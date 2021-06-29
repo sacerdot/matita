@@ -47,10 +47,10 @@ table {
           [ "gr_basic ( 𝐛❨?,?❩ )" * ]
           [ "gr_uni ( 𝐮❨?❩ )" "gr_uni_eq" * ]
           [ "gr_id ( 𝐢 ) " "gr_id_eq" * ]
-          [ "gr_tls ( ⫱*[?]? )" "gr_tls_eq" "gr_tls_pushs" "gr_tls_pushs_eq" "gr_tls_nexts_eq" * ]
+          [ "gr_tls ( ⫰*[?]? )" "gr_tls_eq" "gr_tls_pushs" "gr_tls_pushs_eq" "gr_tls_nexts_eq" * ]
           [ "gr_nexts ( ↑*[?]? )" "gr_nexts_eq" * ]
           [ "gr_pushs ( ⫯*[?]? )" "gr_pushs_eq" * ]
-          [ "gr_tl ( ⫱? )" "gr_tl_eq" "gr_tl_eq_eq" * ]
+          [ "gr_tl ( ⫰? )" "gr_tl_eq" "gr_tl_eq_eq" * ]
           [ "gr_eq ( ? ≡ ? )" * ]
           [ "gr_map ( ⫯? ) ( ↑? )" * ]
         }
@@ -118,8 +118,8 @@ table {
   class "yellow"
   [ { "extensions to the library" * } {
       [ { "streams" * } {
-          [ "stream_tls ( ⫰*{?}[?]? )" "stream_tls_eq" * ]
-          [ "stream_hdtl ( ⫰{?}? )" * ]
+          [ "stream_tls ( ⇣*{?}[?]? )" "stream_tls_eq" * ]
+          [ "stream_hdtl ( ⇣{?}? )" * ]
           [ "stream_eq ( ? ≗{?} ? )" "stream_eq_eq" * ]
           [ "stream ( ? ⨮{?} ? )" * ]
         }

@@ -21,6 +21,6 @@ include "ground/relocation/gr_tls.ma".
 
 (*** tls_eq_repl *)
 lemma gr_tls_eq_repl (n):
-      gr_eq_repl (λf1,f2. ⫱*[n] f1 ≡ ⫱*[n] f2).
+      gr_eq_repl (λf1,f2. ⫰*[n] f1 ≡ ⫰*[n] f2).
 #n @(nat_ind_succ … n) -n /3 width=1 by gr_tl_eq_repl/
 qed.

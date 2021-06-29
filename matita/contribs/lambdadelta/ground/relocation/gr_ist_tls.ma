@@ -20,7 +20,7 @@ include "ground/relocation/gr_ist.ma".
 (* Constructions with gr_tls ************************************************)
 
 (*** istot_tls *)
-lemma gr_ist_tls (n) (f): 𝐓❪f❫ → 𝐓❪⫱*[n]f❫.
+lemma gr_ist_tls (n) (f): 𝐓❪f❫ → 𝐓❪⫰*[n]f❫.
 #n @(nat_ind_succ … n) -n //
 #n #IH #f #Hf <gr_tls_succ
 /3 width=1 by gr_ist_tl/

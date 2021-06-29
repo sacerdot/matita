@@ -24,7 +24,7 @@ include "ground/relocation/gr_after_isi.ma".
 (*** after_uni_dx *)
 lemma gr_after_nat_uni (l2) (l1):
       ∀f2. @↑❪l1, f2❫ ≘ l2 →
-      ∀f. f2 ⊚ 𝐮❨l1❩ ≘ f → 𝐮❨l2❩ ⊚ ⫱*[l2] f2 ≘ f.
+      ∀f. f2 ⊚ 𝐮❨l1❩ ≘ f → 𝐮❨l2❩ ⊚ ⫰*[l2] f2 ≘ f.
 #l2 @(nat_ind_succ … l2) -l2
 [ #l1 #f2 #Hf2 #f #Hf
   elim (gr_nat_inv_zero_dx … Hf2) -Hf2 // #g2 #H1 #H2 destruct
@@ -45,7 +45,7 @@ qed.
 (*** after_uni_sn *)
 lemma gr_nat_after_uni_tls (l2) (l1):
       ∀f2. @↑❪l1, f2❫ ≘ l2 →
-      ∀f. 𝐮❨l2❩ ⊚ ⫱*[l2] f2 ≘ f → f2 ⊚ 𝐮❨l1❩ ≘ f.
+      ∀f. 𝐮❨l2❩ ⊚ ⫰*[l2] f2 ≘ f → f2 ⊚ 𝐮❨l1❩ ≘ f.
 #l2 @(nat_ind_succ … l2) -l2
 [ #l1 #f2 #Hf2 #f #Hf
   elim (gr_nat_inv_zero_dx … Hf2) -Hf2 // #g2 #H1 #H2 destruct

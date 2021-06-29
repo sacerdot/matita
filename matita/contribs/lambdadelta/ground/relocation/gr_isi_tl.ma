@@ -20,7 +20,7 @@ include "ground/relocation/gr_isi.ma".
 (* Constructions with gr_tl *************************************************)
 
 (*** isid_tl *)
-lemma gr_isi_tl (f): 𝐈❪f❫ → 𝐈❪⫱f❫.
+lemma gr_isi_tl (f): 𝐈❪f❫ → 𝐈❪⫰f❫.
 #f cases (gr_map_split_tl f) * #H
 [ /2 width=3 by gr_isi_inv_push/
 | elim (gr_isi_inv_next … H) -H //

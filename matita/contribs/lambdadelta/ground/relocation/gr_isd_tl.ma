@@ -20,7 +20,7 @@ include "ground/relocation/gr_isd.ma".
 (* Constructions with gr_tl *************************************************)
 
 (*** isdiv_tl *)
-lemma gr_isd_tl (f): 𝛀❪f❫ → 𝛀❪⫱f❫.
+lemma gr_isd_tl (f): 𝛀❪f❫ → 𝛀❪⫰f❫.
 #f cases (gr_map_split_tl f) * #H
 [ elim (gr_isd_inv_push … H) -H //
 | /2 width=3 by gr_isd_inv_next/

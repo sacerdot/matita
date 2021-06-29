@@ -171,7 +171,7 @@ qed-.
 lemma frees_inv_lifts_SO:
       ∀b,f,L,U. L ⊢ 𝐅+❪U❫ ≘ f →
       ∀K. ⇩*[b,𝐔❨1❩] L ≘ K → ∀T. ⇧[1] T ≘ U →
-      K ⊢ 𝐅+❪T❫ ≘ ⫱f.
+      K ⊢ 𝐅+❪T❫ ≘ ⫰f.
 #b #f #L #U #H #K #HLK #T #HTU elim(frees_inv_lifts_ex … H … HLK … HTU) -b -L -U
 #f1 #Hf #Hf1 elim (coafter_inv_nxx … Hf) -Hf
 /3 width=5 by frees_eq_repl_back, coafter_isid_inv_sn/
@@ -189,7 +189,7 @@ qed-.
 lemma frees_inv_drops_next:
       ∀f1,L1,T1. L1 ⊢ 𝐅+❪T1❫ ≘ f1 →
       ∀I2,L2,V2,i. ⇩[i] L1 ≘ L2.ⓑ[I2]V2 →
-      ∀g1. ↑g1 = ⫱*[i] f1 →
+      ∀g1. ↑g1 = ⫰*[i] f1 →
       ∃∃g2. L2 ⊢ 𝐅+❪V2❫ ≘ g2 & g2 ⊆ g1.
 #f1 #L1 #T1 #H elim H -f1 -L1 -T1
 [ #f1 #L1 #s #Hf1 #I2 #L2 #V2 #j #_ #g1 #H1 -I2 -L1 -s

@@ -23,7 +23,7 @@ include "ground/relocation/gr_coafter.ma".
 (*** coafter_tls *)
 lemma gr_coafter_tls_bi_tls (n2) (n1):
       ∀f1,f2,f. @↑❪n1, f1❫ ≘ n2 →
-      f1 ~⊚ f2 ≘ f → ⫱*[n2]f1 ~⊚ ⫱*[n1]f2 ≘ ⫱*[n2]f.
+      f1 ~⊚ f2 ≘ f → ⫰*[n2]f1 ~⊚ ⫰*[n1]f2 ≘ ⫰*[n2]f.
 #n2 @(nat_ind_succ … n2) -n2 [ #n1 | #n2 #IH * [| #n1 ] ] #f1 #f2 #f #Hf1 #Hf
 [ elim (gr_nat_inv_zero_dx … Hf1) -Hf1 [ |*: // ] #g1 #Hg1 #H1 destruct //
 | elim (gr_nat_inv_zero_succ … Hf1) -Hf1 [ |*: // ] #g1 #Hg1 #H1
@@ -41,5 +41,5 @@ qed.
 (*** coafter_tls_O *)
 lemma gr_coafter_tls_sn_tls:
       ∀n,f1,f2,f. @↑❪𝟎, f1❫ ≘ n →
-      f1 ~⊚ f2 ≘ f → ⫱*[n]f1 ~⊚ f2 ≘ ⫱*[n]f.
+      f1 ~⊚ f2 ≘ f → ⫰*[n]f1 ~⊚ f2 ≘ ⫰*[n]f.
 /2 width=1 by gr_coafter_tls_bi_tls/ qed.

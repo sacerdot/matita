@@ -25,7 +25,7 @@ include "ground/relocation/gr_after_isi.ma".
 (*** after_uni_succ_dx *)
 lemma gr_after_pat_uni (i2) (i1):
       ∀f2. @❪i1, f2❫ ≘ i2 →
-      ∀f. f2 ⊚ 𝐮❨i1❩ ≘ f → 𝐮❨i2❩ ⊚ ⫱*[i2] f2 ≘ f.
+      ∀f. f2 ⊚ 𝐮❨i1❩ ≘ f → 𝐮❨i2❩ ⊚ ⫰*[i2] f2 ≘ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
   elim (gr_pat_inv_unit_dx … Hf2) -Hf2 // #g2 #H1 #H2 destruct
@@ -47,7 +47,7 @@ qed.
 (*** after_uni_succ_sn *)
 lemma gr_pat_after_uni_tls (i2) (i1):
       ∀f2. @❪i1, f2❫ ≘ i2 →
-      ∀f. 𝐮❨i2❩ ⊚ ⫱*[i2] f2 ≘ f → f2 ⊚ 𝐮❨i1❩ ≘ f.
+      ∀f. 𝐮❨i2❩ ⊚ ⫰*[i2] f2 ≘ f → f2 ⊚ 𝐮❨i1❩ ≘ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
   elim (gr_pat_inv_unit_dx … Hf2) -Hf2 // #g2 #H1 #H2 destruct

@@ -22,7 +22,7 @@ include "ground/relocation/gr_tls_eq.ma".
 (*** eq_inv_nexts_sn *)
 lemma gr_eq_inv_nexts_sn (n):
       ∀f1,g2. ↑*[n] f1 ≡ g2 →
-      ∧∧ f1 ≡ ⫱*[n]g2 & ↑*[n]⫱*[n]g2 = g2.
+      ∧∧ f1 ≡ ⫰*[n]g2 & ↑*[n]⫰*[n]g2 = g2.
 #n @(nat_ind_succ … n) -n /2 width=1 by conj/
 #n #IH #f1 #g2 #H
 elim (gr_eq_inv_next_sn … H) -H [|*: // ] #Hf10 *
@@ -33,7 +33,7 @@ qed-.
 (*** eq_inv_nexts_dx *)
 lemma gr_eq_inv_nexts_dx (n):
       ∀f2,g1. g1 ≡ ↑*[n] f2 →
-      ∧∧ ⫱*[n]g1 ≡ f2 & ↑*[n]⫱*[n]g1 = g1.
+      ∧∧ ⫰*[n]g1 ≡ f2 & ↑*[n]⫰*[n]g1 = g1.
 #n @(nat_ind_succ … n) -n /2 width=1 by conj/
 #n #IH #f2 #g1 #H
 elim (gr_eq_inv_next_dx … H) -H [|*: // ] #Hf02 *

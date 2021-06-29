@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downspoon_2.ma".
+include "ground/notation/functions/downdashedarrow_2.ma".
 include "ground/lib/stream.ma".
 
 (* HEAD AND TAIL FOR STREAMS ************************************************)
@@ -27,7 +27,7 @@ defined.
 
 interpretation
   "tail (streams)"
-  'DownSpoon A t = (stream_tl A t).
+  'DownDashedArrow A t = (stream_tl A t).
 
 (* Basic constructions ******************************************************)
 
@@ -36,10 +36,10 @@ lemma stream_hd_cons (A) (a) (t):
 // qed.
 
 lemma stream_tl_cons (A) (a) (t):
-      t = ⫰{A}(a⨮t).
+      t = ⇣{A}(a⨮t).
 // qed.
 
 lemma stream_split_tl (A) (t):
-      stream_hd A t ⨮ ⫰t = t.
+      stream_hd A t ⨮ ⇣t = t.
 #A * //
 qed.

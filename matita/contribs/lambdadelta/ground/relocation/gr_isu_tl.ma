@@ -19,7 +19,7 @@ include "ground/relocation/gr_isu.ma".
 
 (* Constructions with gr_tl *************************************************)
 
-lemma gr_isu_tl (f): 𝐔❪f❫ → 𝐔❪⫱f❫.
+lemma gr_isu_tl (f): 𝐔❪f❫ → 𝐔❪⫰f❫.
 #f cases (gr_map_split_tl f) * #H
 [ /3 width=3 by gr_isu_inv_push, gr_isu_isi/
 | /2 width=3 by gr_isu_inv_next/

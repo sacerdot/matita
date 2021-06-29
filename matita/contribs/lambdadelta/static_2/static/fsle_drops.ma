@@ -68,7 +68,7 @@ lemma fsle_inv_lifts_sn: ∀T1,U1. ⇧[1] T1 ≘ U1 →
 * #n #m #f2 #g2 #Hf2 #Hg2 #HL #Hfg2 #p
 elim (lveq_inv_pair_pair … HL) -HL #HL #H1 #H2 destruct
 elim (frees_total L2 V2) #g1 #Hg1
-elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
+elim (sor_isfin_ex g1 (⫰g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
 lapply (frees_inv_lifts_SO (Ⓣ) … Hf2 … HTU1)
 [1,2: /3 width=4 by drops_refl, drops_drop/ ] -U1 #Hf2
 lapply (sor_inv_sle_dx … Hg) #H0g

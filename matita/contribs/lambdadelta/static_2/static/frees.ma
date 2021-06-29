@@ -28,7 +28,7 @@ inductive frees: relation3 lenv term rtmap ≝
               frees (L.ⓘ[I]) (#↑i) (⫯f)
 | frees_gref: ∀f,L,l. 𝐈❪f❫ → frees L (§l) f
 | frees_bind: ∀f1,f2,f,p,I,L,V,T. frees L V f1 → frees (L.ⓑ[I]V) T f2 →
-              f1 ⋓ ⫱f2 ≘ f → frees L (ⓑ[p,I]V.T) f
+              f1 ⋓ ⫰f2 ≘ f → frees L (ⓑ[p,I]V.T) f
 | frees_flat: ∀f1,f2,f,I,L,V,T. frees L V f1 → frees L T f2 →
               f1 ⋓ f2 ≘ f → frees L (ⓕ[I]V.T) f
 .
@@ -143,7 +143,7 @@ lemma frees_inv_gref: ∀f,L,l. L ⊢ 𝐅+❪§l❫ ≘ f → 𝐈❪f❫.
 
 fact frees_inv_bind_aux:
      ∀f,L,X. L ⊢ 𝐅+❪X❫ ≘ f → ∀p,I,V,T. X = ⓑ[p,I]V.T →
-     ∃∃f1,f2. L ⊢ 𝐅+❪V❫ ≘ f1 & L.ⓑ[I]V ⊢ 𝐅+❪T❫ ≘ f2 & f1 ⋓ ⫱f2 ≘ f.
+     ∃∃f1,f2. L ⊢ 𝐅+❪V❫ ≘ f1 & L.ⓑ[I]V ⊢ 𝐅+❪T❫ ≘ f2 & f1 ⋓ ⫰f2 ≘ f.
 #f #L #X * -f -L -X
 [ #f #L #s #_ #q #J #W #U #H destruct
 | #f #i #_ #q #J #W #U #H destruct
@@ -158,7 +158,7 @@ qed-.
 
 lemma frees_inv_bind:
       ∀f,p,I,L,V,T. L ⊢ 𝐅+❪ⓑ[p,I]V.T❫ ≘ f →
-      ∃∃f1,f2. L ⊢ 𝐅+❪V❫ ≘ f1 & L.ⓑ[I]V ⊢ 𝐅+❪T❫ ≘ f2 & f1 ⋓ ⫱f2 ≘ f.
+      ∃∃f1,f2. L ⊢ 𝐅+❪V❫ ≘ f1 & L.ⓑ[I]V ⊢ 𝐅+❪T❫ ≘ f2 & f1 ⋓ ⫰f2 ≘ f.
 /2 width=4 by frees_inv_bind_aux/ qed-.
 
 fact frees_inv_flat_aux: ∀f,L,X. L ⊢ 𝐅+❪X❫ ≘ f → ∀I,V,T. X = ⓕ[I]V.T →

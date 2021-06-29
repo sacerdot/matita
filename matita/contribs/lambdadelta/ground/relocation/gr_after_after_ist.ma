@@ -39,7 +39,7 @@ cases (gr_after_inv_push_sn … H1f … H1) -H1f * #g21 #g #H1g #H21 #H
 | cases (gr_after_inv_push_sn_next … H2f … H1 H) -f1 -f #g22 #H2g #H22
   @(gr_eq_next … H21 H22) -f21 -f22
 ]
-@(gr_after_inj_unit_aux (⫱*[↓p]g1) … (⫱*[↓p]g)) -gr_after_inj_unit_aux
+@(gr_after_inj_unit_aux (⫰*[↓p]g1) … (⫰*[↓p]g)) -gr_after_inj_unit_aux
 /2 width=1 by gr_after_tls_sn_tls, gr_ist_tls, gr_pat_unit_succ_tls/
 qed-.
 

@@ -217,8 +217,8 @@ qed-.
 
 (*** coafter_inv_tl1 *)
 lemma gr_coafter_inv_tl_dx:
-      ∀g2,g1,g. g2 ~⊚ ⫱g1 ≘ g →
-      ∃∃f. ⫯g2 ~⊚ g1 ≘ f & ⫱f = g.
+      ∀g2,g1,g. g2 ~⊚ ⫰g1 ≘ g →
+      ∃∃f. ⫯g2 ~⊚ g1 ≘ f & ⫰f = g.
 #g2 #g1 #g
 elim (gr_map_split_tl g1) #H1 #H2
 [ /3 width=7 by gr_coafter_refl, ex2_intro/
@@ -228,8 +228,8 @@ qed-.
 
 (*** coafter_inv_tl0 *)
 lemma gr_coafter_inv_tl:
-      ∀g2,g1,g. g2 ~⊚ g1 ≘ ⫱g →
-      ∃∃f1. ⫯g2 ~⊚ f1 ≘ g & ⫱f1 = g1.
+      ∀g2,g1,g. g2 ~⊚ g1 ≘ ⫰g →
+      ∃∃f1. ⫯g2 ~⊚ f1 ≘ g & ⫰f1 = g1.
 #g2 #g1 #g
 elim (gr_map_split_tl g) #H1 #H2
 [ /3 width=7 by gr_coafter_refl, ex2_intro/

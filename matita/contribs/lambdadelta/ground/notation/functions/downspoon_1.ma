@@ -14,6 +14,6 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( ⫱ term 75 T )"
+notation "hvbox( ⫰ term 75 T )"
   non associative with precedence 75
-  for @{ 'DropPred $T }.
+  for @{ 'DownSpoon $T }.

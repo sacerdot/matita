@@ -39,7 +39,7 @@ lemma frees_total: ∀L,T. ∃f. L ⊢ 𝐅+❪T❫ ≘ f.
 | #p #I #V #T #HG #HL #HT destruct
   elim (IH G L V) // #f1 #HV
   elim (IH G (L.ⓑ[I]V) T) -IH // #f2 #HT
-  elim (sor_isfin_ex f1 (⫱f2))
+  elim (sor_isfin_ex f1 (⫰f2))
   /3 width=6 by frees_fwd_isfin, frees_bind, isfin_tl, ex_intro/
 | #I #V #T #HG #HL #HT destruct
   elim (IH G L V) // #f1 #HV
@@ -53,7 +53,7 @@ qed-.
 
 theorem frees_bind_void:
         ∀f1,L,V. L ⊢ 𝐅+❪V❫ ≘ f1 → ∀f2,T. L.ⓧ ⊢ 𝐅+❪T❫ ≘ f2 →
-        ∀f. f1 ⋓ ⫱f2 ≘ f → ∀p,I. L ⊢ 𝐅+❪ⓑ[p,I]V.T❫ ≘ f.
+        ∀f. f1 ⋓ ⫰f2 ≘ f → ∀p,I. L ⊢ 𝐅+❪ⓑ[p,I]V.T❫ ≘ f.
 #f1 #L #V #Hf1 #f2 #T #Hf2 #f #Hf #p #I
 elim (frees_total (L.ⓑ[I]V) T) #f0 #Hf0
 lapply (lsubr_lsubf … Hf2 … Hf0) -Hf2 /2 width=5 by lsubr_unit/ #H02
@@ -81,7 +81,7 @@ qed-.
 
 lemma frees_inv_bind_void:
       ∀f,p,I,L,V,T. L ⊢ 𝐅+❪ⓑ[p,I]V.T❫ ≘ f →
-      ∃∃f1,f2. L ⊢ 𝐅+❪V❫ ≘ f1 & L.ⓧ ⊢ 𝐅+❪T❫ ≘ f2 & f1 ⋓ ⫱f2 ≘ f.
+      ∃∃f1,f2. L ⊢ 𝐅+❪V❫ ≘ f1 & L.ⓧ ⊢ 𝐅+❪T❫ ≘ f2 & f1 ⋓ ⫰f2 ≘ f.
 #f #p #I #L #V #T #H
 elim (frees_inv_bind … H) -H #f1 #f2 #Hf1 #Hf2 #Hf
 elim (frees_total (L.ⓧ) T) #f0 #Hf0
@@ -119,7 +119,7 @@ lemma frees_ind_void (Q:relation3 …):
         ∀f,L,l. 𝐈❪f❫ →  Q L (§l) f
       ) → (
         ∀f1,f2,f,p,I,L,V,T.
-        L ⊢ 𝐅+❪V❫ ≘ f1 → L.ⓧ ⊢𝐅+❪T❫≘ f2 → f1 ⋓ ⫱f2 ≘ f →
+        L ⊢ 𝐅+❪V❫ ≘ f1 → L.ⓧ ⊢𝐅+❪T❫≘ f2 → f1 ⋓ ⫰f2 ≘ f →
         Q L V f1 → Q (L.ⓧ) T f2 → Q L (ⓑ[p,I]V.T) f
       ) → (
         ∀f1,f2,f,I,L,V,T.

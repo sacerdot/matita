@@ -40,7 +40,7 @@ lemma gr_pat_increasing_strict (g) (i1) (i2):
 qed-.
 
 (*** at_fwd_id_ex *)
-lemma gr_pat_des_id (f) (i): @❪i,f❫ ≘ i → ⫯⫱f = f.
+lemma gr_pat_des_id (f) (i): @❪i,f❫ ≘ i → ⫯⫰f = f.
 #f elim (gr_map_split_tl f) //
 #H #i #Hf elim (gr_pat_inv_next … Hf … H) -Hf -H
 #j2 #Hg #H destruct lapply (gr_pat_increasing … Hg) -Hg

@@ -198,7 +198,7 @@ qed-.
 lemma sex_sdj_split_dx (R1) (R2) (RP):
       c_reflexive … R1 → c_reflexive … R2 → c_reflexive … RP →
       ∀L1,f1.
-      (∀g,I,K,n. ⇩[n] L1 ≘ K.ⓘ[I] → ↑g = ⫱*[n] f1 → R_pw_confluent1_sex R1 R1 R2 cfull g K I) →
+      (∀g,I,K,n. ⇩[n] L1 ≘ K.ⓘ[I] → ↑g = ⫰*[n] f1 → R_pw_confluent1_sex R1 R1 R2 cfull g K I) →
       ∀L2. L1 ⪤[R1,RP,f1] L2 → ∀f2. f1 ∥ f2 →
       ∃∃L. L1 ⪤[R2,cfull,f1] L & L ⪤[RP,R1,f2] L2.
 #R1 #R2 #RP #HR1 #HR2 #HRP #L1 elim L1 -L1

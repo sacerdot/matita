@@ -177,7 +177,7 @@ lemma sex_inv_push (RN) (RP):
 qed-.
 
 lemma sex_inv_tl (RN) (RP):
-      ∀f,I1,I2,L1,L2. L1 ⪤[RN,RP,⫱f] L2 →
+      ∀f,I1,I2,L1,L2. L1 ⪤[RN,RP,⫰f] L2 →
       RN L1 I1 I2 → RP L1 I1 I2 →
       L1.ⓘ[I1] ⪤[RN,RP,f] L2.ⓘ[I2].
 #RN #RP #f #I1 #I2 #L2 #L2 elim (pn_split f) *
@@ -188,7 +188,7 @@ qed-.
 
 lemma sex_fwd_bind (RN) (RP):
       ∀f,I1,I2,L1,L2.
-      L1.ⓘ[I1] ⪤[RN,RP,f] L2.ⓘ[I2] → L1 ⪤[RN,RP,⫱f] L2.
+      L1.ⓘ[I1] ⪤[RN,RP,f] L2.ⓘ[I2] → L1 ⪤[RN,RP,⫰f] L2.
 #RN #RP #f #I1 #I2 #L1 #L2 #Hf
 elim (pn_split f) * #g #H destruct
 [ elim (sex_inv_push … Hf) | elim (sex_inv_next … Hf) ] -Hf //
@@ -330,7 +330,7 @@ lemma sex_dec (RN) (RP):
   lapply (sex_inv_atom1 … H) -H #H destruct
 | #f @or_intror #H
   lapply (sex_inv_atom2 … H) -H #H destruct
-| #L2 #I2 #f elim (IH L2 (⫱f)) -IH #HL12
+| #L2 #I2 #f elim (IH L2 (⫰f)) -IH #HL12
   [2: /4 width=3 by sex_fwd_bind, or_intror/ ]
   elim (pn_split f) * #g #H destruct
   [ elim (HRP L1 I1 I2) | elim (HRN L1 I1 I2) ] -HRP -HRN #HV12

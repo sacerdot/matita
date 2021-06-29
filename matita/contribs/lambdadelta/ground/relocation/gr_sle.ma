@@ -124,21 +124,21 @@ qed-.
 
 (*** sle_px_tl *)
 lemma gr_sle_push_sn_tl:
-      ∀g1,g2. g1 ⊆ g2 → ∀f1. ⫯f1 = g1 → f1 ⊆ ⫱g2.
+      ∀g1,g2. g1 ⊆ g2 → ∀f1. ⫯f1 = g1 → f1 ⊆ ⫰g2.
 #g1 #g2 #H #f1 #H1
 elim (gr_sle_inv_push_sn … H … H1) -H -H1 * //
 qed.
 
 (*** sle_xn_tl *)
 lemma gr_sle_next_dx_tl:
-      ∀g1,g2. g1 ⊆ g2 → ∀f2. ↑f2 = g2 → ⫱g1 ⊆ f2.
+      ∀g1,g2. g1 ⊆ g2 → ∀f2. ↑f2 = g2 → ⫰g1 ⊆ f2.
 #g1 #g2 #H #f2 #H2
 elim (gr_sle_inv_next_dx … H … H2) -H -H2 * //
 qed.
 
 (*** sle_tl *)
 lemma gr_sle_tl:
-      ∀f1,f2. f1 ⊆ f2 → ⫱f1 ⊆ ⫱f2.
+      ∀f1,f2. f1 ⊆ f2 → ⫰f1 ⊆ ⫰f2.
 #f1 elim (gr_map_split_tl f1) #H1 #f2 #H
 [ lapply (gr_sle_push_sn_tl … H … H1) -H //
 | elim (gr_sle_inv_next_sn … H … H1) -H //
@@ -149,14 +149,14 @@ qed.
 
 (*** sle_inv_tl_sn *)
 lemma gr_sle_inv_tl_sn:
-      ∀f1,f2. ⫱f1 ⊆ f2 → f1 ⊆ ↑f2.
+      ∀f1,f2. ⫰f1 ⊆ f2 → f1 ⊆ ↑f2.
 #f1 elim (gr_map_split_tl f1) #H #f2 #Hf12
 /2 width=5 by gr_sle_next, gr_sle_weak/
 qed-.
 
 (*** sle_inv_tl_dx *)
 lemma gr_sle_inv_tl_dx:
-      ∀f1,f2. f1 ⊆ ⫱f2 → ⫯f1 ⊆ f2.
+      ∀f1,f2. f1 ⊆ ⫰f2 → ⫯f1 ⊆ f2.
 #f1 #f2 elim (gr_map_split_tl f2) #H #Hf12
 /2 width=5 by gr_sle_push, gr_sle_weak/
 qed-.

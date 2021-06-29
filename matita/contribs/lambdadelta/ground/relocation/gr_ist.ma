@@ -42,7 +42,7 @@ qed-.
 (* Constructions with gr_tl *************************************************)
 
 (*** istot_tl *)
-lemma gr_ist_tl (f): 𝐓❪f❫ → 𝐓❪⫱f❫.
+lemma gr_ist_tl (f): 𝐓❪f❫ → 𝐓❪⫰f❫.
 #f cases (gr_map_split_tl f) *
 /2 width=3 by gr_ist_inv_next, gr_ist_inv_push/
 qed.

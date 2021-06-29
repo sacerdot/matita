@@ -14,6 +14,14 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( ⫱ *[ term 46 n ] break term 75 T )"
+notation < "hvbox( ⇣*[ break term 46 n ] break term 75 a )"
   non associative with precedence 75
-  for @{ 'DropPreds $n $T }.
+  for @{ 'DownDashedArrowStar $S $n $a }.
+
+notation > "hvbox( ⇣*[ break term 46 n ] break term 75 a )"
+  non associative with precedence 75
+  for @{ 'DownDashedArrowStar ? $n $a }.
+
+notation > "hvbox( ⇣*{ term 46 S }[ break term 46 n ] break term 75 a )"
+  non associative with precedence 75
+  for @{ 'DownDashedArrowStar $S $n $a }.

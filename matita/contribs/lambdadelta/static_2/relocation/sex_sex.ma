@@ -21,8 +21,8 @@ include "static_2/relocation/drops.ma".
 
 theorem sex_trans_gen (RN1) (RP1) (RN2) (RP2) (RN) (RP):
         ∀L1,f.
-        (∀g,I,K,n. ⇩[n] L1 ≘ K.ⓘ[I] → ↑g = ⫱*[n] f → R_pw_transitive_sex RN1 RN2 RN RN1 RP1 g K I) →
-        (∀g,I,K,n. ⇩[n] L1 ≘ K.ⓘ[I] → ⫯g = ⫱*[n] f → R_pw_transitive_sex RP1 RP2 RP RN1 RP1 g K I) →
+        (∀g,I,K,n. ⇩[n] L1 ≘ K.ⓘ[I] → ↑g = ⫰*[n] f → R_pw_transitive_sex RN1 RN2 RN RN1 RP1 g K I) →
+        (∀g,I,K,n. ⇩[n] L1 ≘ K.ⓘ[I] → ⫯g = ⫰*[n] f → R_pw_transitive_sex RP1 RP2 RP RN1 RP1 g K I) →
         ∀L0. L1 ⪤[RN1,RP1,f] L0 →
         ∀L2. L0 ⪤[RN2,RP2,f] L2 →
         L1 ⪤[RN,RP,f] L2.
@@ -64,8 +64,8 @@ qed-.
 
 theorem sex_conf (RN1) (RP1) (RN2) (RP2):
         ∀L,f.
-        (∀g,I,K,n. ⇩[n] L ≘ K.ⓘ[I] → ↑g = ⫱*[n] f → R_pw_confluent2_sex RN1 RN2 RN1 RP1 RN2 RP2 g K I) →
-        (∀g,I,K,n. ⇩[n] L ≘ K.ⓘ[I] → ⫯g = ⫱*[n] f → R_pw_confluent2_sex RP1 RP2 RN1 RP1 RN2 RP2 g K I) →
+        (∀g,I,K,n. ⇩[n] L ≘ K.ⓘ[I] → ↑g = ⫰*[n] f → R_pw_confluent2_sex RN1 RN2 RN1 RP1 RN2 RP2 g K I) →
+        (∀g,I,K,n. ⇩[n] L ≘ K.ⓘ[I] → ⫯g = ⫰*[n] f → R_pw_confluent2_sex RP1 RP2 RN1 RP1 RN2 RP2 g K I) →
         pw_confluent2 … (sex RN1 RP1 f) (sex RN2 RP2 f) L.
 #RN1 #RP1 #RN2 #RP2 #L elim L -L
 [ #f #_ #_ #L1 #H1 #L2 #H2 >(sex_inv_atom1 … H1) >(sex_inv_atom1 … H2) -H2 -H1
@@ -85,8 +85,8 @@ theorem sex_conf (RN1) (RP1) (RN2) (RP2):
 qed-.
 
 lemma sex_repl (RN) (RP) (SN) (SP) (L1) (f):
-      (∀g,I,K1,n. ⇩[n] L1 ≘ K1.ⓘ[I] → ↑g = ⫱*[n] f → R_pw_replace3_sex … RN SN RN RP SN SP g K1 I) →
-      (∀g,I,K1,n. ⇩[n] L1 ≘ K1.ⓘ[I] → ⫯g = ⫱*[n] f → R_pw_replace3_sex … RP SP RN RP SN SP g K1 I) →
+      (∀g,I,K1,n. ⇩[n] L1 ≘ K1.ⓘ[I] → ↑g = ⫰*[n] f → R_pw_replace3_sex … RN SN RN RP SN SP g K1 I) →
+      (∀g,I,K1,n. ⇩[n] L1 ≘ K1.ⓘ[I] → ⫯g = ⫰*[n] f → R_pw_replace3_sex … RP SP RN RP SN SP g K1 I) →
       ∀L2. L1 ⪤[RN,RP,f] L2 → ∀K1. L1 ⪤[SN,SP,f] K1 →
       ∀K2. L2 ⪤[SN,SP,f] K2 → K1 ⪤[RN,RP,f] K2.
 #RN #RP #SN #SP #L1 elim L1 -L1

@@ -20,7 +20,7 @@ include "ground/relocation/gr_tls.ma".
 (* Constructions with gr_pushs **********************************************)
 
 (*** tls_pushs *)
-lemma gr_tls_pushs (n) (f): f = ⫱*[n] ⫯*[n] f.
+lemma gr_tls_pushs (n) (f): f = ⫰*[n] ⫯*[n] f.
 #n @(nat_ind_succ … n) -n //
 #n #IH #f <gr_tls_swap <gr_pushs_succ <gr_tl_push //
 qed.

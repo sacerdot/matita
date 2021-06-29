@@ -24,7 +24,7 @@ include "ground/relocation/gr_coafter.ma".
 (*** coafter_fwd_pushs *)
 lemma gr_coafter_des_pushs_dx (n) (m):
       ∀g2,f1,g. g2 ~⊚ ⫯*[m]f1 ≘ g → @↑❪m, g2❫ ≘ n →
-      ∃∃f. ⫱*[n]g2 ~⊚ f1 ≘ f & ⫯*[n] f = g.
+      ∃∃f. ⫰*[n]g2 ~⊚ f1 ≘ f & ⫯*[n] f = g.
 #n @(nat_ind_succ … n) -n
 [ #m #g2 #f1 #g #Hg #H
   elim (gr_nat_inv_zero_dx … H) -H [|*: // ] #f2 #H1 #H2 destruct

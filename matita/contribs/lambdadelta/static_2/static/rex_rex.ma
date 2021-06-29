@@ -45,7 +45,7 @@ theorem rex_bind (R) (p) (I):
         ∀L1,L2,V1,V2,T. L1 ⪤[R,V1] L2 → L1.ⓑ[I]V1 ⪤[R,T] L2.ⓑ[I]V2 →
         L1 ⪤[R,ⓑ[p,I]V1.T] L2.
 #R #p #I #L1 #L2 #V1 #V2 #T * #f1 #HV #Hf1 * #f2 #HT #Hf2
-lapply (sex_fwd_bind … Hf2) -Hf2 #Hf2 elim (sor_isfin_ex f1 (⫱f2))
+lapply (sex_fwd_bind … Hf2) -Hf2 #Hf2 elim (sor_isfin_ex f1 (⫰f2))
 /3 width=7 by frees_fwd_isfin, frees_bind, sex_join, isfin_tl, ex2_intro/
 qed.
 
@@ -59,7 +59,7 @@ qed.
 theorem rex_bind_void (R) (p) (I):
         ∀L1,L2,V,T. L1 ⪤[R,V] L2 → L1.ⓧ ⪤[R,T] L2.ⓧ → L1 ⪤[R,ⓑ[p,I]V.T] L2.
 #R #p #I #L1 #L2 #V #T * #f1 #HV #Hf1 * #f2 #HT #Hf2
-lapply (sex_fwd_bind … Hf2) -Hf2 #Hf2 elim (sor_isfin_ex f1 (⫱f2))
+lapply (sex_fwd_bind … Hf2) -Hf2 #Hf2 elim (sor_isfin_ex f1 (⫰f2))
 /3 width=7 by frees_fwd_isfin, frees_bind_void, sex_join, isfin_tl, ex2_intro/
 qed.
 

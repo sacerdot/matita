@@ -110,7 +110,7 @@ lemma seq_inv_push (f):
 qed-.
 
 lemma seq_inv_tl (f):
-      ∀I,L1,L2. L1 ≡[⫱f] L2 → L1.ⓘ[I] ≡[f] L2.ⓘ[I].
+      ∀I,L1,L2. L1 ≡[⫰f] L2 → L1.ⓘ[I] ≡[f] L2.ⓘ[I].
 /2 width=1 by sex_inv_tl/ qed-.
 
 (* Basic_2A1: removed theorems 5:

@@ -22,7 +22,7 @@ include "static_2/static/fsle_fqup.ma".
 lemma fsle_frees_trans:
       ∀L1,L2,T1,T2. ❪L1,T1❫ ⊆ ❪L2,T2❫ →
       ∀f2. L2 ⊢ 𝐅+❪T2❫ ≘ f2 →
-      ∃∃n1,n2,f1. L1 ⊢ 𝐅+❪T1❫ ≘ f1 & L1 ≋ⓧ*[n1,n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
+      ∃∃n1,n2,f1. L1 ⊢ 𝐅+❪T1❫ ≘ f1 & L1 ≋ⓧ*[n1,n2] L2 & ⫰*[n1]f1 ⊆ ⫰*[n2]f2.
 #L1 #L2 #T1 #T2 * #n1 #n2 #f1 #g2 #Hf1 #Hg2 #HL #Hn #f2 #Hf2
 lapply (frees_mono … Hg2 … Hf2) -Hg2 -Hf2 #Hgf2
 lapply (tls_eq_repl n2 … Hgf2) -Hgf2 #Hgf2
@@ -53,7 +53,7 @@ qed-.
 lemma fsle_frees_conf:
       ∀L1,L2,T1,T2. ❪L1,T1❫ ⊆ ❪L2,T2❫ →
       ∀f1. L1 ⊢ 𝐅+❪T1❫ ≘ f1 →
-      ∃∃n1,n2,f2. L2 ⊢ 𝐅+❪T2❫ ≘ f2 & L1 ≋ⓧ*[n1,n2] L2 & ⫱*[n1]f1 ⊆ ⫱*[n2]f2.
+      ∃∃n1,n2,f2. L2 ⊢ 𝐅+❪T2❫ ≘ f2 & L1 ≋ⓧ*[n1,n2] L2 & ⫰*[n1]f1 ⊆ ⫰*[n2]f2.
 #L1 #L2 #T1 #T2 * #n1 #n2 #g1 #g2 #Hg1 #Hg2 #HL #Hn #f1 #Hf1
 lapply (frees_mono … Hg1 … Hf1) -Hg1 -Hf1 #Hgf1
 lapply (tls_eq_repl n1 … Hgf1) -Hgf1 #Hgf1
@@ -120,7 +120,7 @@ theorem fsle_bind_sn_ge:
 #L1 #L2 #HL #V1 #T1 #T * #n1 #x #f1 #g #Hf1 #Hg #H1n1 #H2n1 #H #p #I
 elim (fsle_frees_trans … H … Hg) -H #n2 #n #f2 #Hf2 #H1n2 #H2n2
 elim (lveq_inj_void_sn_ge … H1n1 … H1n2) -H1n2 // #H1 #H2 #H3 destruct
-elim (sor_isfin_ex f1 (⫱f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
+elim (sor_isfin_ex f1 (⫰f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
 <tls_xn in H2n2; #H2n2
 /4 width=12 by frees_bind_void, sor_inv_sle, sor_tls, ex4_4_intro/
 qed.
@@ -144,8 +144,8 @@ theorem fsle_bind_eq:
 * #n2 #m2 #f2 #g2 #Hf2 #Hg2 #H2L #Hfg2 #p #I1
 elim (lveq_inj_length … H1L) // #H1 #H2 destruct
 elim (lveq_inj_length … H2L) // -HL -H2L #H1 #H2 destruct
-elim (sor_isfin_ex f1 (⫱f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
-elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
+elim (sor_isfin_ex f1 (⫰f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
+elim (sor_isfin_ex g1 (⫰g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
 /4 width=15 by frees_bind_void, frees_bind, monotonic_sle_sor, sle_tl, ex4_4_intro/
 qed.
 
@@ -158,8 +158,8 @@ theorem fsle_bind:
 * #n2 #m2 #f2 #g2 #Hf2 #Hg2 #H2L #Hfg2 #p
 elim (lveq_inv_pair_pair … H2L) -H2L #H2L #H1 #H2 destruct
 elim (lveq_inj … H2L … H1L) -H1L #H1 #H2 destruct
-elim (sor_isfin_ex f1 (⫱f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
-elim (sor_isfin_ex g1 (⫱g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
+elim (sor_isfin_ex f1 (⫰f2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #f #Hf #_
+elim (sor_isfin_ex g1 (⫰g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
 /4 width=15 by frees_bind, monotonic_sle_sor, sle_tl, ex4_4_intro/
 qed.
 

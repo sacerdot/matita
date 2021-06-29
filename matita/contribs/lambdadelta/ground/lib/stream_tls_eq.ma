@@ -20,7 +20,7 @@ include "ground/lib/stream_tls.ma".
 (* Constructions with stream_eq *********************************************)
 
 lemma stream_tls_eq_repl (A) (n):
-      stream_eq_repl A (λt1,t2. ⫰*[n] t1 ≗ ⫰*[n] t2).
+      stream_eq_repl A (λt1,t2. ⇣*[n] t1 ≗ ⇣*[n] t2).
 #A #n @(nat_ind_succ … n) -n //
 #n #IH * #n1 #t1 * #n2 #t2 #H
 elim (stream_eq_inv_cons_bi … H) /2 width=7 by/

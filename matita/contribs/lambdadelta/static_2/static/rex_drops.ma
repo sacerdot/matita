@@ -40,12 +40,12 @@ definition f_dropable_dx:
 definition f_transitive_next:
            relation3 … ≝ λR1,R2,R3.
            ∀f,L,T. L ⊢ 𝐅+❪T❫ ≘ f →
-           ∀g,I,K,i. ⇩[i] L ≘ K.ⓘ[I] → ↑g = ⫱*[i] f →
+           ∀g,I,K,i. ⇩[i] L ≘ K.ⓘ[I] → ↑g = ⫰*[i] f →
            R_pw_transitive_sex (cext2 R1) (cext2 R2) (cext2 R3) (cext2 R1) cfull g K I.
 
 definition f_confluent1_next: relation2 … ≝ λR1,R2.
            ∀f,L,T. L ⊢ 𝐅+❪T❫ ≘ f →
-           ∀g,I,K,i. ⇩[i] L ≘ K.ⓘ[I] → ↑g = ⫱*[i] f →
+           ∀g,I,K,i. ⇩[i] L ≘ K.ⓘ[I] → ↑g = ⫰*[i] f →
            R_pw_confluent1_sex (cext2 R1) (cext2 R1) (cext2 R2) cfull g K I.
 
 (* Properties with generic slicing for local environments *******************)

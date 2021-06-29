@@ -27,7 +27,7 @@ qed.
 
 (*** tl_eq_repl *)
 lemma gr_tl_eq_repl:
-      gr_eq_repl … (λf1,f2. ⫱f1 ≡ ⫱f2).
+      gr_eq_repl … (λf1,f2. ⫰f1 ≡ ⫰f2).
 #f1 #f2 * -f1 -f2 //
 qed.
 
@@ -36,8 +36,8 @@ qed.
 (*** eq_inv_gen *)
 lemma gr_eq_inv_gen (g1) (g2):
       g1 ≡ g2 →
-      ∨∨ ∧∧ ⫱g1 ≡ ⫱g2 & ⫯⫱g1 = g1 & ⫯⫱g2 = g2
-       | ∧∧ ⫱g1 ≡ ⫱g2 & ↑⫱g1 = g1 & ↑⫱g2 = g2.
+      ∨∨ ∧∧ ⫰g1 ≡ ⫰g2 & ⫯⫰g1 = g1 & ⫯⫰g2 = g2
+       | ∧∧ ⫰g1 ≡ ⫰g2 & ↑⫰g1 = g1 & ↑⫰g2 = g2.
 #g1 #g2 * -g1 -g2 #f1 #f2 #g1 #g2 #f * *
 /3 width=1 by and3_intro, or_introl, or_intror/
 qed-.
@@ -47,7 +47,7 @@ qed-.
 (*** gr_eq_inv_px *)
 lemma gr_eq_inv_push_sn (g1) (g2):
       g1 ≡ g2 → ∀f1. ⫯f1 = g1 →
-      ∧∧ f1 ≡ ⫱g2 & ⫯⫱g2 = g2.
+      ∧∧ f1 ≡ ⫰g2 & ⫯⫰g2 = g2.
 #g1 #g2 #H #f1 #Hf1
 elim (gr_eq_inv_gen … H) -H * #Hg #Hg1 #Hg2 destruct
 [ /2 width=1 by conj/
@@ -58,7 +58,7 @@ qed-.
 (*** gr_eq_inv_nx *)
 lemma gr_eq_inv_next_sn (g1) (g2):
       g1 ≡ g2 → ∀f1. ↑f1 = g1 →
-      ∧∧ f1 ≡ ⫱g2 & ↑⫱g2 = g2.
+      ∧∧ f1 ≡ ⫰g2 & ↑⫰g2 = g2.
 #g1 #g2 #H #f1 #Hf1
 elim (gr_eq_inv_gen … H) -H * #Hg #Hg1 #Hg2 destruct
 [ elim (eq_inv_gr_push_next … Hg1)
@@ -69,7 +69,7 @@ qed-.
 (*** gr_eq_inv_xp *)
 lemma gr_eq_inv_push_dx (g1) (g2):
       g1 ≡ g2 → ∀f2. ⫯f2 = g2 →
-      ∧∧ ⫱g1 ≡ f2 & ⫯⫱g1 = g1.
+      ∧∧ ⫰g1 ≡ f2 & ⫯⫰g1 = g1.
 #g1 #g2 #H #f2 #Hf2
 elim (gr_eq_inv_gen … H) -H * #Hg #Hg1 #Hg2 destruct
 [ /2 width=1 by conj/
@@ -80,7 +80,7 @@ qed-.
 (*** gr_eq_inv_xn *)
 lemma gr_eq_inv_next_dx (g1) (g2):
       g1 ≡ g2 → ∀f2. ↑f2 = g2 →
-      ∧∧ ⫱g1 ≡ f2 & ↑⫱g1 = g1.
+      ∧∧ ⫰g1 ≡ f2 & ↑⫰g1 = g1.
 #g1 #g2 #H #f2 #Hf2
 elim (gr_eq_inv_gen … H) -H * #Hg #Hg1 #Hg2 destruct
 [ elim (eq_inv_gr_push_next … Hg2)

@@ -24,7 +24,7 @@ include "ground/relocation/gr_after.ma".
 (*** after_tls *)
 lemma gr_after_tls_sn_tls (n):
       ∀f1,f2,f. @❪𝟏, f1❫ ≘ ↑n →
-      f1 ⊚ f2 ≘ f → ⫱*[n]f1 ⊚ f2 ≘ ⫱*[n]f.
+      f1 ⊚ f2 ≘ f → ⫰*[n]f1 ⊚ f2 ≘ ⫰*[n]f.
 #n @(nat_ind_succ … n) -n //
 #n #IH #f1 #f2 #f #Hf1 #Hf
 cases (gr_pat_inv_unit_succ … Hf1) -Hf1 [ |*: // ] #g1 #Hg1 #H1

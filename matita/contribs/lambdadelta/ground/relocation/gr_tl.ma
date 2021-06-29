@@ -12,32 +12,32 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/droppred_1.ma".
+include "ground/notation/functions/downspoon_1.ma".
 include "ground/lib/stream_hdtl.ma".
 include "ground/relocation/gr_map.ma".
 
 (* TAIL FOR GENERIC RELOCATION MAPS *****************************************)
 
 (*** tl *)
-definition gr_tl (f): gr_map ≝ ⫰f.
+definition gr_tl (f): gr_map ≝ ⇣f.
 
 interpretation
   "tail (generic relocation maps)"
-  'DropPred f = (gr_tl f).
+  'DownSpoon f = (gr_tl f).
 
 (* Basic constructions ******************************************************)
 
 (*** tl_push_rew *)
-lemma gr_tl_push (f): f = ⫱⫯f.
+lemma gr_tl_push (f): f = ⫰⫯f.
 // qed.
 
 (*** tl_next_rew *)
-lemma gr_tl_next (f): f = ⫱↑f.
+lemma gr_tl_next (f): f = ⫰↑f.
 // qed.
 
 (* Basic eliminations *******************************************************)
 
 (*** pn_split gr_map_split *)
-lemma gr_map_split_tl (f): ∨∨ ⫯⫱f = f | ↑⫱f = f.
+lemma gr_map_split_tl (f): ∨∨ ⫯⫰f = f | ↑⫰f = f.
 * * /2 width=1 by or_introl, or_intror/
 qed-.

@@ -23,7 +23,7 @@ include "ground/relocation/gr_pat_eq.ma".
 (* Note: this requires ↑ on first n *)
 (*** at_pxx_tls *)
 lemma gr_pat_unit_succ_tls (n) (f):
-      @❪𝟏,f❫ ≘ ↑n → @❪𝟏,⫱*[n]f❫ ≘ 𝟏.
+      @❪𝟏,f❫ ≘ ↑n → @❪𝟏,⫰*[n]f❫ ≘ 𝟏.
 #n @(nat_ind_succ … n) -n //
 #n #IH #f #Hf
 elim (gr_pat_inv_unit_succ … Hf) -Hf [|*: // ] #g #Hg #H0 destruct
@@ -32,7 +32,7 @@ qed.
 
 (* Note: this requires ↑ on third n2 *)
 (*** at_tls *)
-lemma gr_pat_tls (n2) (f): ⫯⫱*[↑n2]f ≡ ⫱*[n2]f → ∃i1. @❪i1,f❫ ≘ ↑n2.
+lemma gr_pat_tls (n2) (f): ⫯⫰*[↑n2]f ≡ ⫰*[n2]f → ∃i1. @❪i1,f❫ ≘ ↑n2.
 #n2 @(nat_ind_succ … n2) -n2
 [ /4 width=4 by gr_pat_eq_repl_back, gr_pat_refl, ex_intro/
 | #n2 #IH #f <gr_tls_swap <gr_tls_swap in ⊢ (??%→?); #H
@@ -48,7 +48,7 @@ qed-.
 (*** at_inv_nxx *)
 lemma gr_pat_inv_succ_sn (p) (g) (i1) (j2):
       @❪↑i1,g❫ ≘ j2 → @❪𝟏,g❫ ≘ p →
-      ∃∃i2. @❪i1,⫱*[p]g❫ ≘ i2 & p+i2 = j2.
+      ∃∃i2. @❪i1,⫰*[p]g❫ ≘ i2 & p+i2 = j2.
 #p elim p -p
 [ #g #i1 #j2 #Hg #H
   elim (gr_pat_inv_unit_bi … H) -H [|*: // ] #f #H0
@@ -65,7 +65,7 @@ qed-.
 (* Note: this requires ↑ on first n2 *)
 (*** at_inv_tls *)
 lemma gr_pat_inv_succ_dx_tls (n2) (i1) (f):
-      @❪i1,f❫ ≘ ↑n2 → ⫯⫱*[↑n2]f ≡ ⫱*[n2]f.
+      @❪i1,f❫ ≘ ↑n2 → ⫯⫰*[↑n2]f ≡ ⫰*[n2]f.
 #n2 @(nat_ind_succ … n2) -n2
 [ #i1 #f #Hf elim (gr_pat_inv_unit_dx … Hf) -Hf // #g #H1 #H destruct
   /2 width=1 by gr_eq_refl/

@@ -281,7 +281,7 @@ qed-.
 
 (*** sor_tl *)
 lemma gr_sor_tl:
-      ∀f1,f2,f. f1 ⋓ f2 ≘ f → ⫱f1 ⋓ ⫱f2 ≘ ⫱f.
+      ∀f1,f2,f. f1 ⋓ f2 ≘ f → ⫰f1 ⋓ ⫰f2 ≘ ⫰f.
 #f1 cases (gr_map_split_tl f1) #H1
 #f2 cases (gr_map_split_tl f2) #H2
 #f #Hf
@@ -295,8 +295,8 @@ qed.
 (*** sor_xxn_tl *)
 lemma gr_sor_next_tl:
       ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f. ↑f = g →
-      (∃∃f1,f2. f1 ⋓ f2 ≘ f & ↑f1 = g1 & ⫱g2 = f2) ∨
-      (∃∃f1,f2. f1 ⋓ f2 ≘ f & ⫱g1 = f1 & ↑f2 = g2).
+      (∃∃f1,f2. f1 ⋓ f2 ≘ f & ↑f1 = g1 & ⫰g2 = f2) ∨
+      (∃∃f1,f2. f1 ⋓ f2 ≘ f & ⫰g1 = f1 & ↑f2 = g2).
 #g1 #g2 #g #H #f #H0 elim (gr_sor_inv_next … H … H0) -H -H0 *
 /3 width=5 by ex3_2_intro, or_introl, or_intror/
 qed-.
@@ -304,7 +304,7 @@ qed-.
 (*** sor_xnx_tl *)
 lemma gr_sor_next_dx_tl:
       ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f2. ↑f2 = g2 →
-      ∃∃f1,f. f1 ⋓ f2 ≘ f & ⫱g1 = f1 & ↑f = g.
+      ∃∃f1,f. f1 ⋓ f2 ≘ f & ⫰g1 = f1 & ↑f = g.
 #g1 elim (gr_map_split_tl g1) #H1 #g2 #g #H #f2 #H2
 [ elim (gr_sor_inv_push_next … H … H1 H2)
 | elim (gr_sor_inv_next_bi … H … H1 H2)
@@ -315,7 +315,7 @@ qed-.
 (*** sor_nxx_tl *)
 lemma gr_sor_next_sn_tl:
       ∀g1,g2,g. g1 ⋓ g2 ≘ g → ∀f1. ↑f1 = g1 →
-      ∃∃f2,f. f1 ⋓ f2 ≘ f & ⫱g2 = f2 & ↑f = g.
+      ∃∃f2,f. f1 ⋓ f2 ≘ f & ⫰g2 = f2 & ↑f = g.
 #g1 #g2 elim (gr_map_split_tl g2) #H2 #g #H #f1 #H1
 [ elim (gr_sor_inv_next_push … H … H1 H2)
 | elim (gr_sor_inv_next_bi … H … H1 H2)
@@ -327,14 +327,14 @@ qed-.
 
 (*** sor_inv_tl_sn *)
 lemma gr_sor_inv_tl_sn:
-      ∀f1,f2,f. ⫱f1 ⋓ f2 ≘ f → f1 ⋓ ↑f2 ≘ ↑f.
+      ∀f1,f2,f. ⫰f1 ⋓ f2 ≘ f → f1 ⋓ ↑f2 ≘ ↑f.
 #f1 #f2 #f elim (gr_map_split_tl f1)
 /2 width=7 by gr_sor_push_next, gr_sor_next_bi/
 qed-.
 
 (*** sor_inv_tl_dx *)
 lemma gr_sor_inv_tl_dx:
-      ∀f1,f2,f. f1 ⋓ ⫱f2 ≘ f → ↑f1 ⋓ f2 ≘ ↑f.
+      ∀f1,f2,f. f1 ⋓ ⫰f2 ≘ f → ↑f1 ⋓ f2 ≘ ↑f.
 #f1 #f2 #f elim (gr_map_split_tl f2)
 /2 width=7 by gr_sor_next_push, gr_sor_next_bi/
 qed-.
