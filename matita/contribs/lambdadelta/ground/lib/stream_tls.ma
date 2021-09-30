@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downdashedarrowstar_3.ma".
+include "ground/notation/functions/downharpoonrightstar_3.ma".
 include "ground/lib/stream_hdtl.ma".
 include "ground/arith/nat_succ_iter.ma".
 
@@ -23,26 +23,26 @@ definition stream_tls (A) (n): stream A → stream A ≝
 
 interpretation
   "iterated tail (strams)"
-  'DownDashedArrowStar A n f = (stream_tls A n f).
+  'DownHarpoonRightStar A n f = (stream_tls A n f).
 
 (* Basic constructions ******************************************************)
 
 lemma stream_tls_zero (A) (t):
-      t = ⇣*{A}[𝟎]t.
+      t = ⇂*{A}[𝟎]t.
 // qed.
 
 lemma stream_tls_tl (A) (n) (t):
-      (⇣⇣*[n]t) = ⇣*{A}[n]⇣t.
+      (⇂⇂*[n]t) = ⇂*{A}[n]⇂t.
 #A #n #t
 @(niter_appl … (stream_tl …))
 qed.
 
 lemma stream_tls_succ (A) (n) (t):
-      (⇣⇣*[n]t) = ⇣*{A}[↑n]t.
+      (⇂⇂*[n]t) = ⇂*{A}[↑n]t.
 #A #n #t
 @(niter_succ … (stream_tl …))
 qed.
 
 lemma stream_tls_swap (A) (n) (t):
-      (⇣*[n]⇣t) = ⇣*{A}[↑n]t.
+      (⇂*[n]⇂t) = ⇂*{A}[↑n]t.
 // qed.

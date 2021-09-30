@@ -19,7 +19,7 @@ include "ground/relocation/gr_tl.ma".
 (* ITERATED TAIL FOR GENERIC RELOCATION MAPS ********************************)
 
 (*** tls *)
-definition gr_tls (n) (f:gr_map) ≝ ⇣*[n]f.
+definition gr_tls (n) (f:gr_map) ≝ ⇂*[n]f.
 
 interpretation
   "iterated tail (generic relocation maps)"

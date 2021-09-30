@@ -12,7 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downdashedarrow_2.ma".
+include "ground/notation/functions/downharpoonleft_2.ma".
+include "ground/notation/functions/downharpoonright_2.ma".
 include "ground/lib/stream.ma".
 
 (* HEAD AND TAIL FOR STREAMS ************************************************)
@@ -21,25 +22,29 @@ definition stream_hd (A:Type[0]): stream A → A.
 #A * #a #_ @a
 defined.
 
+interpretation
+  "head (streams)"
+  'DownHarpoonLeft A t = (stream_hd A t).
+
 definition stream_tl (A:Type[0]): stream A → stream A.
 #A * #_ #t @t
 defined.
 
 interpretation
   "tail (streams)"
-  'DownDashedArrow A t = (stream_tl A t).
+  'DownHarpoonRight A t = (stream_tl A t).
 
 (* Basic constructions ******************************************************)
 
 lemma stream_hd_cons (A) (a) (t):
-      a = stream_hd A (a⨮t).
+      a = ⇃{A}(a⨮t).
 // qed.
 
 lemma stream_tl_cons (A) (a) (t):
-      t = ⇣{A}(a⨮t).
+      t = ⇂{A}(a⨮t).
 // qed.
 
 lemma stream_split_tl (A) (t):
-      stream_hd A t ⨮ ⇣t = t.
+      ⇃{A}t ⨮ ⇂t = t.
 #A * //
 qed.

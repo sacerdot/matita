@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/stream_eq.ma".
-include "ground/lib/stream_tls.ma".
+(* GROUND NOTATION **********************************************************)
 
-(* ITERATED TAIL FOR STREAMS ************************************************)
+notation < "hvbox( ⇃ term 75 a )"
+  non associative with precedence 75
+  for @{ 'DownHarpoonLeft $S $a }.
 
-(* Constructions with stream_eq *********************************************)
+notation > "hvbox( ⇃ term 75 a )"
+  non associative with precedence 75
+  for @{ 'DownHarpoonLeft ? $a }.
 
-lemma stream_tls_eq_repl (A) (n):
-      stream_eq_repl A (λt1,t2. ⇂*[n] t1 ≗ ⇂*[n] t2).
-#A #n @(nat_ind_succ … n) -n //
-#n #IH * #n1 #t1 * #n2 #t2 #H
-elim (stream_eq_inv_cons_bi … H) /2 width=7 by/
-qed.
+notation > "hvbox( ⇃{ term 46 S } break term 75 a )"
+  non associative with precedence 75
+  for @{ 'DownHarpoonLeft $S $a }.

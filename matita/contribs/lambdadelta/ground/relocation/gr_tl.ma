@@ -19,7 +19,7 @@ include "ground/relocation/gr_map.ma".
 (* TAIL FOR GENERIC RELOCATION MAPS *****************************************)
 
 (*** tl *)
-definition gr_tl (f): gr_map ≝ ⇣f.
+definition gr_tl (f): gr_map ≝ ⇂f.
 
 interpretation
   "tail (generic relocation maps)"

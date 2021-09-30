@@ -118,8 +118,8 @@ table {
   class "yellow"
   [ { "extensions to the library" * } {
       [ { "streams" * } {
-          [ "stream_tls ( ⇣*{?}[?]? )" "stream_tls_eq" * ]
-          [ "stream_hdtl ( ⇣{?}? )" * ]
+          [ "stream_tls ( ⇂*{?}[?]? )" "stream_tls_eq" * ]
+          [ "stream_hdtl ( ⇃{?}? ) ( ⇂{?}? )" * ]
           [ "stream_eq ( ? ≗{?} ? )" "stream_eq_eq" * ]
           [ "stream ( ? ⨮{?} ? )" * ]
         }
