@@ -19,7 +19,9 @@ include "ground/arith/nat_succ.ma".
 
 (*** le *)
 inductive nle (m:nat): predicate nat ≝
+(*** le_n *)
 | nle_refl   : nle m m
+(*** le_S *)
 | nle_succ_dx: ∀n. nle m n → nle m (↑n)
 .
 

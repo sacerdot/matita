@@ -14,14 +14,14 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation < "hvbox( f ^ break x )"
-  left associative with precedence 65
+notation < "hvbox( term 66 f ^ break term 90 x )"
+  non associative with precedence 65
   for @{ 'Exp $X $f $x }.
 
-notation > "hvbox( f ^ break x )"
-  left associative with precedence 65
+notation > "hvbox( f ^ break term 90 x )"
+  non associative with precedence 65
   for @{ 'Exp ? $f $x }.
 
-notation > "hvbox( f ^{ break term 46 X } break term 65 x )"
+notation > "hvbox( f ^{ break term 46 X } break term 90 x )"
   non associative with precedence 65
   for @{ 'Exp $X $f $x }.

@@ -27,7 +27,7 @@ lemma pr_eq_inv_pushs_sn (n):
 #n #IH #f1 #g2 #H
 elim (pr_eq_inv_push_sn … H) -H [|*: // ] #Hf10 *
 elim (IH … Hf10) -IH -Hf10 #Hf12 #H1
-/2 width=1 by conj/
+<pr_tls_succ /2 width=1 by conj/
 qed-.
 
 (*** eq_inv_pushs_dx *)
@@ -38,5 +38,5 @@ lemma pr_eq_inv_pushs_dx (n):
 #n #IH #f2 #g1 #H
 elim (pr_eq_inv_push_dx … H) -H [|*: // ] #Hf02 *
 elim (IH … Hf02) -IH -Hf02 #Hf12 #H2
-/2 width=1 by conj/
+<pr_tls_succ /2 width=1 by conj/
 qed-.
