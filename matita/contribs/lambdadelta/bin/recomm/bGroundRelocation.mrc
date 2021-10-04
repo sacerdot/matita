@@ -1,23 +1,23 @@
 PcsAnd b "" true false
-gr_eq
-gr_tl, tl, tail
-gr_pushs, pushs, iterated push
-gr_nexts, nexts, iterated next
-gr_tls, tls, iterated tail
-gr_id, id
-gr_uni, uni, uniform relocations
-gr_basic, basic relocation
-gr_pat, pat, at
-gr_nat, nat
-gr_isi, isi, isid, test for identity
-gr_isu, isuni, test for uniform relocations
-gr_fcla, fcla, finite colength assignment, finite colength
-gr_isf, isf, isfin, test for finite colength
-gr_ist, ist, istot
-gr_isd, isdiv
-gr_after, after
-gr_coafter, coafter
-gr_sle, sle, inclusion
-gr_sdj, sdj
-gr_sand, sand
-gr_sor, sor
+pr_eq
+pr_tl, tl, tail
+pr_pushs, pushs, iterated push
+pr_nexts, nexts, iterated next
+pr_tls, tls, iterated tail
+pr_id, id
+pr_uni, uni, uniform relocations
+pr_basic, basic relocation
+pr_pat, pat, at
+pr_nat, nat
+pr_isi, isi, isid, test for identity
+pr_isu, isuni, test for uniform relocations
+pr_fcla, fcla, finite colength assignment, finite colength
+pr_isf, isf, isfin, test for finite colength
+pr_ist, ist, istot
+pr_isd, isdiv
+pr_after, after
+pr_coafter, coafter
+pr_sle, sle, inclusion
+pr_sdj, sdj
+pr_sand, sand
+pr_sor, sor
