@@ -14,7 +14,7 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation < "hvbox( f1 ≐ break term 46 f2 )"
+notation < "hvbox( term 46 f1 ≐ break term 46 f2 )"
   non associative with precedence 45
   for @{ 'DotEq $A $B $f1 $f2 }.
 
