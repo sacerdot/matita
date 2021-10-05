@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/generated/pull_2.ma".
 include "ground/arith/nat_le_minus.ma".
 include "ground/arith/nat_lt_pred.ma".
 
@@ -60,4 +61,22 @@ lemma nlt_des_minus_dx (o) (m) (n): m < n - o → o < n.
 | #o #IH #m #n <nminus_succ_dx_pred_sn #H
   /3 width=2 by nlt_inv_pred_dx/
 ]
+qed-.
+
+(* Advanced eliminators for nle with nlt and nminus *************************)
+
+(*** nat_elim_le_sn *)
+lemma nle_ind_sn (Q:relation …):
+      (∀m1,m2. (∀m. m < m2-m1 → Q (m2-m) m2) → m1 ≤ m2 → Q m1 m2) →
+      ∀n1,n2. n1 ≤ n2 → Q n1 n2.
+#Q #IH #n1 #n2 #Hn
+>(nminus_minus_dx_refl_sn … Hn) -Hn
+lapply (nle_minus_sn_refl_sn n2 n1)
+let d ≝ (n2-n1)
+@(nat_ind_lt … d) -d -n1 #d
+@pull_2 #Hd
+>(nminus_minus_dx_refl_sn … Hd) in ⊢ (%→?); -Hd
+let n1 ≝ (n2-d) #IHd
+@IH -IH [| // ] #m #Hn
+/4 width=3 by nlt_des_le, nlt_nle_trans/
 qed-.
