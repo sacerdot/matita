@@ -42,8 +42,8 @@ theorem lveq_inj_void_sn_ge: ∀K1,K2. |K2| ≤ |K1| →
 #L1 #L2 #HL #n1 #n2 #Hn #m1 #m2 #Hm
 elim (lveq_fwd_length … Hn) -Hn #H1 #H2 destruct
 elim (lveq_fwd_length … Hm) -Hm #H1 #H2 destruct
->length_bind >eq_minus_S_pred >(eq_minus_O … HL)
-/3 width=4 by plus_minus, and3_intro/
+>length_bind >nminus_succ_dx >(nle_inv_eq_zero_minus … HL)
+/3 width=4 by nminus_plus_comm_23, and3_intro/
 qed-.
 
 theorem lveq_inj_void_dx_le: ∀K1,K2. |K1| ≤ |K2| →

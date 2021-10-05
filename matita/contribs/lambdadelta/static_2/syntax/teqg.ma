@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/xoa/or_3.ma".
 include "ground/xoa/ex_3_2.ma".
 include "static_2/notation/relations/stareq_3.ma".
 include "static_2/syntax/term.ma".

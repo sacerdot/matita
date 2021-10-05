@@ -19,7 +19,7 @@ include "static_2/relocation/sex.ma".
 (* SYNTACTIC EQUIVALENCE FOR SELECTED LOCAL ENVIRONMENTS ********************)
 
 (* Basic_2A1: includes: lreq_atom lreq_zero lreq_pair lreq_succ *)
-definition seq: relation3 rtmap lenv lenv ≝
+definition seq: relation3 pr_map lenv lenv ≝
            sex ceq_ext cfull.
 
 interpretation
@@ -29,11 +29,11 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma seq_eq_repl_back:
-      ∀L1,L2. eq_repl_back … (λf. L1 ≡[f] L2).
+      ∀L1,L2. pr_eq_repl_back … (λf. L1 ≡[f] L2).
 /2 width=3 by sex_eq_repl_back/ qed-.
 
 lemma seq_eq_repl_fwd:
-      ∀L1,L2. eq_repl_fwd … (λf. L1 ≡[f] L2).
+      ∀L1,L2. pr_eq_repl_fwd … (λf. L1 ≡[f] L2).
 /2 width=3 by sex_eq_repl_fwd/ qed-.
 
 lemma sle_seq_trans:

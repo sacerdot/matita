@@ -21,7 +21,7 @@ include "static_2/relocation/lifts.ma".
 (* Basic_1: includes: lift_gen_lift *)
 (* Basic_2A1: includes: lift_div_le lift_div_be *)
 theorem lifts_div4: ∀f2,Tf,T. ⇧*[f2] Tf ≘ T → ∀g2,Tg. ⇧*[g2] Tg ≘ T →
-                    ∀f1,g1. H_at_div f2 g2 f1 g1 →
+                    ∀f1,g1. H_pr_pat_div f2 g2 f1 g1 →
                     ∃∃T0. ⇧*[f1] T0 ≘ Tf & ⇧*[g1] T0 ≘ Tg.
 #f2 #Tf #T #H elim H -f2 -Tf -T
 [ #f2 #s #g2 #Tg #H #f1 #g1 #_
@@ -36,7 +36,7 @@ theorem lifts_div4: ∀f2,Tf,T. ⇧*[f2] Tf ≘ T → ∀g2,Tg. ⇧*[g2] Tg ≘ 
 | #f2 #p #I #Vf #V #Tf #T #_ #_ #IHV #IHT #g2 #X #H #f1 #g1 #H0
   elim (lifts_inv_bind2 … H) -H #Vg #Tg #HVg #HTg #H destruct
   elim (IHV … HVg … H0) -IHV -HVg
-  elim (IHT … HTg) -IHT -HTg [ |*: /2 width=8 by at_div_pp/ ]
+  elim (IHT … HTg) -IHT -HTg [ |*: /2 width=8 by pr_pat_div_push_bi/ ]
   /3 width=5 by lifts_bind, ex2_intro/
 | #f2 #I #Vf #V #Tf #T #_ #_ #IHV #IHT #g2 #X #H #f1 #g1 #H0
   elim (lifts_inv_flat2 … H) -H #Vg #Tg #HVg #HTg #H destruct
@@ -49,14 +49,14 @@ qed-.
 lemma lifts_div4_one: ∀f,Tf,T. ⇧*[⫯f] Tf ≘ T →
                       ∀T1. ⇧[1] T1 ≘ T →
                       ∃∃T0. ⇧[1] T0 ≘ Tf & ⇧*[f] T0 ≘ T1.
-/4 width=6 by lifts_div4, at_div_id_dx, at_div_pn/ qed-.
+/4 width=6 by lifts_div4, pr_pat_div_id_dx, pr_pat_div_push_next/ qed-.
 
 theorem lifts_div3: ∀f2,T,T2. ⇧*[f2] T2 ≘ T → ∀f,T1. ⇧*[f] T1 ≘ T →
                     ∀f1. f2 ⊚ f1 ≘ f → ⇧*[f1] T1 ≘ T2.
 #f2 #T #T2 #H elim H -f2 -T -T2
 [ #f2 #s #f #T1 #H >(lifts_inv_sort2 … H) -T1 //
 | #f2 #i2 #i #Hi2 #f #T1 #H #f1 #Ht21 elim (lifts_inv_lref2 … H) -H
-  #i1 #Hi1 #H destruct /3 width=6 by lifts_lref, after_fwd_at1/
+  #i1 #Hi1 #H destruct /3 width=6 by lifts_lref, pr_after_des_pat_dx/
 | #f2 #l #f #T1 #H >(lifts_inv_gref2 … H) -T1 //
 | #f2 #p #I #W2 #W #U2 #U #_ #_ #IHW #IHU #f #T1 #H
   elim (lifts_inv_bind2 … H) -H #W1 #U1 #HW1 #HU1 #H destruct
@@ -75,7 +75,7 @@ theorem lifts_trans: ∀f1,T1,T. ⇧*[f1] T1 ≘ T → ∀f2,T2. ⇧*[f2] T ≘ 
 #f1 #T1 #T #H elim H -f1 -T1 -T
 [ #f1 #s #f2 #T2 #H >(lifts_inv_sort1 … H) -T2 //
 | #f1 #i1 #i #Hi1 #f2 #T2 #H #f #Ht21 elim (lifts_inv_lref1 … H) -H
-  #i2 #Hi2 #H destruct /3 width=6 by lifts_lref, after_fwd_at/
+  #i2 #Hi2 #H destruct /3 width=6 by lifts_lref, pr_after_des_pat/
 | #f1 #l #f2 #T2 #H >(lifts_inv_gref1 … H) -T2 //
 | #f1 #p #I #W1 #W #U1 #U #_ #_ #IHW #IHU #f2 #T2 #H
   elim (lifts_inv_bind1 … H) -H #W2 #U2 #HW2 #HU2 #H destruct
@@ -89,7 +89,7 @@ qed-.
 lemma lifts_trans4_one (f) (T1) (T2):
                        ∀T. ⇧[1]T1 ≘ T → ⇧*[⫯f]T ≘ T2 →
                        ∃∃T0. ⇧*[f]T1 ≘ T0 & ⇧[1]T0 ≘ T2.
-/4 width=6 by lifts_trans, lifts_split_trans, after_uni_one_dx/ qed-.
+/4 width=6 by lifts_trans, lifts_split_trans, pr_after_push_unit/ qed-.
 
 (* Basic_2A1: includes: lift_conf_O1 lift_conf_be *)
 theorem lifts_conf: ∀f1,T,T1. ⇧*[f1] T ≘ T1 → ∀f,T2. ⇧*[f] T ≘ T2 →
@@ -97,7 +97,7 @@ theorem lifts_conf: ∀f1,T,T1. ⇧*[f1] T ≘ T1 → ∀f,T2. ⇧*[f] T ≘ T2 
 #f1 #T #T1 #H elim H -f1 -T -T1
 [ #f1 #s #f #T2 #H >(lifts_inv_sort1 … H) -T2 //
 | #f1 #i #i1 #Hi1 #f #T2 #H #f2 #Ht21 elim (lifts_inv_lref1 … H) -H
-  #i2 #Hi2 #H destruct /3 width=6 by lifts_lref, after_fwd_at2/
+  #i2 #Hi2 #H destruct /3 width=6 by lifts_lref, pr_after_des_pat_sn/
 | #f1 #l #f #T2 #H >(lifts_inv_gref1 … H) -T2 //
 | #f1 #p #I #W #W1 #U #U1 #_ #_ #IHW #IHU #f #T2 #H
   elim (lifts_inv_bind1 … H) -H #W2 #U2 #HW2 #HU2 #H destruct
@@ -112,13 +112,13 @@ qed-.
 
 (* Basic_2A1: includes: lift_inj *)
 lemma lifts_inj: ∀f. is_inj2 … (lifts f).
-#f #T1 #U #H1 #T2 #H2 lapply (after_isid_dx 𝐢  … f)
+#f #T1 #U #H1 #T2 #H2 lapply (pr_after_isi_dx 𝐢  … f)
 /3 width=6 by lifts_div3, lifts_fwd_isid/
 qed-.
 
 (* Basic_2A1: includes: lift_mono *)
 lemma lifts_mono: ∀f,T. is_mono … (lifts f T).
-#f #T #U1 #H1 #U2 #H2 lapply (after_isid_sn 𝐢  … f)
+#f #T #U1 #H1 #U2 #H2 lapply (pr_after_isi_sn 𝐢  … f)
 /3 width=6 by lifts_conf, lifts_fwd_isid/
 qed-.
 

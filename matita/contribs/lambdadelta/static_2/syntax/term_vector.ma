@@ -21,7 +21,7 @@ include "static_2/syntax/term_simple.ma".
 rec definition applv Vs T on Vs ≝
   match Vs with
   [ nil        ⇒ T
-  | cons hd tl ⇒ ⓐhd. (applv tl T)
+  | cons hd pr_tl ⇒ ⓐhd. (applv pr_tl T)
   ].
 
 interpretation "application to vector (term)"

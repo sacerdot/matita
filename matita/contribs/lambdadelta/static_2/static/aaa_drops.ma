@@ -26,7 +26,7 @@ lemma aaa_lref_drops: ∀I,G,K,V,B,i,L. ⇩[i] L ≘ K.ⓑ[I]V → ❪G,K❫ ⊢
 #I #G #K #V #B #i elim i -i
 [ #L #H lapply (drops_fwd_isid … H ?) -H //
   #H destruct /2 width=1 by aaa_zero/
-| #i #IH #L <uni_succ #H #HB lapply (drops_inv_bind2_isuni_next … H) -H // *
+| #i #IH #L <pr_uni_succ #H #HB lapply (drops_inv_bind2_isuni_next … H) -H // *
   #Z #Y #HY #H destruct /3 width=1 by aaa_lref/
 ]
 qed.
@@ -64,7 +64,7 @@ lemma aaa_lifts: ∀G,L1,T1,A. ❪G,L1❫ ⊢ T1 ⁝ A → ∀b,f,L2. ⇩*[b,f] 
   elim (aaa_inv_lref_drops … H) -H #J #K1 #V1 #HLK1 #HA
   elim (lifts_inv_lref1 … HX) -HX #i2 #Hf #H destruct
   lapply (drops_trans … HL21 … HLK1 ??) -HL21 [1,2: // ] #H
-  elim (drops_split_trans … H) -H [ |*: /2 width=6 by after_uni_dx/ ] #Y #HLK2 #HY
+  elim (drops_split_trans … H) -H [ |*: /2 width=6 by pr_after_nat_uni/ ] #Y #HLK2 #HY
   lapply (drops_tls_at … Hf … HY) -HY #HY -Hf
   elim (drops_inv_skip2 … HY) -HY #Z #K2 #HK21 #HZ #H destruct
   elim (liftsb_inv_pair_sn … HZ) -HZ #V2 #HV12 #H destruct
@@ -103,7 +103,7 @@ lemma aaa_inv_lifts: ∀G,L2,T2,A. ❪G,L2❫ ⊢ T2 ⁝ A → ∀b,f,L1. ⇩*[b
   elim (aaa_inv_lref_drops … H) -H #J #K2 #V2 #HLK2 #HA
   elim (lifts_inv_lref2 … HX) -HX #i1 #Hf #H destruct
   lapply (drops_split_div … HL21 (𝐔❨i1❩) ???) -HL21 [4: * |*: // ] #Y #HLK1 #HY
-  lapply (drops_conf … HLK2 … HY ??) -HY [1,2: /2 width=6 by after_uni_dx/ ] #HY
+  lapply (drops_conf … HLK2 … HY ??) -HY [1,2: /2 width=6 by pr_after_nat_uni/ ] #HY
   lapply (drops_tls_at … Hf … HY) -HY #HY -Hf
   elim (drops_inv_skip1 … HY) -HY #Z #K1 #HK21 #HZ #H destruct
   elim (liftsb_inv_pair_dx … HZ) -HZ #V1 #HV12 #H destruct

@@ -31,7 +31,7 @@ lemma sex_length_cfull: ∀L1,L2. |L1| = |L2| → ∀f. L1 ⪤[cfull,cfull,f] L2
 [ #Y2 #H >(length_inv_zero_sn … H) -Y2 //
 | #L1 #I1 #IH #Y2 #H #f
   elim (length_inv_succ_sn … H) -H #I2 #L2 #HL12 #H destruct
-  elim (pn_split f) * #g #H destruct /3 width=1 by sex_next, sex_push/
+  elim (pr_map_split_tl f) * #g #H destruct /3 width=1 by sex_next, sex_push/
 ]
 qed.
 
@@ -41,6 +41,6 @@ lemma sex_length_isid: ∀R,L1,L2. |L1| = |L2| →
 [ #Y2 #H >(length_inv_zero_sn … H) -Y2 //
 | #L1 #I1 #IH #Y2 #H #f #Hf
   elim (length_inv_succ_sn … H) -H #I2 #L2 #HL12 #H destruct
-  elim (isid_inv_gen … Hf) -Hf #g #Hg #H destruct /3 width=1 by sex_push/
+  elim (pr_isi_inv_gen … Hf) -Hf #g #Hg #H destruct /3 width=1 by sex_push/
 ]
 qed.

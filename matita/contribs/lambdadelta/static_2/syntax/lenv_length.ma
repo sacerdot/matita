@@ -47,7 +47,7 @@ lemma length_inv_succ_dx: ∀n,L. |L| = ↑n →
                           ∃∃I,K. |K| = n & L = K. ⓘ[I].
 #n *
 [ >length_atom #H destruct
-| #L #I >length_bind /3 width=4 by ex2_2_intro, injective_S/
+| #L #I >length_bind /3 width=4 by ex2_2_intro, eq_inv_nsucc_bi/
 ]
 qed-.
 

@@ -39,12 +39,12 @@ lemma frees_total: ∀L,T. ∃f. L ⊢ 𝐅+❪T❫ ≘ f.
 | #p #I #V #T #HG #HL #HT destruct
   elim (IH G L V) // #f1 #HV
   elim (IH G (L.ⓑ[I]V) T) -IH // #f2 #HT
-  elim (sor_isfin_ex f1 (⫰f2))
-  /3 width=6 by frees_fwd_isfin, frees_bind, isfin_tl, ex_intro/
+  elim (pr_sor_isf_bi f1 (⫰f2))
+  /3 width=6 by frees_fwd_isfin, frees_bind, pr_isf_tl, ex_intro/
 | #I #V #T #HG #HL #HT destruct
   elim (IH G L V) // #f1 #HV
   elim (IH G L T) -IH // #f2 #HT
-  elim (sor_isfin_ex f1 f2)
+  elim (pr_sor_isf_bi f1 f2)
   /3 width=6 by frees_fwd_isfin, frees_flat, ex_intro/
 ]
 qed-.
@@ -57,23 +57,23 @@ theorem frees_bind_void:
 #f1 #L #V #Hf1 #f2 #T #Hf2 #f #Hf #p #I
 elim (frees_total (L.ⓑ[I]V) T) #f0 #Hf0
 lapply (lsubr_lsubf … Hf2 … Hf0) -Hf2 /2 width=5 by lsubr_unit/ #H02
-elim (pn_split f2) * #g2 #H destruct
+elim (pr_map_split_tl f2) * #g2 #H destruct
 [ elim (lsubf_inv_push2 … H02) -H02 #g0 #Z #Y #H02 #H0 #H destruct
   lapply (lsubf_inv_refl … H02) -H02 #H02
-  lapply (sor_eq_repl_fwd2 … Hf … H02) -g2 #Hf
+  lapply (pr_sor_eq_repl_fwd_dx … Hf … H02) -g2 #Hf
   /2 width=5 by frees_bind/
 | elim (lsubf_inv_unit2 … H02) -H02 * [ #g0 #Y #_ #_ #H destruct ]
   #z1 #g0 #z #Z #Y #X #H02 #Hz1 #Hz #H0 #H destruct
   lapply (lsubf_inv_refl … H02) -H02 #H02
   lapply (frees_mono … Hz1 … Hf1) -Hz1 #H1
-  lapply (sor_eq_repl_back1 … Hz … H02) -g0 #Hz
-  lapply (sor_eq_repl_back2 … Hz … H1) -z1 #Hz
-  lapply (sor_comm … Hz) -Hz #Hz
-  lapply (sor_mono … f Hz ?) // -Hz #H
-  lapply (sor_inv_sle_sn … Hf) -Hf #Hf
-  lapply (frees_eq_repl_back … Hf0 (↑f) ?) /2 width=5 by eq_next/ -z #Hf0
+  lapply (pr_sor_eq_repl_back_sn … Hz … H02) -g0 #Hz
+  lapply (pr_sor_eq_repl_back_dx … Hz … H1) -z1 #Hz
+  lapply (pr_sor_comm … Hz) -Hz #Hz
+  lapply (pr_sor_mono … f Hz ?) // -Hz #H
+  lapply (pr_sor_inv_sle_sn … Hf) -Hf #Hf
+  lapply (frees_eq_repl_back … Hf0 (↑f) ?) /2 width=5 by pr_eq_next/ -z #Hf0
   @(frees_bind … Hf1 Hf0) -Hf1 -Hf0 (**) (* constructor needed *)
-  /2 width=1 by sor_sle_dx/
+  /2 width=1 by pr_sor_sle_dx/
 ]
 qed-.
 
@@ -86,19 +86,19 @@ lemma frees_inv_bind_void:
 elim (frees_inv_bind … H) -H #f1 #f2 #Hf1 #Hf2 #Hf
 elim (frees_total (L.ⓧ) T) #f0 #Hf0
 lapply (lsubr_lsubf … Hf0 … Hf2) -Hf2 /2 width=5 by lsubr_unit/ #H20
-elim (pn_split f0) * #g0 #H destruct
+elim (pr_map_split_tl f0) * #g0 #H destruct
 [ elim (lsubf_inv_push2 … H20) -H20 #g2 #I #Y #H20 #H2 #H destruct
   lapply (lsubf_inv_refl … H20) -H20 #H20
-  lapply (sor_eq_repl_back2 … Hf … H20) -g2 #Hf
+  lapply (pr_sor_eq_repl_back_dx … Hf … H20) -g2 #Hf
   /2 width=5 by ex3_2_intro/
 | elim (lsubf_inv_unit2 … H20) -H20 * [ #g2 #Y #_ #_ #H destruct ]
   #z1 #z0 #g2 #Z #Y #X #H20 #Hz1 #Hg2 #H2 #H destruct
   lapply (lsubf_inv_refl … H20) -H20 #H0
   lapply (frees_mono … Hz1 … Hf1) -Hz1 #H1
-  lapply (sor_eq_repl_back1 … Hg2 … H0) -z0 #Hg2
-  lapply (sor_eq_repl_back2 … Hg2 … H1) -z1 #Hg2
+  lapply (pr_sor_eq_repl_back_sn … Hg2 … H0) -z0 #Hg2
+  lapply (pr_sor_eq_repl_back_dx … Hg2 … H1) -z1 #Hg2
   @(ex3_2_intro … Hf1 Hf0) -Hf1 -Hf0 (**) (* constructor needed *)
-  /2 width=3 by sor_comm_23_idem/
+  /2 width=3 by pr_sor_comm_23_idem/
 ]
 qed-.
 

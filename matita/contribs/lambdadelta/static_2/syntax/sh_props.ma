@@ -12,18 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/sh.ma".
+include "static_2/syntax/sh_nexts.ma".
 
 (* SORT HIERARCHY ***********************************************************)
 
 (* acyclicity condition *)
 record sh_acyclic (h): Prop ≝
 {
-  nexts_inj: ∀s,n1,n2. (next h)^n1 s = (next h)^n2 s → n1 = n2
+(**) (* use extensional equivalence *) 
+  sh_nexts_inj: ∀s,n1,n2. ⇡*[h,n1]s = ⇡*[h,n2]s → n1 = n2
 }.
 
 (* decidability condition *)
 record sh_decidable (h): Prop ≝
 {
-  nexts_dec: ∀s1,s2. Decidable (∃n. (next h)^n s1 = s2)
+  sh_nexts_dec: ∀s1,s2. Decidable (∃n. ⇡*[h,n]s1 = s2)
 }.

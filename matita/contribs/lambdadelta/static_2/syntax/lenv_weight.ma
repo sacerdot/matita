@@ -28,7 +28,7 @@ interpretation "weight (local environment)" 'Weight L = (lw L).
 
 (* Basic_2A1: uses: lw_pair *)
 lemma lw_bind: ∀I,L. ♯❨L❩ < ♯❨L.ⓘ[I]❩.
-normalize /2 width=1 by monotonic_le_plus_r/ qed.
+normalize /2 width=1 by nle_plus_bi_sn/ qed.
 
 (* Basic_1: removed theorems 4: clt_cong clt_head clt_thead clt_wf_ind *)
 (* Basic_1: removed local theorems 1: clt_wf__q_ind *)

@@ -23,8 +23,8 @@ fact fqu_inv_teqg_aux (S) (b):
      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ →
      G1 = G2 → |L1| = |L2| → T1 ≛[S] T2 → ⊥.
 #S #b #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
-[1: #I #G #L #V #_ #H elim (succ_inv_refl_sn … H)
-|6: #I #G #L #T #U #_ #_ #H elim (succ_inv_refl_sn … H)
+[1: #I #G #L #V #_ #H elim (nsucc_inv_refl … H)
+|6: #I #G #L #T #U #_ #_ #H elim (nsucc_inv_refl … H)
 ]
 /2 width=6 by teqg_inv_pair_xy_y, teqg_inv_pair_xy_x/
 qed-.

@@ -22,5 +22,5 @@ theorem acle_trans: Transitive … acle.
 #a1 #a #Ha1 #a2 #Ha2 #m1 #Hm1
 elim (Ha1 … Hm1) -Ha1 -Hm1 #m #Ha #Hm1
 elim (Ha2 … Ha) -Ha2 -Ha #m2 #Ha2 #Hm2
-/3 width=5 by transitive_le, ex2_intro/
+/3 width=5 by nle_trans, ex2_intro/
 qed-.

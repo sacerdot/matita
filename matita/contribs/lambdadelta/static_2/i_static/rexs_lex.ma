@@ -48,8 +48,8 @@ lapply (s_rs_transitive_lex_inv_isid … H3R) -H3R #H3R
 | #L0 #L2 #_ #HL02 * #L * #f0 #Hf0 #HL1 #HL0
   lapply (req_rex_trans … HL0 … HL02) -L0 // * #f1 #Hf1 #HL2
   elim (sex_sdj_split_sn … ceq_ext … HL2 f0 ?) -HL2
-  [ #L0 #HL0 #HL02 |*: /2 width=1 by ext2_refl, sdj_isid_dx/ ]
-  lapply (sex_sdj … HL0 f1 ?) /2 width=1 by sdj_isid_sn/ #H
+  [ #L0 #HL0 #HL02 |*: /2 width=1 by ext2_refl, pr_sdj_isi_dx/ ]
+  lapply (sex_sdj … HL0 f1 ?) /2 width=1 by pr_sdj_isi_sn/ #H
   elim (frees_sex_conf_fsge … Hf1 … H) // -H2R -H #f2 #Hf2 #Hf21
   lapply (sle_sex_trans … HL02 … Hf21) -f1 // #HL02
   lapply (sex_co ?? cfull (CTC … (cext2 R)) … HL1) -HL1 /2 width=1 by ext2_inv_tc/ #HL1

@@ -19,25 +19,25 @@ include "static_2/syntax/sd.ma".
 
 (* Basic_2A1: includes: deg_SO_pos *)
 inductive deg_SO (h) (s) (s0): predicate nat ≝
-| deg_SO_succ : ∀n. (next h)^n s0 = s → deg_SO h s s0 (↑n)
-| deg_SO_zero: (∀n. (next h)^n s0 = s → ⊥) → deg_SO h s s0 0
+| deg_SO_succ : ∀n. ⇡*[h,n]s0 = s → deg_SO h s s0 (↑n)
+| deg_SO_zero: (∀n. ⇡*[h,n]s0 = s → ⊥) → deg_SO h s s0 𝟎
 .
 
 fact deg_SO_inv_succ_aux (h) (s) (s0):
-     ∀n0. deg_SO h s s0 n0 → ∀n. n0 = ↑n → (next h)^n s0 = s.
+     ∀n0. deg_SO h s s0 n0 → ∀n. n0 = ↑n → ⇡*[h,n]s0 = s.
 #h #s #s0 #n0 * -n0
 [ #n #Hn #x #H destruct //
-| #_ #x #H destruct
+| #_ #x #H elim (eq_inv_zero_nsucc … H)
 ]
 qed-.
 
 (* Basic_2A1: was: deg_SO_inv_pos *)
 lemma deg_SO_inv_succ (h) (s) (s0):
-      ∀n. deg_SO h s s0 (↑n) → (next h)^n s0 = s.
+      ∀n. deg_SO h s s0 (↑n) → ⇡*[h,n]s0 = s.
 /2 width=3 by deg_SO_inv_succ_aux/ qed-.
 
-lemma deg_SO_refl (h) (s): deg_SO h s s 1.
-#h #s @(deg_SO_succ … 0 ?) //
+lemma deg_SO_refl (h) (s): deg_SO h s s 𝟏.
+#h #s @(deg_SO_succ … 𝟎 ?) //
 qed.
 
 definition sd_SO (h) (s): sd ≝ mk_sd (deg_SO h s).
@@ -47,24 +47,25 @@ lemma sd_SO_props (h) (s): sh_decidable h → sh_acyclic h →
 #h #s #Hhd #Hha
 @mk_sd_props
 [ #s0
-  elim (nexts_dec … Hhd s0 s) -Hhd
+  elim (sh_nexts_dec … Hhd s0 s) -Hhd
   [ * /3 width=2 by deg_SO_succ, ex_intro/
   | /5 width=2 by deg_SO_zero, ex_intro/
   ]
 | #s0 #d1 #d2 * [ #n1 ] #H1 * [1,3: #n2 ] #H2
   [ < H2 in H1; -H2 #H
-    lapply (nexts_inj … Hha … H) -H #H destruct //
+    lapply (sh_nexts_inj … Hha … H) -H #H destruct //
   | elim H1 /2 width=2 by ex_intro/
   | elim H2 /2 width=2 by ex_intro/
   | //
   ]
 | #s0 #d *
-  [ #n #H destruct cases n -n normalize
-    [ @deg_SO_zero #n >iter_n_Sm #H
-      lapply (nexts_inj … Hha … (↑n) 0 H) -H #H destruct
-    | #n @deg_SO_succ >iter_n_Sm //
+  [ #n #H destruct
+    <npred_succ @(nat_ind_succ … n) -n
+    [ @deg_SO_zero #n >(sh_nexts_succ_next h n s0) #H 
+      lapply (sh_nexts_inj … Hha ???) -H #H destruct
+    | #n @deg_SO_succ >sh_nexts_swap //
     ]
-  | #H0 @deg_SO_zero #n >iter_n_Sm #H destruct
+  | #H0 @deg_SO_zero #n >sh_nexts_swap #H destruct
     /2 width=2 by/
   ]
 ]
@@ -75,7 +76,7 @@ rec definition sd_d (h:?) (s:?) (d:?) on d: sd ≝
    [ O   ⇒ sd_O
    | S d ⇒ match d with
            [ O ⇒ sd_SO h s
-           | _ ⇒ sd_d h (next h s) d
+           | _ ⇒ sd_d h (pr_next h s) d
            ]
    ].
 

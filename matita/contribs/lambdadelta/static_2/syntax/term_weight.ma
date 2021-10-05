@@ -32,7 +32,7 @@ lemma tw_pos: ∀T. 1 ≤ ♯❨T❩.
 qed.
 
 lemma tw_le_pair_dx (I): ∀V,T. ♯❨T❩ < ♯❨②[I]V.T❩.
-#I #V #T /2 width=1 by le_S_S/
+#I #V #T /2 width=1 by nle_succ_bi/
 qed.
 
 (* Basic_1: removed theorems 11:

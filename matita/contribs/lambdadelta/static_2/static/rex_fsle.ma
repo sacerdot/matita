@@ -83,8 +83,8 @@ lemma rex_pair_sn_split (R1) (R2):
   elim (frees_inv_flat … Hg) #y1 #y2 #H #_ #Hy
 ]
 lapply(frees_mono … H … Hf) -H #H1
-lapply (sor_eq_repl_back1 … Hy … H1) -y1 #Hy
-lapply (sor_inv_sle_sn … Hy) -y2 #Hfg
+lapply (pr_sor_eq_repl_back_sn … Hy … H1) -y1 #Hy
+lapply (pr_sor_inv_sle_sn … Hy) -y2 #Hfg
 elim (sex_sle_split_sn (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #L #HL1 #HL2
 lapply (sle_sex_trans … HL1 … Hfg) // #H
 elim (frees_sex_conf_fsge … Hf … H) -Hf -H
@@ -100,8 +100,8 @@ lemma rex_flat_dx_split (R1) (R2):
 elim (frees_total L1 (ⓕ[I]V.T)) #g #Hg
 elim (frees_inv_flat … Hg) #y1 #y2 #_ #H #Hy
 lapply(frees_mono … H … Hf) -H #H2
-lapply (sor_eq_repl_back2 … Hy … H2) -y2 #Hy
-lapply (sor_inv_sle_dx … Hy) -y1 #Hfg
+lapply (pr_sor_eq_repl_back_dx … Hy … H2) -y2 #Hy
+lapply (pr_sor_inv_sle_dx … Hy) -y1 #Hfg
 elim (sex_sle_split_sn (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #L #HL1 #HL2
 lapply (sle_sex_trans … HL1 … Hfg) // #H
 elim (frees_sex_conf_fsge … Hf … H) -Hf -H
@@ -117,10 +117,10 @@ lemma rex_bind_dx_split (R1) (R2):
 elim (frees_total L1 (ⓑ[p,I]V1.T)) #g #Hg
 elim (frees_inv_bind … Hg) #y1 #y2 #_ #H #Hy
 lapply(frees_mono … H … Hf) -H #H2
-lapply (tl_eq_repl … H2) -H2 #H2
-lapply (sor_eq_repl_back2 … Hy … H2) -y2 #Hy
-lapply (sor_inv_sle_dx … Hy) -y1 #Hfg
-lapply (sle_inv_tl_sn … Hfg) -Hfg #Hfg
+lapply (pr_tl_eq_repl … H2) -H2 #H2
+lapply (pr_sor_eq_repl_back_dx … Hy … H2) -y2 #Hy
+lapply (pr_sor_inv_sle_dx … Hy) -y1 #Hfg
+lapply (pr_sle_inv_tl_sn … Hfg) -Hfg #Hfg
 elim (sex_sle_split_sn (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #Y #H #HL2
 lapply (sle_sex_trans … H … Hfg) // #H0
 elim (sex_inv_next1 … H) -H #Z #L #HL1 #H
@@ -138,10 +138,10 @@ lemma rex_bind_dx_split_void (R1) (R2):
 elim (frees_total L1 (ⓑ[p,I]V.T)) #g #Hg
 elim (frees_inv_bind_void … Hg) #y1 #y2 #_ #H #Hy
 lapply(frees_mono … H … Hf) -H #H2
-lapply (tl_eq_repl … H2) -H2 #H2
-lapply (sor_eq_repl_back2 … Hy … H2) -y2 #Hy
-lapply (sor_inv_sle_dx … Hy) -y1 #Hfg
-lapply (sle_inv_tl_sn … Hfg) -Hfg #Hfg
+lapply (pr_tl_eq_repl … H2) -H2 #H2
+lapply (pr_sor_eq_repl_back_dx … Hy … H2) -y2 #Hy
+lapply (pr_sor_inv_sle_dx … Hy) -y1 #Hfg
+lapply (pr_sle_inv_tl_sn … Hfg) -Hfg #Hfg
 elim (sex_sle_split_sn (cext2 R1) (cext2 R2) … HL12 … Hfg) -HL12 /2 width=1 by ext2_refl/ #Y #H #HL2
 lapply (sle_sex_trans … H … Hfg) // #H0
 elim (sex_inv_next1 … H) -H #Z #L #HL1 #H

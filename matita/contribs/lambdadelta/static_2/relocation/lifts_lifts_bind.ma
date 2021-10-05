@@ -43,11 +43,11 @@ qed-.
 (* Advanced proprerties *****************************************************)
 
 lemma liftsb_inj: ∀f. is_inj2 … (liftsb f).
-#f #T1 #U #H1 #T2 #H2 lapply (after_isid_dx 𝐢  … f)
+#f #T1 #U #H1 #T2 #H2 lapply (pr_after_isi_dx 𝐢  … f)
 /3 width=6 by liftsb_div3, liftsb_fwd_isid/
 qed-.
 
 lemma liftsb_mono: ∀f,T. is_mono … (liftsb f T).
-#f #T #U1 #H1 #U2 #H2 lapply (after_isid_sn 𝐢  … f)
+#f #T #U1 #H1 #U2 #H2 lapply (pr_after_isi_sn 𝐢  … f)
 /3 width=6 by liftsb_conf, liftsb_fwd_isid/
 qed-.

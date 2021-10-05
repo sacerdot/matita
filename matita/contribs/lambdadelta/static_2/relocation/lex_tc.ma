@@ -47,7 +47,7 @@ lemma lex_CTC (R): s_rs_transitive … R (λ_. lex R) →
                    TC … (lex R) ⊆ lex (CTC … R).
 #R #HR #L1 #L2 #HL12
 lapply (monotonic_TC … (sex cfull (cext2 R) 𝐢) … HL12) -HL12
-[ #L1 #L2 * /3 width=3 by sex_eq_repl_fwd, eq_id_inv_isid/
+[ #L1 #L2 * /3 width=3 by sex_eq_repl_fwd, pr_isi_inv_eq_id/
 | /5 width=9 by s_rs_transitive_lex_inv_isid, sex_tc_dx, sex_co, ext2_tc, ex2_intro/
 ]
 qed-.

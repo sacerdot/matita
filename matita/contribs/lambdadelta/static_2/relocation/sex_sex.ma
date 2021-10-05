@@ -31,7 +31,7 @@ theorem sex_trans_gen (RN1) (RP1) (RN2) (RP2) (RN) (RP):
   lapply (sex_inv_atom1 … H1) -H1 #H destruct
   lapply (sex_inv_atom1 … H2) -H2 #H destruct
   /2 width=1 by sex_atom/
-| #K1 #I1 #IH #f elim (pn_split f) * #g #H destruct
+| #K1 #I1 #IH #f elim (pr_map_split_tl f) * #g #H destruct
   #HN #HP #L0 #H1 #L2 #H2
   [ elim (sex_inv_push1 … H1) -H1 #I0 #K0 #HK10 #HI10 #H destruct
     elim (sex_inv_push1 … H2) -H2 #I2 #K2 #HK02 #HI02 #H destruct
@@ -57,7 +57,7 @@ theorem sex_trans_id_cfull (R1) (R2) (R3):
 #R1 #R2 #R3 #L1 #L #f #H elim H -L1 -L -f
 [ #f #Hf #L2 #H >(sex_inv_atom1 … H) -L2 // ]
 #f #I1 #I #K1 #K #HK1 #_ #IH #Hf #L2 #H
-[ elim (isid_inv_next … Hf) | lapply (isid_inv_push … Hf ??) ] -Hf [5: |*: // ] #Hf
+[ elim (pr_isi_inv_next … Hf) | lapply (pr_isi_inv_push … Hf ??) ] -Hf [5: |*: // ] #Hf
 elim (sex_inv_push1 … H) -H #I2 #K2 #HK2 #_ #H destruct
 /3 width=1 by sex_push/
 qed-.
@@ -70,7 +70,7 @@ theorem sex_conf (RN1) (RP1) (RN2) (RP2):
 #RN1 #RP1 #RN2 #RP2 #L elim L -L
 [ #f #_ #_ #L1 #H1 #L2 #H2 >(sex_inv_atom1 … H1) >(sex_inv_atom1 … H2) -H2 -H1
   /2 width=3 by sex_atom, ex2_intro/
-| #L #I0 #IH #f elim (pn_split f) * #g #H destruct
+| #L #I0 #IH #f elim (pr_map_split_tl f) * #g #H destruct
   #HN #HP #Y1 #H1 #Y2 #H2
   [ elim (sex_inv_push1 … H1) -H1 #I1 #L1 #HL1 #HI01 #H destruct
     elim (sex_inv_push1 … H2) -H2 #I2 #L2 #HL2 #HI02 #H destruct
@@ -94,7 +94,7 @@ lemma sex_repl (RN) (RP) (SN) (SP) (L1) (f):
   lapply (sex_inv_atom1 … HY) -HY #H destruct
   lapply (sex_inv_atom1 … HY1) -HY1 #H destruct
   lapply (sex_inv_atom1 … HY2) -HY2 #H destruct //
-| #L1 #I1 #IH #f elim (pn_split f) * #g #H destruct
+| #L1 #I1 #IH #f elim (pr_map_split_tl f) * #g #H destruct
   #HN #HP #Y #HY #Y1 #HY1 #Y2 #HY2
   [ elim (sex_inv_push1 … HY) -HY #I2 #L2 #HL12 #HI12 #H destruct
     elim (sex_inv_push1 … HY1) -HY1 #J1 #K1 #HLK1 #HIJ1 #H destruct
@@ -124,10 +124,10 @@ lemma sex_meet (RN) (RP) (L1) (L2):
       ∀f. f1 ⋒ f2 ≘ f → L1 ⪤[RN,RP,f] L2.
 #RN #RP #L1 #L2 #f1 #H elim H -f1 -L1 -L2 //
 #f1 #I1 #I2 #L1 #L2 #_ #HI12 #IH #f2 #H #f #Hf
-elim (pn_split f2) * #g2 #H2 destruct
+elim (pr_map_split_tl f2) * #g2 #H2 destruct
 try elim (sex_inv_push … H) try elim (sex_inv_next … H) -H
-[ elim (sand_inv_npx … Hf) | elim (sand_inv_nnx … Hf)
-| elim (sand_inv_ppx … Hf) | elim (sand_inv_pnx … Hf)
+[ elim (pr_sand_inv_next_push … Hf) | elim (pr_sand_inv_next_bi … Hf)
+| elim (pr_sand_inv_push_bi … Hf) | elim (pr_sand_inv_push_next … Hf)
 ] -Hf /3 width=5 by sex_next, sex_push/
 qed-.
 
@@ -137,9 +137,9 @@ lemma sex_join (RN) (RP) (L1) (L2):
       ∀f. f1 ⋓ f2 ≘ f → L1 ⪤[RN,RP,f] L2.
 #RN #RP #L1 #L2 #f1 #H elim H -f1 -L1 -L2 //
 #f1 #I1 #I2 #L1 #L2 #_ #HI12 #IH #f2 #H #f #Hf
-elim (pn_split f2) * #g2 #H2 destruct
+elim (pr_map_split_tl f2) * #g2 #H2 destruct
 try elim (sex_inv_push … H) try elim (sex_inv_next … H) -H
-[ elim (sor_inv_npx … Hf) | elim (sor_inv_nnx … Hf)
-| elim (sor_inv_ppx … Hf) | elim (sor_inv_pnx … Hf)
+[ elim (pr_sor_inv_next_push … Hf) | elim (pr_sor_inv_next_bi … Hf)
+| elim (pr_sor_inv_push_bi … Hf) | elim (pr_sor_inv_push_next … Hf)
 ] -Hf /3 width=5 by sex_next, sex_push/
 qed-.

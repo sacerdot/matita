@@ -33,7 +33,7 @@ lemma reqg_fsle_comp (S):
       rex_fsle_compatible (ceqg S).
 #S #HS #L1 #L2 #T #HL12
 elim (frees_total L1 T) #f #Hf
-/4 width=8 by frees_reqg_conf, rex_fwd_length, lveq_length_eq, sle_refl, ex4_4_intro/
+/4 width=8 by frees_reqg_conf, rex_fwd_length, lveq_length_eq, pr_sle_refl, ex4_4_intro/
 qed.
 
 (* Advanced properties ******************************************************)

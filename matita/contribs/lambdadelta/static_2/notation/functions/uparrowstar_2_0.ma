@@ -12,27 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/lenv.ma".
+(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-(* FOLD FOR RESTRICTED CLOSURES *********************************************)
-
-rec definition fold L T on L ≝ match L with
-[ LAtom     ⇒ T
-| LBind L I ⇒ match I with
-  [ BUnit _   ⇒ fold L (-ⓛ⋆0.T)
-  | BPair I V ⇒ fold L (-ⓑ[I]V.T)
-  ]
-].
-
-interpretation "fold (restricted closure)" 'nplus L T = (fold L T).
-
-(* Basic properties *********************************************************)
-
-lemma fold_atom: ∀T. ⋆ + T = T.
-// qed.
-
-lemma fold_unit: ∀I,L,T. L.ⓤ[I]+T = L+(-ⓛ⋆0.T).
-// qed.
-
-lemma fold_pair: ∀I,L,V,T. (L.ⓑ[I]V)+T = L+(-ⓑ[I]V.T).
-// qed.
+notation "hvbox( ⇡*[ term 46 h, term 46 n ] )"
+   non associative with precedence 46
+   for @{ 'UpArrowStar_2_0 $h $n }.

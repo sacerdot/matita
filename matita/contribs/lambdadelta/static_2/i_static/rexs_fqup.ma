@@ -34,7 +34,7 @@ lemma rexs_tc: ∀R,L1,L2,T,f. 𝐈❪f❫ → TC … (sex cfull (cext2 R) f) L1
                L1 ⪤*[R,T] L2.
 #R #L1 #L2 #T #f #Hf #H elim H -L2
 [ elim (frees_total L1 T) | #L elim (frees_total L T) ]
-/5 width=7 by sex_sdj, rexs_step_dx, sdj_isid_sn, inj, ex2_intro/
+/5 width=7 by sex_sdj, rexs_step_dx, pr_sdj_isi_sn, inj, ex2_intro/
 qed.
 
 (* Advanced eliminators *****************************************************)

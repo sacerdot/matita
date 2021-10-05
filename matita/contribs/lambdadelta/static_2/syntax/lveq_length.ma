@@ -32,30 +32,30 @@ qed.
 
 lemma lveq_fwd_length_le_sn: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 → n1 ≤ |L1|.
 #L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2 normalize
-/2 width=1 by le_S_S/
+/2 width=1 by nle_succ_bi/
 qed-.
 
 lemma lveq_fwd_length_le_dx: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 → n2 ≤ |L2|.
 #L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2 normalize
-/2 width=1 by le_S_S/
+/2 width=1 by nle_succ_bi/
 qed-.
 
 lemma lveq_fwd_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 →
                        ∧∧ |L1|-|L2| = n1 & |L2|-|L1| = n2.
 #L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2 /2 width=1 by conj/
-#K1 #K2 #n #_ * #H1 #H2 >length_bind /3 width=1 by minus_Sn_m, conj/
+#K1 #K2 #n #_ * #H1 #H2 >length_bind /3 width=1 by nminus_succ_sn, conj/
 qed-.
 
 lemma lveq_length_fwd_sn: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 → |L1| ≤ |L2| → 0 = n1.
 #L1 #L2 #n1 #n2 #H #HL
 elim (lveq_fwd_length … H) -H
->(eq_minus_O … HL) //
+>(nle_inv_eq_zero_minus … HL) //
 qed-.
 
 lemma lveq_length_fwd_dx: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 → |L2| ≤ |L1| → 0 = n2.
 #L1 #L2 #n1 #n2 #H #HL
 elim (lveq_fwd_length … H) -H
->(eq_minus_O … HL) //
+>(nle_inv_eq_zero_minus … HL) //
 qed-.
 
 lemma lveq_inj_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 →
@@ -68,15 +68,15 @@ qed-.
 lemma lveq_fwd_length_plus: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 →
                             |L1| + n2 = |L2| + n1.
 #L1 #L2 #n1 #n2 #H elim H -L1 -L2 -n1 -n2 normalize
-/2 width=2 by injective_plus_r/
+/2 width=2 by eq_inv_nplus_bi_sn/
 qed-.
 
 lemma lveq_fwd_length_eq: ∀L1,L2. L1 ≋ⓧ*[0,0] L2 → |L1| = |L2|.
-/3 width=2 by lveq_fwd_length_plus, injective_plus_l/ qed-.
+/3 width=2 by lveq_fwd_length_plus, eq_inv_nplus_bi_dx/ qed-.
 
 lemma lveq_fwd_length_minus: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 →
                              |L1| - n1 = |L2| - n2.
-/3 width=3 by lveq_fwd_length_plus, lveq_fwd_length_le_dx, lveq_fwd_length_le_sn, plus_to_minus_2/ qed-.
+/3 width=3 by lveq_fwd_length_plus, lveq_fwd_length_le_dx, lveq_fwd_length_le_sn, nminus_plus_swap/ qed-.
 
 lemma lveq_fwd_abst_bind_length_le: ∀I1,I2,L1,L2,V1,n1,n2.
                                     L1.ⓑ[I1]V1 ≋ⓧ*[n1,n2] L2.ⓘ[I2] → |L1| ≤ |L2|.
@@ -94,9 +94,9 @@ lemma lveq_fwd_bind_abst_length_le: ∀I1,I2,L1,L2,V2,n1,n2.
 lemma lveq_inv_void_dx_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2.ⓧ → |L1| ≤ |L2| →
                                ∃∃m2. L1 ≋ ⓧ*[n1,m2] L2 & 0 = n1 & ↑m2 = n2.
 #L1 #L2 #n1 #n2 #H #HL12
-lapply (lveq_fwd_length_plus … H) normalize >plus_n_Sm #H0
-lapply (plus2_le_sn_sn … H0 HL12) -H0 -HL12 #H0
-elim (le_inv_S1 … H0) -H0 #m2 #_ #H0 destruct
+lapply (lveq_fwd_length_plus … H) normalize >nplus_succ_dx #H0
+lapply (nplus_2_des_le_sn_sn … H0 HL12) -H0 -HL12 #H0
+elim (nle_inv_succ_sn … H0) -H0 #m2 #_ #H0 destruct
 elim (lveq_inv_void_succ_dx … H) -H /2 width=3 by ex3_intro/
 qed-.
 

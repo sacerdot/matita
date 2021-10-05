@@ -210,7 +210,7 @@ elim (teqw_inv_cast_sn … H) -H #W2 #U2 #HVW #HTU #H destruct
 qed-.
 
 lemma teqw_inv_cast_xy_y: ∀T,V. ⓝV.T ≃ T → ⊥.
-@(f_ind … tw) #n #IH #T #Hn #V #H destruct
+@(wf1_ind_nlt … tw) #n #IH #T #Hn #V #H destruct
 elim (teqw_inv_cast_sn … H) -H #X1 #X2 #_ #HX2 #H destruct -V
 /2 width=4 by/
 qed-.

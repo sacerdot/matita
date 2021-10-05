@@ -44,7 +44,7 @@ lemma lex_atom (R): ⋆ ⪤[R] ⋆.
 lemma lex_bind (R): ∀I1,I2,K1,K2. K1 ⪤[R] K2 → cext2 R K1 I1 I2 →
                     K1.ⓘ[I1] ⪤[R] K2.ⓘ[I2].
 #R #I1 #I2 #K1 #K2 * #f #Hf #HK12 #HI12
-/3 width=3 by sex_push, isid_push, ex2_intro/
+/3 width=3 by sex_push, pr_isi_push, ex2_intro/
 qed.
 
 (* Basic_2A1: was: lpx_sn_refl *)
@@ -80,7 +80,7 @@ qed-.
 lemma lex_inv_bind_sn (R): ∀I1,L2,K1. K1.ⓘ[I1] ⪤[R] L2 →
                            ∃∃I2,K2. K1 ⪤[R] K2 & cext2 R K1 I1 I2 & L2 = K2.ⓘ[I2].
 #R #I1 #L2 #K1 * #f #Hf #H
-lapply (sex_eq_repl_fwd … H (⫯f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
+lapply (sex_eq_repl_fwd … H (⫯f) ?) -H /2 width=1 by pr_isi_inv_eq_push/ #H
 elim (sex_inv_push1 … H) -H #I2 #K2 #HK12 #HI12 #H destruct
 /3 width=5 by ex2_intro, ex3_2_intro/
 qed-.
@@ -93,7 +93,7 @@ qed-.
 lemma lex_inv_bind_dx (R): ∀I2,L1,K2. L1 ⪤[R] K2.ⓘ[I2] →
                            ∃∃I1,K1. K1 ⪤[R] K2 & cext2 R K1 I1 I2 & L1 = K1.ⓘ[I1].
 #R #I2 #L1 #K2 * #f #Hf #H
-lapply (sex_eq_repl_fwd … H (⫯f) ?) -H /2 width=1 by eq_push_inv_isid/ #H
+lapply (sex_eq_repl_fwd … H (⫯f) ?) -H /2 width=1 by pr_isi_inv_eq_push/ #H
 elim (sex_inv_push2 … H) -H #I1 #K1 #HK12 #HI12 #H destruct
 /3 width=5 by ex3_2_intro, ex2_intro/
 qed-.
@@ -154,8 +154,8 @@ lemma lex_ind (R) (Q:relation2 …):
               ∀L1,L2. L1 ⪤[R] L2 → Q L1 L2.
 #R #Q #IH1 #IH2 #IH3 #L1 #L2 * #f @pull_2 #H
 elim H -f -L1 -L2 // #f #I1 #I2 #K1 #K2 @pull_4 #H
-[ elim (isid_inv_next … H)
-| lapply (isid_inv_push … H ??)
+[ elim (pr_isi_inv_next … H)
+| lapply (pr_isi_inv_push … H ??)
 ] -H [5:|*: // ] #Hf @pull_2 #H
 elim H -H /3 width=3 by ex2_intro/
 qed-.

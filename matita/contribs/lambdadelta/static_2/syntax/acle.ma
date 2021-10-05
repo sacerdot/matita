@@ -45,12 +45,12 @@ qed.
 lemma acle_le_monotonic_le (k1) (k2):
       k1 ≤ k2 → (ac_le k1) ⊆ (ac_le k2).
 #k1 #k2 #Hk #m #Hm
-/3 width=3 by acle_refl, transitive_le/
+/3 width=3 by acle_refl, nle_trans/
 qed.
 
 lemma acle_eq_le (k): (ac_eq k) ⊆ (ac_le k).
 #k #m #Hm destruct
-/2 width=1 by acle_refl, le_n/
+/2 width=1 by nle_refl, acle_refl/
 qed.
 
 lemma acle_le_eq (k): (ac_le k) ⊆ (ac_eq k).

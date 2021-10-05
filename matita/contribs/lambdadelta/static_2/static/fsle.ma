@@ -33,7 +33,7 @@ interpretation "free variables inclusion (term)"
 (* Basic properties *********************************************************)
 
 lemma fsle_sort: ∀L,s1,s2. ❪L,⋆s1❫ ⊆ ❪L,⋆s2❫.
-/3 width=8 by frees_sort, sle_refl, ex4_4_intro/ qed.
+/3 width=8 by frees_sort, pr_sle_refl, ex4_4_intro/ qed.
 
 lemma fsle_gref: ∀L,l1,l2. ❪L,§l1❫ ⊆ ❪L,§l2❫.
-/3 width=8 by frees_gref, sle_refl, ex4_4_intro/ qed.
+/3 width=8 by frees_gref, pr_sle_refl, ex4_4_intro/ qed.

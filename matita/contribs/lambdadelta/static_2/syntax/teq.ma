@@ -18,7 +18,7 @@ include "static_2/syntax/teqg.ma".
 (* SYNTACTIC EQUIVALENCE ON TERMS *******************************************)
 
 definition teq: relation term ≝
-           teqg (eq …).
+           teqg (pr_eq …).
 
 interpretation
   "context-free syntactic equivalence (term)"

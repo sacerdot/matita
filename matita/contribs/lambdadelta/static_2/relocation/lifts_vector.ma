@@ -29,7 +29,7 @@ interpretation "generic relocation (term vector)"
    'RLiftStar f T1s T2s = (liftsv f T1s T2s).
 
 interpretation "uniform relocation (term vector)"
-   'RLift i T1s T2s = (liftsv (uni i) T1s T2s).
+   'RLift i T1s T2s = (liftsv (pr_uni i) T1s T2s).
 
 (* Basic inversion lemmas ***************************************************)
 

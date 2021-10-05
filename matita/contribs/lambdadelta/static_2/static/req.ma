@@ -20,7 +20,7 @@ include "static_2/static/reqg.ma".
 
 (* Basic_2A1: was: lleq *)
 definition req: relation3 term lenv lenv ≝
-           reqg (eq …).
+           reqg (pr_eq …).
 
 interpretation
   "syntactic equivalence on referred entries (local environment)"

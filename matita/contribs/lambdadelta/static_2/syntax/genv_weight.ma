@@ -27,4 +27,4 @@ interpretation "weight (global environment)" 'Weight G = (gw G).
 (* Basic properties *********************************************************)
 
 lemma gw_pair: ∀I,G,T. ♯❨G❩ < ♯❨G.ⓑ[I]T❩.
-normalize /2 width=1 by monotonic_le_plus_r/ qed.
+normalize /2 width=1 by nle_plus_bi_sn/ qed.

@@ -119,13 +119,13 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
   elim (lifts_inv_applv1 … H) -H #V0s #X0 #HV0s #H0 #H destruct
   elim (lifts_inv_lref1 … H0) -H0 #j #Hf #H destruct
   lapply (drops_trans … HL0 … HLK ??) [3: |*: // ] -HLK #H
-  elim (drops_split_trans … H) -H [ |*: /2 width=6 by after_uni_dx/ ] #Y #HLK0 #HY
+  elim (drops_split_trans … H) -H [ |*: /2 width=6 by pr_after_nat_uni/ ] #Y #HLK0 #HY
   lapply (drops_tls_at … Hf … HY) -HY #HY
   elim (drops_inv_skip2 … HY) -HY #Z #K0 #HK0 #HZ #H destruct
   elim (liftsb_inv_pair_sn … HZ) -HZ #W1 #HVW1 #H destruct
   elim (lifts_total W1 (𝐔❨↑j❩)) #W2 #HW12
   lapply (lifts_trans … HVW1 … HW12 ??) -HVW1 [3: |*: // ] #H
-  lapply (lifts_conf … HV12 … H f ?) -V1 [ /2 width=3 by after_uni_succ_sn/ ] #HVW2
+  lapply (lifts_conf … HV12 … H f ?) -V1 [ /2 width=3 by pr_pat_after_uni_tls/ ] #HVW2
   @(s5 … IHA … (V0⨮V0s) … HW12) /3 width=4 by drops_inv_gen, lifts_applv/
 | #G #L #V1s #V2s #HV12s #p #V #T #HA #HV #f #L0 #V10 #X #HL0 #H #HB
   elim (lifts_inv_applv1 … H) -H #V10s #X0 #HV10s #H0 #H destruct
@@ -136,7 +136,7 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
   @(HA … (⫯f)) /3 width=2 by drops_skip, ext2_pair/
   [ @lifts_applv //
     lapply (liftsv_trans … HV10s … HV120s ??) -V10s [3: |*: // ] #H
-    elim (liftsv_split_trans … H (𝐔❨1❩) (⫯f)) /2 width=1 by after_uni_one_sn/ #V10s #HV10s #HV120s
+    elim (liftsv_split_trans … H (𝐔❨1❩) (⫯f)) /2 width=1 by pr_after_unit_sn/ #V10s #HV10s #HV120s
     >(liftsv_mono … HV12s … HV10s) -V1s //
   | @(acr_lifts … H1RP … HB … HV120) /3 width=2 by drops_refl, drops_drop/
   ]

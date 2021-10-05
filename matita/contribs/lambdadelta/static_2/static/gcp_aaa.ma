@@ -37,7 +37,7 @@ theorem acr_aaa_lsubc_lifts (RR) (RS) (RP):
   elim (lifts_inv_lref1 … H0) -H0 #j #Hf #H destruct
   lapply (acr_gcr … H1RP H2RP A) #HA
   lapply (drops_trans … HL01 … HLK1 ??) -HL01 [3: |*: // ] #H
-  elim (drops_split_trans … H) -H [ |*: /2 width=6 by after_uni_dx/ ] #Y #HLK0 #HY
+  elim (drops_split_trans … H) -H [ |*: /2 width=6 by pr_after_nat_uni/ ] #Y #HLK0 #HY
   lapply (drops_tls_at … Hf … HY) -Hf -HY #HY
   elim (drops_inv_skip2 … HY) -HY #Z #K0 #HK01 #HZ #H destruct
   elim (liftsb_inv_pair_sn … HZ) -HZ #V0 #HV10 #H destruct

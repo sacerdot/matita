@@ -24,7 +24,7 @@ lemma rex_lex (R):
       ∀L1,L2. L1 ⪤[R] L2 → ∀T. L1 ⪤[R,T] L2.
 #R #L1 #L2 * #f #Hf #HL12 #T
 elim (frees_total L1 T) #g #Hg
-/4 width=5 by sex_sdj, sdj_isid_sn, ex2_intro/
+/4 width=5 by sex_sdj, pr_sdj_isi_sn, ex2_intro/
 qed.
 
 (* Inversion lemmas with generic extension of a context sensitive relation **)
@@ -36,9 +36,9 @@ lemma rex_inv_req_lex (R):
 #R #H1R #H2R #L1 #L2 #T * #f1 #Hf1 #HL
 elim (sex_sdj_split_dx … ceq_ext … HL 𝐢) -HL
 [ #L0 #HL10 #HL02
-  lapply (sex_sdj … HL02 f1 ?) /2 width=1 by sdj_isid_sn/ #H
+  lapply (sex_sdj … HL02 f1 ?) /2 width=1 by pr_sdj_isi_sn/ #H
   /3 width=5 by (* 2x *) ex2_intro/
-|*: /2 width=1 by ext2_refl, sdj_isid_dx/
+|*: /2 width=1 by ext2_refl, pr_sdj_isi_dx/
   #g #I #K #n #HLK #Hg @H2R /width=7 by/ (**) (* no auto with H2R *)
 ]
 qed-.
@@ -51,8 +51,8 @@ lemma rex_fwd_lex_req (R):
       ∃∃L. L1 ⪤[R] L & L ≡[T] L2.
 #R #H1R #H2R #L1 #L2 #T * #f1 #Hf1 #HL
 elim (sex_sdj_split_sn … ceq_ext … HL 𝐢 ?) -HL
-[ #L0 #HL10 #HL02 |*: /2 width=1 by ext2_refl, sdj_isid_dx/ ] -H1R
-lapply (sex_sdj … HL10 f1 ?) /2 width=1 by sdj_isid_sn/ #H
+[ #L0 #HL10 #HL02 |*: /2 width=1 by ext2_refl, pr_sdj_isi_dx/ ] -H1R
+lapply (sex_sdj … HL10 f1 ?) /2 width=1 by pr_sdj_isi_sn/ #H
 elim (frees_sex_conf_fsge … Hf1 … H) // -H2R -H #f0 #Hf0 #Hf01
 /4 width=7 by sle_sex_trans, (* 2x *) ex2_intro/
 qed-.

@@ -23,10 +23,10 @@ lemma deg_SO_gt (h): sh_lt h →
       ∀s1,s2. s1 < s2 → deg_SO h s1 s2 0.
 #h #Hh #s1 #s2 #Hs12 @deg_SO_zero * normalize
 [ #H destruct
-  elim (lt_refl_false … Hs12)
+  elim (nlt_inv_refl … Hs12)
 | #n #H
-  lapply (next_lt … Hh ((next h)^n s2)) >H -H #H
-  lapply (transitive_lt … H Hs12) -s1 #H1
-  /3 width=5 by lt_le_false, nexts_le/ (* full auto too slow *)
+  lapply (next_lt … Hh ((pr_next h)^n s2)) >H -H #H
+  lapply (nlt_trans … H Hs12) -s1 #H1
+  /3 width=5 by nlt_ge_false, nexts_le/ (* full auto too slow *)
 ]
 qed.

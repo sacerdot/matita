@@ -18,7 +18,7 @@ include "static_2/syntax/lenv.ma".
 
 (* CONTEXT-SENSITIVE FREE VARIABLES *****************************************)
 
-inductive frees: relation3 lenv term rtmap ≝
+inductive frees: relation3 lenv term pr_map ≝
 | frees_sort: ∀f,L,s. 𝐈❪f❫ → frees L (⋆s) f
 | frees_atom: ∀f,i. 𝐈❪f❫ → frees (⋆) (#i) (⫯*[i]↑f)
 | frees_pair: ∀f,I,L,V. frees L V f →
@@ -182,29 +182,29 @@ lemma frees_inv_flat:
 
 (* Basic properties ********************************************************)
 
-lemma frees_eq_repl_back: ∀L,T. eq_repl_back … (λf. L ⊢ 𝐅+❪T❫ ≘ f).
+lemma frees_eq_repl_back: ∀L,T. pr_eq_repl_back … (λf. L ⊢ 𝐅+❪T❫ ≘ f).
 #L #T #f1 #H elim H -f1 -L -T
-[ /3 width=3 by frees_sort, isid_eq_repl_back/
+[ /3 width=3 by frees_sort, pr_isi_eq_repl_back/
 | #f1 #i #Hf1 #g2 #H
-  elim (eq_inv_pushs_sn … H) -H #g #Hg #H destruct
+  elim (pr_eq_inv_pushs_sn … H) -H #g #Hg #H destruct
   elim (eq_inv_nx … Hg) -Hg
-  /3 width=3 by frees_atom, isid_eq_repl_back/
+  /3 width=3 by frees_atom, pr_isi_eq_repl_back/
 | #f1 #I #L #V #_ #IH #g2 #H
   elim (eq_inv_nx … H) -H
   /3 width=3 by frees_pair/
 | #f1 #I #L #Hf1 #g2 #H
   elim (eq_inv_nx … H) -H
-  /3 width=3 by frees_unit, isid_eq_repl_back/
+  /3 width=3 by frees_unit, pr_isi_eq_repl_back/
 | #f1 #I #L #i #_ #IH #g2 #H
   elim (eq_inv_px … H) -H /3 width=3 by frees_lref/
-| /3 width=3 by frees_gref, isid_eq_repl_back/
-| /3 width=7 by frees_bind, sor_eq_repl_back3/
-| /3 width=7 by frees_flat, sor_eq_repl_back3/
+| /3 width=3 by frees_gref, pr_isi_eq_repl_back/
+| /3 width=7 by frees_bind, pr_sor_eq_repl_back/
+| /3 width=7 by frees_flat, pr_sor_eq_repl_back/
 ]
 qed-.
 
-lemma frees_eq_repl_fwd: ∀L,T. eq_repl_fwd … (λf. L ⊢ 𝐅+❪T❫ ≘ f).
-#L #T @eq_repl_sym /2 width=3 by frees_eq_repl_back/
+lemma frees_eq_repl_fwd: ∀L,T. pr_eq_repl_fwd … (λf. L ⊢ 𝐅+❪T❫ ≘ f).
+#L #T @pr_eq_repl_sym /2 width=3 by frees_eq_repl_back/
 qed-.
 
 lemma frees_lref_push: ∀f,i. ⋆ ⊢ 𝐅+❪#i❫ ≘ f → ⋆ ⊢ 𝐅+❪#↑i❫ ≘ ⫯f.
@@ -217,7 +217,7 @@ qed.
 
 lemma frees_fwd_isfin: ∀f,L,T. L ⊢ 𝐅+❪T❫ ≘ f → 𝐅❪f❫.
 #f #L #T #H elim H -f -L -T
-/4 width=5 by sor_isfin, isfin_isid, isfin_tl, isfin_pushs, isfin_push, isfin_next/
+/4 width=5 by pr_sor_inv_isf_bi, pr_isf_isi, pr_isf_tl, pr_isf_pushs, pr_isf_push, pr_isf_next/
 qed-.
 
 (* Basic_2A1: removed theorems 30:

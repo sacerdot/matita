@@ -46,7 +46,7 @@ lemma fsle_lifts_SO_sn: ∀K1,K2. |K1| = |K2| → ∀V1,V2. ❪K1,V1❫ ⊆ ❪K
 * #n1 #n2 #f1 #f2 #Hf1 #Hf2 #HK12 #Hf12
 #W1 #HVW1 #I1 #I2
 elim (lveq_inj_length … HK12) // -HK #H1 #H2 destruct
-/5 width=12 by frees_lifts_SO, frees_pair, drops_refl, drops_drop, lveq_bind, sle_weak, ex4_4_intro/
+/5 width=12 by frees_lifts_SO, frees_pair, drops_refl, drops_drop, lveq_bind, pr_sle_weak, ex4_4_intro/
 qed.
 
 lemma fsle_lifts_SO: ∀K1,K2. |K1| = |K2| → ∀T1,T2. ❪K1,T1❫ ⊆ ❪K2,T2❫ →
@@ -56,7 +56,7 @@ lemma fsle_lifts_SO: ∀K1,K2. |K1| = |K2| → ∀T1,T2. ❪K1,T1❫ ⊆ ❪K2,T
 * #n1 #n2 #f1 #f2 #Hf1 #Hf2 #HK12 #Hf12
 #U1 #U2 #HTU1 #HTU2 #I1 #I2
 elim (lveq_inj_length … HK12) // -HK #H1 #H2 destruct
-/5 width=12 by frees_lifts_SO, drops_refl, drops_drop, lveq_bind, sle_push, ex4_4_intro/
+/5 width=12 by frees_lifts_SO, drops_refl, drops_drop, lveq_bind, pr_sle_push, ex4_4_intro/
 qed.
 
 (* Advanced inversion lemmas ************************************************)
@@ -68,9 +68,9 @@ lemma fsle_inv_lifts_sn: ∀T1,U1. ⇧[1] T1 ≘ U1 →
 * #n #m #f2 #g2 #Hf2 #Hg2 #HL #Hfg2 #p
 elim (lveq_inv_pair_pair … HL) -HL #HL #H1 #H2 destruct
 elim (frees_total L2 V2) #g1 #Hg1
-elim (sor_isfin_ex g1 (⫰g2)) /3 width=3 by frees_fwd_isfin, isfin_tl/ #g #Hg #_
+elim (pr_sor_isf_bi g1 (⫰g2)) /3 width=3 by frees_fwd_isfin, pr_isf_tl/ #g #Hg #_
 lapply (frees_inv_lifts_SO (Ⓣ) … Hf2 … HTU1)
 [1,2: /3 width=4 by drops_refl, drops_drop/ ] -U1 #Hf2
-lapply (sor_inv_sle_dx … Hg) #H0g
-/5 width=10 by frees_bind, sle_tl, sle_trans, ex4_4_intro/
+lapply (pr_sor_inv_sle_dx … Hg) #H0g
+/5 width=10 by frees_bind, pr_sle_tl, pr_sle_trans, ex4_4_intro/
 qed-.

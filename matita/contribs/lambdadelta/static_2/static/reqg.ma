@@ -59,10 +59,10 @@ lemma frees_teqg_conf_seqg (S):
   >(teqg_inv_gref1 … H1) -X /2 width=1 by frees_gref/
 | #f1V #f1T #f1 #p #I #L1 #V1 #T1 #_ #_ #Hf1 #IHV #IHT #X #H1
   elim (teqg_inv_pair1 … H1) -H1 #V2 #T2 #HV12 #HT12 #H1 #L2 #HL12 destruct
-  /6 width=5 by frees_bind, sex_inv_tl, ext2_pair, sle_sex_trans, sor_inv_sle_dx, sor_inv_sle_sn/
+  /6 width=5 by frees_bind, sex_inv_tl, ext2_pair, sle_sex_trans, pr_sor_inv_sle_dx, pr_sor_inv_sle_sn/
 | #f1V #f1T #f1 #I #L1 #V1 #T1 #_ #_ #Hf1 #IHV #IHT #X #H1
   elim (teqg_inv_pair1 … H1) -H1 #V2 #T2 #HV12 #HT12 #H1 #L2 #HL12 destruct
-  /5 width=5 by frees_flat, sle_sex_trans, sor_inv_sle_dx, sor_inv_sle_sn/
+  /5 width=5 by frees_flat, sle_sex_trans, pr_sor_inv_sle_dx, pr_sor_inv_sle_sn/
 ]
 qed-.
 

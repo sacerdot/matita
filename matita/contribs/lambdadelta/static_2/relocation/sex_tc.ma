@@ -87,8 +87,8 @@ theorem sex_tc_step_dx: ∀RN,RP. s_rs_transitive_isid RN RP →
 #RN #RP #HRP #f #L1 #L #H elim H -f -L1 -L
 [ #f #_ #Y #H -HRP >(sex_inv_atom1 … H) -Y // ]
 #f #I1 #I #L1 #L #HL1 #HI1 #IH #Hf #Y #H
-[ elim (isid_inv_next … Hf) -Hf //
-| lapply (isid_inv_push … Hf ??) -Hf [3: |*: // ] #Hf
+[ elim (pr_isi_inv_next … Hf) -Hf //
+| lapply (pr_isi_inv_push … Hf ??) -Hf [3: |*: // ] #Hf
   elim (sex_inv_push1 … H) -H #I2 #L2 #HL2 #HI2 #H destruct
   @sex_push [ /2 width=1 by/ ] -L2 -IH
   @(TC_strap … HI1) -HI1

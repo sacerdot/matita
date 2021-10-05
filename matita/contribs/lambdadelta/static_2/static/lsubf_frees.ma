@@ -25,9 +25,9 @@ lemma lsubf_frees_trans:
 [ /3 width=5 by lsubf_fwd_isid_dx, frees_sort/
 | #f2 #i #Hf2 #g1 #Y1 #H
   elim (lsubf_inv_atom2 … H) -H #Hg1 #H destruct
-  elim (eq_inv_pushs_dx … Hg1) -Hg1 #g #Hg #H destruct
+  elim (pr_eq_inv_pushs_dx … Hg1) -Hg1 #g #Hg #H destruct
   elim (eq_inv_xn … Hg) -Hg
-  /3 width=3 by frees_atom, isid_eq_repl_fwd/
+  /3 width=3 by frees_atom, pr_isi_eq_repl_fwd/
 | #f2 #I #K2 #W #_ #IH #g1 #Y1 #H elim (lsubf_inv_pair2 … H) -H *
   [ #f1 #K1 #H12 #H1 #H2 destruct /3 width=1 by frees_pair/
   | #f #f0 #f1 #K1 #V #H12 #Hf #Hf1 #H1 #H2 #H3 destruct
@@ -37,7 +37,7 @@ lemma lsubf_frees_trans:
   [ #f1 #L1 #H12 #H1 #H2 destruct
     /3 width=5 by lsubf_fwd_isid_dx, frees_unit/
   | #f #f0 #f1 #J #L1 #V #H12 #Hf #Hf1 #H1 #H2 destruct
-    /5 width=9 by lsubf_fwd_isid_dx, frees_eq_repl_back, frees_pair, sor_isid_inv_sn/
+    /5 width=9 by lsubf_fwd_isid_dx, frees_eq_repl_back, frees_pair, pr_sor_inv_isi_sn/
   ]
 | #f2 #I #L2 #i #_ #IH #g1 #L1 #H elim (lsubf_inv_push2 … H) -H
   /3 width=1 by frees_lref/

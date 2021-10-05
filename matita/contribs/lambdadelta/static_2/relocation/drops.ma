@@ -26,7 +26,7 @@ include "static_2/relocation/lifts_bind.ma".
 (* Basic_2A1: includes: drop_atom drop_pair drop_drop drop_skip
                         drop_refl_atom_O2 drop_drop_lt drop_skip_lt
 *)
-inductive drops (b:bool): rtmap → relation lenv ≝
+inductive drops (b:bool): pr_map → relation lenv ≝
 | drops_atom: ∀f. (b = Ⓣ → 𝐈❪f❫) → drops b (f) (⋆) (⋆)
 | drops_drop: ∀f,I,L1,L2. drops b f L1 L2 → drops b (↑f) (L1.ⓘ[I]) L2
 | drops_skip: ∀f,I1,I2,L1,L2.
@@ -38,7 +38,7 @@ interpretation "generic slicing (local environment)"
    'RDropStar b f L1 L2 = (drops b f L1 L2).
 
 interpretation "uniform slicing (local environment)"
-   'RDrop i L1 L2 = (drops true (uni i) L1 L2).
+   'RDrop i L1 L2 = (drops true (pr_uni i) L1 L2).
 
 definition d_liftable1: predicate (relation2 lenv term) ≝
                         λR. ∀K,T. R K T → ∀b,f,L. ⇩*[b,f] L ≘ K →
@@ -102,9 +102,9 @@ lemma drops_atom_F: ∀f. ⇩*[Ⓕ,f] ⋆ ≘ ⋆.
 #f @drops_atom #H destruct
 qed.
 
-lemma drops_eq_repl_back: ∀b,L1,L2. eq_repl_back … (λf. ⇩*[b,f] L1 ≘ L2).
+lemma drops_eq_repl_back: ∀b,L1,L2. pr_eq_repl_back … (λf. ⇩*[b,f] L1 ≘ L2).
 #b #L1 #L2 #f1 #H elim H -f1 -L1 -L2
-[ /4 width=3 by drops_atom, isid_eq_repl_back/
+[ /4 width=3 by drops_atom, pr_isi_eq_repl_back/
 | #f1 #I #L1 #L2 #_ #IH #f2 #H elim (eq_inv_nx … H) -H
   /3 width=3 by drops_drop/
 | #f1 #I1 #I2 #L1 #L2 #_ #HI #IH #f2 #H elim (eq_inv_px … H) -H
@@ -112,8 +112,8 @@ lemma drops_eq_repl_back: ∀b,L1,L2. eq_repl_back … (λf. ⇩*[b,f] L1 ≘ L2
 ]
 qed-.
 
-lemma drops_eq_repl_fwd: ∀b,L1,L2. eq_repl_fwd … (λf. ⇩*[b,f] L1 ≘ L2).
-#b #L1 #L2 @eq_repl_sym /2 width=3 by drops_eq_repl_back/ (**) (* full auto fails *)
+lemma drops_eq_repl_fwd: ∀b,L1,L2. pr_eq_repl_fwd … (λf. ⇩*[b,f] L1 ≘ L2).
+#b #L1 #L2 @pr_eq_repl_sym /2 width=3 by drops_eq_repl_back/ (**) (* full auto fails *)
 qed-.
 
 (* Basic_2A1: includes: drop_FT *)
@@ -166,8 +166,8 @@ fact drops_inv_drop1_aux: ∀b,f,X,Y. ⇩*[b,f] X ≘ Y → ∀g,I,K. X = K.ⓘ[
                           ⇩*[b,g] K ≘ Y.
 #b #f #X #Y * -f -X -Y
 [ #f #Hf #g #J #K #H destruct
-| #f #I #L1 #L2 #HL #g #J #K #H1 #H2 <(injective_next … H2) -g destruct //
-| #f #I1 #I2 #L1 #L2 #_ #_ #g #J #K #_ #H2 elim (discr_push_next … H2)
+| #f #I #L1 #L2 #HL #g #J #K #H1 #H2 <(eq_inv_pr_next_bi … H2) -g destruct //
+| #f #I1 #I2 #L1 #L2 #_ #_ #g #J #K #_ #H2 elim (eq_inv_pr_push_next … H2)
 ]
 qed-.
 
@@ -180,8 +180,8 @@ fact drops_inv_skip1_aux: ∀b,f,X,Y. ⇩*[b,f] X ≘ Y → ∀g,I1,K1. X = K1.�
                           ∃∃I2,K2. ⇩*[b,g] K1 ≘ K2 & ⇧*[g] I2 ≘ I1 & Y = K2.ⓘ[I2].
 #b #f #X #Y * -f -X -Y
 [ #f #Hf #g #J1 #K1 #H destruct
-| #f #I #L1 #L2 #_ #g #J1 #K1 #_ #H2 elim (discr_next_push … H2)
-| #f #I1 #I2 #L1 #L2 #HL #HI #g #J1 #K1 #H1 #H2 <(injective_push … H2) -g destruct
+| #f #I #L1 #L2 #_ #g #J1 #K1 #_ #H2 elim (eq_inv_pr_next_push … H2)
+| #f #I1 #I2 #L1 #L2 #HL #HI #g #J1 #K1 #H1 #H2 <(eq_inv_pr_push_bi … H2) -g destruct
   /2 width=5 by ex3_2_intro/
 ]
 qed-.
@@ -196,8 +196,8 @@ fact drops_inv_skip2_aux: ∀b,f,X,Y. ⇩*[b,f] X ≘ Y → ∀g,I2,K2. Y = K2.�
                           ∃∃I1,K1. ⇩*[b,g] K1 ≘ K2 & ⇧*[g] I2 ≘ I1 & X = K1.ⓘ[I1].
 #b #f #X #Y * -f -X -Y
 [ #f #Hf #g #J2 #K2 #H destruct
-| #f #I #L1 #L2 #_ #g #J2 #K2 #_ #H2 elim (discr_next_push … H2)
-| #f #I1 #I2 #L1 #L2 #HL #HV #g #J2 #K2 #H1 #H2 <(injective_push … H2) -g destruct
+| #f #I #L1 #L2 #_ #g #J2 #K2 #_ #H2 elim (eq_inv_pr_next_push … H2)
+| #f #I1 #I2 #L1 #L2 #HL #HV #g #J2 #K2 #H1 #H2 <(eq_inv_pr_push_bi … H2) -g destruct
   /2 width=5 by ex3_2_intro/
 ]
 qed-.
@@ -215,9 +215,9 @@ fact drops_fwd_drop2_aux: ∀b,f2,X,Y. ⇩*[b,f2] X ≘ Y → ∀I,K. Y = K.ⓘ[
 #b #f2 #X #Y #H elim H -f2 -X -Y
 [ #f2 #Hf2 #J #K #H destruct
 | #f2 #I #L1 #L2 #_ #IHL #J #K #H elim (IHL … H) -IHL
-  /3 width=7 by after_next, ex3_2_intro, drops_drop/
+  /3 width=7 by pr_after_next, ex3_2_intro, drops_drop/
 | #f2 #I1 #I2 #L1 #L2 #HL #_ #_ #J #K #H destruct
-  lapply (after_isid_dx 𝐢 … f2) /3 width=9 by after_push, ex3_2_intro, drops_drop/
+  lapply (pr_after_isi_dx 𝐢 … f2) /3 width=9 by pr_after_push, ex3_2_intro, drops_drop/
 ]
 qed-.
 
@@ -230,7 +230,7 @@ lemma drops_fwd_drop2: ∀b,f2,I,X,K. ⇩*[b,f2] X ≘ K.ⓘ[I] →
 (* Basic_2A1: includes: drop_refl *)
 lemma drops_refl: ∀b,L,f. 𝐈❪f❫ → ⇩*[b,f] L ≘ L.
 #b #L elim L -L /2 width=1 by drops_atom/
-#L #I #IHL #f #Hf elim (isid_inv_gen … Hf) -Hf
+#L #I #IHL #f #Hf elim (pr_isi_inv_gen … Hf) -Hf
 /3 width=1 by drops_skip, liftsb_refl/
 qed.
 
@@ -240,23 +240,23 @@ qed.
 (* Basic_2A1: includes: drop_inv_O2 *)
 lemma drops_fwd_isid: ∀b,f,L1,L2. ⇩*[b,f] L1 ≘ L2 → 𝐈❪f❫ → L1 = L2.
 #b #f #L1 #L2 #H elim H -f -L1 -L2 //
-[ #f #I #L1 #L2 #_ #_ #H elim (isid_inv_next … H) //
-| /5 width=5 by isid_inv_push, liftsb_fwd_isid, eq_f2, sym_eq/
+[ #f #I #L1 #L2 #_ #_ #H elim (pr_isi_inv_next … H) //
+| /5 width=5 by pr_isi_inv_push, liftsb_fwd_isid, eq_f2, sym_eq/
 ]
 qed-.
 
 lemma drops_after_fwd_drop2: ∀b,f2,I,X,K. ⇩*[b,f2] X ≘ K.ⓘ[I] →
                              ∀f1,f. 𝐈❪f1❫ → f2 ⊚ ↑f1 ≘ f → ⇩*[b,f] X ≘ K.
 #b #f2 #I #X #K #H #f1 #f #Hf1 #Hf elim (drops_fwd_drop2 … H) -H
-#g1 #g #Hg1 #Hg #HK lapply (after_mono_eq … Hg … Hf ??) -Hg -Hf
-/3 width=5 by drops_eq_repl_back, isid_inv_eq_repl, eq_next/
+#g1 #g #Hg1 #Hg #HK lapply (pr_after_mono_eq … Hg … Hf ??) -Hg -Hf
+/3 width=5 by drops_eq_repl_back, pr_isi_inv_eq_repl, pr_eq_next/
 qed-.
 
 (* Forward lemmas with test for finite colength *****************************)
 
 lemma drops_fwd_isfin: ∀f,L1,L2. ⇩*[Ⓣ,f] L1 ≘ L2 → 𝐅❪f❫.
 #f #L1 #L2 #H elim H -f -L1 -L2
-/3 width=1 by isfin_next, isfin_push, isfin_isid/
+/3 width=1 by pr_isf_next, pr_isf_push, pr_isf_isi/
 qed-.
 
 (* Properties with test for uniformity **************************************)
@@ -274,8 +274,8 @@ lemma drops_inv_isuni: ∀f,L1,L2. ⇩*[Ⓣ,f] L1 ≘ L2 → 𝐔❪f❫ →
                        ∃∃g,I,K. ⇩*[Ⓣ,g] K ≘ L2 & 𝐔❪g❫ & L1 = K.ⓘ[I] & f = ↑g.
 #f #L1 #L2 * -f -L1 -L2
 [ /4 width=1 by or_introl, conj/
-| /4 width=7 by isuni_inv_next, ex4_3_intro, or_intror/
-| /7 width=6 by drops_fwd_isid, liftsb_fwd_isid, isuni_inv_push, isid_push, or_introl, conj, eq_f2, sym_eq/
+| /4 width=7 by pr_isu_inv_next, ex4_3_intro, or_intror/
+| /7 width=6 by drops_fwd_isid, liftsb_fwd_isid, pr_isu_inv_push, pr_isi_push, or_introl, conj, eq_f2, sym_eq/
 ]
 qed-.
 
@@ -283,10 +283,10 @@ qed-.
 lemma drops_inv_bind1_isuni: ∀b,f,I,K,L2. 𝐔❪f❫ → ⇩*[b,f] K.ⓘ[I] ≘ L2 →
                              (𝐈❪f❫ ∧ L2 = K.ⓘ[I]) ∨
                              ∃∃g. 𝐔❪g❫ & ⇩*[b,g] K ≘ L2 & f = ↑g.
-#b #f #I #K #L2 #Hf #H elim (isuni_split … Hf) -Hf * #g #Hg #H0 destruct
+#b #f #I #K #L2 #Hf #H elim (pr_isu_split … Hf) -Hf * #g #Hg #H0 destruct
 [ lapply (drops_inv_skip1 … H) -H * #Z #Y #HY #HZ #H destruct
   <(drops_fwd_isid … HY Hg) -Y >(liftsb_fwd_isid … HZ Hg) -Z
-  /4 width=3 by isid_push, or_introl, conj/
+  /4 width=3 by pr_isi_push, or_introl, conj/
 | lapply (drops_inv_drop1 … H) -H /3 width=4 by ex3_intro, or_intror/
 ]
 qed-.
@@ -306,8 +306,8 @@ qed-.
 
 lemma drops_inv_bind2_isuni_next: ∀b,f,I,K,L1. 𝐔❪f❫ → ⇩*[b,↑f] L1 ≘ K.ⓘ[I] →
                                   ∃∃I1,K1. ⇩*[b,f] K1 ≘ K.ⓘ[I] & L1 = K1.ⓘ[I1].
-#b #f #I #K #L1 #Hf #H elim (drops_inv_bind2_isuni … H) -H /2 width=3 by isuni_next/ -Hf *
-[ #H elim (isid_inv_next … H) -H //
+#b #f #I #K #L1 #Hf #H elim (drops_inv_bind2_isuni … H) -H /2 width=3 by pr_isu_next/ -Hf *
+[ #H elim (pr_isi_inv_next … H) -H //
 | /2 width=4 by ex2_2_intro/
 ]
 qed-.
@@ -317,11 +317,11 @@ fact drops_inv_TF_aux: ∀f,L1,L2. ⇩*[Ⓕ,f] L1 ≘ L2 → 𝐔❪f❫ →
 #f #L1 #L2 #H elim H -f -L1 -L2
 [ #f #_ #_ #J #K #H destruct
 | #f #I #L1 #L2 #_ #IH #Hf #J #K #H destruct
-  /4 width=3 by drops_drop, isuni_inv_next/
+  /4 width=3 by drops_drop, pr_isu_inv_next/
 | #f #I1 #I2 #L1 #L2 #HL12 #HI21 #_ #Hf #J #K #H destruct
-  lapply (isuni_inv_push … Hf ??) -Hf [1,2: // ] #Hf
+  lapply (pr_isu_inv_push … Hf ??) -Hf [1,2: // ] #Hf
   <(drops_fwd_isid … HL12) -K // <(liftsb_fwd_isid … HI21) -I1
-  /3 width=3 by drops_refl, isid_push/
+  /3 width=3 by drops_refl, pr_isi_push/
 ]
 qed-.
 
@@ -344,18 +344,18 @@ qed-.
 (* Basic_1: was: drop_S *)
 (* Basic_2A1: was: drop_fwd_drop2 *)
 lemma drops_isuni_fwd_drop2: ∀b,f,I,X,K. 𝐔❪f❫ → ⇩*[b,f] X ≘ K.ⓘ[I] → ⇩*[b,↑f] X ≘ K.
-/3 width=7 by drops_after_fwd_drop2, after_isid_isuni/ qed-.
+/3 width=7 by drops_after_fwd_drop2, pr_after_isu_isi_next/ qed-.
 
 (* Inversion lemmas with uniform relocations ********************************)
 
 lemma drops_inv_atom2: ∀b,L,f. ⇩*[b,f] L ≘ ⋆ →
                        ∃∃n,f1. ⇩*[b,𝐔❨n❩] L ≘ ⋆ & 𝐔❨n❩ ⊚ f1 ≘ f.
 #b #L elim L -L
-[ /3 width=4 by drops_atom, after_isid_sn, ex2_2_intro/
-| #L #I #IH #f #H elim (pn_split f) * #g #H0 destruct
+[ /3 width=4 by drops_atom, pr_after_isi_sn, ex2_2_intro/
+| #L #I #IH #f #H elim (pr_map_split_tl f) * #g #H0 destruct
   [ elim (drops_inv_skip1 … H) -H #J #K #_ #_ #H destruct
   | lapply (drops_inv_drop1 … H) -H #HL
-    elim (IH … HL) -IH -HL /3 width=8 by drops_drop, after_next, ex2_2_intro/
+    elim (IH … HL) -IH -HL /3 width=8 by drops_drop, pr_after_next, ex2_2_intro/
   ]
 ]
 qed-.
@@ -363,7 +363,7 @@ qed-.
 lemma drops_inv_succ: ∀L1,L2,i. ⇩[↑i] L1 ≘ L2 →
                       ∃∃I,K. ⇩[i] K ≘ L2 & L1 = K.ⓘ[I].
 #L1 #L2 #i #H elim (drops_inv_isuni … H) -H // *
-[ #H elim (isid_inv_next … H) -H //
+[ #H elim (pr_isi_inv_next … H) -H //
 | /2 width=4 by ex2_2_intro/
 ]
 qed-.
@@ -383,18 +383,18 @@ lemma drops_split_trans: ∀b,f,L1,L2. ⇩*[b,f] L1 ≘ L2 → ∀f1,f2. f1 ⊚ 
 #b #f #L1 #L2 #H elim H -f -L1 -L2
 [ #f #H0f #f1 #f2 #Hf #Hf1 @(ex2_intro … (⋆)) @drops_atom
   #H lapply (H0f H) -b
-  #H elim (after_inv_isid3 … Hf H) -f //
-| #f #I #L1 #L2 #HL12 #IHL12 #f1 #f2 #Hf #Hf1 elim (after_inv_xxn … Hf) -Hf [1,3: * |*: // ]
+  #H elim (pr_after_inv_isi … Hf H) -f //
+| #f #I #L1 #L2 #HL12 #IHL12 #f1 #f2 #Hf #Hf1 elim (pr_after_inv_next … Hf) -Hf [1,3: * |*: // ]
   [ #g1 #g2 #Hf #H1 #H2 destruct
-    lapply (isuni_inv_push … Hf1 ??) -Hf1 [1,2: // ] #Hg1
+    lapply (pr_isu_inv_push … Hf1 ??) -Hf1 [1,2: // ] #Hg1
     elim (IHL12 … Hf) -f
-    /4 width=5 by drops_drop, drops_skip, liftsb_refl, isuni_isid, ex2_intro/
+    /4 width=5 by drops_drop, drops_skip, liftsb_refl, pr_isu_isi, ex2_intro/
   | #g1 #Hf #H destruct elim (IHL12 … Hf) -f
-    /3 width=5 by ex2_intro, drops_drop, isuni_inv_next/
+    /3 width=5 by ex2_intro, drops_drop, pr_isu_inv_next/
   ]
-| #f #I1 #I2 #L1 #L2 #_ #HI21 #IHL12 #f1 #f2 #Hf #Hf1 elim (after_inv_xxp … Hf) -Hf [2,3: // ]
+| #f #I1 #I2 #L1 #L2 #_ #HI21 #IHL12 #f1 #f2 #Hf #Hf1 elim (pr_after_inv_push … Hf) -Hf [2,3: // ]
   #g1 #g2 #Hf #H1 #H2 destruct elim (liftsb_split_trans … HI21 … Hf) -HI21
-  elim (IHL12 … Hf) -f /3 width=5 by ex2_intro, drops_skip, isuni_fwd_push/
+  elim (IHL12 … Hf) -f /3 width=5 by ex2_intro, drops_skip, pr_isu_fwd_push/
 ]
 qed-.
 
@@ -402,15 +402,15 @@ lemma drops_split_div: ∀b,f1,L1,L. ⇩*[b,f1] L1 ≘ L → ∀f2,f. f1 ⊚ f2 
                        ∃∃L2. ⇩*[Ⓕ,f2] L ≘ L2 & ⇩*[Ⓕ,f] L1 ≘ L2.
 #b #f1 #L1 #L #H elim H -f1 -L1 -L
 [ #f1 #Hf1 #f2 #f #Hf #Hf2 @(ex2_intro … (⋆)) @drops_atom #H destruct
-| #f1 #I #L1 #L #HL1 #IH #f2 #f #Hf #Hf2 elim (after_inv_nxx … Hf) -Hf [2,3: // ]
+| #f1 #I #L1 #L #HL1 #IH #f2 #f #Hf #Hf2 elim (pr_after_inv_next_sn … Hf) -Hf [2,3: // ]
   #g #Hg #H destruct elim (IH … Hg) -IH -Hg /3 width=5 by drops_drop, ex2_intro/
 | #f1 #I1 #I #L1 #L #HL1 #HI1 #IH #f2 #f #Hf #Hf2
-  elim (after_inv_pxx … Hf) -Hf [1,3: * |*: // ]
+  elim (pr_after_inv_push_sn … Hf) -Hf [1,3: * |*: // ]
   #g2 #g #Hg #H2 #H0 destruct
-  [ lapply (isuni_inv_push … Hf2 ??) -Hf2 [1,2: // ] #Hg2 -IH
-    lapply (after_isid_inv_dx … Hg … Hg2) -Hg #Hg
-    /5 width=7 by drops_eq_repl_back, drops_F, drops_refl, drops_skip, liftsb_eq_repl_back, isid_push, ex2_intro/
-  | lapply (isuni_inv_next … Hf2 ??) -Hf2 [1,2: // ] #Hg2 -HL1 -HI1
+  [ lapply (pr_isu_inv_push … Hf2 ??) -Hf2 [1,2: // ] #Hg2 -IH
+    lapply (pr_after_isi_inv_dx … Hg … Hg2) -Hg #Hg
+    /5 width=7 by drops_eq_repl_back, drops_F, drops_refl, drops_skip, liftsb_eq_repl_back, pr_isi_push, ex2_intro/
+  | lapply (pr_isu_inv_next … Hf2 ??) -Hf2 [1,2: // ] #Hg2 -HL1 -HI1
     elim (IH … Hg) -f1 /3 width=3 by drops_drop, ex2_intro/
   ]
 ]
@@ -421,12 +421,12 @@ qed-.
 lemma drops_tls_at: ∀f,i1,i2. @❪i1,f❫ ≘ i2 →
                     ∀b,L1,L2. ⇩*[b,⫰*[i2]f] L1 ≘ L2 →
                     ⇩*[b,⫯⫰*[↑i2]f] L1 ≘ L2.
-/3 width=3 by drops_eq_repl_fwd, at_inv_tls/ qed-.
+/3 width=3 by drops_eq_repl_fwd, pr_pat_inv_succ_dx_tls/ qed-.
 
 lemma drops_split_trans_bind2: ∀b,f,I,L,K0. ⇩*[b,f] L ≘ K0.ⓘ[I] → ∀i. @❪O,f❫ ≘ i →
                                ∃∃J,K. ⇩[i]L ≘ K.ⓘ[J] & ⇩*[b,⫰*[↑i]f] K ≘ K0 & ⇧*[⫰*[↑i]f] I ≘ J.
 #b #f #I #L #K0 #H #i #Hf
-elim (drops_split_trans … H) -H [ |5: @(after_uni_dx … Hf) |2,3: skip ] /2 width=1 by after_isid_dx/ #Y #HLY #H
+elim (drops_split_trans … H) -H [ |5: @(pr_after_nat_uni … Hf) |2,3: skip ] /2 width=1 by pr_after_isi_dx/ #Y #HLY #H
 lapply (drops_tls_at … Hf … H) -H #H
 elim (drops_inv_skip2 … H) -H #J #K #HK0 #HIJ #H destruct
 /3 width=5 by drops_inv_gen, ex3_2_intro/

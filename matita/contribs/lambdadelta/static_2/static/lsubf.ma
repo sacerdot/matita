@@ -24,7 +24,7 @@ include "static_2/static/frees.ma".
 
 (* RESTRICTED REFINEMENT FOR CONTEXT-SENSITIVE FREE VARIABLES ***************)
 
-inductive lsubf: relation4 lenv rtmap lenv rtmap ≝
+inductive lsubf: relation4 lenv pr_map lenv pr_map ≝
 | lsubf_atom: ∀f1,f2. f1 ≡ f2 → lsubf (⋆) f1 (⋆) f2
 | lsubf_push: ∀f1,f2,I1,I2,L1,L2. lsubf L1 (f1) L2 (f2) →
               lsubf (L1.ⓘ[I1]) (⫯f1) (L2.ⓘ[I2]) (⫯f2)
@@ -64,10 +64,10 @@ fact lsubf_inv_push1_aux:
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ #f1 #f2 #_ #g1 #J1 #K1 #_ #H destruct
 | #f1 #f2 #I1 #I2 #L1 #L2 #H12 #g1 #J1 #K1 #H1 #H2 destruct
-  <(injective_push … H1) -g1 /2 width=6 by ex3_3_intro/
-| #f1 #f2 #I #L1 #L2 #_ #g1 #J1 #K1 #H elim (discr_next_push … H)
-| #f #f0 #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #g1 #J1 #K1 #H elim (discr_next_push … H)
-| #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #_ #_ #_ #g1 #J1 #K1 #H elim (discr_next_push … H)
+  <(eq_inv_pr_push_bi … H1) -g1 /2 width=6 by ex3_3_intro/
+| #f1 #f2 #I #L1 #L2 #_ #g1 #J1 #K1 #H elim (eq_inv_pr_next_push … H)
+| #f #f0 #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #g1 #J1 #K1 #H elim (eq_inv_pr_next_push … H)
+| #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #_ #_ #_ #g1 #J1 #K1 #H elim (eq_inv_pr_next_push … H)
 ]
 qed-.
 
@@ -87,13 +87,13 @@ fact lsubf_inv_pair1_aux:
           K1 ⊢ 𝐅+❪X❫ ≘ g & g0 ⋓ g ≘ g1 & f2 = ↑g2 & L2 = K2.ⓤ[J].
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ #f1 #f2 #_ #g1 #J #K1 #X #_ #H destruct
-| #f1 #f2 #I1 #I2 #L1 #L2 #H12 #g1 #J #K1 #X #H elim (discr_push_next … H)
+| #f1 #f2 #I1 #I2 #L1 #L2 #H12 #g1 #J #K1 #X #H elim (eq_inv_pr_push_next … H)
 | #f1 #f2 #I #L1 #L2 #H12 #g1 #J #K1 #X #H1 #H2 destruct
-  <(injective_next … H1) -g1 /3 width=5 by or3_intro0, ex3_2_intro/
+  <(eq_inv_pr_next_bi … H1) -g1 /3 width=5 by or3_intro0, ex3_2_intro/
 | #f #f0 #f1 #f2 #L1 #L2 #W #V #Hf #Hf1 #H12 #g1 #J #K1 #X #H1 #H2 destruct
-  <(injective_next … H1) -g1 /3 width=12 by or3_intro1, ex7_6_intro/
+  <(eq_inv_pr_next_bi … H1) -g1 /3 width=12 by or3_intro1, ex7_6_intro/
 | #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #Hf #Hf1 #H12 #g1 #J #K1 #X #H1 #H2 destruct
-  <(injective_next … H1) -g1 /3 width=10 by or3_intro2, ex5_5_intro/
+  <(eq_inv_pr_next_bi … H1) -g1 /3 width=10 by or3_intro2, ex5_5_intro/
 ]
 qed-.
 
@@ -113,9 +113,9 @@ fact lsubf_inv_unit1_aux:
      ∃∃g2,K2. ❪K1,g1❫ ⫃𝐅+ ❪K2,g2❫ & f2 = ↑g2 & L2 = K2.ⓤ[I].
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ #f1 #f2 #_ #g1 #J #K1 #_ #H destruct
-| #f1 #f2 #I1 #I2 #L1 #L2 #H12 #g1 #J #K1 #H elim (discr_push_next … H)
+| #f1 #f2 #I1 #I2 #L1 #L2 #H12 #g1 #J #K1 #H elim (eq_inv_pr_push_next … H)
 | #f1 #f2 #I #L1 #L2 #H12 #g1 #J #K1 #H1 #H2 destruct
-  <(injective_next … H1) -g1 /2 width=5 by ex3_2_intro/
+  <(eq_inv_pr_next_bi … H1) -g1 /2 width=5 by ex3_2_intro/
 | #f #f0 #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #g1 #J #K1 #_ #H destruct
 | #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #_ #_ #_ #g1 #J #K1 #_ #H destruct
 ]
@@ -148,10 +148,10 @@ fact lsubf_inv_push2_aux:
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ #f1 #f2 #_ #g2 #J2 #K2 #_ #H destruct
 | #f1 #f2 #I1 #I2 #L1 #L2 #H12 #g2 #J2 #K2 #H1 #H2 destruct
-  <(injective_push … H1) -g2 /2 width=6 by ex3_3_intro/
-| #f1 #f2 #I #L1 #L2 #_ #g2 #J2 #K2 #H elim (discr_next_push … H)
-| #f #f0 #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #g2 #J2 #K2 #H elim (discr_next_push … H)
-| #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #_ #_ #_ #g2 #J2 #K2 #H elim (discr_next_push … H)
+  <(eq_inv_pr_push_bi … H1) -g2 /2 width=6 by ex3_3_intro/
+| #f1 #f2 #I #L1 #L2 #_ #g2 #J2 #K2 #H elim (eq_inv_pr_next_push … H)
+| #f #f0 #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #g2 #J2 #K2 #H elim (eq_inv_pr_next_push … H)
+| #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #_ #_ #_ #g2 #J2 #K2 #H elim (eq_inv_pr_next_push … H)
 ]
 qed-.
 
@@ -169,11 +169,11 @@ fact lsubf_inv_pair2_aux:
           I = Abst & L1 = K1.ⓓⓝW.V.
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ #f1 #f2 #_ #g2 #J #K2 #X #_ #H destruct
-| #f1 #f2 #I1 #I2 #L1 #L2 #H12 #g2 #J #K2 #X #H elim (discr_push_next … H)
+| #f1 #f2 #I1 #I2 #L1 #L2 #H12 #g2 #J #K2 #X #H elim (eq_inv_pr_push_next … H)
 | #f1 #f2 #I #L1 #L2 #H12 #g2 #J #K2 #X #H1 #H2 destruct
-  <(injective_next … H1) -g2 /3 width=5 by ex3_2_intro, or_introl/
+  <(eq_inv_pr_next_bi … H1) -g2 /3 width=5 by ex3_2_intro, or_introl/
 | #f #f0 #f1 #f2 #L1 #L2 #W #V #Hf #Hf1 #H12 #g2 #J #K2 #X #H1 #H2 destruct
-  <(injective_next … H1) -g2 /3 width=10 by ex6_5_intro, or_intror/
+  <(eq_inv_pr_next_bi … H1) -g2 /3 width=10 by ex6_5_intro, or_intror/
 | #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #_ #_ #_ #g2 #J #K2 #X #_ #H destruct
 ]
 qed-.
@@ -194,12 +194,12 @@ fact lsubf_inv_unit2_aux:
           K1 ⊢ 𝐅+❪V❫ ≘ g & g0 ⋓ g ≘ g1 & f1 = ↑g1 & L1 = K1.ⓑ[J]V.
 #f1 #f2 #L1 #L2 * -f1 -f2 -L1 -L2
 [ #f1 #f2 #_ #g2 #J #K2 #_ #H destruct
-| #f1 #f2 #I1 #I2 #L1 #L2 #H12 #g2 #J #K2 #H elim (discr_push_next … H)
+| #f1 #f2 #I1 #I2 #L1 #L2 #H12 #g2 #J #K2 #H elim (eq_inv_pr_push_next … H)
 | #f1 #f2 #I #L1 #L2 #H12 #g2 #J #K2 #H1 #H2 destruct
-  <(injective_next … H1) -g2 /3 width=5 by ex3_2_intro, or_introl/
+  <(eq_inv_pr_next_bi … H1) -g2 /3 width=5 by ex3_2_intro, or_introl/
 | #f #f0 #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #g2 #J #K2 #_ #H destruct
 | #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #Hf #Hf1 #H12 #g2 #J #K2 #H1 #H2 destruct
-  <(injective_next … H1) -g2 /3 width=11 by ex5_6_intro, or_intror/
+  <(eq_inv_pr_next_bi … H1) -g2 /3 width=11 by ex5_6_intro, or_intror/
 ]
 qed-.
 
@@ -262,9 +262,9 @@ qed-.
 lemma lsubf_inv_refl: ∀L,f1,f2. ❪L,f1❫ ⫃𝐅+ ❪L,f2❫ → f1 ≡ f2.
 #L elim L -L /2 width=1 by lsubf_inv_atom/
 #L #I #IH #f1 #f2 #H12
-elim (pn_split f1) * #g1 #H destruct
+elim (pr_map_split_tl f1) * #g1 #H destruct
 [ elim (lsubf_inv_push_sn … H12) | elim (lsubf_inv_bind_sn … H12) ] -H12
-#g2 #H12 #H destruct /3 width=5 by eq_next, eq_push/
+#g2 #H12 #H destruct /3 width=5 by pr_eq_next, pr_eq_push/
 qed-.
 
 (* Basic forward lemmas *****************************************************)
@@ -272,42 +272,42 @@ qed-.
 lemma lsubf_fwd_bind_tl:
       ∀f1,f2,I,L1,L2. ❪L1.ⓘ[I],f1❫ ⫃𝐅+ ❪L2.ⓘ[I],f2❫ → ❪L1,⫰f1❫ ⫃𝐅+ ❪L2,⫰f2❫.
 #f1 #f2 #I #L1 #L2 #H
-elim (pn_split f1) * #g1 #H0 destruct
+elim (pr_map_split_tl f1) * #g1 #H0 destruct
 [ elim (lsubf_inv_push_sn … H) | elim (lsubf_inv_bind_sn … H) ] -H
 #g2 #H12 #H destruct //
 qed-.
 
 lemma lsubf_fwd_isid_dx: ∀f1,f2,L1,L2. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫ → 𝐈❪f2❫ → 𝐈❪f1❫.
 #f1 #f2 #L1 #L2 #H elim H -f1 -f2 -L1 -L2
-[ /2 width=3 by isid_eq_repl_fwd/
-| /4 width=3 by isid_inv_push, isid_push/
-| #f1 #f2 #I #L1 #L2 #_ #_ #H elim (isid_inv_next … H) -H //
-| #f #f0 #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #_ #H elim (isid_inv_next … H) -H //
-| #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #_ #_ #_ #_ #H elim (isid_inv_next … H) -H //
+[ /2 width=3 by pr_isi_eq_repl_fwd/
+| /4 width=3 by pr_isi_inv_push, pr_isi_push/
+| #f1 #f2 #I #L1 #L2 #_ #_ #H elim (pr_isi_inv_next … H) -H //
+| #f #f0 #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #_ #H elim (pr_isi_inv_next … H) -H //
+| #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #_ #_ #_ #_ #H elim (pr_isi_inv_next … H) -H //
 ]
 qed-.
 
 lemma lsubf_fwd_isid_sn: ∀f1,f2,L1,L2. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫ → 𝐈❪f1❫ → 𝐈❪f2❫.
 #f1 #f2 #L1 #L2 #H elim H -f1 -f2 -L1 -L2
-[ /2 width=3 by isid_eq_repl_back/
-| /4 width=3 by isid_inv_push, isid_push/
-| #f1 #f2 #I #L1 #L2 #_ #_ #H elim (isid_inv_next … H) -H //
-| #f #f0 #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #_ #H elim (isid_inv_next … H) -H //
-| #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #_ #_ #_ #_ #H elim (isid_inv_next … H) -H //
+[ /2 width=3 by pr_isi_eq_repl_back/
+| /4 width=3 by pr_isi_inv_push, pr_isi_push/
+| #f1 #f2 #I #L1 #L2 #_ #_ #H elim (pr_isi_inv_next … H) -H //
+| #f #f0 #f1 #f2 #L1 #L2 #W #V #_ #_ #_ #_ #H elim (pr_isi_inv_next … H) -H //
+| #f #f0 #f1 #f2 #I1 #I2 #L1 #L2 #V #_ #_ #_ #_ #H elim (pr_isi_inv_next … H) -H //
 ]
 qed-.
 
 lemma lsubf_fwd_sle: ∀f1,f2,L1,L2. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫ → f2 ⊆ f1.
 #f1 #f2 #L1 #L2 #H elim H -f1 -f2 -L1 -L2
-/3 width=5 by sor_inv_sle_sn_trans, sle_next, sle_push, sle_refl_eq, eq_sym/
+/3 width=5 by pr_sor_inv_sle_sn_trans, pr_sle_next, pr_sle_push, pr_sle_refl_eq, pr_eq_sym/
 qed-.
 
 (* Basic properties *********************************************************)
 
-lemma lsubf_eq_repl_back1: ∀f2,L1,L2. eq_repl_back … (λf1. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫).
+lemma lsubf_eq_repl_back1: ∀f2,L1,L2. pr_eq_repl_back … (λf1. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫).
 #f2 #L1 #L2 #f #H elim H -f -f2 -L1 -L2
 [ #f1 #f2 #Hf12 #g1 #Hfg1
-  /3 width=3 by lsubf_atom, eq_canc_sn/
+  /3 width=3 by lsubf_atom, pr_eq_canc_sn/
 | #f1 #f2 #I1 #I2 #K1 #K2 #_ #IH #g #H
   elim (eq_inv_px … H) -H [|*: // ] #g1 #Hfg1 #H destruct
   /3 width=1 by lsubf_push/
@@ -316,21 +316,21 @@ lemma lsubf_eq_repl_back1: ∀f2,L1,L2. eq_repl_back … (λf1. ❪L1,f1❫ ⫃�
   /3 width=1 by lsubf_bind/
 | #f #f0 #f1 #f2 #K1 #L2 #W #V #Hf #Hf1 #_ #IH #g #H
   elim (eq_inv_nx … H) -H [|*: // ] #g1 #Hfg1 #H destruct
-  /3 width=5 by lsubf_beta, sor_eq_repl_back3/
+  /3 width=5 by lsubf_beta, pr_sor_eq_repl_back/
 | #f #f0 #f1 #f2 #I1 #I2 #K1 #K2 #V #Hf #Hf1 #_ #IH #g #H
   elim (eq_inv_nx … H) -H [|*: // ] #g1 #Hfg1 #H destruct
-  /3 width=5 by lsubf_unit, sor_eq_repl_back3/
+  /3 width=5 by lsubf_unit, pr_sor_eq_repl_back/
 ]
 qed-.
 
-lemma lsubf_eq_repl_fwd1: ∀f2,L1,L2. eq_repl_fwd … (λf1. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫).
-#f2 #L1 #L2 @eq_repl_sym /2 width=3 by lsubf_eq_repl_back1/
+lemma lsubf_eq_repl_fwd1: ∀f2,L1,L2. pr_eq_repl_fwd … (λf1. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫).
+#f2 #L1 #L2 @pr_eq_repl_sym /2 width=3 by lsubf_eq_repl_back1/
 qed-.
 
-lemma lsubf_eq_repl_back2: ∀f1,L1,L2. eq_repl_back … (λf2. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫).
+lemma lsubf_eq_repl_back2: ∀f1,L1,L2. pr_eq_repl_back … (λf2. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫).
 #f1 #L1 #L2 #f #H elim H -f1 -f -L1 -L2
 [ #f1 #f2 #Hf12 #g2 #Hfg2
-  /3 width=3 by lsubf_atom, eq_trans/
+  /3 width=3 by lsubf_atom, pr_eq_trans/
 | #f1 #f2 #I1 #I2 #K1 #K2 #_ #IH #g #H
   elim (eq_inv_px … H) -H [|*: // ] #g2 #Hfg2 #H destruct
   /3 width=1 by lsubf_push/
@@ -346,13 +346,13 @@ lemma lsubf_eq_repl_back2: ∀f1,L1,L2. eq_repl_back … (λf2. ❪L1,f1❫ ⫃�
 ]
 qed-.
 
-lemma lsubf_eq_repl_fwd2: ∀f1,L1,L2. eq_repl_fwd … (λf2. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫).
-#f1 #L1 #L2 @eq_repl_sym /2 width=3 by lsubf_eq_repl_back2/
+lemma lsubf_eq_repl_fwd2: ∀f1,L1,L2. pr_eq_repl_fwd … (λf2. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫).
+#f1 #L1 #L2 @pr_eq_repl_sym /2 width=3 by lsubf_eq_repl_back2/
 qed-.
 
 lemma lsubf_refl: bi_reflexive … lsubf.
-#L elim L -L /2 width=1 by lsubf_atom, eq_refl/
-#L #I #IH #f elim (pn_split f) * #g #H destruct
+#L elim L -L /2 width=1 by lsubf_atom, pr_eq_refl/
+#L #I #IH #f elim (pr_map_split_tl f) * #g #H destruct
 /2 width=1 by lsubf_push, lsubf_bind/
 qed.
 
@@ -363,7 +363,7 @@ lemma lsubf_bind_tl_dx:
       ∀g1,f2,I,L1,L2. ❪L1,g1❫ ⫃𝐅+ ❪L2,⫰f2❫ →
       ∃∃f1. ❪L1.ⓘ[I],f1❫ ⫃𝐅+ ❪L2.ⓘ[I],f2❫ & g1 = ⫰f1.
 #g1 #f2 #I #L1 #L2 #H
-elim (pn_split f2) * #g2 #H2 destruct
+elim (pr_map_split_tl f2) * #g2 #H2 destruct
 @ex2_intro [1,2,4,5: /2 width=2 by lsubf_push, lsubf_bind/ ] // (**) (* constructor needed *)
 qed-.
 
@@ -372,8 +372,8 @@ lemma lsubf_beta_tl_dx:
       ∀f2,L2,W. ❪L1,f0❫ ⫃𝐅+ ❪L2,⫰f2❫ →
       ∃∃f1. ❪L1.ⓓⓝW.V,f1❫ ⫃𝐅+ ❪L2.ⓛW,f2❫ & ⫰f1 ⊆ g1.
 #f #f0 #g1 #L1 #V #Hf #Hg1 #f2
-elim (pn_split f2) * #x2 #H2 #L2 #W #HL12 destruct
-[ /3 width=4 by lsubf_push, sor_inv_sle_sn, ex2_intro/
+elim (pr_map_split_tl f2) * #x2 #H2 #L2 #W #HL12 destruct
+[ /3 width=4 by lsubf_push, pr_sor_inv_sle_sn, ex2_intro/
 | @(ex2_intro … (↑g1)) /2 width=5 by lsubf_beta/ (**) (* full auto fails *)
 ]
 qed-.
@@ -384,32 +384,32 @@ lemma lsubf_inv_sor_dx:
       ∀f2l,f2r. f2l⋓f2r ≘ f2 →
       ∃∃f1l,f1r. ❪L1,f1l❫ ⫃𝐅+ ❪L2,f2l❫ & ❪L1,f1r❫ ⫃𝐅+ ❪L2,f2r❫ & f1l⋓f1r ≘ f1.
 #f1 #f2 #L1 #L2 #H elim H -f1 -f2 -L1 -L2
-[ /3 width=7 by sor_eq_repl_fwd3, ex3_2_intro/
+[ /3 width=7 by pr_sor_eq_repl_fwd, ex3_2_intro/
 | #g1 #g2 #I1 #I2 #L1 #L2 #_ #IH #f2l #f2r #H
-  elim (sor_inv_xxp … H) -H [|*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
-  elim (IH … Hg2) -g2 /3 width=11 by lsubf_push, sor_pp, ex3_2_intro/
+  elim (pr_sor_inv_push … H) -H [|*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
+  elim (IH … Hg2) -g2 /3 width=11 by lsubf_push, pr_sor_push_bi, ex3_2_intro/
 | #g1 #g2 #I #L1 #L2 #_ #IH #f2l #f2r #H
-  elim (sor_inv_xxn … H) -H [1,3,4: * |*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
-  elim (IH … Hg2) -g2 /3 width=11 by lsubf_push, lsubf_bind, sor_np, sor_pn, sor_nn, ex3_2_intro/
+  elim (pr_sor_inv_next … H) -H [1,3,4: * |*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
+  elim (IH … Hg2) -g2 /3 width=11 by lsubf_push, lsubf_bind, pr_sor_next_push, pr_sor_push_next, pr_sor_next_bi, ex3_2_intro/
 | #g #g0 #g1 #g2 #L1 #L2 #W #V #Hg #Hg1 #_ #IH #f2l #f2r #H
-  elim (sor_inv_xxn … H) -H [1,3,4: * |*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
+  elim (pr_sor_inv_next … H) -H [1,3,4: * |*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
   elim (IH … Hg2) -g2 #g1l #g1r #Hl #Hr #Hg0
-  [ lapply (sor_comm_23 … Hg0 Hg1 ?) -g0 [3: |*: // ] #Hg1
-    /3 width=11 by lsubf_push, lsubf_beta, sor_np, ex3_2_intro/
-  | lapply (sor_assoc_dx … Hg1 … Hg0 ??) -g0 [3: |*: // ] #Hg1
-    /3 width=11 by lsubf_push, lsubf_beta, sor_pn, ex3_2_intro/
-  | lapply (sor_distr_dx … Hg0 … Hg1) -g0 [5: |*: // ] #Hg1
-    /3 width=11 by lsubf_beta, sor_nn, ex3_2_intro/
+  [ lapply (pr_sor_comm_23 … Hg0 Hg1 ?) -g0 [3: |*: // ] #Hg1
+    /3 width=11 by lsubf_push, lsubf_beta, pr_sor_next_push, ex3_2_intro/
+  | lapply (pr_sor_assoc_dx … Hg1 … Hg0 ??) -g0 [3: |*: // ] #Hg1
+    /3 width=11 by lsubf_push, lsubf_beta, pr_sor_push_next, ex3_2_intro/
+  | lapply (pr_sor_distr_dx … Hg0 … Hg1) -g0 [5: |*: // ] #Hg1
+    /3 width=11 by lsubf_beta, pr_sor_next_bi, ex3_2_intro/
   ]
 | #g #g0 #g1 #g2 #I1 #I2 #L1 #L2 #V #Hg #Hg1 #_ #IH #f2l #f2r #H
-  elim (sor_inv_xxn … H) -H [1,3,4: * |*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
+  elim (pr_sor_inv_next … H) -H [1,3,4: * |*: // ] #g2l #g2r #Hg2 #Hl #Hr destruct
   elim (IH … Hg2) -g2 #g1l #g1r #Hl #Hr #Hg0
-  [ lapply (sor_comm_23 … Hg0 Hg1 ?) -g0 [3: |*: // ] #Hg1
-    /3 width=11 by lsubf_push, lsubf_unit, sor_np, ex3_2_intro/
-  | lapply (sor_assoc_dx … Hg1 … Hg0 ??) -g0 [3: |*: // ] #Hg1
-    /3 width=11 by lsubf_push, lsubf_unit, sor_pn, ex3_2_intro/
-  | lapply (sor_distr_dx … Hg0 … Hg1) -g0 [5: |*: // ] #Hg1
-    /3 width=11 by lsubf_unit, sor_nn, ex3_2_intro/
+  [ lapply (pr_sor_comm_23 … Hg0 Hg1 ?) -g0 [3: |*: // ] #Hg1
+    /3 width=11 by lsubf_push, lsubf_unit, pr_sor_next_push, ex3_2_intro/
+  | lapply (pr_sor_assoc_dx … Hg1 … Hg0 ??) -g0 [3: |*: // ] #Hg1
+    /3 width=11 by lsubf_push, lsubf_unit, pr_sor_push_next, ex3_2_intro/
+  | lapply (pr_sor_distr_dx … Hg0 … Hg1) -g0 [5: |*: // ] #Hg1
+    /3 width=11 by lsubf_unit, pr_sor_next_bi, ex3_2_intro/
   ]
 ]
 qed-.

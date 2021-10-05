@@ -59,7 +59,7 @@ lemma teqo_inv_lifts_bi: deliftable2_bi teqo.
 | #j #f #X1 #H1 #X2 #H2
   elim (lifts_inv_lref2 … H1) -H1 #i1 #Hj1 #H destruct
   elim (lifts_inv_lref2 … H2) -H2 #i2 #Hj2 #H destruct
-  <(at_inj … Hj2 … Hj1) -j -f -i1
+  <(pr_pat_inj … Hj2 … Hj1) -j -f -i1
   /1 width=1 by teqo_lref/
 | #l #f #X1 #H1 #X2 #H2
   >(lifts_inv_gref2 … H1) -H1 >(lifts_inv_gref2 … H2) -H2

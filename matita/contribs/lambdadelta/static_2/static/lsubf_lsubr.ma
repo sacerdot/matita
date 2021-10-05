@@ -22,11 +22,11 @@ include "static_2/static/lsubf_lsubf.ma".
 lemma lsubf_fwd_lsubr_isdiv:
       ∀f1,f2,L1,L2. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫ → 𝛀❪f1❫ → 𝛀❪f2❫ → L1 ⫃ L2.
 #f1 #f2 #L1 #L2 #H elim H -f1 -f2 -L1 -L2
-/4 width=3 by lsubr_bind, isdiv_inv_next/
+/4 width=3 by lsubr_bind, pr_isd_inv_next/
 [ #f1 #f2 #I1 #I2 #L1 #L2 #_ #_ #H
-  elim (isdiv_inv_push … H) //
-| /5 width=5 by lsubf_fwd_sle, lsubr_beta, sle_inv_isdiv_sn, isdiv_inv_next/
-| /5 width=5 by lsubf_fwd_sle, lsubr_unit, sle_inv_isdiv_sn, isdiv_inv_next/
+  elim (pr_isd_inv_push … H) //
+| /5 width=5 by lsubf_fwd_sle, lsubr_beta, pr_sle_inv_isd_sn, pr_isd_inv_next/
+| /5 width=5 by lsubf_fwd_sle, lsubr_unit, pr_sle_inv_isd_sn, pr_isd_inv_next/
 ]
 qed-.
 
@@ -35,12 +35,12 @@ qed-.
 lemma lsubr_lsubf_isid:
       ∀L1,L2. L1 ⫃ L2 → ∀f1,f2. 𝐈❪f1❫ → 𝐈❪f2❫ → ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫.
 #L1 #L2 #H elim H -L1 -L2
-[ /3 width=1 by lsubf_atom, isid_inv_eq_repl/
+[ /3 width=1 by lsubf_atom, pr_isi_inv_eq_repl/
 | #I #L1 #L2 | #L1 #L2 #V #W | #I1 #I2 #L1 #L2 #V
 ]
 #_ #IH #f1 #f2 #Hf1 #Hf2
-elim (isid_inv_gen … Hf1) -Hf1 #g1 #Hg1 #H destruct
-elim (isid_inv_gen … Hf2) -Hf2 #g2 #Hg2 #H destruct
+elim (pr_isi_inv_gen … Hf1) -Hf1 #g1 #Hg1 #H destruct
+elim (pr_isi_inv_gen … Hf2) -Hf2 #g2 #Hg2 #H destruct
 /3 width=1 by lsubf_push/
 qed.
 
@@ -53,7 +53,7 @@ lemma lsubr_lsubf:
 | #f2 #i #Hf2 #Y1 #HY1
   >(lsubr_inv_atom2 … HY1) -Y1 #g1 #Hg1
   elim (frees_inv_atom … Hg1) -Hg1 #f1 #Hf1 #H destruct
-  /5 width=5 by lsubf_atom, isid_inv_eq_repl, pushs_eq_repl, eq_next/
+  /5 width=5 by lsubf_atom, pr_isi_inv_eq_repl, pr_pushs_eq_repl, pr_eq_next/
 | #f2 #Z #L2 #W #_ #IH #Y1 #HY1 #g1 #Hg1 elim (lsubr_inv_pair2 … HY1) -HY1 *
   [ #L1 #HL12 #H destruct
     elim (frees_inv_pair … Hg1) -Hg1 #f1 #Hf1 #H destruct
@@ -68,7 +68,7 @@ lemma lsubr_lsubf:
     /3 width=1 by lsubf_bind, lsubr_lsubf_isid/
   | #I #L1 #V #HL12 #H destruct
     elim (frees_inv_pair … Hg1) -Hg1 #f1 #Hf1 #H destruct
-    /3 width=5 by lsubf_unit, sor_isid_sn, lsubr_lsubf_isid/
+    /3 width=5 by lsubf_unit, pr_sor_isi_sn, lsubr_lsubf_isid/
   ]
 | #f2 #I2 #L2 #i #_ #IH #Y1 #HY1 #g1 #Hg1
   elim (lsubr_fwd_bind2 … HY1) -HY1 #I1 #L1 #HL12 #H destruct

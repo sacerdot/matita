@@ -26,10 +26,10 @@ theorem drops_conf: ∀b1,f1,L1,L. ⇩*[b1,f1] L1 ≘ L →
 #b1 #f1 #L1 #L #H elim H -f1 -L1 -L
 [ #f1 #_ #b2 #f #L2 #HL2 #f2 #Hf12 elim (drops_inv_atom1 … HL2) -b1 -HL2
   #H #Hf destruct @drops_atom
-  #H elim (after_inv_isid3 … Hf12) -Hf12 /2 width=1 by/
-| #f1 #I1 #K1 #K #_ #IH #b2 #f #L2 #HL2 #f2 #Hf elim (after_inv_nxx … Hf) -Hf [2,3: // ]
+  #H elim (pr_after_inv_isi … Hf12) -Hf12 /2 width=1 by/
+| #f1 #I1 #K1 #K #_ #IH #b2 #f #L2 #HL2 #f2 #Hf elim (pr_after_inv_next_sn … Hf) -Hf [2,3: // ]
   #g #Hg #H destruct /3 width=3 by drops_inv_drop1/
-| #f1 #I1 #I #K1 #K #_ #HI1 #IH #b2 #f #L2 #HL2 #f2 #Hf elim (after_inv_pxx … Hf) -Hf [1,3: * |*:// ]
+| #f1 #I1 #I #K1 #K #_ #HI1 #IH #b2 #f #L2 #HL2 #f2 #Hf elim (pr_after_inv_push_sn … Hf) -Hf [1,3: * |*:// ]
   #g2 #g #Hf #H1 #H2 destruct
   [ elim (drops_inv_skip1 … HL2) -HL2 /3 width=6 by drops_skip, liftsb_div3/
   | /4 width=3 by drops_inv_drop1, drops_drop/
@@ -47,11 +47,11 @@ theorem drops_trans: ∀b1,f1,L1,L. ⇩*[b1,f1] L1 ≘ L →
 #b1 #f1 #L1 #L #H elim H -f1 -L1 -L
 [ #f1 #Hf1 #b2 #f2 #L2 #HL2 #f #Hf elim (drops_inv_atom1 … HL2) -HL2
   #H #Hf2 destruct @drops_atom #H elim (andb_inv_true_dx … H) -H
-  #H1 #H2 lapply (after_isid_inv_sn … Hf ?) -Hf
-  /3 width=3 by isid_eq_repl_back/
-| #f1 #I1 #K1 #K #_ #IH #b2 #f2 #L2 #HL2 #f #Hf elim (after_inv_nxx … Hf) -Hf
+  #H1 #H2 lapply (pr_after_isi_inv_sn … Hf ?) -Hf
+  /3 width=3 by pr_isi_eq_repl_back/
+| #f1 #I1 #K1 #K #_ #IH #b2 #f2 #L2 #HL2 #f #Hf elim (pr_after_inv_next_sn … Hf) -Hf
   /3 width=3 by drops_drop/
-| #f1 #I1 #I #K1 #K #_ #HI1 #IH #b2 #f2 #L2 #HL2 #f #Hf elim (after_inv_pxx … Hf) -Hf [1,3: * |*: // ]
+| #f1 #I1 #I #K1 #K #_ #HI1 #IH #b2 #f2 #L2 #HL2 #f #Hf elim (pr_after_inv_push_sn … Hf) -Hf [1,3: * |*: // ]
   #g2 #g #Hg #H1 #H2 destruct
   [ elim (drops_inv_skip1 … HL2) -HL2 /3 width=6 by drops_skip, liftsb_trans/
   | /4 width=3 by drops_inv_drop1, drops_drop/
@@ -64,20 +64,20 @@ theorem drops_conf_div_isuni:
         𝐔❪f1❫ → 𝐔❪f2❫ → f1 ≡ f2.
 #f1 #L #K #H elim H -f1 -L -K
 [ #f1 #Hf1 #f2 #Hf2 elim (drops_inv_atom1 … Hf2) -Hf2
-  /3 width=1 by isid_inv_eq_repl/
-| #f1 #I #L #K #Hf1 #IH #f2 elim (pn_split f2) *
+  /3 width=1 by pr_isi_inv_eq_repl/
+| #f1 #I #L #K #Hf1 #IH #f2 elim (pr_map_split_tl f2) *
   #g2 #H2 #Hf2 #HU1 #HU2 destruct
   [ elim (drops_inv_skip1 … Hf2) -IH -HU1 -Hf2 #Y2 #X2 #HY2 #_ #H destruct
-    lapply (drops_fwd_isid … HY2 ?) -HY2 /2 width=3 by isuni_inv_push/ -HU2
+    lapply (drops_fwd_isid … HY2 ?) -HY2 /2 width=3 by pr_isu_inv_push/ -HU2
     #H destruct elim (drops_inv_x_bind_xy … Hf1)
-  | /4 width=5 by drops_inv_drop1, isuni_inv_next, eq_next/
+  | /4 width=5 by drops_inv_drop1, pr_isu_inv_next, pr_eq_next/
   ]
-| #f1 #I1 #I2 #L #K #Hf1 #_ #IH #f2 elim (pn_split f2) *
+| #f1 #I1 #I2 #L #K #Hf1 #_ #IH #f2 elim (pr_map_split_tl f2) *
   #g2 #H2 #Hf2 #HU1 #HU2 destruct
   [ elim (drops_inv_skip1 … Hf2) -Hf2 #Y2 #X2 #HY2 #_ #H destruct -Hf1
-    /4 width=5 by isuni_fwd_push, eq_push/
+    /4 width=5 by pr_isu_fwd_push, pr_eq_push/
   | lapply (drops_inv_drop1 … Hf2) -Hf2 -IH -HU2 #Hg2
-    lapply (drops_fwd_isid … Hf1 ?) -Hf1 /2 width=3 by isuni_inv_push/ -HU1
+    lapply (drops_fwd_isid … Hf1 ?) -Hf1 /2 width=3 by pr_isu_inv_push/ -HU1
     #H destruct elim (drops_inv_x_bind_xy … Hg2)
   ]
 ]
@@ -88,7 +88,7 @@ qed-.
 (* Basic_2A1: includes: drop_mono *)
 lemma drops_mono: ∀b1,f,L,L1. ⇩*[b1,f] L ≘ L1 →
                   ∀b2,L2. ⇩*[b2,f] L ≘ L2 → L1 = L2.
-#b1 #f #L #L1 lapply (after_isid_dx 𝐢 … f)
+#b1 #f #L #L1 lapply (pr_after_isi_dx 𝐢 … f)
 /3 width=8 by drops_conf, drops_fwd_isid/
 qed-.
 
@@ -135,7 +135,7 @@ lemma drops_conf_div_bind_isuni:
 #f1 #f2 #I1 #I2 #L #K #Hf1 #Hf2 #HU1 #HU2
 lapply (drops_isuni_fwd_drop2 … Hf1) // #H1
 lapply (drops_isuni_fwd_drop2 … Hf2) // #H2
-lapply (drops_conf_div_isuni … H1 … H2 ??) /2 width=3 by isuni_next/ -H1 -H2 -HU1 -HU2 #H
+lapply (drops_conf_div_isuni … H1 … H2 ??) /2 width=3 by pr_isu_next/ -H1 -H2 -HU1 -HU2 #H
 lapply (eq_inv_nn … H ????) -H [5: |*: // ] #H12
 lapply (drops_eq_repl_back … Hf1 … H12) -Hf1 #H0
 lapply (drops_mono … H0 … Hf2) -L #H

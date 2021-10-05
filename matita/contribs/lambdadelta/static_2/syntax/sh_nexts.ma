@@ -12,8 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+include "ground/arith/nat_succ_iter.ma".
+include "static_2/notation/functions/uparrowstar_2_0.ma".
+include "static_2/syntax/sh.ma".
 
-notation "hvbox( ⫯[ term 46 h ] break term 46 s )"
-   non associative with precedence 46
-   for @{ 'UpSpoon $h $s }.
+(* SORT HIERARCHY ***********************************************************)
+
+definition sh_nexts (h) (n): nat → nat ≝ ⇡[h]^n.
+
+interpretation
+  "iterated next sort (sort hierarchy)"
+  'UpArrowStar_2_0 h n = (sh_nexts h n).
+
+(* Basic constructions *)
+
+lemma sh_nexts_zero (h): ∀s. s = ⇡*[h,𝟎]s.
+// qed.
+
+lemma sh_nexts_unit (h): ⇡[h] ≐ ⇡*[h,𝟏].
+// qed.
+
+lemma sh_nexts_succ (h) (n): ⇡[h] ∘ (⇡*[h,n]) ≐ ⇡*[h,↑n].
+/2 width=1 by niter_succ/ qed.
+
+(* Advanced constructions ****************************)
+
+lemma sh_nexts_swap (h) (n): ⇡[h] ∘ (⇡*[h,n]) ≐ ⇡*[h,n] ∘ ⇡[h].
+/2 width=1 by niter_appl/ qed.
+
+(* Helper constructions *****************************************************)
+
+lemma sh_nexts_succ_next (h) (n): ⇡*[h,n] ∘ (⇡[h]) ≐ ⇡*[h,↑n].
+// qed.

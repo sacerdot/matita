@@ -80,7 +80,7 @@ lemma rex_inv_sort (R):
 #R * [ | #Y1 #I1 ] #Y2 #s * #f #H1 #H2
 [ lapply (sex_inv_atom1 … H2) -H2 /3 width=1 by or_introl, conj/
 | lapply (frees_inv_sort … H1) -H1 #Hf
-  elim (isid_inv_gen … Hf) -Hf #g #Hg #H destruct
+  elim (pr_isi_inv_gen … Hf) -Hf #g #Hg #H destruct
   elim (sex_inv_push1 … H2) -H2 #I2 #L2 #H12 #_ #H destruct
   /5 width=7 by frees_sort, ex3_4_intro, ex2_intro, or_intror/
 ]
@@ -122,7 +122,7 @@ lemma rex_inv_gref (R):
 #R * [ | #Y1 #I1 ] #Y2 #l * #f #H1 #H2
 [ lapply (sex_inv_atom1 … H2) -H2 /3 width=1 by or_introl, conj/
 | lapply (frees_inv_gref … H1) -H1 #Hf
-  elim (isid_inv_gen … Hf) -Hf #g #Hg #H destruct
+  elim (pr_isi_inv_gen … Hf) -Hf #g #Hg #H destruct
   elim (sex_inv_push1 … H2) -H2 #I2 #L2 #H12 #_ #H destruct
   /5 width=7 by frees_gref, ex3_4_intro, ex2_intro, or_intror/
 ]
@@ -133,7 +133,7 @@ lemma rex_inv_bind (R):
       ∀p,I,L1,L2,V1,V2,T. L1 ⪤[R,ⓑ[p,I]V1.T] L2 → R L1 V1 V2 →
       ∧∧ L1 ⪤[R,V1] L2 & L1.ⓑ[I]V1 ⪤[R,T] L2.ⓑ[I]V2.
 #R #p #I #L1 #L2 #V1 #V2 #T * #f #Hf #HL #HV elim (frees_inv_bind … Hf) -Hf
-/6 width=6 by sle_sex_trans, sex_inv_tl, ext2_pair, sor_inv_sle_dx, sor_inv_sle_sn, ex2_intro, conj/
+/6 width=6 by sle_sex_trans, sex_inv_tl, ext2_pair, pr_sor_inv_sle_dx, pr_sor_inv_sle_sn, ex2_intro, conj/
 qed-.
 
 (* Basic_2A1: uses: llpx_sn_inv_flat *)
@@ -141,7 +141,7 @@ lemma rex_inv_flat (R):
       ∀I,L1,L2,V,T. L1 ⪤[R,ⓕ[I]V.T] L2 →
       ∧∧ L1 ⪤[R,V] L2 & L1 ⪤[R,T] L2.
 #R #I #L1 #L2 #V #T * #f #Hf #HL elim (frees_inv_flat … Hf) -Hf
-/5 width=6 by sle_sex_trans, sor_inv_sle_dx, sor_inv_sle_sn, ex2_intro, conj/
+/5 width=6 by sle_sex_trans, pr_sor_inv_sle_dx, pr_sor_inv_sle_sn, ex2_intro, conj/
 qed-.
 
 (* Advanced inversion lemmas ************************************************)
@@ -255,7 +255,7 @@ lemma rex_fwd_pair_sn (R):
       ∀I,L1,L2,V,T. L1 ⪤[R,②[I]V.T] L2 → L1 ⪤[R,V] L2.
 #R * [ #p ] #I #L1 #L2 #V #T * #f #Hf #HL
 [ elim (frees_inv_bind … Hf) | elim (frees_inv_flat … Hf) ] -Hf
-/4 width=6 by sle_sex_trans, sor_inv_sle_sn, ex2_intro/
+/4 width=6 by sle_sex_trans, pr_sor_inv_sle_sn, ex2_intro/
 qed-.
 
 (* Basic_2A1: uses: llpx_sn_fwd_bind_dx llpx_sn_fwd_bind_O_dx *)
@@ -274,7 +274,7 @@ qed-.
 lemma rex_fwd_dx (R):
       ∀I2,L1,K2,T. L1 ⪤[R,T] K2.ⓘ[I2] →
       ∃∃I1,K1. L1 = K1.ⓘ[I1].
-#R #I2 #L1 #K2 #T * #f elim (pn_split f) * #g #Hg #_ #Hf destruct
+#R #I2 #L1 #K2 #T * #f elim (pr_map_split_tl f) * #g #Hg #_ #Hf destruct
 [ elim (sex_inv_push2 … Hf) | elim (sex_inv_next2 … Hf) ] -Hf #I1 #K1 #_ #_ #H destruct
 /2 width=3 by ex1_2_intro/
 qed-.
@@ -290,7 +290,7 @@ lemma rex_sort (R):
       ∀I1,I2,L1,L2,s. L1 ⪤[R,⋆s] L2 → L1.ⓘ[I1] ⪤[R,⋆s] L2.ⓘ[I2].
 #R #I1 #I2 #L1 #L2 #s * #f #Hf #H12
 lapply (frees_inv_sort … Hf) -Hf
-/4 width=3 by frees_sort, sex_push, isid_push, ex2_intro/
+/4 width=3 by frees_sort, sex_push, pr_isi_push, ex2_intro/
 qed.
 
 lemma rex_pair (R):
@@ -314,7 +314,7 @@ lemma rex_gref (R):
       ∀I1,I2,L1,L2,l. L1 ⪤[R,§l] L2 → L1.ⓘ[I1] ⪤[R,§l] L2.ⓘ[I2].
 #R #I1 #I2 #L1 #L2 #l * #f #Hf #H12
 lapply (frees_inv_gref … Hf) -Hf
-/4 width=3 by frees_gref, sex_push, isid_push, ex2_intro/
+/4 width=3 by frees_gref, sex_push, pr_isi_push, ex2_intro/
 qed.
 
 lemma rex_bind_repl_dx (R):
