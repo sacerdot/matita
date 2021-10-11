@@ -27,7 +27,7 @@ record sh_lt (h): Prop ≝
 
 lemma sh_nexts_le (h): sh_lt h → ∀s,n. s ≤ ⇡*[h,n]s.
 #h #Hh #s #n @(nat_ind_succ … n) -n [ // ] #n #IH <sh_nexts_succ
-lapply (sh_next_lt … Hh ((sh_next h)^n s)) #H
+lapply (sh_next_lt … Hh (⇡*[h,n]s)) #H
 lapply (nle_nlt_trans … IH H) -IH -H /2 width=2 by nlt_des_le/
 qed.
 
@@ -50,7 +50,7 @@ lemma sh_lt_nexts_inv_lt (h): sh_lt h →
   [ <sh_nexts_zero #H
     elim (nlt_inv_refl s)
     /3 width=3 by sh_nexts_lt, nlt_trans/
-  | #n2 #_ <sh_nexts_succ <sh_nexts_succ >sh_nexts_swap >sh_nexts_swap #H
+  | #n2 #_ <sh_nexts_succ_next <sh_nexts_succ_next #H
     /3 width=2 by nlt_succ_bi/
   ]
 ]
@@ -68,7 +68,7 @@ lemma sh_lt_acyclic (h): sh_lt h → sh_acyclic h.
   [ <sh_nexts_zero #H -IH
     elim (nlt_inv_refl s) <H in ⊢ (??%); -H
     /2 width=1 by sh_nexts_lt/
-  | #n2 #_ <sh_nexts_succ <sh_nexts_succ >sh_nexts_swap >sh_nexts_swap #H
+  | #n2 #_ <sh_nexts_succ_next <sh_nexts_succ_next #H
     lapply (IH … H) -IH -H //
   ]
 ]
@@ -97,13 +97,13 @@ elim (nat_split_lt_ge s2 s1) #Hs
     [3: /3 width=1 by sh_next_lt, nlt_minus_bi_sn/ ]
     <nminus_minus_dx_refl_sn [2,4: /2 width=1 by nlt_des_le/ ] -Hs21
     [ * #n #H destruct
-      @or_introl @(ex_intro … (↑n)) <sh_nexts_succ >sh_nexts_swap //
+      @or_introl @(ex_intro … (↑n)) //
     | #H1 @or_intror * #n #H2 @H1 -H1 destruct
       generalize in match Hs12; -Hs12
       >(sh_nexts_zero h s1) in ⊢ (?%?→?); #H
       lapply (sh_lt_nexts_inv_lt … Hh … H) -H #H
       >(nlt_des_gen … H) -H
-      @(ex_intro … (↓n)) <sh_nexts_succ >sh_nexts_swap //
+      @(ex_intro … (↓n)) //
     ]
   ]
 ]

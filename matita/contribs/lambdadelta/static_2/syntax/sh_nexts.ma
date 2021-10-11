@@ -26,21 +26,28 @@ interpretation
 
 (* Basic constructions *)
 
-lemma sh_nexts_zero (h): ∀s. s = ⇡*[h,𝟎]s.
+lemma sh_nexts_zero (h):
+      ∀s. s = ⇡*[h,𝟎]s.
 // qed.
 
-lemma sh_nexts_unit (h): ⇡[h] ≐ ⇡*[h,𝟏].
+lemma sh_nexts_unit (h):
+      ∀s. ⇡[h]s = ⇡*[h,𝟏]s.
 // qed.
 
-lemma sh_nexts_succ (h) (n): ⇡[h] ∘ (⇡*[h,n]) ≐ ⇡*[h,↑n].
-/2 width=1 by niter_succ/ qed.
+lemma sh_nexts_succ (h) (n):
+      ∀s. ⇡[h](⇡*[h,n]s) = ⇡*[h,↑n]s.
+#h #n #s @(niter_succ … (⇡[h]))
+qed.
 
 (* Advanced constructions ****************************)
 
-lemma sh_nexts_swap (h) (n): ⇡[h] ∘ (⇡*[h,n]) ≐ ⇡*[h,n] ∘ ⇡[h].
-/2 width=1 by niter_appl/ qed.
+lemma sh_nexts_swap (h) (n):
+      ∀s. ⇡[h](⇡*[h,n]s) = ⇡*[h,n](⇡[h]s).
+#h #n #s @(niter_appl … (⇡[h]))
+qed.
 
 (* Helper constructions *****************************************************)
 
-lemma sh_nexts_succ_next (h) (n): ⇡*[h,n] ∘ (⇡[h]) ≐ ⇡*[h,↑n].
+lemma sh_nexts_succ_next (h) (n):
+      ∀s. ⇡*[h,n](⇡[h]s) = ⇡*[h,↑n]s.
 // qed.

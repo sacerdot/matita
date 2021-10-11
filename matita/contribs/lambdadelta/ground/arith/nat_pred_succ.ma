@@ -34,6 +34,10 @@ lemma pnpred_psucc (p): pnpred (psucc p) = nsucc (pnpred p).
 
 (* Constructions with nsucc *************************************************)
 
+lemma nsucc_pnpred (p):
+      ninj p = ↑(pnpred p).
+// qed.
+
 (*** pred_Sn pred_S *)
 lemma npred_succ (n): n = ↓↑n.
 * //
