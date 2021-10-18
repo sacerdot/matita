@@ -12,12 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/arith/nat_succ.ma".
 include "static_2/syntax/lenv.ma".
 
 (* LENGTH OF A LOCAL ENVIRONMENT ********************************************)
 
 rec definition length L ≝ match L with
-[ LAtom     ⇒ 0
+[ LAtom     ⇒ 𝟎
 | LBind L _ ⇒ ↑(length L)
 ].
 
@@ -25,7 +26,7 @@ interpretation "length (local environment)" 'card L = (length L).
 
 (* Basic properties *********************************************************)
 
-lemma length_atom: |⋆| = 0.
+lemma length_atom: |⋆| = 𝟎.
 // qed.
 
 (* Basic_2A1: uses: length_pair *)
@@ -34,20 +35,23 @@ lemma length_bind: ∀I,L. |L.ⓘ[I]| = ↑|L|.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma length_inv_zero_dx: ∀L. |L| = 0 → L = ⋆.
-* // #L #I >length_bind
-#H destruct
+lemma length_inv_zero_dx: ∀L. |L| = 𝟎 → L = ⋆.
+* // #L #I
+>length_bind #H
+elim (eq_inv_nsucc_zero … H) 
 qed-.
 
-lemma length_inv_zero_sn: ∀L. 0 = |L| → L = ⋆.
+lemma length_inv_zero_sn: ∀L. 𝟎 = |L| → L = ⋆.
 /2 width=1 by length_inv_zero_dx/ qed-.
 
 (* Basic_2A1: was: length_inv_pos_dx *)
 lemma length_inv_succ_dx: ∀n,L. |L| = ↑n →
                           ∃∃I,K. |K| = n & L = K. ⓘ[I].
 #n *
-[ >length_atom #H destruct
-| #L #I >length_bind /3 width=4 by ex2_2_intro, eq_inv_nsucc_bi/
+[ >length_atom #H
+  elim (eq_inv_zero_nsucc … H) 
+| #L #I >length_bind
+  /3 width=4 by ex2_2_intro, eq_inv_nsucc_bi/
 ]
 qed-.
 

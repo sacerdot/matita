@@ -12,27 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/lenv.ma".
+include "ground/arith/pnat_lt.ma".
 
-(* FOLD FOR RESTRICTED CLOSURES *********************************************)
+(* WELL-FOUNDED INDUCTION ***************************************************)
 
-rec definition fold L T on L ≝ match L with
-[ LAtom     ⇒ T
-| LBind L I ⇒ match I with
-  [ BUnit _   ⇒ fold L (-ⓛ⋆𝟎.T)
-  | BPair I V ⇒ fold L (-ⓑ[I]V.T)
-  ]
-].
+fact wf1_ind_plt_aux (A1) (f:A1→pnat) (Q:predicate …):
+     (∀p. (∀a1. f a1 < p → Q a1) → ∀a1. f a1 = p → Q a1) →
+     ∀p,a1. f a1 = p → Q a1.
+#A1 #f #Q #H #p @(pnat_ind_lt … p) -p /3 width=3 by/
+qed-.
 
-interpretation "fold (restricted closure)" 'plus L T = (fold L T).
-
-(* Basic properties *********************************************************)
-
-lemma fold_atom: ∀T. ⋆ + T = T.
-// qed.
-
-lemma fold_unit: ∀I,L,T. L.ⓤ[I]+T = L+(-ⓛ⋆𝟎.T).
-// qed.
-
-lemma fold_pair: ∀I,L,V,T. (L.ⓑ[I]V)+T = L+(-ⓑ[I]V.T).
-// qed.
+lemma wf1_ind_plt (A1) (f:A1→pnat) (Q:predicate …):
+      (∀p. (∀a1. f a1 < p → Q a1) → ∀a1. f a1 = p → Q a1) →
+      ∀a1. Q a1.
+#A #f #Q #H #a1 @(wf1_ind_plt_aux … H) -H //
+qed-.

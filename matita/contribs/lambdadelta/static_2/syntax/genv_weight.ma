@@ -18,7 +18,7 @@ include "static_2/syntax/genv.ma".
 (* WEIGHT OF A GLOBAL ENVIRONMENT *******************************************)
 
 rec definition gw G ≝ match G with
-[ GAtom       ⇒ 0
+[ GAtom       ⇒ 𝟏
 | GPair G I T ⇒ gw G + ♯❨T❩
 ].
 
@@ -26,5 +26,11 @@ interpretation "weight (global environment)" 'Weight G = (gw G).
 
 (* Basic properties *********************************************************)
 
+lemma gw_atom_unfold: 𝟏 = ♯❨⋆❩.
+// qed.
+
+lemma gw_pair_unfold (I) (G) (T): ♯❨G❩ + ♯❨T❩ = ♯❨G.ⓑ[I]T❩.
+// qed.
+
 lemma gw_pair: ∀I,G,T. ♯❨G❩ < ♯❨G.ⓑ[I]T❩.
-normalize /2 width=1 by nle_plus_bi_sn/ qed.
+// qed.

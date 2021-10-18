@@ -14,6 +14,7 @@
 
 include "ground/xoa/ex_1_2.ma".
 include "ground/xoa/ex_3_2.ma".
+include "ground/arith/wf1_ind_plt.ma".
 include "static_2/notation/relations/tildeminus_2.ma".
 include "static_2/syntax/term_weight.ma".
 
@@ -210,7 +211,7 @@ elim (teqw_inv_cast_sn … H) -H #W2 #U2 #HVW #HTU #H destruct
 qed-.
 
 lemma teqw_inv_cast_xy_y: ∀T,V. ⓝV.T ≃ T → ⊥.
-@(wf1_ind_nlt … tw) #n #IH #T #Hn #V #H destruct
+@(wf1_ind_plt … tw) #p #IH #T #Hp #V #H destruct
 elim (teqw_inv_cast_sn … H) -H #X1 #X2 #_ #HX2 #H destruct -V
 /2 width=4 by/
 qed-.

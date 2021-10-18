@@ -19,10 +19,10 @@ include "static_2/syntax/teq.ma".
 (* SYNTACTIC EQUIVALENCE ****************************************************)
 
 definition ceq: relation3 lenv term term ≝
-           ceqg (pr_eq …).
+           ceqg (eq …).
 
 definition ceq_ext: lenv → relation bind ≝
-           ceqg_ext (pr_eq …).
+           ceqg_ext (eq …).
 
 interpretation
   "context-dependent syntactic equivalence (term)"

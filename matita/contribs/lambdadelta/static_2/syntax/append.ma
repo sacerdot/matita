@@ -28,7 +28,7 @@ rec definition append L K on K ≝ match K with
 | LBind K I ⇒ (append L K).ⓘ[I]
 ].
 
-interpretation "append (local environment)" 'nplus L1 L2 = (append L1 L2).
+interpretation "append (local environment)" 'plus L1 L2 = (append L1 L2).
 
 interpretation "local environment tail binding construction (generic)"
    'SnItem I L = (append (LBind LAtom I) L).

@@ -12,12 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/arith/nat_succ.ma".
 include "static_2/syntax/genv.ma".
 
 (* LENGTH OF A GLOBAL ENVIRONMENT *******************************************)
 
 rec definition glength G on G ≝ match G with
-[ GAtom       ⇒ 0
+[ GAtom       ⇒ 𝟎
 | GPair G _ _ ⇒ ↑(glength G)
 ].
 

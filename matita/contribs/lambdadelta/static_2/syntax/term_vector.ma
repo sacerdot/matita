@@ -19,10 +19,10 @@ include "static_2/syntax/term_simple.ma".
 (* TERMS ********************************************************************)
 
 rec definition applv Vs T on Vs ≝
-  match Vs with
-  [ nil        ⇒ T
-  | cons hd pr_tl ⇒ ⓐhd. (applv pr_tl T)
-  ].
+match Vs with
+[ list_nil        ⇒ T
+| list_cons hd tl ⇒ ⓐhd. (applv tl T)
+].
 
 interpretation "application to vector (term)"
    'SnApplVector Vs T = (applv Vs T).

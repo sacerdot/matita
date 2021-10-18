@@ -18,14 +18,18 @@ include "static_2/syntax/bind.ma".
 (* WEIGHT OF A BINDER FOR LOCAL ENVIRONMENTS *******************************)
 
 rec definition bw I ≝ match I with
-[ BUnit _   ⇒ 1
+[ BUnit _   ⇒ 𝟏
 | BPair _ V ⇒ ♯❨V❩
 ].
 
-interpretation "weight (binder for local environments)" 'Weight I = (bw I).
+interpretation
+  "weight (binder for local environments)"
+  'Weight I = (bw I).
 
 (* Basic properties *********************************************************)
 
-lemma bw_pos: ∀I. 1 ≤ ♯❨I❩.
-* //
-qed.
+lemma bw_unit_unfold (I): 𝟏 = ♯❨BUnit I❩.
+// qed.
+
+lemma bw_pair_unfold (I) (V): ♯❨V❩ = ♯❨BPair I V❩.
+// qed.

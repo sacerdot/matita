@@ -81,6 +81,7 @@ table {
       [ { "well-founded induction" * } {
           [ "wf1_ind_ylt" * ]
           [ "wf1_ind_nlt" "wf2_ind_nlt" "wf3_ind_nlt.ma" * ]
+          [ "wf1_ind_plt" * ]
         }
       ]
       [ { "non-negative integers with infinity" * } {
@@ -106,7 +107,7 @@ table {
         }
       ]
       [ { "positive integers" * } {
-          [ "nat_lt ( ?&lt;? )" "pnat_lt_pred" * ]
+          [ "nat_lt ( ?&lt;? )" "pnat_lt_pred" "pnat_lt_plus" * ]
           [ "pnat_le ( ?≤? )" "pnat_le_pred" "pnat_le_plus" * ]
           [ "pnat_plus ( ?+? )" * ]
           [ "nat_pred ( ↓? )" * ]

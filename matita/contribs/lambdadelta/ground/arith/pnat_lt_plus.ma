@@ -12,27 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/lenv.ma".
+include "ground/arith/pnat_le_plus.ma".
+include "ground/arith/pnat_lt.ma".
 
-(* FOLD FOR RESTRICTED CLOSURES *********************************************)
+(* STRICT ORDER FOR POSITIVE INTEGERS ***************************************)
 
-rec definition fold L T on L ≝ match L with
-[ LAtom     ⇒ T
-| LBind L I ⇒ match I with
-  [ BUnit _   ⇒ fold L (-ⓛ⋆𝟎.T)
-  | BPair I V ⇒ fold L (-ⓑ[I]V.T)
-  ]
-].
+(* Constructions with pplus *************************************************)
 
-interpretation "fold (restricted closure)" 'plus L T = (fold L T).
+lemma plt_plus_bi_dx (p) (q1) (q2): q1 < q2 → q1 + p < q2 + p.
+#p #q1 #q2 #H
+@plt_i >pplus_succ_sn /2 width=1 by ple_plus_bi_dx/
+qed.
 
-(* Basic properties *********************************************************)
+lemma plt_plus_bi_sn (p) (q1) (q2): q1 < q2 → p + q1 < p + q2.
+#p #q1 #q2 #H
+@plt_i >pplus_succ_dx /2 width=1 by ple_plus_bi_sn/
+qed.
 
-lemma fold_atom: ∀T. ⋆ + T = T.
-// qed.
+lemma plt_plus_dx_dx_refl (p) (q): p < p + q.
+/2 width=1 by ple_plus_bi_sn/ qed.
 
-lemma fold_unit: ∀I,L,T. L.ⓤ[I]+T = L+(-ⓛ⋆𝟎.T).
-// qed.
+lemma plt_plus_dx_sn_refl (p) (q): p < q + p.
+/2 width=1 by ple_plus_bi_dx/ qed.
 
-lemma fold_pair: ∀I,L,V,T. (L.ⓑ[I]V)+T = L+(-ⓑ[I]V.T).
-// qed.
+lemma plt_plus_dx_sn (r) (p) (q): q ≤ p → q < r + p.
+/2 width=3 by ple_plt_trans/ qed.
+
+lemma plt_plus_dx_dx (r) (p) (q): q ≤ p → q < p + r.
+/2 width=3 by ple_plt_trans/ qed.
