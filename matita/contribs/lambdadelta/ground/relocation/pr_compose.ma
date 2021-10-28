@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/pr_after.ma".
+include "ground/relocation/pr_after_after.ma".
 
-(* RELATIONAL COMPOSITION FOR PARTIAL RELOCATION MAPS ***********************)
+(* FUNCTIONAL COMPOSITION FOR PARTIAL RELOCATION MAPS ***********************)
 
 corec definition pr_compose: pr_map → pr_map → pr_map.
 * * #g2 [ #f1 | * * #g1 ]
@@ -40,6 +40,7 @@ lemma pr_compose_unfold_push (f2) (f1): ↑(f2∘f1) = (⫯f2)∘(↑f1).
 <(stream_unfold … ((⫯f2)∘(↑f1))) in ⊢ (???%); //
 qed.
 
+(*** compose_next *)
 lemma pr_compose_unfold_next (f2) (f1):
       ↑(f2∘f1) = (↑f2)∘f1.
 #f2 #f1
@@ -48,7 +49,8 @@ qed.
 
 (* Main constructions *******************************************************)
 
-corec theorem pr_after_compose (f2) (f1):
+(*** after_total *)
+corec theorem pr_after_total (f2) (f1):
               f2 ⊚ f1 ≘ f2∘f1.
 cases (pr_map_split_tl f2)*
 [ cases (pr_map_split_tl f1) * ]
@@ -57,3 +59,9 @@ cases (pr_map_split_tl f2)*
 | @pr_after_next /2 width=5 by/
 ]
 qed.
+
+(* Main inversions **********************************************************)
+
+(*** after_inv_total *)
+lemma pr_after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 ∘ f1 ≡ f.
+/2 width=4 by pr_after_mono/ qed-.

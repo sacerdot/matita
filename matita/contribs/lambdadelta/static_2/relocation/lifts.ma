@@ -12,7 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/nstream_after.ma".
+include "ground/arith/nat_le_plus.ma".
+include "ground/relocation/pr_compose.ma".
+include "ground/relocation/pr_nat_uni.ma".
+include "ground/relocation/pr_isi_nat.ma".
+include "ground/relocation/pr_ist_ist.ma".
+include "ground/relocation/pr_after_uni.ma".
+include "ground/relocation/pr_after_nat.ma".
+include "ground/relocation/pr_after_ist.ma".
 include "static_2/notation/relations/rliftstar_3.ma".
 include "static_2/notation/relations/rlift_3.ma".
 include "static_2/syntax/term.ma".
@@ -25,7 +32,7 @@ include "static_2/syntax/term.ma".
 *)
 inductive lifts: pr_map → relation term ≝
 | lifts_sort: ∀f,s. lifts f (⋆s) (⋆s)
-| lifts_lref: ∀f,i1,i2. @❪i1,f❫ ≘ i2 → lifts f (#i1) (#i2)
+| lifts_lref: ∀f,i1,i2. @↑❪i1,f❫ ≘ i2 → lifts f (#i1) (#i2)
 | lifts_gref: ∀f,l. lifts f (§l) (§l)
 | lifts_bind: ∀f,p,I,V1,V2,T1,T2.
               lifts f V1 V2 → lifts (⫯f) T1 T2 →
@@ -81,7 +88,7 @@ lemma lifts_inv_sort1: ∀f,Y,s. ⇧*[f] ⋆s ≘ Y → Y = ⋆s.
 /2 width=4 by lifts_inv_sort1_aux/ qed-.
 
 fact lifts_inv_lref1_aux: ∀f,X,Y. ⇧*[f] X ≘ Y → ∀i1. X = #i1 →
-                          ∃∃i2. @❪i1,f❫ ≘ i2 & Y = #i2.
+                          ∃∃i2. @↑❪i1,f❫ ≘ i2 & Y = #i2.
 #f #X #Y * -f -X -Y
 [ #f #s #x #H destruct
 | #f #i1 #i2 #Hi12 #x #H destruct /2 width=3 by ex2_intro/
@@ -94,7 +101,7 @@ qed-.
 (* Basic_1: was: lift1_lref *)
 (* Basic_2A1: includes: lift_inv_lref1 lift_inv_lref1_lt lift_inv_lref1_ge *)
 lemma lifts_inv_lref1: ∀f,Y,i1. ⇧*[f] #i1 ≘ Y →
-                       ∃∃i2. @❪i1,f❫ ≘ i2 & Y = #i2.
+                       ∃∃i2. @↑❪i1,f❫ ≘ i2 & Y = #i2.
 /2 width=3 by lifts_inv_lref1_aux/ qed-.
 
 fact lifts_inv_gref1_aux: ∀f,X,Y. ⇧*[f] X ≘ Y → ∀l. X = §l → Y = §l.
@@ -163,7 +170,7 @@ lemma lifts_inv_sort2: ∀f,X,s. ⇧*[f] X ≘ ⋆s → X = ⋆s.
 /2 width=4 by lifts_inv_sort2_aux/ qed-.
 
 fact lifts_inv_lref2_aux: ∀f,X,Y. ⇧*[f] X ≘ Y → ∀i2. Y = #i2 →
-                          ∃∃i1. @❪i1,f❫ ≘ i2 & X = #i1.
+                          ∃∃i1. @↑❪i1,f❫ ≘ i2 & X = #i1.
 #f #X #Y * -f -X -Y
 [ #f #s #x #H destruct
 | #f #i1 #i2 #Hi12 #x #H destruct /2 width=3 by ex2_intro/
@@ -176,7 +183,7 @@ qed-.
 (* Basic_1: includes: lift_gen_lref lift_gen_lref_lt lift_gen_lref_false lift_gen_lref_ge *)
 (* Basic_2A1: includes: lift_inv_lref2 lift_inv_lref2_lt lift_inv_lref2_be lift_inv_lref2_ge lift_inv_lref2_plus *)
 lemma lifts_inv_lref2: ∀f,X,i2. ⇧*[f] X ≘ #i2 →
-                       ∃∃i1. @❪i1,f❫ ≘ i2 & X = #i1.
+                       ∃∃i1. @↑❪i1,f❫ ≘ i2 & X = #i1.
 /2 width=3 by lifts_inv_lref2_aux/ qed-.
 
 fact lifts_inv_gref2_aux: ∀f,X,Y. ⇧*[f] X ≘ Y → ∀l. Y = §l → X = §l.
@@ -235,7 +242,7 @@ lemma lifts_inv_flat2: ∀f,I,V2,T2,X. ⇧*[f] X ≘ ⓕ[I]V2.T2 →
 
 lemma lifts_inv_atom1: ∀f,I,Y. ⇧*[f] ⓪[I] ≘ Y →
                        ∨∨ ∃∃s. I = Sort s & Y = ⋆s
-                        | ∃∃i,j. @❪i,f❫ ≘ j & I = LRef i & Y = #j
+                        | ∃∃i,j. @↑❪i,f❫ ≘ j & I = LRef i & Y = #j
                         | ∃∃l. I = GRef l & Y = §l.
 #f * #n #Y #H
 [ lapply (lifts_inv_sort1 … H)
@@ -246,7 +253,7 @@ qed-.
 
 lemma lifts_inv_atom2: ∀f,I,X. ⇧*[f] X ≘ ⓪[I] →
                        ∨∨ ∃∃s. X = ⋆s & I = Sort s
-                        | ∃∃i,j. @❪i,f❫ ≘ j & X = #i & I = LRef j
+                        | ∃∃i,j. @↑❪i,f❫ ≘ j & X = #i & I = LRef j
                         | ∃∃l. X = §l & I = GRef l.
 #f * #n #X #H
 [ lapply (lifts_inv_sort2 … H)
@@ -289,7 +296,7 @@ lemma lifts_inv_pair_xy_y: ∀I,T,V,f. ⇧*[f] ②[I]V.T ≘ T → ⊥.
 qed-.
 
 lemma lifts_inv_push_zero_sn (f):
-      ∀X. ⇧*[⫯f]#0 ≘ X → #0 = X.
+      ∀X. ⇧*[⫯f]#𝟎 ≘ X → #(𝟎) = X.
 #f #X #H
 elim (lifts_inv_lref1 … H) -H #i #Hi #H destruct
 lapply (pr_pat_inv_unit_push … Hi ???) -Hi //
@@ -300,30 +307,34 @@ lemma lifts_inv_push_succ_sn (f) (i1):
       ∃∃i2. ⇧*[f]#i1 ≘ #i2 & #(↑i2) = X.
 #f #i1 #X #H
 elim (lifts_inv_lref1 … H) -H #j #Hij #H destruct
-elim (pr_pat_inv_succ_push … Hij) -Hij [|*: // ] #i2 #Hi12 #H destruct
+elim (pr_nat_inv_succ_push … Hij) -Hij [|*: // ] #i2 #Hi12 #H destruct
 /3 width=3 by lifts_lref, ex2_intro/
 qed-.
 
 (* Inversion lemmas with uniform relocations ********************************)
 
 lemma lifts_inv_lref1_uni: ∀l,Y,i. ⇧[l] #i ≘ Y → Y = #(l+i).
-#l #Y #i1 #H elim (lifts_inv_lref1 … H) -H /4 width=4 by fr2_nat_mono, eq_f/
+#l #Y #i1 #H elim (lifts_inv_lref1 … H) -H
+#i2 #H #H2 destruct
+/4 width=4 by pr_nat_mono, eq_f/
 qed-.
 
 lemma lifts_inv_lref2_uni: ∀l,X,i2. ⇧[l] X ≘ #i2 →
-                           ∃∃i1. X = #i1 & i2 = l + i1.
+                           ∃∃i1. X = #i1 & i1 + l = i2.
 #l #X #i2 #H elim (lifts_inv_lref2 … H) -H
-/3 width=3 by pr_pat_inv_uni, ex2_intro/
+/3 width=3 by pr_nat_inv_uni, ex2_intro/
 qed-.
 
-lemma lifts_inv_lref2_uni_ge: ∀l,X,i. ⇧[l] X ≘ #(l + i) → X = #i.
+lemma lifts_inv_lref2_uni_ge: ∀l,X,i. ⇧[l] X ≘ #(i+l) → X = #i.
 #l #X #i2 #H elim (lifts_inv_lref2_uni … H) -H
-#i1 #H1 #H2 destruct /4 width=2 by eq_inv_nplus_bi_sn, eq_f, sym_eq/
+#i1 #H1 #H2 destruct
+/4 width=2 by eq_inv_nplus_bi_dx, eq_f/
 qed-.
 
 lemma lifts_inv_lref2_uni_lt: ∀l,X,i. ⇧[l] X ≘ #i → i < l → ⊥.
 #l #X #i2 #H elim (lifts_inv_lref2_uni … H) -H
-#i1 #_ #H1 #H2 destruct /2 width=4 by nlt_ge_false/
+#i1 #_ #H1 #H2 destruct
+/2 width=4 by nlt_ge_false/
 qed-.
 
 (* Basic forward lemmas *****************************************************)
@@ -331,7 +342,7 @@ qed-.
 (* Basic_2A1: includes: lift_inv_O2 *)
 lemma lifts_fwd_isid: ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → 𝐈❪f❫ → T1 = T2.
 #f #T1 #T2 #H elim H -f -T1 -T2
-/4 width=3 by pr_isi_pat_des, pr_isi_push, eq_f2, eq_f/
+/4 width=3 by pr_isi_nat_des, pr_isi_push, eq_f2, eq_f/
 qed-.
 
 (* Basic_2A1: includes: lift_fwd_pair1 *)
@@ -381,18 +392,19 @@ lemma lifts_refl: ∀T,f. 𝐈❪f❫ → ⇧*[f] T ≘ T.
 qed.
 
 (* Basic_2A1: includes: lift_total *)
-lemma lifts_total: ∀T1,f. ∃T2. ⇧*[f] T1 ≘ T2.
+lemma lifts_total: ∀T1,f. 𝐓❪f❫ → ∃T2. ⇧*[f] T1 ≘ T2.
 #T1 elim T1 -T1 *
-/3 width=2 by lifts_lref, lifts_sort, lifts_gref, ex_intro/
-[ #p ] #I #V1 #T1 #IHV1 #IHT1 #f
-elim (IHV1 f) -IHV1 #V2 #HV12
-[ elim (IHT1 (⫯f)) -IHT1 /3 width=2 by lifts_bind, ex_intro/
+/3 width=2 by lifts_sort, lifts_gref, ex_intro/
+[ #i #f #Hf elim (Hf (↑i)) -Hf /3 width=2 by ex_intro, lifts_lref/ ]
+[ #p ] #I #V1 #T1 #IHV1 #IHT1 #f #Hf
+elim (IHV1 f) -IHV1 // #V2 #HV12
+[ elim (IHT1 (⫯f)) -IHT1 /3 width=2 by pr_ist_push, ex_intro, lifts_bind/
 | elim (IHT1 f) -IHT1 /3 width=2 by lifts_flat, ex_intro/
 ]
 qed-.
 
-lemma lifts_push_zero (f): ⇧*[⫯f]#0 ≘ #0.
-/2 width=1 by lifts_lref/ qed.
+lemma lifts_push_zero (f): ⇧*[⫯f]#(𝟎) ≘ #(𝟎).
+/3 width=2 by pr_nat_refl, lifts_lref/ qed.
 
 lemma lifts_push_lref (f) (i1) (i2): ⇧*[f]#i1 ≘ #i2 → ⇧*[⫯f]#(↑i1) ≘ #(↑i2).
 #f1 #i1 #i2 #H
@@ -411,12 +423,12 @@ lemma lifts_split_trans: ∀f,T1,T2. ⇧*[f] T1 ≘ T2 →
                          ∃∃T. ⇧*[f1] T1 ≘ T & ⇧*[f2] T ≘ T2.
 #f #T1 #T2 #H elim H -f -T1 -T2
 [ /3 width=3 by lifts_sort, ex2_intro/
-| #f #i1 #i2 #Hi #f1 #f2 #Ht elim (pr_after_pat_des … Hi … Ht) -Hi -Ht
+| #f #i1 #i2 #Hi #f1 #f2 #Ht elim (pr_after_nat_des … Hi … Ht) -Hi -Ht
   /3 width=3 by lifts_lref, ex2_intro/
 | /3 width=3 by lifts_gref, ex2_intro/
 | #f #p #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f1 #f2 #Ht
   elim (IHV … Ht) elim (IHT (⫯f1) (⫯f2)) -IHV -IHT
-  /3 width=5 by lifts_bind, after_O2, ex2_intro/
+  /3 width=7 by pr_after_refl, ex2_intro, lifts_bind/
 | #f #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f1 #f2 #Ht
   elim (IHV … Ht) elim (IHT … Ht) -IHV -IHT -Ht
   /3 width=5 by lifts_flat, ex2_intro/
@@ -425,17 +437,18 @@ qed-.
 
 (* Note: apparently, this was missing in Basic_2A1 *)
 lemma lifts_split_div: ∀f1,T1,T2. ⇧*[f1] T1 ≘ T2 →
-                       ∀f2,f. f2 ⊚ f1 ≘ f →
+                       ∀f2. 𝐓❪f2❫ → ∀f. f2 ⊚ f1 ≘ f →
                        ∃∃T. ⇧*[f2] T2 ≘ T & ⇧*[f] T1 ≘ T.
 #f1 #T1 #T2 #H elim H -f1 -T1 -T2
 [ /3 width=3 by lifts_sort, ex2_intro/
-| #f1 #i1 #i2 #Hi #f2 #f #Ht elim (pr_after_des_ist_pat … Hi … Ht) -Hi -Ht
+| #f1 #i1 #i2 #Hi #f2 #Hf2 #f #Ht
+  elim (pr_after_des_ist_nat … Hi … Ht) -Hi -Ht
   /3 width=3 by lifts_lref, ex2_intro/
 | /3 width=3 by lifts_gref, ex2_intro/
-| #f1 #p #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f2 #f #Ht
-  elim (IHV … Ht) elim (IHT (⫯f2) (⫯f)) -IHV -IHT
-  /3 width=5 by lifts_bind, after_O2, ex2_intro/
-| #f1 #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f2 #f #Ht
+| #f1 #p #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f2 #Hf2 #f #Ht
+  elim (IHV … Ht) elim (IHT (⫯f2) … (⫯f)) -IHV -IHT
+  /3 width=7 by pr_ist_push, pr_after_refl, ex2_intro, lifts_bind/
+| #f1 #I #V1 #V2 #T1 #T2 #_ #_ #IHV #IHT #f2 #Hf2 #f #Ht
   elim (IHV … Ht) elim (IHT … Ht) -IHV -IHT -Ht
   /3 width=5 by lifts_flat, ex2_intro/
 ]
@@ -443,18 +456,18 @@ qed-.
 
 (* Basic_1: includes: dnf_dec2 dnf_dec *)
 (* Basic_2A1: includes: is_lift_dec *)
-lemma is_lifts_dec: ∀T2,f. Decidable (∃T1. ⇧*[f] T1 ≘ T2).
+lemma is_lifts_dec: ∀T2,f. 𝐓❪f❫ → Decidable (∃T1. ⇧*[f] T1 ≘ T2).
 #T1 elim T1 -T1
 [ * [1,3: /3 width=2 by lifts_sort, lifts_gref, ex_intro, or_introl/ ]
-  #i2 #f elim (is_pr_pat_dec f i2) //
+  #i2 #f #Hf elim (is_pr_nat_dec f i2) //
   [ * /4 width=3 by lifts_lref, ex_intro, or_introl/
   | #H @or_intror *
     #X #HX elim (lifts_inv_lref2 … HX) -HX
     /3 width=2 by ex_intro/
   ]
-| * [ #p ] #I #V2 #T2 #IHV2 #IHT2 #f
-  [ elim (IHV2 f) -IHV2
-    [ * #V1 #HV12 elim (IHT2 (⫯f)) -IHT2
+| * [ #p ] #I #V2 #T2 #IHV2 #IHT2 #f #Hf
+  [ elim (IHV2 f) -IHV2 //
+    [ * #V1 #HV12 elim (IHT2 (⫯f)) -IHT2 /2 width=1 by pr_ist_push/
       [ * #T1 #HT12 @or_introl /3 width=2 by lifts_bind, ex_intro/
       | -V1 #HT2 @or_intror * #X #H
         elim (lifts_inv_bind2 … H) -H /3 width=2 by ex_intro/
@@ -462,8 +475,8 @@ lemma is_lifts_dec: ∀T2,f. Decidable (∃T1. ⇧*[f] T1 ≘ T2).
     | -IHT2 #HV2 @or_intror * #X #H
       elim (lifts_inv_bind2 … H) -H /3 width=2 by ex_intro/
     ]
-  | elim (IHV2 f) -IHV2
-    [ * #V1 #HV12 elim (IHT2 f) -IHT2
+  | elim (IHV2 f) -IHV2 //
+    [ * #V1 #HV12 elim (IHT2 f) -IHT2 //
       [ * #T1 #HT12 /4 width=2 by lifts_flat, ex_intro, or_introl/
       | -V1 #HT2 @or_intror * #X #H
         elim (lifts_inv_flat2 … H) -H /3 width=2 by ex_intro/
@@ -477,8 +490,8 @@ qed-.
 
 (* Properties with uniform relocation ***************************************)
 
-lemma lifts_uni: ∀n1,n2,T,U. ⇧*[𝐔❨n1❩∘𝐔❨n2❩] T ≘ U → ⇧[n1+n2] T ≘ U.
-/3 width=4 by lifts_eq_repl_back, after_inv_total/ qed.
+lemma lifts_uni: ∀n1,n2,T,U. ⇧*[𝐮❨n2❩∘𝐮❨n1❩] T ≘ U → ⇧[n1+n2] T ≘ U.
+/3 width=4 by lifts_eq_repl_back, pr_after_inv_total/ qed.
 
 (* Basic_2A1: removed theorems 14:
               lifts_inv_nil lifts_inv_cons

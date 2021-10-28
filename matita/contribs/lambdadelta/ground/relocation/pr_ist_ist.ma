@@ -15,6 +15,7 @@
 include "ground/relocation/pr_eq.ma".
 include "ground/relocation/pr_pat_lt.ma".
 include "ground/relocation/pr_pat_pat.ma".
+include "ground/relocation/pr_nat.ma".
 include "ground/relocation/pr_ist.ma".
 
 (* TOTALITY CONDITION FOR PARTIAL RELOCATION MAPS ***************************)
@@ -64,5 +65,14 @@ cases (pr_map_split_tl f2) #H2
 | @(pr_eq_next … H1 H2) @pr_eq_ext_pat -pr_eq_ext_pat
   [3:|*: /2 width=3 by pr_ist_inv_next/ ] -Hf1 -Hf2 #i #i1 #i2 #Hg1 #Hg2
   lapply (Hi i (↑i1) (↑i2) ??) /2 width=5 by pr_pat_next/
+]
+qed-.
+
+(* Advanced constructions with pr_nat ***************************************)
+
+lemma is_pr_nat_dec (f) (l2): 𝐓❪f❫ → Decidable (∃l1. @↑❪l1,f❫ ≘ l2).
+#f #l2 #Hf elim (is_pr_pat_dec … (↑l2) Hf)
+[ * /3 width=2 by ex_intro, or_introl/
+| #H @or_intror * /3 width=2 by ex_intro/
 ]
 qed-.

@@ -12,28 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/pr_isi_id.ma".
-include "ground/relocation/pr_pat_pat_id.ma".
+include "ground/relocation/pr_nat.ma".
+include "ground/relocation/pr_isi_pat.ma".
 
 (* IDENTITY CONDITION FOR PARTIAL RELOCATION MAPS ***************************)
 
-(* Advanced constructions with pr_isi and pr_pat ****************************)
+(* Advanced constructions with pr_isi and pr_nat ****************************)
 
-(*** isid_at *)
-lemma pr_isi_pat (f): (∀i. @❪i,f❫ ≘ i) → 𝐈❪f❫.
-/3 width=1 by pr_eq_id_isi, pr_pat_inv_id/
-qed.
+lemma pr_isi_nat (f): (∀l. @↑❪l,f❫ ≘ l) → 𝐈❪f❫.
+/2 width=1 by pr_isi_pat/ qed.
 
-(* Inversions with pr_pat ***************************************************)
+(* Inversions with pr_nat ***************************************************)
 
-(*** isid_inv_at *)
-lemma pr_isi_inv_pat (f) (i): 𝐈❪f❫ → @❪i,f❫ ≘ i.
-/3 width=3 by pr_isi_inv_eq_id, pr_pat_id, pr_pat_eq_repl_back/
-qed-.
+lemma pr_isi_inv_nat (f) (l): 𝐈❪f❫ → @↑❪l,f❫ ≘ l.
+/2 width=1 by pr_isi_inv_pat/ qed-.
 
-(* Destructions with pr_pat *************************************************)
+(* Destructions with pr_nat *************************************************)
 
-(*** isid_inv_at_mono *)
-lemma pr_isi_pat_des (f) (i1) (i2): 𝐈❪f❫ → @❪i1,f❫ ≘ i2 → i1 = i2.
-/4 width=3 by pr_isi_inv_eq_id, pr_pat_id_des, pr_pat_eq_repl_fwd/
-qed-.
+lemma pr_isi_nat_des (f) (l1) (l2): 𝐈❪f❫ → @↑❪l1,f❫ ≘ l2 → l1 = l2.
+/3 width=3 by pr_isi_pat_des, eq_inv_npsucc_bi/ qed-.

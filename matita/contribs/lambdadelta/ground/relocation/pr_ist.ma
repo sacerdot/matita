@@ -39,6 +39,20 @@ lemma pr_ist_inv_next (g): 𝐓❪g❫ → ∀f. ↑f = g → 𝐓❪f❫.
 #j #Hg elim (pr_pat_inv_next … Hg … H) -Hg -H /2 width=2 by ex_intro/
 qed-.
 
+(* Basic constructions ******************************************************)
+
+lemma pr_ist_push (f): 𝐓❪f❫ → 𝐓❪⫯f❫.
+#f #Hf *
+[ /3 width=2 by pr_pat_refl, ex_intro/
+| #i elim (Hf i) -Hf /3 width=8 by pr_pat_push, ex_intro/
+]
+qed.
+
+lemma pr_ist_next (f): 𝐓❪f❫ → 𝐓❪↑f❫.
+#f #Hf #i elim (Hf i) -Hf
+/3 width=6 by pr_pat_next, ex_intro/
+qed.
+
 (* Constructions with pr_tl *************************************************)
 
 (*** istot_tl *)
