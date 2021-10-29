@@ -28,7 +28,7 @@ interpretation
   "functional composition (partial relocation maps)"
   'compose f2 f1 = (pr_compose f2 f1).
 
-(* Basic constructions (specific) *******************************************)
+(* Basic constructions ******************************************************)
 
 lemma pr_compose_unfold_refl (f2) (f1): ⫯(f2∘f1) = (⫯f2)∘(⫯f1).
 #f2 #f1

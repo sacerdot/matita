@@ -29,6 +29,10 @@ table {
           [ "fr2_map ( ◊ ) ( ❨?,?❩;? )" * ]
         }
       ]
+      [ { "total relocation" * } {
+          [ "tr_map ( 𝐭❨?❩ )" "tr_nexts" "tr_eq" * ]
+        }
+      ]
       [ { "partial relocation" * } {
           [ "pr_sor ( ? ⋓ ? ≘ ? )" "pr_sor_eq" "pr_sor_tls" "pr_sor_isi" "pr_sor_fcla" "pr_sor_isf" "pr_sor_coafter_ist_isf" "pr_sor_sle" "pr_sor_sor" "pr_sor_sor_sle" * ]
           [ "pr_sand ( ? ⋒ ? ≘ ? )" "pr_sand_eq" * ]
