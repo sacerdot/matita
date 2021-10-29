@@ -20,7 +20,7 @@ include "ground/relocation/pr_isi.ma".
 (* Constructions with pr_tl *************************************************)
 
 (*** isid_tl *)
-lemma pr_isi_tl (f): 𝐈❪f❫ → 𝐈❪⫰f❫.
+lemma pr_isi_tl (f): 𝐈❨f❩ → 𝐈❨⫰f❩.
 #f cases (pr_map_split_tl f) * #H
 [ /2 width=3 by pr_isi_inv_push/
 | elim (pr_isi_inv_next … H) -H //

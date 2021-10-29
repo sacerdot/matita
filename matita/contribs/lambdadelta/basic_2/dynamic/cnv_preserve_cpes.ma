@@ -22,8 +22,8 @@ include "basic_2/dynamic/cnv_cpmre.ma".
 (* Properties with t-bound rt-equivalence for terms *************************)
 
 lemma cnv_cpes_dec (h) (a) (n1) (n2) (G) (L):
-      ∀T1. ❪G,L❫ ⊢ T1 ![h,a] → ∀T2. ❪G,L❫ ⊢ T2 ![h,a] →
-      Decidable … (❪G,L❫ ⊢ T1 ⬌*[h,n1,n2] T2).
+      ∀T1. ❨G,L❩ ⊢ T1 ![h,a] → ∀T2. ❨G,L❩ ⊢ T2 ![h,a] →
+      Decidable … (❨G,L❩ ⊢ T1 ⬌*[h,n1,n2] T2).
 #h #a #n1 #n2 #G #L #T1 #HT1 #T2 #HT2
 elim (cnv_fwd_aaa … HT1) #A1 #HA1
 elim (cnv_fwd_aaa … HT2) #A2 #HA2

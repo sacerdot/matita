@@ -21,7 +21,7 @@ include "basic_2/rt_transition/cnx.ma".
 (* Advanced properties ******************************************************)
 
 lemma cnx_teqx_trans (G) (L):
-      ∀T1. ❪G,L❫ ⊢ ⬈𝐍 T1 → ∀T2. T1 ≅ T2 → ❪G,L❫ ⊢ ⬈𝐍 T2.
+      ∀T1. ❨G,L❩ ⊢ ⬈𝐍 T1 → ∀T2. T1 ≅ T2 → ❨G,L❩ ⊢ ⬈𝐍 T2.
 #G #L #T1 #HT1 #T2 #HT12 #T #HT2
 lapply (teqx_cpx_trans … HT12 … HT2) -HT2 #H
 lapply (HT1 … H) -HT1 -H /2 width=5 by teqx_canc_sn/ (**) (* full auto fails *)

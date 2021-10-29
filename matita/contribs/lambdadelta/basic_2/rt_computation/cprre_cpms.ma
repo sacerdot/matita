@@ -20,8 +20,8 @@ include "basic_2/rt_computation/cprre.ma".
 (* Properties with t-bound rt-computarion on terms **************************)
 
 lemma cpms_cprre_trans (h) (n) (G) (L):
-      ∀T1,T0. ❪G,L❫ ⊢T1 ➡*[h,n] T0 →
-      ∀T2. ❪G,L❫ ⊢ T0 ➡*𝐍[h,0] T2 → ❪G,L❫ ⊢ T1 ➡*𝐍[h,n] T2.
+      ∀T1,T0. ❨G,L❩ ⊢T1 ➡*[h,n] T0 →
+      ∀T2. ❨G,L❩ ⊢ T0 ➡*𝐍[h,0] T2 → ❨G,L❩ ⊢ T1 ➡*𝐍[h,n] T2.
 #h #n #G #L #T1 #T0 #HT10 #T2 * #HT02 #HT2
 /3 width=3 by cpms_cprs_trans, cpmre_intro/
 qed-.

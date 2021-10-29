@@ -22,7 +22,7 @@ include "basic_2/rt_transition/cpr.ma".
 
 lemma cpr_subst (h) (G) (L) (U1) (i):
                 ∀K,V. ⇩[i] L ≘ K.ⓓV →
-                ∃∃U2,T2. ❪G,L❫ ⊢ U1 ➡[h,0] U2 & ⇧[i,1] T2 ≘ U2.
+                ∃∃U2,T2. ❨G,L❩ ⊢ U1 ➡[h,0] U2 & ⇧[i,1] T2 ≘ U2.
 #h #G #L #U1 @(fqup_wf_ind_eq (Ⓣ) … G L U1) -G -L -U1
 #G0 #L0 #U0 #IH #G #L * *
 [ #s #HG #HL #HT #i #K #V #_ destruct -IH

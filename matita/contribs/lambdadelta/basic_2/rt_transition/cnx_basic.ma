@@ -21,7 +21,7 @@ include "basic_2/rt_transition/cnx.ma".
 (* Advanced inversion lemmas ************************************************)
 
 lemma cnx_inv_abbr_pos (G) (L):
-      ∀V,T. ❪G,L❫ ⊢ ⬈𝐍 +ⓓV.T → ⊥.
+      ∀V,T. ❨G,L❩ ⊢ ⬈𝐍 +ⓓV.T → ⊥.
 #G #L #V #U1 #H
 elim (cpx_subst G (L.ⓓV) U1 … 0) [|*: /2 width=4 by drops_refl/ ] #U2 #T2 #HU12 #HTU2
 elim (teqx_dec U1 U2) #HnU12 [ -HU12 | -HTU2 ]

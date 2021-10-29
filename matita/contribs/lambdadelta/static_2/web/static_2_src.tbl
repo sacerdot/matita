@@ -21,17 +21,17 @@ table {
    [ { "static typing" * } {
         [ { "generic reducibility" * } {
              [ [ "restricted refinement for lenvs" ] "lsubc" + "( ? ⊢ ? ⫃[?] ? )" "lsubc_drops" + "lsubc_lsubr" + "lsubc_lsuba" * ]
-             [ [ "candidates" ] "gcp_cr" + "( ❪?,?,?❫ ϵ ⟦?⟧[?] )" "gcp_aaa" * ]
+             [ [ "candidates" ] "gcp_cr" + "( ❨?,?,?❩ ϵ ⟦?⟧[?] )" "gcp_aaa" * ]
              [ [ "computation properties" ] "gcp" *]
           }
         ]
         [ { "atomic arity assignment" * } {
              [ [ "restricted refinement for lenvs" ] "lsuba" + "( ? ⊢ ? ⫃⁝ ? )" "lsuba_drops" + "lsuba_lsubr" + "lsuba_aaa" + "lsuba_lsuba" * ]
-             [ [ "for terms" ] "aaa" + "( ❪?,?❫ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_reqg" + "aaa_feqg" + "aaa_aaa" + "aaa_dec" * ]
+             [ [ "for terms" ] "aaa" + "( ❨?,?❩ ⊢ ? ⁝ ? )" "aaa_drops" + "aaa_fqus" + "aaa_reqg" + "aaa_feqg" + "aaa_aaa" + "aaa_dec" * ]
           }
         ]
         [ { "sort-irrelevant equivalence" * } {
-             [ [ "for closures on referred entries" ] "feqx" + "( ❪?,?,?❫ ≅ ❪?,?,?❫ )" "feqx_feqx" * ]
+             [ [ "for closures on referred entries" ] "feqx" + "( ❨?,?,?❩ ≅ ❨?,?,?❩ )" "feqx_feqx" * ]
              [ [ "for lenvs on referred entries" ] "reqx" + "( ? ≅[?] ? )" "reqx_reqx" * ]
           }
         ]
@@ -40,7 +40,7 @@ table {
           }
         ]
         [ { "generic equivalence" * } {
-             [ [ "for closures on referred entries" ] "feqg" + "( ❪?,?,?❫ ≛[?] ❪?,?,?❫ )" "feqg_length" + "feqg_fqu" + "feqg_fqup" + "feqg_fqus" + "feqg_feqg" * ]
+             [ [ "for closures on referred entries" ] "feqg" + "( ❨?,?,?❩ ≛[?] ❨?,?,?❩ )" "feqg_length" + "feqg_fqu" + "feqg_fqup" + "feqg_fqus" + "feqg_feqg" * ]
              [ [ "for lenvs on referred entries" ] "reqg" + "( ? ≛[?,?] ? )" "reqg_length" + "reqg_drops" + "reqg_fqup" + "reqg_fqus" + "reqg_reqg" * ]
           }
         ]
@@ -49,9 +49,9 @@ table {
           }
         ]
         [ { "context-sensitive free variables" * } {
-             [ [ "inclusion for restricted closures" ] "fsle" + "( ❪?,?❫ ⊆ ❪?,?❫ )" "fsle_length" + "fsle_drops" + "fsle_fqup" + "fsle_fsle" * ]
-             [ [ "restricted refinement for lenvs" ] "lsubf" + "( ❪?,?❫ ⫃𝐅+ ❪?,?❫ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
-             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅+❪?❫ ≘ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
+             [ [ "inclusion for restricted closures" ] "fsle" + "( ❨?,?❩ ⊆ ❨?,?❩ )" "fsle_length" + "fsle_drops" + "fsle_fqup" + "fsle_fsle" * ]
+             [ [ "restricted refinement for lenvs" ] "lsubf" + "( ❨?,?❩ ⫃𝐅+ ❨?,?❩ )" "lsubf_lsubr" + "lsubf_frees" + "lsubf_lsubf" * ]
+             [ [ "for terms" ] "frees" + "( ? ⊢ 𝐅+❨?❩ ≘ ? )" "frees_append" + "frees_drops" + "frees_fqup" + "frees_frees" * ]
           }
         ]
         [ { "local environments" * } {
@@ -63,8 +63,8 @@ table {
    class "grass"
    [ { "s-computation" * } {
         [ { "iterated structural successor" * } {
-             [ [ "for closures" ] "fqus" + "( ❪?,?,?❫ ⬂*[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂* ❪?,?,?❫ )" "fqus_weight" + "fqus_drops" + "fqus_fqup" + "fqus_fqus" * ]
-             [ [ "proper for closures" ] "fqup" + "( ❪?,?,?❫ ⬂+[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂+ ❪?,?,?❫ )" "fqup_weight" + "fqup_drops" + "fqup_fqup" * ]
+             [ [ "for closures" ] "fqus" + "( ❨?,?,?❩ ⬂*[?] ❨?,?,?❩ )" + "( ❨?,?,?❩ ⬂* ❨?,?,?❩ )" "fqus_weight" + "fqus_drops" + "fqus_fqup" + "fqus_fqus" * ]
+             [ [ "proper for closures" ] "fqup" + "( ❨?,?,?❩ ⬂+[?] ❨?,?,?❩ )" + "( ❨?,?,?❩ ⬂+ ❨?,?,?❩ )" "fqup_weight" + "fqup_drops" + "fqup_fqup" * ]
           }
         ]
      }
@@ -72,8 +72,8 @@ table {
    class "yellow"
    [ { "s-transition" * } {
         [ { "structural successor" * } {
-             [ [ "for closures" ] "fquq" + "( ❪?,?,?❫ ⬂⸮[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂⸮ ❪?,?,?❫ )" "fquq_length" + "fquq_weight" * ]
-             [ [ "proper for closures" ] "fqu" + "( ❪?,?,?❫ ⬂[?] ❪?,?,?❫ )" + "( ❪?,?,?❫ ⬂ ❪?,?,?❫ )" "fqu_length" + "fqu_weight" + "fqu_teqg" * ]
+             [ [ "for closures" ] "fquq" + "( ❨?,?,?❩ ⬂⸮[?] ❨?,?,?❩ )" + "( ❨?,?,?❩ ⬂⸮ ❨?,?,?❩ )" "fquq_length" + "fquq_weight" * ]
+             [ [ "proper for closures" ] "fqu" + "( ❨?,?,?❩ ⬂[?] ❨?,?,?❩ )" + "( ❨?,?,?❩ ⬂ ❨?,?,?❩ )" "fqu_length" + "fqu_weight" + "fqu_teqg" * ]
           }
         ]
      }
@@ -169,7 +169,7 @@ table {
         ]
         [ { "terms" * } {
              [ [ "" ] "term_vector" + "( Ⓐ?.? )" * ]
-             [ [ "" ] "term_simple" + "( 𝐒❪?❫ )"  * ]
+             [ [ "" ] "term_simple" + "( 𝐒❨?❩ )"  * ]
              [ [ "" ] "term_weight" + "( ♯❨?❩ )" * ]
              [ [ "" ] "term" * ]
           }

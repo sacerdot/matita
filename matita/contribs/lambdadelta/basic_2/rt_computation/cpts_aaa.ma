@@ -20,7 +20,7 @@ include "basic_2/rt_computation/cpts_drops.ma".
 (* Properties with atomic arity assignment for terms ************************)
 
 lemma cpts_total_aaa (h) (G) (L) (T1):
-      ∀A. ❪G,L❫ ⊢ T1 ⁝ A → ∀n. ∃T2. ❪G,L❫ ⊢ T1 ⬆*[h,n] T2.
+      ∀A. ❨G,L❩ ⊢ T1 ⁝ A → ∀n. ∃T2. ❨G,L❩ ⊢ T1 ⬆*[h,n] T2.
 #h #G #L #T1 #A #H elim H -G -L -T1 -A
 [ #G #L #s #n /3 width=2 by ex_intro/
 | #I #G #K #V1 #B #_ #IH #n -B

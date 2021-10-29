@@ -32,7 +32,7 @@ definition T: term ≝ #0.
 (* Basic properties *********************************************************)
 
 lemma ex_rpx_fwd_1 (G) (K) (s1) (s0):
-      ❪G,L1 K s1 s0❫ ⊢ ⬈ L K s1 s0.
+      ❨G,L1 K s1 s0❩ ⊢ ⬈ L K s1 s0.
 /3 width=1 by lpx_pair, lpx_bind_refl_dx, cpx_eps/ qed.
 
 lemma ex_rpx_fwd_2 (K) (s1) (s0) (i1) (i0):
@@ -40,7 +40,7 @@ lemma ex_rpx_fwd_2 (K) (s1) (s0) (i1) (i0):
 /4 width=1 by reqg_refl, reqg_pair, reqg_sort, teqg_sort/ qed.
 
 lemma ex_rpx_fwd_3 (G) (K) (s1) (s0) (i1) (i0):
-      ❪G,L1 K s1 s0❫ ⊢ ⬈[T] L2 K i1 i0 → ⊥.
+      ❨G,L1 K s1 s0❩ ⊢ ⬈[T] L2 K i1 i0 → ⊥.
 #G #K #s1 #s0 #i1 #i0 #H
 elim (rpx_inv_zero_pair_sn … H) -H #Y2 #X2 #H #_ normalize #H0 destruct
 elim (rpx_inv_flat … H) -H #H #_
@@ -51,5 +51,5 @@ qed-.
 (* Main properties **********************************************************)
 
 theorem ex_rpx_fwd (G) (K) (s1) (s0) (i1) (i0):
-        (❪G,L1 K s1 s0❫ ⊢ ⬈ L K s1 s0 → L K s1 s0 ≅[T] L2 K i1 i0 → ❪G,L1 K s1 s0❫ ⊢ ⬈[T] L2 K i1 i0) → ⊥.
+        (❨G,L1 K s1 s0❩ ⊢ ⬈ L K s1 s0 → L K s1 s0 ≅[T] L2 K i1 i0 → ❨G,L1 K s1 s0❩ ⊢ ⬈[T] L2 K i1 i0) → ⊥.
 /3 width=7 by ex_rpx_fwd_3, ex_rpx_fwd_2, ex_rpx_fwd_1/ qed-.

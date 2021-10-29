@@ -18,16 +18,16 @@ include "basic_2/dynamic/cnv_cpm_teqx.ma".
 (* CONTEXT-SENSITIVE NATIVE VALIDITY FOR TERMS ******************************)
 
 definition IH_cnv_cpm_teqx_cpm_trans (h) (a): relation3 genv lenv term ≝
-           λG,L,T1. ❪G,L❫ ⊢ T1 ![h,a] →
-           ∀n1,T. ❪G,L❫ ⊢ T1 ➡[h,n1] T → T1 ≅ T →
-           ∀n2,T2. ❪G,L❫ ⊢ T ➡[h,n2] T2 →
-           ∃∃T0. ❪G,L❫ ⊢ T1 ➡[h,n2] T0 & ❪G,L❫ ⊢ T0 ➡[h,n1] T2 & T0 ≅ T2.
+           λG,L,T1. ❨G,L❩ ⊢ T1 ![h,a] →
+           ∀n1,T. ❨G,L❩ ⊢ T1 ➡[h,n1] T → T1 ≅ T →
+           ∀n2,T2. ❨G,L❩ ⊢ T ➡[h,n2] T2 →
+           ∃∃T0. ❨G,L❩ ⊢ T1 ➡[h,n2] T0 & ❨G,L❩ ⊢ T0 ➡[h,n1] T2 & T0 ≅ T2.
 
 (* Transitive properties restricted rt-transition for terms *****************)
 
 fact cnv_cpm_teqx_cpm_trans_sub (h) (a) (G0) (L0) (T0):
-     (∀G,L,T. ❪G0,L0,T0❫ > ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
-     (∀G,L,T. ❪G0,L0,T0❫ ⬂+ ❪G,L,T❫ → IH_cnv_cpm_teqx_cpm_trans h a G L T) →
+     (∀G,L,T. ❨G0,L0,T0❩ > ❨G,L,T❩ → IH_cnv_cpm_trans_lpr h a G L T) →
+     (∀G,L,T. ❨G0,L0,T0❩ ⬂+ ❨G,L,T❩ → IH_cnv_cpm_teqx_cpm_trans h a G L T) →
      ∀G,L,T1. G0 = G → L0 = L → T0 = T1 → IH_cnv_cpm_teqx_cpm_trans h a G L T1.
 #h #a #G0 #L0 #T0 #IH2 #IH1 #G #L * [| * [| * ]]
 [ #I #_ #_ #_ #_ #n1 #X1 #H1X #H2X #n2 #X2 #HX2 destruct -G0 -L0 -T0
@@ -89,7 +89,7 @@ fact cnv_cpm_teqx_cpm_trans_sub (h) (a) (G0) (L0) (T0):
 qed-.
 
 fact cnv_cpm_teqx_cpm_trans_aux (h) (a) (G0) (L0) (T0):
-     (∀G,L,T. ❪G0,L0,T0❫ > ❪G,L,T❫ → IH_cnv_cpm_trans_lpr h a G L T) →
+     (∀G,L,T. ❨G0,L0,T0❩ > ❨G,L,T❩ → IH_cnv_cpm_trans_lpr h a G L T) →
      IH_cnv_cpm_teqx_cpm_trans h a G0 L0 T0.
 #h #a #G0 #L0 #T0
 @(fqup_wf_ind (Ⓣ) … G0 L0 T0) -G0 -L0 -T0 #G0 #L0 #T0 #IH #IH0

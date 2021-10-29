@@ -20,5 +20,5 @@ include "ground/relocation/pr_isf.ma".
 (* Constructions with pr_uni ************************************************)
 
 (*** isfin_uni *)
-lemma pr_isf_uni (n): 𝐅❪𝐮❨n❩❫.
+lemma pr_isf_uni (n): 𝐅❨𝐮❨n❩❩.
 /3 width=2 by ex_intro/ qed.

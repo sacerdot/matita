@@ -21,8 +21,8 @@ include "ground/relocation/pr_after.ma".
 
 (*** after_at_fwd *)
 lemma pr_after_pat_des (i) (i1):
-      ∀f. @❪i1, f❫ ≘ i → ∀f2,f1. f2 ⊚ f1 ≘ f →
-      ∃∃i2. @❪i1, f1❫ ≘ i2 & @❪i2, f2❫ ≘ i.
+      ∀f. @❨i1, f❩ ≘ i → ∀f2,f1. f2 ⊚ f1 ≘ f →
+      ∃∃i2. @❨i1, f1❩ ≘ i2 & @❨i2, f2❩ ≘ i.
 #i elim i -i [2: #i #IH ] #i1 #f #Hf #f2 #f1 #Hf21
 [ elim (pr_pat_inv_succ_dx … Hf) -Hf [1,3:* |*: // ]
   [1: #g #j1 #Hg #H0 #H |2,4: #g #Hg #H ]
@@ -40,8 +40,8 @@ qed-.
 
 (*** after_fwd_at *)
 lemma pr_after_des_pat (i) (i2) (i1):
-      ∀f1,f2. @❪i1, f1❫ ≘ i2 → @❪i2, f2❫ ≘ i →
-      ∀f. f2 ⊚ f1 ≘ f → @❪i1, f❫ ≘ i.
+      ∀f1,f2. @❨i1, f1❩ ≘ i2 → @❨i2, f2❩ ≘ i →
+      ∀f. f2 ⊚ f1 ≘ f → @❨i1, f❩ ≘ i.
 #i elim i -i [2: #i #IH ] #i2 #i1 #f1 #f2 #Hf1 #Hf2 #f #Hf
 [ elim (pr_pat_inv_succ_dx … Hf2) -Hf2 [1,3: * |*: // ]
   #g2 [ #j2 ] #Hg2 [ #H22 ] #H20
@@ -60,16 +60,16 @@ qed-.
 
 (*** after_fwd_at2 *)
 lemma pr_after_des_pat_sn (i1) (i):
-      ∀f. @❪i1, f❫ ≘ i → ∀f1,i2. @❪i1, f1❫ ≘ i2 →
-      ∀f2. f2 ⊚ f1 ≘ f → @❪i2, f2❫ ≘ i.
+      ∀f. @❨i1, f❩ ≘ i → ∀f1,i2. @❨i1, f1❩ ≘ i2 →
+      ∀f2. f2 ⊚ f1 ≘ f → @❨i2, f2❩ ≘ i.
 #i1 #i #f #Hf #f1 #i2 #Hf1 #f2 #H elim (pr_after_pat_des … Hf … H) -f
 #j1 #H #Hf2 <(pr_pat_mono … Hf1 … H) -i1 -i2 //
 qed-.
 
 (*** after_fwd_at1 *)
 lemma pr_after_des_pat_dx (i) (i2) (i1):
-      ∀f,f2. @❪i1, f❫ ≘ i → @❪i2, f2❫ ≘ i →
-      ∀f1. f2 ⊚ f1 ≘ f → @❪i1, f1❫ ≘ i2.
+      ∀f,f2. @❨i1, f❩ ≘ i → @❨i2, f2❩ ≘ i →
+      ∀f1. f2 ⊚ f1 ≘ f → @❨i1, f1❩ ≘ i2.
 #i elim i -i [2: #i #IH ] #i2 #i1 #f #f2 #Hf #Hf2 #f1 #Hf1
 [ elim (pr_pat_inv_succ_dx … Hf) -Hf [1,3: * |*: // ]
   #g [ #j1 ] #Hg [ #H01 ] #H00

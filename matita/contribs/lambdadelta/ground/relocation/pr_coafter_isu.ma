@@ -22,7 +22,7 @@ include "ground/relocation/pr_coafter_uni_pushs.ma".
 
 (*** coafter_isuni_isid *)
 lemma pr_coafter_isu_isi:
-      ∀f2. 𝐈❪f2❫ → ∀f1. 𝐔❪f1❫ → f1 ~⊚ f2 ≘ f2.
+      ∀f2. 𝐈❨f2❩ → ∀f1. 𝐔❨f1❩ → f1 ~⊚ f2 ≘ f2.
 #f #Hf #g #H
 elim (pr_isu_inv_uni … H) -H #n #H
 /5 width=4 by pr_isi_pushs, pr_isi_inv_eq_repl, pr_coafter_eq_repl_back, pr_coafter_eq_repl_back_sn/

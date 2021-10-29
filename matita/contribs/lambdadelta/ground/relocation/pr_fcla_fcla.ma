@@ -20,7 +20,7 @@ include "ground/relocation/pr_fcla.ma".
 
 (*** fcla_mono *)
 theorem pr_fcla_mono (f):
-        ∀n1. 𝐂❪f❫ ≘ n1 → ∀n2. 𝐂❪f❫ ≘ n2 → n1 = n2.
+        ∀n1. 𝐂❨f❩ ≘ n1 → ∀n2. 𝐂❨f❩ ≘ n2 → n1 = n2.
 #f #n #H elim H -f -n
 [ /2 width=3 by pr_fcla_inv_isi/
 | /3 width=3 by pr_fcla_inv_push/

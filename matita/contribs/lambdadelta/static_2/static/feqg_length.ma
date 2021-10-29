@@ -20,5 +20,5 @@ include "static_2/static/feqg.ma".
 (* Forward lemmas with length for local environments ************************)
 
 lemma feqg_fwd_length (S) (G1) (G2) (L1) (L2) (T1) (T2):
-      ❪G1,L1,T1❫ ≛[S] ❪G2,L2,T2❫ → |L1| = |L2|.
+      ❨G1,L1,T1❩ ≛[S] ❨G2,L2,T2❩ → |L1| = |L2|.
 /3 width=6 by feqg_fwd_reqg_sn, reqg_fwd_length/ qed-.

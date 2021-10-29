@@ -20,10 +20,10 @@ include "basic_2/rt_computation/fpbg.ma".
 (* Advanced properties ******************************************************)
 
 lemma fpbc_fpbg (G1) (G2) (L1) (L2) (T1) (T2):
-      ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
+      ❨G1,L1,T1❩ ≻ ❨G2,L2,T2❩ → ❨G1,L1,T1❩ > ❨G2,L2,T2❩.
 /3 width=13 by fpbg_intro, fpb_fpbs/ qed.
 
 lemma fpbc_fpbs_fpbg (G) (L) (T):
-      ∀G1,L1,T1. ❪G1,L1,T1❫ ≻ ❪G,L,T❫ →
-      ∀G2,L2,T2. ❪G,L,T❫ ≥ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
+      ∀G1,L1,T1. ❨G1,L1,T1❩ ≻ ❨G,L,T❩ →
+      ∀G2,L2,T2. ❨G,L,T❩ ≥ ❨G2,L2,T2❩ → ❨G1,L1,T1❩ > ❨G2,L2,T2❩.
 /2 width=9 by fpbg_intro/ qed.

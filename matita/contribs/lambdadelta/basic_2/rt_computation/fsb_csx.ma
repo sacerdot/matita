@@ -24,7 +24,7 @@ include "basic_2/rt_computation/fsb_fpbg.ma".
 (* Inversion lemmas with context-sensitive stringly rt-normalizing terms ****)
 
 lemma fsb_inv_csx:
-      ∀G,L,T. ≥𝐒 ❪G,L,T❫ → ❪G,L❫ ⊢ ⬈*𝐒 T.
+      ∀G,L,T. ≥𝐒 ❨G,L,T❩ → ❨G,L❩ ⊢ ⬈*𝐒 T.
 #G #L #T #H @(fsb_ind … H) -G -L -T
 /5 width=1 by csx_intro, cpx_fpbc/
 qed-.
@@ -32,8 +32,8 @@ qed-.
 (* Propreties with context-sensitive stringly rt-normalizing terms **********)
 
 lemma csx_fsb_fpbs:
-      ∀G1,L1,T1. ❪G1,L1❫ ⊢ ⬈*𝐒 T1 →
-      ∀G2,L2,T2. ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫ → ≥𝐒 ❪G2,L2,T2❫.
+      ∀G1,L1,T1. ❨G1,L1❩ ⊢ ⬈*𝐒 T1 →
+      ∀G2,L2,T2. ❨G1,L1,T1❩ ≥ ❨G2,L2,T2❩ → ≥𝐒 ❨G2,L2,T2❩.
 #G1 #L1 #T1 #H @(csx_ind … H) -T1
 #T1 #HT1 #IHc #G2 #L2 #T2 @(fqup_wf_ind (Ⓣ) … G2 L2 T2) -G2 -L2 -T2
 #G0 #L0 #T0 #IHu #H10
@@ -64,25 +64,25 @@ elim (fpbc_fwd_lpx … H) -H * [ -IHd -IHc | -IHu -IHd |]
 qed.
 
 lemma csx_fsb (G) (L) (T):
-      ❪G,L❫ ⊢ ⬈*𝐒 T → ≥𝐒 ❪G,L,T❫.
+      ❨G,L❩ ⊢ ⬈*𝐒 T → ≥𝐒 ❨G,L,T❩.
 /2 width=5 by csx_fsb_fpbs/ qed.
 
 (* Advanced eliminators *****************************************************)
 
 lemma csx_ind_fpbc (Q:relation3 …):
       (∀G1,L1,T1.
-        ❪G1,L1❫ ⊢ ⬈*𝐒 T1 →
-        (∀G2,L2,T2. ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫ → Q G2 L2 T2) →
+        ❨G1,L1❩ ⊢ ⬈*𝐒 T1 →
+        (∀G2,L2,T2. ❨G1,L1,T1❩ ≻ ❨G2,L2,T2❩ → Q G2 L2 T2) →
         Q G1 L1 T1
       ) →
-      ∀G,L,T. ❪G,L❫ ⊢ ⬈*𝐒 T → Q G L T.
+      ∀G,L,T. ❨G,L❩ ⊢ ⬈*𝐒 T → Q G L T.
 /4 width=4 by fsb_inv_csx, csx_fsb, fsb_ind/ qed-.
 
 lemma csx_ind_fpbg (Q:relation3 …):
       (∀G1,L1,T1.
-        ❪G1,L1❫ ⊢ ⬈*𝐒 T1 →
-        (∀G2,L2,T2. ❪G1,L1,T1❫ > ❪G2,L2,T2❫ → Q G2 L2 T2) →
+        ❨G1,L1❩ ⊢ ⬈*𝐒 T1 →
+        (∀G2,L2,T2. ❨G1,L1,T1❩ > ❨G2,L2,T2❩ → Q G2 L2 T2) →
         Q G1 L1 T1
       ) →
-      ∀G,L,T. ❪G,L❫ ⊢ ⬈*𝐒 T → Q G L T.
+      ∀G,L,T. ❨G,L❩ ⊢ ⬈*𝐒 T → Q G L T.
 /4 width=4 by fsb_inv_csx, csx_fsb, fsb_ind_fpbg/ qed-.

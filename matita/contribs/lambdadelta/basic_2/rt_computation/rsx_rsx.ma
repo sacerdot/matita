@@ -33,7 +33,7 @@ qed-.
 (* Basic_2A1: uses: lsx_lpx_trans *)
 lemma rsx_lpx_trans (G):
       ∀L1,T. G ⊢ ⬈*𝐒[T] L1 →
-      ∀L2. ❪G,L1❫ ⊢ ⬈ L2 → G ⊢ ⬈*𝐒[T] L2.
+      ∀L2. ❨G,L1❩ ⊢ ⬈ L2 → G ⊢ ⬈*𝐒[T] L2.
 #G #L1 #T #H @(rsx_ind … H) -L1 #L1 #HL1 #IHL1 #L2 #HL12
 elim (reqx_dec … L1 L2 T) /3 width=4 by rsx_reqx_trans/
 qed-.

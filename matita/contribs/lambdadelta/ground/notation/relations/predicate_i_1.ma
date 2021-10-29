@@ -14,6 +14,6 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( 𝐈❪ term 46 f ❫ )"
+notation "hvbox( 𝐈❨ term 46 f ❩ )"
   non associative with precedence 45
   for @{ 'PredicateI $f }.

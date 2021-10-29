@@ -30,18 +30,18 @@ interpretation
 
 (* Basic_2A1: uses: fpbq_fpbs *)
 lemma fpb_fpbs:
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ →
-      ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
+      ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ≽ ❨G2,L2,T2❩ →
+      ❨G1,L1,T1❩ ≥ ❨G2,L2,T2❩.
 /2 width=1 by tri_inj/ qed.
 
 lemma fpbs_strap1:
-      ∀G1,G,G2,L1,L,L2,T1,T,T2. ❪G1,L1,T1❫ ≥ ❪G,L,T❫ →
-      ❪G,L,T❫ ≽ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
+      ∀G1,G,G2,L1,L,L2,T1,T,T2. ❨G1,L1,T1❩ ≥ ❨G,L,T❩ →
+      ❨G,L,T❩ ≽ ❨G2,L2,T2❩ → ❨G1,L1,T1❩ ≥ ❨G2,L2,T2❩.
 /2 width=5 by tri_step/ qed-.
 
 lemma fpbs_strap2:
-      ∀G1,G,G2,L1,L,L2,T1,T,T2. ❪G1,L1,T1❫ ≽ ❪G,L,T❫ →
-      ❪G,L,T❫ ≥ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫.
+      ∀G1,G,G2,L1,L,L2,T1,T,T2. ❨G1,L1,T1❩ ≽ ❨G,L,T❩ →
+      ❨G,L,T❩ ≥ ❨G2,L2,T2❩ → ❨G1,L1,T1❩ ≥ ❨G2,L2,T2❩.
 /2 width=5 by tri_TC_strap/ qed-.
 
 (* Basic_2A1: removed theorems 3:

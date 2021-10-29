@@ -23,7 +23,7 @@ include "ground/relocation/pr_coafter.ma".
 
 (*** coafter_fwd_pushs *)
 lemma pr_coafter_des_pushs_dx (n) (m):
-      ∀g2,f1,g. g2 ~⊚ ⫯*[m]f1 ≘ g → @↑❪m, g2❫ ≘ n →
+      ∀g2,f1,g. g2 ~⊚ ⫯*[m]f1 ≘ g → @↑❨m, g2❩ ≘ n →
       ∃∃f. ⫰*[n]g2 ~⊚ f1 ≘ f & ⫯*[n] f = g.
 #n @(nat_ind_succ … n) -n
 [ #m #g2 #f1 #g #Hg #H

@@ -21,7 +21,7 @@ include "basic_2/rt_computation/fpbg_fqup.ma".
 (* Properties with t-bound rt-transition for terms **************************)
 
 lemma cpm_tneqx_cpm_fpbg (h) (G) (L):
-      ∀n1,T1,T. ❪G,L❫ ⊢ T1 ➡[h,n1] T → (T1 ≅ T → ⊥) →
-      ∀n2,T2. ❪G,L❫ ⊢ T ➡[h,n2] T2 → ❪G,L,T1❫ > ❪G,L,T2❫.
+      ∀n1,T1,T. ❨G,L❩ ⊢ T1 ➡[h,n1] T → (T1 ≅ T → ⊥) →
+      ∀n2,T2. ❨G,L❩ ⊢ T ➡[h,n2] T2 → ❨G,L,T1❩ > ❨G,L,T2❩.
 /4 width=5 by fpbc_fpbs_fpbg, fpb_fpbs, cpm_fwd_fpbc, cpm_fwd_fpb/
 qed.

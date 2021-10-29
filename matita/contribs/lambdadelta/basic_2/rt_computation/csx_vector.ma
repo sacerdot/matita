@@ -27,15 +27,15 @@ interpretation
 (* Basic inversion lemmas ***************************************************)
 
 lemma csxv_inv_cons (G) (L):
-      ∀T,Ts. ❪G,L❫ ⊢ ⬈*𝐒 T⨮Ts →
-      ∧∧ ❪G,L❫ ⊢ ⬈*𝐒 T & ❪G,L❫ ⊢ ⬈*𝐒 Ts.
+      ∀T,Ts. ❨G,L❩ ⊢ ⬈*𝐒 T⨮Ts →
+      ∧∧ ❨G,L❩ ⊢ ⬈*𝐒 T & ❨G,L❩ ⊢ ⬈*𝐒 Ts.
 normalize // qed-.
 
 (* Basic forward lemmas *****************************************************)
 
 lemma csx_fwd_applv (G) (L):
-      ∀T,Vs. ❪G,L❫ ⊢ ⬈*𝐒 ⒶVs.T →
-      ∧∧ ❪G,L❫ ⊢ ⬈*𝐒 Vs & ❪G,L❫ ⊢ ⬈*𝐒 T.
+      ∀T,Vs. ❨G,L❩ ⊢ ⬈*𝐒 ⒶVs.T →
+      ∧∧ ❨G,L❩ ⊢ ⬈*𝐒 Vs & ❨G,L❩ ⊢ ⬈*𝐒 T.
 #G #L #T #Vs elim Vs -Vs /2 width=1 by conj/
 #V #Vs #IHVs #HVs
 lapply (csx_fwd_pair_sn … HVs) #HV

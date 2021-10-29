@@ -20,7 +20,7 @@ include "ground/relocation/pr_fcla.ma".
 (* Constructions with pr_uni ************************************************)
 
 (*** fcla_uni *)
-lemma pr_fcla_uni (n): 𝐂❪𝐮❨n❩❫ ≘ n.
+lemma pr_fcla_uni (n): 𝐂❨𝐮❨n❩❩ ≘ n.
 #n @(nat_ind_succ … n) -n
 /2 width=1 by pr_fcla_isi, pr_fcla_next/
 qed.

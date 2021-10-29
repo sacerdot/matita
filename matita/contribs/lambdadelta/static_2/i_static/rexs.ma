@@ -51,7 +51,7 @@ lemma rexs_pair: ∀R. (∀L. reflexive … (R L)) →
 /3 width=5 by rex_pair, rexs_step_dx, inj/
 qed.
 
-lemma rexs_unit: ∀R,f,I,L1,L2. 𝐈❪f❫ → L1 ⪤[cext2 R,cfull,f] L2 →
+lemma rexs_unit: ∀R,f,I,L1,L2. 𝐈❨f❩ → L1 ⪤[cext2 R,cfull,f] L2 →
                  L1.ⓤ[I] ⪤*[R,#0] L2.ⓤ[I].
 /3 width=3 by rex_unit, inj/ qed.
 

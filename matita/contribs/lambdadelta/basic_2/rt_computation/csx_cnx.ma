@@ -21,11 +21,11 @@ include "basic_2/rt_computation/csx.ma".
 
 (* Basic_1: was just: sn3_nf2 *)
 lemma cnx_csx (G) (L):
-      ∀T. ❪G,L❫ ⊢ ⬈𝐍 T → ❪G,L❫ ⊢ ⬈*𝐒 T.
+      ∀T. ❨G,L❩ ⊢ ⬈𝐍 T → ❨G,L❩ ⊢ ⬈*𝐒 T.
 /2 width=1 by NF_to_SN/ qed.
 
 (* Advanced properties ******************************************************)
 
 lemma csx_sort (G) (L):
-      ∀s. ❪G,L❫ ⊢ ⬈*𝐒 ⋆s.
+      ∀s. ❨G,L❩ ⊢ ⬈*𝐒 ⋆s.
 /3 width=4 by cnx_csx, cnx_sort/ qed.

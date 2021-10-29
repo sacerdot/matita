@@ -21,5 +21,5 @@ include "basic_2/rt_transition/lpr_lpx.ma".
 
 (* Basic_2A1: uses: lpr_fpb *)
 lemma lpr_fwd_fpbc (h) (G) (T):
-      ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 → (L1 ≅[T] L2 → ⊥) → ❪G,L1,T❫ ≻ ❪G,L2,T❫.
+      ∀L1,L2. ❨G,L1❩ ⊢ ➡[h,0] L2 → (L1 ≅[T] L2 → ⊥) → ❨G,L1,T❩ ≻ ❨G,L2,T❩.
 /3 width=2 by lpx_fpbc, lpr_fwd_lpx/ qed-.

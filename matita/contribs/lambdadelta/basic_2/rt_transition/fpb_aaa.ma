@@ -23,8 +23,8 @@ include "basic_2/rt_transition/fpb_lpx.ma".
 
 (* Basic_2A1: uses: fpbq_aaa_conf *)
 lemma fpb_aaa_conf:
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ →
-      ∀A1. ❪G1,L1❫ ⊢ T1 ⁝ A1 → ∃A2. ❪G2,L2❫ ⊢ T2 ⁝ A2.
+      ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ≽ ❨G2,L2,T2❩ →
+      ∀A1. ❨G1,L1❩ ⊢ T1 ⁝ A1 → ∃A2. ❨G2,L2❩ ⊢ T2 ⁝ A2.
 #G1 #G2 #L1 #L2 #T1 #T2 #H #A1 #HA1
 elim (fpb_inv_req … H) -H #L0 #L #T #H1 #HT2 #HL0 #HL02
 elim (aaa_fquq_conf … H1 … HA1) -G1 -L1 -T1 -A1 #A2 #HA2

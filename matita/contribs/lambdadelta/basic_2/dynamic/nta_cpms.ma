@@ -23,8 +23,8 @@ include "basic_2/dynamic/nta.ma".
 (* Basic_2A1: uses by definition nta_appl ntaa_appl *)
 lemma nta_appl_abst (h) (a) (p) (G) (L):
       ∀n. ad a n →
-      ∀V,W. ❪G,L❫ ⊢ V :[h,a] W →
-      ∀T,U. ❪G,L.ⓛW❫ ⊢ T :[h,a] U → ❪G,L❫ ⊢ ⓐV.ⓛ[p]W.T :[h,a] ⓐV.ⓛ[p]W.U.
+      ∀V,W. ❨G,L❩ ⊢ V :[h,a] W →
+      ∀T,U. ❨G,L.ⓛW❩ ⊢ T :[h,a] U → ❨G,L❩ ⊢ ⓐV.ⓛ[p]W.T :[h,a] ⓐV.ⓛ[p]W.U.
 #h #a #p #G #L #n #Ha #V #W #H1 #T #U #H2
 elim (cnv_inv_cast … H1) -H1 #X1 #HW #HV #HWX1 #HVX1
 elim (cnv_inv_cast … H2) -H2 #X2 #HU #HT #HUX2 #HTX2
@@ -35,8 +35,8 @@ qed.
 (* Basic_2A1: was nta_appl_old *)
 lemma nta_appl (h) (a) (p) (G) (L):
       ∀n. 1 ≤ n → ad a n →
-      ∀V,W. ❪G,L❫ ⊢ V :[h,a] W →
-      ∀T,U. ❪G,L❫ ⊢ T :[h,a] ⓛ[p]W.U → ❪G,L❫ ⊢ ⓐV.T :[h,a] ⓐV.ⓛ[p]W.U.
+      ∀V,W. ❨G,L❩ ⊢ V :[h,a] W →
+      ∀T,U. ❨G,L❩ ⊢ T :[h,a] ⓛ[p]W.U → ❨G,L❩ ⊢ ⓐV.T :[h,a] ⓐV.ⓛ[p]W.U.
 #h #a #p #G #L #n #Hn #Ha #V #W #H1 #T #U #H2
 elim (cnv_inv_cast … H1) -H1 #X1 #HW #HV #HWX1 #HVX1
 elim (cnv_inv_cast … H2) -H2 #X2 #HU #HT #HUX2 #HTX2
@@ -53,8 +53,8 @@ qed.
 (* Inversion lemmas with advanced rt_computation for terms ******************)
 
 lemma nta_inv_abst_bi_cnv (h) (a) (p) (G) (K) (W):
-      ∀T,U. ❪G,K❫ ⊢ ⓛ[p]W.T :[h,a] ⓛ[p]W.U →
-      ∧∧ ❪G,K❫ ⊢ W ![h,a] & ❪G,K.ⓛW❫ ⊢ T :[h,a] U.
+      ∀T,U. ❨G,K❩ ⊢ ⓛ[p]W.T :[h,a] ⓛ[p]W.U →
+      ∧∧ ❨G,K❩ ⊢ W ![h,a] & ❨G,K.ⓛW❩ ⊢ T :[h,a] U.
 #h #a #p #G #K #W #T #U #H
 elim (cnv_inv_cast … H) -H #X #HWU #HWT #HUX #HTX
 elim (cnv_inv_bind … HWU) -HWU #HW #HU

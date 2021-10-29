@@ -14,6 +14,6 @@
 
 (* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
 
-notation "hvbox( L ⊢ 𝐅 +❪ break term 46 T ❫ ≘ break term 46 f )"
+notation "hvbox( L ⊢ 𝐅 +❨ break term 46 T ❩ ≘ break term 46 f )"
    non associative with precedence 45
    for @{ 'FreePlus $L $T $f }.

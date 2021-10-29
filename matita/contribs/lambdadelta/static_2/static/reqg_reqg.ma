@@ -22,8 +22,8 @@ include "static_2/static/reqg_length.ma".
 
 lemma frees_reqg_conf (S):
       reflexive … S →
-      ∀f,L1,T. L1 ⊢ 𝐅+❪T❫ ≘ f →
-      ∀L2. L1 ≛[S,T] L2 → L2 ⊢ 𝐅+❪T❫ ≘ f.
+      ∀f,L1,T. L1 ⊢ 𝐅+❨T❩ ≘ f →
+      ∀L2. L1 ≛[S,T] L2 → L2 ⊢ 𝐅+❨T❩ ≘ f.
 /3 width=7 by frees_seqg_conf, rex_inv_frees/ qed-.
 
 (* Properties with free variables inclusion for restricted closures *******)

@@ -22,7 +22,7 @@ include "static_2/static/feqg.ma".
 lemma teqg_feqg (S):
       reflexive … S →
       ∀T1,T2. T1 ≛[S] T2 →
-      ∀G,L. ❪G,L,T1❫ ≛[S] ❪G,L,T2❫.
+      ∀G,L. ❨G,L,T1❩ ≛[S] ❨G,L,T2❩.
 /3 width=1 by feqg_intro_sn, reqg_refl/ qed.
 
 (* Advanced properties ******************************************************)

@@ -20,7 +20,7 @@ include "ground/relocation/pr_ist.ma".
 (* Constructions with pr_tls ************************************************)
 
 (*** istot_tls *)
-lemma pr_ist_tls (n) (f): 𝐓❪f❫ → 𝐓❪⫰*[n]f❫.
+lemma pr_ist_tls (n) (f): 𝐓❨f❩ → 𝐓❨⫰*[n]f❩.
 #n @(nat_ind_succ … n) -n //
 #n #IH #f #Hf <pr_tls_succ
 /3 width=1 by pr_ist_tl/

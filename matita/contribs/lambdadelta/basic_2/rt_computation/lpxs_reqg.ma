@@ -22,8 +22,8 @@ include "basic_2/rt_computation/lpxs_lpx.ma".
 (* Basic_2A1: uses: lleq_lpxs_trans *)
 lemma reqg_lpxs_trans (S) (G) (T:term):
       reflexive … S → symmetric … S →
-      ∀L2,K2. ❪G,L2❫ ⊢ ⬈* K2 → ∀L1. L1 ≛[S,T] L2 →
-      ∃∃K1. ❪G,L1❫ ⊢ ⬈* K1 & K1 ≛[S,T] K2.
+      ∀L2,K2. ❨G,L2❩ ⊢ ⬈* K2 → ∀L1. L1 ≛[S,T] L2 →
+      ∃∃K1. ❨G,L1❩ ⊢ ⬈* K1 & K1 ≛[S,T] K2.
 #S #G #T #H1S #H2S #L2 #K2 #H @(lpxs_ind_sn … H) -L2 /2 width=3 by ex2_intro/
 #L #L2 #HL2 #_ #IH #L1 #HT
 elim (reqg_lpx_trans … HL2 … HT) // -L #L #HL1 #HT
@@ -35,8 +35,8 @@ qed-.
 lemma lpxs_rneqg_inv_step_sn (S) (G) (T:term):
       reflexive … S → symmetric … S → Transitive … S →
       (∀s1,s2. Decidable (S s1 s2)) →
-      ∀L1,L2. ❪G,L1❫ ⊢ ⬈* L2 → (L1 ≛[S,T] L2 → ⊥) →
-      ∃∃L,L0. ❪G,L1❫ ⊢ ⬈ L & L1 ≛[S,T] L → ⊥ & ❪G,L❫ ⊢ ⬈* L0 & L0 ≛[S,T] L2.
+      ∀L1,L2. ❨G,L1❩ ⊢ ⬈* L2 → (L1 ≛[S,T] L2 → ⊥) →
+      ∃∃L,L0. ❨G,L1❩ ⊢ ⬈ L & L1 ≛[S,T] L → ⊥ & ❨G,L❩ ⊢ ⬈* L0 & L0 ≛[S,T] L2.
 #S #G #T #H1S #H2S #H3S #H4S #L1 #L2 #H @(lpxs_ind_sn … H) -L1
 [ #H elim H -H /2 width=1 by reqg_refl/
 | #L1 #L #H1 #H2 #IH2 #H12 elim (reqg_dec S … L1 L T) // #H

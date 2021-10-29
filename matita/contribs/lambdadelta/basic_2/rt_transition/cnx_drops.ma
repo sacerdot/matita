@@ -21,13 +21,13 @@ include "basic_2/rt_transition/cnx.ma".
 (* Properties with generic slicing ******************************************)
 
 lemma cnx_lref_atom (G) (L):
-      ∀i. ⇩[i] L ≘ ⋆ → ❪G,L❫ ⊢ ⬈𝐍 #i.
+      ∀i. ⇩[i] L ≘ ⋆ → ❨G,L❩ ⊢ ⬈𝐍 #i.
 #G #L #i #Hi #X #H elim (cpx_inv_lref1_drops … H) -H // *
 #I #K #V1 #V2 #HLK lapply (drops_mono … Hi … HLK) -L #H destruct
 qed.
 
 lemma cnx_lref_unit (G) (L):
-      ∀I,K,i. ⇩[i] L ≘ K.ⓤ[I] → ❪G,L❫ ⊢ ⬈𝐍 #i.
+      ∀I,K,i. ⇩[i] L ≘ K.ⓤ[I] → ❨G,L❩ ⊢ ⬈𝐍 #i.
 #G #L #I #K #i #HLK #X #H elim (cpx_inv_lref1_drops … H) -H // *
 #Z #Y #V1 #V2 #HLY lapply (drops_mono … HLK … HLY) -L #H destruct
 qed.
@@ -43,7 +43,7 @@ qed-.
 
 (* Basic_2A1: was: cnx_inv_delta *)
 lemma cnx_inv_lref_pair (G) (L):
-      ∀I,K,V,i. ⇩[i] L ≘ K.ⓑ[I]V → ❪G,L❫ ⊢ ⬈𝐍 #i → ⊥.
+      ∀I,K,V,i. ⇩[i] L ≘ K.ⓑ[I]V → ❨G,L❩ ⊢ ⬈𝐍 #i → ⊥.
 #G #L #I #K #V #i #HLK #H
 elim (lifts_total V (𝐔❨↑i❩)) #W #HVW
 lapply (H W ?) -H /2 width=7 by cpx_delta_drops/ -HLK

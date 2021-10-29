@@ -20,7 +20,7 @@ include "ground/relocation/pr_isd.ma".
 (* Constructions with pr_tl *************************************************)
 
 (*** isdiv_tl *)
-lemma pr_isd_tl (f): 𝛀❪f❫ → 𝛀❪⫰f❫.
+lemma pr_isd_tl (f): 𝛀❨f❩ → 𝛀❨⫰f❩.
 #f cases (pr_map_split_tl f) * #H
 [ elim (pr_isd_inv_push … H) -H //
 | /2 width=3 by pr_isd_inv_next/

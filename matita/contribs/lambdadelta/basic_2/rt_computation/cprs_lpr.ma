@@ -33,8 +33,8 @@ lemma lpr_cprs_trans (h) (G):
 qed-.
 
 lemma cprs_lpr_conf_dx (h) (G):
-      ∀L0,T0,T1. ❪G,L0❫ ⊢ T0 ➡*[h,0] T1 → ∀L1. ❪G,L0❫ ⊢ ➡[h,0] L1 →
-      ∃∃T. ❪G,L1❫ ⊢ T1 ➡*[h,0] T & ❪G,L1❫ ⊢ T0 ➡*[h,0] T.
+      ∀L0,T0,T1. ❨G,L0❩ ⊢ T0 ➡*[h,0] T1 → ∀L1. ❨G,L0❩ ⊢ ➡[h,0] L1 →
+      ∃∃T. ❨G,L1❩ ⊢ T1 ➡*[h,0] T & ❨G,L1❩ ⊢ T0 ➡*[h,0] T.
 #h #G #L0 #T0 #T1 #H
 @(cprs_ind_dx … H) -T1 /2 width=3 by ex2_intro/
 #T #T1 #_ #HT1 #IHT0 #L1 #HL01
@@ -45,9 +45,9 @@ elim (cprs_strip … HT2 … HT3) -T
 qed-.
 
 lemma cprs_lpr_conf_sn (h) (G):
-      ∀L0,T0,T1. ❪G,L0❫ ⊢ T0 ➡*[h,0] T1 →
-      ∀L1. ❪G,L0❫ ⊢ ➡[h,0] L1 →
-      ∃∃T. ❪G,L0❫ ⊢ T1 ➡*[h,0] T & ❪G,L1❫ ⊢ T0 ➡*[h,0] T.
+      ∀L0,T0,T1. ❨G,L0❩ ⊢ T0 ➡*[h,0] T1 →
+      ∀L1. ❨G,L0❩ ⊢ ➡[h,0] L1 →
+      ∃∃T. ❨G,L0❩ ⊢ T1 ➡*[h,0] T & ❨G,L1❩ ⊢ T0 ➡*[h,0] T.
 #h #G #L0 #T0 #T1 #HT01 #L1 #HL01
 elim (cprs_lpr_conf_dx … HT01 … HL01) -HT01 #T #HT1 #HT0
 /3 width=3 by lpr_cpms_trans, ex2_intro/

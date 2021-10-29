@@ -25,7 +25,7 @@ include "static_2/static/frees.ma".
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
 definition rex (R) (T): relation lenv ≝
-               λL1,L2. ∃∃f. L1 ⊢ 𝐅+❪T❫ ≘ f & L1 ⪤[cext2 R,cfull,f] L2.
+               λL1,L2. ∃∃f. L1 ⊢ 𝐅+❨T❩ ≘ f & L1 ⪤[cext2 R,cfull,f] L2.
 
 interpretation
   "generic extension on referred entries (local environment)"
@@ -90,7 +90,7 @@ lemma rex_inv_zero (R):
       ∀Y1,Y2. Y1 ⪤[R,#0] Y2 →
       ∨∨ ∧∧ Y1 = ⋆ & Y2 = ⋆
        | ∃∃I,L1,L2,V1,V2. L1 ⪤[R,V1] L2 & R L1 V1 V2 & Y1 = L1.ⓑ[I]V1 & Y2 = L2.ⓑ[I]V2
-       | ∃∃f,I,L1,L2. 𝐈❪f❫ & L1 ⪤[cext2 R,cfull,f] L2 & Y1 = L1.ⓤ[I] & Y2 = L2.ⓤ[I].
+       | ∃∃f,I,L1,L2. 𝐈❨f❩ & L1 ⪤[cext2 R,cfull,f] L2 & Y1 = L1.ⓤ[I] & Y2 = L2.ⓤ[I].
 #R * [ | #Y1 * #I1 [ | #X ] ] #Y2 * #f #H1 #H2
 [ lapply (sex_inv_atom1 … H2) -H2 /3 width=1 by or3_intro0, conj/
 | elim (frees_inv_unit … H1) -H1 #g #HX #H destruct
@@ -188,7 +188,7 @@ qed-.
 
 lemma rex_inv_zero_unit_sn (R):
       ∀I,K1,L2. K1.ⓤ[I] ⪤[R,#0] L2 →
-      ∃∃f,K2. 𝐈❪f❫ & K1 ⪤[cext2 R,cfull,f] K2 & L2 = K2.ⓤ[I].
+      ∃∃f,K2. 𝐈❨f❩ & K1 ⪤[cext2 R,cfull,f] K2 & L2 = K2.ⓤ[I].
 #R #I #K1 #L2 #H elim (rex_inv_zero … H) -H *
 [ #H destruct
 | #Z #Y1 #Y2 #X1 #X2 #_ #_ #H destruct
@@ -198,7 +198,7 @@ qed-.
 
 lemma rex_inv_zero_unit_dx (R):
       ∀I,L1,K2. L1 ⪤[R,#0] K2.ⓤ[I] →
-      ∃∃f,K1. 𝐈❪f❫ & K1 ⪤[cext2 R,cfull,f] K2 & L1 = K1.ⓤ[I].
+      ∃∃f,K1. 𝐈❨f❩ & K1 ⪤[cext2 R,cfull,f] K2 & L1 = K1.ⓤ[I].
 #R #I #L1 #K2 #H elim (rex_inv_zero … H) -H *
 [ #_ #H destruct
 | #Z #Y1 #Y2 #X1 #X2 #_ #_ #_ #H destruct
@@ -301,7 +301,7 @@ lemma rex_pair (R):
 qed.
 
 lemma rex_unit (R):
-      ∀f,I,L1,L2. 𝐈❪f❫ → L1 ⪤[cext2 R,cfull,f] L2 →
+      ∀f,I,L1,L2. 𝐈❨f❩ → L1 ⪤[cext2 R,cfull,f] L2 →
       L1.ⓤ[I] ⪤[R,#0] L2.ⓤ[I].
 /4 width=3 by frees_unit, sex_next, ext2_unit, ex2_intro/ qed.
 
@@ -333,8 +333,8 @@ qed-.
 
 lemma rex_isid (R1) (R2):
       ∀L1,L2,T1,T2.
-      (∀f. L1 ⊢ 𝐅+❪T1❫ ≘ f → 𝐈❪f❫) →
-      (∀f. 𝐈❪f❫ → L1 ⊢ 𝐅+❪T2❫ ≘ f) →
+      (∀f. L1 ⊢ 𝐅+❨T1❩ ≘ f → 𝐈❨f❩) →
+      (∀f. 𝐈❨f❩ → L1 ⊢ 𝐅+❨T2❩ ≘ f) →
       L1 ⪤[R1,T1] L2 → L1 ⪤[R2,T2] L2.
 #R1 #R2 #L1 #L2 #T1 #T2 #H1 #H2 *
 /4 width=7 by sex_co_isid, ex2_intro/

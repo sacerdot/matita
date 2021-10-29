@@ -22,8 +22,8 @@ include "basic_2/rt_equivalence/cpcs_cprs.ma".
 
 (* Basic_1: was: cpcs_dec *)
 lemma csx_cpcs_dec (h) (G) (L):
-      ∀T1. ❪G,L❫ ⊢ ⬈*𝐒 T1 → ∀T2. ❪G,L❫ ⊢ ⬈*𝐒 T2 →
-      Decidable … (❪G,L❫ ⊢ T1 ⬌*[h] T2).
+      ∀T1. ❨G,L❩ ⊢ ⬈*𝐒 T1 → ∀T2. ❨G,L❩ ⊢ ⬈*𝐒 T2 →
+      Decidable … (❨G,L❩ ⊢ T1 ⬌*[h] T2).
 #h #G #L #T1 #HT1 #T2 #HT2
 elim (cprre_total_csx h … HT1) -HT1 #U1 #HTU1
 elim (cprre_total_csx h … HT2) -HT2 #U2 #HTU2

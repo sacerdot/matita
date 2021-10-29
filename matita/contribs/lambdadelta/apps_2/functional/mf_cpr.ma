@@ -20,9 +20,9 @@ include "apps_2/functional/mf_exteq.ma".
 
 (* Properties with relocation ***********************************************)
 
-lemma mf_delta_drops (h) (G): ∀K,V1,V2. ❪G,K❫ ⊢ V1 ➡[h,0] V2 →
+lemma mf_delta_drops (h) (G): ∀K,V1,V2. ❨G,K❩ ⊢ V1 ➡[h,0] V2 →
                               ∀T,L,i. ⇩[i] L ≘ K.ⓓV1 →
-                              ∀gv,lv. ❪G,L❫ ⊢ ●[gv,⇡[i←#i]lv]T ➡[h,0] ●[gv,⇡[i←↑[↑i]V2]lv]T.
+                              ∀gv,lv. ❨G,L❩ ⊢ ●[gv,⇡[i←#i]lv]T ➡[h,0] ●[gv,⇡[i←↑[↑i]V2]lv]T.
 #h #G #K #V1 #V2 #HV #T elim T -T * //
 [ #i #L #j #HKL #gv #lv
   >mf_lref >mf_lref

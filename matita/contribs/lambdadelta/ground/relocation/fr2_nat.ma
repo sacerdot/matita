@@ -40,7 +40,7 @@ interpretation
 
 (*** at_inv_nil *)
 lemma fr2_nat_inv_nil (l1) (l2):
-      @❪l1, ◊❫ ≘ l2 → l1 = l2.
+      @❨l1, ◊❩ ≘ l2 → l1 = l2.
 #l1 #l2 @(insert_eq_1 … (◊))
 #f * -f -l1 -l2
 [ //
@@ -51,9 +51,9 @@ qed-.
 
 (*** at_inv_cons *)
 lemma fr2_nat_inv_cons (f) (d) (h) (l1) (l2):
-      @❪l1, ❨d,h❩;f❫ ≘ l2 →
-      ∨∨ ∧∧ l1 < d & @❪l1, f❫ ≘ l2 
-       | ∧∧ d ≤ l1 & @❪l1+h, f❫ ≘ l2.
+      @❨l1, ❨d,h❩;f❩ ≘ l2 →
+      ∨∨ ∧∧ l1 < d & @❨l1, f❩ ≘ l2 
+       | ∧∧ d ≤ l1 & @❨l1+h, f❩ ≘ l2.
 #g #d #h #l1 #l2 @(insert_eq_1 … (❨d, h❩;g))
 #f * -f -l1 -l2
 [ #l #H destruct
@@ -64,7 +64,7 @@ qed-.
 
 (*** at_inv_cons *)
 lemma fr2_nat_inv_cons_lt (f) (d) (h) (l1) (l2):
-      @❪l1, ❨d,h❩;f❫ ≘ l2 → l1 < d → @❪l1, f❫ ≘ l2.
+      @❨l1, ❨d,h❩;f❩ ≘ l2 → l1 < d → @❨l1, f❩ ≘ l2.
 #f #d #h #l1 #h2 #H
 elim (fr2_nat_inv_cons … H) -H * // #Hdl1 #_ #Hl1d
 elim (nlt_ge_false … Hl1d Hdl1)
@@ -72,7 +72,7 @@ qed-.
 
 (*** at_inv_cons *)
 lemma fr2_nat_inv_cons_ge (f) (d) (h) (l1) (l2):
-      @❪l1, ❨d,h❩;f❫ ≘ l2 → d ≤ l1 → @❪l1+h, f❫ ≘ l2.
+      @❨l1, ❨d,h❩;f❩ ≘ l2 → d ≤ l1 → @❨l1+h, f❩ ≘ l2.
 #f #d #h #l1 #h2 #H
 elim (fr2_nat_inv_cons … H) -H * // #Hl1d #_ #Hdl1
 elim (nlt_ge_false … Hl1d Hdl1)

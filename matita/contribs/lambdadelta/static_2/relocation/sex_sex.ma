@@ -52,7 +52,7 @@ theorem sex_trans (RN) (RP) (f):
 /2 width=9 by sex_trans_gen/ qed-.
 
 theorem sex_trans_id_cfull (R1) (R2) (R3):
-        ∀L1,L,f. L1 ⪤[R1,cfull,f] L → 𝐈❪f❫ →
+        ∀L1,L,f. L1 ⪤[R1,cfull,f] L → 𝐈❨f❩ →
         ∀L2. L ⪤[R2,cfull,f] L2 → L1 ⪤[R3,cfull,f] L2.
 #R1 #R2 #R3 #L1 #L #f #H elim H -L1 -L -f
 [ #f #Hf #L2 #H >(sex_inv_atom1 … H) -L2 // ]

@@ -20,12 +20,12 @@ include "basic_2/rt_computation/cpms_cpxs.ma".
 (* Properties with generic equivalence for local environments ***************)
 
 lemma cpms_reqg_conf_sn (S) (h) (n) (G) (L1) (L2):
-                        ∀T1,T2. ❪G,L1❫ ⊢ T1 ➡*[h,n] T2 →
+                        ∀T1,T2. ❨G,L1❩ ⊢ T1 ➡*[h,n] T2 →
                         L1 ≛[S,T1] L2 → L1 ≛[S,T2] L2.
 /3 width=5 by cpms_fwd_cpxs, cpxs_reqg_conf_sn/ qed-.
 
 lemma cpms_reqg_conf_dx (S) (h) (n) (G) (L1) (L2):
                         reflexive … S → symmetric … S →
-                        ∀T1,T2. ❪G,L2❫ ⊢ T1 ➡*[h,n] T2 →
+                        ∀T1,T2. ❨G,L2❩ ⊢ T1 ➡*[h,n] T2 →
                         L1 ≛[S,T1] L2 → L1 ≛[S,T2] L2.
 /3 width=5 by cpms_fwd_cpxs, cpxs_reqg_conf_dx/ qed-.

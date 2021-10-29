@@ -14,6 +14,6 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( 𝐌❪ term 46 n, break term 46 c ❫ )"
+notation "hvbox( 𝐌❨ term 46 n, break term 46 c ❩ )"
   non associative with precedence 45
   for @{ 'PredicateM $n $c }.

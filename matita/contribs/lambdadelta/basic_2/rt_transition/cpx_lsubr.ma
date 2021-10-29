@@ -24,7 +24,7 @@ lemma lsubr_cpx_trans (G): lsub_trans … (cpx G) lsubr.
 qed-.
 
 lemma cpx_bind_unit (G) (L):
-      ∀V1,V2. ❪G,L❫ ⊢ V1 ⬈ V2 →
-      ∀J,T1,T2. ❪G,L.ⓤ[J]❫ ⊢ T1 ⬈ T2 →
-      ∀p,I. ❪G,L❫ ⊢ ⓑ[p,I]V1.T1 ⬈ ⓑ[p,I]V2.T2.
+      ∀V1,V2. ❨G,L❩ ⊢ V1 ⬈ V2 →
+      ∀J,T1,T2. ❨G,L.ⓤ[J]❩ ⊢ T1 ⬈ T2 →
+      ∀p,I. ❨G,L❩ ⊢ ⓑ[p,I]V1.T1 ⬈ ⓑ[p,I]V2.T2.
 /4 width=4 by lsubr_cpx_trans, cpx_bind, lsubr_unit/ qed.

@@ -21,7 +21,7 @@ include "basic_2/dynamic/nta.ma".
 
 (* Note: this means that no type is a universe *)
 lemma nta_fwd_aaa (h) (a) (G) (L):
-      ∀T,U. ❪G,L❫ ⊢ T :[h,a] U → ∃∃A. ❪G,L❫ ⊢ T ⁝ A & ❪G,L❫ ⊢ U ⁝ A.
+      ∀T,U. ❨G,L❩ ⊢ T :[h,a] U → ∃∃A. ❨G,L❩ ⊢ T ⁝ A & ❨G,L❩ ⊢ U ⁝ A.
 #h #a #G #L #T #U #H
 elim (cnv_fwd_aaa … H) -H #A #H
 elim (aaa_inv_cast … H) -H #HU #HT
@@ -32,7 +32,7 @@ qed-.
 
 (* Basic_1: uses: ty3_predicative *)
 lemma nta_abst_predicative (h) (a) (p) (G) (L):
-      ∀W,T. ❪G,L❫ ⊢ ⓛ[p]W.T :[h,a] W → ⊥.
+      ∀W,T. ❨G,L❩ ⊢ ⓛ[p]W.T :[h,a] W → ⊥.
 #h #a #p #G #L #W #T #H
 elim (nta_fwd_aaa … H) -a -h #X #H #H1W
 elim (aaa_inv_abst … H) -p #B #A #H2W #_ #H destruct -T
@@ -42,8 +42,8 @@ qed-.
 
 (* Basic_1: uses: ty3_repellent *)
 theorem nta_abst_repellent (h) (a) (p) (G) (K):
-        ∀W,T,U1. ❪G,K❫ ⊢ ⓛ[p]W.T :[h,a] U1 →
-        ∀U2. ❪G,K.ⓛW❫ ⊢ T :[h,a] U2 → ⇧[1] U1 ≘ U2 → ⊥.
+        ∀W,T,U1. ❨G,K❩ ⊢ ⓛ[p]W.T :[h,a] U1 →
+        ∀U2. ❨G,K.ⓛW❩ ⊢ T :[h,a] U2 → ⇧[1] U1 ≘ U2 → ⊥.
 #h #a #p #G #K #W #T #U1 #H1 #U2 #H2 #HU12
 elim (nta_fwd_aaa … H2) -H2 #A2 #H2T #H2U2
 elim (nta_fwd_aaa … H1) -H1 #X1 #H1 #HU1

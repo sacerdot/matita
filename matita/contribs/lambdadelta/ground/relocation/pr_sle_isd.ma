@@ -21,7 +21,7 @@ include "ground/relocation/pr_sle.ma".
 
 (*** sle_isdiv_dx *)
 corec lemma pr_sle_isd_dx:
-            ∀f2. 𝛀❪f2❫ → ∀f1. f1 ⊆ f2.
+            ∀f2. 𝛀❨f2❩ → ∀f1. f1 ⊆ f2.
 #f2 * -f2
 #f2 #g2 #Hf2 #H2 #f1 cases (pr_map_split_tl f1) *
 /3 width=5 by pr_sle_weak, pr_sle_next/
@@ -31,7 +31,7 @@ qed.
 
 (*** sle_inv_isdiv_sn *)
 corec lemma pr_sle_inv_isd_sn:
-            ∀f1,f2. f1 ⊆ f2 → 𝛀❪f1❫ → 𝛀❪f2❫.
+            ∀f1,f2. f1 ⊆ f2 → 𝛀❨f1❩ → 𝛀❨f2❩.
 #f1 #f2 * -f1 -f2
 #f1 #f2 #g1 #g2 #Hf * * #H
 [1,3: elim (pr_isd_inv_push … H) // ]

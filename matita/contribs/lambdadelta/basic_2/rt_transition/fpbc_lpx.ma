@@ -21,16 +21,16 @@ include "basic_2/rt_transition/fpbc.ma".
 
 (* Basic_2A1: uses: fpb_lpx *)
 lemma lpx_fpbc (G) (T):
-      ∀L1,L2. ❪G,L1❫ ⊢ ⬈ L2 → (L1 ≅[T] L2 → ⊥) → ❪G,L1,T❫ ≻ ❪G,L2,T❫.
+      ∀L1,L2. ❨G,L1❩ ⊢ ⬈ L2 → (L1 ≅[T] L2 → ⊥) → ❨G,L1,T❩ ≻ ❨G,L2,T❩.
 /3 width=1 by rpx_fpbc, lpx_rpx/ qed.
 
 (* Forward lemmas with extended rt-transition for full local envs ***********)
 
 lemma fpbc_fwd_lpx (G1) (G2) (L1) (L2) (T1) (T2):
-      ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫ →
-      ∨∨ ∃∃G,L,T. ❪G1,L1,T1❫ ⬂ ❪G,L,T❫ & ❪G,L,T❫ ≽ ❪G2,L2,T2❫
-       | ∃∃T. ❪G1,L1❫ ⊢ T1 ⬈ T & T1 ≅ T → ⊥ & ❪G1,L1,T❫ ≽ ❪G2,L2,T2❫
-       | ∃∃L. ❪G1,L1❫ ⊢ ⬈ L & (L1 ≅[T1] L → ⊥) & ❪G1,L,T1❫ ≽ ❪G2,L2,T2❫.
+      ❨G1,L1,T1❩ ≻ ❨G2,L2,T2❩ →
+      ∨∨ ∃∃G,L,T. ❨G1,L1,T1❩ ⬂ ❨G,L,T❩ & ❨G,L,T❩ ≽ ❨G2,L2,T2❩
+       | ∃∃T. ❨G1,L1❩ ⊢ T1 ⬈ T & T1 ≅ T → ⊥ & ❨G1,L1,T❩ ≽ ❨G2,L2,T2❩
+       | ∃∃L. ❨G1,L1❩ ⊢ ⬈ L & (L1 ≅[T1] L → ⊥) & ❨G1,L,T1❩ ≽ ❨G2,L2,T2❩.
 #G1 #G2 #L1 #L2 #T1 #T2 #H
 elim (fpbc_inv_gen sfull … H) -H #H12 #Hn12
 elim (fpb_inv_gen … H12) -H12 #L #T #H1 #HT2 #HL2

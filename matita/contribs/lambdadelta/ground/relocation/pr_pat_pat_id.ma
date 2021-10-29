@@ -21,7 +21,7 @@ include "ground/relocation/pr_pat_pat.ma".
 
 (*** at_id_fwd *)
 lemma pr_pat_id_des (i1) (i2):
-      @❪i1,𝐢❫ ≘ i2 → i1 = i2.
+      @❨i1,𝐢❩ ≘ i2 → i1 = i2.
 /2 width=4 by pr_pat_mono/ qed-.
 
 (* Main constructions with pr_id ********************************************)

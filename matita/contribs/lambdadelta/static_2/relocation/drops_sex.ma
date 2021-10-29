@@ -91,7 +91,7 @@ lemma sex_liftable_co_dedropable_sn (RN) (RP):
 qed-.
 
 fact sex_dropable_dx_aux (RN) (RP):
-     ∀b,f,L2,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔❪f❫ →
+     ∀b,f,L2,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔❨f❩ →
      ∀f2,L1. L1 ⪤[RN,RP,f2] L2 → ∀f1. f ~⊚ f1 ≘ f2 →
      ∃∃K1. ⇩*[b,f] L1 ≘ K1 & K1 ⪤[RN,RP,f1] K2.
 #RN #RP #b #f #L2 #K2 #H elim H -f -L2 -K2
@@ -119,7 +119,7 @@ lemma sex_co_dropable_dx (RN) (RP):
 
 lemma sex_drops_conf_next (RN) (RP):
       ∀f2,L1,L2. L1 ⪤[RN,RP,f2] L2 →
-      ∀b,f,I1,K1. ⇩*[b,f] L1 ≘ K1.ⓘ[I1] → 𝐔❪f❫ →
+      ∀b,f,I1,K1. ⇩*[b,f] L1 ≘ K1.ⓘ[I1] → 𝐔❨f❩ →
       ∀f1. f ~⊚ ↑f1 ≘ f2 →
       ∃∃I2,K2. ⇩*[b,f] L2 ≘ K2.ⓘ[I2] & K1 ⪤[RN,RP,f1] K2 & RN K1 I1 I2.
 #RN #RP #f2 #L1 #L2 #HL12 #b #f #I1 #K1 #HLK1 #Hf #f1 #Hf2
@@ -130,7 +130,7 @@ qed-.
 
 lemma sex_drops_conf_push (RN) (RP):
       ∀f2,L1,L2. L1 ⪤[RN,RP,f2] L2 →
-      ∀b,f,I1,K1. ⇩*[b,f] L1 ≘ K1.ⓘ[I1] → 𝐔❪f❫ →
+      ∀b,f,I1,K1. ⇩*[b,f] L1 ≘ K1.ⓘ[I1] → 𝐔❨f❩ →
       ∀f1. f ~⊚ ⫯f1 ≘ f2 →
       ∃∃I2,K2. ⇩*[b,f] L2 ≘ K2.ⓘ[I2] & K1 ⪤[RN,RP,f1] K2 & RP K1 I1 I2.
 #RN #RP #f2 #L1 #L2 #HL12 #b #f #I1 #K1 #HLK1 #Hf #f1 #Hf2
@@ -141,7 +141,7 @@ qed-.
 
 lemma sex_drops_trans_next (RN) (RP):
       ∀f2,L1,L2. L1 ⪤[RN,RP,f2] L2 →
-      ∀b,f,I2,K2. ⇩*[b,f] L2 ≘ K2.ⓘ[I2] → 𝐔❪f❫ →
+      ∀b,f,I2,K2. ⇩*[b,f] L2 ≘ K2.ⓘ[I2] → 𝐔❨f❩ →
       ∀f1. f ~⊚ ↑f1 ≘ f2 →
       ∃∃I1,K1. ⇩*[b,f] L1 ≘ K1.ⓘ[I1] & K1 ⪤[RN,RP,f1] K2 & RN K1 I1 I2.
 #RN #RP #f2 #L1 #L2 #HL12 #b #f #I2 #K2 #HLK2 #Hf #f1 #Hf2
@@ -151,7 +151,7 @@ elim (sex_co_dropable_dx … HL12 … HLK2 … Hf … Hf2) -L2 -f2 -Hf
 qed-.
 
 lemma sex_drops_trans_push (RN) (RP): ∀f2,L1,L2. L1 ⪤[RN,RP,f2] L2 →
-      ∀b,f,I2,K2. ⇩*[b,f] L2 ≘ K2.ⓘ[I2] → 𝐔❪f❫ →
+      ∀b,f,I2,K2. ⇩*[b,f] L2 ≘ K2.ⓘ[I2] → 𝐔❨f❩ →
       ∀f1. f ~⊚ ⫯f1 ≘ f2 →
       ∃∃I1,K1. ⇩*[b,f] L1 ≘ K1.ⓘ[I1] & K1 ⪤[RN,RP,f1] K2 & RP K1 I1 I2.
 #RN #RP #f2 #L1 #L2 #HL12 #b #f #I2 #K2 #HLK2 #Hf #f1 #Hf2
@@ -187,7 +187,7 @@ elim (sex_liftable_co_dedropable_sn … H1RN H1RP H2RN H2RP … HLK1 … HK12 �
 qed-.
 
 lemma drops_atom2_sex_conf (RN) (RP):
-      ∀b,f1,L1. ⇩*[b,f1] L1 ≘ ⋆ → 𝐔❪f1❫ →
+      ∀b,f1,L1. ⇩*[b,f1] L1 ≘ ⋆ → 𝐔❨f1❩ →
       ∀f,L2. L1 ⪤[RN,RP,f] L2 →
       ∀f2. f1 ~⊚ f2 ≘f → ⇩*[b,f1] L2 ≘ ⋆.
 #RN #RP #b #f1 #L1 #H1 #Hf1 #f #L2 #H2 #f2 #H3

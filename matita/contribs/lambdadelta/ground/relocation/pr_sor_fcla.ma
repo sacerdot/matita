@@ -25,8 +25,8 @@ include "ground/relocation/pr_sor_isi.ma".
 
 (*** sor_fcla_ex *)
 lemma pr_sor_fcla_bi:
-      ∀f1,n1. 𝐂❪f1❫ ≘ n1 → ∀f2,n2. 𝐂❪f2❫ ≘ n2 →
-      ∃∃f,n. f1 ⋓ f2 ≘ f & 𝐂❪f❫ ≘ n & (n1 ∨ n2) ≤ n & n ≤ n1 + n2.
+      ∀f1,n1. 𝐂❨f1❩ ≘ n1 → ∀f2,n2. 𝐂❨f2❩ ≘ n2 →
+      ∃∃f,n. f1 ⋓ f2 ≘ f & 𝐂❨f❩ ≘ n & (n1 ∨ n2) ≤ n & n ≤ n1 + n2.
 #f1 #n1 #Hf1 elim Hf1 -f1 -n1 /3 width=6 by pr_sor_isi_sn, ex4_2_intro/
 #f1 #n1 #Hf1 #IH #f2 #n2 * -f2 -n2 /3 width=6 by pr_fcla_push, pr_fcla_next, ex4_2_intro, pr_sor_isi_dx/
 #f2 #n2 #Hf2 elim (IH … Hf2) -IH -Hf2 -Hf1 [2,4: #f #n <nplus_succ_dx ] (* * full auto fails *)
@@ -41,8 +41,8 @@ qed-.
 
 (*** sor_fcla *)
 lemma pr_sor_inv_fcla_bi:
-      ∀f1,n1. 𝐂❪f1❫ ≘ n1 → ∀f2,n2. 𝐂❪f2❫ ≘ n2 → ∀f. f1 ⋓ f2 ≘ f →
-      ∃∃n. 𝐂❪f❫ ≘ n & (n1 ∨ n2) ≤ n & n ≤ n1 + n2.
+      ∀f1,n1. 𝐂❨f1❩ ≘ n1 → ∀f2,n2. 𝐂❨f2❩ ≘ n2 → ∀f. f1 ⋓ f2 ≘ f →
+      ∃∃n. 𝐂❨f❩ ≘ n & (n1 ∨ n2) ≤ n & n ≤ n1 + n2.
 #f1 #n1 #Hf1 #f2 #n2 #Hf2 #f #Hf elim (pr_sor_fcla_bi … Hf1 … Hf2) -Hf1 -Hf2
 /4 width=6 by pr_sor_mono, pr_fcla_eq_repl_back, ex3_intro/
 qed-.
@@ -51,8 +51,8 @@ qed-.
 
 (*** sor_fwd_fcla_sn_ex *)
 lemma pr_sor_des_fcla_sn:
-      ∀f,n. 𝐂❪f❫ ≘ n → ∀f1,f2. f1 ⋓ f2 ≘ f →
-      ∃∃n1. 𝐂❪f1❫ ≘ n1 & n1 ≤ n.
+      ∀f,n. 𝐂❨f❩ ≘ n → ∀f1,f2. f1 ⋓ f2 ≘ f →
+      ∃∃n1. 𝐂❨f1❩ ≘ n1 & n1 ≤ n.
 #f #n #H elim H -f -n
 [ /4 width=4 by pr_sor_des_isi_sn, pr_fcla_isi, ex2_intro/
 | #f #n #_ #IH #f1 #f2 #H
@@ -66,6 +66,6 @@ qed-.
 
 (*** sor_fwd_fcla_dx_ex *)
 lemma pr_sor_des_fcla_dx:
-      ∀f,n. 𝐂❪f❫ ≘ n → ∀f1,f2. f1 ⋓ f2 ≘ f →
-      ∃∃n2. 𝐂❪f2❫ ≘ n2 & n2 ≤ n.
+      ∀f,n. 𝐂❨f❩ ≘ n → ∀f1,f2. f1 ⋓ f2 ≘ f →
+      ∃∃n2. 𝐂❨f2❩ ≘ n2 & n2 ≤ n.
 /3 width=4 by pr_sor_des_fcla_sn, pr_sor_comm/ qed-.

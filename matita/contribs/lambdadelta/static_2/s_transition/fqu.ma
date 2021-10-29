@@ -47,18 +47,18 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-lemma fqu_sort: ∀b,I,G,L,s. ❪G,L.ⓘ[I],⋆s❫ ⬂[b] ❪G,L,⋆s❫.
+lemma fqu_sort: ∀b,I,G,L,s. ❨G,L.ⓘ[I],⋆s❩ ⬂[b] ❨G,L,⋆s❩.
 /2 width=1 by fqu_drop/ qed.
 
-lemma fqu_lref_S: ∀b,I,G,L,i. ❪G,L.ⓘ[I],#↑i❫ ⬂[b] ❪G,L,#i❫.
+lemma fqu_lref_S: ∀b,I,G,L,i. ❨G,L.ⓘ[I],#↑i❩ ⬂[b] ❨G,L,#i❩.
 /2 width=1 by fqu_drop/ qed.
 
-lemma fqu_gref: ∀b,I,G,L,l. ❪G,L.ⓘ[I],§l❫ ⬂[b] ❪G,L,§l❫.
+lemma fqu_gref: ∀b,I,G,L,l. ❨G,L.ⓘ[I],§l❩ ⬂[b] ❨G,L,§l❩.
 /2 width=1 by fqu_drop/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
-fact fqu_inv_sort1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ →
+fact fqu_inv_sort1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G2,L2,T2❩ →
                         ∀s. T1 = ⋆s →
                         ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & T2 = ⋆s.
 #b #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
@@ -72,11 +72,11 @@ fact fqu_inv_sort1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T
 ]
 qed-.
 
-lemma fqu_inv_sort1: ∀b,G1,G2,L1,L2,T2,s. ❪G1,L1,⋆s❫ ⬂[b] ❪G2,L2,T2❫ →
+lemma fqu_inv_sort1: ∀b,G1,G2,L1,L2,T2,s. ❨G1,L1,⋆s❩ ⬂[b] ❨G2,L2,T2❩ →
                      ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & T2 = ⋆s.
 /2 width=4 by fqu_inv_sort1_aux/ qed-.
 
-fact fqu_inv_lref1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ →
+fact fqu_inv_lref1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G2,L2,T2❩ →
                         ∀i. T1 = #i →
                         (∃∃J,V. G1 = G2 & L1 = L2.ⓑ[J]V & T2 = V & i = 0) ∨
                         ∃∃J,j. G1 = G2 & L1 = L2.ⓘ[J] & T2 = #j & i = ↑j.
@@ -91,12 +91,12 @@ fact fqu_inv_lref1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T
 ]
 qed-.
 
-lemma fqu_inv_lref1: ∀b,G1,G2,L1,L2,T2,i. ❪G1,L1,#i❫ ⬂[b] ❪G2,L2,T2❫ →
+lemma fqu_inv_lref1: ∀b,G1,G2,L1,L2,T2,i. ❨G1,L1,#i❩ ⬂[b] ❨G2,L2,T2❩ →
                      (∃∃J,V. G1 = G2 & L1 = L2.ⓑ[J]V & T2 = V & i = 0) ∨
                      ∃∃J,j. G1 = G2 & L1 = L2.ⓘ[J] & T2 = #j & i = ↑j.
 /2 width=4 by fqu_inv_lref1_aux/ qed-.
 
-fact fqu_inv_gref1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ →
+fact fqu_inv_gref1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G2,L2,T2❩ →
                         ∀l. T1 = §l →
                         ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & T2 = §l.
 #b #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
@@ -110,11 +110,11 @@ fact fqu_inv_gref1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T
 ]
 qed-.
 
-lemma fqu_inv_gref1: ∀b,G1,G2,L1,L2,T2,l. ❪G1,L1,§l❫ ⬂[b] ❪G2,L2,T2❫ →
+lemma fqu_inv_gref1: ∀b,G1,G2,L1,L2,T2,l. ❨G1,L1,§l❩ ⬂[b] ❨G2,L2,T2❩ →
                      ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & T2 = §l.
 /2 width=4 by fqu_inv_gref1_aux/ qed-.
 
-fact fqu_inv_bind1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ →
+fact fqu_inv_bind1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G2,L2,T2❩ →
                         ∀p,I,V1,U1. T1 = ⓑ[p,I]V1.U1 →
                         ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
                          | ∧∧ G1 = G2 & L1.ⓑ[I]V1 = L2 & U1 = T2 & b = Ⓣ
@@ -130,14 +130,14 @@ fact fqu_inv_bind1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T
 ]
 qed-.
 
-lemma fqu_inv_bind1: ∀b,p,I,G1,G2,L1,L2,V1,U1,T2. ❪G1,L1,ⓑ[p,I]V1.U1❫ ⬂[b] ❪G2,L2,T2❫ →
+lemma fqu_inv_bind1: ∀b,p,I,G1,G2,L1,L2,V1,U1,T2. ❨G1,L1,ⓑ[p,I]V1.U1❩ ⬂[b] ❨G2,L2,T2❩ →
                      ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
                       | ∧∧ G1 = G2 & L1.ⓑ[I]V1 = L2 & U1 = T2 & b = Ⓣ
                       | ∧∧ G1 = G2 & L1.ⓧ = L2 & U1 = T2 & b = Ⓕ
                       | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧[1] T2 ≘ ⓑ[p,I]V1.U1.
 /2 width=4 by fqu_inv_bind1_aux/ qed-.
 
-lemma fqu_inv_bind1_true: ∀p,I,G1,G2,L1,L2,V1,U1,T2. ❪G1,L1,ⓑ[p,I]V1.U1❫ ⬂ ❪G2,L2,T2❫ →
+lemma fqu_inv_bind1_true: ∀p,I,G1,G2,L1,L2,V1,U1,T2. ❨G1,L1,ⓑ[p,I]V1.U1❩ ⬂ ❨G2,L2,T2❩ →
                           ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
                            | ∧∧ G1 = G2 & L1.ⓑ[I]V1 = L2 & U1 = T2
                            | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧[1] T2 ≘ ⓑ[p,I]V1.U1.
@@ -147,7 +147,7 @@ lemma fqu_inv_bind1_true: ∀p,I,G1,G2,L1,L2,V1,U1,T2. ❪G1,L1,ⓑ[p,I]V1.U1❫
 /3 width=1 by and3_intro, or3_intro1/
 qed-.
 
-fact fqu_inv_flat1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ →
+fact fqu_inv_flat1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G2,L2,T2❩ →
                         ∀I,V1,U1. T1 = ⓕ[I]V1.U1 →
                         ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
                          | ∧∧ G1 = G2 & L1 = L2 & U1 = T2
@@ -162,7 +162,7 @@ fact fqu_inv_flat1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T
 ]
 qed-.
 
-lemma fqu_inv_flat1: ∀b,I,G1,G2,L1,L2,V1,U1,T2. ❪G1,L1,ⓕ[I]V1.U1❫ ⬂[b] ❪G2,L2,T2❫ →
+lemma fqu_inv_flat1: ∀b,I,G1,G2,L1,L2,V1,U1,T2. ❨G1,L1,ⓕ[I]V1.U1❩ ⬂[b] ❨G2,L2,T2❩ →
                      ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
                       | ∧∧ G1 = G2 & L1 = L2 & U1 = T2
                       | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧[1] T2 ≘ ⓕ[I]V1.U1.
@@ -170,31 +170,31 @@ lemma fqu_inv_flat1: ∀b,I,G1,G2,L1,L2,V1,U1,T2. ❪G1,L1,ⓕ[I]V1.U1❫ ⬂[b]
 
 (* Advanced inversion lemmas ************************************************)
 
-lemma fqu_inv_atom1: ∀b,I,G1,G2,L2,T2. ❪G1,⋆,⓪[I]❫ ⬂[b] ❪G2,L2,T2❫ → ⊥.
+lemma fqu_inv_atom1: ∀b,I,G1,G2,L2,T2. ❨G1,⋆,⓪[I]❩ ⬂[b] ❨G2,L2,T2❩ → ⊥.
 #b * #x #G1 #G2 #L2 #T2 #H
 [ elim (fqu_inv_sort1 … H) | elim (fqu_inv_lref1 … H) * | elim (fqu_inv_gref1 … H) ] -H
 #I [2: #V |3: #i ] #_ #H destruct
 qed-.
 
-lemma fqu_inv_sort1_bind: ∀b,I,G1,G2,K,L2,T2,s. ❪G1,K.ⓘ[I],⋆s❫ ⬂[b] ❪G2,L2,T2❫ →
+lemma fqu_inv_sort1_bind: ∀b,I,G1,G2,K,L2,T2,s. ❨G1,K.ⓘ[I],⋆s❩ ⬂[b] ❨G2,L2,T2❩ →
                           ∧∧ G1 = G2 & L2 = K & T2 = ⋆s.
 #b #I #G1 #G2 #K #L2 #T2 #s #H elim (fqu_inv_sort1 … H) -H
 #Z #X #H1 #H2 destruct /2 width=1 by and3_intro/
 qed-.
 
-lemma fqu_inv_zero1_pair: ∀b,I,G1,G2,K,L2,V,T2. ❪G1,K.ⓑ[I]V,#0❫ ⬂[b] ❪G2,L2,T2❫ →
+lemma fqu_inv_zero1_pair: ∀b,I,G1,G2,K,L2,V,T2. ❨G1,K.ⓑ[I]V,#0❩ ⬂[b] ❨G2,L2,T2❩ →
                           ∧∧ G1 = G2 & L2 = K & T2 = V.
 #b #I #G1 #G2 #K #L2 #V #T2 #H elim (fqu_inv_lref1 … H) -H *
 #Z #X #H1 #H2 #H3 #H4 destruct /2 width=1 by and3_intro/
 qed-.
 
-lemma fqu_inv_lref1_bind: ∀b,I,G1,G2,K,L2,T2,i. ❪G1,K.ⓘ[I],#(↑i)❫ ⬂[b] ❪G2,L2,T2❫ →
+lemma fqu_inv_lref1_bind: ∀b,I,G1,G2,K,L2,T2,i. ❨G1,K.ⓘ[I],#(↑i)❩ ⬂[b] ❨G2,L2,T2❩ →
                           ∧∧ G1 = G2 & L2 = K & T2 = #i.
 #b #I #G1 #G2 #K #L2 #T2 #i #H elim (fqu_inv_lref1 … H) -H *
 #Z #X #H1 #H2 #H3 #H4 destruct /2 width=1 by and3_intro/
 qed-.
 
-lemma fqu_inv_gref1_bind: ∀b,I,G1,G2,K,L2,T2,l. ❪G1,K.ⓘ[I],§l❫ ⬂[b] ❪G2,L2,T2❫ →
+lemma fqu_inv_gref1_bind: ∀b,I,G1,G2,K,L2,T2,l. ❨G1,K.ⓘ[I],§l❩ ⬂[b] ❨G2,L2,T2❩ →
                           ∧∧ G1 = G2 & L2 = K & T2 = §l.
 #b #I #G1 #G2 #K #L2 #T2 #l #H elim (fqu_inv_gref1 … H) -H
 #Z #H1 #H2 #H3 destruct /2 width=1 by and3_intro/

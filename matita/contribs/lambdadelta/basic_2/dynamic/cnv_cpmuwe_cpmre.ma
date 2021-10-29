@@ -22,7 +22,7 @@ include "basic_2/dynamic/cnv_cpmre.ma".
 (* Advanced Properties with t-unbound whd evaluation on terms ***************)
 
 lemma cnv_R_cpmuwe_dec (h) (a) (G) (L):
-      ∀T. ❪G,L❫ ⊢ T ![h,a] → ∀n. Decidable (R_cpmuwe h G L T n).
+      ∀T. ❨G,L❩ ⊢ T ![h,a] → ∀n. Decidable (R_cpmuwe h G L T n).
 #h #a #G #L #T1 #HT1 #n
 elim (cnv_fwd_aaa … HT1) #A #HA
 elim (cpmre_total_aaa h n … HA) -HA #T2 #HT12

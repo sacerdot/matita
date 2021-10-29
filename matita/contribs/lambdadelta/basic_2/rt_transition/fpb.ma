@@ -20,7 +20,7 @@ include "basic_2/rt_transition/rpx.ma".
 
 (* Basic_2A1: uses: fpbq *)
 definition fpb (G1) (L1) (T1) (G2) (L2) (T2): Prop ≝
-           ∃∃L,T. ❪G1,L1,T1❫ ⬂⸮ ❪G2,L,T❫ & ❪G2,L❫ ⊢ T ⬈ T2 & ❪G2,L❫ ⊢ ⬈[T] L2.
+           ∃∃L,T. ❨G1,L1,T1❩ ⬂⸮ ❨G2,L,T❩ & ❨G2,L❩ ⊢ T ⬈ T2 & ❨G2,L❩ ⊢ ⬈[T] L2.
 
 interpretation
   "parallel rst-transition (closure)"
@@ -29,19 +29,19 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma fpb_intro (G1) (L1) (T1) (G2) (L2) (T2):
-      ∀L,T. ❪G1,L1,T1❫ ⬂⸮ ❪G2,L,T❫ → ❪G2,L❫ ⊢ T ⬈ T2 → 
-      ❪G2,L❫ ⊢ ⬈[T] L2 → ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫.
+      ∀L,T. ❨G1,L1,T1❩ ⬂⸮ ❨G2,L,T❩ → ❨G2,L❩ ⊢ T ⬈ T2 → 
+      ❨G2,L❩ ⊢ ⬈[T] L2 → ❨G1,L1,T1❩ ≽ ❨G2,L2,T2❩.
 /2 width=5 by ex3_2_intro/ qed.
 
 lemma rpx_fpb (G) (T):
-      ∀L1,L2. ❪G,L1❫ ⊢ ⬈[T] L2 → ❪G,L1,T❫ ≽ ❪G,L2,T❫.
+      ∀L1,L2. ❨G,L1❩ ⊢ ⬈[T] L2 → ❨G,L1,T❩ ≽ ❨G,L2,T❩.
 /2 width=5 by fpb_intro/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
 lemma fpb_inv_gen (G1) (L1) (T1) (G2) (L2) (T2):
-      ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ →
-      ∃∃L,T. ❪G1,L1,T1❫ ⬂⸮ ❪G2,L,T❫ & ❪G2,L❫ ⊢ T ⬈ T2 & ❪G2,L❫ ⊢ ⬈[T] L2.
+      ❨G1,L1,T1❩ ≽ ❨G2,L2,T2❩ →
+      ∃∃L,T. ❨G1,L1,T1❩ ⬂⸮ ❨G2,L,T❩ & ❨G2,L❩ ⊢ T ⬈ T2 & ❨G2,L❩ ⊢ ⬈[T] L2.
 // qed-.
 
 (* Basic_2A1: removed theorems 2:

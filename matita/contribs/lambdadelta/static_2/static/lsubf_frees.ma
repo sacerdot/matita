@@ -19,8 +19,8 @@ include "static_2/static/lsubf.ma".
 (* Properties with context-sensitive free variables *************************)
 
 lemma lsubf_frees_trans:
-      ∀f2,L2,T. L2 ⊢ 𝐅+❪T❫ ≘ f2 →
-      ∀f1,L1. ❪L1,f1❫ ⫃𝐅+ ❪L2,f2❫ → L1 ⊢ 𝐅+❪T❫ ≘ f1.
+      ∀f2,L2,T. L2 ⊢ 𝐅+❨T❩ ≘ f2 →
+      ∀f1,L1. ❨L1,f1❩ ⫃𝐅+ ❨L2,f2❩ → L1 ⊢ 𝐅+❨T❩ ≘ f1.
 #f2 #L2 #T #H elim H -f2 -L2 -T
 [ /3 width=5 by lsubf_fwd_isid_dx, frees_sort/
 | #f2 #i #Hf2 #g1 #Y1 #H

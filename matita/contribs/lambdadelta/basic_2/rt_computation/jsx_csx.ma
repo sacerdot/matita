@@ -22,7 +22,7 @@ include "basic_2/rt_computation/jsx_lsubr.ma".
 
 lemma jsx_csx_conf (G):
       ∀L1,L2. G ⊢ L1 ⊒ L2 →
-      ∀T. ❪G,L1❫ ⊢ ⬈*𝐒 T → ❪G,L2❫ ⊢ ⬈*𝐒 T.
+      ∀T. ❨G,L1❩ ⊢ ⬈*𝐒 T → ❨G,L2❩ ⊢ ⬈*𝐒 T.
 /3 width=5 by jsx_fwd_lsubr, csx_lsubr_conf/ qed-.
 
 (* Properties with strongly rt-normalizing referred local environments ******)

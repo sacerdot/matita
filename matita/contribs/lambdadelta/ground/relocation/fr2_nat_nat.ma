@@ -20,7 +20,7 @@ include "ground/relocation/fr2_nat.ma".
 
 (*** at_mono *)
 theorem fr2_nat_mono (f) (l):
-        ∀l1. @❪l, f❫ ≘ l1 → ∀l2. @❪l, f❫ ≘ l2 → l1 = l2.
+        ∀l1. @❨l, f❩ ≘ l1 → ∀l2. @❨l, f❩ ≘ l2 → l1 = l2.
 #f #l #l1 #H elim H -f -l -l1
 [ #l #x #H <(fr2_nat_inv_nil … H) -x //
 | #f #d #h #l #l1 #Hld #_ #IH #x #H

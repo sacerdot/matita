@@ -20,9 +20,9 @@ include "basic_2/rt_transition/lpx.ma".
 (* Properties with extended structural successor for closures ***************)
 
 lemma lpx_fqu_trans (b):
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ →
-      ∀K1. ❪G1,K1❫ ⊢ ⬈ L1 →
-      ∃∃K2,T. ❪G1,K1❫ ⊢ T1 ⬈ T & ❪G1,K1,T❫ ⬂[b] ❪G2,K2,T2❫ & ❪G2,K2❫ ⊢ ⬈ L2.
+      ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G2,L2,T2❩ →
+      ∀K1. ❨G1,K1❩ ⊢ ⬈ L1 →
+      ∃∃K2,T. ❨G1,K1❩ ⊢ T1 ⬈ T & ❨G1,K1,T❩ ⬂[b] ❨G2,K2,T2❩ & ❨G2,K2❩ ⊢ ⬈ L2.
 #b #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G #K #V #K1 #H
   elim (lpx_inv_pair_dx … H) -H #K0 #V0 #HK0 #HV0 #H destruct
@@ -39,9 +39,9 @@ lemma lpx_fqu_trans (b):
 qed-.
 
 lemma fqu_lpx_trans (b):
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂[b] ❪G2,L2,T2❫ →
-      ∀K2. ❪G2,L2❫ ⊢ ⬈ K2 →
-      ∃∃K1,T. ❪G1,L1❫ ⊢ ⬈ K1 & ❪G1,L1❫ ⊢ T1 ⬈ T & ❪G1,K1,T❫ ⬂[b] ❪G2,K2,T2❫.
+      ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G2,L2,T2❩ →
+      ∀K2. ❨G2,L2❩ ⊢ ⬈ K2 →
+      ∃∃K1,T. ❨G1,L1❩ ⊢ ⬈ K1 & ❨G1,L1❩ ⊢ T1 ⬈ T & ❨G1,K1,T❩ ⬂[b] ❨G2,K2,T2❩.
 #b #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 [ /3 width=5 by lpx_bind_refl_dx, fqu_lref_O, ex3_2_intro/
 | /3 width=5 by cpx_pair_sn, fqu_pair_sn, ex3_2_intro/
@@ -59,9 +59,9 @@ qed-.
 (* Properties with extended optional structural successor for closures ******)
 
 lemma lpx_fquq_trans (b):
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂⸮[b] ❪G2,L2,T2❫ →
-      ∀K1. ❪G1,K1❫ ⊢ ⬈ L1 →
-      ∃∃K2,T. ❪G1,K1❫ ⊢ T1 ⬈ T & ❪G1,K1,T❫ ⬂⸮[b] ❪G2,K2,T2❫ & ❪G2,K2❫ ⊢ ⬈ L2.
+      ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂⸮[b] ❨G2,L2,T2❩ →
+      ∀K1. ❨G1,K1❩ ⊢ ⬈ L1 →
+      ∃∃K2,T. ❨G1,K1❩ ⊢ T1 ⬈ T & ❨G1,K1,T❩ ⬂⸮[b] ❨G2,K2,T2❩ & ❨G2,K2❩ ⊢ ⬈ L2.
 #b #G1 #G2 #L1 #L2 #T1 #T2 #H #K1 #HKL1 cases H -H
 [ #H12 elim (lpx_fqu_trans … H12 … HKL1) -L1 /3 width=5 by fqu_fquq, ex3_2_intro/
 | * #H1 #H2 #H3 destruct /2 width=5 by ex3_2_intro/
@@ -69,9 +69,9 @@ lemma lpx_fquq_trans (b):
 qed-.
 
 lemma fquq_lpx_trans (b):
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂⸮[b] ❪G2,L2,T2❫ →
-      ∀K2. ❪G2,L2❫ ⊢ ⬈ K2 →
-      ∃∃K1,T. ❪G1,L1❫ ⊢ ⬈ K1 & ❪G1,L1❫ ⊢ T1 ⬈ T & ❪G1,K1,T❫ ⬂⸮[b] ❪G2,K2,T2❫.
+      ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂⸮[b] ❨G2,L2,T2❩ →
+      ∀K2. ❨G2,L2❩ ⊢ ⬈ K2 →
+      ∃∃K1,T. ❨G1,L1❩ ⊢ ⬈ K1 & ❨G1,L1❩ ⊢ T1 ⬈ T & ❨G1,K1,T❩ ⬂⸮[b] ❨G2,K2,T2❩.
 #b #G1 #G2 #L1 #L2 #T1 #T2 #H #K2 #HLK2 cases H -H
 [ #H12 elim (fqu_lpx_trans … H12 … HLK2) /3 width=5 by fqu_fquq, ex3_2_intro/
 | * #H1 #H2 #H3 destruct /2 width=5 by ex3_2_intro/

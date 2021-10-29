@@ -23,26 +23,26 @@ include "basic_2/rt_transition/rpx_fsle.ma".
 
 lemma rpx_pair_sn_split (S) (G):
       reflexive … S →
-      ∀L1,L2,V. ❪G,L1❫ ⊢ ⬈[V] L2 → ∀I,T.
-      ∃∃L. ❪G,L1❫ ⊢ ⬈[②[I]V.T] L & L ≛[S,V] L2.
+      ∀L1,L2,V. ❨G,L1❩ ⊢ ⬈[V] L2 → ∀I,T.
+      ∃∃L. ❨G,L1❩ ⊢ ⬈[②[I]V.T] L & L ≛[S,V] L2.
 /3 width=5 by rpx_fsge_comp, rex_pair_sn_split, teqg_refl/ qed-.
 
 lemma rpx_flat_dx_split (S) (G):
       reflexive … S →
-      ∀L1,L2,T. ❪G,L1❫ ⊢ ⬈[T] L2 → ∀I,V.
-      ∃∃L. ❪G,L1❫ ⊢ ⬈[ⓕ[I]V.T] L & L ≛[S,T] L2.
+      ∀L1,L2,T. ❨G,L1❩ ⊢ ⬈[T] L2 → ∀I,V.
+      ∃∃L. ❨G,L1❩ ⊢ ⬈[ⓕ[I]V.T] L & L ≛[S,T] L2.
 /3 width=5 by rpx_fsge_comp, rex_flat_dx_split, teqg_refl/ qed-.
 
 lemma rpx_bind_dx_split (S) (G):
       reflexive … S →
-      ∀I,L1,L2,V1,T. ❪G,L1.ⓑ[I]V1❫ ⊢ ⬈[T] L2 → ∀p.
-      ∃∃L,V. ❪G,L1❫ ⊢ ⬈[ⓑ[p,I]V1.T] L & L.ⓑ[I]V ≛[S,T] L2 & ❪G,L1❫ ⊢ V1 ⬈ V.
+      ∀I,L1,L2,V1,T. ❨G,L1.ⓑ[I]V1❩ ⊢ ⬈[T] L2 → ∀p.
+      ∃∃L,V. ❨G,L1❩ ⊢ ⬈[ⓑ[p,I]V1.T] L & L.ⓑ[I]V ≛[S,T] L2 & ❨G,L1❩ ⊢ V1 ⬈ V.
 /3 width=5 by rpx_fsge_comp, rex_bind_dx_split, teqg_refl/ qed-.
 
 lemma rpx_bind_dx_split_void (S) (G):
       reflexive … S →
-      ∀K1,L2,T. ❪G,K1.ⓧ❫ ⊢ ⬈[T] L2 → ∀p,I,V.
-      ∃∃K2. ❪G,K1❫ ⊢ ⬈[ⓑ[p,I]V.T] K2 & K2.ⓧ ≛[S,T] L2.
+      ∀K1,L2,T. ❨G,K1.ⓧ❩ ⊢ ⬈[T] L2 → ∀p,I,V.
+      ∃∃K2. ❨G,K1❩ ⊢ ⬈[ⓑ[p,I]V.T] K2 & K2.ⓧ ≛[S,T] L2.
 /3 width=5 by rpx_fsge_comp, rex_bind_dx_split_void, teqg_refl/ qed-.
 
 lemma rpx_teqg_conf_sn (S) (G):
@@ -52,13 +52,13 @@ lemma rpx_teqg_conf_sn (S) (G):
 
 lemma rpx_teqg_div (S) (G):
       reflexive … S → symmetric … S →
-      ∀T1,T2. T1 ≛[S] T2 → ∀L1,L2. ❪G,L1❫ ⊢ ⬈[T2] L2 → ❪G,L1❫ ⊢ ⬈[T1] L2.
+      ∀T1,T2. T1 ≛[S] T2 → ∀L1,L2. ❨G,L1❩ ⊢ ⬈[T2] L2 → ❨G,L1❩ ⊢ ⬈[T1] L2.
 /2 width=6 by teqg_rex_div/ qed-. 
 
 lemma cpx_teqg_repl_reqg (S) (G) (L0) (T0):
       reflexive … S →
-      ∀T1. ❪G,L0❫ ⊢ T0 ⬈ T1 → ∀T2. T0 ≛[S] T2 → ∀T3. T1 ≛[S] T3 →
-      ∀L2. L0 ≛[S,T0] L2 → ❪G,L2❫ ⊢ T2 ⬈ T3.
+      ∀T1. ❨G,L0❩ ⊢ T0 ⬈ T1 → ∀T2. T0 ≛[S] T2 → ∀T3. T1 ≛[S] T3 →
+      ∀L2. L0 ≛[S,T0] L2 → ❨G,L2❩ ⊢ T2 ⬈ T3.
 #S #G #L0 #T0 #HS #T1 #H @(cpx_ind … H) -G -L0 -T0 -T1
 [ * #x0 #G #L0 #X2 #HX2 #X3 #HX3 #L2 #_
   [ elim (teqg_inv_sort1 … HX2) -HX2 #x2 #Hx02 #H destruct
@@ -134,18 +134,18 @@ qed-.
 
 lemma cpx_teqg_conf (S) (G) (L):
       reflexive … S →
-      ∀T0:term. ∀T1. ❪G,L❫ ⊢ T0 ⬈ T1 → ∀T2. T0 ≛[S] T2 → ❪G,L❫ ⊢ T2 ⬈ T1.
+      ∀T0:term. ∀T1. ❨G,L❩ ⊢ T0 ⬈ T1 → ∀T2. T0 ≛[S] T2 → ❨G,L❩ ⊢ T2 ⬈ T1.
 /3 width=9 by cpx_teqg_repl_reqg, reqg_refl, teqg_refl/ qed-.
 
 lemma teqg_cpx_trans (S) (G) (L):
       reflexive … S → symmetric … S →
-      ∀T2. ∀T0:term. T2 ≛[S] T0 → ∀T1. ❪G,L❫ ⊢ T0 ⬈ T1 → ❪G,L❫ ⊢ T2 ⬈ T1.
+      ∀T2. ∀T0:term. T2 ≛[S] T0 → ∀T1. ❨G,L❩ ⊢ T0 ⬈ T1 → ❨G,L❩ ⊢ T2 ⬈ T1.
 /3 width=6 by cpx_teqg_conf, teqg_sym/
 qed-.
 
 lemma teqg_cpx (S) (G) (L):
       reflexive … S → symmetric … S →
-      ∀T1,T2:term. T1 ≛[S] T2 → ❪G,L❫ ⊢ T1 ⬈ T2.
+      ∀T1,T2:term. T1 ≛[S] T2 → ❨G,L❩ ⊢ T1 ⬈ T2.
 /2 width=6 by teqg_cpx_trans/ qed.
 
 (* Basic_2A1: uses: cpx_lleq_conf *)
@@ -157,7 +157,7 @@ lemma cpx_reqg_conf (S) (G):
 (* Basic_2A1: uses: lleq_cpx_trans *)
 lemma reqg_cpx_trans (S) (G):
       reflexive … S → symmetric … S →
-      ∀L2,L0,T0. L2 ≛[S,T0] L0 → ∀T1. ❪G,L0❫ ⊢ T0 ⬈ T1 → ❪G,L2❫ ⊢ T0 ⬈ T1.
+      ∀L2,L0,T0. L2 ≛[S,T0] L0 → ∀T1. ❨G,L0❩ ⊢ T0 ⬈ T1 → ❨G,L2❩ ⊢ T0 ⬈ T1.
 /3 width=7 by cpx_reqg_conf, reqg_sym/
 qed-.
 
@@ -168,10 +168,10 @@ lemma rpx_reqg_conf (S) (G) (T):
 
 lemma reqg_rpx_trans (S) (G) (T) (L):
       reflexive … S → symmetric … S →
-      ∀L1. L1 ≛[S,T] L → ∀L2. ❪G,L❫ ⊢ ⬈[T] L2 → ❪G,L1❫ ⊢ ⬈[T] L2.
+      ∀L1. L1 ≛[S,T] L → ∀L2. ❨G,L❩ ⊢ ⬈[T] L2 → ❨G,L1❩ ⊢ ⬈[T] L2.
 /3 width=7 by rpx_reqg_conf, reqg_sym/ qed-.
 
 lemma reqg_rpx (S) (G) (T):
       reflexive … S → symmetric … S →
-      ∀L1,L2. L1 ≛[S,T] L2 → ❪G,L1❫ ⊢ ⬈[T] L2.
+      ∀L1,L2. L1 ≛[S,T] L2 → ❨G,L1❩ ⊢ ⬈[T] L2.
 /2 width=6 by reqg_rpx_trans/ qed.

@@ -22,14 +22,14 @@ include "basic_2/dynamic/cnv_aaa.ma".
 (* Note: this is the "big tree" theorem *)
 (* Basic_2A1: uses: snv_fwd_fsb *)
 lemma cnv_fwd_fsb (h) (a):
-      ∀G,L,T. ❪G,L❫ ⊢ T ![h,a] → ≥𝐒 ❪G,L,T❫.
+      ∀G,L,T. ❨G,L❩ ⊢ T ![h,a] → ≥𝐒 ❨G,L,T❩.
 #h #a #G #L #T #H elim (cnv_fwd_aaa … H) -H /2 width=2 by aaa_fsb/
 qed-.
 
 (* Forward lemmas with strongly rt-normalizing terms ************************)
 
 lemma cnv_fwd_csx (h) (a):
-      ∀G,L,T. ❪G,L❫ ⊢ T ![h,a] → ❪G,L❫ ⊢ ⬈*𝐒 T.
+      ∀G,L,T. ❨G,L❩ ⊢ T ![h,a] → ❨G,L❩ ⊢ ⬈*𝐒 T.
 #h #a #G #L #T #H
 /3 width=3 by cnv_fwd_fsb, fsb_inv_csx/
 qed-.
@@ -37,5 +37,5 @@ qed-.
 (* Inversion lemmas with proper parallel rst-computation for closures *******)
 
 lemma cnv_fpbg_refl_false (h) (a):
-      ∀G,L,T. ❪G,L❫ ⊢ T ![h,a] → ❪G,L,T❫ > ❪G,L,T❫ → ⊥.
+      ∀G,L,T. ❨G,L❩ ⊢ T ![h,a] → ❨G,L,T❩ > ❨G,L,T❩ → ⊥.
 /3 width=7 by cnv_fwd_fsb, fsb_fpbg_refl_false/ qed-.

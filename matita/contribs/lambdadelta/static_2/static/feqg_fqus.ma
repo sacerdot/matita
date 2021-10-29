@@ -21,9 +21,9 @@ include "static_2/static/feqg.ma".
 
 lemma feqg_fquq_trans (S) (b):
       reflexive … S → symmetric … S → Transitive … S →
-      ∀G1,G,L1,L,T1,T. ❪G1,L1,T1❫ ≛[S] ❪G,L,T❫ →
-      ∀G2,L2,T2. ❪G,L,T❫ ⬂⸮[b] ❪G2,L2,T2❫ →
-      ∃∃G,L0,T0. ❪G1,L1,T1❫ ⬂⸮[b] ❪G,L0,T0❫ & ❪G,L0,T0❫ ≛[S] ❪G2,L2,T2❫.
+      ∀G1,G,L1,L,T1,T. ❨G1,L1,T1❩ ≛[S] ❨G,L,T❩ →
+      ∀G2,L2,T2. ❨G,L,T❩ ⬂⸮[b] ❨G2,L2,T2❩ →
+      ∃∃G,L0,T0. ❨G1,L1,T1❩ ⬂⸮[b] ❨G,L0,T0❩ & ❨G,L0,T0❩ ≛[S] ❨G2,L2,T2❩.
 #S #b #H1S #H2S #H3S #G1 #G #L1 #L #T1 #T #H1 #G2 #L2 #T2 #H2
 elim(feqg_inv_gen_dx … H1) -H1 // #HG #HL1 #HT1 destruct
 elim (reqg_fquq_trans … H2 … HL1) -L // #L #T0 #H2 #HT02 #HL2
@@ -34,9 +34,9 @@ qed-.
 
 lemma feqg_fqus_trans (S) (b):
       reflexive … S → symmetric … S → Transitive … S →
-      ∀G1,G,L1,L,T1,T. ❪G1,L1,T1❫ ≛[S] ❪G,L,T❫ →
-      ∀G2,L2,T2. ❪G,L,T❫ ⬂*[b] ❪G2,L2,T2❫ →
-      ∃∃G,L0,T0. ❪G1,L1,T1❫ ⬂*[b] ❪G,L0,T0❫ & ❪G,L0,T0❫ ≛[S] ❪G2,L2,T2❫.
+      ∀G1,G,L1,L,T1,T. ❨G1,L1,T1❩ ≛[S] ❨G,L,T❩ →
+      ∀G2,L2,T2. ❨G,L,T❩ ⬂*[b] ❨G2,L2,T2❩ →
+      ∃∃G,L0,T0. ❨G1,L1,T1❩ ⬂*[b] ❨G,L0,T0❩ & ❨G,L0,T0❩ ≛[S] ❨G2,L2,T2❩.
 #S #b #H1S #H2S #H3S #G1 #G #L1 #L #T1 #T #H1 #G2 #L2 #T2 #H2
 elim(feqg_inv_gen_dx … H1) -H1 // #HG #HL1 #HT1 destruct
 elim (reqg_fqus_trans … H2 … HL1) -L // #L #T0 #H2 #HT02 #HL2

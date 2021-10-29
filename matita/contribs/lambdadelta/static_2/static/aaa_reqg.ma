@@ -21,8 +21,8 @@ include "static_2/static/aaa.ma".
 
 lemma aaa_teqg_conf_reqg (S) (G):
       reflexive … S →
-      ∀L1,T1,A. ❪G,L1❫ ⊢ T1 ⁝ A → ∀T2. T1 ≛[S] T2 →
-      ∀L2. L1 ≛[S,T1] L2 → ❪G,L2❫ ⊢ T2 ⁝ A.
+      ∀L1,T1,A. ❨G,L1❩ ⊢ T1 ⁝ A → ∀T2. T1 ≛[S] T2 →
+      ∀L2. L1 ≛[S,T1] L2 → ❨G,L2❩ ⊢ T2 ⁝ A.
 #S #G #HS #L1 #T1 #A #H elim H -G -L1 -T1 -A
 [ #G #L1 #s1 #X #H1 elim (teqg_inv_sort1 … H1) -H1 //
 | #I #G #L1 #V1 #B #_ #IH #X #H1 >(teqg_inv_lref1 … H1) -H1
@@ -48,10 +48,10 @@ qed-.
 
 lemma aaa_teqg_conf (S) (G) (L) (A):
       reflexive … S →
-      ∀T1. ❪G,L❫ ⊢ T1 ⁝ A → ∀T2. T1 ≛[S] T2 → ❪G,L❫ ⊢ T2 ⁝ A.
+      ∀T1. ❨G,L❩ ⊢ T1 ⁝ A → ∀T2. T1 ≛[S] T2 → ❨G,L❩ ⊢ T2 ⁝ A.
 /3 width=7 by aaa_teqg_conf_reqg, reqg_refl/ qed-.
 
 lemma aaa_reqg_conf (S) (G) (T) (A):
       reflexive … S →
-      ∀L1. ❪G,L1❫ ⊢ T ⁝ A → ∀L2. L1 ≛[S,T] L2 → ❪G,L2❫ ⊢ T ⁝ A.
+      ∀L1. ❨G,L1❩ ⊢ T ⁝ A → ∀L2. L1 ≛[S,T] L2 → ❨G,L2❩ ⊢ T ⁝ A.
 /3 width=7 by aaa_teqg_conf_reqg, teqg_refl/ qed-.

@@ -35,7 +35,7 @@ lemma pr_after_uni_sn_pushs (h):
 qed.
 
 lemma pr_after_uni_isi_next (h1):
-      ∀f2. 𝐈❪f2❫ → 𝐮❨h1❩ ⊚ ↑f2 ≘ ↑𝐮❨h1❩.
+      ∀f2. 𝐈❨f2❩ → 𝐮❨h1❩ ⊚ ↑f2 ≘ ↑𝐮❨h1❩.
 #h1 @(nat_ind_succ … h1) -h1
 /5 width=7 by pr_after_isi_dx, pr_after_eq_repl_back_sn, pr_after_next, pr_after_push, pr_isi_inv_eq_push/
 qed.

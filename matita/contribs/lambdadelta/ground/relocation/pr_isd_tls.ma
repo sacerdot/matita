@@ -20,6 +20,6 @@ include "ground/relocation/pr_isd_tl.ma".
 (* Constructions with pr_tls ************************************************)
 
 (*** isdiv_tls *)
-lemma pr_isd_tls (n) (g): 𝛀❪g❫ → 𝛀❪⫰*[n]g❫.
+lemma pr_isd_tls (n) (g): 𝛀❨g❩ → 𝛀❨⫰*[n]g❩.
 #n @(nat_ind_succ … n) -n /3 width=1 by pr_isd_tl/
 qed.

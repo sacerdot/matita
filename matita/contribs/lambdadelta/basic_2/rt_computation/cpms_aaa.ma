@@ -27,7 +27,7 @@ lemma cpms_aaa_conf (h) (G) (L) (n): Conf3 … (aaa G L) (cpms h G L n).
 /3 width=5 by cpms_fwd_cpxs, cpxs_aaa_conf/ qed-.
 
 lemma cpms_total_aaa (h) (G) (L) (n) (A):
-      ∀T. ❪G,L❫ ⊢ T ⁝ A → ∃U. ❪G,L❫ ⊢ T ➡*[h,n] U.
+      ∀T. ❨G,L❩ ⊢ T ⁝ A → ∃U. ❨G,L❩ ⊢ T ➡*[h,n] U.
 #h #G #L #n elim n -n
 [ /2 width=3 by ex_intro/
 | #n #IH #A #T1 #HT1 <plus_SO_dx
@@ -39,9 +39,9 @@ lemma cpms_total_aaa (h) (G) (L) (n) (A):
 qed-.
 
 lemma cpms_abst_dx_le_aaa (h) (G) (L) (T) (W) (p):
-      ∀A. ❪G,L❫ ⊢ T ⁝ A →
-      ∀n1,U1. ❪G,L❫ ⊢ T ➡*[h,n1] ⓛ[p]W.U1 → ∀n2. n1 ≤ n2 →
-      ∃∃U2. ❪G,L❫ ⊢ T ➡*[h,n2] ⓛ[p]W.U2 & ❪G,L.ⓛW❫ ⊢ U1 ➡*[h,n2-n1] U2.
+      ∀A. ❨G,L❩ ⊢ T ⁝ A →
+      ∀n1,U1. ❨G,L❩ ⊢ T ➡*[h,n1] ⓛ[p]W.U1 → ∀n2. n1 ≤ n2 →
+      ∃∃U2. ❨G,L❩ ⊢ T ➡*[h,n2] ⓛ[p]W.U2 & ❨G,L.ⓛW❩ ⊢ U1 ➡*[h,n2-n1] U2.
 #h #G #L #T #W #p #A #HA #n1 #U1 #HTU1 #n2 #Hn12
 lapply (cpms_aaa_conf … HA … HTU1) -HA #HA
 elim (cpms_total_aaa h … (n2-n1) … HA) -HA #X #H

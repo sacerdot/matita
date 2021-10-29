@@ -32,7 +32,7 @@ include "static_2/syntax/term.ma".
 *)
 inductive lifts: pr_map → relation term ≝
 | lifts_sort: ∀f,s. lifts f (⋆s) (⋆s)
-| lifts_lref: ∀f,i1,i2. @↑❪i1,f❫ ≘ i2 → lifts f (#i1) (#i2)
+| lifts_lref: ∀f,i1,i2. @↑❨i1,f❩ ≘ i2 → lifts f (#i1) (#i2)
 | lifts_gref: ∀f,l. lifts f (§l) (§l)
 | lifts_bind: ∀f,p,I,V1,V2,T1,T2.
               lifts f V1 V2 → lifts (⫯f) T1 T2 →
@@ -88,7 +88,7 @@ lemma lifts_inv_sort1: ∀f,Y,s. ⇧*[f] ⋆s ≘ Y → Y = ⋆s.
 /2 width=4 by lifts_inv_sort1_aux/ qed-.
 
 fact lifts_inv_lref1_aux: ∀f,X,Y. ⇧*[f] X ≘ Y → ∀i1. X = #i1 →
-                          ∃∃i2. @↑❪i1,f❫ ≘ i2 & Y = #i2.
+                          ∃∃i2. @↑❨i1,f❩ ≘ i2 & Y = #i2.
 #f #X #Y * -f -X -Y
 [ #f #s #x #H destruct
 | #f #i1 #i2 #Hi12 #x #H destruct /2 width=3 by ex2_intro/
@@ -101,7 +101,7 @@ qed-.
 (* Basic_1: was: lift1_lref *)
 (* Basic_2A1: includes: lift_inv_lref1 lift_inv_lref1_lt lift_inv_lref1_ge *)
 lemma lifts_inv_lref1: ∀f,Y,i1. ⇧*[f] #i1 ≘ Y →
-                       ∃∃i2. @↑❪i1,f❫ ≘ i2 & Y = #i2.
+                       ∃∃i2. @↑❨i1,f❩ ≘ i2 & Y = #i2.
 /2 width=3 by lifts_inv_lref1_aux/ qed-.
 
 fact lifts_inv_gref1_aux: ∀f,X,Y. ⇧*[f] X ≘ Y → ∀l. X = §l → Y = §l.
@@ -170,7 +170,7 @@ lemma lifts_inv_sort2: ∀f,X,s. ⇧*[f] X ≘ ⋆s → X = ⋆s.
 /2 width=4 by lifts_inv_sort2_aux/ qed-.
 
 fact lifts_inv_lref2_aux: ∀f,X,Y. ⇧*[f] X ≘ Y → ∀i2. Y = #i2 →
-                          ∃∃i1. @↑❪i1,f❫ ≘ i2 & X = #i1.
+                          ∃∃i1. @↑❨i1,f❩ ≘ i2 & X = #i1.
 #f #X #Y * -f -X -Y
 [ #f #s #x #H destruct
 | #f #i1 #i2 #Hi12 #x #H destruct /2 width=3 by ex2_intro/
@@ -183,7 +183,7 @@ qed-.
 (* Basic_1: includes: lift_gen_lref lift_gen_lref_lt lift_gen_lref_false lift_gen_lref_ge *)
 (* Basic_2A1: includes: lift_inv_lref2 lift_inv_lref2_lt lift_inv_lref2_be lift_inv_lref2_ge lift_inv_lref2_plus *)
 lemma lifts_inv_lref2: ∀f,X,i2. ⇧*[f] X ≘ #i2 →
-                       ∃∃i1. @↑❪i1,f❫ ≘ i2 & X = #i1.
+                       ∃∃i1. @↑❨i1,f❩ ≘ i2 & X = #i1.
 /2 width=3 by lifts_inv_lref2_aux/ qed-.
 
 fact lifts_inv_gref2_aux: ∀f,X,Y. ⇧*[f] X ≘ Y → ∀l. Y = §l → X = §l.
@@ -242,7 +242,7 @@ lemma lifts_inv_flat2: ∀f,I,V2,T2,X. ⇧*[f] X ≘ ⓕ[I]V2.T2 →
 
 lemma lifts_inv_atom1: ∀f,I,Y. ⇧*[f] ⓪[I] ≘ Y →
                        ∨∨ ∃∃s. I = Sort s & Y = ⋆s
-                        | ∃∃i,j. @↑❪i,f❫ ≘ j & I = LRef i & Y = #j
+                        | ∃∃i,j. @↑❨i,f❩ ≘ j & I = LRef i & Y = #j
                         | ∃∃l. I = GRef l & Y = §l.
 #f * #n #Y #H
 [ lapply (lifts_inv_sort1 … H)
@@ -253,7 +253,7 @@ qed-.
 
 lemma lifts_inv_atom2: ∀f,I,X. ⇧*[f] X ≘ ⓪[I] →
                        ∨∨ ∃∃s. X = ⋆s & I = Sort s
-                        | ∃∃i,j. @↑❪i,f❫ ≘ j & X = #i & I = LRef j
+                        | ∃∃i,j. @↑❨i,f❩ ≘ j & X = #i & I = LRef j
                         | ∃∃l. X = §l & I = GRef l.
 #f * #n #X #H
 [ lapply (lifts_inv_sort2 … H)
@@ -340,7 +340,7 @@ qed-.
 (* Basic forward lemmas *****************************************************)
 
 (* Basic_2A1: includes: lift_inv_O2 *)
-lemma lifts_fwd_isid: ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → 𝐈❪f❫ → T1 = T2.
+lemma lifts_fwd_isid: ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → 𝐈❨f❩ → T1 = T2.
 #f #T1 #T2 #H elim H -f -T1 -T2
 /4 width=3 by pr_isi_nat_des, pr_isi_push, eq_f2, eq_f/
 qed-.
@@ -386,13 +386,13 @@ qed-.
 
 (* Basic_1: includes: lift_r *)
 (* Basic_2A1: includes: lift_refl *)
-lemma lifts_refl: ∀T,f. 𝐈❪f❫ → ⇧*[f] T ≘ T.
+lemma lifts_refl: ∀T,f. 𝐈❨f❩ → ⇧*[f] T ≘ T.
 #T elim T -T *
 /4 width=3 by lifts_flat, lifts_bind, lifts_lref, pr_isi_inv_pat, pr_isi_push/
 qed.
 
 (* Basic_2A1: includes: lift_total *)
-lemma lifts_total: ∀T1,f. 𝐓❪f❫ → ∃T2. ⇧*[f] T1 ≘ T2.
+lemma lifts_total: ∀T1,f. 𝐓❨f❩ → ∃T2. ⇧*[f] T1 ≘ T2.
 #T1 elim T1 -T1 *
 /3 width=2 by lifts_sort, lifts_gref, ex_intro/
 [ #i #f #Hf elim (Hf (↑i)) -Hf /3 width=2 by ex_intro, lifts_lref/ ]
@@ -437,7 +437,7 @@ qed-.
 
 (* Note: apparently, this was missing in Basic_2A1 *)
 lemma lifts_split_div: ∀f1,T1,T2. ⇧*[f1] T1 ≘ T2 →
-                       ∀f2. 𝐓❪f2❫ → ∀f. f2 ⊚ f1 ≘ f →
+                       ∀f2. 𝐓❨f2❩ → ∀f. f2 ⊚ f1 ≘ f →
                        ∃∃T. ⇧*[f2] T2 ≘ T & ⇧*[f] T1 ≘ T.
 #f1 #T1 #T2 #H elim H -f1 -T1 -T2
 [ /3 width=3 by lifts_sort, ex2_intro/
@@ -456,7 +456,7 @@ qed-.
 
 (* Basic_1: includes: dnf_dec2 dnf_dec *)
 (* Basic_2A1: includes: is_lift_dec *)
-lemma is_lifts_dec: ∀T2,f. 𝐓❪f❫ → Decidable (∃T1. ⇧*[f] T1 ≘ T2).
+lemma is_lifts_dec: ∀T2,f. 𝐓❨f❩ → Decidable (∃T1. ⇧*[f] T1 ≘ T2).
 #T1 elim T1 -T1
 [ * [1,3: /3 width=2 by lifts_sort, lifts_gref, ex_intro, or_introl/ ]
   #i2 #f #Hf elim (is_pr_nat_dec f i2) //

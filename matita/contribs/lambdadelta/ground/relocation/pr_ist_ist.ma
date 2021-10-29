@@ -23,7 +23,7 @@ include "ground/relocation/pr_ist.ma".
 (* Advanced constructions with pr_pat ***************************************)
 
 (*** at_dec *)
-lemma pr_pat_dec (f) (i1) (i2): 𝐓❪f❫ → Decidable (@❪i1,f❫ ≘ i2).
+lemma pr_pat_dec (f) (i1) (i2): 𝐓❨f❩ → Decidable (@❨i1,f❩ ≘ i2).
 #f #i1 #i2 #Hf lapply (Hf i1) -Hf *
 #j2 #Hf elim (eq_pnat_dec i2 j2)
 [ #H destruct /2 width=1 by or_introl/
@@ -32,9 +32,9 @@ lemma pr_pat_dec (f) (i1) (i2): 𝐓❪f❫ → Decidable (@❪i1,f❫ ≘ i2).
 qed-.
 
 (*** is_at_dec *)
-lemma is_pr_pat_dec (f) (i2): 𝐓❪f❫ → Decidable (∃i1. @❪i1,f❫ ≘ i2).
+lemma is_pr_pat_dec (f) (i2): 𝐓❨f❩ → Decidable (∃i1. @❨i1,f❩ ≘ i2).
 #f #i2 #Hf
-lapply (dec_plt (λi1.@❪i1,f❫ ≘ i2) … (↑i2)) [| * ]
+lapply (dec_plt (λi1.@❨i1,f❩ ≘ i2) … (↑i2)) [| * ]
 [ /2 width=1 by pr_pat_dec/
 | * /3 width=2 by ex_intro, or_introl/
 | #H @or_intror * #i1 #Hi12
@@ -45,8 +45,8 @@ qed-.
 (* Main destructions with pr_pat ********************************************)
 
 (*** at_ext *)
-corec theorem pr_eq_ext_pat (f1) (f2): 𝐓❪f1❫ → 𝐓❪f2❫ →
-              (∀i,i1,i2. @❪i,f1❫ ≘ i1 → @❪i,f2❫ ≘ i2 → i1 = i2) →
+corec theorem pr_eq_ext_pat (f1) (f2): 𝐓❨f1❩ → 𝐓❨f2❩ →
+              (∀i,i1,i2. @❨i,f1❩ ≘ i1 → @❨i,f2❩ ≘ i2 → i1 = i2) →
               f1 ≡ f2.
 cases (pr_map_split_tl f1) #H1
 cases (pr_map_split_tl f2) #H2
@@ -70,7 +70,7 @@ qed-.
 
 (* Advanced constructions with pr_nat ***************************************)
 
-lemma is_pr_nat_dec (f) (l2): 𝐓❪f❫ → Decidable (∃l1. @↑❪l1,f❫ ≘ l2).
+lemma is_pr_nat_dec (f) (l2): 𝐓❨f❩ → Decidable (∃l1. @↑❨l1,f❩ ≘ l2).
 #f #l2 #Hf elim (is_pr_pat_dec … (↑l2) Hf)
 [ * /3 width=2 by ex_intro, or_introl/
 | #H @or_intror * /3 width=2 by ex_intro/

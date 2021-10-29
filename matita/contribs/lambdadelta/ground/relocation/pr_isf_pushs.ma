@@ -20,13 +20,13 @@ include "ground/relocation/pr_isf.ma".
 (* Constructions with pr_pushs **********************************************)
 
 (*** isfin_pushs *)
-lemma pr_isf_pushs (n) (f): 𝐅❪f❫ → 𝐅❪⫯*[n]f❫.
+lemma pr_isf_pushs (n) (f): 𝐅❨f❩ → 𝐅❨⫯*[n]f❩.
 #n @(nat_ind_succ … n) -n /3 width=3 by pr_isf_push/
 qed.
 
 (* Inversions with pr_pushs *************************************************)
 
 (*** isfin_inv_pushs *)
-lemma pr_isf_inv_pushs (n) (g): 𝐅❪⫯*[n]g❫ → 𝐅❪g❫.
+lemma pr_isf_inv_pushs (n) (g): 𝐅❨⫯*[n]g❩ → 𝐅❨g❩.
 #n @(nat_ind_succ … n) -n /3 width=3 by pr_isf_inv_push/
 qed-.

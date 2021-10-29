@@ -20,8 +20,8 @@ include "basic_2/rt_transition/cnx.ma".
 (* Inversion lemmas with simple terms ***************************************)
 
 lemma cnx_inv_appl (G) (L):
-      ∀V,T. ❪G,L❫ ⊢ ⬈𝐍 ⓐV.T →
-      ∧∧ ❪G,L❫ ⊢ ⬈𝐍 V & ❪G,L❫ ⊢ ⬈𝐍 T & 𝐒❪T❫.
+      ∀V,T. ❨G,L❩ ⊢ ⬈𝐍 ⓐV.T →
+      ∧∧ ❨G,L❩ ⊢ ⬈𝐍 V & ❨G,L❩ ⊢ ⬈𝐍 T & 𝐒❨T❩.
 #G #L #V1 #T1 #HVT1 @and3_intro
 [ #V2 #HV2 lapply (HVT1 (ⓐV2.T1) ?) -HVT1 /2 width=1 by cpx_pair_sn/ -HV2
   #H elim (teqx_inv_pair … H) -H //
@@ -41,7 +41,7 @@ qed-.
 (* Properties with simple terms *********************************************)
 
 lemma cnx_appl_simple (G) (L):
-      ∀V,T. ❪G,L❫ ⊢ ⬈𝐍 V → ❪G,L❫ ⊢ ⬈𝐍 T → 𝐒❪T❫ → ❪G,L❫ ⊢ ⬈𝐍 ⓐV.T.
+      ∀V,T. ❨G,L❩ ⊢ ⬈𝐍 V → ❨G,L❩ ⊢ ⬈𝐍 T → 𝐒❨T❩ → ❨G,L❩ ⊢ ⬈𝐍 ⓐV.T.
 #G #L #V #T #HV #HT #HS #X #H elim (cpx_inv_appl1_simple … H) -H //
 #V0 #T0 #HV0 #HT0 #H destruct
 @teqx_pair [ @HV | @HT ] // (**) (* auto fails because δ-expansion gets in the way *)

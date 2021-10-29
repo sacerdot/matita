@@ -21,14 +21,14 @@ include "ground/relocation/pr_after_pat_tls.ma".
 
 (*** H_after_inj *)
 definition H_pr_after_inj: predicate pr_map ≝
-           λf1. 𝐓❪f1❫ →
+           λf1. 𝐓❨f1❩ →
            ∀f,f21,f22. f1 ⊚ f21 ≘ f → f1 ⊚ f22 ≘ f → f21 ≡ f22.
 
 (* Main destructions with pr_ist ********************************************)
 
 (*** after_inj_O_aux *)
 corec fact pr_after_inj_unit_aux:
-           ∀f1. @❪𝟏, f1❫ ≘ 𝟏 → H_pr_after_inj f1.
+           ∀f1. @❨𝟏, f1❩ ≘ 𝟏 → H_pr_after_inj f1.
 #f1 #H1f1 #H2f1 #f #f21 #f22 #H1f #H2f
 cases (pr_pat_inv_unit_bi … H1f1) -H1f1 [|*: // ] #g1 #H1
 lapply (pr_ist_inv_push … H2f1 … H1) -H2f1 #H2g1
@@ -45,8 +45,8 @@ qed-.
 
 (*** after_inj_aux *)
 fact pr_after_inj_aux:
-     (∀f1. @❪𝟏, f1❫ ≘ 𝟏 → H_pr_after_inj f1) →
-     ∀i2,f1. @❪𝟏, f1❫ ≘ i2 → H_pr_after_inj f1.
+     (∀f1. @❨𝟏, f1❩ ≘ 𝟏 → H_pr_after_inj f1) →
+     ∀i2,f1. @❨𝟏, f1❩ ≘ i2 → H_pr_after_inj f1.
 #H0 #i2 elim i2 -i2 /2 width=1 by/ -H0
 #i2 #IH #f1 #H1f1 #H2f1 #f #f21 #f22 #H1f #H2f
 elim (pr_pat_inv_unit_succ … H1f1) -H1f1 [|*: // ] #g1 #H1g1 #H1

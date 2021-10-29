@@ -26,7 +26,7 @@ include "basic_2/rt_transition/fpb.ma".
 (* Basic_2A1: uses: fpbq_feqx *)
 lemma feqg_fpb (S) (G1) (G2) (L1) (L2) (T1) (T2):
       reflexive … S → symmetric … S →
-      ❪G1,L1,T1❫ ≛[S] ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫.
+      ❨G1,L1,T1❩ ≛[S] ❨G2,L2,T2❩ → ❨G1,L1,T1❩ ≽ ❨G2,L2,T2❩.
 #S #G1 #G2 #L1 #L2 #T1 #T2 #HS1 #HS2 #H
 elim (feqg_inv_gen_sn … H) -H #H #HL12 #HT12 destruct
 /4 width=8 by reqg_rpx, teqg_cpx, fpb_intro/
@@ -34,8 +34,8 @@ qed.
 
 lemma feqg_fpb_trans (S) (G) (L) (T):
       reflexive … S → symmetric … S → Transitive … S →
-      ∀G1,L1,T1. ❪G1,L1,T1❫ ≛[S] ❪G,L,T❫ →
-      ∀G2,L2,T2. ❪G,L,T❫ ≽ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫.
+      ∀G1,L1,T1. ❨G1,L1,T1❩ ≛[S] ❨G,L,T❩ →
+      ∀G2,L2,T2. ❨G,L,T❩ ≽ ❨G2,L2,T2❩ → ❨G1,L1,T1❩ ≽ ❨G2,L2,T2❩.
 #S #G #L #T #H1S #H2S #H3S #G1 #L1 #T1 #H1 #G2 #L2 #T2 #H2
 elim (fpb_inv_gen … H2) -H2 #L0 #T0 #H0 #HT02 #H
 elim (rpx_inv_reqg_lpx S … H) -H // #L3 #HL03 #HL32

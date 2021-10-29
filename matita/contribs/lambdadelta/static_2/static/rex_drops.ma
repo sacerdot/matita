@@ -27,24 +27,24 @@ definition f_dedropable_sn:
 
 definition f_dropable_sn:
            predicate (relation3 lenv term term) ≝ λR.
-           ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 → 𝐔❪f❫ →
+           ∀b,f,L1,K1. ⇩*[b,f] L1 ≘ K1 → 𝐔❨f❩ →
            ∀L2,U. L1 ⪤[R,U] L2 → ∀T. ⇧*[f] T ≘ U →
            ∃∃K2. K1 ⪤[R,T] K2 & ⇩*[b,f] L2 ≘ K2.
 
 definition f_dropable_dx:
            predicate (relation3 lenv term term) ≝ λR.
            ∀L1,L2,U. L1 ⪤[R,U] L2 →
-           ∀b,f,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔❪f❫ → ∀T. ⇧*[f] T ≘ U →
+           ∀b,f,K2. ⇩*[b,f] L2 ≘ K2 → 𝐔❨f❩ → ∀T. ⇧*[f] T ≘ U →
            ∃∃K1. ⇩*[b,f] L1 ≘ K1 & K1 ⪤[R,T] K2.
 
 definition f_transitive_next:
            relation3 … ≝ λR1,R2,R3.
-           ∀f,L,T. L ⊢ 𝐅+❪T❫ ≘ f →
+           ∀f,L,T. L ⊢ 𝐅+❨T❩ ≘ f →
            ∀g,I,K,i. ⇩[i] L ≘ K.ⓘ[I] → ↑g = ⫰*[i] f →
            R_pw_transitive_sex (cext2 R1) (cext2 R2) (cext2 R3) (cext2 R1) cfull g K I.
 
 definition f_confluent1_next: relation2 … ≝ λR1,R2.
-           ∀f,L,T. L ⊢ 𝐅+❪T❫ ≘ f →
+           ∀f,L,T. L ⊢ 𝐅+❨T❩ ≘ f →
            ∀g,I,K,i. ⇩[i] L ≘ K.ⓘ[I] → ↑g = ⫰*[i] f →
            R_pw_confluent1_sex (cext2 R1) (cext2 R1) (cext2 R2) cfull g K I.
 
@@ -112,7 +112,7 @@ qed-.
 
 (* Basic_2A1: uses: llpx_sn_inv_lift_O *)
 lemma rex_inv_lifts_bi (R):
-      ∀L1,L2,U. L1 ⪤[R,U] L2 → ∀b,f. 𝐔❪f❫ →
+      ∀L1,L2,U. L1 ⪤[R,U] L2 → ∀b,f. 𝐔❨f❩ →
       ∀K1,K2. ⇩*[b,f] L1 ≘ K1 → ⇩*[b,f] L2 ≘ K2 →
       ∀T. ⇧*[f] T ≘ U → K1 ⪤[R,T] K2.
 #R #L1 #L2 #U #HL12 #b #f #Hf #K1 #K2 #HLK1 #HLK2 #T #HTU
@@ -149,7 +149,7 @@ qed-.
 
 lemma rex_inv_lref_unit_sn (R):
       ∀L1,L2,i. L1 ⪤[R,#i] L2 → ∀I,K1. ⇩[i] L1 ≘ K1.ⓤ[I] →
-      ∃∃f,K2. ⇩[i] L2 ≘ K2.ⓤ[I] & K1 ⪤[cext2 R,cfull,f] K2 & 𝐈❪f❫.
+      ∃∃f,K2. ⇩[i] L2 ≘ K2.ⓤ[I] & K1 ⪤[cext2 R,cfull,f] K2 & 𝐈❨f❩.
 #R #L1 #L2 #i #HL12 #I #K1 #HLK1 elim (rex_dropable_sn … HLK1 … HL12 (#0)) -HLK1 -HL12 //
 #Y #HY #HLK2 elim (rex_inv_zero_unit_sn … HY) -HY
 #f #K2 #Hf #HK12 #H destruct /2 width=5 by ex3_2_intro/
@@ -157,7 +157,7 @@ qed-.
 
 lemma rex_inv_lref_unit_dx (R):
       ∀L1,L2,i. L1 ⪤[R,#i] L2 → ∀I,K2. ⇩[i] L2 ≘ K2.ⓤ[I] →
-      ∃∃f,K1. ⇩[i] L1 ≘ K1.ⓤ[I] & K1 ⪤[cext2 R,cfull,f] K2 & 𝐈❪f❫.
+      ∃∃f,K1. ⇩[i] L1 ≘ K1.ⓤ[I] & K1 ⪤[cext2 R,cfull,f] K2 & 𝐈❨f❩.
 #R #L1 #L2 #i #HL12 #I #K2 #HLK2 elim (rex_dropable_dx … HL12 … HLK2 … (#0)) -HLK2 -HL12 //
 #Y #HLK1 #HY elim (rex_inv_zero_unit_dx … HY) -HY
 #f #K2 #Hf #HK12 #H destruct /2 width=5 by ex3_2_intro/

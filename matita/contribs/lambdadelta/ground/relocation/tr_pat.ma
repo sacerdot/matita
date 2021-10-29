@@ -13,6 +13,8 @@
 (**************************************************************************)
 
 include "ground/notation/functions/apply_2.ma".
+include "ground/arith/pnat_plus.ma".
+include "ground/relocation/pr_pat.ma".
 include "ground/relocation/tr_map.ma".
 (*
 include "ground/arith/pnat_le_plus.ma".
@@ -21,6 +23,7 @@ include "ground/relocation/rtmap_istot.ma".
 *)
 (* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
 
+(*** apply *)
 rec definition tr_pat (i: pnat) on i: tr_map → pnat.
 * #p #f cases i -i
 [ @p
@@ -33,51 +36,52 @@ interpretation
   "functional positive application (total relocation maps)"
   'apply f i = (tr_pat i f).
 
-(* Properties on at (specific) ************************************************)
+(* Constructions with pr_pat ***********************************************)
 
-lemma at_O1: ∀i2,f. @❪𝟏, i2⨮f❫ ≘ i2.
+(*** at_O1 *)
+lemma pr_pat_unit_sn: ∀i2,f. @❨𝟏,𝐭❨i2⨮f❩❩ ≘ i2.
 #i2 elim i2 -i2 /2 width=5 by gr_pat_refl, gr_pat_next/
 qed.
 
-lemma at_S1: ∀p,f,i1,i2. @❪i1, f❫ ≘ i2 → @❪↑i1, p⨮f❫ ≘ i2+p.
+lemma at_S1: ∀p,f,i1,i2. @❨i1, f❩ ≘ i2 → @❨↑i1, p⨮f❩ ≘ i2+p.
 #p elim p -p /3 width=7 by gr_pat_push, gr_pat_next/
 qed.
 
-lemma at_total: ∀i1,f. @❪i1, f❫ ≘ f@❨i1❩.
+lemma at_total: ∀i1,f. @❨i1, f❩ ≘ f@❨i1❩.
 #i1 elim i1 -i1
 [ * // | #i #IH * /3 width=1 by at_S1/ ]
 qed.
 
-lemma at_istot: ∀f. 𝐓❪f❫.
+lemma at_istot: ∀f. 𝐓❨f❩.
 /2 width=2 by ex_intro/ qed.
 
-lemma at_plus2: ∀f,i1,i,p,q. @❪i1, p⨮f❫ ≘ i → @❪i1, (p+q)⨮f❫ ≘ i+q.
+lemma at_plus2: ∀f,i1,i,p,q. @❨i1, p⨮f❩ ≘ i → @❨i1, (p+q)⨮f❩ ≘ i+q.
 #f #i1 #i #p #q #H elim q -q
 /2 width=5 by gr_pat_next/
 qed.
 
 (* Inversion lemmas on at (specific) ******************************************)
 
-lemma at_inv_O1: ∀f,p,i2. @❪𝟏, p⨮f❫ ≘ i2 → p = i2.
+lemma at_inv_O1: ∀f,p,i2. @❨𝟏, p⨮f❩ ≘ i2 → p = i2.
 #f #p elim p -p /2 width=6 by gr_pat_inv_unit_push/
 #p #IH #i2 #H elim (gr_pat_inv_next … H) -H [|*: // ]
 #j2 #Hj * -i2 /3 width=1 by eq_f/
 qed-.
 
-lemma at_inv_S1: ∀f,p,j1,i2. @❪↑j1, p⨮f❫ ≘ i2 →
-                 ∃∃j2. @❪j1, f❫ ≘ j2 & j2+p = i2.
+lemma at_inv_S1: ∀f,p,j1,i2. @❨↑j1, p⨮f❩ ≘ i2 →
+                 ∃∃j2. @❨j1, f❩ ≘ j2 & j2+p = i2.
 #f #p elim p -p /2 width=5 by gr_pat_inv_succ_push/
 #p #IH #j1 #i2 #H elim (gr_pat_inv_next … H) -H [|*: // ]
 #j2 #Hj * -i2 elim (IH … Hj) -IH -Hj
 #i2 #Hi * -j2 /2 width=3 by ex2_intro/
 qed-.
 
-lemma at_inv_total: ∀f,i1,i2. @❪i1, f❫ ≘ i2 → f@❨i1❩ = i2.
+lemma at_inv_total: ∀f,i1,i2. @❨i1, f❩ ≘ i2 → f@❨i1❩ = i2.
 /2 width=6 by fr2_nat_mono/ qed-.
 
 (* Forward lemmas on at (specific) *******************************************)
 
-lemma at_increasing_plus: ∀f,p,i1,i2. @❪i1, p⨮f❫ ≘ i2 → i1 + p ≤ ↑i2.
+lemma at_increasing_plus: ∀f,p,i1,i2. @❨i1, p⨮f❩ ≘ i2 → i1 + p ≤ ↑i2.
 #f #p *
 [ #i2 #H <(at_inv_O1 … H) -i2 //
 | #i1 #i2 #H elim (at_inv_S1 … H) -H
@@ -86,7 +90,7 @@ lemma at_increasing_plus: ∀f,p,i1,i2. @❪i1, p⨮f❫ ≘ i2 → i1 + p ≤ �
 ]
 qed-.
 
-lemma at_fwd_id: ∀f,p,i. @❪i, p⨮f❫ ≘ i → 𝟏 = p.
+lemma at_fwd_id: ∀f,p,i. @❨i, p⨮f❩ ≘ i → 𝟏 = p.
 #f #p #i #H elim (gr_pat_des_id … H) -H
 #g #H elim (push_inv_seq_dx … H) -H //
 qed-.

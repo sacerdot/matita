@@ -24,13 +24,13 @@ include "basic_2/rt_computation/fpbg_fpbs.ma".
 
 (* Note: this is used in the closure proof *)
 lemma fqup_fpbg:
-      ∀G1,G2,L1,L2,T1,T2. ❪G1,L1,T1❫ ⬂+ ❪G2,L2,T2❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
+      ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂+ ❨G2,L2,T2❩ → ❨G1,L1,T1❩ > ❨G2,L2,T2❩.
 #G1 #G2 #L1 #L2 #T1 #T2 #H elim (fqup_inv_step_sn … H) -H
 /3 width=5 by fpbc_fpbs_fpbg, fqus_fpbs, fqu_fpbc/
 qed.
 
 (* Note: this is used in the closure proof *)
 lemma fqup_fpbg_trans (G) (L) (T):
-      ∀G1,L1,T1. ❪G1,L1,T1❫ ⬂+ ❪G,L,T❫ →
-      ∀G2,L2,T2. ❪G,L,T❫ > ❪G2,L2,T2❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
+      ∀G1,L1,T1. ❨G1,L1,T1❩ ⬂+ ❨G,L,T❩ →
+      ∀G2,L2,T2. ❨G,L,T❩ > ❨G2,L2,T2❩ → ❨G1,L1,T1❩ > ❨G2,L2,T2❩.
 /3 width=5 by fpbs_fpbg_trans, fqup_fpbs/ qed-.

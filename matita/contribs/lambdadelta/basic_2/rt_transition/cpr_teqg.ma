@@ -21,7 +21,7 @@ include "basic_2/rt_transition/cpr_drops_basic.ma".
 
 lemma cpr_abbr_pos_tneqx (S) (h) (G) (L) (V) (T1):
       symmetric … S → (∀s1,s2. Decidable (S s1 s2)) →
-      ∃∃T2. ❪G,L❫ ⊢ +ⓓV.T1 ➡[h,0] T2 & (+ⓓV.T1 ≛[S] T2 → ⊥).
+      ∃∃T2. ❨G,L❩ ⊢ +ⓓV.T1 ➡[h,0] T2 & (+ⓓV.T1 ≛[S] T2 → ⊥).
 #S #h #G #L #V #U1 #H1S #H2S
 elim (cpr_subst h G (L.ⓓV) U1 … 0) [|*: /2 width=4 by drops_refl/ ] #U2 #T2 #HU12 #HTU2
 elim (teqg_dec … H2S U1 U2) [ -HU12 #HU12 | -HTU2 #HnU12 ]

@@ -23,8 +23,8 @@ include "basic_2/rt_transition/cpx.ma".
 (* Basic_2A1: was: cpx_delta *)
 lemma cpx_delta_drops (G) (L):
       ∀I,K,V,V2,W2,i.
-      ⇩[i] L ≘ K.ⓑ[I]V → ❪G,K❫ ⊢ V ⬈ V2 →
-      ⇧[↑i] V2 ≘ W2 → ❪G,L❫ ⊢ #i ⬈ W2.
+      ⇩[i] L ≘ K.ⓑ[I]V → ❨G,K❩ ⊢ V ⬈ V2 →
+      ⇧[↑i] V2 ≘ W2 → ❨G,L❩ ⊢ #i ⬈ W2.
 #G #L * #K #V #V2 #W2 #i #HLK *
 /3 width=7 by cpg_ell_drops, cpg_delta_drops, ex_intro/
 qed.
@@ -33,19 +33,19 @@ qed.
 
 (* Basic_2A1: was: cpx_inv_atom1 *)
 lemma cpx_inv_atom1_drops (G) (L):
-      ∀I,T2. ❪G,L❫ ⊢ ⓪[I] ⬈ T2 →
+      ∀I,T2. ❨G,L❩ ⊢ ⓪[I] ⬈ T2 →
       ∨∨ T2 = ⓪[I]
        | ∃∃s1,s2. T2 = ⋆s2 & I = Sort s1
-       | ∃∃J,K,V,V2,i. ⇩[i] L ≘ K.ⓑ[J]V & ❪G,K❫ ⊢ V ⬈ V2 & ⇧[↑i] V2 ≘ T2 & I = LRef i.
+       | ∃∃J,K,V,V2,i. ⇩[i] L ≘ K.ⓑ[J]V & ❨G,K❩ ⊢ V ⬈ V2 & ⇧[↑i] V2 ≘ T2 & I = LRef i.
 #G #L #I #T2 * #c #H elim (cpg_inv_atom1_drops … H) -H *
 /4 width=9 by or3_intro0, or3_intro1, or3_intro2, ex4_5_intro, ex2_2_intro, ex_intro/
 qed-.
 
 (* Basic_2A1: was: cpx_inv_lref1 *)
 lemma cpx_inv_lref1_drops (G) (L):
-      ∀T2,i. ❪G,L❫ ⊢ #i ⬈ T2 →
+      ∀T2,i. ❨G,L❩ ⊢ #i ⬈ T2 →
       ∨∨ T2 = #i 
-       | ∃∃J,K,V,V2. ⇩[i] L ≘ K. ⓑ[J]V & ❪G,K❫ ⊢ V ⬈ V2 & ⇧[↑i] V2 ≘ T2.
+       | ∃∃J,K,V,V2. ⇩[i] L ≘ K. ⓑ[J]V & ❨G,K❩ ⊢ V ⬈ V2 & ⇧[↑i] V2 ≘ T2.
 #G #L #T1 #i * #c #H elim (cpg_inv_lref1_drops … H) -H *
 /4 width=7 by ex3_4_intro, ex_intro, or_introl, or_intror/
 qed-.

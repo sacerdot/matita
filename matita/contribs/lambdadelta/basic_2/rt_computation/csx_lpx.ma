@@ -20,8 +20,8 @@ include "basic_2/rt_computation/csx_cpxs.ma".
 (* Properties with extended parallel rt-transition on all entries ***********)
 
 lemma csx_lpx_conf (G) (L1):
-      ∀T. ❪G,L1❫ ⊢ ⬈*𝐒 T →
-      ∀L2. ❪G,L1❫ ⊢ ⬈ L2 → ❪G,L2❫ ⊢ ⬈*𝐒 T.
+      ∀T. ❨G,L1❩ ⊢ ⬈*𝐒 T →
+      ∀L2. ❨G,L1❩ ⊢ ⬈ L2 → ❨G,L2❩ ⊢ ⬈*𝐒 T.
 #G #L1 #T #H @(csx_ind_cpxs … H) -T
 /4 width=3 by csx_intro, lpx_cpx_trans/
 qed-.
@@ -29,8 +29,8 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma csx_abst (G) (L):
-      ∀p,W. ❪G,L❫ ⊢ ⬈*𝐒 W →
-      ∀T. ❪G,L.ⓛW❫ ⊢ ⬈*𝐒 T → ❪G,L❫ ⊢ ⬈*𝐒 ⓛ[p]W.T.
+      ∀p,W. ❨G,L❩ ⊢ ⬈*𝐒 W →
+      ∀T. ❨G,L.ⓛW❩ ⊢ ⬈*𝐒 T → ❨G,L❩ ⊢ ⬈*𝐒 ⓛ[p]W.T.
 #G #L #p #W #HW
 @(csx_ind … HW) -W #W #_ #IHW #T #HT
 @(csx_ind … HT) -T #T #HT #IHT
@@ -45,8 +45,8 @@ elim (tneqx_inv_pair  … H2) -H2
 qed.
 
 lemma csx_abbr (G) (L):
-      ∀p,V. ❪G,L❫ ⊢ ⬈*𝐒 V →
-      ∀T. ❪G,L.ⓓV❫ ⊢ ⬈*𝐒 T → ❪G,L❫ ⊢ ⬈*𝐒 ⓓ[p]V.T.
+      ∀p,V. ❨G,L❩ ⊢ ⬈*𝐒 V →
+      ∀T. ❨G,L.ⓓV❩ ⊢ ⬈*𝐒 T → ❨G,L❩ ⊢ ⬈*𝐒 ⓓ[p]V.T.
 #G #L #p #V #HV
 @(csx_ind … HV) -V #V #_ #IHV #T #HT
 @(csx_ind_cpxs … HT) -T #T #HT #IHT
@@ -64,15 +64,15 @@ elim (cpx_inv_abbr1 … H1) -H1 *
 qed.
 
 lemma csx_bind (G) (L):
-      ∀p,I,V. ❪G,L❫ ⊢ ⬈*𝐒 V →
-      ∀T. ❪G,L.ⓑ[I]V❫ ⊢ ⬈*𝐒 T → ❪G,L❫ ⊢ ⬈*𝐒 ⓑ[p,I]V.T.
+      ∀p,I,V. ❨G,L❩ ⊢ ⬈*𝐒 V →
+      ∀T. ❨G,L.ⓑ[I]V❩ ⊢ ⬈*𝐒 T → ❨G,L❩ ⊢ ⬈*𝐒 ⓑ[p,I]V.T.
 #G #L #p * #V #HV #T #HT
 /2 width=1 by csx_abbr, csx_abst/
 qed.
 
 fact csx_appl_theta_aux (G) (L):
-     ∀p,U. ❪G,L❫ ⊢ ⬈*𝐒 U → ∀V1,V2. ⇧[1] V1 ≘ V2 →
-     ∀V,T. U = ⓓ[p]V.ⓐV2.T → ❪G,L❫ ⊢ ⬈*𝐒 ⓐV1.ⓓ[p]V.T.
+     ∀p,U. ❨G,L❩ ⊢ ⬈*𝐒 U → ∀V1,V2. ⇧[1] V1 ≘ V2 →
+     ∀V,T. U = ⓓ[p]V.ⓐV2.T → ❨G,L❩ ⊢ ⬈*𝐒 ⓐV1.ⓓ[p]V.T.
 #G #L #p #X #H
 @(csx_ind_cpxs … H) -X #X #HVT #IHVT #V1 #V2 #HV12 #V #T #H destruct
 lapply (csx_fwd_pair_sn … HVT) #HV
@@ -106,6 +106,6 @@ elim (cpx_inv_appl1 … HL) -HL *
 qed-.
 
 lemma csx_appl_theta (G) (L):
-      ∀p,V,V2,T. ❪G,L❫ ⊢ ⬈*𝐒 ⓓ[p]V.ⓐV2.T →
-      ∀V1. ⇧[1] V1 ≘ V2 → ❪G,L❫ ⊢ ⬈*𝐒 ⓐV1.ⓓ[p]V.T.
+      ∀p,V,V2,T. ❨G,L❩ ⊢ ⬈*𝐒 ⓓ[p]V.ⓐV2.T →
+      ∀V1. ⇧[1] V1 ≘ V2 → ❨G,L❩ ⊢ ⬈*𝐒 ⓐV1.ⓓ[p]V.T.
 /2 width=5 by csx_appl_theta_aux/ qed.

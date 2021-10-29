@@ -20,7 +20,7 @@ include "basic_2/dynamic/cnv_aaa.ma".
 (* Properties with preorder for applicability domains ***********************)
 
 lemma cnv_acle_trans (h) (a1) (a2):
-      a1 ⊆ a2 → ∀G,L,T. ❪G,L❫ ⊢ T ![h,a1] → ❪G,L❫ ⊢ T ![h,a2].
+      a1 ⊆ a2 → ∀G,L,T. ❨G,L❩ ⊢ T ![h,a1] → ❨G,L❩ ⊢ T ![h,a2].
 #h #a1 #a2 #Ha12 #G #L #T #H elim H -G -L -T
 [ /1 width=1 by cnv_sort/
 | /3 width=1 by cnv_zero/
@@ -34,9 +34,9 @@ lemma cnv_acle_trans (h) (a1) (a2):
 qed-.
 
 lemma cnv_acle_omega (h) (a):
-      ∀G,L,T. ❪G,L❫ ⊢ T ![h,a] → ❪G,L❫ ⊢ T ![h,𝛚].
+      ∀G,L,T. ❨G,L❩ ⊢ T ![h,a] → ❨G,L❩ ⊢ T ![h,𝛚].
 /3 width=3 by cnv_acle_trans, acle_omega/ qed-.
 
 lemma cnv_acle_one (h) (a) (n):
-      ∀G,L,T. ❪G,L❫ ⊢ T ![h,𝟏] → ad a n → ❪G,L❫ ⊢ T ![h,a].
+      ∀G,L,T. ❨G,L❩ ⊢ T ![h,𝟏] → ad a n → ❨G,L❩ ⊢ T ![h,a].
 /3 width=3 by cnv_acle_trans, acle_one/ qed-.

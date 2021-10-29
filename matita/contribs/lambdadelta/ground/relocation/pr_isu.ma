@@ -20,7 +20,7 @@ include "ground/relocation/pr_isi.ma".
 (*** isuni *)
 inductive pr_isu: predicate pr_map ≝
 (*** isuni_isid *)
-| pr_isu_isi (f): 𝐈❪f❫ → pr_isu f
+| pr_isu_isi (f): 𝐈❨f❩ → pr_isu f
 (*** isuni_next *)
 | pr_isu_next (f): pr_isu f → ∀g. ↑f = g → pr_isu g
 .
@@ -32,7 +32,7 @@ interpretation
 (* Basic inversions *********************************************************)
 
 (*** isuni_inv_push *)
-lemma pr_isu_inv_push (g): 𝐔❪g❫ → ∀f. ⫯f = g → 𝐈❪f❫.
+lemma pr_isu_inv_push (g): 𝐔❨g❩ → ∀f. ⫯f = g → 𝐈❨f❩.
 #g * -g
 [ /2 width=3 by pr_isi_inv_push/
 | #f #_ #g #H #x #Hx destruct
@@ -41,7 +41,7 @@ lemma pr_isu_inv_push (g): 𝐔❪g❫ → ∀f. ⫯f = g → 𝐈❪f❫.
 qed-.
 
 (*** isuni_inv_next *)
-lemma pr_isu_inv_next (g): 𝐔❪g❫ → ∀f. ↑f = g → 𝐔❪f❫.
+lemma pr_isu_inv_next (g): 𝐔❨g❩ → ∀f. ↑f = g → 𝐔❨f❩.
 #g * -g #f #Hf
 [ #x #Hx elim (pr_isi_inv_next … Hf … Hx)
 | #g #H #x #Hx destruct
@@ -52,5 +52,5 @@ qed-.
 (* Basic destructions *******************************************************)
 
 (*** isuni_fwd_push *)
-lemma pr_isu_fwd_push (g): 𝐔❪g❫ → ∀f. ⫯f = g → 𝐔❪f❫.
+lemma pr_isu_fwd_push (g): 𝐔❨g❩ → ∀f. ⫯f = g → 𝐔❨f❩.
 /3 width=3 by pr_isu_inv_push, pr_isu_isi/ qed-.

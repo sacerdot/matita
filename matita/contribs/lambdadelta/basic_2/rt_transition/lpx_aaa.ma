@@ -23,9 +23,9 @@ include "basic_2/rt_transition/lpx_drops.ma".
 (* Note: lemma 500 *)
 (* Basic_2A1: was: cpx_lpx_aaa_conf *)
 lemma cpx_aaa_conf_lpx (G) (L1):
-      ∀T1,A. ❪G,L1❫ ⊢ T1 ⁝ A →
-      ∀T2. ❪G,L1❫ ⊢ T1 ⬈ T2 →
-      ∀L2. ❪G,L1❫ ⊢ ⬈ L2 → ❪G,L2❫ ⊢ T2 ⁝ A.
+      ∀T1,A. ❨G,L1❩ ⊢ T1 ⁝ A →
+      ∀T2. ❨G,L1❩ ⊢ T1 ⬈ T2 →
+      ∀L2. ❨G,L1❩ ⊢ ⬈ L2 → ❨G,L2❩ ⊢ T2 ⁝ A.
 #G #L1 #T1 #A #H elim H -G -L1 -T1 -A
 [ #G #L1 #s1 #X #H
   elim (cpx_inv_sort1 … H) -H #s2 #H destruct //

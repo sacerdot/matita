@@ -27,24 +27,24 @@ interpretation "simple (term)" 'Simple T = (simple T).
 
 (* Basic inversion lemmas ***************************************************)
 
-fact simple_inv_bind_aux: ∀T. 𝐒❪T❫ → ∀p,J,W,U. T = ⓑ[p,J]W.U → ⊥.
+fact simple_inv_bind_aux: ∀T. 𝐒❨T❩ → ∀p,J,W,U. T = ⓑ[p,J]W.U → ⊥.
 #T * -T
 [ #I #p #J #W #U #H destruct
 | #I #V #T #a #J #W #U #H destruct
 ]
 qed-.
 
-lemma simple_inv_bind: ∀p,I,V,T. 𝐒❪ⓑ[p,I] V. T❫ → ⊥.
+lemma simple_inv_bind: ∀p,I,V,T. 𝐒❨ⓑ[p,I] V. T❩ → ⊥.
 /2 width=7 by simple_inv_bind_aux/ qed-.
 
-lemma simple_inv_pair: ∀I,V,T. 𝐒❪②[I]V.T❫ → ∃J. I = Flat2 J.
+lemma simple_inv_pair: ∀I,V,T. 𝐒❨②[I]V.T❩ → ∃J. I = Flat2 J.
 * /2 width=2 by ex_intro/
 #p #I #V #T #H elim (simple_inv_bind … H)
 qed-.
 
 (* Basic properties *********************************************************)
 
-lemma simple_dec_ex (X): ∨∨ 𝐒❪X❫ | ∃∃p,I,T,U. X = ⓑ[p,I]T.U.
+lemma simple_dec_ex (X): ∨∨ 𝐒❨X❩ | ∃∃p,I,T,U. X = ⓑ[p,I]T.U.
 * [ /2 width=1 by simple_atom, or_introl/ ]
 * [| /2 width=1 by simple_flat, or_introl/ ]
 /3 width=5 by ex1_4_intro, or_intror/

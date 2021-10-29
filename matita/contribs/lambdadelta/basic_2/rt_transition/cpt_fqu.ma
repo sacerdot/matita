@@ -22,22 +22,22 @@ include "basic_2/rt_transition/cpt.ma".
 lemma cpt_ind (h) (Q:relation5 …):
       (∀I,G,L. Q 0 G L (⓪[I]) (⓪[I])) →
       (∀G,L,s. Q 1 G L (⋆s) (⋆(⫯[h]s))) →
-      (∀n,G,K,V1,V2,W2. ❪G,K❫ ⊢ V1 ⬆[h,n] V2 → Q n G K V1 V2 →
+      (∀n,G,K,V1,V2,W2. ❨G,K❩ ⊢ V1 ⬆[h,n] V2 → Q n G K V1 V2 →
         ⇧[1] V2 ≘ W2 → Q n G (K.ⓓV1) (#0) W2
-      ) → (∀n,G,K,V1,V2,W2. ❪G,K❫ ⊢ V1 ⬆[h,n] V2 → Q n G K V1 V2 →
+      ) → (∀n,G,K,V1,V2,W2. ❨G,K❩ ⊢ V1 ⬆[h,n] V2 → Q n G K V1 V2 →
         ⇧[1] V2 ≘ W2 → Q (↑n) G (K.ⓛV1) (#0) W2
-      ) → (∀n,I,G,K,T,U,i. ❪G,K❫ ⊢ #i ⬆[h,n] T → Q n G K (#i) T →
+      ) → (∀n,I,G,K,T,U,i. ❨G,K❩ ⊢ #i ⬆[h,n] T → Q n G K (#i) T →
         ⇧[1] T ≘ U → Q n G (K.ⓘ[I]) (#↑i) (U)
-      ) → (∀n,p,I,G,L,V1,V2,T1,T2. ❪G,L❫ ⊢ V1 ⬆[h,0] V2 → ❪G,L.ⓑ[I]V1❫ ⊢ T1 ⬆[h,n] T2 →
+      ) → (∀n,p,I,G,L,V1,V2,T1,T2. ❨G,L❩ ⊢ V1 ⬆[h,0] V2 → ❨G,L.ⓑ[I]V1❩ ⊢ T1 ⬆[h,n] T2 →
         Q 0 G L V1 V2 → Q n G (L.ⓑ[I]V1) T1 T2 → Q n G L (ⓑ[p,I]V1.T1) (ⓑ[p,I]V2.T2)
-      ) → (∀n,G,L,V1,V2,T1,T2. ❪G,L❫ ⊢ V1 ⬆[h,0] V2 → ❪G,L❫ ⊢ T1 ⬆[h,n] T2 →
+      ) → (∀n,G,L,V1,V2,T1,T2. ❨G,L❩ ⊢ V1 ⬆[h,0] V2 → ❨G,L❩ ⊢ T1 ⬆[h,n] T2 →
         Q 0 G L V1 V2 → Q n G L T1 T2 → Q n G L (ⓐV1.T1) (ⓐV2.T2)
-      ) → (∀n,G,L,V1,V2,T1,T2. ❪G,L❫ ⊢ V1 ⬆[h,n] V2 → ❪G,L❫ ⊢ T1 ⬆[h,n] T2 →
+      ) → (∀n,G,L,V1,V2,T1,T2. ❨G,L❩ ⊢ V1 ⬆[h,n] V2 → ❨G,L❩ ⊢ T1 ⬆[h,n] T2 →
         Q n G L V1 V2 → Q n G L T1 T2 → Q n G L (ⓝV1.T1) (ⓝV2.T2)
-      ) → (∀n,G,L,V1,V2,T. ❪G,L❫ ⊢ V1 ⬆[h,n] V2 →
+      ) → (∀n,G,L,V1,V2,T. ❨G,L❩ ⊢ V1 ⬆[h,n] V2 →
         Q n G L V1 V2 → Q (↑n) G L (ⓝV1.T) V2
       ) →
-      ∀n,G,L,T1,T2. ❪G,L❫ ⊢ T1 ⬆[h,n] T2 → Q n G L T1 T2.
+      ∀n,G,L,T1,T2. ❨G,L❩ ⊢ T1 ⬆[h,n] T2 → Q n G L T1 T2.
 #h #Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #IH9 #n #G #L #T1
 generalize in match n; -n
 @(fqu_wf_ind (Ⓣ) … G L T1) -G -L -T1 #G0 #L0 * [| * [| * ]]

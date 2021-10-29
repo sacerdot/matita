@@ -18,7 +18,7 @@ include "static_2/static/frees.ma".
 
 (* Main inversion lemmas ****************************************************)
 
-theorem frees_mono: ∀f1,L,T. L ⊢ 𝐅+❪T❫ ≘ f1 → ∀f2. L ⊢ 𝐅+❪T❫ ≘ f2 → f1 ≡ f2.
+theorem frees_mono: ∀f1,L,T. L ⊢ 𝐅+❨T❩ ≘ f1 → ∀f2. L ⊢ 𝐅+❨T❩ ≘ f2 → f1 ≡ f2.
 #f1 #L #T #H elim H -f1 -L -T
 [ /3 width=3 by frees_inv_sort, pr_isi_inv_eq_repl/
 | #f1 #i #Hf1 #g2 #H

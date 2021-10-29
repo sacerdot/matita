@@ -242,7 +242,7 @@ qed-.
 
 lemma sex_co_isid (RN1) (RP1) (RN2) (RP2):
       RP1 ⊆ RP2 →
-      ∀f,L1,L2. L1 ⪤[RN1,RP1,f] L2 → 𝐈❪f❫ →
+      ∀f,L1,L2. L1 ⪤[RN1,RP1,f] L2 → 𝐈❨f❩ →
       L1 ⪤[RN2,RP2,f] L2.
 #RN1 #RP1 #RN2 #RP2 #HR #f #L1 #L2 #H elim H -f -L1 -L2 //
 #f #I1 #I2 #K1 #K2 #_ #HI12 #IH #H

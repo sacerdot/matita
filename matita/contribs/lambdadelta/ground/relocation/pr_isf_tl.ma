@@ -20,7 +20,7 @@ include "ground/relocation/pr_isf.ma".
 (* Constructions with pr_tl *************************************************)
 
 (*** isfin_tl *)
-lemma pr_isf_tl (f): 𝐅❪f❫ → 𝐅❪⫰f❫.
+lemma pr_isf_tl (f): 𝐅❨f❩ → 𝐅❨⫰f❩.
 #f elim (pr_map_split_tl f) * #Hf
 /3 width=3 by pr_isf_inv_push, pr_isf_inv_next/
 qed.
@@ -28,7 +28,7 @@ qed.
 (* Inversions with pr_tl ****************************************************)
 
 (*** isfin_inv_tl *)
-lemma pr_isf_inv_tl (g): 𝐅❪⫰g❫ → 𝐅❪g❫.
+lemma pr_isf_inv_tl (g): 𝐅❨⫰g❩ → 𝐅❨g❩.
 #f elim (pr_map_split_tl f) * #Hf
 /2 width=1 by pr_isf_next, pr_isf_push/
 qed-.

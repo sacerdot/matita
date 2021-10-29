@@ -23,8 +23,8 @@ include "basic_2/rt_transition/cpg.ma".
 (* Advanced properties ******************************************************)
 
 lemma cpg_delta_drops (Rs) (Rk) (c) (G) (K):
-      ∀V,V2,i,L,T2. ⇩[i] L ≘ K.ⓓV → ❪G,K❫ ⊢ V ⬈[Rs,Rk,c] V2 →
-      ⇧[↑i] V2 ≘ T2 → ❪G,L❫ ⊢ #i ⬈[Rs,Rk,c] T2.
+      ∀V,V2,i,L,T2. ⇩[i] L ≘ K.ⓓV → ❨G,K❩ ⊢ V ⬈[Rs,Rk,c] V2 →
+      ⇧[↑i] V2 ≘ T2 → ❨G,L❩ ⊢ #i ⬈[Rs,Rk,c] T2.
 #Rs #Rk #c #G #K #V #V2 #i elim i -i
 [ #L #T2 #HLK lapply (drops_fwd_isid … HLK ?) // #H destruct /3 width=3 by cpg_delta/
 | #i #IH #L0 #T0 #H0 #HV2 #HVT2
@@ -34,8 +34,8 @@ lemma cpg_delta_drops (Rs) (Rk) (c) (G) (K):
 qed.
 
 lemma cpg_ell_drops (Rs) (Rk) (c) (G) (K):
-      ∀V,V2,i,L,T2. ⇩[i] L ≘ K.ⓛV → ❪G,K❫ ⊢ V ⬈[Rs,Rk,c] V2 →
-      ⇧[↑i] V2 ≘ T2 → ❪G,L❫ ⊢ #i ⬈[Rs,Rk,c+𝟘𝟙] T2.
+      ∀V,V2,i,L,T2. ⇩[i] L ≘ K.ⓛV → ❨G,K❩ ⊢ V ⬈[Rs,Rk,c] V2 →
+      ⇧[↑i] V2 ≘ T2 → ❨G,L❩ ⊢ #i ⬈[Rs,Rk,c+𝟘𝟙] T2.
 #Rs #Rk #c #G #K #V #V2 #i elim i -i
 [ #L #T2 #HLK lapply (drops_fwd_isid … HLK ?) // #H destruct /3 width=3 by cpg_ell/
 | #i #IH #L0 #T0 #H0 #HV2 #HVT2
@@ -47,10 +47,10 @@ qed.
 (* Advanced inversion lemmas ************************************************)
 
 lemma cpg_inv_lref1_drops (Rs) (Rk) (c) (G):
-      ∀i,L,T2. ❪G,L❫ ⊢ #i ⬈[Rs,Rk,c] T2 →
+      ∀i,L,T2. ❨G,L❩ ⊢ #i ⬈[Rs,Rk,c] T2 →
       ∨∨ ∧∧ T2 = #i & c = 𝟘𝟘
-       | ∃∃cV,K,V,V2. ⇩[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & c = cV
-       | ∃∃cV,K,V,V2. ⇩[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & c = cV + 𝟘𝟙.
+       | ∃∃cV,K,V,V2. ⇩[i] L ≘ K.ⓓV & ❨G,K❩ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & c = cV
+       | ∃∃cV,K,V,V2. ⇩[i] L ≘ K.ⓛV & ❨G,K❩ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & c = cV + 𝟘𝟙.
 #Rs #Rk #c #G #i elim i -i
 [ #L #T2 #H elim (cpg_inv_zero1 … H) -H * /3 width=1 by or3_intro0, conj/
   /4 width=8 by drops_refl, ex4_4_intro, or3_intro2, or3_intro1/
@@ -67,11 +67,11 @@ lemma cpg_inv_lref1_drops (Rs) (Rk) (c) (G):
 qed-.
 
 lemma cpg_inv_atom1_drops (Rs) (Rk) (c) (G) (L):
-      ∀I,T2. ❪G,L❫ ⊢ ⓪[I] ⬈[Rs,Rk,c] T2 →
+      ∀I,T2. ❨G,L❩ ⊢ ⓪[I] ⬈[Rs,Rk,c] T2 →
       ∨∨ ∧∧ T2 = ⓪[I] & c = 𝟘𝟘
        | ∃∃s1,s2. Rs s1 s2 & T2 = ⋆s2 & I = Sort s1 & c = 𝟘𝟙
-       | ∃∃cV,i,K,V,V2. ⇩[i] L ≘ K.ⓓV & ❪G,K❫ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & I = LRef i & c = cV
-       | ∃∃cV,i,K,V,V2. ⇩[i] L ≘ K.ⓛV & ❪G,K❫ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & I = LRef i & c = cV + 𝟘𝟙.
+       | ∃∃cV,i,K,V,V2. ⇩[i] L ≘ K.ⓓV & ❨G,K❩ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & I = LRef i & c = cV
+       | ∃∃cV,i,K,V,V2. ⇩[i] L ≘ K.ⓛV & ❨G,K❩ ⊢ V ⬈[Rs,Rk,cV] V2 & ⇧[↑i] V2 ≘ T2 & I = LRef i & c = cV + 𝟘𝟙.
 #Rs #Rk #c #G #L * #x #T2 #H
 [ elim (cpg_inv_sort1 … H) -H *
   /3 width=5 by or4_intro0, or4_intro1, ex4_2_intro, conj/

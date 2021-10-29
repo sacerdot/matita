@@ -31,7 +31,7 @@ interpretation
 (* Basic inversions *********************************************************)
 
 (*** isid_inv_gen *)
-lemma pr_isi_inv_gen (g): 𝐈❪g❫ → ∃∃f. 𝐈❪f❫ & ⫯f = g.
+lemma pr_isi_inv_gen (g): 𝐈❨g❩ → ∃∃f. 𝐈❨f❩ & ⫯f = g.
 #g * -g
 #f #g #Hf /2 width=3 by ex2_intro/
 qed-.
@@ -39,7 +39,7 @@ qed-.
 (* Advanced inversions ******************************************************)
 
 (*** isid_inv_push *)
-lemma pr_isi_inv_push (g): 𝐈❪g❫ → ∀f. ⫯f = g → 𝐈❪f❫.
+lemma pr_isi_inv_push (g): 𝐈❨g❩ → ∀f. ⫯f = g → 𝐈❨f❩.
 #g #H
 elim (pr_isi_inv_gen … H) -H #f #Hf
 * -g #g #H
@@ -47,7 +47,7 @@ elim (pr_isi_inv_gen … H) -H #f #Hf
 qed-.
 
 (*** isid_inv_next *)
-lemma pr_isi_inv_next (g): 𝐈❪g❫ → ∀f. ↑f = g → ⊥.
+lemma pr_isi_inv_next (g): 𝐈❨g❩ → ∀f. ↑f = g → ⊥.
 #g #H
 elim (pr_isi_inv_gen … H) -H #f #Hf
 * -g #g #H elim (eq_inv_pr_next_push … H)

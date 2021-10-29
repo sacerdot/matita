@@ -20,9 +20,9 @@ include "basic_2/rt_computation/cpms_drops.ma".
 
 (* Basic_1: was: pr3_gen_lref *)
 (* Basic_2A1: was: cprs_inv_lref1 *)
-lemma cprs_inv_lref1_drops (h) (G): ∀L,T2,i. ❪G,L❫ ⊢ #i ➡*[h,0] T2 →
+lemma cprs_inv_lref1_drops (h) (G): ∀L,T2,i. ❨G,L❩ ⊢ #i ➡*[h,0] T2 →
                                     ∨∨ T2 = #i
-                                     | ∃∃K,V1,T1. ⇩[i] L ≘ K.ⓓV1 & ❪G,K❫ ⊢ V1 ➡*[h,0] T1 &
+                                     | ∃∃K,V1,T1. ⇩[i] L ≘ K.ⓓV1 & ❨G,K❩ ⊢ V1 ➡*[h,0] T1 &
                                                   ⇧[↑i] T1 ≘ T2.
 #h #G #L #T2 #i #H elim (cpms_inv_lref1_drops … H) -H *
 [ /2 width=1 by or_introl/

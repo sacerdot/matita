@@ -25,8 +25,8 @@ include "basic_2/dynamic/lsubv_cnv.ma".
 
 fact cnv_cpm_trans_lpr_aux (h) (a):
      ∀G0,L0,T0.
-     (∀G1,L1,T1. ❪G0,L0,T0❫ > ❪G1,L1,T1❫ → IH_cnv_cpms_conf_lpr h a G1 L1 T1) →
-     (∀G1,L1,T1. ❪G0,L0,T0❫ > ❪G1,L1,T1❫ → IH_cnv_cpm_trans_lpr h a G1 L1 T1) →
+     (∀G1,L1,T1. ❨G0,L0,T0❩ > ❨G1,L1,T1❩ → IH_cnv_cpms_conf_lpr h a G1 L1 T1) →
+     (∀G1,L1,T1. ❨G0,L0,T0❩ > ❨G1,L1,T1❩ → IH_cnv_cpm_trans_lpr h a G1 L1 T1) →
      ∀G1,L1,T1. G0 = G1 → L0 = L1 → T0 = T1 → IH_cnv_cpm_trans_lpr h a G1 L1 T1.
 #h #a #G0 #L0 #T0 #IH2 #IH1 #G1 #L1 * * [|||| * ]
 [ #s #HG0 #HL0 #HT0 #H1 #x #X #H2 #L2 #_ destruct -IH2 -IH1 -H1

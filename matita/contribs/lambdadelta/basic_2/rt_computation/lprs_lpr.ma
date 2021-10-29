@@ -21,33 +21,33 @@ include "basic_2/rt_computation/lprs_tc.ma".
 (* Basic_2A1: was: lprs_ind_dx *)
 lemma lprs_ind_sn (h) (G) (L2):
       ∀Q:predicate lenv. Q L2 →
-      (∀L1,L. ❪G,L1❫ ⊢ ➡[h,0] L → ❪G,L❫ ⊢ ➡*[h,0] L2 → Q L → Q L1) →
-      ∀L1. ❪G,L1❫ ⊢ ➡*[h,0] L2 → Q L1.
+      (∀L1,L. ❨G,L1❩ ⊢ ➡[h,0] L → ❨G,L❩ ⊢ ➡*[h,0] L2 → Q L → Q L1) →
+      ∀L1. ❨G,L1❩ ⊢ ➡*[h,0] L2 → Q L1.
 /4 width=8 by lprs_inv_CTC, lprs_CTC, lpr_cprs_trans, cpr_refl, lex_CTC_ind_sn/ qed-.
 
 (* Basic_2A1: was: lprs_ind *)
 lemma lprs_ind_dx (h) (G) (L1):
       ∀Q:predicate lenv. Q L1 →
-      (∀L,L2. ❪G,L1❫ ⊢ ➡*[h,0] L → ❪G,L❫ ⊢ ➡[h,0] L2 → Q L → Q L2) →
-      ∀L2. ❪G,L1❫ ⊢ ➡*[h,0] L2 → Q L2.
+      (∀L,L2. ❨G,L1❩ ⊢ ➡*[h,0] L → ❨G,L❩ ⊢ ➡[h,0] L2 → Q L → Q L2) →
+      ∀L2. ❨G,L1❩ ⊢ ➡*[h,0] L2 → Q L2.
 /4 width=8 by lprs_inv_CTC, lprs_CTC, lpr_cprs_trans, cpr_refl, lex_CTC_ind_dx/ qed-.
 
 (* Properties with extended rt-transition for full local environments *******)
 
 lemma lpr_lprs (h) (G):
-      ∀L1,L2. ❪G,L1❫ ⊢ ➡[h,0] L2 → ❪G,L1❫ ⊢ ➡*[h,0] L2.
+      ∀L1,L2. ❨G,L1❩ ⊢ ➡[h,0] L2 → ❨G,L1❩ ⊢ ➡*[h,0] L2.
 /4 width=3 by lprs_CTC, lpr_cprs_trans, lex_CTC_inj/ qed.
 
 (* Basic_2A1: was: lprs_strap2 *)
 lemma lprs_step_sn (h) (G):
-      ∀L1,L. ❪G,L1❫ ⊢ ➡[h,0] L →
-      ∀L2.❪G,L❫ ⊢ ➡*[h,0] L2 → ❪G,L1❫ ⊢ ➡*[h,0] L2.
+      ∀L1,L. ❨G,L1❩ ⊢ ➡[h,0] L →
+      ∀L2.❨G,L❩ ⊢ ➡*[h,0] L2 → ❨G,L1❩ ⊢ ➡*[h,0] L2.
 /4 width=3 by lprs_inv_CTC, lprs_CTC, lpr_cprs_trans, lex_CTC_step_sn/ qed-.
 
 (* Basic_2A1: was: lpxs_strap1 *)
 lemma lprs_step_dx (h) (G):
-      ∀L1,L. ❪G,L1❫ ⊢ ➡*[h,0] L →
-      ∀L2. ❪G,L❫ ⊢ ➡[h,0] L2 → ❪G,L1❫ ⊢ ➡*[h,0] L2.
+      ∀L1,L. ❨G,L1❩ ⊢ ➡*[h,0] L →
+      ∀L2. ❨G,L❩ ⊢ ➡[h,0] L2 → ❨G,L1❩ ⊢ ➡*[h,0] L2.
 /4 width=3 by lprs_inv_CTC, lprs_CTC, lpr_cprs_trans, lex_CTC_step_dx/ qed-.
 
 lemma lprs_strip (h) (G):

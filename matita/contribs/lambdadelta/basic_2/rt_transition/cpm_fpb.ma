@@ -22,5 +22,5 @@ include "basic_2/rt_transition/cpm_cpx.ma".
 (* Basic_2A1: includes: cpr_fpbq *)
 (* Basic_2A1: uses: cpm_fpbq *)
 lemma cpm_fwd_fpb (h) (n) (G) (L):
-      ∀T1,T2. ❪G,L❫ ⊢ T1 ➡[h,n] T2 → ❪G,L,T1❫ ≽ ❪G,L,T2❫.
+      ∀T1,T2. ❨G,L❩ ⊢ T1 ➡[h,n] T2 → ❨G,L,T1❩ ≽ ❨G,L,T2❩.
 /3 width=3 by cpx_fpb, cpm_fwd_cpx/ qed-.

@@ -20,21 +20,21 @@ include "static_2/static/rex_rex.ma".
 (* GENERIC EXTENSION ON REFERRED ENTRIES OF A CONTEXT-SENSITIVE REALTION ****)
 
 definition R_fsge_compatible: predicate (relation3 …) ≝ λRN.
-           ∀L,T1,T2. RN L T1 T2 → ❪L,T2❫ ⊆ ❪L,T1❫.
+           ∀L,T1,T2. RN L T1 T2 → ❨L,T2❩ ⊆ ❨L,T1❩.
 
 definition rex_fsge_compatible: predicate (relation3 …) ≝ λRN.
-           ∀L1,L2,T. L1 ⪤[RN,T] L2 → ❪L2,T❫ ⊆ ❪L1,T❫.
+           ∀L1,L2,T. L1 ⪤[RN,T] L2 → ❨L2,T❩ ⊆ ❨L1,T❩.
 
 definition rex_fsle_compatible: predicate (relation3 …) ≝ λRN.
-           ∀L1,L2,T. L1 ⪤[RN,T] L2 → ❪L1,T❫ ⊆ ❪L2,T❫.
+           ∀L1,L2,T. L1 ⪤[RN,T] L2 → ❨L1,T❩ ⊆ ❨L2,T❩.
 
 (* Basic inversions with free variables inclusion for restricted closures ***)
 
 lemma frees_sex_conf_fsge (R):
       rex_fsge_compatible R →
-      ∀L1,T,f1. L1 ⊢ 𝐅+❪T❫ ≘ f1 →
+      ∀L1,T,f1. L1 ⊢ 𝐅+❨T❩ ≘ f1 →
       ∀L2. L1 ⪤[cext2 R,cfull,f1] L2 →
-      ∃∃f2. L2 ⊢ 𝐅+❪T❫ ≘ f2 & f2 ⊆ f1.
+      ∃∃f2. L2 ⊢ 𝐅+❨T❩ ≘ f2 & f2 ⊆ f1.
 #R #HR #L1 #T #f1 #Hf1 #L2 #H1L
 lapply (HR L1 L2 T ?) /2 width=3 by ex2_intro/ #H2L
 @(fsle_frees_trans_eq … H2L … Hf1) /3 width=4 by sex_fwd_length, sym_eq/
@@ -42,9 +42,9 @@ qed-.
 
 lemma frees_sex_conf_fsle (R):
       rex_fsle_compatible R →
-      ∀L1,T,f1. L1 ⊢ 𝐅+❪T❫ ≘ f1 →
+      ∀L1,T,f1. L1 ⊢ 𝐅+❨T❩ ≘ f1 →
       ∀L2. L1 ⪤[cext2 R,cfull,f1] L2 →
-      ∃∃f2. L2 ⊢ 𝐅+❪T❫ ≘ f2 & f1 ⊆ f2.
+      ∃∃f2. L2 ⊢ 𝐅+❨T❩ ≘ f2 & f1 ⊆ f2.
 #R #HR #L1 #T #f1 #Hf1 #L2 #H1L
 lapply (HR L1 L2 T ?) /2 width=3 by ex2_intro/ #H2L
 @(fsle_frees_conf_eq … H2L … Hf1) /3 width=4 by sex_fwd_length, sym_eq/
@@ -54,7 +54,7 @@ qed-.
 
 (* Note: we just need lveq_inv_refl: ∀L, n1, n2. L ≋ⓧ*[n1, n2] L → ∧∧ 0 = n1 & 0 = n2 *)
 lemma fsge_rex_trans (R):
-      ∀L1,T1,T2. ❪L1,T1❫ ⊆ ❪L1,T2❫ →
+      ∀L1,T1,T2. ❨L1,T1❩ ⊆ ❨L1,T2❩ →
       ∀L2. L1 ⪤[R,T2] L2 → L1 ⪤[R,T1] L2.
 #R #L1 #T1 #T2 * #n1 #n2 #f1 #f2 #Hf1 #Hf2 #Hn #Hf #L2 #HL12
 elim (lveq_inj_length … Hn ?) // #H1 #H2 destruct

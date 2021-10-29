@@ -30,7 +30,7 @@ lemma rexs_pair_refl: ∀R. c_reflexive … R →
 /3 width=3 by rexs_step_dx, rex_pair_refl, inj/
 qed.
 
-lemma rexs_tc: ∀R,L1,L2,T,f. 𝐈❪f❫ → TC … (sex cfull (cext2 R) f) L1 L2 →
+lemma rexs_tc: ∀R,L1,L2,T,f. 𝐈❨f❩ → TC … (sex cfull (cext2 R) f) L1 L2 →
                L1 ⪤*[R,T] L2.
 #R #L1 #L2 #T #f #Hf #H elim H -L2
 [ elim (frees_total L1 T) | #L elim (frees_total L T) ]

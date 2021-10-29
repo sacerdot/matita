@@ -21,8 +21,8 @@ include "basic_2/rt_transition/cpg.ma".
 
 (* Note: the main property of simple terms *)
 lemma cpg_inv_appl1_simple (Rs) (Rk) (c) (G) (L):
-      ∀V1,T1,U. ❪G,L❫ ⊢ ⓐV1.T1 ⬈[Rs,Rk,c] U → 𝐒❪T1❫ →
-      ∃∃cV,cT,V2,T2. ❪G,L❫ ⊢ V1 ⬈[Rs,Rk,cV] V2 & ❪G,L❫ ⊢ T1 ⬈[Rs,Rk,cT] T2 & U = ⓐV2.T2 & c = ((↕*cV)∨cT).
+      ∀V1,T1,U. ❨G,L❩ ⊢ ⓐV1.T1 ⬈[Rs,Rk,c] U → 𝐒❨T1❩ →
+      ∃∃cV,cT,V2,T2. ❨G,L❩ ⊢ V1 ⬈[Rs,Rk,cV] V2 & ❨G,L❩ ⊢ T1 ⬈[Rs,Rk,cT] T2 & U = ⓐV2.T2 & c = ((↕*cV)∨cT).
 #Rs #Rk #c #G #L #V1 #T1 #U #H #HT1 elim (cpg_inv_appl1 … H) -H *
 [ /2 width=8 by ex4_4_intro/
 | #cV #cW #cT #p #V2 #W1 #W2 #U1 #U2 #_ #_ #_ #H destruct

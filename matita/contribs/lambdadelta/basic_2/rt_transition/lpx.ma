@@ -27,8 +27,8 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma lpx_bind (G):
-      ∀K1,K2. ❪G,K1❫ ⊢ ⬈ K2 → ∀I1,I2. ❪G,K1❫ ⊢ I1 ⬈ I2 →
-      ❪G,K1.ⓘ[I1]❫ ⊢ ⬈ K2.ⓘ[I2].
+      ∀K1,K2. ❨G,K1❩ ⊢ ⬈ K2 → ∀I1,I2. ❨G,K1❩ ⊢ I1 ⬈ I2 →
+      ❨G,K1.ⓘ[I1]❩ ⊢ ⬈ K2.ⓘ[I2].
 /2 width=1 by lex_bind/ qed.
 
 lemma lpx_refl (G): reflexive … (lpx G).
@@ -37,62 +37,62 @@ lemma lpx_refl (G): reflexive … (lpx G).
 (* Advanced properties ******************************************************)
 
 lemma lpx_bind_refl_dx (G):
-      ∀K1,K2. ❪G,K1❫ ⊢ ⬈ K2 →
-      ∀I. ❪G,K1.ⓘ[I]❫ ⊢ ⬈ K2.ⓘ[I].
+      ∀K1,K2. ❨G,K1❩ ⊢ ⬈ K2 →
+      ∀I. ❨G,K1.ⓘ[I]❩ ⊢ ⬈ K2.ⓘ[I].
 /2 width=1 by lex_bind_refl_dx/ qed.
 
 lemma lpx_pair (G):
-      ∀K1,K2. ❪G,K1❫ ⊢ ⬈ K2 → ∀V1,V2. ❪G,K1❫ ⊢ V1 ⬈ V2 →
-      ∀I.❪G,K1.ⓑ[I]V1❫ ⊢ ⬈ K2.ⓑ[I]V2.
+      ∀K1,K2. ❨G,K1❩ ⊢ ⬈ K2 → ∀V1,V2. ❨G,K1❩ ⊢ V1 ⬈ V2 →
+      ∀I.❨G,K1.ⓑ[I]V1❩ ⊢ ⬈ K2.ⓑ[I]V2.
 /2 width=1 by lex_pair/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 
 (* Basic_2A1: was: lpx_inv_atom1 *)
 lemma lpx_inv_atom_sn (G):
-      ∀L2. ❪G,⋆❫ ⊢ ⬈ L2 → L2 = ⋆.
+      ∀L2. ❨G,⋆❩ ⊢ ⬈ L2 → L2 = ⋆.
 /2 width=2 by lex_inv_atom_sn/ qed-.
 
 lemma lpx_inv_bind_sn (G):
-      ∀I1,L2,K1. ❪G,K1.ⓘ[I1]❫ ⊢ ⬈ L2 →
-      ∃∃I2,K2. ❪G,K1❫ ⊢ ⬈ K2 & ❪G,K1❫ ⊢ I1 ⬈ I2 & L2 = K2.ⓘ[I2].
+      ∀I1,L2,K1. ❨G,K1.ⓘ[I1]❩ ⊢ ⬈ L2 →
+      ∃∃I2,K2. ❨G,K1❩ ⊢ ⬈ K2 & ❨G,K1❩ ⊢ I1 ⬈ I2 & L2 = K2.ⓘ[I2].
 /2 width=1 by lex_inv_bind_sn/ qed-.
 
 (* Basic_2A1: was: lpx_inv_atom2 *)
 lemma lpx_inv_atom_dx (G):
-      ∀L1. ❪G,L1❫ ⊢ ⬈ ⋆ → L1 = ⋆.
+      ∀L1. ❨G,L1❩ ⊢ ⬈ ⋆ → L1 = ⋆.
 /2 width=2 by lex_inv_atom_dx/ qed-.
 
 lemma lpx_inv_bind_dx (G):
-      ∀I2,L1,K2. ❪G,L1❫ ⊢ ⬈ K2.ⓘ[I2] →
-      ∃∃I1,K1. ❪G,K1❫ ⊢ ⬈ K2 & ❪G,K1❫ ⊢ I1 ⬈ I2 & L1 = K1.ⓘ[I1].
+      ∀I2,L1,K2. ❨G,L1❩ ⊢ ⬈ K2.ⓘ[I2] →
+      ∃∃I1,K1. ❨G,K1❩ ⊢ ⬈ K2 & ❨G,K1❩ ⊢ I1 ⬈ I2 & L1 = K1.ⓘ[I1].
 /2 width=1 by lex_inv_bind_dx/ qed-.
 
 (* Advanced inversion lemmas ************************************************)
 
 lemma lpx_inv_unit_sn (G):
-      ∀I,L2,K1. ❪G,K1.ⓤ[I]❫ ⊢ ⬈ L2 →
-      ∃∃K2. ❪G,K1❫ ⊢ ⬈ K2 & L2 = K2.ⓤ[I].
+      ∀I,L2,K1. ❨G,K1.ⓤ[I]❩ ⊢ ⬈ L2 →
+      ∃∃K2. ❨G,K1❩ ⊢ ⬈ K2 & L2 = K2.ⓤ[I].
 /2 width=1 by lex_inv_unit_sn/ qed-.
 
 (* Basic_2A1: was: lpx_inv_pair1 *)
 lemma lpx_inv_pair_sn (G):
-      ∀I,L2,K1,V1. ❪G,K1.ⓑ[I]V1❫ ⊢ ⬈ L2 →
-      ∃∃K2,V2. ❪G,K1❫ ⊢ ⬈ K2 & ❪G,K1❫ ⊢ V1 ⬈ V2 & L2 = K2.ⓑ[I]V2.
+      ∀I,L2,K1,V1. ❨G,K1.ⓑ[I]V1❩ ⊢ ⬈ L2 →
+      ∃∃K2,V2. ❨G,K1❩ ⊢ ⬈ K2 & ❨G,K1❩ ⊢ V1 ⬈ V2 & L2 = K2.ⓑ[I]V2.
 /2 width=1 by lex_inv_pair_sn/ qed-.
 
 lemma lpx_inv_unit_dx (G):
-      ∀I,L1,K2. ❪G,L1❫ ⊢ ⬈ K2.ⓤ[I] →
-      ∃∃K1. ❪G,K1❫ ⊢ ⬈ K2 & L1 = K1.ⓤ[I].
+      ∀I,L1,K2. ❨G,L1❩ ⊢ ⬈ K2.ⓤ[I] →
+      ∃∃K1. ❨G,K1❩ ⊢ ⬈ K2 & L1 = K1.ⓤ[I].
 /2 width=1 by lex_inv_unit_dx/ qed-.
 
 (* Basic_2A1: was: lpx_inv_pair2 *)
 lemma lpx_inv_pair_dx (G):
-      ∀I,L1,K2,V2. ❪G,L1❫ ⊢ ⬈ K2.ⓑ[I]V2 →
-      ∃∃K1,V1. ❪G,K1❫ ⊢ ⬈ K2 & ❪G,K1❫ ⊢ V1 ⬈ V2 & L1 = K1.ⓑ[I]V1.
+      ∀I,L1,K2,V2. ❨G,L1❩ ⊢ ⬈ K2.ⓑ[I]V2 →
+      ∃∃K1,V1. ❨G,K1❩ ⊢ ⬈ K2 & ❨G,K1❩ ⊢ V1 ⬈ V2 & L1 = K1.ⓑ[I]V1.
 /2 width=1 by lex_inv_pair_dx/ qed-.
 
 lemma lpx_inv_pair (G):
-      ∀I1,I2,L1,L2,V1,V2. ❪G,L1.ⓑ[I1]V1❫ ⊢ ⬈ L2.ⓑ[I2]V2 →
-      ∧∧ ❪G,L1❫ ⊢ ⬈ L2 & ❪G,L1❫ ⊢ V1 ⬈ V2 & I1 = I2.
+      ∀I1,I2,L1,L2,V1,V2. ❨G,L1.ⓑ[I1]V1❩ ⊢ ⬈ L2.ⓑ[I2]V2 →
+      ∧∧ ❨G,L1❩ ⊢ ⬈ L2 & ❨G,L1❩ ⊢ V1 ⬈ V2 & I1 = I2.
 /2 width=1 by lex_inv_pair/ qed-.

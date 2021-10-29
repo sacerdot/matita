@@ -24,8 +24,8 @@ include "basic_2/rt_computation/csx_vector.ma".
 
 (* Basic_1: was just: sn3_appls_lref *)
 lemma csx_applv_cnx (G) (L):
-      ∀T. 𝐒❪T❫ → ❪G,L❫ ⊢ ⬈𝐍 T →
-      ∀Vs. ❪G,L❫ ⊢ ⬈*𝐒 Vs → ❪G,L❫ ⊢ ⬈*𝐒 ⒶVs.T.
+      ∀T. 𝐒❨T❩ → ❨G,L❩ ⊢ ⬈𝐍 T →
+      ∀Vs. ❨G,L❩ ⊢ ⬈*𝐒 Vs → ❨G,L❩ ⊢ ⬈*𝐒 ⒶVs.T.
 #G #L #T #H1T #H2T #Vs elim Vs -Vs
 [ #_ normalize in ⊢ (???%); /2 width=1 by cnx_csx/
 | #V #Vs #IHV #H
@@ -41,5 +41,5 @@ qed.
 
 (* Note: strong normalization does not depend on this any more *)
 lemma csx_applv_sort (G) (L):
-      ∀s,Vs. ❪G,L❫ ⊢ ⬈*𝐒 Vs → ❪G,L❫ ⊢ ⬈*𝐒 ⒶVs.⋆s.
+      ∀s,Vs. ❨G,L❩ ⊢ ⬈*𝐒 Vs → ❨G,L❩ ⊢ ⬈*𝐒 ⒶVs.⋆s.
 /3 width=6 by csx_applv_cnx, cnx_sort, simple_atom/ qed.

@@ -24,7 +24,7 @@ include "ground/relocation/pr_after_isi.ma".
 
 (*** after_uni_succ_dx *)
 lemma pr_after_pat_uni (i2) (i1):
-      ∀f2. @❪i1, f2❫ ≘ i2 →
+      ∀f2. @❨i1, f2❩ ≘ i2 →
       ∀f. f2 ⊚ 𝐮❨i1❩ ≘ f → 𝐮❨i2❩ ⊚ ⫰*[i2] f2 ≘ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf
@@ -46,7 +46,7 @@ qed.
 
 (*** after_uni_succ_sn *)
 lemma pr_pat_after_uni_tls (i2) (i1):
-      ∀f2. @❪i1, f2❫ ≘ i2 →
+      ∀f2. @❨i1, f2❩ ≘ i2 →
       ∀f. 𝐮❨i2❩ ⊚ ⫰*[i2] f2 ≘ f → f2 ⊚ 𝐮❨i1❩ ≘ f.
 #i2 elim i2 -i2
 [ #i1 #f2 #Hf2 #f #Hf

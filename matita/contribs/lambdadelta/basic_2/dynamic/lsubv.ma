@@ -20,7 +20,7 @@ include "basic_2/dynamic/cnv.ma".
 inductive lsubv (h) (a) (G): relation lenv ≝
 | lsubv_atom: lsubv h a G (⋆) (⋆)
 | lsubv_bind: ∀I,L1,L2. lsubv h a G L1 L2 → lsubv h a G (L1.ⓘ[I]) (L2.ⓘ[I])
-| lsubv_beta: ∀L1,L2,W,V. ❪G,L1❫ ⊢ ⓝW.V ![h,a] →
+| lsubv_beta: ∀L1,L2,W,V. ❨G,L1❩ ⊢ ⓝW.V ![h,a] →
               lsubv h a G L1 L2 → lsubv h a G (L1.ⓓⓝW.V) (L2.ⓛW)
 .
 
@@ -47,7 +47,7 @@ lemma lsubv_inv_atom_sn (h) (a) (G):
 fact lsubv_inv_bind_sn_aux (h) (a) (G): ∀L1,L2. G ⊢ L1 ⫃![h,a] L2 →
      ∀I,K1. L1 = K1.ⓘ[I] →
      ∨∨ ∃∃K2. G ⊢ K1 ⫃![h,a] K2 & L2 = K2.ⓘ[I]
-      | ∃∃K2,W,V. ❪G,K1❫ ⊢ ⓝW.V ![h,a] & G ⊢ K1 ⫃![h,a] K2
+      | ∃∃K2,W,V. ❨G,K1❩ ⊢ ⓝW.V ![h,a] & G ⊢ K1 ⫃![h,a] K2
                 & I = BPair Abbr (ⓝW.V) & L2 = K2.ⓛW.
 #h #a #G #L1 #L2 * -L1 -L2
 [ #J #K1 #H destruct
@@ -60,7 +60,7 @@ qed-.
 lemma lsubv_inv_bind_sn (h) (a) (G):
       ∀I,K1,L2. G ⊢ K1.ⓘ[I] ⫃![h,a] L2 →
       ∨∨ ∃∃K2. G ⊢ K1 ⫃![h,a] K2 & L2 = K2.ⓘ[I]
-       | ∃∃K2,W,V. ❪G,K1❫ ⊢ ⓝW.V ![h,a] & G ⊢ K1 ⫃![h,a] K2
+       | ∃∃K2,W,V. ❨G,K1❩ ⊢ ⓝW.V ![h,a] & G ⊢ K1 ⫃![h,a] K2
                  & I = BPair Abbr (ⓝW.V) & L2 = K2.ⓛW.
 /2 width=3 by lsubv_inv_bind_sn_aux/ qed-.
 
@@ -82,7 +82,7 @@ fact lsubv_inv_bind_dx_aux (h) (a) (G):
      ∀L1,L2. G ⊢ L1 ⫃![h,a] L2 →
      ∀I,K2. L2 = K2.ⓘ[I] →
      ∨∨ ∃∃K1. G ⊢ K1 ⫃![h,a] K2 & L1 = K1.ⓘ[I]
-      | ∃∃K1,W,V. ❪G,K1❫ ⊢ ⓝW.V ![h,a] &
+      | ∃∃K1,W,V. ❨G,K1❩ ⊢ ⓝW.V ![h,a] &
                   G ⊢ K1 ⫃![h,a] K2 & I = BPair Abst W & L1 = K1.ⓓⓝW.V.
 #h #a #G #L1 #L2 * -L1 -L2
 [ #J #K2 #H destruct
@@ -95,7 +95,7 @@ qed-.
 lemma lsubv_inv_bind_dx (h) (a) (G):
       ∀I,L1,K2. G ⊢ L1 ⫃![h,a] K2.ⓘ[I] →
       ∨∨ ∃∃K1. G ⊢ K1 ⫃![h,a] K2 & L1 = K1.ⓘ[I]
-       | ∃∃K1,W,V. ❪G,K1❫ ⊢ ⓝW.V ![h,a] &
+       | ∃∃K1,W,V. ❨G,K1❩ ⊢ ⓝW.V ![h,a] &
                    G ⊢ K1 ⫃![h,a] K2 & I = BPair Abst W & L1 = K1.ⓓⓝW.V.
 /2 width=3 by lsubv_inv_bind_dx_aux/ qed-.
 

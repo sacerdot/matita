@@ -22,8 +22,8 @@ include "basic_2/rt_computation/csx_csx.ma".
 (* Basic_2A1: uses: csx_lleq_conf *)
 lemma csx_reqg_conf (S) (G) (T):
       reflexive … S → symmetric … S →
-      ∀L1. ❪G,L1❫ ⊢ ⬈*𝐒 T →
-      ∀L2. L1 ≛[S,T] L2 → ❪G,L2❫ ⊢ ⬈*𝐒 T.
+      ∀L1. ❨G,L1❩ ⊢ ⬈*𝐒 T →
+      ∀L2. L1 ≛[S,T] L2 → ❨G,L2❩ ⊢ ⬈*𝐒 T.
 #S #G #T #H1S #H2S #L1 #H
 @(csx_ind … H) -T #T1 #_ #IH #L2 #HL12
 @csx_intro #T2 #HT12 #HnT12
@@ -34,5 +34,5 @@ qed-.
 (* Basic_2A1: uses: csx_lleq_trans *)
 lemma csx_reqg_trans (S) (G) (T):
       reflexive … S → symmetric … S →
-      ∀L1,L2. L1 ≛[S,T] L2 → ❪G,L2❫ ⊢ ⬈*𝐒 T → ❪G,L1❫ ⊢ ⬈*𝐒 T.
+      ∀L1,L2. L1 ≛[S,T] L2 → ❨G,L2❩ ⊢ ⬈*𝐒 T → ❨G,L1❩ ⊢ ⬈*𝐒 T.
 /3 width=8 by csx_reqg_conf, reqg_sym/ qed-.

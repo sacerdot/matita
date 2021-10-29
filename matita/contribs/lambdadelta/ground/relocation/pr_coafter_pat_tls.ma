@@ -23,7 +23,7 @@ include "ground/relocation/pr_coafter_nat_tls.ma".
 (*** coafter_tls_succ *)
 lemma pr_coafter_tls_tl_tls:
       ∀g2,g1,g. g2 ~⊚ g1 ≘ g →
-      ∀j. @❪𝟏, g2❫ ≘ j → ⫰*[j]g2 ~⊚ ⫰g1 ≘ ⫰*[j]g.
+      ∀j. @❨𝟏, g2❩ ≘ j → ⫰*[j]g2 ~⊚ ⫰g1 ≘ ⫰*[j]g.
 #g2 #g1 #g #Hg #j #Hg2
 lapply (pr_nat_pred_bi … Hg2) -Hg2 #Hg2
 lapply (pr_coafter_tls_bi_tls … Hg2 … Hg) -Hg #Hg
@@ -35,7 +35,7 @@ qed.
 
 (* Note: parked for now
 lemma coafter_fwd_xpx_pushs:
-      ∀g2,f1,g,i,j. @❪i, g2❫ ≘ j → g2 ~⊚ ⫯*[i]⫯f1 ≘ g →
+      ∀g2,f1,g,i,j. @❨i, g2❩ ≘ j → g2 ~⊚ ⫯*[i]⫯f1 ≘ g →
       ∃∃f.  ⫰*[↑j]g2 ~⊚ f1 ≘ f & ⫯*[j]⫯f = g.
 #g2 #g1 #g #i #j #Hg2 <pushs_xn #Hg(coafter_fwd_pushs … Hg Hg2) #f #H0 destruct
 lapply (coafter_tls … Hg2 Hg) -Hg <tls_pushs <tls_pushs #Hf
@@ -46,7 +46,7 @@ elim (coafter_inv_ppx … Hf) [|*: // ] -Hf #g #Hg #H destruct
 qed-.
 
 lemma coafter_fwd_xnx_pushs:
-      ∀g2,f1,g,i,j. @❪i, g2❫ ≘ j → g2 ~⊚ ⫯*[i]↑f1 ≘ g →
+      ∀g2,f1,g,i,j. @❨i, g2❩ ≘ j → g2 ~⊚ ⫯*[i]↑f1 ≘ g →
       ∃∃f. ⫰*[↑j]g2 ~⊚ f1 ≘ f & ⫯*[j] ↑f = g.
 #g2 #g1 #g #i #j #Hg2 #Hg
 elim (coafter_fwd_pushs … Hg Hg2) #f #H0 destruct

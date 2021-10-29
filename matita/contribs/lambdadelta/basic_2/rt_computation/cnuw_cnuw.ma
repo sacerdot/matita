@@ -22,7 +22,7 @@ include "basic_2/rt_computation/lprs_cpms.ma".
 (* Advanced inversion lemmas ************************************************)
 
 lemma cnuw_inv_abbr_pos (h) (G) (L):
-      ∀V,T. ❪G,L❫ ⊢ ➡𝐍𝐖*[h] +ⓓV.T → ⊥.
+      ∀V,T. ❨G,L❩ ⊢ ➡𝐍𝐖*[h] +ⓓV.T → ⊥.
 #h #G #L #V #T1 #H
 elim (cprs_abbr_pos_tneqw h G L V T1) #T2 #HT12 #HnT12
 /3 width=2 by/
@@ -30,7 +30,7 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma cnuw_abbr_neg (h) (G) (L): ∀V,T. ❪G,L❫ ⊢ ➡𝐍𝐖*[h] -ⓓV.T.
+lemma cnuw_abbr_neg (h) (G) (L): ∀V,T. ❨G,L❩ ⊢ ➡𝐍𝐖*[h] -ⓓV.T.
 #h #G #L #V1 #T1 #n #X #H
 elim (cpms_inv_abbr_sn_dx … H) -H *
 [ #V2 #T2 #_ #_ #H destruct /1 width=1 by teqw_abbr_neg/
@@ -38,22 +38,22 @@ elim (cpms_inv_abbr_sn_dx … H) -H *
 ]
 qed.
 
-lemma cnuw_abst (h) (p) (G) (L): ∀W,T. ❪G,L❫ ⊢ ➡𝐍𝐖*[h] ⓛ[p]W.T.
+lemma cnuw_abst (h) (p) (G) (L): ∀W,T. ❨G,L❩ ⊢ ➡𝐍𝐖*[h] ⓛ[p]W.T.
 #h #p #G #L #W1 #T1 #n #X #H
 elim (cpms_inv_abst_sn … H) -H #W2 #T2 #_ #_ #H destruct
 /1 width=1 by teqw_abst/
 qed.
 
 lemma cnuw_cpms_trans (h) (n) (G) (L):
-      ∀T1. ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T1 →
-      ∀T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 → ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T2.
+      ∀T1. ❨G,L❩ ⊢ ➡𝐍𝐖*[h] T1 →
+      ∀T2. ❨G,L❩ ⊢ T1 ➡*[h,n] T2 → ❨G,L❩ ⊢ ➡𝐍𝐖*[h] T2.
 #h #n1 #G #L #T1 #HT1 #T2 #HT12 #n2 #T3 #HT23
 /4 width=5 by cpms_trans, teqw_canc_sn/
 qed-.
 
 lemma cnuw_dec_ex (h) (G) (L):
-      ∀T1. ∨∨ ❪G,L❫ ⊢ ➡𝐍𝐖*[h] T1
-            | ∃∃n,T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 & (T1 ≃ T2 → ⊥).
+      ∀T1. ∨∨ ❨G,L❩ ⊢ ➡𝐍𝐖*[h] T1
+            | ∃∃n,T2. ❨G,L❩ ⊢ T1 ➡*[h,n] T2 & (T1 ≃ T2 → ⊥).
 #h #G #L #T1 elim T1 -T1 *
 [ #s /3 width=5 by cnuw_sort, or_introl/
 | #i elim (drops_F_uni L i)
@@ -97,7 +97,7 @@ lemma cnuw_dec_ex (h) (G) (L):
 ]
 qed-.
 
-lemma cnuw_dec (h) (G) (L): ∀T. Decidable (❪G,L❫ ⊢ ➡𝐍𝐖*[h] T).
+lemma cnuw_dec (h) (G) (L): ∀T. Decidable (❨G,L❩ ⊢ ➡𝐍𝐖*[h] T).
 #h #G #L #T1
 elim (cnuw_dec_ex h G L T1)
 [ /2 width=1 by or_introl/

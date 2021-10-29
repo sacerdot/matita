@@ -30,7 +30,7 @@ interpretation
 (* Basic_2A1: uses: lsx_ind *)
 lemma rsx_ind (G) (T) (Q:predicate …):
       (∀L1. G ⊢ ⬈*𝐒[T] L1 →
-        (∀L2. ❪G,L1❫ ⊢ ⬈ L2 → (L1 ≅[T] L2 → ⊥) → Q L2) →
+        (∀L2. ❨G,L1❩ ⊢ ⬈ L2 → (L1 ≅[T] L2 → ⊥) → Q L2) →
         Q L1
       ) →
       ∀L. G ⊢ ⬈*𝐒[T] L →  Q L.
@@ -43,7 +43,7 @@ qed-.
 (* Basic_2A1: uses: lsx_intro *)
 lemma rsx_intro (G) (T):
       ∀L1.
-      (∀L2. ❪G,L1❫ ⊢ ⬈ L2 → (L1 ≅[T] L2 → ⊥) → G ⊢ ⬈*𝐒[T] L2) →
+      (∀L2. ❨G,L1❩ ⊢ ⬈ L2 → (L1 ≅[T] L2 → ⊥) → G ⊢ ⬈*𝐒[T] L2) →
       G ⊢ ⬈*𝐒[T] L1.
 /5 width=1 by SN_intro/ qed.
 

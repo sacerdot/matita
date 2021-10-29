@@ -24,14 +24,14 @@ include "basic_2/rt_computation/fpbg_fpbs.ma".
 
 (* Basic_2A1: was: cpxs_fpbg *)
 lemma cpxs_tneqx_fpbg:
-      ∀G,L,T1,T2. ❪G,L❫ ⊢ T1 ⬈* T2 →
-      (T1 ≅ T2 → ⊥) → ❪G,L,T1❫ > ❪G,L,T2❫.
+      ∀G,L,T1,T2. ❨G,L❩ ⊢ T1 ⬈* T2 →
+      (T1 ≅ T2 → ⊥) → ❨G,L,T1❩ > ❨G,L,T2❩.
 #G #L #T1 #T2 #H #H0
 elim (cpxs_tneqg_fwd_step_sn … H … H0) -H -H0
 /4 width=5 by fpbc_fpbs_fpbg, cpxs_fpbs, cpx_fpbc, sfull_dec/
 qed.
 
 lemma cpxs_fpbg_trans:
-      ∀G1,L1,T1,T. ❪G1,L1❫ ⊢ T1 ⬈* T →
-      ∀G2,L2,T2. ❪G1,L1,T❫ > ❪G2,L2,T2❫ → ❪G1,L1,T1❫ > ❪G2,L2,T2❫.
+      ∀G1,L1,T1,T. ❨G1,L1❩ ⊢ T1 ⬈* T →
+      ∀G2,L2,T2. ❨G1,L1,T❩ > ❨G2,L2,T2❩ → ❨G1,L1,T1❩ > ❨G2,L2,T2❩.
 /3 width=5 by fpbs_fpbg_trans, cpxs_fpbs/ qed-.

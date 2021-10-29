@@ -21,18 +21,18 @@ include "basic_2/rt_computation/fsb_csx.ma".
 (* Main properties with atomic arity assignment for terms *******************)
 
 theorem aaa_fsb (G) (L) (T) (A):
-        ❪G,L❫ ⊢ T ⁝ A → ≥𝐒 ❪G,L,T❫.
+        ❨G,L❩ ⊢ T ⁝ A → ≥𝐒 ❨G,L,T❩.
 /3 width=2 by aaa_csx, csx_fsb/ qed.
 
 (* Advanced eliminators with atomic arity assignment for terms **************)
 
 fact aaa_ind_fpbc_aux (Q:relation3 …):
      (∀G1,L1,T1,A.
-       ❪G1,L1❫ ⊢ T1 ⁝ A →
-       (∀G2,L2,T2. ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫ → Q G2 L2 T2) →
+       ❨G1,L1❩ ⊢ T1 ⁝ A →
+       (∀G2,L2,T2. ❨G1,L1,T1❩ ≻ ❨G2,L2,T2❩ → Q G2 L2 T2) →
        Q G1 L1 T1
      ) →
-     ∀G,L,T. ❪G,L❫ ⊢ ⬈*𝐒 T → ∀A. ❪G,L❫ ⊢ T ⁝ A →  Q G L T.
+     ∀G,L,T. ❨G,L❩ ⊢ ⬈*𝐒 T → ∀A. ❨G,L❩ ⊢ T ⁝ A →  Q G L T.
 #R #IH #G #L #T #H @(csx_ind_fpbc … H) -G -L -T
 #G1 #L1 #T1 #H1 #IH1 #A1 #HTA1 @IH -IH //
 #G2 #L2 #T2 #H12 elim (fpbs_aaa_conf … G2 … L2 … T2 … HTA1) -A1
@@ -41,20 +41,20 @@ qed-.
 
 lemma aaa_ind_fpbc (Q:relation3 …):
       (∀G1,L1,T1,A.
-        ❪G1,L1❫ ⊢ T1 ⁝ A →
-        (∀G2,L2,T2. ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫ → Q G2 L2 T2) →
+        ❨G1,L1❩ ⊢ T1 ⁝ A →
+        (∀G2,L2,T2. ❨G1,L1,T1❩ ≻ ❨G2,L2,T2❩ → Q G2 L2 T2) →
         Q G1 L1 T1
       ) →
-      ∀G,L,T,A. ❪G,L❫ ⊢ T ⁝ A → Q G L T.
+      ∀G,L,T,A. ❨G,L❩ ⊢ T ⁝ A → Q G L T.
 /4 width=4 by aaa_ind_fpbc_aux, aaa_csx/ qed-.
 
 fact aaa_ind_fpbg_aux (Q:relation3 …):
      (∀G1,L1,T1,A.
-       ❪G1,L1❫ ⊢ T1 ⁝ A →
-       (∀G2,L2,T2. ❪G1,L1,T1❫ > ❪G2,L2,T2❫ → Q G2 L2 T2) →
+       ❨G1,L1❩ ⊢ T1 ⁝ A →
+       (∀G2,L2,T2. ❨G1,L1,T1❩ > ❨G2,L2,T2❩ → Q G2 L2 T2) →
        Q G1 L1 T1
      ) →
-     ∀G,L,T. ❪G,L❫ ⊢ ⬈*𝐒 T → ∀A. ❪G,L❫ ⊢ T ⁝ A →  Q G L T.
+     ∀G,L,T. ❨G,L❩ ⊢ ⬈*𝐒 T → ∀A. ❨G,L❩ ⊢ T ⁝ A →  Q G L T.
 #Q #IH #G #L #T #H @(csx_ind_fpbg … H) -G -L -T
 #G1 #L1 #T1 #H1 #IH1 #A1 #HTA1 @IH -IH //
 #G2 #L2 #T2 #H12 elim (fpbs_aaa_conf … G2 … L2 … T2 … HTA1) -A1
@@ -63,9 +63,9 @@ qed-.
 
 lemma aaa_ind_fpbg (Q:relation3 …):
       (∀G1,L1,T1,A.
-        ❪G1,L1❫ ⊢ T1 ⁝ A →
-        (∀G2,L2,T2. ❪G1,L1,T1❫ > ❪G2,L2,T2❫ → Q G2 L2 T2) →
+        ❨G1,L1❩ ⊢ T1 ⁝ A →
+        (∀G2,L2,T2. ❨G1,L1,T1❩ > ❨G2,L2,T2❩ → Q G2 L2 T2) →
         Q G1 L1 T1
       ) →
-      ∀G,L,T,A. ❪G,L❫ ⊢ T ⁝ A → Q G L T.
+      ∀G,L,T,A. ❨G,L❩ ⊢ T ⁝ A → Q G L T.
 /4 width=4 by aaa_ind_fpbg_aux, aaa_csx/ qed-.

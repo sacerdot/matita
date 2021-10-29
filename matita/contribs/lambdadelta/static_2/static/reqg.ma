@@ -32,8 +32,8 @@ interpretation
 (* Basic properties ***********************************************************)
 
 lemma frees_teqg_conf_seqg (S):
-      ∀f,L1,T1. L1 ⊢ 𝐅+❪T1❫ ≘ f → ∀T2. T1 ≛[S] T2 →
-      ∀L2. L1 ≛[S,f] L2 → L2 ⊢ 𝐅+❪T2❫ ≘ f.
+      ∀f,L1,T1. L1 ⊢ 𝐅+❨T1❩ ≘ f → ∀T2. T1 ≛[S] T2 →
+      ∀L2. L1 ≛[S,f] L2 → L2 ⊢ 𝐅+❨T2❩ ≘ f.
 #S #f #L1 #T1 #H elim H -f -L1 -T1
 [ #f #L1 #s1 #Hf #X #H1 #L2 #_
   elim (teqg_inv_sort1 … H1) -H1 #s2 #_ #H destruct
@@ -68,14 +68,14 @@ qed-.
 
 lemma frees_teqg_conf (S):
       reflexive … S →
-      ∀f,L,T1. L ⊢ 𝐅+❪T1❫ ≘ f →
-      ∀T2. T1 ≛[S] T2 → L ⊢ 𝐅+❪T2❫ ≘ f.
+      ∀f,L,T1. L ⊢ 𝐅+❨T1❩ ≘ f →
+      ∀T2. T1 ≛[S] T2 → L ⊢ 𝐅+❨T2❩ ≘ f.
 /5 width=6 by frees_teqg_conf_seqg, sex_refl, teqg_refl, ext2_refl/ qed-.
 
 lemma frees_seqg_conf (S):
       reflexive … S →
-      ∀f,L1,T. L1 ⊢ 𝐅+❪T❫ ≘ f →
-      ∀L2. L1 ≛[S,f] L2 → L2 ⊢ 𝐅+❪T❫ ≘ f.
+      ∀f,L1,T. L1 ⊢ 𝐅+❨T❩ ≘ f →
+      ∀L2. L1 ≛[S,f] L2 → L2 ⊢ 𝐅+❨T❩ ≘ f.
 /3 width=6 by frees_teqg_conf_seqg, teqg_refl/ qed-.
 
 lemma teqg_rex_conf_sn (S) (R):
@@ -117,7 +117,7 @@ lemma reqg_pair (S):
 /2 width=1 by rex_pair/ qed.
 
 lemma reqg_unit (S):
-      ∀f,I,L1,L2. 𝐈❪f❫ → L1 ≛[S,f] L2 →
+      ∀f,I,L1,L2. 𝐈❨f❩ → L1 ≛[S,f] L2 →
       L1.ⓤ[I] ≛[S,#0] L2.ⓤ[I].
 /2 width=3 by rex_unit/ qed.
 
@@ -155,7 +155,7 @@ lemma reqg_inv_zero (S):
       ∀Y1,Y2. Y1 ≛[S,#0] Y2 →
       ∨∨ ∧∧ Y1 = ⋆ & Y2 = ⋆
        | ∃∃I,L1,L2,V1,V2. L1 ≛[S,V1] L2 & V1 ≛[S] V2 & Y1 = L1.ⓑ[I]V1 & Y2 = L2.ⓑ[I]V2
-       | ∃∃f,I,L1,L2. 𝐈❪f❫ & L1 ≛[S,f] L2 & Y1 = L1.ⓤ[I] & Y2 = L2.ⓤ[I].
+       | ∃∃f,I,L1,L2. 𝐈❨f❩ & L1 ≛[S,f] L2 & Y1 = L1.ⓤ[I] & Y2 = L2.ⓤ[I].
 #S #Y1 #Y2 #H elim (rex_inv_zero … H) -H *
 /3 width=9 by or3_intro0, or3_intro1, or3_intro2, ex4_5_intro, ex4_4_intro, conj/
 qed-.

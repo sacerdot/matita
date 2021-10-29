@@ -22,8 +22,8 @@ include "basic_2/rt_computation/fpbg_fqup.ma".
 
 (* Basic_2A1: uses: lpxs_fpbg *)
 lemma lpxs_rneqx_fpbg:
-      ∀G,L1,L2,T. ❪G,L1❫ ⊢ ⬈* L2 →
-      (L1 ≅[T] L2 → ⊥) → ❪G,L1,T❫ > ❪G,L2,T❫.
+      ∀G,L1,L2,T. ❨G,L1❩ ⊢ ⬈* L2 →
+      (L1 ≅[T] L2 → ⊥) → ❨G,L1,T❩ > ❨G,L2,T❩.
 #G #L1 #L2 #T #H #H0
 elim (lpxs_rneqg_inv_step_sn … H … H0) -H -H0
 /4 width=10 by fpbc_fpbs_fpbg, lpxs_feqg_fpbs, lpx_fpbc, feqg_intro_sn, sfull_dec/

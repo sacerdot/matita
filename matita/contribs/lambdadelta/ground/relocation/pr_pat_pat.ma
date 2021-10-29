@@ -21,7 +21,7 @@ include "ground/relocation/pr_pat.ma".
 
 (*** at_monotonic *)
 theorem pr_pat_monotonic:
-        ∀j2,i2,f. @❪i2,f❫ ≘ j2 → ∀j1,i1. @❪i1,f❫ ≘ j1 →
+        ∀j2,i2,f. @❨i2,f❩ ≘ j2 → ∀j1,i1. @❨i1,f❩ ≘ j1 →
         i1 < i2 → j1 < j2.
 #j2 elim j2 -j2
 [ #i2 #f #H2f elim (pr_pat_inv_unit_dx … H2f) -H2f //
@@ -39,7 +39,7 @@ qed-.
 
 (*** at_inv_monotonic *)
 theorem pr_pat_inv_monotonic:
-        ∀j1,i1,f. @❪i1,f❫ ≘ j1 → ∀j2,i2. @❪i2,f❫ ≘ j2 →
+        ∀j1,i1,f. @❨i1,f❩ ≘ j1 → ∀j2,i2. @❨i2,f❩ ≘ j2 →
         j1 < j2 → i1 < i2.
 #j1 elim j1 -j1
 [ #i1 #f #H1f elim (pr_pat_inv_unit_dx … H1f) -H1f //
@@ -62,7 +62,7 @@ qed-.
 
 (*** at_mono *)
 theorem pr_pat_mono (f) (i):
-        ∀i1. @❪i,f❫ ≘ i1 → ∀i2. @❪i,f❫ ≘ i2 → i2 = i1.
+        ∀i1. @❨i,f❩ ≘ i1 → ∀i2. @❨i,f❩ ≘ i2 → i2 = i1.
 #f #i #i1 #H1 #i2 #H2 elim (pnat_split_lt_eq_gt i2 i1) //
 #Hi elim (plt_ge_false i i)
 /2 width=6 by pr_pat_inv_monotonic/
@@ -70,7 +70,7 @@ qed-.
 
 (*** at_inj *)
 theorem pr_pat_inj (f) (i):
-        ∀i1. @❪i1,f❫ ≘ i → ∀i2. @❪i2,f❫ ≘ i → i1 = i2.
+        ∀i1. @❨i1,f❩ ≘ i → ∀i2. @❨i2,f❩ ≘ i → i1 = i2.
 #f #i #i1 #H1 #i2 #H2 elim (pnat_split_lt_eq_gt i2 i1) //
 #Hi elim (plt_ge_false i i)
 /2 width=6 by pr_pat_monotonic/

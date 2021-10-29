@@ -36,7 +36,7 @@ lemma sex_length_cfull: ∀L1,L2. |L1| = |L2| → ∀f. L1 ⪤[cfull,cfull,f] L2
 qed.
 
 lemma sex_length_isid: ∀R,L1,L2. |L1| = |L2| →
-                       ∀f. 𝐈❪f❫ → L1 ⪤[R,cfull,f] L2.
+                       ∀f. 𝐈❨f❩ → L1 ⪤[R,cfull,f] L2.
 #R #L1 elim L1 -L1
 [ #Y2 #H >(length_inv_zero_sn … H) -Y2 //
 | #L1 #I1 #IH #Y2 #H #f #Hf

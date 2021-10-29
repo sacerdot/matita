@@ -22,9 +22,9 @@ include "basic_2/rt_computation/cpxs_reqg.ma".
 (* to update *)
 lemma feqg_cpxs_trans (S):
       reflexive … S → symmetric … S →
-      ∀G1,G2,L1,L2,T1,T. ❪G1,L1,T1❫ ≛[S] ❪G2,L2,T❫ →
-      ∀T2. ❪G2,L2❫ ⊢ T ⬈* T2 →
-      ∃∃T0. ❪G1,L1❫ ⊢ T1 ⬈* T0 & ❪G1,L1,T0❫ ≛[S] ❪G2,L2,T2❫.
+      ∀G1,G2,L1,L2,T1,T. ❨G1,L1,T1❩ ≛[S] ❨G2,L2,T❩ →
+      ∀T2. ❨G2,L2❩ ⊢ T ⬈* T2 →
+      ∃∃T0. ❨G1,L1❩ ⊢ T1 ⬈* T0 & ❨G1,L1,T0❩ ≛[S] ❨G2,L2,T2❩.
 #S #H1S #H2S #G1 #G2 #L1 #L2 #T1 #T #H #T2 #H2T2
 elim (feqg_inv_gen_dx … H) -H // #H #HL12 #HT1 destruct
 lapply (reqg_cpxs_trans … H2T2 … HL12) // #H1T2

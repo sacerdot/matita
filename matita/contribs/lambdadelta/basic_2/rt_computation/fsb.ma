@@ -27,18 +27,18 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma fsb_intro (G1) (L1) (T1):
-      (∀G2,L2,T2. ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫ → ≥𝐒 ❪G2,L2,T2❫) → ≥𝐒 ❪G1,L1,T1❫.
+      (∀G2,L2,T2. ❨G1,L1,T1❩ ≻ ❨G2,L2,T2❩ → ≥𝐒 ❨G2,L2,T2❩) → ≥𝐒 ❨G1,L1,T1❩.
 /5 width=1 by fpbc_intro, SN3_intro/ qed.
 
 (* Basic eliminators ********************************************************)
 
 (* Note: eliminator with shorter ground hypothesis *)
 lemma fsb_ind (Q:relation3 …):
-      (∀G1,L1,T1. ≥𝐒 ❪G1,L1,T1❫ →
-        (∀G2,L2,T2. ❪G1,L1,T1❫ ≻ ❪G2,L2,T2❫ → Q G2 L2 T2) →
+      (∀G1,L1,T1. ≥𝐒 ❨G1,L1,T1❩ →
+        (∀G2,L2,T2. ❨G1,L1,T1❩ ≻ ❨G2,L2,T2❩ → Q G2 L2 T2) →
         Q G1 L1 T1
       ) →
-      ∀G,L,T. ≥𝐒 ❪G,L,T❫ → Q G L T.
+      ∀G,L,T. ≥𝐒 ❨G,L,T❩ → Q G L T.
 #Q #IH #G #L #T #H elim H -G -L -T
 #G1 #L1 #T1 #H1 #IH1
 @IH -IH [ /4 width=1 by SN3_intro/ ] -H1 #G2 #L2 #T2 #H

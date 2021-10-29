@@ -21,8 +21,8 @@ include "basic_2/rt_computation/fpbs_fqup.ma".
 
 (* Basic_2A1: was: csx_fpbs_conf *)
 lemma fpbs_csx_conf:
-      ∀G1,L1,T1. ❪G1,L1❫ ⊢ ⬈*𝐒 T1 →
-      ∀G2,L2,T2. ❪G1,L1,T1❫ ≥ ❪G2,L2,T2❫ → ❪G2,L2❫ ⊢ ⬈*𝐒 T2.
+      ∀G1,L1,T1. ❨G1,L1❩ ⊢ ⬈*𝐒 T1 →
+      ∀G2,L2,T2. ❨G1,L1,T1❩ ≥ ❨G2,L2,T2❩ → ❨G2,L2❩ ⊢ ⬈*𝐒 T2.
 #G1 #L1 #T1 #HT1 #G2 #L2 #T2 #H @(fpbs_ind … H) -G2 -L2 -T2
 /2 width=5 by csx_fpb_conf/
 qed-.

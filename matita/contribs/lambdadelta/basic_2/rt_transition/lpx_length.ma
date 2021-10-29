@@ -20,5 +20,5 @@ include "basic_2/rt_transition/lpx.ma".
 (* Forward lemmas with length for local environments ************************)
 
 lemma lpx_fwd_length (G):
-      ∀L1,L2. ❪G,L1❫ ⊢ ⬈ L2 → |L1| = |L2|.
+      ∀L1,L2. ❨G,L1❩ ⊢ ⬈ L2 → |L1| = |L2|.
 /2 width=2 by lex_fwd_length/ qed-.

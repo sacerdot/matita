@@ -20,6 +20,6 @@ include "ground/relocation/pr_isi_tl.ma".
 (* Constructions with pr_tls ************************************************)
 
 (*** isid_tls *)
-lemma pr_isi_tls (n) (f): 𝐈❪f❫ → 𝐈❪⫰*[n]f❫.
+lemma pr_isi_tls (n) (f): 𝐈❨f❩ → 𝐈❨⫰*[n]f❩.
 #n @(nat_ind_succ … n) -n /3 width=1 by pr_isi_tl/
 qed.

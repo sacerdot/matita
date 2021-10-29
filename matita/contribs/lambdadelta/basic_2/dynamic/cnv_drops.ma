@@ -21,8 +21,8 @@ include "basic_2/dynamic/cnv.ma".
 
 (* Basic_2A1: uses: snv_lref *)
 lemma cnv_lref_drops (h) (a) (G):
-      ∀I,K,V,i,L. ❪G,K❫ ⊢ V ![h,a] →
-      ⇩[i] L ≘ K.ⓑ[I]V → ❪G,L❫ ⊢ #i ![h,a].
+      ∀I,K,V,i,L. ❨G,K❩ ⊢ V ![h,a] →
+      ⇩[i] L ≘ K.ⓑ[I]V → ❨G,L❩ ⊢ #i ![h,a].
 #h #a #G #I #K #V #i elim i -i
 [ #L #HV #H
   lapply (drops_fwd_isid … H ?) -H // #H destruct
@@ -37,8 +37,8 @@ qed.
 
 (* Basic_2A1: uses: snv_inv_lref *)
 lemma cnv_inv_lref_drops (h) (a) (G):
-      ∀i,L. ❪G,L❫ ⊢ #i ![h,a] →
-      ∃∃I,K,V. ⇩[i] L ≘ K.ⓑ[I]V & ❪G,K❫ ⊢ V ![h,a].
+      ∀i,L. ❨G,L❩ ⊢ #i ![h,a] →
+      ∃∃I,K,V. ⇩[i] L ≘ K.ⓑ[I]V & ❨G,K❩ ⊢ V ![h,a].
 #h #a #G #i elim i -i
 [ #L #H
   elim (cnv_inv_zero … H) -H #I #K #V #HV #H destruct
@@ -51,15 +51,15 @@ lemma cnv_inv_lref_drops (h) (a) (G):
 qed-.
 
 lemma cnv_inv_lref_pair (h) (a) (G):
-      ∀i,L. ❪G,L❫ ⊢ #i ![h,a] →
-      ∀I,K,V. ⇩[i] L ≘ K.ⓑ[I]V → ❪G,K❫ ⊢ V ![h,a].
+      ∀i,L. ❨G,L❩ ⊢ #i ![h,a] →
+      ∀I,K,V. ⇩[i] L ≘ K.ⓑ[I]V → ❨G,K❩ ⊢ V ![h,a].
 #h #a #G #i #L #H #I #K #V #HLK
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #HX
 lapply (drops_mono … HLY … HLK) -L #H destruct //
 qed-.
 
 lemma cnv_inv_lref_atom (h) (a) (b) (G):
-      ∀i,L. ❪G,L❫ ⊢ #i ![h,a] → ⇩*[b,𝐔❨i❩] L ≘ ⋆ → ⊥.
+      ∀i,L. ❨G,L❩ ⊢ #i ![h,a] → ⇩*[b,𝐔❨i❩] L ≘ ⋆ → ⊥.
 #h #a #b #G #i #L #H #Hi
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #_
 lapply (drops_gen b … HLY) -HLY #HLY
@@ -67,7 +67,7 @@ lapply (drops_mono … HLY … Hi) -L #H destruct
 qed-.
 
 lemma cnv_inv_lref_unit (h) (a) (G):
-      ∀i,L. ❪G,L❫ ⊢ #i ![h,a] →
+      ∀i,L. ❨G,L❩ ⊢ #i ![h,a] →
       ∀I,K. ⇩[i] L ≘ K.ⓤ[I] → ⊥.
 #h #a #G #i #L #H #I #K #HLK
 elim (cnv_inv_lref_drops … H) -H #Z #Y #X #HLY #_

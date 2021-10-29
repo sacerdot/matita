@@ -21,13 +21,13 @@ include "ground/relocation/pr_coafter_nat_tls.ma".
 
 (*** H_coafter_fwd_isid2 *)
 definition H_pr_coafter_des_ist_sn_isi: predicate pr_map ≝
-           λf1. ∀f2,f. f1 ~⊚ f2 ≘ f → 𝐓❪f1❫ → 𝐈❪f❫ → 𝐈❪f2❫.
+           λf1. ∀f2,f. f1 ~⊚ f2 ≘ f → 𝐓❨f1❩ → 𝐈❨f❩ → 𝐈❨f2❩.
 
 (* Destructions with pr_ist and pr_isi **************************************)
 
 (*** coafter_fwd_isid2_O_aux *)
 corec fact pr_coafter_des_ist_sn_isi_unit_aux:
-           ∀f1. @❪𝟏, f1❫ ≘ 𝟏 → H_pr_coafter_des_ist_sn_isi f1.
+           ∀f1. @❨𝟏, f1❩ ≘ 𝟏 → H_pr_coafter_des_ist_sn_isi f1.
 #f1 #H1f1 #f2 #f #H #H2f1 #Hf
 cases (pr_pat_inv_unit_bi … H1f1) -H1f1 [ |*: // ] #g1 #H1
 lapply (pr_ist_inv_push … H2f1 … H1) -H2f1 #H2g1
@@ -42,8 +42,8 @@ qed-.
 
 (*** coafter_fwd_isid2_aux *)
 fact pr_coafter_des_ist_sn_isi_aux:
-     (∀f1. @❪𝟏, f1❫ ≘ 𝟏 → H_pr_coafter_des_ist_sn_isi f1) →
-     ∀i2,f1. @❪𝟏, f1❫ ≘ i2 → H_pr_coafter_des_ist_sn_isi f1.
+     (∀f1. @❨𝟏, f1❩ ≘ 𝟏 → H_pr_coafter_des_ist_sn_isi f1) →
+     ∀i2,f1. @❨𝟏, f1❩ ≘ i2 → H_pr_coafter_des_ist_sn_isi f1.
 #H0 #i2 elim i2 -i2 /2 width=1 by/ -H0
 #i2 #IH #f1 #H1f1 #f2 #f #H #H2f1 #Hf
 elim (pr_pat_inv_unit_succ … H1f1) -H1f1 [ |*: // ] #g1 #Hg1 #H1

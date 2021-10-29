@@ -24,8 +24,8 @@ include "basic_2/rt_transition/cnr_drops.ma".
 (* Basic_1: was: nf2_dec *)
 (* Basic_2A1: uses: cnr_dec *)
 lemma cnr_dec_teqg (S) (h) (G) (L):
-      ∀T1. ∨∨ ❪G,L❫ ⊢ ➡𝐍[h,0] T1
-            | ∃∃T2. ❪G,L❫ ⊢ T1 ➡[h,0] T2 & (T1 ≛[S] T2 → ⊥).
+      ∀T1. ∨∨ ❨G,L❩ ⊢ ➡𝐍[h,0] T1
+            | ∃∃T2. ❨G,L❩ ⊢ T1 ➡[h,0] T2 & (T1 ≛[S] T2 → ⊥).
 #S #h #G #L #T1
 @(fqup_wf_ind_eq (Ⓣ) … G L T1) -G -L -T1 #G0 #L0 #T0 #IH #G #L * *
 [ #s #HG #HL #HT destruct -IH

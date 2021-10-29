@@ -22,14 +22,14 @@ include "basic_2/rt_computation/rsx_rsx.ma".
 
 (* Basic_2A1: uses: lsx_intro_alt *)
 lemma rsx_intro_lpxs (G):
-      ∀L1,T. (∀L2. ❪G,L1❫ ⊢ ⬈* L2 → (L1 ≅[T] L2 → ⊥) → G ⊢ ⬈*𝐒[T] L2) →
+      ∀L1,T. (∀L2. ❨G,L1❩ ⊢ ⬈* L2 → (L1 ≅[T] L2 → ⊥) → G ⊢ ⬈*𝐒[T] L2) →
       G ⊢ ⬈*𝐒[T] L1.
 /4 width=1 by lpx_lpxs, rsx_intro/ qed-.
 
 (* Basic_2A1: uses: lsx_lpxs_trans *)
 lemma rsx_lpxs_trans (G):
       ∀L1,T. G ⊢ ⬈*𝐒[T] L1 →
-      ∀L2. ❪G,L1❫ ⊢ ⬈* L2 → G ⊢ ⬈*𝐒[T] L2.
+      ∀L2. ❨G,L1❩ ⊢ ⬈* L2 → G ⊢ ⬈*𝐒[T] L2.
 #G #L1 #T #HL1 #L2 #H @(lpxs_ind_dx … H) -L2
 /2 width=3 by rsx_lpx_trans/
 qed-.
@@ -38,11 +38,11 @@ qed-.
 
 lemma rsx_ind_lpxs_reqx (G) (T) (Q:predicate lenv):
       (∀L1. G ⊢ ⬈*𝐒[T] L1 →
-        (∀L2. ❪G,L1❫ ⊢ ⬈* L2 → (L1 ≅[T] L2 → ⊥) → Q L2) →
+        (∀L2. ❨G,L1❩ ⊢ ⬈* L2 → (L1 ≅[T] L2 → ⊥) → Q L2) →
         Q L1
       ) →
       ∀L1. G ⊢ ⬈*𝐒[T] L1 →
-      ∀L0. ❪G,L1❫ ⊢ ⬈* L0 → ∀L2. L0 ≅[T] L2 → Q L2.
+      ∀L0. ❨G,L1❩ ⊢ ⬈* L0 → ∀L2. L0 ≅[T] L2 → Q L2.
 #G #T #Q #IH #L1 #H @(rsx_ind … H) -L1
 #L1 #HL1 #IH1 #L0 #HL10 #L2 #HL02
 @IH -IH /3 width=3 by rsx_lpxs_trans, rsx_reqx_trans/ -HL1 #K2 #HLK2 #HnLK2
@@ -63,7 +63,7 @@ qed-.
 (* Basic_2A1: uses: lsx_ind_alt *)
 lemma rsx_ind_lpxs (G) (T) (Q:predicate lenv):
       (∀L1. G ⊢ ⬈*𝐒[T] L1 →
-        (∀L2. ❪G,L1❫ ⊢ ⬈* L2 → (L1 ≅[T] L2 → ⊥) → Q L2) →
+        (∀L2. ❨G,L1❩ ⊢ ⬈* L2 → (L1 ≅[T] L2 → ⊥) → Q L2) →
         Q L1
       ) →
       ∀L. G ⊢ ⬈*𝐒[T] L → Q L.
@@ -77,7 +77,7 @@ qed-.
 fact rsx_bind_lpxs_aux (G):
      ∀p,I,L1,V. G ⊢ ⬈*𝐒[V] L1 →
      ∀Y,T. G ⊢ ⬈*𝐒[T] Y →
-     ∀L2. Y = L2.ⓑ[I]V → ❪G,L1❫ ⊢ ⬈* L2 →
+     ∀L2. Y = L2.ⓑ[I]V → ❨G,L1❩ ⊢ ⬈* L2 →
      G ⊢ ⬈*𝐒[ⓑ[p,I]V.T] L2.
 #G #p #I #L1 #V #H @(rsx_ind_lpxs … H) -L1
 #L1 #_ #IHL1 #Y #T #H @(rsx_ind_lpxs … H) -Y
@@ -104,7 +104,7 @@ lemma rsx_bind (G):
 (* Basic_2A1: uses: lsx_flat_lpxs *)
 lemma rsx_flat_lpxs (G):
       ∀I,L1,V. G ⊢ ⬈*𝐒[V] L1 →
-      ∀L2,T. G ⊢ ⬈*𝐒[T] L2 → ❪G,L1❫ ⊢ ⬈* L2 →
+      ∀L2,T. G ⊢ ⬈*𝐒[T] L2 → ❨G,L1❩ ⊢ ⬈* L2 →
       G ⊢ ⬈*𝐒[ⓕ[I]V.T] L2.
 #G #I #L1 #V #H @(rsx_ind_lpxs … H) -L1
 #L1 #HL1 #IHL1 #L2 #T #H @(rsx_ind_lpxs … H) -L2
@@ -129,7 +129,7 @@ lemma rsx_flat (G):
 fact rsx_bind_lpxs_void_aux (G):
      ∀p,I,L1,V. G ⊢ ⬈*𝐒[V] L1 →
      ∀Y,T. G ⊢ ⬈*𝐒[T] Y →
-     ∀L2. Y = L2.ⓧ → ❪G,L1❫ ⊢ ⬈* L2 →
+     ∀L2. Y = L2.ⓧ → ❨G,L1❩ ⊢ ⬈* L2 →
      G ⊢ ⬈*𝐒[ⓑ[p,I]V.T] L2.
 #G #p #I #L1 #V #H @(rsx_ind_lpxs … H) -L1
 #L1 #_ #IHL1 #Y #T #H @(rsx_ind_lpxs … H) -Y

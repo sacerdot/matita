@@ -23,8 +23,8 @@ include "basic_2/rt_computation/csx_lpx.ma".
 
 (* Basic_2A1: was: csx_fpb_conf *)
 lemma csx_fpb_conf:
-      ∀G1,L1,T1. ❪G1,L1❫ ⊢ ⬈*𝐒 T1 →
-      ∀G2,L2,T2. ❪G1,L1,T1❫ ≽ ❪G2,L2,T2❫ → ❪G2,L2❫ ⊢ ⬈*𝐒 T2.
+      ∀G1,L1,T1. ❨G1,L1❩ ⊢ ⬈*𝐒 T1 →
+      ∀G2,L2,T2. ❨G1,L1,T1❩ ≽ ❨G2,L2,T2❩ → ❨G2,L2❩ ⊢ ⬈*𝐒 T2.
 #G1 #L1 #T1 #HT1 #G2 #L2 #T2 #H
 elim (fpb_inv_req … H) -H #L0 #L #T #H1 #HT2 #HL0 #HL02
 lapply (cpx_reqg_conf … HL0 … HT2) -HT2 // #HT2

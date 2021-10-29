@@ -35,7 +35,7 @@ lemma pr_isd_eq_repl_fwd:
 (* Main inversions with pr_eq ***********************************************)
 
 (*** isdiv_inv_eq_repl *)
-corec theorem pr_isd_inv_eq_repl (g1) (g2): 𝛀❪g1❫ → 𝛀❪g2❫ → g1 ≡ g2.
+corec theorem pr_isd_inv_eq_repl (g1) (g2): 𝛀❨g1❩ → 𝛀❨g2❩ → g1 ≡ g2.
 #H1 #H2
 cases (pr_isd_inv_gen … H1) -H1
 cases (pr_isd_inv_gen … H2) -H2
@@ -45,13 +45,13 @@ qed-.
 (* Alternative definition with pr_eq ****************************************)
 
 (*** eq_next_isdiv *)
-corec lemma pr_eq_next_isd (f): ↑f ≡ f → 𝛀❪f❫.
+corec lemma pr_eq_next_isd (f): ↑f ≡ f → 𝛀❨f❩.
 #H cases (pr_eq_inv_next_sn … H) -H
 /4 width=3 by pr_isd_next, pr_eq_trans/
 qed.
 
 (*** eq_next_inv_isdiv *)
-corec lemma pr_eq_next_inv_isd (g): 𝛀❪g❫ → ↑g ≡ g.
+corec lemma pr_eq_next_inv_isd (g): 𝛀❨g❩ → ↑g ≡ g.
 * -g #f #g #Hf *
 /3 width=5 by pr_eq_next/
 qed-.

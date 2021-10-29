@@ -61,7 +61,7 @@ qed-.
 
 theorem drops_conf_div_isuni:
         ∀f1,L,K. ⇩*[Ⓣ,f1] L ≘ K → ∀f2. ⇩*[Ⓣ,f2] L ≘ K →
-        𝐔❪f1❫ → 𝐔❪f2❫ → f1 ≡ f2.
+        𝐔❨f1❩ → 𝐔❨f2❩ → f1 ≡ f2.
 #f1 #L #K #H elim H -f1 -L -K
 [ #f1 #Hf1 #f2 #Hf2 elim (drops_inv_atom1 … Hf2) -Hf2
   /3 width=1 by pr_isi_inv_eq_repl/
@@ -131,7 +131,7 @@ qed-.
 lemma drops_conf_div_bind_isuni:
       ∀f1,f2,I1,I2,L,K.
       ⇩*[Ⓣ,f1] L ≘ K.ⓘ[I1] → ⇩*[Ⓣ,f2] L ≘ K.ⓘ[I2] →
-      𝐔❪f1❫ → 𝐔❪f2❫ → f1 ≡ f2 ∧ I1 = I2.
+      𝐔❨f1❩ → 𝐔❨f2❩ → f1 ≡ f2 ∧ I1 = I2.
 #f1 #f2 #I1 #I2 #L #K #Hf1 #Hf2 #HU1 #HU2
 lapply (drops_isuni_fwd_drop2 … Hf1) // #H1
 lapply (drops_isuni_fwd_drop2 … Hf2) // #H2

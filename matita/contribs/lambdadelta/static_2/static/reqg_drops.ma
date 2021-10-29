@@ -35,7 +35,7 @@ lemma reqg_inv_lifts_dx (S):
 /2 width=5 by rex_dropable_dx/ qed-.
 
 lemma reqg_inv_lifts_bi (S):
-      ∀L1,L2,U. L1 ≛[S,U] L2 → ∀b,f. 𝐔❪f❫ →
+      ∀L1,L2,U. L1 ≛[S,U] L2 → ∀b,f. 𝐔❨f❩ →
       ∀K1,K2. ⇩*[b,f] L1 ≘ K1 → ⇩*[b,f] L2 ≘ K2 →
       ∀T. ⇧*[f] T ≘ U → K1 ≛[S,T] K2.
 /2 width=10 by rex_inv_lifts_bi/ qed-.

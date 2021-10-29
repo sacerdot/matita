@@ -23,7 +23,7 @@ include "ground/relocation/pr_sor_isi.ma".
 
 (*** coafter_sor *)
 lemma pr_sor_coafter_dx_tans:
-      ∀f. 𝐅❪f❫ → ∀f2. 𝐓❪f2❫ → ∀f1. f2 ~⊚ f1 ≘ f → ∀f1a,f1b. f1a ⋓ f1b ≘ f1 →
+      ∀f. 𝐅❨f❩ → ∀f2. 𝐓❨f2❩ → ∀f1. f2 ~⊚ f1 ≘ f → ∀f1a,f1b. f1a ⋓ f1b ≘ f1 →
       ∃∃fa,fb. f2 ~⊚ f1a ≘ fa & f2 ~⊚ f1b ≘ fb & fa ⋓ fb ≘ f.
 @pr_isf_ind
 [ #f #Hf #f2 #Hf2 #f1 #Hf #f1a #f1b #Hf1
@@ -53,7 +53,7 @@ qed-.
 
 (*** coafter_inv_sor *)
 lemma pr_sor_coafter_div:
-      ∀f. 𝐅❪f❫ → ∀f2. 𝐓❪f2❫ → ∀f1. f2 ~⊚ f1 ≘ f → ∀fa,fb. fa ⋓ fb ≘ f →
+      ∀f. 𝐅❨f❩ → ∀f2. 𝐓❨f2❩ → ∀f1. f2 ~⊚ f1 ≘ f → ∀fa,fb. fa ⋓ fb ≘ f →
       ∃∃f1a,f1b. f2 ~⊚ f1a ≘ fa & f2 ~⊚ f1b ≘ fb & f1a ⋓ f1b ≘ f1.
 @pr_isf_ind
 [ #f #Hf #f2 #Hf2 #f1 #H1f #fa #fb #H2f

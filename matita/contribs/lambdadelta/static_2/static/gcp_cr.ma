@@ -28,7 +28,7 @@ definition S1 ≝ λRP,C:candidate.
 (* Note: this is Tait's iii, or Girard's CR4 *)
 definition S2 ≝ λRR:relation4 genv lenv term term. λRS:relation term. λRP,C:candidate.
                 ∀G,L,Vs. all … (RP G L) Vs →
-                ∀T. 𝐒❪T❫ → nf RR RS G L T → C G L (ⒶVs.T).
+                ∀T. 𝐒❨T❩ → nf RR RS G L T → C G L (ⒶVs.T).
 
 (* Note: this generalizes Tait's ii, or Girard's CR3 *)
 definition S3 ≝ λC:candidate.
@@ -148,11 +148,11 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
 qed.
 
 lemma acr_abst: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
-                ∀p,G,L,W,T,A,B. ❪G,L,W❫ ϵ ⟦B⟧[RP] → (
+                ∀p,G,L,W,T,A,B. ❨G,L,W❩ ϵ ⟦B⟧[RP] → (
                    ∀b,f,L0,V0,W0,T0. ⇩*[b,f] L0 ≘ L → ⇧*[f] W ≘ W0 → ⇧*[⫯f] T ≘ T0 →
-                                   ❪G,L0,V0❫ ϵ ⟦B⟧[RP] → ❪G,L0,W0❫ ϵ ⟦B⟧[RP] → ❪G,L0.ⓓⓝW0.V0,T0❫ ϵ ⟦A⟧[RP]
+                                   ❨G,L0,V0❩ ϵ ⟦B⟧[RP] → ❨G,L0,W0❩ ϵ ⟦B⟧[RP] → ❨G,L0.ⓓⓝW0.V0,T0❩ ϵ ⟦A⟧[RP]
                 ) →
-                ❪G,L,ⓛ[p]W.T❫ ϵ ⟦②B.A⟧[RP].
+                ❨G,L,ⓛ[p]W.T❩ ϵ ⟦②B.A⟧[RP].
 #RR #RS #RP #H1RP #H2RP #p #G #L #W #T #A #B #HW #HA #f #L0 #V0 #X #HL0 #H #HB
 lapply (acr_gcr … H1RP H2RP A) #HCA
 lapply (acr_gcr … H1RP H2RP B) #HCB

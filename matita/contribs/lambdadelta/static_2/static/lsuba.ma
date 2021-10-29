@@ -21,7 +21,7 @@ include "static_2/static/aaa.ma".
 inductive lsuba (G:genv): relation lenv ≝
 | lsuba_atom: lsuba G (⋆) (⋆)
 | lsuba_bind: ∀I,L1,L2. lsuba G L1 L2 → lsuba G (L1.ⓘ[I]) (L2.ⓘ[I])
-| lsuba_beta: ∀L1,L2,W,V,A. ❪G,L1❫ ⊢ ⓝW.V ⁝ A → ❪G,L2❫ ⊢ W ⁝ A →
+| lsuba_beta: ∀L1,L2,W,V,A. ❨G,L1❩ ⊢ ⓝW.V ⁝ A → ❨G,L2❩ ⊢ W ⁝ A →
               lsuba G L1 L2 → lsuba G (L1.ⓓⓝW.V) (L2.ⓛW)
 .
 
@@ -44,7 +44,7 @@ lemma lsuba_inv_atom1: ∀G,L2. G ⊢ ⋆ ⫃⁝ L2 → L2 = ⋆.
 
 fact lsuba_inv_bind1_aux: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → ∀I,K1. L1 = K1.ⓘ[I] →
                           (∃∃K2. G ⊢ K1 ⫃⁝ K2 & L2 = K2.ⓘ[I]) ∨
-                          ∃∃K2,W,V,A. ❪G,K1❫ ⊢ ⓝW.V ⁝ A & ❪G,K2❫ ⊢ W ⁝ A &
+                          ∃∃K2,W,V,A. ❨G,K1❩ ⊢ ⓝW.V ⁝ A & ❨G,K2❩ ⊢ W ⁝ A &
                                       G ⊢ K1 ⫃⁝ K2 & I = BPair Abbr (ⓝW.V) & L2 = K2.ⓛW.
 #G #L1 #L2 * -L1 -L2
 [ #J #K1 #H destruct
@@ -55,7 +55,7 @@ qed-.
 
 lemma lsuba_inv_bind1: ∀I,G,K1,L2. G ⊢ K1.ⓘ[I] ⫃⁝ L2 →
                        (∃∃K2. G ⊢ K1 ⫃⁝ K2 & L2 = K2.ⓘ[I]) ∨
-                       ∃∃K2,W,V,A. ❪G,K1❫ ⊢ ⓝW.V ⁝ A & ❪G,K2❫ ⊢ W ⁝ A & G ⊢ K1 ⫃⁝ K2 &
+                       ∃∃K2,W,V,A. ❨G,K1❩ ⊢ ⓝW.V ⁝ A & ❨G,K2❩ ⊢ W ⁝ A & G ⊢ K1 ⫃⁝ K2 &
                                    I = BPair Abbr (ⓝW.V) & L2 = K2.ⓛW.
 /2 width=3 by lsuba_inv_bind1_aux/ qed-.
 
@@ -72,7 +72,7 @@ lemma lsuba_inv_atom2: ∀G,L1. G ⊢ L1 ⫃⁝ ⋆ → L1 = ⋆.
 
 fact lsuba_inv_bind2_aux: ∀G,L1,L2. G ⊢ L1 ⫃⁝ L2 → ∀I,K2. L2 = K2.ⓘ[I] →
                           (∃∃K1. G ⊢ K1 ⫃⁝ K2 & L1 = K1.ⓘ[I]) ∨
-                          ∃∃K1,V,W,A. ❪G,K1❫ ⊢ ⓝW.V ⁝ A & ❪G,K2❫ ⊢ W ⁝ A &
+                          ∃∃K1,V,W,A. ❨G,K1❩ ⊢ ⓝW.V ⁝ A & ❨G,K2❩ ⊢ W ⁝ A &
                                        G ⊢ K1 ⫃⁝ K2 & I = BPair Abst W & L1 = K1.ⓓⓝW.V.
 #G #L1 #L2 * -L1 -L2
 [ #J #K2 #H destruct
@@ -83,7 +83,7 @@ qed-.
 
 lemma lsuba_inv_bind2: ∀I,G,L1,K2. G ⊢ L1 ⫃⁝ K2.ⓘ[I] →
                        (∃∃K1. G ⊢ K1 ⫃⁝ K2 & L1 = K1.ⓘ[I]) ∨
-                       ∃∃K1,V,W,A. ❪G,K1❫ ⊢ ⓝW.V ⁝ A & ❪G,K2❫ ⊢ W ⁝ A & G ⊢ K1 ⫃⁝ K2 &
+                       ∃∃K1,V,W,A. ❨G,K1❩ ⊢ ⓝW.V ⁝ A & ❨G,K2❩ ⊢ W ⁝ A & G ⊢ K1 ⫃⁝ K2 &
                                    I = BPair Abst W & L1 = K1.ⓓⓝW.V.
 /2 width=3 by lsuba_inv_bind2_aux/ qed-.
 

@@ -22,7 +22,7 @@ include "basic_2/rt_computation/jsx_rsx.ma".
 
 fact rsx_fwd_lref_pair_csx_aux (G):
      ∀L. G ⊢ ⬈*𝐒[#0] L →
-     ∀I,K,V. L = K.ⓑ[I]V → ❪G,K❫ ⊢ ⬈*𝐒 V.
+     ∀I,K,V. L = K.ⓑ[I]V → ❨G,K❩ ⊢ ⬈*𝐒 V.
 #G #L #H
 @(rsx_ind … H) -L #L #_ #IH #I #K #V1 #H destruct
 @csx_intro #V2 #HV12 #HnV12
@@ -34,11 +34,11 @@ fact rsx_fwd_lref_pair_csx_aux (G):
 qed-.
 
 lemma rsx_fwd_lref_pair_csx (G):
-      ∀I,K,V. G ⊢ ⬈*𝐒[#0] K.ⓑ[I]V → ❪G,K❫ ⊢ ⬈*𝐒 V.
+      ∀I,K,V. G ⊢ ⬈*𝐒[#0] K.ⓑ[I]V → ❨G,K❩ ⊢ ⬈*𝐒 V.
 /2 width=4 by rsx_fwd_lref_pair_csx_aux/ qed-.
 
 lemma rsx_fwd_lref_pair_csx_drops (G):
-      ∀I,K,V,i,L. ⇩[i] L ≘ K.ⓑ[I]V → G ⊢ ⬈*𝐒[#i] L → ❪G,K❫ ⊢ ⬈*𝐒 V.
+      ∀I,K,V,i,L. ⇩[i] L ≘ K.ⓑ[I]V → G ⊢ ⬈*𝐒[#i] L → ❨G,K❩ ⊢ ⬈*𝐒 V.
 #G #I #K #V #i elim i -i
 [ #L #H >(drops_fwd_isid … H) -H
   /2 width=2 by rsx_fwd_lref_pair_csx/
@@ -53,19 +53,19 @@ qed-.
 
 lemma rsx_inv_lref_pair (G):
       ∀I,K,V. G ⊢ ⬈*𝐒[#0] K.ⓑ[I]V →
-      ∧∧ ❪G,K❫ ⊢ ⬈*𝐒 V & G ⊢ ⬈*𝐒[V] K.
+      ∧∧ ❨G,K❩ ⊢ ⬈*𝐒 V & G ⊢ ⬈*𝐒[V] K.
 /3 width=2 by rsx_fwd_lref_pair_csx, rsx_fwd_pair, conj/ qed-.
 
 lemma rsx_inv_lref_pair_drops (G):
       ∀I,K,V,i,L. ⇩[i] L ≘ K.ⓑ[I]V → G ⊢ ⬈*𝐒[#i] L →
-      ∧∧ ❪G,K❫ ⊢ ⬈*𝐒 V & G ⊢ ⬈*𝐒[V] K.
+      ∧∧ ❨G,K❩ ⊢ ⬈*𝐒 V & G ⊢ ⬈*𝐒[V] K.
 /3 width=5 by rsx_fwd_lref_pair_csx_drops, rsx_fwd_lref_pair_drops, conj/ qed-.
 
 lemma rsx_inv_lref_drops (G):
       ∀L,i. G ⊢ ⬈*𝐒[#i] L →
       ∨∨ ⇩*[Ⓕ,𝐔❨i❩] L ≘ ⋆
        | ∃∃I,K. ⇩[i] L ≘ K.ⓤ[I]
-       | ∃∃I,K,V. ⇩[i] L ≘ K.ⓑ[I]V & ❪G,K❫ ⊢ ⬈*𝐒 V & G ⊢ ⬈*𝐒[V] K.
+       | ∃∃I,K,V. ⇩[i] L ≘ K.ⓑ[I]V & ❨G,K❩ ⊢ ⬈*𝐒 V & G ⊢ ⬈*𝐒[V] K.
 #G #L #i #H elim (drops_F_uni L i)
 [ /2 width=1 by or3_intro0/
 | * * /4 width=10 by rsx_fwd_lref_pair_csx_drops, rsx_fwd_lref_pair_drops, ex3_3_intro, ex1_2_intro, or3_intro2, or3_intro1/
@@ -77,8 +77,8 @@ qed-.
 (* Note: swapping the eliminations to avoid rsx_cpx_trans: no solution found *)
 (* Basic_2A1: uses: lsx_lref_be_lpxs *)
 lemma rsx_lref_pair_lpxs (G):
-      ∀K1,V. ❪G,K1❫ ⊢ ⬈*𝐒 V →
-      ∀K2. G ⊢ ⬈*𝐒[V] K2 → ❪G,K1❫ ⊢ ⬈* K2 →
+      ∀K1,V. ❨G,K1❩ ⊢ ⬈*𝐒 V →
+      ∀K2. G ⊢ ⬈*𝐒[V] K2 → ❨G,K1❩ ⊢ ⬈* K2 →
       ∀I. G ⊢ ⬈*𝐒[#0] K2.ⓑ[I]V.
 #G #K1 #V #H
 @(csx_ind_cpxs … H) -V #V0 #_ #IHV0 #K2 #H
@@ -96,12 +96,12 @@ elim (teqx_dec V0 V2) #HnV02 destruct [ -IHV0 -HV02 -HK0 | -IHK0 -HnY ]
 qed.
 
 lemma rsx_lref_pair (G):
-      ∀K,V. ❪G,K❫ ⊢ ⬈*𝐒 V → G ⊢ ⬈*𝐒[V] K → ∀I. G ⊢ ⬈*𝐒[#0] K.ⓑ[I]V.
+      ∀K,V. ❨G,K❩ ⊢ ⬈*𝐒 V → G ⊢ ⬈*𝐒[V] K → ∀I. G ⊢ ⬈*𝐒[#0] K.ⓑ[I]V.
 /2 width=3 by rsx_lref_pair_lpxs/ qed.
 
 (* Basic_2A1: uses: lsx_lref_be *)
 lemma rsx_lref_pair_drops (G):
-      ∀K,V. ❪G,K❫ ⊢ ⬈*𝐒 V → G ⊢ ⬈*𝐒[V] K →
+      ∀K,V. ❨G,K❩ ⊢ ⬈*𝐒 V → G ⊢ ⬈*𝐒[V] K →
       ∀I,i,L. ⇩[i] L ≘ K.ⓑ[I]V → G ⊢ ⬈*𝐒[#i] L.
 #G #K #V #HV #HK #I #i elim i -i
 [ #L #H >(drops_fwd_isid … H) -H /2 width=1 by rsx_lref_pair/
@@ -115,7 +115,7 @@ qed.
 
 (* Basic_2A1: uses: csx_lsx *)
 theorem csx_rsx (G):
-        ∀L,T. ❪G,L❫ ⊢ ⬈*𝐒 T → G ⊢ ⬈*𝐒[T] L.
+        ∀L,T. ❨G,L❩ ⊢ ⬈*𝐒 T → G ⊢ ⬈*𝐒[T] L.
 #G #L #T @(fqup_wf_ind_eq (Ⓣ) … G L T) -G -L -T
 #Z #Y #X #IH #G #L * *
 [ //

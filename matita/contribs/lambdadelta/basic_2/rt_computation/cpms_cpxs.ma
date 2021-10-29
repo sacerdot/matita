@@ -22,7 +22,7 @@ include "basic_2/rt_computation/cpms.ma".
 
 (* Basic_2A1: includes: scpds_fwd_cpxs cprs_cpxs *)
 lemma cpms_fwd_cpxs (h) (n) (G) (L):
-      ∀T1,T2. ❪G,L❫ ⊢ T1 ➡*[h,n] T2 → ❪G,L❫ ⊢ T1 ⬈* T2.
+      ∀T1,T2. ❨G,L❩ ⊢ T1 ➡*[h,n] T2 → ❨G,L❩ ⊢ T1 ⬈* T2.
 #h #n #G #L #T1 #T2 #H @(cpms_ind_dx … H) -T2
 /3 width=5 by cpxs_strap1, cpm_fwd_cpx/
 qed-.

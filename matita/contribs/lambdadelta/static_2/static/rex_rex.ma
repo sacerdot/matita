@@ -22,7 +22,7 @@ include "static_2/static/rex.ma".
 
 lemma rex_inv_frees (R):
       ∀L1,L2,T. L1 ⪤[R,T] L2 →
-      ∀f. L1 ⊢ 𝐅+❪T❫ ≘ f → L1 ⪤[cext2 R,cfull,f] L2.
+      ∀f. L1 ⊢ 𝐅+❨T❩ ≘ f → L1 ⪤[cext2 R,cfull,f] L2.
 #R #L1 #L2 #T * /3 width=6 by frees_mono, sex_eq_repl_back/
 qed-.
 

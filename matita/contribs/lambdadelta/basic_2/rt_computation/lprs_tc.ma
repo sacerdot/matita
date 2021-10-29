@@ -21,11 +21,11 @@ include "basic_2/rt_computation/cprs_lpr.ma".
 (* Properties with transitive closure ***************************************)
 
 lemma lprs_TC (h) (G):
-              ∀L1,L2. TC … (lex (λL.cpm h G L 0)) L1 L2 → ❪G,L1❫⊢ ➡*[h,0] L2.
+              ∀L1,L2. TC … (lex (λL.cpm h G L 0)) L1 L2 → ❨G,L1❩⊢ ➡*[h,0] L2.
 /4 width=3 by lprs_CTC, lex_CTC, lpr_cprs_trans/ qed.
 
 (* Inversion lemmas with transitive closure *********************************)
 
 lemma lprs_inv_TC (h) (G):
-                  ∀L1,L2. ❪G,L1❫⊢ ➡*[h,0] L2 → TC … (lex (λL.cpm h G L 0)) L1 L2.
+                  ∀L1,L2. ❨G,L1❩⊢ ➡*[h,0] L2 → TC … (lex (λL.cpm h G L 0)) L1 L2.
 /3 width=3 by lprs_inv_CTC, lex_inv_CTC/ qed-.

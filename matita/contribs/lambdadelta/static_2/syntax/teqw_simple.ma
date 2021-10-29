@@ -20,7 +20,7 @@ include "static_2/syntax/teqw.ma".
 (* Properties with simple terms *********************************************)
 
 lemma teqw_simple_trans:
-      ∀T1,T2. T1 ≃ T2 → 𝐒❪T1❫ → 𝐒❪T2❫.
+      ∀T1,T2. T1 ≃ T2 → 𝐒❨T1❩ → 𝐒❨T2❩.
 #T1 #T2 * -T1 -T2
 [4,5: #p #V1 #V2 #T1 #T2 [ #_ ] #H
       elim (simple_inv_bind … H)

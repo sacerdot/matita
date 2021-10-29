@@ -20,7 +20,7 @@ include "apps_2/models/model.ma".
 
 definition tm_dd ≝ term.
 
-definition tm_sq (h) (T1) (T2) ≝  ❪⋆,⋆❫ ⊢ T1 ⬌*[h] T2.
+definition tm_sq (h) (T1) (T2) ≝  ❨⋆,⋆❩ ⊢ T1 ⬌*[h] T2.
 
 definition tm_sv (s) ≝ ⋆s.
 

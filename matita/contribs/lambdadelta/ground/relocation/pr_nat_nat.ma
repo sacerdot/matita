@@ -20,7 +20,7 @@ include "ground/relocation/pr_nat.ma".
 (* Main destructions ********************************************************)
 
 theorem pr_nat_monotonic (k2) (l2) (f):
-        @↑❪l2,f❫ ≘ k2 → ∀k1,l1. @↑❪l1,f❫ ≘ k1 → l1 < l2 → k1 < k2.
+        @↑❨l2,f❩ ≘ k2 → ∀k1,l1. @↑❨l1,f❩ ≘ k1 → l1 < l2 → k1 < k2.
 #k2 @(nat_ind_succ … k2) -k2
 [ #l2 #f #H2f elim (pr_nat_inv_zero_dx … H2f) -H2f //
   #g #H21 #_ #k1 #l1 #_ #Hi destruct
@@ -37,7 +37,7 @@ theorem pr_nat_monotonic (k2) (l2) (f):
 qed-.
 
 theorem pr_nat_inv_monotonic (k1) (l1) (f):
-        @↑❪l1,f❫ ≘ k1 → ∀k2,l2. @↑❪l2,f❫ ≘ k2 → k1 < k2 → l1 < l2.
+        @↑❨l1,f❩ ≘ k1 → ∀k2,l2. @↑❨l2,f❩ ≘ k2 → k1 < k2 → l1 < l2.
 #k1 @(nat_ind_succ … k1) -k1
 [ #l1 #f #H1f elim (pr_nat_inv_zero_dx … H1f) -H1f //
   #g * -l1 #H #k2 #l2 #H2f #Hk
@@ -59,14 +59,14 @@ theorem pr_nat_inv_monotonic (k1) (l1) (f):
 qed-.
 
 theorem pr_nat_mono (f) (l) (l1) (l2):
-        @↑❪l,f❫ ≘ l1 → @↑❪l,f❫ ≘ l2 → l2 = l1.
+        @↑❨l,f❩ ≘ l1 → @↑❨l,f❩ ≘ l2 → l2 = l1.
 #f #l #l1 #l2 #H1 #H2 elim (nat_split_lt_eq_gt l2 l1) //
 #Hi elim (nlt_ge_false l l)
 /2 width=6 by pr_nat_inv_monotonic/
 qed-.
 
 theorem pr_nat_inj (f) (l1) (l2) (l):
-        @↑❪l1,f❫ ≘ l → @↑❪l2,f❫ ≘ l → l1 = l2.
+        @↑❨l1,f❩ ≘ l → @↑❨l2,f❩ ≘ l → l1 = l2.
 #f #l1 #l2 #l #H1 #H2 elim (nat_split_lt_eq_gt l2 l1) //
 #Hi elim (nlt_ge_false l l)
 /2 width=6 by pr_nat_monotonic/

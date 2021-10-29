@@ -24,19 +24,19 @@ lemma rpx_refl (G):
 /2 width=1 by rex_refl/ qed.
 
 lemma rpx_pair_refl (G):
-      ∀L,V1,V2. ❪G,L❫ ⊢ V1 ⬈ V2 →
-      ∀I,T. ❪G,L.ⓑ[I]V1❫ ⊢ ⬈[T] L.ⓑ[I]V2.
+      ∀L,V1,V2. ❨G,L❩ ⊢ V1 ⬈ V2 →
+      ∀I,T. ❨G,L.ⓑ[I]V1❩ ⊢ ⬈[T] L.ⓑ[I]V2.
 /2 width=1 by rex_pair_refl/ qed.
 
 (* Advanced inversion lemmas ************************************************)
 
 lemma rpx_inv_bind_void (G):
-      ∀p,I,L1,L2,V,T. ❪G,L1❫ ⊢ ⬈[ⓑ[p,I]V.T] L2 →
-      ∧∧ ❪G,L1❫ ⊢ ⬈[V] L2 & ❪G,L1.ⓧ❫ ⊢ ⬈[T] L2.ⓧ.
+      ∀p,I,L1,L2,V,T. ❨G,L1❩ ⊢ ⬈[ⓑ[p,I]V.T] L2 →
+      ∧∧ ❨G,L1❩ ⊢ ⬈[V] L2 & ❨G,L1.ⓧ❩ ⊢ ⬈[T] L2.ⓧ.
 /2 width=3 by rex_inv_bind_void/ qed-.
 
 (* Advanced forward lemmas **************************************************)
 
 lemma rpx_fwd_bind_dx_void (G):
-      ∀p,I,L1,L2,V,T. ❪G,L1❫ ⊢ ⬈[ⓑ[p,I]V.T] L2 → ❪G,L1.ⓧ❫ ⊢ ⬈[T] L2.ⓧ.
+      ∀p,I,L1,L2,V,T. ❨G,L1❩ ⊢ ⬈[ⓑ[p,I]V.T] L2 → ❨G,L1.ⓧ❩ ⊢ ⬈[T] L2.ⓧ.
 /2 width=4 by rex_fwd_bind_dx_void/ qed-.

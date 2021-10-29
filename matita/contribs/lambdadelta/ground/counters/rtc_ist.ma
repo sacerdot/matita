@@ -26,32 +26,32 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma rtc_ist_zz: 𝐓❪𝟎,𝟘𝟘❫.
+lemma rtc_ist_zz: 𝐓❨𝟎,𝟘𝟘❩.
 // qed.
 
-lemma rtc_ist_zu: 𝐓❪𝟏,𝟘𝟙❫.
+lemma rtc_ist_zu: 𝐓❨𝟏,𝟘𝟙❩.
 // qed.
 
 (* Basic inversions *********************************************************)
 
-lemma rtc_ist_inv_zz (n): 𝐓❪n,𝟘𝟘❫ → 𝟎 = n.
+lemma rtc_ist_inv_zz (n): 𝐓❨n,𝟘𝟘❩ → 𝟎 = n.
 #n #H destruct //
 qed-.
 
-lemma rtc_ist_inv_zu (n): 𝐓❪n,𝟘𝟙❫ → ninj (𝟏) = n.
+lemma rtc_ist_inv_zu (n): 𝐓❨n,𝟘𝟙❩ → ninj (𝟏) = n.
 #n #H destruct //
 qed-.
 
-lemma rtc_ist_inv_uz (n): 𝐓❪n,𝟙𝟘❫ → ⊥.
+lemma rtc_ist_inv_uz (n): 𝐓❨n,𝟙𝟘❩ → ⊥.
 #h #H destruct
 qed-.
 
 (* Main inversions **********************************************************)
 
-theorem rtc_ist_inj (n1) (n2) (c): 𝐓❪n1,c❫ → 𝐓❪n2,c❫ → n1 = n2.
+theorem rtc_ist_inj (n1) (n2) (c): 𝐓❨n1,c❩ → 𝐓❨n2,c❩ → n1 = n2.
 #n1 #n2 #c #H1 #H2 destruct //
 qed-.
 
-theorem rtc_ist_mono (n) (c1) (c2): 𝐓❪n,c1❫ → 𝐓❪n,c2❫ → c1 = c2.
+theorem rtc_ist_mono (n) (c1) (c2): 𝐓❨n,c1❩ → 𝐓❨n,c2❩ → c1 = c2.
 #n #c1 #c2 #H1 #H2 destruct //
 qed-.

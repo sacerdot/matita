@@ -20,13 +20,13 @@ include "ground/relocation/pr_isi.ma".
 (* Constructions with pr_pushs **********************************************)
 
 (*** isid_pushs *)
-lemma pr_isi_pushs (n) (f): 𝐈❪f❫ → 𝐈❪⫯*[n]f❫.
+lemma pr_isi_pushs (n) (f): 𝐈❨f❩ → 𝐈❨⫯*[n]f❩.
 #n @(nat_ind_succ … n) -n /3 width=3 by pr_isi_push/
 qed.
 
 (* Inversions with pr_pushs *************************************************)
 
 (*** isid_inv_pushs *)
-lemma pr_isi_inv_pushs (n) (g): 𝐈❪⫯*[n]g❫ → 𝐈❪g❫.
+lemma pr_isi_inv_pushs (n) (g): 𝐈❨⫯*[n]g❩ → 𝐈❨g❩.
 #n @(nat_ind_succ … n) -n /3 width=3 by pr_isi_inv_push/
 qed-.

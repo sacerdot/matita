@@ -27,6 +27,6 @@ lemma cpx_reqg_conf_sn (S) (G):
 (* Basic_2A1: was just: cpx_lleq_conf_dx *)
 lemma cpx_reqg_conf_dx (S) (G) (L2):
       reflexive … S → symmetric … S →
-      ∀T1,T2. ❪G,L2❫ ⊢ T1 ⬈ T2 →
+      ∀T1,T2. ❨G,L2❩ ⊢ T1 ⬈ T2 →
       ∀L1. L1 ≛[S,T1] L2 → L1 ≛[S,T2] L2.
 /4 width=4 by cpx_reqg_conf_sn, reqg_sym/ qed-.

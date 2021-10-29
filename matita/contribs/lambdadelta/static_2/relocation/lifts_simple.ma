@@ -20,13 +20,13 @@ include "static_2/relocation/lifts.ma".
 (* Forward lemmas with simple terms *****************************************)
 
 (* Basic_2A1: includes: lift_simple_dx *)
-lemma lifts_simple_dx: ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → 𝐒❪T1❫ → 𝐒❪T2❫.
+lemma lifts_simple_dx: ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → 𝐒❨T1❩ → 𝐒❨T2❩.
 #f #T1 #T2 #H elim H -f -T1 -T2 //
 #f #p #I #V1 #V2 #T1 #T2 #_ #_ #_ #_ #H elim (simple_inv_bind … H)
 qed-.
 
 (* Basic_2A1: includes: lift_simple_sn *)
-lemma lifts_simple_sn: ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → 𝐒❪T2❫ → 𝐒❪T1❫.
+lemma lifts_simple_sn: ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → 𝐒❨T2❩ → 𝐒❨T1❩.
 #f #T1 #T2 #H elim H -f -T1 -T2 //
 #f #p #I #V1 #V2 #T1 #T2 #_ #_ #_ #_ #H elim (simple_inv_bind … H)
 qed-.
