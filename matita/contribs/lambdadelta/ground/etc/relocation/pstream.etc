@@ -54,22 +54,6 @@ lemma eq_inv_gr_next_bi: injective ? ? gr_next.
 * #p1 #f1 * #p2 #f2 <gr_next_unfold <gr_next_unfold #H destruct //
 qed-.
 
-lemma push_inv_seq_sn: ∀f,g,p. p⨮g = ⫯f → ∧∧ 𝟏 = p & g = f.
-#f #g #p <gr_push_unfold #H destruct /2 width=1 by conj/
-qed-.
-
-lemma push_inv_seq_dx: ∀f,g,p. ⫯f = p⨮g → ∧∧ 𝟏 = p & g = f.
-#f #g #p <gr_push_unfold #H destruct /2 width=1 by conj/
-qed-.
-
-lemma next_inv_seq_sn: ∀f,g,p. p⨮g = ↑f → ∃∃q. q⨮g = f & ↑q = p.
-* #q #f #g #p <gr_next_unfold #H destruct /2 width=3 by ex2_intro/
-qed-.
-
-lemma next_inv_seq_dx: ∀f,g,p. ↑f = p⨮g → ∃∃q. q⨮g = f & ↑q = p.
-* #q #f #g #p <gr_next_unfold #H destruct /2 width=3 by ex2_intro/
-qed-.
-
 lemma case_prop (Q:predicate gr_map):
       (∀f. Q (⫯f)) → (∀f. Q (↑f)) → ∀f. Q f.
 #Q #H1 #H2 * * //

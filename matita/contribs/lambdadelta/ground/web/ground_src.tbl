@@ -30,7 +30,8 @@ table {
         }
       ]
       [ { "total relocation" * } {
-          [ "tr_map ( 𝐭❨?❩ )" "tr_nexts" "tr_eq" * ]
+          [ "tr_pap ( ?@❨?❩ )" * ]
+          [ "tr_map ( 𝐭❨?❩ )" "tr_eq" "tr_nexts" "tr_pat" * ]
         }
       ]
       [ { "partial relocation" * } {

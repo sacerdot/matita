@@ -40,3 +40,49 @@ qed.
 lemma tr_inj_unfold_succ (f): ∀p. ↑𝐭❨p⨮f❩ = 𝐭❨↑p⨮f❩.
 #f #p <(stream_unfold … (𝐭❨↑p⨮f❩)) in ⊢ (???%); //
 qed.
+
+(* Basic inversions *********************************************************)
+
+(*** push_inv_seq_sn *)
+lemma eq_inv_cons_pr_push (f) (g):
+      ∀p. 𝐭❨p⨮g❩ = ⫯f → ∧∧ 𝟏 = p & 𝐭❨g❩ = f.
+#f #g *
+[ <tr_inj_unfold_unit
+  /3 width=1 by eq_inv_pr_push_bi, conj/
+| #p <tr_inj_unfold_succ #H
+  elim (eq_inv_pr_next_push … H)
+]
+qed-.
+
+(*** push_inv_seq_dx *)
+lemma eq_inv_pr_push_cons (f) (g):
+      ∀p. ⫯f = 𝐭❨p⨮g❩ → ∧∧ 𝟏 = p & 𝐭❨g❩ = f.
+#f #g *
+[ <tr_inj_unfold_unit
+  /3 width=1 by eq_inv_pr_push_bi, conj/
+| #p <tr_inj_unfold_succ #H
+  elim (eq_inv_pr_push_next … H)
+]
+qed-.
+
+(*** next_inv_seq_sn *)
+lemma eq_inv_cons_pr_next (f) (g):
+      ∀p. 𝐭❨p⨮g❩ = ↑f → ∃∃q. 𝐭❨q⨮g❩ = f & ↑q = p.
+#f #g *
+[ <tr_inj_unfold_unit #H
+  elim (eq_inv_pr_push_next … H)
+| #p <tr_inj_unfold_succ #H
+  /3 width=3 by eq_inv_pr_next_bi, ex2_intro/
+]
+qed-.
+
+(*** next_inv_seq_dx *)
+lemma eq_inv_pr_next_cons (f) (g):
+      ∀p. ↑f = 𝐭❨p⨮g❩ → ∃∃q. 𝐭❨q⨮g❩ = f & ↑q = p.
+#f #g *
+[ <tr_inj_unfold_unit #H
+  elim (eq_inv_pr_next_push … H)
+| #p <tr_inj_unfold_succ #H
+  /3 width=3 by eq_inv_pr_next_bi, ex2_intro/
+]
+qed-.
