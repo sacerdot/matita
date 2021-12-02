@@ -18,20 +18,20 @@ include "ground/lib/relations.ma".
 
 (* LISTS ********************************************************************)
 
-inductive list (A:Type[0]) : Type[0] :=
-| list_nil : list A
-| list_cons: A → list A → list A
+inductive list (A:Type[0]): Type[0] :=
+| list_empty: list A
+| list_lcons: A → list A → list A
 .
 
 interpretation
-  "nil (lists)"
-  'CircledE A = (list_nil A).
+  "empty (lists)"
+  'CircledE A = (list_empty A).
 
 interpretation
-  "cons (lists)"
-  'OPlusRight A hd tl = (list_cons A hd tl).
+  "left cons (lists)"
+  'OPlusRight A hd tl = (list_lcons A hd tl).
 
 rec definition list_all A (R:predicate A) (l:list A) on l ≝ match l with
-[ list_nil        ⇒ ⊤
-| list_cons hd tl ⇒ ∧∧ R hd & list_all A R tl
+[ list_empty       ⇒ ⊤
+| list_lcons hd tl ⇒ ∧∧ R hd & list_all A R tl
 ].

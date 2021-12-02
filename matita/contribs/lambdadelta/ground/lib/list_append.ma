@@ -12,50 +12,47 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/ringeq_3.ma".
+include "ground/notation/functions/oplus_3.ma".
 include "ground/lib/list.ma".
 
-(* EXTENSIONAL EQUIVALENCE FOR LISTS ****************************************)
+(* APPEND FOR LISTS *********************************************************)
 
-rec definition list_eq A (l1,l2:list A) on l1 ≝
-match l1 with
-[ list_empty       ⇒
-  match l2 with
-  [ list_empty     ⇒ ⊤
-  | list_lcons _ _ ⇒ ⊥
-  ]
-| list_lcons a1 l1 ⇒
-  match l2 with
-  [ list_empty       ⇒ ⊥
-  | list_lcons a2 l2 ⇒ a1 = a2 ∧ list_eq A l1 l2
-  ]
+rec definition list_append A (l1:list A) (l2:list A) on l1 ≝ match l1 with
+[ list_empty       ⇒ l2
+| list_lcons hd tl ⇒ hd ⨮ (list_append A tl l2)
 ].
 
 interpretation
-  "extensional equivalence (lists)"
-  'RingEq A l1 l2 = (list_eq A l1 l2).
+  "append (lists)"
+  'OPlus A l1 l2 = (list_append A l1 l2).
 
 (* Basic constructions ******************************************************)
 
-lemma list_eq_refl (A):
-      reflexive … (list_eq A).
-#A #l elim l -l /2 width=1 by conj/
-qed.
-
-(* Main constructions *******************************************************)
-
-theorem eq_list_eq (A) (l1) (l2):
-        l1 = l2 → l1 ≗{A} l2.
+lemma list_append_empty_sn (A):
+      ∀l2. l2 = Ⓔ ⨁{A} l2.
 // qed.
 
-(* Main inversions **********************************************************)
+lemma list_append_lcons_sn (A):
+      ∀a,l1,l2. a ⨮ l1 ⨁ l2 = (a⨮l1) ⨁{A} l2.
+// qed.
 
-theorem list_eq_inv_eq (A) (l1) (l2):
-        l1 ≗{A} l2 → l1 = l2.
-#A #l1 elim l1 -l1 [| #a1 #l1 #IH ] *
-[ //
-| #a2 #l2 #H elim H
-| #H elim H
-| #a2 #l2 * #Ha #Hl /3 width=1 by eq_f2/
+(* Advanced constructions ***************************************************)
+
+lemma list_append_empty_dx (A):
+      ∀l1. l1 = l1 ⨁{A} Ⓔ.
+#A #l1 elim l1 -l1
+[ <list_append_empty_sn //
+| #hd #tl #IH <list_append_lcons_sn <IH //
 ]
-qed-.
+qed.
+
+lemma list_append_assoc (A):
+      associative … (list_append A).
+#A #l1 elim l1 -l1
+[ <list_append_empty_sn //
+| #a1 #l1 #IH *
+  [ #l3 <list_append_empty_dx <list_append_empty_sn //
+  | #a2 #l2 #l3 <list_append_lcons_sn <list_append_lcons_sn <IH //
+  ]
+]
+qed.

@@ -14,6 +14,14 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( l1 @@ break l2 )"
+notation < "hvbox( hd ⨁ break tl )"
   right associative with precedence 55
-  for @{ 'Append $l1 $l2 }.
+  for @{ 'OPlus $S $hd $tl }.
+
+notation > "hvbox( hd ⨁ break tl )"
+  right associative with precedence 55
+  for @{ 'OPlus ? $hd $tl }.
+
+notation > "hvbox( hd ⨁{ break term 46 S } break term 54 tl )"
+  non associative with precedence 55
+  for @{ 'OPlus $S $hd $tl }.

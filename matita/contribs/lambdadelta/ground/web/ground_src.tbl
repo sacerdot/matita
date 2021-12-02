@@ -130,8 +130,13 @@ table {
           [ "stream ( ? ⨮{?} ? )" * ]
         }
       ]
+      [ { "lists" * } {
+          [ "list_append ( ?⨁{?}? )" "list_rcons ( ?⨭{?}? )" * ]
+          [ "list_length ( |?| )" * ]
+          [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_eq" * ]
+        }
+      ]
       [ { "" * } {
-          [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_eq" "list_length ( |?| )" * ]
           [ "bool ( Ⓕ ) ( Ⓣ )" "bool_or" "bool_and" * ]
           [ "ltc" "ltc_ctc" * ]
           [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" "lstar_2a" * ]

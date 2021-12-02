@@ -18,8 +18,8 @@ include "ground/arith/nat_succ.ma".
 (* LENGTH FOR LISTS *********************************************************)
 
 rec definition list_length A (l:list A) on l ≝ match l with
-[ list_nil      ⇒ 𝟎
-| list_cons _ l ⇒ ↑(list_length A l)
+[ list_empty     ⇒ 𝟎
+| list_lcons _ l ⇒ ↑(list_length A l)
 ].
 
 interpretation
@@ -28,17 +28,17 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma list_length_nil (A:Type[0]): |list_nil A| = 𝟎.
+lemma list_length_empty (A:Type[0]): |list_empty A| = 𝟎.
 // qed.
 
-lemma list_length_cons (A:Type[0]) (l:list A) (a:A): |a⨮l| = ↑|l|.
+lemma list_length_lcons (A:Type[0]) (l:list A) (a:A): |a⨮l| = ↑|l|.
 // qed.
 
 (* Basic inversions *********************************************************)
 
 lemma list_length_inv_zero_dx (A:Type[0]) (l:list A):
       |l| = 𝟎 → l = Ⓔ.
-#A * // #a #l >list_length_cons #H
+#A * // #a #l >list_length_lcons #H
 elim (eq_inv_nsucc_zero … H)
 qed-.
 
@@ -50,9 +50,9 @@ lemma list_length_inv_succ_dx (A:Type[0]) (l:list A) (x):
       |l| = ↑x →
       ∃∃tl,a. x = |tl| & l = a ⨮ tl.
 #A *
-[ #x >list_length_nil #H
+[ #x >list_length_empty #H
   elim (eq_inv_zero_nsucc … H)
-| #a #l #x >list_length_cons #H
+| #a #l #x >list_length_lcons #H
   /3 width=4 by eq_inv_nsucc_bi, ex2_2_intro/
 ]
 qed-.
