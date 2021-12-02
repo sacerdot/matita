@@ -13,7 +13,8 @@
 (**************************************************************************)
 
 include "ground/notation/functions/apply_2.ma".
-include "ground/relocation/tr_pat.ma".
+include "ground/arith/pnat_plus.ma".
+include "ground/relocation/tr_map.ma".
 
 (* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
 
@@ -30,36 +31,37 @@ interpretation
   "functional positive application (total relocation maps)"
   'Apply f i = (tr_pap i f).
 
-(* Constructions with pr_pat ***********************************************)
+(* Basic constructions ******************************************************)
 
-(*** at_total *)
-lemma tr_pat_total: ∀i1,f. @❨i1,𝐭❨f❩❩ ≘ f@❨i1❩.
-#i1 elim i1 -i1
-[ * // | #i #IH * /3 width=1 by pr_pat_succ_sn/ ]
+(*** apply_O1 *)
+lemma tr_pap_unit (f):
+      ∀p. p = (p⨮f)@❨𝟏❩.
+// qed.
+
+(*** apply_S1 *)
+lemma tr_pap_succ (f):
+      ∀p,i. f@❨i❩+p = (p⨮f)@❨↑i❩.
+// qed.
+(*
+(*** apply_S2 *)
+lemma tr_pap_next (f):
+      ∀i. ↑(f@❨i❩) = (↑f)@❨i❩.
+* #p #f * //
 qed.
 
-(* Inversions with pr_pat ***************************************************)
 
-lemma at_inv_total: ∀f,i1,i2. @❨i1, f❩ ≘ i2 → f@❨i1❩ = i2.
-/2 width=6 by fr2_nat_mono/ qed-.
 
-(* Basic properties *********************************************************)
+(*** apply_eq_repl *)
+lemma apply_eq_repl (i):
+      ∀f1,f2. f1 ≗ f2 → f1@❨i❩ = f2@❨i❩.
 
-lemma apply_O1: ∀p,f. (p⨮f)@❨𝟏❩ = p.
-// qed.
 
-lemma apply_S1: ∀p,f,i. (p⨮f)@❨↑i❩ = f@❨i❩+p.
-// qed.
-
-lemma apply_eq_repl (i): gr_eq_repl … (λf1,f2. f1@❨i❩ = f2@❨i❩).
+(i): pr_eq_repl … (λf1,f2. f1@❨i❩ = f2@❨i❩).
 #i elim i -i [2: #i #IH ] * #p1 #f1 * #p2 #f2 #H
 elim (eq_inv_seq_aux … H) -H #Hp #Hf //
 >apply_S1 >apply_S1 /3 width=1 by eq_f2/
 qed.
 
-lemma apply_S2: ∀f,i. (↑f)@❨i❩ = ↑(f@❨i❩).
-* #p #f * //
-qed.
 
 (* Main inversion lemmas ****************************************************)
 
@@ -85,4 +87,5 @@ include "ground/relocation/rtmap_istot.ma".
 
 lemma at_istot: ∀f. 𝐓❨f❩.
 /2 width=2 by ex_intro/ qed.
+*)
 *)
