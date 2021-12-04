@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/append_2.ma".
+include "ground/notation/functions/double_semicolon_2.ma".
 include "basic_2A/notation/functions/snbind2_3.ma".
 include "basic_2A/notation/functions/snabbr_2.ma".
 include "basic_2A/notation/functions/snabst_2.ma".
@@ -25,23 +25,28 @@ let rec append L K on K ≝ match K with
 | LPair K I V ⇒ (append L K). ⓑ{I} V
 ].
 
-interpretation "append (local environment)" 'Append L1 L2 = (append L1 L2).
+interpretation
+  "append (local environment)"
+  'DoubleSemicolon L1 L2 = (append L1 L2).
 
-interpretation "local environment tail binding construction (binary)"
-   'SnBind2 I T L = (append (LPair LAtom I T) L).
+interpretation
+  "local environment tail binding construction (binary)"
+  'SnBind2 I T L = (append (LPair LAtom I T) L).
 
-interpretation "tail abbreviation (local environment)"
-   'SnAbbr T L = (append (LPair LAtom Abbr T) L).
+interpretation
+  "tail abbreviation (local environment)"
+  'SnAbbr T L = (append (LPair LAtom Abbr T) L).
 
-interpretation "tail abstraction (local environment)"
-   'SnAbst L T = (append (LPair LAtom Abst T) L).
+interpretation
+  "tail abstraction (local environment)"
+  'SnAbst L T = (append (LPair LAtom Abst T) L).
 
 definition d_appendable_sn: predicate (lenv→relation term) ≝ λR.
-                            ∀K,T1,T2. R K T1 T2 → ∀L. R (L @@ K) T1 T2.
+                            ∀K,T1,T2. R K T1 T2 → ∀L. R (L ;; K) T1 T2.
 
 (* Basic properties *********************************************************)
 
-lemma append_atom_sn: ∀L. ⋆ @@ L = L.
+lemma append_atom_sn: ∀L. ⋆ ;; L = L.
 #L elim L -L normalize //
 qed.
 
@@ -49,7 +54,7 @@ lemma append_assoc: associative … append.
 #L1 #L2 #L3 elim L3 -L3 normalize //
 qed.
 
-lemma append_length: ∀L1,L2. |L1 @@ L2| = |L1| + |L2|.
+lemma append_length: ∀L1,L2. |L1 ;; L2| = |L1| + |L2|.
 #L1 #L2 elim L2 -L2 normalize //
 qed.
 
@@ -66,7 +71,7 @@ qed-.
 
 (* Basic inversion lemmas ***************************************************)
 
-lemma append_inj_sn: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |K1| = |K2| →
+lemma append_inj_sn: ∀K1,K2,L1,L2. L1 ;; K1 = L2 ;; K2 → |K1| = |K2| →
                      L1 = L2 ∧ K1 = K2.
 #K1 elim K1 -K1
 [ * normalize /2 width=1 by conj/
@@ -81,7 +86,7 @@ lemma append_inj_sn: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |K1| = |K2| →
 qed-.
 
 (* Note: lemma 750 *)
-lemma append_inj_dx: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |L1| = |L2| →
+lemma append_inj_dx: ∀K1,K2,L1,L2. L1 ;; K1 = L2 ;; K2 → |L1| = |L2| →
                      L1 = L2 ∧ K1 = K2.
 #K1 elim K1 -K1
 [ * normalize /2 width=1 by conj/
@@ -99,11 +104,11 @@ lemma append_inj_dx: ∀K1,K2,L1,L2. L1 @@ K1 = L2 @@ K2 → |L1| = |L2| →
 ]
 qed-.
 
-lemma append_inv_refl_dx: ∀L,K. L @@ K = L → K = ⋆.
+lemma append_inv_refl_dx: ∀L,K. L ;; K = L → K = ⋆.
 #L #K #H elim (append_inj_dx … (⋆) … H) //
 qed-.
 
-lemma append_inv_pair_dx: ∀I,L,K,V. L @@ K = L.ⓑ{I}V → K = ⋆.ⓑ{I}V.
+lemma append_inv_pair_dx: ∀I,L,K,V. L ;; K = L.ⓑ{I}V → K = ⋆.ⓑ{I}V.
 #I #L #K #V #H elim (append_inj_dx … (⋆.ⓑ{I}V) … H) //
 qed-.
 

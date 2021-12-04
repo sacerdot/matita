@@ -14,14 +14,6 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation < "hvbox( Ⓔ )"
+notation "𝐞"
   non associative with precedence 75
-  for @{ 'CircledE $S }.
-
-notation > "hvbox( Ⓔ )"
-  non associative with precedence 75
-  for @{ 'CircledE ? }.
-
-notation > "hvbox( Ⓔ{ term 46 C } )"
-  non associative with precedence 75
-  for @{ 'CircledE $S }.
+  for @{ 'ElementE }.

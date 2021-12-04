@@ -97,8 +97,8 @@ lemma acr_gcr: ∀RR,RS,RP. gcp RR RS RP → gcr RR RS RP RP →
 #B #A #IHB #IHA @mk_gcr
 [ #G #L #T #H
   elim (cp1 … H1RP G L) #k #HK
-  lapply (H L (⋆k) T (◊) ? ? ?) -H //
-  [ lapply (s2 … IHB G L (Ⓔ) … HK) //
+  lapply (H L (⋆k) T (𝐞) ? ? ?) -H //
+  [ lapply (s2 … IHB G L (ⓔ) … HK) //
   | /3 width=6 by s1, cp3/
   ]
 | #G #L #Vs #HVs #T #H1T #H2T #L0 #V0 #X #cs #HL0 #H #HB
@@ -156,11 +156,11 @@ lapply (acr_gcr … H1RP H2RP A) #HCA
 lapply (acr_gcr … H1RP H2RP B) #HCB
 elim (lifts_inv_bind1 … H) -H #W0 #T0 #HW0 #HT0 #H destruct
 lapply (gcr_lifts … H1RP … HL0 … HW0 HW) -HW #HW0
-lapply (s3 … HCA … a G L0 (Ⓔ)) #H @H -H
-lapply (s6 … HCA G L0 (Ⓔ) (Ⓔ) ?) // #H @H -H
+lapply (s3 … HCA … a G L0 (ⓔ)) #H @H -H
+lapply (s6 … HCA G L0 (ⓔ) (ⓔ) ?) // #H @H -H
 [ @(HA … HL0) //
 | lapply (s1 … HCB) -HCB #HCB
-  lapply (s7 … H2RP G L0 (Ⓔ)) /3 width=1 by/
+  lapply (s7 … H2RP G L0 (ⓔ)) /3 width=1 by/
 ]
 qed.
 

@@ -22,8 +22,8 @@ include "ground/relocation/fr2_map.ma".
 (*** at *)
 inductive fr2_nat: fr2_map → relation nat ≝
 (*** at_nil *)
-| fr2_nat_nil (l):
-  fr2_nat (◊) l l
+| fr2_nat_empty (l):
+  fr2_nat (𝐞) l l
 (*** at_lt *)
 | fr2_nat_lt (f) (d) (h) (l1) (l2):
   l1 < d → fr2_nat f l1 l2 → fr2_nat (❨d,h❩;f) l1 l2
@@ -39,9 +39,9 @@ interpretation
 (* Basic inversions *********************************************************)
 
 (*** at_inv_nil *)
-lemma fr2_nat_inv_nil (l1) (l2):
-      @❨l1, ◊❩ ≘ l2 → l1 = l2.
-#l1 #l2 @(insert_eq_1 … (◊))
+lemma fr2_nat_inv_empty (l1) (l2):
+      @❨l1, 𝐞❩ ≘ l2 → l1 = l2.
+#l1 #l2 @(insert_eq_1 … (𝐞))
 #f * -f -l1 -l2
 [ //
 | #f #d #h #l1 #l2 #_ #_ #H destruct
@@ -50,7 +50,7 @@ lemma fr2_nat_inv_nil (l1) (l2):
 qed-.
 
 (*** at_inv_cons *)
-lemma fr2_nat_inv_cons (f) (d) (h) (l1) (l2):
+lemma fr2_nat_inv_lcons (f) (d) (h) (l1) (l2):
       @❨l1, ❨d,h❩;f❩ ≘ l2 →
       ∨∨ ∧∧ l1 < d & @❨l1, f❩ ≘ l2 
        | ∧∧ d ≤ l1 & @❨l1+h, f❩ ≘ l2.
@@ -63,17 +63,17 @@ lemma fr2_nat_inv_cons (f) (d) (h) (l1) (l2):
 qed-.
 
 (*** at_inv_cons *)
-lemma fr2_nat_inv_cons_lt (f) (d) (h) (l1) (l2):
+lemma fr2_nat_inv_lcons_lt (f) (d) (h) (l1) (l2):
       @❨l1, ❨d,h❩;f❩ ≘ l2 → l1 < d → @❨l1, f❩ ≘ l2.
 #f #d #h #l1 #h2 #H
-elim (fr2_nat_inv_cons … H) -H * // #Hdl1 #_ #Hl1d
+elim (fr2_nat_inv_lcons … H) -H * // #Hdl1 #_ #Hl1d
 elim (nlt_ge_false … Hl1d Hdl1)
 qed-.
 
 (*** at_inv_cons *)
-lemma fr2_nat_inv_cons_ge (f) (d) (h) (l1) (l2):
+lemma fr2_nat_inv_lcons_ge (f) (d) (h) (l1) (l2):
       @❨l1, ❨d,h❩;f❩ ≘ l2 → d ≤ l1 → @❨l1+h, f❩ ≘ l2.
 #f #d #h #l1 #h2 #H
-elim (fr2_nat_inv_cons … H) -H * // #Hl1d #_ #Hdl1
+elim (fr2_nat_inv_lcons … H) -H * // #Hl1d #_ #Hdl1
 elim (nlt_ge_false … Hl1d Hdl1)
 qed-.

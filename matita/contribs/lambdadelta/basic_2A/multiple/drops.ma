@@ -22,7 +22,7 @@ include "basic_2A/multiple/lifts_vector.ma".
 (* ITERATED LOCAL ENVIRONMENT SLICING ***************************************)
 
 inductive drops (s:bool): mr2 → relation lenv ≝
-| drops_nil : ∀L. drops s (◊) L L
+| drops_nil : ∀L. drops s (𝐞) L L
 | drops_cons: ∀L1,L,L2,cs,l,m.
               drops s cs L1 L → ⬇[s, l, m] L ≡ L2 → drops s (❨l, m❩; cs) L1 L2
 .
@@ -49,12 +49,12 @@ definition d_liftables1_all: relation2 lenv term → predicate bool ≝
 
 (* Basic inversion lemmas ***************************************************)
 
-fact drops_inv_nil_aux: ∀L1,L2,s,cs. ⬇*[s, cs] L1 ≡ L2 → cs = ◊ → L1 = L2.
+fact drops_inv_nil_aux: ∀L1,L2,s,cs. ⬇*[s, cs] L1 ≡ L2 → cs = 𝐞 → L1 = L2.
 #L1 #L2 #s #cs * -L1 -L2 -cs //
 #L1 #L #L2 #l #m #cs #_ #_ #H destruct
 qed-.
 
-lemma drops_inv_nil: ∀L1,L2,s. ⬇*[s, ◊] L1 ≡ L2 → L1 = L2.
+lemma drops_inv_nil: ∀L1,L2,s. ⬇*[s, 𝐞] L1 ≡ L2 → L1 = L2.
 /2 width=4 by drops_inv_nil_aux/ qed-.
 
 fact drops_inv_cons_aux: ∀L1,L2,s,cs. ⬇*[s, cs] L1 ≡ L2 →

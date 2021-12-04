@@ -24,8 +24,8 @@ include "ground/relocation/fr2_map.ma".
 (*** minuss *)
 inductive fr2_minus: nat → relation fr2_map ≝
 (*** minuss_nil *)
-| fr2_minus_nil (i):
-  fr2_minus i (◊) (◊)
+| fr2_minus_empty (i):
+  fr2_minus i (𝐞) (𝐞)
 (*** minuss_lt *)
 | fr2_minus_lt (f1) (f2) (d) (h) (i):
   i < d → fr2_minus i f1 f2 → fr2_minus i (❨d,h❩;f1) (❨d-i,h❩;f2)
@@ -41,9 +41,9 @@ interpretation
 (* Basic inversions *********************************************************)
 
 (*** minuss_inv_nil1 *)
-lemma fr2_minus_inv_nil_sn (f2) (i):
-      ◊ ▭ i ≘ f2 → f2 = ◊.
-#f2 #i @(insert_eq_1 … (◊))
+lemma fr2_minus_inv_empty_sn (f2) (i):
+      𝐞 ▭ i ≘ f2 → f2 = 𝐞.
+#f2 #i @(insert_eq_1 … (𝐞))
 #f1 * -f1 -f2 -i
 [ //
 | #f1 #f2 #d #h #i #_ #_ #H destruct
@@ -52,7 +52,7 @@ lemma fr2_minus_inv_nil_sn (f2) (i):
 qed-.
 
 (*** minuss_inv_cons1 *)
-lemma fr2_minus_inv_cons_sn (f1) (f2) (d) (h) (i):
+lemma fr2_minus_inv_lcons_sn (f1) (f2) (d) (h) (i):
       ❨d, h❩;f1 ▭ i ≘ f2 →
       ∨∨ ∧∧ d ≤ i & f1 ▭ h+i ≘ f2
        | ∃∃f. i < d & f1 ▭ i ≘ f & f2 = ❨d-i,h❩;f.
@@ -65,18 +65,18 @@ lemma fr2_minus_inv_cons_sn (f1) (f2) (d) (h) (i):
 qed-.
 
 (*** minuss_inv_cons1_ge *)
-lemma fr2_minus_inv_cons_sn_ge (f1) (f2) (d) (h) (i):
+lemma fr2_minus_inv_lcons_sn_ge (f1) (f2) (d) (h) (i):
       ❨d, h❩;f1 ▭ i ≘ f2 → d ≤ i → f1 ▭ h+i ≘ f2.
 #f1 #f2 #d #h #i #H
-elim (fr2_minus_inv_cons_sn … H) -H * // #f #Hid #_ #_ #Hdi
+elim (fr2_minus_inv_lcons_sn … H) -H * // #f #Hid #_ #_ #Hdi
 elim (nlt_ge_false … Hid Hdi)
 qed-.
 
 (*** minuss_inv_cons1_lt *)
-lemma fr2_minus_inv_cons_sn_lt (f1) (f2) (d) (h) (i):
+lemma fr2_minus_inv_lcons_sn_lt (f1) (f2) (d) (h) (i):
       ❨d, h❩;f1 ▭ i ≘ f2 → i < d →
       ∃∃f. f1 ▭ i ≘ f & f2 = ❨d-i,h❩;f.
-#f1 #f2 #d #h #i #H elim (fr2_minus_inv_cons_sn … H) -H *
+#f1 #f2 #d #h #i #H elim (fr2_minus_inv_lcons_sn … H) -H *
 [ #Hdi #_ #Hid elim (nlt_ge_false … Hid Hdi)
 | /2 width=3 by ex2_intro/
 ]

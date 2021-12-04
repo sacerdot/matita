@@ -29,7 +29,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma list_append_empty_sn (A):
-      ∀l2. l2 = Ⓔ ⨁{A} l2.
+      ∀l2. l2 = ⓔ ⨁{A} l2.
 // qed.
 
 lemma list_append_lcons_sn (A):
@@ -39,7 +39,7 @@ lemma list_append_lcons_sn (A):
 (* Advanced constructions ***************************************************)
 
 lemma list_append_empty_dx (A):
-      ∀l1. l1 = l1 ⨁{A} Ⓔ.
+      ∀l1. l1 = l1 ⨁{A} ⓔ.
 #A #l1 elim l1 -l1
 [ <list_append_empty_sn //
 | #hd #tl #IH <list_append_lcons_sn <IH //

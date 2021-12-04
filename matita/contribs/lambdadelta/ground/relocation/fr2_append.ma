@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/append_2.ma".
+include "ground/notation/functions/double_semicolon_2.ma".
 include "ground/relocation/fr2_map.ma".
 
 (* CONCATENATION FOR FINITE RELOCATION MAPS WITH PAIRS **********************)
@@ -20,22 +20,22 @@ include "ground/relocation/fr2_map.ma".
 (* Note: this is compose *)
 (*** fr2_append *)
 rec definition fr2_append f1 f2 on f1 ≝ match f1 with
-[ fr2_nil          ⇒ f2
-| fr2_cons d h f1 ⇒ ❨d, h❩; fr2_append f1 f2
+[ fr2_empty        ⇒ f2
+| fr2_lcons d h f1 ⇒ ❨d, h❩; fr2_append f1 f2
 ].
 
 interpretation
   "append (finite relocation maps with pairs)" 
-  'Append f1 f2 = (fr2_append f1 f2).
+  'DoubleSemicolon f1 f2 = (fr2_append f1 f2).
 
 (* Basic constructions ******************************************************)
 
 (*** mr2_append_nil *)
-lemma fr2_append_nil (f2):
-      f2 = ◊ @@ f2.
+lemma fr2_append_empty (f2):
+      f2 = 𝐞 ;; f2.
 // qed.
 
 (*** mr2_append_cons *)
-lemma fr2_append_cons (d) (h) (f1) (f2):
-      ❨d, h❩; (f1 @@ f2) = (❨d, h❩; f1) @@ f2.
+lemma fr2_append_lcons (d) (h) (f1) (f2):
+      ❨d, h❩; (f1 ;; f2) = (❨d, h❩; f1) ;; f2.
 // qed.

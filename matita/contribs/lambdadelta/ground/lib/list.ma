@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/circledE_1.ma".
+include "ground/notation/functions/circled_element_e_1.ma".
 include "ground/notation/functions/oplusright_3.ma".
 include "ground/lib/relations.ma".
 
@@ -25,7 +25,7 @@ inductive list (A:Type[0]): Type[0] :=
 
 interpretation
   "empty (lists)"
-  'CircledE A = (list_empty A).
+  'CircledElementE A = (list_empty A).
 
 interpretation
   "left cons (lists)"

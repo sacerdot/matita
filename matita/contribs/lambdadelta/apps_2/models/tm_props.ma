@@ -38,7 +38,7 @@ lemma tm_mi (h) (gv1) (gv2) (lv1) (lv2) (p) (W) (T):
 
 
 <pippo in ⊢ (????%?); >(mf_comp … T) in ⊢ (????%?);
-[2: @@tm_vpush_vlift_join_O
+[2: ;;tm_vpush_vlift_join_O
 
 <pippo in ⊢ (????%?);
 

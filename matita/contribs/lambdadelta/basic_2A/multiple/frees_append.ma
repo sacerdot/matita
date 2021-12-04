@@ -20,7 +20,7 @@ include "basic_2A/multiple/frees.ma".
 (* Properties on append for local environments ******************************)
 
 lemma frees_append: ∀L2,U,l,i. L2 ⊢ i ϵ 𝐅*[l]⦃U⦄ → i ≤ |L2| →
-                    ∀L1. L1 @@ L2 ⊢ i ϵ 𝐅*[l]⦃U⦄.
+                    ∀L1. L1 ;; L2 ⊢ i ϵ 𝐅*[l]⦃U⦄.
 #L2 #U #l #i #H elim H -L2 -U -l -i /3 width=2 by frees_eq/
 #I #L2 #K2 #U #W #l #i #j #Hlj #Hji #HnU #HLK2 #_ #IHW #Hi #L1
 lapply (drop_fwd_length_minus2 … HLK2) normalize #H0
@@ -33,7 +33,7 @@ qed.
 
 (* Inversion lemmas on append for local environments ************************)
 
-fact frees_inv_append_aux: ∀L,U,l,i. L ⊢ i ϵ 𝐅*[l]⦃U⦄ → ∀L1,L2. L = L1 @@ L2 →
+fact frees_inv_append_aux: ∀L,U,l,i. L ⊢ i ϵ 𝐅*[l]⦃U⦄ → ∀L1,L2. L = L1 ;; L2 →
                            i ≤ |L2| → L2 ⊢ i ϵ 𝐅*[l]⦃U⦄.
 #L #U #l #i #H elim H -L -U -l -i /3 width=2 by frees_eq/
 #Z #L #Y #U #X #l #i #j #Hlj #Hji #HnU #HLY #_ #IHW #L1 #L2 #H #Hi destruct
@@ -47,6 +47,6 @@ lapply (drop_O1_inv_append1_le … HLY … HLK2) -HLY
 ]
 qed-.
 
-lemma frees_inv_append: ∀L1,L2,U,l,i. L1 @@ L2 ⊢ i ϵ 𝐅*[l]⦃U⦄ →
+lemma frees_inv_append: ∀L1,L2,U,l,i. L1 ;; L2 ⊢ i ϵ 𝐅*[l]⦃U⦄ →
                         i ≤ |L2| → L2 ⊢ i ϵ 𝐅*[l]⦃U⦄.
 /2 width=4 by frees_inv_append_aux/ qed-.

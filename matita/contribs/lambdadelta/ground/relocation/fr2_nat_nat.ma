@@ -22,10 +22,10 @@ include "ground/relocation/fr2_nat.ma".
 theorem fr2_nat_mono (f) (l):
         ∀l1. @❨l, f❩ ≘ l1 → ∀l2. @❨l, f❩ ≘ l2 → l1 = l2.
 #f #l #l1 #H elim H -f -l -l1
-[ #l #x #H <(fr2_nat_inv_nil … H) -x //
+[ #l #x #H <(fr2_nat_inv_empty … H) -x //
 | #f #d #h #l #l1 #Hld #_ #IH #x #H
-  lapply (fr2_nat_inv_cons_lt … H Hld) -H -Hld /2 width=1 by/
+  lapply (fr2_nat_inv_lcons_lt … H Hld) -H -Hld /2 width=1 by/
 | #f #d #h #l #l1 #Hdl #_ #IH #x #H
-  lapply (fr2_nat_inv_cons_ge … H Hdl) -H -Hdl /2 width=1 by/
+  lapply (fr2_nat_inv_lcons_ge … H Hdl) -H -Hdl /2 width=1 by/
 ]
 qed-.

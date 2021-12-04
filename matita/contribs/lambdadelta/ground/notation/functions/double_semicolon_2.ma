@@ -14,6 +14,6 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( l1 @@ break l2 )"
+notation "hvbox( l1 ;; break l2 )"
   right associative with precedence 55
-  for @{ 'Append $l1 $l2 }.
+  for @{ 'DoubleSemicolon $l1 $l2 }.

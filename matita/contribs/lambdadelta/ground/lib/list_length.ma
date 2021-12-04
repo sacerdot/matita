@@ -37,13 +37,13 @@ lemma list_length_lcons (A:Type[0]) (l:list A) (a:A): |a⨮l| = ↑|l|.
 (* Basic inversions *********************************************************)
 
 lemma list_length_inv_zero_dx (A:Type[0]) (l:list A):
-      |l| = 𝟎 → l = Ⓔ.
+      |l| = 𝟎 → l = ⓔ.
 #A * // #a #l >list_length_lcons #H
 elim (eq_inv_nsucc_zero … H)
 qed-.
 
 lemma list_length_inv_zero_sn (A:Type[0]) (l:list A):
-      (𝟎) = |l| → l = Ⓔ.
+      (𝟎) = |l| → l = ⓔ.
 /2 width=1 by list_length_inv_zero_dx/ qed-.
 
 lemma list_length_inv_succ_dx (A:Type[0]) (l:list A) (x):

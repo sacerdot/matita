@@ -20,8 +20,8 @@ include "ground/relocation/fr2_map.ma".
 (* Note: this is pushs *)
 (*** pluss *)
 rec definition fr2_plus (f:fr2_map) (n:nat) on f ≝ match f with
-[ fr2_nil        ⇒ ◊
-| fr2_cons d h f ⇒ ❨d+n,h❩;fr2_plus f n
+[ fr2_empty       ⇒ 𝐞
+| fr2_lcons d h f ⇒ ❨d+n,h❩;fr2_plus f n
 ].
 
 interpretation
@@ -31,21 +31,21 @@ interpretation
 (* Basic constructions ******************************************************)
 
 (*** pluss_SO2 *)
-lemma fr2_plus_cons_unit (d) (h) (f):
+lemma fr2_plus_lcons_unit (d) (h) (f):
       ((❨d,h❩;f)+𝟏) = ❨↑d,h❩;f+𝟏.
 normalize // qed.
 
 (* Basic inversions *********************************************************)
 
 (*** pluss_inv_nil2 *)
-lemma fr2_plus_inv_nil_dx (n) (f):
-      f+n = ◊ → f = ◊.
+lemma fr2_plus_inv_empty_dx (n) (f):
+      f+n = 𝐞 → f = 𝐞.
 #n * // normalize
 #d #h #f #H destruct
 qed.
 
 (*** pluss_inv_cons2 *)
-lemma fr2_plus_inv_cons_dx (n) (d) (h) (f2) (f):
+lemma fr2_plus_inv_lcons_dx (n) (d) (h) (f2) (f):
       f + n = ❨d,h❩;f2 →
       ∃∃f1. f1+n = f2 & f = ❨d-n,h❩;f1.
 #n #d #h #f2 *

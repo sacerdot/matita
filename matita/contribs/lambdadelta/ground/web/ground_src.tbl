@@ -24,9 +24,9 @@ table {
       [ { "finite relocation with pairs" * } {
           [ "fr2_nat ( @❨?,?❩ ≘ ? )" "fr2_nat_nat" * ]
           [ "fr2_minus ( ? ▭ ? ≘ ? )" * ]
-          [ "fr2_append ( ?@@? )" * ]
+          [ "fr2_append ( ?;;? )" * ]
           [ "fr2_plus ( ?+? )" * ]
-          [ "fr2_map ( ◊ ) ( ❨?,?❩;? )" * ]
+          [ "fr2_map ( 𝐞 ) ( ❨?,?❩;? )" * ]
         }
       ]
       [ { "total relocation" * } {
@@ -133,7 +133,7 @@ table {
       [ { "lists" * } {
           [ "list_append ( ?⨁{?}? )" "list_rcons ( ?⨭{?}? )" * ]
           [ "list_length ( |?| )" * ]
-          [ "list ( Ⓔ{?} ) ( ? ⨮{?} ? )" "list_eq" * ]
+          [ "list ( ⓔ{?} ) ( ? ⨮{?} ? )" "list_eq" * ]
         }
       ]
       [ { "" * } {

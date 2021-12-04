@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/diamond_0.ma".
+include "ground/notation/functions/element_e_0.ma".
 include "ground/notation/functions/semicolon_3.ma".
 include "ground/arith/nat.ma".
 
@@ -21,14 +21,15 @@ include "ground/arith/nat.ma".
 (*** mr2 *)
 inductive fr2_map: Type[0] :=
 (*** nil2 *)
-  | fr2_nil : fr2_map
+| fr2_empty: fr2_map
 (*** cons2 *)
-  | fr2_cons: nat → nat → fr2_map → fr2_map.
+| fr2_lcons: nat → nat → fr2_map → fr2_map
+.
 
 interpretation
-  "nil (finite relocation maps with pairs)"
-  'Diamond = (fr2_nil).
+  "empty (finite relocation maps with pairs)"
+  'ElementE = (fr2_empty).
 
 interpretation
-  "cons (finite relocation maps with pairs)"
-  'Semicolon d h f = (fr2_cons d h f).
+  "left cons (finite relocation maps with pairs)"
+  'Semicolon d h f = (fr2_lcons d h f).

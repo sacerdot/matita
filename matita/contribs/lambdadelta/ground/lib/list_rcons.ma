@@ -24,7 +24,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma list_cons_comm (A):
-      ∀a. a ⨮ Ⓔ = Ⓔ ⨭{A} a.
+      ∀a. a ⨮ ⓔ = ⓔ ⨭{A} a.
 // qed.
 
 lemma list_cons_shift (A):
