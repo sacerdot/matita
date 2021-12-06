@@ -27,8 +27,6 @@ inductive label: Type[0] ≝
 | label_edge_s: label
 .
 
-coercion label_node_d.
-
 interpretation
   "variable reference by depth (label)"
   'NodeLabelD p = (label_node_d p).

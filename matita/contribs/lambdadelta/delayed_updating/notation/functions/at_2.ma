@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( 𝗱❨ break term 46 a ❩ )"
+notation "hvbox( @ break term 76 u. break term 75 t )"
   non associative with precedence 75
-  for @{ 'NodeLabelD $a }.
+  for @{ 'At $u $t }.

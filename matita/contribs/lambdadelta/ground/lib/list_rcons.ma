@@ -41,3 +41,11 @@ lemma list_append_rcons_sn (A):
 lemma list_append_rcons_dx (A):
       ∀l1,l2,a. l1 ⨁ l2 ⨭ a = l1 ⨁{A} (l2 ⨭ a).
 // qed.
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_list_empty_rcons (A):
+      ∀l,a. ⓔ = l⨭{A}a → ⊥.
+#A #l #a #H
+elim (eq_inv_list_empty_append … H) -H #_ #H destruct
+qed-.

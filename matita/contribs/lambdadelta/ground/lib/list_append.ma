@@ -56,3 +56,14 @@ lemma list_append_assoc (A):
   ]
 ]
 qed.
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_list_empty_append (A):
+      ∀l1,l2. ⓔ = l1⨁{A}l2 →
+      ∧∧ ⓔ = l1 & ⓔ = l2.
+#A *
+[ #l2 /2 width=1 by conj/
+| #a1 #l1 #l2 <list_append_lcons_sn #H destruct
+]
+qed-.
