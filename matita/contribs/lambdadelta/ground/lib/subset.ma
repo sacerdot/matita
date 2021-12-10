@@ -12,8 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR DELAYED UPDATING ********************************************)
+include "ground/notation/functions/powerclass_1.ma".
+include "ground/notation/relations/epsilon_3.ma".
+include "ground/lib/relations.ma".
 
-notation "hvbox( p ϵ⬦ break term 46 t )"
-  non associative with precedence 45
-  for @{ 'UpDownArrowEpsilon $p $t }.
+(* SUBSETS ******************************************************************)
+
+definition subset (A): Type[0] ≝
+           predicate A.
+
+interpretation
+  "power class (subset)"
+  'PowerClass A = (subset A).
+
+definition subset_in (A): 𝒫❨A❩ → 𝒫❨A❩ ≝
+           λu.u.
+
+interpretation
+  "membership (subset)"
+  'Epsilon A a u = (subset_in A u a).
