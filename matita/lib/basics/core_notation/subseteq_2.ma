@@ -11,5 +11,6 @@
 
 (* Core notation *******************************************************)
 
-notation "hvbox(a break ⊆ b)" non associative with precedence 45
-for @{ 'subseteq $a $b }. (* \subseteq *)
+notation "hvbox( a ⊆ break term 46 b )"
+ non associative with precedence 45
+ for @{ 'subseteq $a $b }. (* \subseteq *)

@@ -22,9 +22,9 @@ include "delayed_updating/notation/functions/edgelabel_s_0.ma".
 
 inductive label: Type[0] ≝
 | label_node_d: pnat → label
-| label_edge_l: label
-| label_edge_a: label
-| label_edge_s: label
+| label_edge_L: label
+| label_edge_A: label
+| label_edge_S: label
 .
 
 interpretation
@@ -33,12 +33,12 @@ interpretation
 
 interpretation
   "name-free functional abstruction (label)"
-  'EdgeLabelL = (label_edge_l).
+  'EdgeLabelL = (label_edge_L).
 
 interpretation
   "application (label)"
-  'EdgeLabelA = (label_edge_a).
+  'EdgeLabelA = (label_edge_A).
 
 interpretation
   "side branch (label)"
-  'EdgeLabelS = (label_edge_s).
+  'EdgeLabelS = (label_edge_S).
