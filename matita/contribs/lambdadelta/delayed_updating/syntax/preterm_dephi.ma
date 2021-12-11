@@ -12,9 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "delayed_updating/syntax/path_dephi.ma".
 include "delayed_updating/syntax/preterm_constructors.ma".
 
 (* DEPHI FOR PRETERM ********************************************************)
 
-definition preterm_dephi (f) (t) ≝
-           λp. ∃∃q. q ϵ⬦ t & p = path_dephi f q. 
+definition preterm_dephi (f) (t): preterm ≝
+           λp. ∃∃q. q ϵ t & p = path_dephi f q. 

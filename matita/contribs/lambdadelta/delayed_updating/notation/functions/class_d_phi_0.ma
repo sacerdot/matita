@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( t ϵ break 𝐃𝛗 )"
-  non associative with precedence 45
-  for @{ 'InPredicateDPhi $t }.
+notation "hvbox( 𝐃𝛗 )"
+  non associative with precedence 75
+  for @{ 'ClassDPhi }.

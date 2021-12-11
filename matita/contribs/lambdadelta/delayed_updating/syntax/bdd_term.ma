@@ -17,44 +17,54 @@ include "ground/xoa/ex_3_1.ma".
 include "ground/xoa/ex_4_2.ma".
 include "ground/xoa/ex_4_3.ma".
 include "ground/xoa/ex_5_3.ma".
+include "delayed_updating/syntax/preterm_equivalence.ma".
 include "delayed_updating/syntax/preterm_constructors.ma".
-include "delayed_updating/notation/relations/in_predicate_d_phi_1.ma".
+include "delayed_updating/notation/functions/class_d_phi_0.ma".
 
 (* BY-DEPTH DELAYED (BDD) TERM **********************************************)
 
-inductive bdd: predicate preterm ≝
+inductive bdd: 𝒫❨preterm❩ ≝
 | bdd_oref: ∀n. bdd #n
 | bdd_iref: ∀t,n. bdd t → bdd 𝛗n.t
 | bdd_abst: ∀t. bdd t → bdd 𝛌.t
 | bdd_appl: ∀u,t. bdd u → bdd t → bdd @u.t
+| bdd_conv: ∀t1,t2. t1 ⇔ t2 → bdd t1 → bdd t2
 .
 
 interpretation
-  "well-formed by-depth delayed (preterm)"
-  'InPredicateDPhi t = (bdd t).
+  "by-depth delayed (preterm)"
+  'ClassDPhi = (bdd).
 
 (* Basic inversions *********************************************************)
 
 lemma bdd_inv_in_comp_gen:
-      ∀t,p. t ϵ 𝐃𝛗 → p ϵ⬦ t →
-      ∨∨ ∃∃n. #n = t & 𝗱❨n❩;𝐞 = p
-       | ∃∃u,q,n. u ϵ 𝐃𝛗 & q ϵ⬦ u & 𝛗n.u = t & 𝗱❨n❩;q = p
-       | ∃∃u,q. u ϵ 𝐃𝛗 & q ϵ⬦ u & 𝛌.u = t & 𝗟;q = p
-       | ∃∃v,u,q. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ⬦ u & @v.u = t & 𝗔;q = p
-       | ∃∃v,u,q. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ⬦ v & @v.u = t & 𝗦;q = p
+      ∀t,p. t ϵ 𝐃𝛗 → p ϵ t →
+      ∨∨ ∃∃n. #n ⇔ t & 𝗱❨n❩;𝐞 = p
+       | ∃∃u,q,n. u ϵ 𝐃𝛗 & q ϵ u & 𝛗n.u ⇔ t & 𝗱❨n❩;q = p
+       | ∃∃u,q. u ϵ 𝐃𝛗 & q ϵ u & 𝛌.u ⇔ t & 𝗟;q = p
+       | ∃∃v,u,q. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ u & @v.u ⇔ t & 𝗔;q = p
+       | ∃∃v,u,q. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ v & @v.u ⇔ t & 𝗦;q = p
 .
-#t #p *
+#t #p #H elim H -H
 [ #n * /3 width=3 by or5_intro0, ex2_intro/
-| #u #n #Hu * #q #Hq #Hp /3 width=7 by ex4_3_intro, or5_intro1/
-| #u #Hu * #q #Hq #Hp /3 width=6 by or5_intro2, ex4_2_intro/
-| #v #u #Hv #Hu * * #q #Hq #Hp /3 width=8 by ex5_3_intro, or5_intro3, or5_intro4/
+| #u #n #Hu #_ * #q #Hq #Hp /3 width=7 by ex4_3_intro, or5_intro1/
+| #u #Hu #_ * #q #Hq #Hp /3 width=6 by or5_intro2, ex4_2_intro/
+| #v #u #Hv #Hu #_ #_ * * #q #Hq #Hp /3 width=8 by ex5_3_intro, or5_intro3, or5_intro4/
+| #t1 #t2 #Ht12 #_ #IH #Ht2
+  elim IH -IH [6: /2 width=3 by subset_in_eq_repl_fwd/ ] *
+  [ /4 width=3 by subset_eq_trans, or5_intro0, ex2_intro/
+  | /4 width=7 by subset_eq_trans, ex4_3_intro, or5_intro1/
+  | /4 width=6 by subset_eq_trans, or5_intro2, ex4_2_intro/
+  | /4 width=8 by subset_eq_trans, ex5_3_intro, or5_intro3/
+  | /4 width=8 by subset_eq_trans, ex5_3_intro, or5_intro4/
+  ]
 ]
 qed-.
 
 lemma bdd_inv_in_comp_d:
-      ∀t,q,n. t ϵ 𝐃𝛗 → 𝗱❨n❩;q ϵ⬦ t →
-      ∨∨ ∧∧ #n = t & 𝐞 = q
-       | ∃∃u. u ϵ 𝐃𝛗 & q ϵ⬦ u & 𝛗n.u = t
+      ∀t,q,n. t ϵ 𝐃𝛗 → 𝗱❨n❩;q ϵ t →
+      ∨∨ ∧∧ #n ⇔ t & 𝐞 = q
+       | ∃∃u. u ϵ 𝐃𝛗 & q ϵ u & 𝛗n.u ⇔ t
 .
 #t #q #n #Ht #Hq
 elim (bdd_inv_in_comp_gen … Ht Hq) -Ht -Hq *
@@ -67,9 +77,9 @@ elim (bdd_inv_in_comp_gen … Ht Hq) -Ht -Hq *
 qed-.
 
 lemma bdd_inv_in_root_d:
-      ∀t,q,n. t ϵ 𝐃𝛗 → 𝗱❨n❩;q ϵ▵ t →
-      ∨∨ ∧∧ #n = t & 𝐞 = q
-       | ∃∃u. u ϵ 𝐃𝛗 & q ϵ▵ u & 𝛗n.u = t
+      ∀t,q,n. t ϵ 𝐃𝛗 → 𝗱❨n❩;q ϵ ▵t →
+      ∨∨ ∧∧ #n ⇔ t & 𝐞 = q
+       | ∃∃u. u ϵ 𝐃𝛗 & q ϵ ▵u & 𝛗n.u ⇔ t
 .
 #t #q #n #Ht * #r #Hq
 elim (bdd_inv_in_comp_d … Ht Hq) -Ht -Hq *
@@ -82,8 +92,8 @@ elim (bdd_inv_in_comp_d … Ht Hq) -Ht -Hq *
 qed-.
 
 lemma bdd_inv_in_comp_L:
-      ∀t,q. t ϵ 𝐃𝛗 → 𝗟;q ϵ⬦ t →
-      ∃∃u. u ϵ 𝐃𝛗 & q ϵ⬦ u & 𝛌.u = t
+      ∀t,q. t ϵ 𝐃𝛗 → 𝗟;q ϵ t →
+      ∃∃u. u ϵ 𝐃𝛗 & q ϵ u & 𝛌.u ⇔ t
 .
 #t #q #Ht #Hq
 elim (bdd_inv_in_comp_gen … Ht Hq) -Ht -Hq *
@@ -96,8 +106,8 @@ elim (bdd_inv_in_comp_gen … Ht Hq) -Ht -Hq *
 qed-.
 
 lemma bdd_inv_in_root_L:
-      ∀t,q. t ϵ 𝐃𝛗 → 𝗟;q ϵ▵ t →
-      ∃∃u. u ϵ 𝐃𝛗 & q ϵ▵ u & 𝛌.u = t.
+      ∀t,q. t ϵ 𝐃𝛗 → 𝗟;q ϵ ▵t →
+      ∃∃u. u ϵ 𝐃𝛗 & q ϵ ▵u & 𝛌.u ⇔ t.
 #t #q #Ht * #r #Hq
 elim (bdd_inv_in_comp_L … Ht Hq) -Ht -Hq
 #u #Hu #Hq #H0 destruct
@@ -105,8 +115,8 @@ elim (bdd_inv_in_comp_L … Ht Hq) -Ht -Hq
 qed-.
 
 lemma bdd_inv_in_comp_A:
-      ∀t,q. t ϵ 𝐃𝛗 → 𝗔;q ϵ⬦ t →
-      ∃∃v,u. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ⬦ u & @v.u = t
+      ∀t,q. t ϵ 𝐃𝛗 → 𝗔;q ϵ t →
+      ∃∃v,u. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ u & @v.u ⇔ t
 .
 #t #q #Ht #Hq
 elim (bdd_inv_in_comp_gen … Ht Hq) -Ht -Hq *
@@ -119,8 +129,8 @@ elim (bdd_inv_in_comp_gen … Ht Hq) -Ht -Hq *
 qed-.
 
 lemma bdd_inv_in_root_A:
-      ∀t,q. t ϵ 𝐃𝛗 → 𝗔;q ϵ▵ t →
-      ∃∃v,u. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ▵ u & @v.u = t
+      ∀t,q. t ϵ 𝐃𝛗 → 𝗔;q ϵ ▵t →
+      ∃∃v,u. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ ▵u & @v.u ⇔ t
 .
 #t #q #Ht * #r #Hq
 elim (bdd_inv_in_comp_A … Ht Hq) -Ht -Hq
@@ -129,8 +139,8 @@ elim (bdd_inv_in_comp_A … Ht Hq) -Ht -Hq
 qed-.
 
 lemma bdd_inv_in_comp_S:
-      ∀t,q. t ϵ 𝐃𝛗 → 𝗦;q ϵ⬦ t →
-      ∃∃v,u. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ⬦ v & @v.u = t
+      ∀t,q. t ϵ 𝐃𝛗 → 𝗦;q ϵ t →
+      ∃∃v,u. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ v & @v.u ⇔ t
 .
 #t #q #Ht #Hq
 elim (bdd_inv_in_comp_gen … Ht Hq) -Ht -Hq *
@@ -143,8 +153,8 @@ elim (bdd_inv_in_comp_gen … Ht Hq) -Ht -Hq *
 qed-.
 
 lemma bdd_inv_in_root_S:
-      ∀t,q. t ϵ 𝐃𝛗 → 𝗦;q ϵ▵ t →
-      ∃∃v,u. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ▵ v & @v.u = t
+      ∀t,q. t ϵ 𝐃𝛗 → 𝗦;q ϵ ▵t →
+      ∃∃v,u. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ ▵v & @v.u ⇔ t
 .
 #t #q #Ht * #r #Hq
 elim (bdd_inv_in_comp_S … Ht Hq) -Ht -Hq
@@ -155,13 +165,17 @@ qed-.
 (* Advanced inversions ******************************************************)
 
 lemma bbd_mono_in_root_d:
-      ∀l,n,p,t. t ϵ 𝐃𝛗 → p,𝗱❨n❩ ϵ▵ t → p,l ϵ▵ t → 𝗱❨n❩ = l.
+      ∀l,n,p,t. t ϵ 𝐃𝛗 → p,𝗱❨n❩ ϵ ▵t → p,l ϵ ▵t → 𝗱❨n❩ = l.
 #l #n #p elim p -p
 [ #t #Ht <list_cons_comm <list_cons_comm #Hn #Hl
   elim (bdd_inv_in_root_d … Ht Hn) -Ht -Hn *
-  [ #H0 #_ destruct
+  [ #H0 #_
+    lapply (preterm_root_eq_repl … H0) -H0 #H0
+    lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
     elim (preterm_in_root_inv_lcons_oref … Hl) -Hl //
-  | #u #_ #_ #H0 destruct
+  | #u #_ #_ #H0
+    lapply (preterm_root_eq_repl … H0) -H0 #H0
+    lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
     elim (preterm_in_root_inv_lcons_iref … Hl) -Hl //
   ]
 | * [ #m ] #p #IH #t #Ht
@@ -169,20 +183,28 @@ lemma bbd_mono_in_root_d:
   [ elim (bdd_inv_in_root_d … Ht Hn) -Ht -Hn *
     [ #_ #H0
       elim (eq_inv_list_empty_rcons ??? H0)
-    | #u #Hu #Hp #H0 destruct
+    | #u #Hu #Hp #H0
+      lapply (preterm_root_eq_repl … H0) -H0 #H0
+      lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
       elim (preterm_in_root_inv_lcons_iref … Hl) -Hl #_ #Hl
       /2 width=4 by/
     ]
   | elim (bdd_inv_in_root_L … Ht Hn) -Ht -Hn
-    #u #Hu #Hp #H0 destruct
+    #u #Hu #Hp #H0
+    lapply (preterm_root_eq_repl … H0) -H0 #H0
+    lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl  
     elim (preterm_in_root_inv_lcons_abst … Hl) -Hl #_ #Hl
     /2 width=4 by/
   | elim (bdd_inv_in_root_A … Ht Hn) -Ht -Hn
-    #v #u #_ #Hu #Hp #H0 destruct
+    #v #u #_ #Hu #Hp #H0
+    lapply (preterm_root_eq_repl … H0) -H0 #H0
+    lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
     elim (preterm_in_root_inv_lcons_appl … Hl) -Hl * #H0 #Hl destruct
     /2 width=4 by/
   | elim (bdd_inv_in_root_S … Ht Hn) -Ht -Hn
-    #v #u #Hv #_ #Hp #H0 destruct
+    #v #u #Hv #_ #Hp #H0
+    lapply (preterm_root_eq_repl … H0) -H0 #H0
+    lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
     elim (preterm_in_root_inv_lcons_appl … Hl) -Hl * #H0 #Hl destruct
     /2 width=4 by/
   ]

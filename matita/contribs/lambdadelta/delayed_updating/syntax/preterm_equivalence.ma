@@ -12,8 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GROUND NOTATION **********************************************************)
+include "ground/lib/subset_equivalence.ma".
+include "delayed_updating/syntax/preterm.ma".
 
-notation "hvbox( a1 ⇔ break term 46 a2 )"
-  non associative with precedence 45
-  for @{ 'WhiteHArrow $a1 $a2 }.
+(* EQUIVALENCE FOR PRETERM **************************************************)
+
+(* Constructions with preterm_root ******************************************)
+
+lemma preterm_root_incl_repl:
+      ∀t1,t2. t1 ⊆ t2 → ▵t1 ⊆ ▵t2.
+#t1 #t2 #Ht #p * #q #Hq
+/3 width=2 by ex_intro/
+qed.
+
+lemma preterm_root_eq_repl:
+      ∀t1,t2. t1 ⇔ t2 → ▵t1 ⇔ ▵t2.
+#t1 #t2 * #H1 #H2
+/3 width=3 by conj, preterm_root_incl_repl/
+qed.

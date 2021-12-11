@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/white_harrow_2.ma".
+include "ground/notation/relations/arroweq_2.ma".
 include "ground/lib/subset_inclusion.ma".
 
 (* EQUIVALENCE FOR SUBSETS **************************************************)
@@ -22,7 +22,21 @@ definition subset_eq (A): relation2 𝒫❨A❩ 𝒫❨A❩ ≝
 
 interpretation
   "equivalence (subset)"
-  'WhiteHArrow u1 u2 = (subset_eq ? u1 u2).
+  'ArrowEq u1 u2 = (subset_eq ? u1 u2).
+
+(* Basic destructions *******************************************************)
+
+lemma subset_in_eq_repl_back (A) (a:A):
+      ∀u1. a ϵ u1 → ∀u2. u1 ⇔ u2 → a ϵ u2.
+#A #a #u1 #Hu1 #u2 *
+/2 width=1 by/
+qed-.
+
+lemma subset_in_eq_repl_fwd (A) (a:A):
+      ∀u1. a ϵ u1 → ∀u2. u2 ⇔ u1 → a ϵ u2.
+#A #a #u1 #Hu1 #u2 *
+/2 width=1 by/
+qed-.
 
 (* Basic constructions ******************************************************)
 
