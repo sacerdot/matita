@@ -12,33 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/apply_2.ma".
-include "ground/arith/pnat_plus.ma".
-include "ground/relocation/tr_map.ma".
+include "ground/lib/stream_eq.ma".
+include "ground/relocation/tr_pap.ma".
 
 (* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
 
-(*** apply *)
-rec definition tr_pap (i: pnat) on i: tr_map → pnat.
-* #p #f cases i -i
-[ @p
-| #i lapply (tr_pap i f) -tr_pap -i -f
-  #i @(i+p)
+(* Main constructions with stream_eq ****************************************)
+
+(* Note: a better statement would be: tr_eq_repl … (λf1,f2. f1@❨i❩ = f2@❨i❩) *)
+(*** apply_eq_repl *)
+theorem apply_eq_repl (i):
+        ∀f1,f2. f1 ≗ f2 → f1@❨i❩ = f2@❨i❩.
+#i elim i -i [2: #i #IH ] * #p1 #f1 * #p2 #f2 #H
+elim (stream_eq_inv_cons_bi … H) -H [1,8: |*: // ] #Hp #Hf //
+<tr_pap_succ <tr_pap_succ /3 width=1 by eq_f2/
+qed.
+
+(* Main inversions with stream_eq *******************************************)
+
+corec theorem nstream_eq_inv_ext:
+              ∀f1,f2. (∀i. f1@❨i❩ = f2@❨i❩) → f1 ≗ f2.
+* #p1 #f1 * #p2 #f2 #Hf @stream_eq_cons
+[ @(Hf (𝟏))
+| @nstream_eq_inv_ext -nstream_eq_inv_ext #i
+  lapply (Hf (𝟏)) <tr_pap_unit <tr_pap_unit #H destruct
+  lapply (Hf (↑i)) <tr_pap_succ <tr_pap_succ #H
+  /3 width=2 by eq_inv_pplus_bi_dx, eq_inv_psucc_bi/
 ]
-defined.
-
-interpretation
-  "functional positive application (total relocation maps)"
-  'Apply f i = (tr_pap i f).
-
-(* Basic constructions ******************************************************)
-
-(*** apply_O1 *)
-lemma tr_pap_unit (f):
-      ∀p. p = (p⨮f)@❨𝟏❩.
-// qed.
-
-(*** apply_S1 *)
-lemma tr_pap_succ (f):
-      ∀p,i. f@❨i❩+p = (p⨮f)@❨↑i❩.
-// qed.
+qed-.

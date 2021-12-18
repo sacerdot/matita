@@ -55,6 +55,7 @@ lemma stream_eq_repl_sym (A) (R):
 
 (* Basic inversions *********************************************************)
 
+(*** eq_inv_seq_aux *)
 lemma stream_eq_inv_cons_bi (A):
       ∀t1,t2. t1 ≗{A} t2 →
       ∀u1,u2,b1,b2. b1⨮u1 = t1 → b2⨮u2 = t2 →

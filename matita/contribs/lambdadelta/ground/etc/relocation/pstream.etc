@@ -18,24 +18,6 @@ include "ground/arith/pnat.ma".
 
 (* RELOCATION P-STREAM ******************************************************)
 
-definition gr_push: gr_map → gr_map ≝ λf. 𝟏⨮f.
-
-interpretation "push (pstream)" 'UpSpoon f = (gr_push f).
-
-definition gr_next: gr_map → gr_map.
-* #p #f @(↑p⨮f)
-defined.
-
-interpretation "next (pstream)" 'UpArrow f = (gr_next f).
-
-(* Basic properties *********************************************************)
-
-lemma gr_push_unfold: ∀f. 𝟏⨮f = ⫯f.
-// qed.
-
-lemma gr_next_unfold: ∀f,p. (↑p)⨮f = ↑(p⨮f).
-// qed.
-
 (* Basic inversion lemmas ***************************************************)
 
 lemma eq_inv_gr_push_bi: injective ? ? gr_push.

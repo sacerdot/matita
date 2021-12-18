@@ -12,33 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/apply_2.ma".
-include "ground/arith/pnat_plus.ma".
-include "ground/relocation/tr_map.ma".
+include "ground/relocation/tr_pap_pat.ma".
 
-(* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
+(* Main inversions **********************************************************)
 
-(*** apply *)
-rec definition tr_pap (i: pnat) on i: tr_map → pnat.
-* #p #f cases i -i
-[ @p
-| #i lapply (tr_pap i f) -tr_pap -i -f
-  #i @(i+p)
-]
-defined.
-
-interpretation
-  "functional positive application (total relocation maps)"
-  'Apply f i = (tr_pap i f).
-
-(* Basic constructions ******************************************************)
-
-(*** apply_O1 *)
-lemma tr_pap_unit (f):
-      ∀p. p = (p⨮f)@❨𝟏❩.
-// qed.
-
-(*** apply_S1 *)
-lemma tr_pap_succ (f):
-      ∀p,i. f@❨i❩+p = (p⨮f)@❨↑i❩.
-// qed.
+(*** apply_inj *)
+theorem tr_pap_inj (f):
+        ∀i1,i2,j. f@❨i1❩ = j → f@❨i2❩ = j → i1 = i2.
+/2 width=4 by pr_pat_inj/ qed-.

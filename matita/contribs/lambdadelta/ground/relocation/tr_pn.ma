@@ -12,33 +12,38 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/apply_2.ma".
-include "ground/arith/pnat_plus.ma".
 include "ground/relocation/tr_map.ma".
 
-(* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
+(* PUSH AND NEXT FOR TOTAL RELOCATION MAPS **********************************)
 
-(*** apply *)
-rec definition tr_pap (i: pnat) on i: tr_map → pnat.
-* #p #f cases i -i
-[ @p
-| #i lapply (tr_pap i f) -tr_pap -i -f
-  #i @(i+p)
-]
+definition tr_push: tr_map → tr_map ≝
+           λf. 𝟏⨮f.
+
+interpretation
+  "push (total relocation maps)"
+  'UpSpoon f = (tr_push f).
+
+definition tr_next: tr_map → tr_map.
+* #p #f @(↑p⨮f)
 defined.
 
 interpretation
-  "functional positive application (total relocation maps)"
-  'Apply f i = (tr_pap i f).
+  "next (total relocation maps)"
+  'UpArrow f = (tr_next f).
 
 (* Basic constructions ******************************************************)
 
-(*** apply_O1 *)
-lemma tr_pap_unit (f):
-      ∀p. p = (p⨮f)@❨𝟏❩.
+lemma tr_push_unfold (f): 𝟏⨮f = ⫯f.
 // qed.
 
-(*** apply_S1 *)
-lemma tr_pap_succ (f):
-      ∀p,i. f@❨i❩+p = (p⨮f)@❨↑i❩.
+lemma tr_next_unfold (f): ∀p. (↑p)⨮f = ↑(p⨮f).
 // qed.
+
+(* Constructions with tr_inj ************************************************)
+
+lemma tr_inj_push (f): ⫯𝐭❨f❩ = 𝐭❨⫯f❩.
+// qed.
+
+lemma tr_inj_next (f): ↑𝐭❨f❩ = 𝐭❨↑f❩.
+* //
+qed.
