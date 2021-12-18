@@ -12,25 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset.ma".
-include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/uptriangle_1.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* PRETERM ******************************************************************)
+(* GROUND NOTATION **********************************************************)
 
-(* Note: preterms are subsets of complete paths *)
-definition preterm: Type[0] ≝ 𝒫❨path❩.
+notation < "hvbox( a ϵ break term 46 u )"
+  non associative with precedence 45
+  for @{ 'Epsilon $S $a $u }.
 
-definition preterm_root: preterm → preterm ≝
-           λt,p. ∃q. p;;q ϵ t.
+notation > "hvbox( a ϵ break term 46 u )"
+  non associative with precedence 45
+  for @{ 'Epsilon ? $a $u }.
 
-interpretation
-  "root (preterm)"
-  'UpTriangle t = (preterm_root t).
-
-(* Basic constructions ******************************************************)
-
-lemma preterm_in_comp_root (p) (t):
-      p ϵ t → p ϵ ▵t.
-/2 width=2 by ex_intro/
-qed.
+notation > "hvbox( a ϵ{ break term 46 S } break term 46 u )"
+  non associative with precedence 45
+  for @{ 'Epsilon $S $a $u }.

@@ -13,24 +13,24 @@
 (**************************************************************************)
 
 include "ground/lib/subset.ma".
-include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/uptriangle_1.ma".
 
-(* PRETERM ******************************************************************)
+(* INCLUSION FOR SUBSETS ****************************************************)
 
-(* Note: preterms are subsets of complete paths *)
-definition preterm: Type[0] ≝ 𝒫❨path❩.
-
-definition preterm_root: preterm → preterm ≝
-           λt,p. ∃q. p;;q ϵ t.
+definition subset_le (A): relation2 𝒫❨A❩ 𝒫❨A❩ ≝
+           λu1,u2. ∀p. p ϵ u1 → p ϵ u2.
 
 interpretation
-  "root (preterm)"
-  'UpTriangle t = (preterm_root t).
+  "inclusion (subset)"
+  'subseteq u1 u2 = (subset_le ? u1 u2).
 
 (* Basic constructions ******************************************************)
 
-lemma preterm_in_comp_root (p) (t):
-      p ϵ t → p ϵ ▵t.
-/2 width=2 by ex_intro/
-qed.
+lemma subset_le_refl (A):
+      reflexive … (subset_le A).
+// qed.
+
+(* Main constructions *******************************************************)
+
+theorem subset_le_trans (A):
+        Transitive … (subset_le A).
+/3 width=1 by/ qed-.

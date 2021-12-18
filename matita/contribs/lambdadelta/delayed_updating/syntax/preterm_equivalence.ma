@@ -12,25 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset.ma".
-include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/uptriangle_1.ma".
+include "ground/lib/subset_equivalence.ma".
+include "delayed_updating/syntax/preterm.ma".
 
-(* PRETERM ******************************************************************)
+(* EQUIVALENCE FOR PRETERM **************************************************)
 
-(* Note: preterms are subsets of complete paths *)
-definition preterm: Type[0] ≝ 𝒫❨path❩.
+(* Constructions with preterm_root ******************************************)
 
-definition preterm_root: preterm → preterm ≝
-           λt,p. ∃q. p;;q ϵ t.
+lemma preterm_root_incl_repl:
+      ∀t1,t2. t1 ⊆ t2 → ▵t1 ⊆ ▵t2.
+#t1 #t2 #Ht #p * #q #Hq
+/3 width=2 by ex_intro/
+qed.
 
-interpretation
-  "root (preterm)"
-  'UpTriangle t = (preterm_root t).
-
-(* Basic constructions ******************************************************)
-
-lemma preterm_in_comp_root (p) (t):
-      p ϵ t → p ϵ ▵t.
-/2 width=2 by ex_intro/
+lemma preterm_root_eq_repl:
+      ∀t1,t2. t1 ⇔ t2 → ▵t1 ⇔ ▵t2.
+#t1 #t2 * #H1 #H2
+/3 width=3 by conj, preterm_root_incl_repl/
 qed.
