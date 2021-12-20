@@ -12,15 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/stream_hdtl.ma".
-include "ground/relocation/pstream.ma".
+include "ground/lib/stream_tls.ma".
+include "ground/arith/nat_pred_succ.ma".
+include "ground/relocation/tr_pn_hdtl.ma".
 
-(* RELOCATION P-STREAM ******************************************************)
+(* PUSH AND NEXT FOR TOTAL RELOCATION MAPS **********************************)
 
-(* Properties with stream_tl *************************************************)
+(* Constructions with stream_tls ********************************************)
 
-lemma tl_push: ∀f. f = ⫰⫯f.
-// qed.
-
-lemma tl_next: ∀f. ⫰f = ⫰↑f.
-* // qed.
+(*** tls_next *)
+lemma tr_tls_next (f):
+      ∀p:pnat. ⇂*[p]f = ⇂*[p]↑f.
+#f #p
+>(npsucc_pred p) <stream_tls_swap <stream_tls_swap //
+qed.

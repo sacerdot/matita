@@ -16,54 +16,6 @@ include "ground/relocation/pstream_tls.ma".
 include "ground/relocation/pstream_istot.ma".
 include "ground/relocation/rtmap_after.ma".
 
-(* RELOCATION P-STREAM ******************************************************)
-
-corec definition compose: gr_map → gr_map → gr_map.
-#f2 * #p1 #f1 @(stream_cons … (f2@❨p1❩)) @(compose ? f1) -compose -f1
-@(⫰*[p1]f2)
-defined.
-
-interpretation "functional composition (nstream)"
-   'compose f2 f1 = (compose f2 f1).
-
-(* Basic properties on compose ***********************************************)
-
-lemma compose_rew: ∀f2,f1,p1. f2@❨p1❩⨮(⫰*[p1]f2)∘f1 = f2∘(p1⨮f1).
-#f2 #f1 #p1 <(stream_rew … (f2∘(p1⨮f1))) normalize //
-qed.
-
-lemma compose_next: ∀f2,f1,f. f2∘f1 = f → (↑f2)∘f1 = ↑f.
-#f2 * #p1 #f1 #f <compose_rew <compose_rew
-* -f /2 width=1 by eq_f2/
-qed.
-
-(* Basic inversion lemmas on compose ****************************************)
-
-lemma compose_inv_rew: ∀f2,f1,f,p1,p. f2∘(p1⨮f1) = p⨮f →
-                       f2@❨p1❩ = p ∧ (⫰*[p1]f2)∘f1 = f.
-#f2 #f1 #f #p1 #p <compose_rew
-#H destruct /2 width=1 by conj/
-qed-.
-
-lemma compose_inv_O2: ∀f2,f1,f,p2,p. (p2⨮f2)∘(⫯f1) = p⨮f →
-                      p2 = p ∧ f2∘f1 = f.
-#f2 #f1 #f #p2 #p <compose_rew
-#H destruct /2 width=1 by conj/
-qed-.
-
-lemma compose_inv_S2: ∀f2,f1,f,p2,p1,p. (p2⨮f2)∘(↑p1⨮f1) = p⨮f →
-                      f2@❨p1❩+p2 = p ∧ f2∘(p1⨮f1) = f2@❨p1❩⨮f.
-#f2 #f1 #f #p2 #p1 #p <compose_rew
-#H destruct >nsucc_inj <stream_tls_swap
-/2 width=1 by conj/
-qed-.
-
-lemma compose_inv_S1: ∀f2,f1,f,p1,p. (↑f2)∘(p1⨮f1) = p⨮f →
-                      ↑(f2@❨p1❩) = p ∧ f2∘(p1⨮f1) = f2@❨p1❩⨮f.
-#f2 #f1 #f #p1 #p <compose_rew
-#H destruct /2 width=1 by conj/
-qed-.
-
 (* Properties on after (specific) *********************************************)
 
 lemma after_O2: ∀f2,f1,f. f2 ⊚ f1 ≘ f →
