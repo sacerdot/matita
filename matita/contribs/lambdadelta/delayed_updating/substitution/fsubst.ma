@@ -12,33 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset.ma".
-include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/pitchfork_2.ma".
-include "delayed_updating/notation/functions/uptriangle_1.ma".
+include "ground/xoa/ex_3_1.ma".
+include "delayed_updating/syntax/preterm.ma".
+include "delayed_updating/notation/functions/pitchforkleftarrow_3.ma".
 
-(* PRETERM ******************************************************************)
+(* FOCALIZED SUBSTITUTION ***************************************************)
 
-(* Note: preterms are subsets of complete paths *)
-definition preterm: Type[0] ≝ 𝒫❨path❩.
-
-definition preterm_grafted: path → preterm → preterm ≝
-           λp,t,q. p;;q ϵ t.
-
-interpretation
-  "grafted (preterm)"
-  'Pitchfork t p = (preterm_grafted p t).
-
-definition preterm_root: preterm → preterm ≝
-           λt,q. ∃r. q;;r ϵ t.
+definition fsubst (p) (u): preterm → preterm ≝
+           λt,q.
+           ∨∨ ∃∃r. r ϵ u & p ϵ ▵t & p;;r = q
+            | ∧∧ q ϵ t & (∀r. p;;r = q → ⊥) 
+.
 
 interpretation
-  "root (preterm)"
-  'UpTriangle t = (preterm_root t).
-
-(* Basic constructions ******************************************************)
-
-lemma preterm_in_comp_root (p) (t):
-      p ϵ t → p ϵ ▵t.
-/2 width=2 by ex_intro/
-qed.
+  "focalized substitution (preterm)"
+  'PitchforkLeftArrow t p u = (fsubst p u t).

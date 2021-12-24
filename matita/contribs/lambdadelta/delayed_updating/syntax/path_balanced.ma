@@ -12,33 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset.ma".
 include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/pitchfork_2.ma".
-include "delayed_updating/notation/functions/uptriangle_1.ma".
+include "delayed_updating/notation/relations/predicate_squarecap_1.ma".
 
-(* PRETERM ******************************************************************)
+(* BALANCE CONDITION FOR PATH ***********************************************)
 
-(* Note: preterms are subsets of complete paths *)
-definition preterm: Type[0] ≝ 𝒫❨path❩.
-
-definition preterm_grafted: path → preterm → preterm ≝
-           λp,t,q. p;;q ϵ t.
-
-interpretation
-  "grafted (preterm)"
-  'Pitchfork t p = (preterm_grafted p t).
-
-definition preterm_root: preterm → preterm ≝
-           λt,q. ∃r. q;;r ϵ t.
+(* This condition applies to a structural path *)
+inductive pbc: predicate path ≝
+| pbc_empty: pbc 𝐞
+| pbc_redex: ∀b. pbc b → pbc (𝗔;b,𝗟)
+| pbc_after: ∀b1,b2. pbc b1 → pbc b2 → pbc (b1;;b2)
+.
 
 interpretation
-  "root (preterm)"
-  'UpTriangle t = (preterm_root t).
-
-(* Basic constructions ******************************************************)
-
-lemma preterm_in_comp_root (p) (t):
-      p ϵ t → p ϵ ▵t.
-/2 width=2 by ex_intro/
-qed.
+  "balance condition (path)"
+  'PredicateSquareCap p = (pbc p).
