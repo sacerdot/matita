@@ -30,6 +30,8 @@ table {
         }
       ]
       [ { "total relocation" * } {
+          [ "tr_uni ( 𝐮❨?❩ )" * ]
+          [ "tr_id ( 𝐢 ) " * ]
           [ "tr_compose ( ?∘? )" "tr_compose_pn" * ]
           [ "tr_pap ( ?@❨?❩ )" "tr_pap_eq" "tr_pap_pat" "tr_pap_pn" "tr_pap_pap" * ]
           [ "tr_pn ( ⫯? ) ( ↑? )" "tr_pn_hdtl" "tr_pn_tls" * ]
