@@ -24,7 +24,7 @@ include "basic_2A/multiple/lifts_vector.ma".
 inductive drops (s:bool): mr2 → relation lenv ≝
 | drops_nil : ∀L. drops s (𝐞) L L
 | drops_cons: ∀L1,L,L2,cs,l,m.
-              drops s cs L1 L → ⬇[s, l, m] L ≡ L2 → drops s (❨l, m❩; cs) L1 L2
+              drops s cs L1 L → ⬇[s, l, m] L ≡ L2 → drops s (❨l, m❩◗ cs) L1 L2
 .
 
 interpretation "iterated slicing (local environment) abstract"
@@ -58,7 +58,7 @@ lemma drops_inv_nil: ∀L1,L2,s. ⬇*[s, 𝐞] L1 ≡ L2 → L1 = L2.
 /2 width=4 by drops_inv_nil_aux/ qed-.
 
 fact drops_inv_cons_aux: ∀L1,L2,s,cs. ⬇*[s, cs] L1 ≡ L2 →
-                         ∀l,m,tl. cs = ❨l, m❩; tl →
+                         ∀l,m,tl. cs = ❨l, m❩◗ tl →
                          ∃∃L. ⬇*[s, tl] L1 ≡ L & ⬇[s, l, m] L ≡ L2.
 #L1 #L2 #s #cs * -L1 -L2 -cs
 [ #L #l #m #tl #H destruct
@@ -67,7 +67,7 @@ fact drops_inv_cons_aux: ∀L1,L2,s,cs. ⬇*[s, cs] L1 ≡ L2 →
 ]
 qed-.
 
-lemma drops_inv_cons: ∀L1,L2,s,l,m,cs. ⬇*[s, ❨l, m❩; cs] L1 ≡ L2 →
+lemma drops_inv_cons: ∀L1,L2,s,l,m,cs. ⬇*[s, ❨l, m❩◗ cs] L1 ≡ L2 →
                       ∃∃L. ⬇*[s, cs] L1 ≡ L & ⬇[s, l, m] L ≡ L2.
 /2 width=3 by drops_inv_cons_aux/ qed-.
 

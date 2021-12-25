@@ -22,7 +22,7 @@ include "basic_2A/substitution/lift.ma".
 inductive lifts: mr2 → relation term ≝
 | lifts_nil : ∀T. lifts (𝐞) T T
 | lifts_cons: ∀T1,T,T2,cs,l,m.
-              ⬆[l,m] T1 ≡ T → lifts cs T T2 → lifts (❨l, m❩; cs) T1 T2
+              ⬆[l,m] T1 ≡ T → lifts cs T T2 → lifts (❨l, m❩◗ cs) T1 T2
 .
 
 interpretation "generic relocation (term)"
@@ -39,7 +39,7 @@ lemma lifts_inv_nil: ∀T1,T2. ⬆*[𝐞] T1 ≡ T2 → T1 = T2.
 /2 width=3 by lifts_inv_nil_aux/ qed-.
 
 fact lifts_inv_cons_aux: ∀T1,T2,cs. ⬆*[cs] T1 ≡ T2 →
-                         ∀l,m,tl. cs = ❨l, m❩; tl →
+                         ∀l,m,tl. cs = ❨l, m❩◗ tl →
                          ∃∃T. ⬆[l, m] T1 ≡ T & ⬆*[tl] T ≡ T2.
 #T1 #T2 #cs * -T1 -T2 -cs
 [ #T #l #m #tl #H destruct
@@ -47,7 +47,7 @@ fact lifts_inv_cons_aux: ∀T1,T2,cs. ⬆*[cs] T1 ≡ T2 →
   /2 width=3 by ex2_intro/
 qed-.
 
-lemma lifts_inv_cons: ∀T1,T2,l,m,cs. ⬆*[❨l, m❩; cs] T1 ≡ T2 →
+lemma lifts_inv_cons: ∀T1,T2,l,m,cs. ⬆*[❨l, m❩◗ cs] T1 ≡ T2 →
                       ∃∃T. ⬆[l, m] T1 ≡ T & ⬆*[cs] T ≡ T2.
 /2 width=3 by lifts_inv_cons_aux/ qed-.
 

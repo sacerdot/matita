@@ -53,7 +53,7 @@ table {
    class "orange"
    [ { "functional" * } {
         [ { "multiple filling" * } {
-             [ "mf" + "( ●[?,?]? )" "mf_exeq" "mf_lifts" "mf_cpr" *]
+             [ "mf" + "( ■[?,?]? )" "mf_exeq" "mf_lifts" "mf_cpr" *]
              [ "mf_vpush" + "( ⇡[?←?]? )" "mf_vpush_exteq" "mf_vpush_vlift" * ]
              [ "mf_vlift" + "( ⇡[?]? )" "mf_vlift_exteq" * ]
              [ "mf_v" * ]

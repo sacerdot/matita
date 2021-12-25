@@ -14,6 +14,6 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( l1 ;; break l2 )"
-  right associative with precedence 55
-  for @{ 'DoubleSemicolon $l1 $l2 }.
+notation "hvbox( ❨ term 46 hd1, break term 46 hd2 ❩◗ break term 46 tl )"
+  non associative with precedence 47
+  for @{ 'BlackHalfCircleRight $hd1 $hd2 $tl }.

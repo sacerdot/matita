@@ -20,7 +20,7 @@ include "apps_2/functional/mf.ma".
 
 (* Properties with extensional equivalence **********************************)
 
-lemma mf_comp (T): compatible_3 … (λgv,lv.●[gv,lv]T) (exteq …) (exteq …) (eq …).
+lemma mf_comp (T): compatible_3 … (λgv,lv.■[gv,lv]T) (exteq …) (exteq …) (eq …).
 #T elim T -T *
 [ //
 | #i #gv1 #gv2 #Hgv #lv1 #lv2 #Hlv
@@ -36,7 +36,7 @@ qed-.
 
 (* Advanced properties ******************************************************)
 
-lemma mf_id (T): ●[mf_gi,mf_li]T = T.
+lemma mf_id (T): ■[mf_gi,mf_li]T = T.
 #T elim T -T * //
 [ #p #I #V #T #IHV #IHT
   <IHV in ⊢ (???%); <IHT in ⊢ (???%); -IHV -IHT

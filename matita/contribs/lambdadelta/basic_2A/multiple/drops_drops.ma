@@ -20,6 +20,6 @@ include "basic_2A/multiple/drops_drop.ma".
 (* Main properties **********************************************************)
 
 theorem drops_trans: ∀L,L2,s,cs2. ⬇*[s, cs2] L ≡ L2 → ∀L1,cs1. ⬇*[s, cs1] L1 ≡ L →
-                     ⬇*[s, cs2 ;; cs1] L1 ≡ L2.
+                     ⬇*[s, cs2 ● cs1] L1 ≡ L2.
 #L #L2 #s #cs2 #H elim H -L -L2 -cs2 /3 width=3 by drops_cons/
 qed-.

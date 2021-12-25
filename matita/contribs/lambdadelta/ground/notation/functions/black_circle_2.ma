@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE "models" COMPONENT **************************************)
+(* GROUND NOTATION **********************************************************)
 
-notation "hvbox( ●[ term 46 gv, break term 46 lv ] break term 46 T )"
-   non associative with precedence 46
-   for @{ 'BlackCircle $gv $lv $T }.
+notation "hvbox( l1 ● break l2 )"
+  right associative with precedence 47
+  for @{ 'BlackCircle $l1 $l2 }.

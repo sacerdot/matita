@@ -15,13 +15,13 @@
 (* GROUND NOTATION **********************************************************)
 
 notation < "hvbox( hd ⨁ break tl )"
-  right associative with precedence 55
+  right associative with precedence 47
   for @{ 'OPlus $S $hd $tl }.
 
 notation > "hvbox( hd ⨁ break tl )"
-  right associative with precedence 55
+  right associative with precedence 47
   for @{ 'OPlus ? $hd $tl }.
 
-notation > "hvbox( hd ⨁{ break term 46 S } break term 54 tl )"
-  non associative with precedence 55
+notation > "hvbox( hd ⨁{ break term 46 S } break term 46 tl )"
+  non associative with precedence 47
   for @{ 'OPlus $S $hd $tl }.

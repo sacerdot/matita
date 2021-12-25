@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GROUND NOTATION **********************************************************)
+(* NOTATION FOR THE "models" COMPONENT **************************************)
 
-notation "hvbox( ❨ term 46 hd1, break term 46 hd2 ❩; break term 46 tl )"
-  non associative with precedence 75
-  for @{ 'Semicolon $hd1 $hd2 $tl }.
+notation "hvbox( ■[ term 46 gv, break term 46 lv ] break term 46 T )"
+   non associative with precedence 46
+   for @{ 'BlackSquare $gv $lv $T }.

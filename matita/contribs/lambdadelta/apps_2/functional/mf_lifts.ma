@@ -19,7 +19,7 @@ include "apps_2/functional/mf_exteq.ma".
 
 (* Properties with relocation ***********************************************)
 
-lemma mf_lifts_basic_SO_dx (T) (j): ∀gv,lv. ↑[j,1]●[gv,lv]T = ●[⇡[j]gv,⇡[j]lv]T.
+lemma mf_lifts_basic_SO_dx (T) (j): ∀gv,lv. ↑[j,1]■[gv,lv]T = ■[⇡[j]gv,⇡[j]lv]T.
 #T elim T -T * //
 [ #p #I #V #T #IHV #IHT #j #gv #lv
   >mf_bind >mf_bind >flifts_basic_bind

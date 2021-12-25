@@ -28,7 +28,7 @@ definition tm_co (p) (V) (T) ≝ ⓓ[p]V.(↑[1]T).
 
 definition tm_ap (V) (T) ≝ ⓐV.T.
 
-definition tm_ti (gv) (lv) (T) ≝ ●[gv,lv]T.
+definition tm_ti (gv) (lv) (T) ≝ ■[gv,lv]T.
 
 definition TM (h): model ≝ mk_model … .
 [ @tm_dd

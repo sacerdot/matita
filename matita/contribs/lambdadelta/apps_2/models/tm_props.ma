@@ -24,7 +24,7 @@ include "apps_2/models/tm_vpush.ma".
 lemma cpcs_repl (h) (G) (L): replace_2 … (cpcs h G L) (cpcs h G L) (cpcs h G L).
 /3 width=5 by cpcs_trans, cpcs_sym/ qed-.
 (*
-lemma pippo (h) (gv) (lv) (T): ●[gv,lv]T = ⟦T⟧{TM h}[gv,lv].
+lemma pippo (h) (gv) (lv) (T): ■[gv,lv]T = ⟦T⟧{TM h}[gv,lv].
 // qed.
 
 lemma tm_mi (h) (gv1) (gv2) (lv1) (lv2) (p) (W) (T):
@@ -38,7 +38,7 @@ lemma tm_mi (h) (gv1) (gv2) (lv1) (lv2) (p) (W) (T):
 
 
 <pippo in ⊢ (????%?); >(mf_comp … T) in ⊢ (????%?);
-[2: ;;tm_vpush_vlift_join_O
+[2: @tm_vpush_vlift_join_O
 
 <pippo in ⊢ (????%?);
 

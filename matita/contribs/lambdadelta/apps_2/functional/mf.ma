@@ -35,19 +35,19 @@ interpretation "term filling (multiple filling)"
 
 (* Basic Properties *********************************************************)
 
-lemma mf_sort: ∀gv,lv,s. ●[gv,lv]⋆s = ⋆s.
+lemma mf_sort: ∀gv,lv,s. ■[gv,lv]⋆s = ⋆s.
 // qed.
 
-lemma mf_lref: ∀gv,lv,i. ●[gv,lv]#i = lv i.
+lemma mf_lref: ∀gv,lv,i. ■[gv,lv]#i = lv i.
 // qed.
 
-lemma mf_gref: ∀gv,lv,l. ●[gv,lv]§l = gv l.
+lemma mf_gref: ∀gv,lv,l. ■[gv,lv]§l = gv l.
 // qed.
 
 lemma mf_bind (p) (I): ∀gv,lv,V,T.
-                       ●[gv,lv]ⓑ[p,I]V.T = ⓑ[p,I]●[gv,lv]V.●[⇡[0]gv,⇡[0←#0]lv]T.
+                       ■[gv,lv]ⓑ[p,I]V.T = ⓑ[p,I]■[gv,lv]V.■[⇡[0]gv,⇡[0←#0]lv]T.
 // qed.
 
 lemma mf_flat (I): ∀gv,lv,V,T.
-                   ●[gv,lv]ⓕ[I]V.T = ⓕ[I]●[gv,lv]V.●[gv,lv]T.
+                   ■[gv,lv]ⓕ[I]V.T = ⓕ[I]■[gv,lv]V.■[gv,lv]T.
 // qed.

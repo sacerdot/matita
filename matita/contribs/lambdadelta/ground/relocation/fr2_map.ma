@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/notation/functions/element_e_0.ma".
-include "ground/notation/functions/semicolon_3.ma".
+include "ground/notation/functions/black_halfcircleright_3.ma".
 include "ground/arith/nat.ma".
 
 (* FINITE RELOCATION MAPS WITH PAIRS ****************************************)
@@ -32,4 +32,4 @@ interpretation
 
 interpretation
   "left cons (finite relocation maps with pairs)"
-  'Semicolon d h f = (fr2_lcons d h f).
+  'BlackHalfCircleRight d h f = (fr2_lcons d h f).

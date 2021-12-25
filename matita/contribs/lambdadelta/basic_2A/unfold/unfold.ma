@@ -24,7 +24,7 @@ inductive unfold: relation4 genv lenv term lenv ≝
 | unfold_sort: ∀G,L,k. unfold G L (⋆k) L
 | unfold_lref: ∀I,G,L1,L2,K1,K2,V,i. ⬇[i] L1 ≡ K1. ⓑ{I}V →
                unfold G K1 V K2 → ⬇[Ⓣ, |L2|, i] L2 ≡ K2 →
-               unfold G L1 (#i) (L1;;L2)
+               unfold G L1 (#i) (L1●L2)
 | unfold_bind: ∀a,I,G,L1,L2,V,T.
                unfold G (L1.ⓑ{I}V) T L2 → unfold G L1 (ⓑ{a,I}V.T) L2
 | unfold_flat: ∀I,G,L1,L2,V,T.

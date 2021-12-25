@@ -26,10 +26,10 @@ inductive fr2_nat: fr2_map → relation nat ≝
   fr2_nat (𝐞) l l
 (*** at_lt *)
 | fr2_nat_lt (f) (d) (h) (l1) (l2):
-  l1 < d → fr2_nat f l1 l2 → fr2_nat (❨d,h❩;f) l1 l2
+  l1 < d → fr2_nat f l1 l2 → fr2_nat (❨d,h❩◗f) l1 l2
 (*** at_ge *)
 | fr2_nat_ge (f) (d) (h) (l1) (l2):
-  d ≤ l1 → fr2_nat f (l1 + h) l2 → fr2_nat (❨d,h❩;f) l1 l2
+  d ≤ l1 → fr2_nat f (l1 + h) l2 → fr2_nat (❨d,h❩◗f) l1 l2
 .
 
 interpretation
@@ -51,10 +51,10 @@ qed-.
 
 (*** at_inv_cons *)
 lemma fr2_nat_inv_lcons (f) (d) (h) (l1) (l2):
-      @❨l1, ❨d,h❩;f❩ ≘ l2 →
+      @❨l1, ❨d,h❩◗f❩ ≘ l2 →
       ∨∨ ∧∧ l1 < d & @❨l1, f❩ ≘ l2 
        | ∧∧ d ≤ l1 & @❨l1+h, f❩ ≘ l2.
-#g #d #h #l1 #l2 @(insert_eq_1 … (❨d, h❩;g))
+#g #d #h #l1 #l2 @(insert_eq_1 … (❨d, h❩◗g))
 #f * -f -l1 -l2
 [ #l #H destruct
 | #f1 #d1 #h1 #l1 #l2 #Hld1 #Hl12 #H destruct /3 width=1 by or_introl, conj/
@@ -64,7 +64,7 @@ qed-.
 
 (*** at_inv_cons *)
 lemma fr2_nat_inv_lcons_lt (f) (d) (h) (l1) (l2):
-      @❨l1, ❨d,h❩;f❩ ≘ l2 → l1 < d → @❨l1, f❩ ≘ l2.
+      @❨l1, ❨d,h❩◗f❩ ≘ l2 → l1 < d → @❨l1, f❩ ≘ l2.
 #f #d #h #l1 #h2 #H
 elim (fr2_nat_inv_lcons … H) -H * // #Hdl1 #_ #Hl1d
 elim (nlt_ge_false … Hl1d Hdl1)
@@ -72,7 +72,7 @@ qed-.
 
 (*** at_inv_cons *)
 lemma fr2_nat_inv_lcons_ge (f) (d) (h) (l1) (l2):
-      @❨l1, ❨d,h❩;f❩ ≘ l2 → d ≤ l1 → @❨l1+h, f❩ ≘ l2.
+      @❨l1, ❨d,h❩◗f❩ ≘ l2 → d ≤ l1 → @❨l1+h, f❩ ≘ l2.
 #f #d #h #l1 #h2 #H
 elim (fr2_nat_inv_lcons … H) -H * // #Hl1d #_ #Hdl1
 elim (nlt_ge_false … Hl1d Hdl1)
