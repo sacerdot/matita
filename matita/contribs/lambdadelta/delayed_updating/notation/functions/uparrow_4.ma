@@ -12,29 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_rcons.ma".
-include "ground/notation/functions/element_e_0.ma".
-include "ground/notation/functions/black_circle_2.ma".
-include "delayed_updating/syntax/label.ma".
-include "delayed_updating/notation/functions/black_halfcircleright_2.ma".
-include "delayed_updating/notation/functions/black_halfcircleleft_2.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* PATH *********************************************************************)
+notation < "hvbox( ↑ ❨ term 46 k, break term 46 p, break term 46 f ❩ )"
+  non associative with precedence 75
+  for @{ 'UpArrow $S $k $p $f }.
 
-definition path ≝ list label.
+notation > "hvbox( ↑ ❨ term 46 k, break term 46 p, break term 46 f ❩ )"
+  non associative with precedence 75
+  for @{ 'UpArrow ? $k $p $f }.
 
-interpretation
-  "empty (paths)"
-  'ElementE = (list_empty label).
-
-interpretation
-  "left cons (paths)"
-  'BlackHalfCircleRight l p = (list_lcons label l p).
-
-interpretation
-  "append (paths)"
-  'BlackCircle l1 l2 = (list_append label l1 l2).
-
-interpretation
-  "right cons (paths)"
-  'BlackHalfCircleLeft p l = (list_append label p (list_lcons label l (list_empty label))).
+notation > "hvbox( ↑ { term 46 S } ❨ break term 46 k, break term 46 p, break term 46 f ❩ )"
+  non associative with precedence 75
+  for @{ 'UpArrow $S $k $p $f }.

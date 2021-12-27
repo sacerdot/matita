@@ -23,9 +23,9 @@ match p with
 | list_lcons l q ⇒
    match l with
    [ label_node_d n ⇒ path_structure q
-   | label_edge_L   ⇒ 𝗟;path_structure q
-   | label_edge_A   ⇒ 𝗔;path_structure q
-   | label_edge_S   ⇒ 𝗦;path_structure q
+   | label_edge_L   ⇒ 𝗟◗path_structure q
+   | label_edge_A   ⇒ 𝗔◗path_structure q
+   | label_edge_S   ⇒ 𝗦◗path_structure q
    ]
 ].
 

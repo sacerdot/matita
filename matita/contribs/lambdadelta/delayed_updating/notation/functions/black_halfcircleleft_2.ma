@@ -12,29 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_rcons.ma".
-include "ground/notation/functions/element_e_0.ma".
-include "ground/notation/functions/black_circle_2.ma".
-include "delayed_updating/syntax/label.ma".
-include "delayed_updating/notation/functions/black_halfcircleright_2.ma".
-include "delayed_updating/notation/functions/black_halfcircleleft_2.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* PATH *********************************************************************)
-
-definition path ≝ list label.
-
-interpretation
-  "empty (paths)"
-  'ElementE = (list_empty label).
-
-interpretation
-  "left cons (paths)"
-  'BlackHalfCircleRight l p = (list_lcons label l p).
-
-interpretation
-  "append (paths)"
-  'BlackCircle l1 l2 = (list_append label l1 l2).
-
-interpretation
-  "right cons (paths)"
-  'BlackHalfCircleLeft p l = (list_append label p (list_lcons label l (list_empty label))).
+notation "hvbox( hd ◖ break tl )"
+  left associative with precedence 47
+  for @{ 'BlackHalfCircleLeft $hd $tl }.

@@ -1,0 +1,35 @@
+notation "hvbox( l1 ● break l2 )"
+  right associative with precedence 47
+  for @{ 'DoubleSemicolon $l1 $l2 }.
+
+notation "hvbox( hd ◗ break tl )"
+  right associative with precedence 47
+  for @{ 'Semicolon $hd $tl }.
+
+notation "hvbox( hd ◖ break tl )"
+  left associative with precedence 47
+  for @{ 'Comma $hd $tl }.
+
+lemma tmp1 (l1) (l2) (p): l1 ◗ l2 ◗ p = l1 ◗ (l2 ◗ p).
+// qed.
+
+lemma tmp2 (p) (l1) (l2): p ◖ l1 ◖ l2 = (p ◖ l1) ◖ l2.
+// qed.
+
+lemma tmp3 (p1) (p2) (p3): p1 ● p2 ● p3 = p1 ● (p2 ● p3).
+// qed.
+
+lemma tmp4 (l1) (p) (l2): l1 ◗ p ◖ l2 = l1 ◗ (p ◖ l2).
+// qed.
+
+lemma tmp5 (p1) (l) (p2): p1 ◖ l ● p2 = (p1 ◖ l) ● p2.
+// qed.
+
+lemma tmp6 (p1) (p2) (l): p1 ● p2 ◖ l  = p1 ● (p2 ◖ l).
+// qed.
+
+lemma tmp7 (l) (p1) (p2): l ◗ p1 ● p2 = l ◗ (p1 ● p2).
+// qed.
+
+lemma tmp8 (p1) (l) (p2): p1 ● l ◗ p2 = p1 ● (l ◗ p2).
+// qed.

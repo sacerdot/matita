@@ -20,8 +20,8 @@ include "delayed_updating/notation/functions/pitchforkleftarrow_3.ma".
 
 definition fsubst (p) (u): preterm → preterm ≝
            λt,q.
-           ∨∨ ∃∃r. r ϵ u & p ϵ ▵t & p;;r = q
-            | ∧∧ q ϵ t & (∀r. p;;r = q → ⊥) 
+           ∨∨ ∃∃r. r ϵ u & p ϵ ▵t & p●r = q
+            | ∧∧ q ϵ t & (∀r. p●r = q → ⊥)
 .
 
 interpretation

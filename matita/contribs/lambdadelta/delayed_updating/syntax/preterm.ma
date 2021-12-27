@@ -23,14 +23,14 @@ include "delayed_updating/notation/functions/uptriangle_1.ma".
 definition preterm: Type[0] ≝ 𝒫❨path❩.
 
 definition preterm_grafted: path → preterm → preterm ≝
-           λp,t,q. p;;q ϵ t.
+           λp,t,q. p●q ϵ t.
 
 interpretation
   "grafted (preterm)"
   'Pitchfork t p = (preterm_grafted p t).
 
 definition preterm_root: preterm → preterm ≝
-           λt,q. ∃r. q;;r ϵ t.
+           λt,q. ∃r. q●r ϵ t.
 
 interpretation
   "root (preterm)"

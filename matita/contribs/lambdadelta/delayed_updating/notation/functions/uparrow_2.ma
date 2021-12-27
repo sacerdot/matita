@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( hd , break tl )"
-  right associative with precedence 50
-  for @{ 'Comma $hd $tl }.
+notation "hvbox( ↑ [ term 46 t1 ] break term 75 t2  )"
+  non associative with precedence 75
+  for @{ 'UpArrow $t1 $t2 }.
