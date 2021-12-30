@@ -41,12 +41,12 @@ qed.
 
 (*** after_isid_inv_sn *)
 lemma pr_after_isi_inv_sn:
-      ∀f1,f2,f. f1 ⊚ f2 ≘ f → 𝐈❨f1❩ → f2 ≡ f.
+      ∀f1,f2,f. f1 ⊚ f2 ≘ f → 𝐈❨f1❩ → f2 ≐ f.
 /3 width=6 by pr_after_isi_sn, pr_after_mono/ qed-.
 
 (*** after_isid_inv_dx *)
 lemma pr_after_isi_inv_dx:
-      ∀f1,f2,f. f1 ⊚ f2 ≘ f → 𝐈❨f2❩ → f1 ≡ f.
+      ∀f1,f2,f. f1 ⊚ f2 ≘ f → 𝐈❨f2❩ → f1 ≐ f.
 /3 width=6 by pr_after_isi_dx, pr_after_mono/ qed-.
 
 (*** after_fwd_isid1 *)

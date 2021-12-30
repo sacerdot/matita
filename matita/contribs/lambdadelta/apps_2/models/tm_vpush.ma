@@ -19,7 +19,7 @@ include "apps_2/models/tm.ma".
 
 (* Properties with push for model evaluation ********************************)
 
-lemma tm_vpush_vlift_join_O (h) (v) (T): ⇡[0]⫯{TM h}[0←T]v ≐ ⇡[0←↑[1]T]v.
+lemma tm_vpush_vlift_join_O (h) (v) (T): ⇡[0]⫯{TM h}[0←T]v ⊜ ⇡[0←↑[1]T]v.
 #h #v #T #i
 elim (eq_or_gt i) #Hi destruct
 [ >mf_vpush_eq >mf_vlift_rw >vpush_eq //

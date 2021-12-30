@@ -21,7 +21,7 @@ include "ground/relocation/pr_sor.ma".
 
 (*** sor_mono *)
 corec theorem pr_sor_mono:
-              ∀f1,f2,x,y. f1 ⋓ f2 ≘ x → f1 ⋓ f2 ≘ y → x ≡ y.
+              ∀f1,f2,x,y. f1 ⋓ f2 ≘ x → f1 ⋓ f2 ≘ y → x ≐ y.
 #f1 #f2 #x #y * -f1 -f2 -x
 #f1 #f2 #f #g1 #g2 #g #Hf #H1 #H2 #H0 #H
 [ cases (pr_sor_inv_push_bi … H … H1 H2)

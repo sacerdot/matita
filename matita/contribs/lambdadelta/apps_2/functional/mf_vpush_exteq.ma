@@ -20,7 +20,7 @@ include "apps_2/functional/mf_vpush.ma".
 
 (* Properties with extensional equivalence **********************************)
 
-lemma mf_lc_id: ⇡[0←#0]mf_li ≐ mf_li.
+lemma mf_lc_id: ⇡[0←#0]mf_li ⊜ mf_li.
 #i elim (eq_or_gt i) #Hi destruct //
 >mf_vpush_gt // >(flifts_lref_uni 1) <(S_pred … Hi) in ⊢ (???%); -Hi //
 qed.
@@ -37,7 +37,7 @@ qed-.
 (* Main properties with extensional equivalence *****************************)
 
 theorem mf_vpush_swap: ∀l1,l2. l2 ≤ l1 →
-                       ∀v,T1,T2. ⇡[l2←T2]⇡[l1←T1]v ≐ ⇡[↑l1←↑[l2,1]T1]⇡[l2←T2]v.
+                       ∀v,T1,T2. ⇡[l2←T2]⇡[l1←T1]v ⊜ ⇡[↑l1←↑[l2,1]T1]⇡[l2←T2]v.
 #l1 #l2 #Hl21 #v #T1 #T2 #i
 elim (lt_or_eq_or_gt i l2) #Hl2 destruct
 [ lapply (lt_to_le_to_lt … Hl2 Hl21) #Hl1

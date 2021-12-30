@@ -56,5 +56,5 @@ qed-.
 
 (*** sle_refl_eq *)
 lemma pr_sle_refl_eq:
-      ∀f1,f2. f1 ≡ f2 → f1 ⊆ f2.
+      ∀f1,f2. f1 ≐ f2 → f1 ⊆ f2.
 /2 width=3 by pr_sle_eq_repl_back_dx/ qed.

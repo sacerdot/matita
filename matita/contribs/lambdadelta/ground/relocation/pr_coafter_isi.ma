@@ -41,7 +41,7 @@ qed.
 
 (*** coafter_isid_inv_sn *)
 lemma pr_coafter_isi_inv_sn:
-      ∀f1,f2,f. f1 ~⊚ f2 ≘ f → 𝐈❨f1❩ → f2 ≡ f.
+      ∀f1,f2,f. f1 ~⊚ f2 ≘ f → 𝐈❨f1❩ → f2 ≐ f.
 /3 width=6 by pr_coafter_isi_sn, pr_coafter_mono/ qed-.
 
 (*** coafter_isid_inv_dx *)

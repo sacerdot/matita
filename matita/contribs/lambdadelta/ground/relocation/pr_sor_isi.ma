@@ -66,13 +66,13 @@ qed-.
 
 (*** sor_isid_inv_sn *)
 lemma pr_sor_inv_isi_sn:
-      ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈❨f1❩ → f2 ≡ f.
+      ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈❨f1❩ → f2 ≐ f.
 /3 width=4 by pr_sor_isi_sn, pr_sor_mono/
 qed-.
 
 (*** sor_isid_inv_dx *)
 lemma pr_sor_inv_isi_dx:
-      ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈❨f2❩ → f1 ≡ f.
+      ∀f1,f2,f. f1 ⋓ f2 ≘ f → 𝐈❨f2❩ → f1 ≐ f.
 /3 width=4 by pr_sor_isi_dx, pr_sor_mono/
 qed-.
 

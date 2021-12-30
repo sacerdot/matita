@@ -22,7 +22,7 @@ include "ground/relocation/pr_after_pat_tls.ma".
 (*** H_after_inj *)
 definition H_pr_after_inj: predicate pr_map ≝
            λf1. 𝐓❨f1❩ →
-           ∀f,f21,f22. f1 ⊚ f21 ≘ f → f1 ⊚ f22 ≘ f → f21 ≡ f22.
+           ∀f,f21,f22. f1 ⊚ f21 ≘ f → f1 ⊚ f22 ≘ f → f21 ≐ f22.
 
 (* Main destructions with pr_ist ********************************************)
 

@@ -19,7 +19,7 @@ include "apps_2/functional/mf_vpush.ma".
 
 (* Properties with multiple filling lift ************************************)
 
-lemma mf_vpush_vlift_swap_O (v) (T) (l): ⇡[0←↑[↑l,1]T]⇡[l]v ≐⇡[↑l]⇡[0←T]v.
+lemma mf_vpush_vlift_swap_O (v) (T) (l): ⇡[0←↑[↑l,1]T]⇡[l]v ⊜⇡[↑l]⇡[0←T]v.
 #v #T #l #i
 elim (eq_or_gt i) #Hi destruct
 [ >mf_vpush_eq >mf_vlift_rw >mf_vpush_eq //
@@ -28,6 +28,6 @@ elim (eq_or_gt i) #Hi destruct
 ]
 qed.
 
-lemma mf_vpush_vlift_swap_O_lref_O (v) (l): ⇡[0←#0]⇡[l]v ≐⇡[↑l]⇡[0←#0]v.
+lemma mf_vpush_vlift_swap_O_lref_O (v) (l): ⇡[0←#0]⇡[l]v ⊜⇡[↑l]⇡[0←#0]v.
 #v #l @(mf_vpush_vlift_swap_O … (#0))
 qed.

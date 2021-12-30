@@ -89,7 +89,7 @@ lemma after_inv_const: ∀f2,f1,f,p1,p.
 ]
 qed-.
 
-lemma after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 ∘ f1 ≡ f.
+lemma after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 ∘ f1 ≐ f.
 /2 width=4 by gr_after_mono/ qed-.
 
 (* Forward lemmas on after (specific) *****************************************)

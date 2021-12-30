@@ -19,7 +19,7 @@ include "ground/relocation/pr_id.ma".
 
 (* Constructions with pr_eq *************************************************)
 
-corec lemma pr_id_eq (f): ⫯f ≡ f → 𝐢 ≡ f.
+corec lemma pr_id_eq (f): ⫯f ≐ f → 𝐢 ≐ f.
 cases pr_id_unfold #Hf
 cases (pr_eq_inv_push_sn … Hf) [|*: // ] #_ #H
 cases H in Hf; -H #Hf
@@ -30,7 +30,7 @@ qed.
 (* Inversions with pr_eq ****************************************************)
 
 (* Note: this has the same proof of the previous *)
-corec lemma pr_id_inv_eq (f): 𝐢 ≡ f → ⫯f ≡ f.
+corec lemma pr_id_inv_eq (f): 𝐢 ≐ f → ⫯f ≐ f.
 cases pr_id_unfold #Hf
 cases (pr_eq_inv_push_sn … Hf) [|*: // ] #_ #H
 cases H in Hf; -H #Hf

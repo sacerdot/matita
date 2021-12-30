@@ -47,7 +47,7 @@ qed-.
 (*** at_ext *)
 corec theorem pr_eq_ext_pat (f1) (f2): 𝐓❨f1❩ → 𝐓❨f2❩ →
               (∀i,i1,i2. @❨i,f1❩ ≘ i1 → @❨i,f2❩ ≘ i2 → i1 = i2) →
-              f1 ≡ f2.
+              f1 ≐ f2.
 cases (pr_map_split_tl f1) #H1
 cases (pr_map_split_tl f2) #H2
 #Hf1 #Hf2 #Hi

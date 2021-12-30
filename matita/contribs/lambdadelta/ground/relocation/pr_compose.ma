@@ -63,5 +63,5 @@ qed.
 (* Main inversions **********************************************************)
 
 (*** after_inv_total *)
-lemma pr_after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 ∘ f1 ≡ f.
+lemma pr_after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 ∘ f1 ≐ f.
 /2 width=4 by pr_after_mono/ qed-.

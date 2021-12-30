@@ -21,7 +21,7 @@ include "ground/relocation/pr_coafter_nat_tls.ma".
 (*** H_coafter_inj *)
 definition H_pr_coafter_inj: predicate pr_map ≝
            λf1. 𝐓❨f1❩ →
-           ∀f,f21,f22. f1 ~⊚ f21 ≘ f → f1 ~⊚ f22 ≘ f → f21 ≡ f22.
+           ∀f,f21,f22. f1 ~⊚ f21 ≘ f → f1 ~⊚ f22 ≘ f → f21 ≐ f22.
 
 (* Main destructions with pr_ist ********************************************)
 

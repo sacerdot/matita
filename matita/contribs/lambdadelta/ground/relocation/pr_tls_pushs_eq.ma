@@ -21,8 +21,8 @@ include "ground/relocation/pr_pushs.ma".
 
 (*** eq_inv_pushs_sn *)
 lemma pr_eq_inv_pushs_sn (n):
-      ∀f1,g2. ⫯*[n] f1 ≡ g2 →
-      ∧∧ f1 ≡ ⫰*[n]g2 & ⫯*[n]⫰*[n]g2 = g2.
+      ∀f1,g2. ⫯*[n] f1 ≐ g2 →
+      ∧∧ f1 ≐ ⫰*[n]g2 & ⫯*[n]⫰*[n]g2 = g2.
 #n @(nat_ind_succ … n) -n /2 width=1 by conj/
 #n #IH #f1 #g2 #H
 elim (pr_eq_inv_push_sn … H) -H [|*: // ] #Hf10 *
@@ -32,8 +32,8 @@ qed-.
 
 (*** eq_inv_pushs_dx *)
 lemma pr_eq_inv_pushs_dx (n):
-      ∀f2,g1. g1 ≡ ⫯*[n] f2 →
-      ∧∧ ⫰*[n]g1 ≡ f2 & ⫯*[n]⫰*[n]g1 = g1.
+      ∀f2,g1. g1 ≐ ⫯*[n] f2 →
+      ∧∧ ⫰*[n]g1 ≐ f2 & ⫯*[n]⫰*[n]g1 = g1.
 #n @(nat_ind_succ … n) -n /2 width=1 by conj/
 #n #IH #f2 #g1 #H
 elim (pr_eq_inv_push_dx … H) -H [|*: // ] #Hf02 *

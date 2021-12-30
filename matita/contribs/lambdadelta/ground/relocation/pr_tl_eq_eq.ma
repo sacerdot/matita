@@ -29,9 +29,9 @@ corec theorem pr_eq_trans: Transitive … pr_eq.
 qed-.
 
 (*** eq_canc_sn *)
-theorem pr_eq_canc_sn (f2): pr_eq_repl_back (λf. f ≡ f2).
+theorem pr_eq_canc_sn (f2): pr_eq_repl_back (λf. f ≐ f2).
 /3 width=3 by pr_eq_trans, pr_eq_sym/ qed-.
 
 (*** eq_canc_dx *)
-theorem pr_eq_canc_dx (f1): pr_eq_repl_fwd (λf. f1 ≡ f).
+theorem pr_eq_canc_dx (f1): pr_eq_repl_fwd (λf. f1 ≐ f).
 /3 width=5 by pr_eq_canc_sn, pr_eq_repl_sym/ qed-.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/ideq_2.ma".
+include "static_2/notation/relations/ideq_2.ma".
 include "static_2/syntax/teqg.ma".
 
 (* SYNTACTIC EQUIVALENCE ON TERMS *******************************************)

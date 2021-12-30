@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/xoa/ex_3_2.ma".
-include "ground/notation/relations/ideq_2.ma".
+include "ground/notation/relations/doteq_2.ma".
 include "ground/lib/stream_eq.ma".
 include "ground/relocation/pr_map.ma".
 
@@ -31,19 +31,19 @@ coinductive pr_eq: relation pr_map ≝
 
 interpretation
   "extensional equivalence (partial relocation maps)"
-  'IdEq f1 f2 = (pr_eq f1 f2).
+  'DotEq f1 f2 = (pr_eq f1 f2).
 
 (*** eq_repl *)
 definition pr_eq_repl (R:relation …) ≝
-           ∀f1,f2. f1 ≡ f2 → R f1 f2.
+           ∀f1,f2. f1 ≐ f2 → R f1 f2.
 
 (*** eq_repl_back *)
 definition pr_eq_repl_back (R:predicate …) ≝
-           ∀f1. R f1 → ∀f2. f1 ≡ f2 → R f2.
+           ∀f1. R f1 → ∀f2. f1 ≐ f2 → R f2.
 
 (*** eq_repl_fwd *)
 definition pr_eq_repl_fwd (R:predicate …) ≝
-           ∀f1. R f1 → ∀f2. f2 ≡ f1 → R f2.
+           ∀f1. R f1 → ∀f2. f2 ≐ f1 → R f2.
 
 (* Basic constructions ******************************************************)
 

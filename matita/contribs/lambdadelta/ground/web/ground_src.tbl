@@ -60,7 +60,7 @@ table {
           [ "pr_nexts ( ↑*[?]? )" "pr_nexts_eq" * ]
           [ "pr_pushs ( ⫯*[?]? )" "pr_pushs_eq" * ]
           [ "pr_tl ( ⫰? )" "pr_tl_eq" "pr_tl_eq_eq" * ]
-          [ "pr_eq ( ? ≡ ? )" * ]
+          [ "pr_eq ( ? ≐ ? )" * ]
           [ "pr_map ( ⫯? ) ( ↑? )" * ]
         }
       ]
@@ -143,7 +143,7 @@ table {
       [ { "" * } {
           [ "bool ( Ⓕ ) ( Ⓣ )" "bool_or" "bool_and" * ]
           [ "ltc" "ltc_ctc" * ]
-          [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ≐{?,?} ? )" "star" "lstar_2a" * ]
+          [ "logic ( ⊥ ) ( ⊤ )" "relations ( ? ⊆ ? )" "functions" "exteq ( ? ⊜{?,?} ? )" "star" "lstar_2a" * ]
         }
       ]
     }

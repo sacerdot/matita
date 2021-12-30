@@ -20,7 +20,7 @@ include "apps_2/functional/mf_vlift.ma".
 
 (* Properties with extensional equivalence **********************************)
 
-lemma mf_gc_id: ∀j. ⇡[j]mf_gi ≐ mf_gi.
+lemma mf_gc_id: ∀j. ⇡[j]mf_gi ⊜ mf_gi.
 // qed.
 
 lemma mf_vlift_comp (l): compatible_2 … (mf_vlift l) (exteq …) (exteq …).
@@ -30,5 +30,5 @@ qed.
 
 (* Main properties with extensional equivalence *****************************)
 
-theorem mf_vlift_swap: ∀l1,l2. l2 ≤ l1 → ∀v. ⇡[l2]⇡[l1]v ≐ ⇡[↑l1]⇡[l2]v.
+theorem mf_vlift_swap: ∀l1,l2. l2 ≤ l1 → ∀v. ⇡[l2]⇡[l1]v ⊜ ⇡[↑l1]⇡[l2]v.
 /2 width=1 by flifts_basic_swap/ qed-.

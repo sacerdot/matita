@@ -21,7 +21,7 @@ include "ground/relocation/pr_pushs.ma".
 
 (*** pushs_eq_repl *)
 lemma pr_pushs_eq_repl (n):
-      pr_eq_repl (λf1,f2. ⫯*[n] f1 ≡ ⫯*[n] f2).
+      pr_eq_repl (λf1,f2. ⫯*[n] f1 ≐ ⫯*[n] f2).
 #n @(nat_ind_succ … n) -n
 /3 width=5 by pr_eq_push/
 qed-.

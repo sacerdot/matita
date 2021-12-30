@@ -36,7 +36,7 @@ lemma pr_isi_eq_repl_fwd:
 (* Main inversions with pr_eq ***********************************************)
 
 (*** isid_inv_eq_repl *)
-corec theorem pr_isi_inv_eq_repl (g1) (g2): 𝐈❨g1❩ → 𝐈❨g2❩ → g1 ≡ g2.
+corec theorem pr_isi_inv_eq_repl (g1) (g2): 𝐈❨g1❩ → 𝐈❨g2❩ → g1 ≐ g2.
 #H1 #H2
 cases (pr_isi_inv_gen … H1) -H1
 cases (pr_isi_inv_gen … H2) -H2
@@ -46,13 +46,13 @@ qed-.
 (* Alternative definition with pr_eq ****************************************)
 
 (*** eq_push_isid *)
-corec lemma pr_eq_push_isi (f): ⫯f ≡ f → 𝐈❨f❩.
+corec lemma pr_eq_push_isi (f): ⫯f ≐ f → 𝐈❨f❩.
 #H cases (pr_eq_inv_push_sn … H) -H
 /4 width=3 by pr_isi_push, pr_eq_trans/
 qed.
 
 (*** eq_push_inv_isid *)
-corec lemma pr_isi_inv_eq_push (g): 𝐈❨g❩ → ⫯g ≡ g.
+corec lemma pr_isi_inv_eq_push (g): 𝐈❨g❩ → ⫯g ≐ g.
 * -g #f #g #Hf *
 /3 width=5 by pr_eq_push/
 qed-.

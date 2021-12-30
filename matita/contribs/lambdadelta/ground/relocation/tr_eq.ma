@@ -19,7 +19,7 @@ include "ground/relocation/tr_nexts.ma".
 
 (* Constructions with pr_eq and stream_eq ***********************************)
 
-corec lemma eq_tr_inj_bi (f1) (f2): f1 ≗ f2 → 𝐭❨f1❩ ≡ 𝐭❨f2❩.
+corec lemma eq_tr_inj_bi (f1) (f2): f1 ≗ f2 → 𝐭❨f1❩ ≐ 𝐭❨f2❩.
 * -f1 -f2 #p1 #p2 #f1 #f2 * -p2 #H
 cases p1 -p1
 [ @pr_eq_push /2 width=5 by/
@@ -31,7 +31,7 @@ qed.
 
 (* Inversions with pr_eq and stream_eq **************************************)
 
-corec lemma eq_inv_tr_inj_bi (f1) (f2): 𝐭❨f1❩ ≡ 𝐭❨f2❩ → f1 ≗ f2.
+corec lemma eq_inv_tr_inj_bi (f1) (f2): 𝐭❨f1❩ ≐ 𝐭❨f2❩ → f1 ≗ f2.
 cases f1 -f1 #p1 #f1 cases f2 -f2 #p2 #f2
 cases tr_inj_unfold cases tr_inj_unfold #H
 cases (pr_eq_inv_nexts_push_bi … H) -H #H1 #H2

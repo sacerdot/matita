@@ -38,7 +38,7 @@ lemma pr_pat_eq_repl_fwd (i1) (i2):
 #i1 #i2 @pr_eq_repl_sym /2 width=3 by pr_pat_eq_repl_back/
 qed-.
 
-lemma pr_pat_eq (f): ⫯f ≡ f → ∀i. @❨i,f❩ ≘ i.
+lemma pr_pat_eq (f): ⫯f ≐ f → ∀i. @❨i,f❩ ≘ i.
 #f #Hf #i elim i -i
 [ /3 width=3 by pr_pat_eq_repl_back, pr_pat_refl/
 | /3 width=7 by pr_pat_eq_repl_back, pr_pat_push/
@@ -48,7 +48,7 @@ qed.
 (* Inversions with pr_eq ****************************************************)
 
 corec lemma pr_pat_inv_eq (f):
-            (∀i. @❨i,f❩ ≘ i) → ⫯f ≡ f.
+            (∀i. @❨i,f❩ ≘ i) → ⫯f ≐ f.
 #Hf
 lapply (Hf (𝟏)) #H
 lapply (pr_pat_des_id … H) -H #H

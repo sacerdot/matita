@@ -21,7 +21,7 @@ include "ground/relocation/pr_nexts.ma".
 
 (*** nexts_eq_repl *)
 lemma pr_nexts_eq_repl (n):
-      pr_eq_repl (λf1,f2. ↑*[n] f1 ≡ ↑*[n] f2).
+      pr_eq_repl (λf1,f2. ↑*[n] f1 ≐ ↑*[n] f2).
 #n @(nat_ind_succ … n) -n
 /3 width=5 by pr_eq_next/
 qed.
@@ -29,8 +29,8 @@ qed.
 (* Inversions with pr_eq ****************************************************)
 
 lemma pr_eq_inv_nexts_push_bi (f1) (f2) (n1) (n2):
-      ↑*[n1] ⫯f1 ≡ ↑*[n2] ⫯f2 →
-      ∧∧ n1 = n2 & f1 ≡ f2.
+      ↑*[n1] ⫯f1 ≐ ↑*[n2] ⫯f2 →
+      ∧∧ n1 = n2 & f1 ≐ f2.
 #f1 #f2
 #n1 @(nat_ind_succ … n1) -n1 [| #n1 #IH ]
 #n2 @(nat_ind_succ … n2) -n2 [2,4: #n2 #_ ]

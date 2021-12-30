@@ -43,7 +43,7 @@ lemma pr_isu_eq_repl_fwd:
 (* Inversions with pr_uni ***************************************************)
 
 (*** uni_isuni *)
-lemma pr_isu_inv_uni (f): 𝐔❨f❩ → ∃n. 𝐮❨n❩ ≡ f.
+lemma pr_isu_inv_uni (f): 𝐔❨f❩ → ∃n. 𝐮❨n❩ ≐ f.
 #f #H elim H -f
 [ /3 width=2 by pr_isi_inv_uni, ex_intro/
 | #f #_ #g #H * /3 width=6 by pr_eq_next, ex_intro/
