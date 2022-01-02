@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( 𝛌 . break term 75 t )"
+notation "hvbox( 𝛌. break term 75 t )"
   non associative with precedence 75
   for @{ 'Lamda $t }.

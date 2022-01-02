@@ -15,9 +15,9 @@
 include "ground/lib/list_rcons.ma".
 include "ground/notation/functions/element_e_0.ma".
 include "ground/notation/functions/black_circle_2.ma".
+include "ground/notation/functions/black_halfcircleright_2.ma".
+include "ground/notation/functions/black_halfcircleleft_2.ma".
 include "delayed_updating/syntax/label.ma".
-include "delayed_updating/notation/functions/black_halfcircleright_2.ma".
-include "delayed_updating/notation/functions/black_halfcircleleft_2.ma".
 
 (* PATH *********************************************************************)
 

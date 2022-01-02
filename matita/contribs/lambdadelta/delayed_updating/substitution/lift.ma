@@ -20,8 +20,11 @@ include "delayed_updating/notation/functions/uparrow_2.ma".
 
 (* LIFT FOR PATH ***********************************************************)
 
+definition lift_continuation (A:Type[0]) ≝
+           path → tr_map → A.
+
 (* Note: inner numeric labels are not liftable, so they are removed *)
-rec definition lift_gen (A:Type[0]) (k:?→?→A) (p) (f) on p ≝
+rec definition lift_gen (A:Type[0]) (k:lift_continuation A) (p) (f) on p ≝
 match p with
 [ list_empty     ⇒ k 𝐞 f
 | list_lcons l q ⇒
@@ -55,28 +58,26 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma lift_L (A) (k) (p) (f):
+lemma lift_empty (A) (k) (f):
+      k 𝐞 f = ↑{A}❨k, 𝐞, f❩.
+// qed.
+
+lemma lift_d_empty_sn (A) (k) (n) (f):
+      ↑❨(λp. k (𝗱❨f@❨n❩❩◗p)), 𝐞, f❩ = ↑{A}❨k, 𝗱❨n❩◗𝐞, f❩.
+// qed.
+
+lemma lift_d_lcons_sn (A) (k) (p) (l) (n) (f):
+      ↑❨k, l◗p, f∘𝐮❨ninj n❩❩ = ↑{A}❨k, 𝗱❨n❩◗l◗p, f❩.
+// qed.
+
+lemma lift_L_sn (A) (k) (p) (f):
       ↑❨(λp. k (𝗟◗p)), p, ⫯f❩ = ↑{A}❨k, 𝗟◗p, f❩.
 // qed.
 
-(* Basic constructions with proj_path ***************************************)
+lemma lift_A_sn (A) (k) (p) (f):
+      ↑❨(λp. k (𝗔◗p)), p, f❩ = ↑{A}❨k, 𝗔◗p, f❩.
+// qed.
 
-lemma lift_append (p) (f) (q):
-      q●↑[f]p = ↑❨(λp. proj_path (q●p)), p, f❩.
-#p elim p -p
-[ //
-| #l #p #IH #f #q cases l
-  [
-  | <lift_L in ⊢ (???%);
-    >(list_append_rcons_sn ? q) in ⊢ (???(??(λ_.%)??));
-    
-     <IH 
-  normalize >IH
-  | //   
-
-(* Constructions with append ************************************************)
-
-theorem lift_append_A (p2) (p1) (f):
-        (↑[f]p1)●𝗔◗↑[↑[p1]f]p2 = ↑[f](p1●𝗔◗p2).
-#p2 #p1 elim p1 -p1
-[ #f normalize 
+lemma lift_S_sn (A) (k) (p) (f):
+      ↑❨(λp. k (𝗦◗p)), p, f❩ = ↑{A}❨k, 𝗦◗p, f❩.
+// qed.

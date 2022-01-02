@@ -1,0 +1,76 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "delayed_updating/substitution/lift.ma".
+include "ground/notation/relations/ringeq_3.ma".
+
+(* LIFT FOR PATH ***********************************************************)
+
+definition lift_exteq (A): relation2 (lift_continuation A) (lift_continuation A) ≝
+           λk1,k2. ∀p,f. k1 p f = k2 p f.
+
+interpretation
+  "extensional equivalence (lift continuation)"
+  'RingEq A k1 k2 = (lift_exteq A k1 k2).
+
+(* Constructions with lift_exteq ********************************************)
+
+lemma lift_eq_repl_sn (A) (p) (k1) (k2) (f):
+      k1 ≗{A} k2 → ↑❨k1, p, f❩ = ↑❨k2, p, f❩.
+#A #p elim p -p
+[ #k1 #k2 #f #Hk <lift_empty <lift_empty //
+| * [ #n * [| #l0 ]] [|*: #q ] #IH #k1 #k2 #f #Hk /2 width=1 by/
+]
+qed-.
+
+(* Advanced constructions ***************************************************)
+
+lemma lift_lcons_alt (A) (k) (f) (p) (l):
+      ↑❨λp2.k(l◗p2),p,f❩ = ↑{A}❨λp2.k((l◗𝐞)●p2),p,f❩.
+#A #k #f #p #l
+@lift_eq_repl_sn #p2 #g // (**) (* auto fails with typechecker failure *)
+qed.
+
+lemma lift_append_rcons_sn (A) (k) (f) (p1) (p) (l):
+      ↑❨λp2.k(p1●l◗p2),p,f❩ = ↑{A}❨λp2.k(p1◖l●p2),p,f❩.
+#A #k #f #p1 #p #l
+@lift_eq_repl_sn #p2 #g
+<list_append_rcons_sn //
+qed.
+
+(* Basic constructions with proj_path ***************************************)
+
+lemma lift_append_sn (p) (f) (q):
+      q●↑[f]p = ↑❨(λp. proj_path (q●p)), p, f❩.
+#p elim p -p
+[ //
+| * [ #n * [| #l ]] [|*: #p ] #IH #f #q
+  [ <lift_d_empty_sn <lift_d_empty_sn >lift_lcons_alt >lift_append_rcons_sn
+    <IH <IH -IH <list_append_rcons_sn //
+  | <lift_d_lcons_sn <lift_d_lcons_sn <IH -IH //
+  | <lift_L_sn <lift_L_sn >lift_lcons_alt >lift_append_rcons_sn
+    <IH <IH -IH <list_append_rcons_sn //
+  | <lift_A_sn <lift_A_sn >lift_lcons_alt >lift_append_rcons_sn
+    <IH <IH -IH <list_append_rcons_sn //
+  | <lift_S_sn <lift_S_sn >lift_lcons_alt >lift_append_rcons_sn
+    <IH <IH -IH <list_append_rcons_sn //
+  ]
+]
+qed.
+
+lemma lift_lcons (f) (p) (l):
+      l◗↑[f]p = ↑❨(λp. proj_path (l◗p)), p, f❩.
+#f #p #l
+>lift_lcons_alt <lift_append_sn //
+qed.

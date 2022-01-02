@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/xoa/ex_3_1.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/syntax/path_balanced.ma".
 include "delayed_updating/substitution/fsubst.ma".

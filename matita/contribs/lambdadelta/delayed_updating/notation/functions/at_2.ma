@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( @ break term 76 u. break term 75 t )"
+notation "hvbox( @ break term 76 u . break term 75 t )"
   non associative with precedence 75
   for @{ 'At $u $t }.
