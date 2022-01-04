@@ -20,9 +20,9 @@ include "delayed_updating/substitution/lift_eq.ma".
 (* Constructions with structure ********************************************)
 
 lemma lift_d_empty_dx (n) (p) (f):
-      (⊗p)◖𝗱❨(↑[p◖𝗱❨n❩]f)@❨n❩❩ = ↑[f](p◖𝗱❨n❩).
+      (⊗p)◖𝗱❨(↑[p]f)@❨n❩❩ = ↑[f](p◖𝗱❨n❩).
 #n #p @(path_ind_lift … p) -p // [ #m #l #p |*: #p ] #IH #f
-[ <lift_rmap_d_lcons_sn <lift_path_d_lcons_sn //
+[ <lift_rmap_d_sn <lift_path_d_lcons_sn //
 | <lift_rmap_L_sn <lift_path_L_sn <IH //
 | <lift_rmap_A_sn <lift_path_A_sn <IH //
 | <lift_rmap_S_sn <lift_path_S_sn <IH //

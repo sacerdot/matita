@@ -31,7 +31,7 @@ match p with
   match l with
   [ label_node_d n ⇒
     match q with
-    [ list_empty     ⇒ lift_gen (A) (λp. k (𝗱❨f@❨n❩❩◗p)) q f
+    [ list_empty     ⇒ lift_gen (A) (λp. k (𝗱❨f@❨n❩❩◗p)) q (f∘𝐮❨n❩)
     | list_lcons _ _ ⇒ lift_gen (A) k q (f∘𝐮❨n❩)
     ]
   | label_edge_L   ⇒ lift_gen (A) (λp. k (𝗟◗p)) q (⫯f)
@@ -63,7 +63,7 @@ lemma lift_empty (A) (k) (f):
 // qed.
 
 lemma lift_d_empty_sn (A) (k) (n) (f):
-      ↑❨(λp. k (𝗱❨f@❨n❩❩◗p)), 𝐞, f❩ = ↑{A}❨k, 𝗱❨n❩◗𝐞, f❩.
+      ↑❨(λp. k (𝗱❨f@❨n❩❩◗p)), 𝐞, f∘𝐮❨ninj n❩❩ = ↑{A}❨k, 𝗱❨n❩◗𝐞, f❩.
 // qed.
 
 lemma lift_d_lcons_sn (A) (k) (p) (l) (n) (f):
@@ -94,13 +94,9 @@ lemma lift_path_d_lcons_sn (f) (p) (l) (n):
 
 (* Basic constructions with proj_rmap ***************************************)
 
-lemma lift_rmap_d_empty_sn (f) (n):
-      f = ↑[𝗱❨n❩◗𝐞]f.
-// qed.
-
-lemma lift_rmap_d_lcons_sn (f) (p) (l) (n):
-      ↑[l◗p](f∘𝐮❨ninj n❩) = ↑[𝗱❨n❩◗l◗p]f.
-// qed.
+lemma lift_rmap_d_sn (f) (p) (n):
+      ↑[p](f∘𝐮❨ninj n❩) = ↑[𝗱❨n❩◗p]f.
+#f * // qed.
 
 lemma lift_rmap_L_sn (f) (p):
       ↑[p](⫯f) = ↑[𝗟◗p]f.
@@ -113,6 +109,16 @@ lemma lift_rmap_A_sn (f) (p):
 lemma lift_rmap_S_sn (f) (p):
       ↑[p]f = ↑[𝗦◗p]f.
 // qed.
+
+(* Advanced constructions with proj_rmap and path_append ********************)
+
+lemma lift_rmap_append (p2) (p1) (f):
+      ↑[p2]↑[p1]f = ↑[p1●p2]f.
+#p2 #p1 elim p1 -p1 // * [ #n ] #p1 #IH #f //
+[ <lift_rmap_A_sn <lift_rmap_A_sn //
+| <lift_rmap_S_sn <lift_rmap_S_sn //
+]
+qed.
 
 (* Advanced eliminations with path ******************************************)
 
