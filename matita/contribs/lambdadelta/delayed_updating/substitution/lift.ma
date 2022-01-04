@@ -81,3 +81,50 @@ lemma lift_A_sn (A) (k) (p) (f):
 lemma lift_S_sn (A) (k) (p) (f):
       ↑❨(λp. k (𝗦◗p)), p, f❩ = ↑{A}❨k, 𝗦◗p, f❩.
 // qed.
+
+(* Basic constructions with proj_path ***************************************)
+
+lemma lift_path_d_empty_sn (f) (n):
+      𝗱❨f@❨n❩❩◗𝐞 = ↑[f](𝗱❨n❩◗𝐞).
+// qed.
+
+lemma lift_path_d_lcons_sn (f) (p) (l) (n):
+      ↑[f∘𝐮❨ninj n❩](l◗p) = ↑[f](𝗱❨n❩◗l◗p).
+// qed.
+
+(* Basic constructions with proj_rmap ***************************************)
+
+lemma lift_rmap_d_empty_sn (f) (n):
+      f = ↑[𝗱❨n❩◗𝐞]f.
+// qed.
+
+lemma lift_rmap_d_lcons_sn (f) (p) (l) (n):
+      ↑[l◗p](f∘𝐮❨ninj n❩) = ↑[𝗱❨n❩◗l◗p]f.
+// qed.
+
+lemma lift_rmap_L_sn (f) (p):
+      ↑[p](⫯f) = ↑[𝗟◗p]f.
+// qed.
+
+lemma lift_rmap_A_sn (f) (p):
+      ↑[p]f = ↑[𝗔◗p]f.
+// qed.
+
+lemma lift_rmap_S_sn (f) (p):
+      ↑[p]f = ↑[𝗦◗p]f.
+// qed.
+
+(* Advanced eliminations with path ******************************************)
+
+lemma path_ind_lift (Q:predicate …):
+      Q 𝐞 →
+      (∀n. Q 𝐞 → Q (𝗱❨n❩◗𝐞)) →
+      (∀n,l,p. Q (l◗p) → Q (𝗱❨n❩◗l◗p)) →
+      (∀p. Q p → Q (𝗟◗p)) →
+      (∀p. Q p → Q (𝗔◗p)) →
+      (∀p. Q p → Q (𝗦◗p)) →
+      ∀p. Q p.
+#Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #p
+elim p -p [| * [ #n * ] ]
+/2 width=1 by/
+qed-.

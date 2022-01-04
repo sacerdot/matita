@@ -28,9 +28,9 @@ interpretation
 
 lemma lift_eq_repl_sn (A) (p) (k1) (k2) (f):
       k1 ≗{A} k2 → ↑❨k1, p, f❩ = ↑❨k2, p, f❩.
-#A #p elim p -p
+#A #p @(path_ind_lift … p) -p [| #n | #n #l0 #q ]
 [ #k1 #k2 #f #Hk <lift_empty <lift_empty //
-| * [ #n * [| #l0 ]] [|*: #q ] #IH #k1 #k2 #f #Hk /2 width=1 by/
+|*: #IH #k1 #k2 #f #Hk /2 width=1 by/
 ]
 qed-.
 
@@ -49,28 +49,35 @@ lemma lift_append_rcons_sn (A) (k) (f) (p1) (p) (l):
 <list_append_rcons_sn //
 qed.
 
-(* Basic constructions with proj_path ***************************************)
+(* Advanced constructions with proj_path ************************************)
 
-lemma lift_append_sn (p) (f) (q):
+lemma lift_path_append_sn (p) (f) (q):
       q●↑[f]p = ↑❨(λp. proj_path (q●p)), p, f❩.
-#p elim p -p
-[ //
-| * [ #n * [| #l ]] [|*: #p ] #IH #f #q
-  [ <lift_d_empty_sn <lift_d_empty_sn >lift_lcons_alt >lift_append_rcons_sn
-    <IH <IH -IH <list_append_rcons_sn //
-  | <lift_d_lcons_sn <lift_d_lcons_sn <IH -IH //
-  | <lift_L_sn <lift_L_sn >lift_lcons_alt >lift_append_rcons_sn
-    <IH <IH -IH <list_append_rcons_sn //
-  | <lift_A_sn <lift_A_sn >lift_lcons_alt >lift_append_rcons_sn
-    <IH <IH -IH <list_append_rcons_sn //
-  | <lift_S_sn <lift_S_sn >lift_lcons_alt >lift_append_rcons_sn
-    <IH <IH -IH <list_append_rcons_sn //
-  ]
+#p @(path_ind_lift … p) -p // [ #n #l #p |*: #p ] #IH #f #q
+[ <lift_d_lcons_sn <lift_d_lcons_sn <IH -IH //
+| <lift_L_sn <lift_L_sn >lift_lcons_alt >lift_append_rcons_sn
+  <IH <IH -IH <list_append_rcons_sn //
+| <lift_A_sn <lift_A_sn >lift_lcons_alt >lift_append_rcons_sn
+  <IH <IH -IH <list_append_rcons_sn //
+| <lift_S_sn <lift_S_sn >lift_lcons_alt >lift_append_rcons_sn
+  <IH <IH -IH <list_append_rcons_sn //
 ]
 qed.
 
-lemma lift_lcons (f) (p) (l):
+lemma lift_path_lcons (f) (p) (l):
       l◗↑[f]p = ↑❨(λp. proj_path (l◗p)), p, f❩.
 #f #p #l
->lift_lcons_alt <lift_append_sn //
+>lift_lcons_alt <lift_path_append_sn //
 qed.
+
+lemma lift_path_L_sn (f) (p):
+      𝗟◗↑[⫯f]p = ↑[f](𝗟◗p).
+// qed.
+
+lemma lift_path_A_sn (f) (p):
+      𝗔◗↑[f]p = ↑[f](𝗔◗p).
+// qed.
+
+lemma lift_path_S_sn (f) (p):
+      𝗦◗↑[f]p = ↑[f](𝗦◗p).
+// qed.

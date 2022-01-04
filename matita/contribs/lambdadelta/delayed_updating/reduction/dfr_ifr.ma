@@ -12,8 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR DELAYED UPDATING ********************************************)
+include "delayed_updating/reduction/ifr.ma".
+include "delayed_updating/reduction/dfr.ma".
 
-notation "hvbox( t1 ➡'d''f'[ break term 46 p, break term 46 q ] break term 46 t2 )"
-   non associative with precedence 45
-   for @{ 'BlackRightArrow $t1 $p $q $t2 }.
+(* DELAYED FOCUSED REDUCTION ************************************************)
+
+lemma dfr_lift_bi (f) (p) (q) (t1) (t2):
+      t1 ➡𝐝𝐟[p,q] t2 → ↑[f]t1 ➡𝐟[⊗p,⊗q] ↑[f]t2.
+#f #p #q #t1 #t2
+* #b #n #Hr #Hb
