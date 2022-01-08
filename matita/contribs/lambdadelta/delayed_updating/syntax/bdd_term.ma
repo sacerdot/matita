@@ -24,10 +24,10 @@ include "delayed_updating/notation/functions/class_d_phi_0.ma".
 (* BY-DEPTH DELAYED (BDD) TERM **********************************************)
 
 inductive bdd: 𝒫❨preterm❩ ≝
-| bdd_oref: ∀n. bdd #n
-| bdd_iref: ∀t,n. bdd t → bdd 𝛗n.t
-| bdd_abst: ∀t. bdd t → bdd 𝛌.t
-| bdd_appl: ∀u,t. bdd u → bdd t → bdd @u.t
+| bdd_oref: ∀n. bdd (#n)
+| bdd_iref: ∀t,n. bdd t → bdd (𝛗n.t)
+| bdd_abst: ∀t. bdd t → bdd (𝛌.t)
+| bdd_appl: ∀u,t. bdd u → bdd t → bdd (@u.t)
 | bdd_conv: ∀t1,t2. t1 ⇔ t2 → bdd t1 → bdd t2
 .
 

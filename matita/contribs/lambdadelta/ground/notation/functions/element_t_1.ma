@@ -15,5 +15,5 @@
 (* GROUND NOTATION **********************************************************)
 
 notation "hvbox( 𝐭❨ break term 46 a ❩ )"
-  non associative with precedence 75
+  non associative with precedence 70
   for @{ 'ElementT $a }.

@@ -28,7 +28,7 @@ lemma pr_pat_id_des (i1) (i2):
 
 (*** at_div_id_dx *)
 theorem pr_pat_div_id_dx (f):
-        H_pr_pat_div f 𝐢 𝐢 f.
+        H_pr_pat_div f (𝐢 ) (𝐢) f.
 #f #jf #j0 #j #Hf #H0
 lapply (pr_pat_id_des … H0) -H0 #H destruct
 /2 width=3 by ex2_intro/
@@ -36,5 +36,5 @@ qed-.
 
 (*** at_div_id_sn *)
 theorem pr_pat_div_id_sn (f):
-        H_pr_pat_div 𝐢 f f 𝐢.
+        H_pr_pat_div (𝐢) f f (𝐢).
 /3 width=6 by pr_pat_div_id_dx, pr_pat_div_comm/ qed-.

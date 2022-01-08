@@ -12,12 +12,41 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/ifr.ma".
-include "delayed_updating/reduction/dfr.ma".
+include "delayed_updating/syntax/path.ma".
+include "ground/arith/nat_succ.ma".
+include "ground/notation/functions/verticalbars_1.ma".
 
-(* DELAYED FOCUSED REDUCTION ************************************************)
+(* DEPTH FOR PATH ***********************************************************)
 
-lemma dfr_lift_bi (f) (p) (q) (t1) (t2):
-      t1 ➡𝐝𝐟[p,q] t2 → ↑[f]t1 ➡𝐟[⊗p,⊗q] ↑[f]t2.
-#f #p #q #t1 #t2
-* #b #Hr #Hb
+rec definition depth (p) on p: nat ≝
+match p with
+[ list_empty     ⇒ 𝟎
+| list_lcons l q ⇒
+  match l with
+  [ label_node_d _ ⇒ depth q
+  | label_edge_L   ⇒ ↑(depth q)
+  | label_edge_A   ⇒ depth q
+  | label_edge_S   ⇒ depth q
+  ]
+].
+
+interpretation
+  "depth (path)"
+  'VerticalBars p = (depth p).
+
+(* Basic constructions ******************************************************)
+
+lemma depth_empty: 𝟎 = ❘𝐞❘.
+// qed.
+
+lemma depth_d (q) (n): ❘q❘ = ❘𝗱❨n❩◗q❘.
+// qed.
+
+lemma depth_L (q): ↑❘q❘ = ❘𝗟◗q❘.
+// qed.
+
+lemma depth_A (q): ❘q❘ = ❘𝗔◗q❘.
+// qed.
+
+lemma depth_S (q): ❘q❘ = ❘𝗦◗q❘.
+// qed.

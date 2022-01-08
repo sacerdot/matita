@@ -15,13 +15,13 @@
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
 notation < "hvbox( ↑❨ term 46 k, break term 46 p, break term 46 f ❩ )"
-  non associative with precedence 75
+  non associative with precedence 70
   for @{ 'UpArrow $S $k $p $f }.
 
 notation > "hvbox( ↑❨ term 46 k, break term 46 p, break term 46 f ❩ )"
-  non associative with precedence 75
+  non associative with precedence 70
   for @{ 'UpArrow ? $k $p $f }.
 
 notation > "hvbox( ↑{ term 46 S }❨ break term 46 k, break term 46 p, break term 46 f ❩ )"
-  non associative with precedence 75
+  non associative with precedence 70
   for @{ 'UpArrow $S $k $p $f }.

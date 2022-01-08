@@ -16,7 +16,7 @@ include "ground/lib/subset.ma".
 
 (* INCLUSION FOR SUBSETS ****************************************************)
 
-definition subset_le (A): relation2 𝒫❨A❩ 𝒫❨A❩ ≝
+definition subset_le (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
            λu1,u2. ∀p. p ϵ u1 → p ϵ u2.
 
 interpretation

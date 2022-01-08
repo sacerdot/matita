@@ -17,7 +17,7 @@ include "ground/lib/subset_inclusion.ma".
 
 (* EQUIVALENCE FOR SUBSETS **************************************************)
 
-definition subset_eq (A): relation2 𝒫❨A❩ 𝒫❨A❩ ≝
+definition subset_eq (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
            λu1,u2. ∧∧ u1 ⊆ u2 & u2 ⊆ u1.
 
 interpretation

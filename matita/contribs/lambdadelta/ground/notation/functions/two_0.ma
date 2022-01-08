@@ -15,5 +15,5 @@
 (* GROUND NOTATION **********************************************************)
 
 notation "𝟐"
-  non associative with precedence 75
+  non associative with precedence 70
   for @{ 'Two }.

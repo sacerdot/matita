@@ -12,12 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/ifr.ma".
-include "delayed_updating/reduction/dfr.ma".
+(* GROUND NOTATION **********************************************************)
 
-(* DELAYED FOCUSED REDUCTION ************************************************)
-
-lemma dfr_lift_bi (f) (p) (q) (t1) (t2):
-      t1 ➡𝐝𝐟[p,q] t2 → ↑[f]t1 ➡𝐟[⊗p,⊗q] ↑[f]t2.
-#f #p #q #t1 #t2
-* #b #Hr #Hb
+notation "hvbox( ❘ term 46 C ❘ )"
+  non associative with precedence 70
+  for @{ 'VerticalBars $C }.

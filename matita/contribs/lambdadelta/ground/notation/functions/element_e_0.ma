@@ -15,5 +15,5 @@
 (* GROUND NOTATION **********************************************************)
 
 notation "𝐞"
-  non associative with precedence 75
+  non associative with precedence 70
   for @{ 'ElementE }.

@@ -15,5 +15,5 @@
 (* GROUND NOTATION **********************************************************)
 
 notation "hvbox( 𝒫 ❨ break term 46 S ❩ )"
-  non associative with precedence 75
+  non associative with precedence 70
   for @{ 'PowerClass $S }.

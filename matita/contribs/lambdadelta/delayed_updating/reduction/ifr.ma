@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "delayed_updating/syntax/path_depth.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/syntax/path_balanced.ma".
 include "delayed_updating/substitution/fsubst.ma".
@@ -21,9 +22,9 @@ include "delayed_updating/notation/relations/black_rightarrow_f_4.ma".
 (* IMMEDIATE FOCUSED REDUCTION ************************************************)
 
 inductive ifr (p) (q) (t): predicate preterm ≝
-| ifr_beta (b) (n):
+| ifr_beta (b):
   let r ≝ p●𝗔◗b●𝗟◗q in
-  r◖𝗱❨n❩ ϵ t → ⊓⊗b → ifr p q t (t[⋔r←↑[𝐮❨n❩]t⋔(p◖𝗦)])
+  r◖𝗱❨↑❘q❘❩ ϵ t → ⊓⊗b → ifr p q t (t[⋔r←↑[𝐮❨↑❘q❘❩]t⋔(p◖𝗦)])
 .
 
 interpretation

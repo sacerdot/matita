@@ -15,5 +15,5 @@
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
 notation "hvbox( 𝐃𝛗 )"
-  non associative with precedence 75
+  non associative with precedence 70
   for @{ 'ClassDPhi }.

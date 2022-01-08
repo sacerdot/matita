@@ -15,5 +15,5 @@
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
 notation "hvbox( 𝗔 )"
-  non associative with precedence 75
+  non associative with precedence 70
   for @{ 'EdgeLabelA }.

@@ -26,7 +26,7 @@ definition lift_continuation (A:Type[0]) ≝
 (* Note: inner numeric labels are not liftable, so they are removed *)
 rec definition lift_gen (A:Type[0]) (k:lift_continuation A) (p) (f) on p ≝
 match p with
-[ list_empty     ⇒ k 𝐞 f
+[ list_empty     ⇒ k (𝐞) f
 | list_lcons l q ⇒
   match l with
   [ label_node_d n ⇒
@@ -59,7 +59,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma lift_empty (A) (k) (f):
-      k 𝐞 f = ↑{A}❨k, 𝐞, f❩.
+      k (𝐞) f = ↑{A}❨k, 𝐞, f❩.
 // qed.
 
 lemma lift_d_empty_sn (A) (k) (n) (f):
@@ -123,8 +123,8 @@ qed.
 (* Advanced eliminations with path ******************************************)
 
 lemma path_ind_lift (Q:predicate …):
-      Q 𝐞 →
-      (∀n. Q 𝐞 → Q (𝗱❨n❩◗𝐞)) →
+      Q (𝐞) →
+      (∀n. Q (𝐞) → Q (𝗱❨n❩◗𝐞)) →
       (∀n,l,p. Q (l◗p) → Q (𝗱❨n❩◗l◗p)) →
       (∀p. Q p → Q (𝗟◗p)) →
       (∀p. Q p → Q (𝗔◗p)) →

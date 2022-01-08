@@ -19,7 +19,7 @@ include "delayed_updating/notation/relations/predicate_squarecap_1.ma".
 
 (* This condition applies to a structural path *)
 inductive pbc: predicate path ≝
-| pbc_empty: pbc 𝐞  
+| pbc_empty: pbc (𝐞)  
 | pbc_redex: ∀b. pbc b → pbc (𝗔◗b◖𝗟)
 | pbc_after: ∀b1,b2. pbc b1 → pbc b2 → pbc (b1●b2)
 .

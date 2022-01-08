@@ -15,5 +15,5 @@
 (* GROUND NOTATION **********************************************************)
 
 notation "hvbox ( 〈 term 46 x1, break term 46 x2 , break term 46 x3, break term 46 x4 〉 )"
-  non associative with precedence 75
+  non associative with precedence 70
   for @{ 'Tuple $x1 $x2 $x3 $x4 }.
