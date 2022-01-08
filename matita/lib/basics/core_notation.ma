@@ -277,8 +277,6 @@ for @{ 'union $a $b }. (* \cup *)
 
 (* other notations **********************************************************)
 
-notation "| term 19 C |" with precedence 70 for @{ 'card $C }.
-
 notation "\naturals" non associative with precedence 90 for @{'N}.
 notation "\rationals" non associative with precedence 90 for @{'Q}.
 notation "\reals" non associative with precedence 90 for @{'R}.

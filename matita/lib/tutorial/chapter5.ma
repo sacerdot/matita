@@ -4,7 +4,7 @@
 
 include "tutorial/chapter4.ma".
 include "arithmetics/nat.ma".
-
+include "basics/core_notation/card_1.ma".
 
 (******************************** Option Type *********************************)
 

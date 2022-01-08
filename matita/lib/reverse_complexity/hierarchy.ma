@@ -6,6 +6,7 @@ include "arithmetics/bounded_quantifiers.ma".
 include "arithmetics/pidgeon_hole.ma". 
 include "basics/sets.ma".
 include "basics/types.ma".
+include "basics/core_notation/card_1.ma".
 
 (************************************ MAX *************************************)
 notation "Max_{ ident i < n | p } f"

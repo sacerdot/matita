@@ -302,8 +302,6 @@ notation "s ^ (-1)" non associative with precedence 75 for @{ 'invert $s }.
 (*
 notation < "s \sup (-1) x" non associative with precedence 90 for @{ 'invert_appl $s $x}. 
 
-notation "| term 19 C |" with precedence 70 for @{ 'card $C }.
-
 notation "\naturals" non associative with precedence 90 for @{'N}.
 notation "\rationals" non associative with precedence 90 for @{'Q}.
 notation "\reals" non associative with precedence 90 for @{'R}.
