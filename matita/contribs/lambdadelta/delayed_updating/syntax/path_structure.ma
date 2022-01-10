@@ -40,7 +40,7 @@ lemma structure_empty:
 // qed.
 
 lemma structure_d_sn (p) (n):
-      ⊗p = ⊗(𝗱❨n❩◗p).
+      ⊗p = ⊗(𝗱n◗p).
 // qed.
 
 lemma structure_L_sn (p):
@@ -71,7 +71,7 @@ qed.
 (* Constructions with list_rcons ********************************************)
 
 lemma structure_d_dx (p) (n):
-      ⊗p = ⊗(p◖𝗱❨n❩).
+      ⊗p = ⊗(p◖𝗱n).
 #p #n <structure_append //
 qed.
 

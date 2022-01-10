@@ -22,8 +22,8 @@ include "delayed_updating/notation/relations/black_rightarrow_df_4.ma".
 
 inductive dfr (p) (q) (t): predicate preterm ≝
 | dfr_beta (b):
-  let r ≝ p●𝗔◗b●𝗟◗q◖𝗱❨↑❘q❘❩ in
-  r ϵ t → ⊓⊗b → dfr p q t (t[⋔r←t⋔(p◖𝗦)])
+  let r ≝ p●𝗔◗b●𝗟◗q◖𝗱(↑❘q❘) in
+  r ϵ t → ⊓(⊗b) → dfr p q t (t[⋔r←t⋔(p◖𝗦)])
 .
 
 interpretation

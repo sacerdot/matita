@@ -39,8 +39,8 @@ interpretation
 
 lemma bdd_inv_in_comp_gen:
       ∀t,p. t ϵ 𝐃𝛗 → p ϵ t →
-      ∨∨ ∃∃n. #n ⇔ t & 𝗱❨n❩◗𝐞 = p
-       | ∃∃u,q,n. u ϵ 𝐃𝛗 & q ϵ u & 𝛗n.u ⇔ t & 𝗱❨n❩◗q = p
+      ∨∨ ∃∃n. #n ⇔ t & 𝗱n◗𝐞 = p
+       | ∃∃u,q,n. u ϵ 𝐃𝛗 & q ϵ u & 𝛗n.u ⇔ t & 𝗱n◗q = p
        | ∃∃u,q. u ϵ 𝐃𝛗 & q ϵ u & 𝛌.u ⇔ t & 𝗟◗q = p
        | ∃∃v,u,q. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ u & @v.u ⇔ t & 𝗔◗q = p
        | ∃∃v,u,q. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ v & @v.u ⇔ t & 𝗦◗q = p
@@ -62,7 +62,7 @@ lemma bdd_inv_in_comp_gen:
 qed-.
 
 lemma bdd_inv_in_comp_d:
-      ∀t,q,n. t ϵ 𝐃𝛗 → 𝗱❨n❩◗q ϵ t →
+      ∀t,q,n. t ϵ 𝐃𝛗 → 𝗱n◗q ϵ t →
       ∨∨ ∧∧ #n ⇔ t & 𝐞 = q
        | ∃∃u. u ϵ 𝐃𝛗 & q ϵ u & 𝛗n.u ⇔ t
 .
@@ -77,7 +77,7 @@ elim (bdd_inv_in_comp_gen … Ht Hq) -Ht -Hq *
 qed-.
 
 lemma bdd_inv_in_root_d:
-      ∀t,q,n. t ϵ 𝐃𝛗 → 𝗱❨n❩◗q ϵ ▵t →
+      ∀t,q,n. t ϵ 𝐃𝛗 → 𝗱n◗q ϵ ▵t →
       ∨∨ ∧∧ #n ⇔ t & 𝐞 = q
        | ∃∃u. u ϵ 𝐃𝛗 & q ϵ ▵u & 𝛗n.u ⇔ t
 .
@@ -165,7 +165,7 @@ qed-.
 (* Advanced inversions ******************************************************)
 
 lemma bbd_mono_in_root_d:
-      ∀l,n,p,t. t ϵ 𝐃𝛗 → p◖𝗱❨n❩ ϵ ▵t → p◖l ϵ ▵t → 𝗱❨n❩ = l.
+      ∀l,n,p,t. t ϵ 𝐃𝛗 → p◖𝗱n ϵ ▵t → p◖l ϵ ▵t → 𝗱n = l.
 #l #n #p elim p -p
 [ #t #Ht <list_cons_comm <list_cons_comm #Hn #Hl
   elim (bdd_inv_in_root_d … Ht Hn) -Ht -Hn *

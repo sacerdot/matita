@@ -39,7 +39,7 @@ interpretation
 lemma depth_empty: 𝟎 = ❘𝐞❘.
 // qed.
 
-lemma depth_d (q) (n): ❘q❘ = ❘𝗱❨n❩◗q❘.
+lemma depth_d (q) (n): ❘q❘ = ❘𝗱n◗q❘.
 // qed.
 
 lemma depth_L (q): ↑❘q❘ = ❘𝗟◗q❘.

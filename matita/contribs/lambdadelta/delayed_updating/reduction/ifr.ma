@@ -24,7 +24,7 @@ include "delayed_updating/notation/relations/black_rightarrow_f_4.ma".
 inductive ifr (p) (q) (t): predicate preterm ≝
 | ifr_beta (b):
   let r ≝ p●𝗔◗b●𝗟◗q in
-  r◖𝗱❨↑❘q❘❩ ϵ t → ⊓⊗b → ifr p q t (t[⋔r←↑[𝐮❨↑❘q❘❩]t⋔(p◖𝗦)])
+  r◖𝗱(↑❘q❘) ϵ t → ⊓(⊗b) → ifr p q t (t[⋔r←↑[𝐮❨↑❘q❘❩]t⋔(p◖𝗦)])
 .
 
 interpretation

@@ -51,7 +51,7 @@ interpretation
 
 lemma preterm_in_root_inv_lcons_oref:
       ∀p,l,n. l◗p ϵ ▵#n →
-      ∧∧ 𝗱❨n❩ = l & 𝐞 = p.
+      ∧∧ 𝗱n = l & 𝐞 = p.
 #p #l #n * #q
 <list_append_lcons_sn #H0 destruct -H0
 elim (eq_inv_list_empty_append … e0) -e0 #H0 #_
@@ -60,7 +60,7 @@ qed-.
 
 lemma preterm_in_root_inv_lcons_iref:
       ∀t,p,l,n. l◗p ϵ ▵𝛗n.t →
-      ∧∧ 𝗱❨n❩ = l & p ϵ ▵t.
+      ∧∧ 𝗱n = l & p ϵ ▵t.
 #t #p #l #n * #q
 <list_append_lcons_sn * #r #Hr #H0 destruct
 /3 width=2 by ex_intro, conj/

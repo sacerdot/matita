@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( ⊓ term 46 p )"
+notation "hvbox( ⊓ term 70 p )"
   non associative with precedence 45
   for @{ 'PredicateSquareCap $p }.
