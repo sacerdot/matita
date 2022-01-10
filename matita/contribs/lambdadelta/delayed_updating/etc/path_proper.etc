@@ -1,0 +1,17 @@
+(* Constructions with path_append *******************************************)
+
+lemma ppc_append_sn (p2) (p1): Ꝕp2 → Ꝕ(p1●p2).
+#p2 * /2 width=3 by ppc_lcons/
+qed.
+
+lemma ppc_append_dx (p1) (p2): Ꝕp1 → Ꝕ(p1●p2).
+#p1 #p2 #Hp1
+elim (ppc_inv_lcons … Hp1) -Hp1 #l #q1 #H destruct
+/2 width=3 by ppc_lcons/
+qed.
+
+(* Constructions with path_rcons ********************************************)
+
+lemma ppc_rcons (q) (l): Ꝕ(q◖l).
+/2 width=1 by ppc_lcons, ppc_append_sn/
+qed.
