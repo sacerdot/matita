@@ -12,30 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_rcons.ma".
-include "ground/notation/functions/element_e_0.ma".
-include "ground/notation/functions/black_circle_2.ma".
-include "ground/notation/functions/black_halfcircleright_2.ma".
-include "ground/notation/functions/black_halfcircleleft_2.ma".
-include "delayed_updating/syntax/label.ma".
+include "delayed_updating/substitution/lift.ma".
+include "delayed_updating/syntax/prototerm.ma".
+include "ground/lib/subset_ext_equivalence.ma".
 
-(* PATH *********************************************************************)
-
-(* Note: a path is a list of labels *) 
-definition path ≝ list label.
+(* LIFT FOR PROTOTERM *******************************************************)
 
 interpretation
-  "empty (paths)"
-  'ElementE = (list_empty label).
-
-interpretation
-  "left cons (paths)"
-  'BlackHalfCircleRight l p = (list_lcons label l p).
-
-interpretation
-  "append (paths)"
-  'BlackCircle l1 l2 = (list_append label l1 l2).
-
-interpretation
-  "right cons (paths)"
-  'BlackHalfCircleLeft p l = (list_append label p (list_lcons label l (list_empty label))).
+  "lift (prototerm)"
+  'UpArrow f t = (subset_ext_f1 ? ? (lift_gen ? proj_path f) t).

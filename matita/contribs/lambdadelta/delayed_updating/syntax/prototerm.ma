@@ -12,30 +12,33 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_rcons.ma".
-include "ground/notation/functions/element_e_0.ma".
-include "ground/notation/functions/black_circle_2.ma".
-include "ground/notation/functions/black_halfcircleright_2.ma".
-include "ground/notation/functions/black_halfcircleleft_2.ma".
-include "delayed_updating/syntax/label.ma".
+include "ground/lib/subset.ma".
+include "delayed_updating/syntax/path.ma".
+include "delayed_updating/notation/functions/pitchfork_2.ma".
+include "delayed_updating/notation/functions/uptriangle_1.ma".
 
-(* PATH *********************************************************************)
+(* PROTOTERM ****************************************************************)
 
-(* Note: a path is a list of labels *) 
-definition path ≝ list label.
+(* Note: a prototerm is a subset of complete paths *)
+definition prototerm: Type[0] ≝ 𝒫❨path❩.
 
-interpretation
-  "empty (paths)"
-  'ElementE = (list_empty label).
+definition prototerm_grafted: path → prototerm → prototerm ≝
+           λp,t,q. p●q ϵ t.
 
 interpretation
-  "left cons (paths)"
-  'BlackHalfCircleRight l p = (list_lcons label l p).
+  "grafted (prototerm)"
+  'Pitchfork t p = (prototerm_grafted p t).
+
+definition prototerm_root: prototerm → prototerm ≝
+           λt,q. ∃r. q●r ϵ t.
 
 interpretation
-  "append (paths)"
-  'BlackCircle l1 l2 = (list_append label l1 l2).
+  "root (prototerm)"
+  'UpTriangle t = (prototerm_root t).
 
-interpretation
-  "right cons (paths)"
-  'BlackHalfCircleLeft p l = (list_append label p (list_lcons label l (list_empty label))).
+(* Basic constructions ******************************************************)
+
+lemma prototerm_in_comp_root (p) (t):
+      p ϵ t → p ϵ ▵t.
+/2 width=2 by ex_intro/
+qed.

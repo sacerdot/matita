@@ -12,30 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_rcons.ma".
-include "ground/notation/functions/element_e_0.ma".
-include "ground/notation/functions/black_circle_2.ma".
-include "ground/notation/functions/black_halfcircleright_2.ma".
-include "ground/notation/functions/black_halfcircleleft_2.ma".
-include "delayed_updating/syntax/label.ma".
+include "delayed_updating/syntax/path_proper.ma".
+include "ground/lib/subset_ext_equivalence.ma".
 
-(* PATH *********************************************************************)
-
-(* Note: a path is a list of labels *) 
-definition path ≝ list label.
+(* PROPER CONDITION FOR PROTOTERM *******************************************)
 
 interpretation
-  "empty (paths)"
-  'ElementE = (list_empty label).
+  "proper condition (prototerm)"
+  'PredicatePTail t = (subset_ext_p1 path ppc t).
 
-interpretation
-  "left cons (paths)"
-  'BlackHalfCircleRight l p = (list_lcons label l p).
+(* Basic constructions ******************************************************)
 
-interpretation
-  "append (paths)"
-  'BlackCircle l1 l2 = (list_append label l1 l2).
+lemma tpc_i (t):
+      (𝐞 ⧸ϵ t) → Ꝕt.
+#t #Ht * //
+#H elim (Ht H)
+qed.
 
-interpretation
-  "right cons (paths)"
-  'BlackHalfCircleLeft p l = (list_append label p (list_lcons label l (list_empty label))).
+(* Basic inversions *********************************************************)
+
+lemma tpc_e (t): Ꝕt → 𝐞 ϵ t → ⊥.
+/2 width=5 by subset_in_inv_ext_p1_dx/ qed-.

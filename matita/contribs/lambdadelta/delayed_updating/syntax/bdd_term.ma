@@ -12,18 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "delayed_updating/syntax/prototerm_constructors.ma".
+include "delayed_updating/syntax/prototerm_equivalence.ma".
+include "delayed_updating/notation/functions/class_d_phi_0.ma".
 include "ground/xoa/or_5.ma".
 include "ground/xoa/ex_3_1.ma".
 include "ground/xoa/ex_4_2.ma".
 include "ground/xoa/ex_4_3.ma".
 include "ground/xoa/ex_5_3.ma".
-include "delayed_updating/syntax/preterm_equivalence.ma".
-include "delayed_updating/syntax/preterm_constructors.ma".
-include "delayed_updating/notation/functions/class_d_phi_0.ma".
 
 (* BY-DEPTH DELAYED (BDD) TERM **********************************************)
 
-inductive bdd: 𝒫❨preterm❩ ≝
+inductive bdd: 𝒫❨prototerm❩ ≝
 | bdd_oref: ∀n. bdd (#n)
 | bdd_iref: ∀t,n. bdd t → bdd (𝛗n.t)
 | bdd_abst: ∀t. bdd t → bdd (𝛌.t)
@@ -32,7 +32,7 @@ inductive bdd: 𝒫❨preterm❩ ≝
 .
 
 interpretation
-  "by-depth delayed (preterm)"
+  "by-depth delayed (prototerm)"
   'ClassDPhi = (bdd).
 
 (* Basic inversions *********************************************************)
@@ -170,13 +170,13 @@ lemma bbd_mono_in_root_d:
 [ #t #Ht <list_cons_comm <list_cons_comm #Hn #Hl
   elim (bdd_inv_in_root_d … Ht Hn) -Ht -Hn *
   [ #H0 #_
-    lapply (preterm_root_eq_repl … H0) -H0 #H0
+    lapply (prototerm_root_eq_repl … H0) -H0 #H0
     lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
-    elim (preterm_in_root_inv_lcons_oref … Hl) -Hl //
+    elim (prototerm_in_root_inv_lcons_oref … Hl) -Hl //
   | #u #_ #_ #H0
-    lapply (preterm_root_eq_repl … H0) -H0 #H0
+    lapply (prototerm_root_eq_repl … H0) -H0 #H0
     lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
-    elim (preterm_in_root_inv_lcons_iref … Hl) -Hl //
+    elim (prototerm_in_root_inv_lcons_iref … Hl) -Hl //
   ]
 | * [ #m ] #p #IH #t #Ht
   <list_cons_shift <list_cons_shift #Hn #Hl
@@ -184,28 +184,28 @@ lemma bbd_mono_in_root_d:
     [ #_ #H0
       elim (eq_inv_list_empty_rcons ??? H0)
     | #u #Hu #Hp #H0
-      lapply (preterm_root_eq_repl … H0) -H0 #H0
+      lapply (prototerm_root_eq_repl … H0) -H0 #H0
       lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
-      elim (preterm_in_root_inv_lcons_iref … Hl) -Hl #_ #Hl
+      elim (prototerm_in_root_inv_lcons_iref … Hl) -Hl #_ #Hl
       /2 width=4 by/
     ]
   | elim (bdd_inv_in_root_L … Ht Hn) -Ht -Hn
     #u #Hu #Hp #H0
-    lapply (preterm_root_eq_repl … H0) -H0 #H0
+    lapply (prototerm_root_eq_repl … H0) -H0 #H0
     lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl  
-    elim (preterm_in_root_inv_lcons_abst … Hl) -Hl #_ #Hl
+    elim (prototerm_in_root_inv_lcons_abst … Hl) -Hl #_ #Hl
     /2 width=4 by/
   | elim (bdd_inv_in_root_A … Ht Hn) -Ht -Hn
     #v #u #_ #Hu #Hp #H0
-    lapply (preterm_root_eq_repl … H0) -H0 #H0
+    lapply (prototerm_root_eq_repl … H0) -H0 #H0
     lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
-    elim (preterm_in_root_inv_lcons_appl … Hl) -Hl * #H0 #Hl destruct
+    elim (prototerm_in_root_inv_lcons_appl … Hl) -Hl * #H0 #Hl destruct
     /2 width=4 by/
   | elim (bdd_inv_in_root_S … Ht Hn) -Ht -Hn
     #v #u #Hv #_ #Hp #H0
-    lapply (preterm_root_eq_repl … H0) -H0 #H0
+    lapply (prototerm_root_eq_repl … H0) -H0 #H0
     lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
-    elim (preterm_in_root_inv_lcons_appl … Hl) -Hl * #H0 #Hl destruct
+    elim (prototerm_in_root_inv_lcons_appl … Hl) -Hl * #H0 #Hl destruct
     /2 width=4 by/
   ]
 ]

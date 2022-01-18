@@ -12,33 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset.ma".
-include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/pitchfork_2.ma".
-include "delayed_updating/notation/functions/uptriangle_1.ma".
+include "delayed_updating/syntax/prototerm.ma".
+include "delayed_updating/syntax/path_structure.ma".
+include "delayed_updating/notation/relations/predicate_t_hook_1.ma".
 
 (* PRETERM ******************************************************************)
 
-(* Note: preterms are subsets of complete paths *)
-definition preterm: Type[0] ≝ 𝒫❨path❩.
+(* Note: different root paths have different structure *)
+definition structure_injective: predicate prototerm ≝
+           λt. ∀p1,p2. p1 ϵ ▵t → p2 ϵ ▵t → ⊗p1 = ⊗p2 → p1 = p2
+.
 
-definition preterm_grafted: path → preterm → preterm ≝
-           λp,t,q. p●q ϵ t.
-
-interpretation
-  "grafted (preterm)"
-  'Pitchfork t p = (preterm_grafted p t).
-
-definition preterm_root: preterm → preterm ≝
-           λt,q. ∃r. q●r ϵ t.
+(* Note: a preterm is a prototerm satislying the conditions above *)
+record is_preterm (t): Prop ≝
+{
+  is_pt_injective: structure_injective t
+}.
 
 interpretation
-  "root (preterm)"
-  'UpTriangle t = (preterm_root t).
-
-(* Basic constructions ******************************************************)
-
-lemma preterm_in_comp_root (p) (t):
-      p ϵ t → p ϵ ▵t.
-/2 width=2 by ex_intro/
-qed.
+  "preterm condition (prototerm)"
+  'PredicateTHook t = (is_preterm t).

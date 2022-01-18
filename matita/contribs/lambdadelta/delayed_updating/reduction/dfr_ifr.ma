@@ -12,12 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/ifr.ma".
 include "delayed_updating/reduction/dfr.ma".
+include "delayed_updating/reduction/ifr.ma".
+include "delayed_updating/substitution/fsubst_lift.ma".
 
 (* DELAYED FOCUSED REDUCTION ************************************************)
 
-lemma dfr_lift_bi (f) (p) (q) (t1) (t2):
+lemma dfr_lift_bi (f) (p) (q) (t1) (t2): Ƭt1 →
       t1 ➡𝐝𝐟[p,q] t2 → ↑[f]t1 ➡𝐟[⊗p,⊗q] ↑[f]t2.
-#f #p #q #t1 #t2
-* #b #Hr #Hb
+#f #p #q #t1 #t2 #Ht1
+* -t2 #b #Hr #Hb

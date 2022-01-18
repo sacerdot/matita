@@ -12,18 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/xoa/ex_3_1.ma".
-include "delayed_updating/syntax/preterm.ma".
+include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/notation/functions/pitchforkleftarrow_3.ma".
 
 (* FOCALIZED SUBSTITUTION ***************************************************)
 
-definition fsubst (p) (u): preterm → preterm ≝
+definition fsubst (p) (u): prototerm → prototerm ≝
            λt,q.
-           ∨∨ ∃∃r. r ϵ u & p ϵ ▵t & p●r = q
+           ∨∨ ∃∃r. r ϵ u & p●r = q
             | ∧∧ q ϵ t & (∀r. p●r = q → ⊥)
 .
 
 interpretation
-  "focalized substitution (preterm)"
+  "focalized substitution (prototerm)"
   'PitchforkLeftArrow t p u = (fsubst p u t).

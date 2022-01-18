@@ -21,68 +21,74 @@ include "delayed_updating/notation/functions/uparrow_2.ma".
 (* LIFT FOR PATH ***********************************************************)
 
 definition lift_continuation (A:Type[0]) ≝
-           path → tr_map → A.
+           tr_map → path → A.
 
 (* Note: inner numeric labels are not liftable, so they are removed *)
-rec definition lift_gen (A:Type[0]) (k:lift_continuation A) (p) (f) on p ≝
+rec definition lift_gen (A:Type[0]) (k:lift_continuation A) (f) (p) on p ≝
 match p with
-[ list_empty     ⇒ k (𝐞) f
+[ list_empty     ⇒ k f (𝐞)
 | list_lcons l q ⇒
   match l with
   [ label_node_d n ⇒
     match q with
-    [ list_empty     ⇒ lift_gen (A) (λp. k (𝗱(f@❨n❩)◗p)) q (f∘𝐮❨n❩)
-    | list_lcons _ _ ⇒ lift_gen (A) k q (f∘𝐮❨n❩)
+    [ list_empty     ⇒ lift_gen (A) (λg,p. k g (𝗱(f@❨n❩)◗p)) (f∘𝐮❨n❩) q
+    | list_lcons _ _ ⇒ lift_gen (A) k (f∘𝐮❨n❩) q
     ]
-  | label_edge_L   ⇒ lift_gen (A) (λp. k (𝗟◗p)) q (⫯f)
-  | label_edge_A   ⇒ lift_gen (A) (λp. k (𝗔◗p)) q f
-  | label_edge_S   ⇒ lift_gen (A) (λp. k (𝗦◗p)) q f
+  | label_edge_L   ⇒ lift_gen (A) (λg,p. k g (𝗟◗p)) (⫯f) q
+  | label_edge_A   ⇒ lift_gen (A) (λg,p. k g (𝗔◗p)) f q
+  | label_edge_S   ⇒ lift_gen (A) (λg,p. k g (𝗦◗p)) f q
   ]
 ].
 
 interpretation
   "lift (gneric)"
-  'UpArrow A k p f = (lift_gen A k p f).
+  'UpArrow A k f p = (lift_gen A k f p).
 
-definition proj_path (p:path) (f:tr_map) ≝ p.
+definition proj_path: lift_continuation … ≝
+           λf,p.p.
 
-definition proj_rmap (p:path) (f:tr_map) ≝ f.
+definition proj_rmap: lift_continuation … ≝
+           λf,p.f.
 
 interpretation
   "lift (path)"
-  'UpArrow f p = (lift_gen ? proj_path p f).
+  'UpArrow f p = (lift_gen ? proj_path f p).
 
 interpretation
   "lift (relocation map)"
-  'UpArrow p f = (lift_gen ? proj_rmap p f).
+  'UpArrow p f = (lift_gen ? proj_rmap f p).
 
 (* Basic constructions ******************************************************)
 
 lemma lift_empty (A) (k) (f):
-      k (𝐞) f = ↑{A}❨k, 𝐞, f❩.
+      k f (𝐞) = ↑{A}❨k, f, 𝐞❩.
 // qed.
 
 lemma lift_d_empty_sn (A) (k) (n) (f):
-      ↑❨(λp. k (𝗱(f@❨n❩)◗p)), 𝐞, f∘𝐮❨ninj n❩❩ = ↑{A}❨k, 𝗱n◗𝐞, f❩.
+      ↑❨(λg,p. k g (𝗱(f@❨n❩)◗p)), f∘𝐮❨ninj n❩, 𝐞❩ = ↑{A}❨k, f, 𝗱n◗𝐞❩.
 // qed.
 
 lemma lift_d_lcons_sn (A) (k) (p) (l) (n) (f):
-      ↑❨k, l◗p, f∘𝐮❨ninj n❩❩ = ↑{A}❨k, 𝗱n◗l◗p, f❩.
+      ↑❨k, f∘𝐮❨ninj n❩, l◗p❩ = ↑{A}❨k, f, 𝗱n◗l◗p❩.
 // qed.
 
 lemma lift_L_sn (A) (k) (p) (f):
-      ↑❨(λp. k (𝗟◗p)), p, ⫯f❩ = ↑{A}❨k, 𝗟◗p, f❩.
+      ↑❨(λg,p. k g (𝗟◗p)), ⫯f, p❩ = ↑{A}❨k, f, 𝗟◗p❩.
 // qed.
 
 lemma lift_A_sn (A) (k) (p) (f):
-      ↑❨(λp. k (𝗔◗p)), p, f❩ = ↑{A}❨k, 𝗔◗p, f❩.
+      ↑❨(λg,p. k g (𝗔◗p)), f, p❩ = ↑{A}❨k, f, 𝗔◗p❩.
 // qed.
 
 lemma lift_S_sn (A) (k) (p) (f):
-      ↑❨(λp. k (𝗦◗p)), p, f❩ = ↑{A}❨k, 𝗦◗p, f❩.
+      ↑❨(λg,p. k g (𝗦◗p)), f, p❩ = ↑{A}❨k, f, 𝗦◗p❩.
 // qed.
 
 (* Basic constructions with proj_path ***************************************)
+
+lemma lift_path_empty (f):
+      (𝐞) = ↑[f]𝐞.
+// qed.
 
 lemma lift_path_d_empty_sn (f) (n):
       𝗱(f@❨n❩)◗𝐞 = ↑[f](𝗱n◗𝐞).

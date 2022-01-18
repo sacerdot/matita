@@ -12,14 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/preterm.ma".
-include "delayed_updating/substitution/lift.ma".
+include "ground/lib/subset_equivalence.ma".
+include "delayed_updating/syntax/prototerm.ma".
 
-(* LIFT FOR PRETERM ***********************************************************)
+(* EQUIVALENCE FOR PROTOTERM ************************************************)
 
-definition lift_preterm (f) (t): preterm ≝
-           λp. ∃∃r. r ϵ t & p = ↑[f]r.
+(* Constructions with prototerm_root ****************************************)
 
-interpretation
-  "lift (preterm)"
-  'UpArrow f t = (lift_preterm f t).
+lemma prototerm_root_incl_repl:
+      ∀t1,t2. t1 ⊆ t2 → ▵t1 ⊆ ▵t2.
+#t1 #t2 #Ht #p * #q #Hq
+/3 width=2 by ex_intro/
+qed.
+
+lemma prototerm_root_eq_repl:
+      ∀t1,t2. t1 ⇔ t2 → ▵t1 ⇔ ▵t2.
+#t1 #t2 * #H1 #H2
+/3 width=3 by conj, prototerm_root_incl_repl/
+qed.
