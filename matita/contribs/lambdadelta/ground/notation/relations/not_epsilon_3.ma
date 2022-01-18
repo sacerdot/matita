@@ -12,28 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/logic.ma".
-include "ground/notation/xoa/false_0.ma".
-include "ground/notation/xoa/true_0.ma".
-include "ground/notation/xoa/or_2.ma".
-include "ground/notation/xoa/and_2.ma".
+(* GROUND NOTATION **********************************************************)
 
-interpretation
-  "false (logic)"
-  'false = False.
+notation < "hvbox( a ⧸ϵ break term 46 u )"
+  non associative with precedence 45
+  for @{ 'NotEpsilon $S $a $u }.
 
-interpretation
-  "true (logic)"
-  'true = True.
+notation > "hvbox( a ⧸ϵ break term 46 u )"
+  non associative with precedence 45
+  for @{ 'NotEpsilon ? $a $u }.
 
-(* LOGIC ********************************************************************)
-
-definition negation (A:Prop): Prop ≝
-           A → ⊥.
-
-(* Constructions with land **************************************************)
-
-lemma commutative_and (A) (B):
-      A ∧ B → B ∧ A.
-#A #B * /2 width=1 by conj/
-qed-.
+notation > "hvbox( a ⧸ϵ{ break term 46 S } break term 46 u )"
+  non associative with precedence 45
+  for @{ 'NotEpsilon $S $a $u }.

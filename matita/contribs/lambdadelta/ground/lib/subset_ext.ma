@@ -12,28 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/logic.ma".
-include "ground/notation/xoa/false_0.ma".
-include "ground/notation/xoa/true_0.ma".
-include "ground/notation/xoa/or_2.ma".
-include "ground/notation/xoa/and_2.ma".
+include "ground/lib/subset.ma".
 
-interpretation
-  "false (logic)"
-  'false = False.
+(* EXTENSIONS FOR SUBSETS ***************************************************)
 
-interpretation
-  "true (logic)"
-  'true = True.
+definition subset_ext_f1 (A1) (A0) (f:A1→A0): 𝒫❨A1❩ → 𝒫❨A0❩ ≝
+           λu1,a0. ∃∃a1. a1 ϵ u1 & f a1 = a0.
 
-(* LOGIC ********************************************************************)
+definition subset_ext_p1 (A1) (Q:predicate A1): predicate (𝒫❨A1❩) ≝
+           λu1. ∀a1. a1 ϵ u1 → Q a1.
 
-definition negation (A:Prop): Prop ≝
-           A → ⊥.
+(* Basic constructions ******************************************************)
 
-(* Constructions with land **************************************************)
+lemma subset_in_ext_f1_dx (A1) (A0) (f) (u1) (a1):
+      a1 ϵ u1 → f a1 ϵ subset_ext_f1 A1 A0 f u1.
+/2 width=3 by ex2_intro/ qed.
 
-lemma commutative_and (A) (B):
-      A ∧ B → B ∧ A.
-#A #B * /2 width=1 by conj/
-qed-.
+(* Basic inversions *********************************************************)
+
+lemma subset_in_inv_ext_p1_dx (A1) (Q) (u1) (a1):
+      a1 ϵ u1 → subset_ext_p1 A1 Q u1 → Q a1.
+/2 width=1 by/ qed-.

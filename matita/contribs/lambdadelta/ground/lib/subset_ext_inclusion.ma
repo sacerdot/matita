@@ -12,28 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/logic.ma".
-include "ground/notation/xoa/false_0.ma".
-include "ground/notation/xoa/true_0.ma".
-include "ground/notation/xoa/or_2.ma".
-include "ground/notation/xoa/and_2.ma".
+include "ground/lib/subset_inclusion.ma".
+include "ground/lib/subset_ext.ma".
 
-interpretation
-  "false (logic)"
-  'false = False.
+(* EXTENSIONS FOR SUBSETS ***************************************************)
 
-interpretation
-  "true (logic)"
-  'true = True.
+(* Constructions with subset_inclusion **************************************)
 
-(* LOGIC ********************************************************************)
+lemma subset_inclusion_ext_f1_bi (A1) (A0) (f) (u1) (v1):
+      u1 ⊆ v1 → subset_ext_f1 A1 A0 f u1 ⊆ subset_ext_f1 A1 A0 f v1.
+#A1 #A0 #f #u1 #v1 #Huv1 #a0 * #a1 #Hau1 #H destruct
+/3 width=3 by subset_in_ext_f1_dx/
+qed.
 
-definition negation (A:Prop): Prop ≝
-           A → ⊥.
-
-(* Constructions with land **************************************************)
-
-lemma commutative_and (A) (B):
-      A ∧ B → B ∧ A.
-#A #B * /2 width=1 by conj/
+lemma subset_inclusion_ext_p1_trans (A1) (Q) (u1) (v1):
+      u1 ⊆ v1 → subset_ext_p1 A1 Q v1 → subset_ext_p1 A1 Q u1.
+#A1 #Q #u1 #v1 #Huv1 #Hv1
+/3 width=1 by/
 qed-.

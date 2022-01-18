@@ -12,9 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/lib/relations.ma".
 include "ground/notation/functions/powerclass_1.ma".
 include "ground/notation/relations/epsilon_3.ma".
-include "ground/lib/relations.ma".
+include "ground/notation/relations/not_epsilon_3.ma".
 
 (* SUBSETS ******************************************************************)
 
@@ -31,3 +32,7 @@ definition subset_in (A): 𝒫❨A❩ → 𝒫❨A❩ ≝
 interpretation
   "membership (subset)"
   'Epsilon A a u = (subset_in A u a).
+
+interpretation
+  "negated membership (subset)"
+  'NotEpsilon A a u = (negation (subset_in A u a)).
