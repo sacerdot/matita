@@ -481,15 +481,16 @@ EXTEND
       params = LIST0 protected_binder_vars;
        SYMBOL ":"; typ = term; SYMBOL <:unicode<def>>; SYMBOL "{" ; 
        fields = LIST0 [ 
-         name = IDENT ; 
+         name = IDENT ;
+         params = LIST0 protected_binder_vars; (* FG: params added *)
          coercion = [ 
              SYMBOL ":" -> false,0 
            | SYMBOL ":"; SYMBOL ">" -> true,0
            | SYMBOL ":"; arity = int ; SYMBOL ">" -> true,arity
          ]; 
          ty = term -> 
-           let b,n = coercion in 
-           (name,ty,b,n) 
+           let b,n = coercion in
+           (name, shift_params `Forall params ty, b, n) 
        ] SEP SYMBOL ";"; SYMBOL "}" -> 
         let params =
           List.fold_right
