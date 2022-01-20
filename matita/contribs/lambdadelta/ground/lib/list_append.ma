@@ -67,3 +67,14 @@ lemma eq_inv_list_empty_append (A):
 | #a1 #l1 #l2 <list_append_lcons_sn #H destruct
 ]
 qed-.
+
+(* Advanced eliminations ****************************************************)
+
+lemma list_ind_append_dx (A) (Q:predicate …):
+      Q (ⓔ{A}) →
+      (∀l1,l2. Q l1 -> Q (l1⨁l2)) →
+      ∀l. Q l.
+#A #Q #IH1 #IH2 * //
+#a #l >(list_append_empty_sn … (a⨮l))
+/2 width=1 by/
+qed-.

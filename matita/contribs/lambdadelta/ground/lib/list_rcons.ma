@@ -14,6 +14,7 @@
 
 include "ground/notation/functions/oplusleft_3.ma".
 include "ground/lib/list_append.ma".
+include "ground/generated/pull_2.ma". 
 
 (* RIGHT CONS FOR LISTS *****************************************************)
 
@@ -48,4 +49,16 @@ lemma eq_inv_list_empty_rcons (A):
       ∀l,a. ⓔ = l⨭{A}a → ⊥.
 #A #l #a #H
 elim (eq_inv_list_empty_append … H) -H #_ #H destruct
+qed-.
+
+(* Advanced eliminations ****************************************************)
+
+lemma list_ind_rcons (A) (Q:predicate …):
+      Q (ⓔ{A}) →
+      (∀l,a. Q l -> Q (l⨭a)) →
+      ∀l. Q l.
+#A #Q #IH1 #IH2 #l
+@(list_ind_append_dx … l) -l //
+@pull_2 #l2 elim l2 -l2 //
+#a2 #l2 #IH0 #l1 #IH /3 width=1 by/
 qed-.
