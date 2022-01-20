@@ -20,20 +20,23 @@ include "delayed_updating/syntax/prototerm_proper.ma".
 
 (* FOCALIZED SUBSTITUTION ***************************************************)
 
-lemma lift_fsubst_sn (f) (t) (u) (p): Ꝕu → p ⧸ϵ t →
+lemma lift_fsubst_sn (f) (t) (u) (p): Ꝕu →
       (↑[f]t)[⋔(⊗p)←↑[↑[p]f]u] ⊆ ↑[f](t[⋔p←u]).
-#f #t #u #p #Hu #Hp #ql * *
+#f #t #u #p #Hu #ql * *
 [ #rl * #r #Hr #H1 #H2 destruct
   >lift_append_proper_dx
   /4 width=1 by subset_in_ext_f1_dx, or_introl/
 | * #q #Hq #H1 #H0
-  @(ex2_intro … H1) @or_intror @conj //
-  #r #H2 destruct
-  @H0 -H0 [| <lift_append_proper_dx /2 width=1 by/ ]
+  @(ex2_intro … H1) @or_intror @conj // *
+  [ <list_append_empty_dx #H2 destruct
+    elim (lift_root f q) #r #_ #Hr /2 width=2 by/
+  | #l #r #H2 destruct
+    @H0 -H0 [| <lift_append_proper_dx /2 width=3 by ppc_lcons/ ]
+  ]
 ]
 qed-.
 
-lemma lift_fsubst_dx (f) (t) (u) (p): Ꝕu → p ϵ ▵t → structure_injective t →
+lemma lift_fsubst_dx (f) (t) (u) (p): Ꝕu → p ϵ ▵t → t ϵ 𝐓 →
       ↑[f](t[⋔p←u]) ⊆ (↑[f]t)[⋔(⊗p)←↑[↑[p]f]u].
 #f #t #u #p #Hu #H1p #H2p #ql * #q * *
 [ #r #Hu #H1 #H2 destruct
@@ -51,6 +54,6 @@ lemma lift_fsubst_dx (f) (t) (u) (p): Ꝕu → p ϵ ▵t → structure_injective
 ]
 qed-.
 
-lemma lift_fsubst (f) (t) (u) (p): Ꝕu → p ⧸ϵ t → p ϵ ▵t → structure_injective t →
+lemma lift_fsubst (f) (t) (u) (p): Ꝕu → p ϵ ▵t → t ϵ 𝐓 →
       (↑[f]t)[⋔(⊗p)←↑[↑[p]f]u] ⇔ ↑[f](t[⋔p←u]).
 /4 width=3 by lift_fsubst_sn, conj, lift_fsubst_dx/ qed.

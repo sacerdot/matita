@@ -75,11 +75,19 @@ lemma lift_S_dx (p) (f):
 #p #f <lift_append_proper_dx //
 qed.
 
+lemma lift_root (f) (p):
+      ∃∃r. 𝐞 = ⊗r & ⊗p●r = ↑[f]p.
+#f #p @(list_ind_rcons … p) -p
+[ /2 width=3 by ex2_intro/
+| #p * [ #n ] /2 width=3 by ex2_intro/
+]
+qed-.
+
 (* Advanced inversions with proj_path ***************************************)
 
 lemma lift_path_inv_d_sn (k) (q) (p) (f):
       (𝗱k◗q) = ↑[f]p →
-      ∃∃r,h. 𝐞 = ⊗r & (↑[r]f)@❨h❩ = k & 𝐞  = q & r◖𝗱h = p.
+      ∃∃r,h. 𝐞 = ⊗r & (↑[r]f)@❨h❩ = k & 𝐞 = q & r◖𝗱h = p.
 #k #q #p @(path_ind_lift … p) -p
 [| #n | #n #l #p |*: #p ] [|*: #IH ] #f
 [ <lift_path_empty #H destruct

@@ -21,3 +21,9 @@ include "ground/lib/subset_ext_equivalence.ma".
 interpretation
   "lift (prototerm)"
   'UpArrow f t = (subset_ext_f1 ? ? (lift_gen ? proj_path f) t).
+
+(* Basic constructions ******************************************************)
+
+lemma in_comp_lift_bi (f) (p) (t):
+      p ϵ t → ↑[f]p ϵ ↑[f]t.
+/2 width=1 by subset_in_ext_f1_dx/ qed.
