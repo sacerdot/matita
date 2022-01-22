@@ -12,24 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/fsubst.ma".
-include "delayed_updating/substitution/lift_prototerm.ma".
-include "delayed_updating/syntax/path_depth.ma".
 include "delayed_updating/syntax/path_structure.ma".
-include "delayed_updating/syntax/path_balanced.ma".
-include "delayed_updating/notation/relations/black_rightarrow_f_4.ma".
-include "ground/xoa/ex_1_2.ma".
-include "ground/xoa/and_4.ma".
+include "delayed_updating/syntax/path_depth.ma".
 
-(* IMMEDIATE FOCUSED REDUCTION ************************************************)
+(* STRUCTURE FOR PATH *******************************************************)
 
-definition ifr (p) (q): relation2 prototerm prototerm ≝
-           λt1,t2. ∃∃b,n.
-           let r ≝ p●𝗔◗b●𝗟◗q in
-           ∧∧ ⊗b ϵ 𝐁 & ❘q❘ = (↑[q]𝐢)@❨n❩ & r◖𝗱n ϵ t1 &
-              t1[⋔r←↑[𝐮❨n❩](t1⋔(p◖𝗦))] ⇔ t2
-.
+(* Constructions with depth *************************************************)
 
-interpretation
-  "focused balanced reduction with immediate updating (prototerm)"
-  'BlackRightArrowF t1 p q t2 = (ifr p q t1 t2).
+lemma depth_structure (p):
+      ❘p❘ = ❘⊗p❘.
+#p elim p -p //
+* [ #n ] #p #IH //
+[ <structure_L_sn <depth_L <depth_L //
+| <structure_A_sn <depth_A <depth_A //
+| <structure_S_sn <depth_S <depth_S //
+]
+qed.
