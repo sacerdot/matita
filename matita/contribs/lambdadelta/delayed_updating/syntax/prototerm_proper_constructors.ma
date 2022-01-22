@@ -12,18 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/class_b_0.ma".
+include "delayed_updating/syntax/prototerm_proper.ma".
+include "delayed_updating/syntax/prototerm_constructors.ma".
 
-(* BALANCE CONDITION FOR PATH ***********************************************)
+(* PROPER CONDITION FOR PROTOTERM *******************************************)
 
-(* This condition applies to a structural path *)
-inductive pbc: predicate path ≝
-| pbc_empty: pbc (𝐞)
-| pbc_redex: ∀b. pbc b → pbc (𝗔◗b◖𝗟)
-| pbc_after: ∀b1,b2. pbc b1 → pbc b2 → pbc (b1●b2)
-.
+(* Constructions with prototerm constructors ********************************)
 
-interpretation
-  "balance condition (path)"
-  'ClassB = (pbc).
+lemma ppc_iref (t) (n):
+      (𝛗n.t) ϵ 𝐏.
+#t #n #p * #q #Hq #H0 destruct //
+qed.

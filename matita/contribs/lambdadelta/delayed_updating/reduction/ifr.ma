@@ -24,8 +24,8 @@ include "delayed_updating/notation/relations/black_rightarrow_f_4.ma".
 definition ifr (p) (q): relation2 prototerm prototerm ≝
            λt1,t2. ∃b.
            let r ≝ p●𝗔◗b●𝗟◗q in
-           ∧∧ ⊓(⊗b) & r◖𝗱(↑❘q❘) ϵ t1 &
-              t2 ⇔ t1[⋔r←↑[𝐮❨↑❘q❘❩]t1⋔(p◖𝗦)]
+           ∧∧ ⊗b ϵ 𝐁 & r◖𝗱❘q❘ ϵ t1 &
+              t1[⋔r←↑[𝐮❨❘q❘❩](t1⋔(p◖𝗦))] ⇔ t2
 .
 
 interpretation

@@ -55,6 +55,7 @@ lemma lift_path_append_sn (p) (f) (q):
       q●↑[f]p = ↑❨(λg,p. proj_path g (q●p)), f, p❩.
 #p @(path_ind_lift … p) -p // [ #n #l #p |*: #p ] #IH #f #q
 [ <lift_d_lcons_sn <lift_d_lcons_sn <IH -IH //
+| <lift_m_sn <lift_m_sn //
 | <lift_L_sn <lift_L_sn >lift_lcons_alt >lift_append_rcons_sn
   <IH <IH -IH <list_append_rcons_sn //
 | <lift_A_sn <lift_A_sn >lift_lcons_alt >lift_append_rcons_sn

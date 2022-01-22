@@ -13,20 +13,20 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path.ma".
-include "ground/arith/nat_succ.ma".
 include "ground/notation/functions/verticalbars_1.ma".
 
 (* DEPTH FOR PATH ***********************************************************)
 
-rec definition depth (p) on p: nat ≝
+rec definition depth (p) on p: pnat ≝
 match p with
-[ list_empty     ⇒ 𝟎
+[ list_empty     ⇒ 𝟏
 | list_lcons l q ⇒
   match l with
-  [ label_node_d _ ⇒ depth q
-  | label_edge_L   ⇒ ↑(depth q)
-  | label_edge_A   ⇒ depth q
-  | label_edge_S   ⇒ depth q
+  [ label_d _ ⇒ depth q
+  | label_m   ⇒ depth q
+  | label_L   ⇒ ↑(depth q)
+  | label_A   ⇒ depth q
+  | label_S   ⇒ depth q
   ]
 ].
 
@@ -36,10 +36,13 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma depth_empty: 𝟎 = ❘𝐞❘.
+lemma depth_empty: 𝟏 = ❘𝐞❘.
 // qed.
 
 lemma depth_d (q) (n): ❘q❘ = ❘𝗱n◗q❘.
+// qed.
+
+lemma depth_m (q): ❘q❘ = ❘𝗺◗q❘.
 // qed.
 
 lemma depth_L (q): ↑❘q❘ = ❘𝗟◗q❘.

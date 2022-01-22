@@ -35,12 +35,14 @@ interpretation
   "by-depth delayed (prototerm)"
   'ClassDPhi = (bdd).
 
+(*
+
 (* Basic inversions *********************************************************)
 
 lemma bdd_inv_in_comp_gen:
       ∀t,p. t ϵ 𝐃𝛗 → p ϵ t →
       ∨∨ ∃∃n. #n ⇔ t & 𝗱n◗𝐞 = p
-       | ∃∃u,q,n. u ϵ 𝐃𝛗 & q ϵ u & 𝛗n.u ⇔ t & 𝗱n◗q = p
+       | ∃∃u,q,n. u ϵ 𝐃𝛗 & q ϵ u & 𝛗n.u ⇔ t & 𝗱n◗𝗺◗q = p
        | ∃∃u,q. u ϵ 𝐃𝛗 & q ϵ u & 𝛌.u ⇔ t & 𝗟◗q = p
        | ∃∃v,u,q. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ u & @v.u ⇔ t & 𝗔◗q = p
        | ∃∃v,u,q. v ϵ 𝐃𝛗 & u ϵ 𝐃𝛗 & q ϵ v & @v.u ⇔ t & 𝗦◗q = p
@@ -64,12 +66,13 @@ qed-.
 lemma bdd_inv_in_comp_d:
       ∀t,q,n. t ϵ 𝐃𝛗 → 𝗱n◗q ϵ t →
       ∨∨ ∧∧ #n ⇔ t & 𝐞 = q
-       | ∃∃u. u ϵ 𝐃𝛗 & q ϵ u & 𝛗n.u ⇔ t
+       | ∃∃u. u ϵ 𝐃𝛗 & q ϵ ɱ.u & 𝛗n.u ⇔ t
 .
 #t #q #n #Ht #Hq
 elim (bdd_inv_in_comp_gen … Ht Hq) -Ht -Hq *
 [ #n0 #H1 #H2 destruct /3 width=1 by or_introl, conj/
-| #u0 #q0 #n0 #Hu0 #Hq0 #H1 #H2 destruct /3 width=4 by ex3_intro, or_intror/
+| #u0 #q0 #n0 #Hu0 #Hq0 #H1 #H2 destruct
+ /4 width=4 by ex3_intro, ex2_intro, or_intror/
 | #u0 #q0 #_ #_ #_ #H0 destruct
 | #v0 #u0 #q0 #_ #_ #_ #_ #H0 destruct
 | #v0 #u0 #q0 #_ #_ #_ #_ #H0 destruct
@@ -79,7 +82,7 @@ qed-.
 lemma bdd_inv_in_root_d:
       ∀t,q,n. t ϵ 𝐃𝛗 → 𝗱n◗q ϵ ▵t →
       ∨∨ ∧∧ #n ⇔ t & 𝐞 = q
-       | ∃∃u. u ϵ 𝐃𝛗 & q ϵ ▵u & 𝛗n.u ⇔ t
+       | ∃∃u. u ϵ 𝐃𝛗 & q ϵ ▵ɱ.u & 𝛗n.u ⇔ t
 .
 #t #q #n #Ht * #r #Hq
 elim (bdd_inv_in_comp_d … Ht Hq) -Ht -Hq *
@@ -210,3 +213,4 @@ lemma bbd_mono_in_root_d:
   ]
 ]
 qed-.
+*)

@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( Ꝕ term 70 x )"
-  non associative with precedence 45
-  for @{ 'PredicatePTail $x }.
+notation "hvbox( 𝐁 )"
+  non associative with precedence 70
+  for @{ 'ClassB }.

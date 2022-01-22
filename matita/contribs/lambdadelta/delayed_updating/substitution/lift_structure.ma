@@ -41,12 +41,13 @@ lemma lift_des_structure (q) (p) (f):
 
 (* Constructions with proper condition for path *****************************)
 
-lemma lift_append_proper_dx (p2) (p1) (f): Ꝕp2 →
+lemma lift_append_proper_dx (p2) (p1) (f): p2 ϵ 𝐏 →
       (⊗p1)●(↑[↑[p1]f]p2) = ↑[f](p1●p2).
 #p2 #p1 @(path_ind_lift … p1) -p1 //
 [ #n | #n #l #p1 |*: #p1 ] #IH #f #Hp2
 [ elim (ppc_inv_lcons … Hp2) -Hp2 #l #q #H destruct //
 | <lift_path_d_lcons_sn <IH //
+| <lift_path_m_sn <IH //
 | <lift_path_L_sn <IH //
 | <lift_path_A_sn <IH //
 | <lift_path_S_sn <IH //
@@ -58,6 +59,11 @@ qed-.
 lemma lift_d_empty_dx (n) (p) (f):
       (⊗p)◖𝗱((↑[p]f)@❨n❩) = ↑[f](p◖𝗱n).
 #n #p #f <lift_append_proper_dx // 
+qed.
+
+lemma lift_m_dx (p) (f):
+      ⊗p = ↑[f](p◖𝗺).
+#p #f <lift_append_proper_dx //
 qed.
 
 lemma lift_L_dx (p) (f):
@@ -96,6 +102,23 @@ lemma lift_path_inv_d_sn (k) (q) (p) (f):
 | <lift_path_d_lcons_sn #H
   elim (IH … H) -IH -H #r #h #Hr #Hh #Hq #Hp destruct
   /2 width=5 by ex4_2_intro/
+| <lift_path_m_sn #H
+  elim (IH … H) -IH -H #r #h #Hr #Hh #Hq #Hp destruct
+  /2 width=5 by ex4_2_intro/
+| <lift_path_L_sn #H destruct
+| <lift_path_A_sn #H destruct
+| <lift_path_S_sn #H destruct
+]
+qed-.
+
+lemma lift_path_inv_m_sn (q) (p) (f):
+      (𝗺◗q) = ↑[f]p → ⊥.
+#q #p @(path_ind_lift … p) -p
+[| #n | #n #l #p |*: #p ] [|*: #IH ] #f
+[ <lift_path_empty #H destruct
+| <lift_path_d_empty_sn #H destruct
+| <lift_path_d_lcons_sn #H /2 width=2 by/
+| <lift_path_m_sn #H /2 width=2 by/
 | <lift_path_L_sn #H destruct
 | <lift_path_A_sn #H destruct
 | <lift_path_S_sn #H destruct
@@ -110,6 +133,9 @@ lemma lift_path_inv_L_sn (q) (p) (f):
 [ <lift_path_empty #H destruct
 | <lift_path_d_empty_sn #H destruct
 | <lift_path_d_lcons_sn #H
+  elim (IH … H) -IH -H #r1 #r2 #Hr1 #Hq #Hp destruct
+  /2 width=5 by ex3_2_intro/
+| <lift_path_m_sn #H
   elim (IH … H) -IH -H #r1 #r2 #Hr1 #Hq #Hp destruct
   /2 width=5 by ex3_2_intro/
 | <lift_path_L_sn #H destruct -IH
@@ -129,6 +155,9 @@ lemma lift_path_inv_A_sn (q) (p) (f):
 | <lift_path_d_lcons_sn #H
   elim (IH … H) -IH -H #r1 #r2 #Hr1 #Hq #Hp destruct
   /2 width=5 by ex3_2_intro/
+| <lift_path_m_sn #H
+  elim (IH … H) -IH -H #r1 #r2 #Hr1 #Hq #Hp destruct
+  /2 width=5 by ex3_2_intro/
 | <lift_path_L_sn #H destruct
 | <lift_path_A_sn #H destruct -IH
   /2 width=5 by ex3_2_intro/
@@ -146,7 +175,9 @@ lemma lift_path_inv_S_sn (q) (p) (f):
 | <lift_path_d_lcons_sn #H
   elim (IH … H) -IH -H #r1 #r2 #Hr1 #Hq #Hp destruct
   /2 width=5 by ex3_2_intro/
-| <lift_path_L_sn #H destruct
+| <lift_path_m_sn #H
+  elim (IH … H) -IH -H #r1 #r2 #Hr1 #Hq #Hp destruct
+  /2 width=5 by ex3_2_intro/| <lift_path_L_sn #H destruct
 | <lift_path_A_sn #H destruct
 | <lift_path_S_sn #H destruct -IH
   /2 width=5 by ex3_2_intro/
@@ -155,8 +186,8 @@ qed-.
 
 (* Inversions with proper condition for path ********************************)
 
-lemma lift_inv_append_proper_dx (q2) (q1) (p) (f): Ꝕq2 →
-      q1●q2 = ↑[f]p →
+lemma lift_inv_append_proper_dx (q2) (q1) (p) (f):
+      q2 ϵ 𝐏 → q1●q2 = ↑[f]p →
       ∃∃p1,p2. ⊗p1 = q1 & ↑[↑[p1]f]p2 = q2 & p1●p2 = p.
 #q2 #q1 elim q1 -q1
 [ #p #f #Hq2 <list_append_empty_sn #H destruct
@@ -165,6 +196,7 @@ lemma lift_inv_append_proper_dx (q2) (q1) (p) (f): Ꝕq2 →
   [ elim (lift_path_inv_d_sn … H) -H #r1 #m1 #_ #_ #H0 #_ -IH
     elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 destruct
     elim Hq2 -Hq2 //
+  | elim (lift_path_inv_m_sn … H)
   | elim (lift_path_inv_L_sn … H) -H #r1 #s1 #Hr1 #Hs1 #H0 destruct
     elim (IH … Hs1) -IH -Hs1 // -Hq2 #p1 #p2 #H1 #H2 #H3 destruct
     @(ex3_2_intro … (r1●𝗟◗p1)) //

@@ -22,10 +22,11 @@ match p with
 [ list_empty     ⇒ 𝐞
 | list_lcons l q ⇒
    match l with
-   [ label_node_d n ⇒ structure q
-   | label_edge_L   ⇒ 𝗟◗structure q
-   | label_edge_A   ⇒ 𝗔◗structure q
-   | label_edge_S   ⇒ 𝗦◗structure q
+   [ label_d n ⇒ structure q
+   | label_m   ⇒ structure q
+   | label_L   ⇒ 𝗟◗structure q
+   | label_A   ⇒ 𝗔◗structure q
+   | label_S   ⇒ 𝗦◗structure q
    ]
 ].
 
@@ -43,16 +44,20 @@ lemma structure_d_sn (p) (n):
       ⊗p = ⊗(𝗱n◗p).
 // qed.
 
+lemma structure_m_sn (p):
+      ⊗p = ⊗(𝗺◗p).
+// qed.
+
 lemma structure_L_sn (p):
-      𝗟◗⊗p = ⊗(𝗟◗p).
+      (𝗟◗⊗p) = ⊗(𝗟◗p).
 // qed.
 
 lemma structure_A_sn (p):
-      𝗔◗⊗p = ⊗(𝗔◗p).
+      (𝗔◗⊗p) = ⊗(𝗔◗p).
 // qed.
 
 lemma structure_S_sn (p):
-      𝗦◗⊗p = ⊗(𝗦◗p).
+      (𝗦◗⊗p) = ⊗(𝗦◗p).
 // qed.
 
 (* Main constructions *******************************************************)
@@ -73,6 +78,11 @@ qed.
 lemma structure_d_dx (p) (n):
       ⊗p = ⊗(p◖𝗱n).
 #p #n <structure_append //
+qed.
+
+lemma structure_m_dx (p):
+      ⊗p = ⊗(p◖𝗺).
+#p <structure_append //
 qed.
 
 lemma structure_L_dx (p):

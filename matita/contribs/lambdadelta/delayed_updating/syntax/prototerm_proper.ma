@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/syntax/path_proper.ma".
 include "ground/lib/subset_ext_equivalence.ma".
 
@@ -19,17 +20,23 @@ include "ground/lib/subset_ext_equivalence.ma".
 
 interpretation
   "proper condition (prototerm)"
-  'PredicatePTail t = (subset_ext_p1 path ppc t).
+  'ClassP = (subset_ext_p1 path ppc).
 
 (* Basic constructions ******************************************************)
 
 lemma tpc_i (t):
-      (𝐞 ⧸ϵ t) → Ꝕt.
+      (𝐞 ⧸ϵ t) → t ϵ 𝐏.
 #t #Ht * //
 #H elim (Ht H)
 qed.
 
 (* Basic inversions *********************************************************)
 
-lemma tpc_e (t): Ꝕt → 𝐞 ϵ t → ⊥.
-/2 width=5 by subset_in_inv_ext_p1_dx/ qed-.
+lemma in_ppc_comp_trans (t) (p):
+      p ϵ t → t ϵ 𝐏 → p ϵ 𝐏.
+#t #p #Hp #Ht
+@(Ht … Hp)
+qed-.
+
+lemma tpc_e (t): 𝐞 ϵ t → t ϵ 𝐏 → ⊥.
+/2 width=5 by in_ppc_comp_trans/ qed-.
