@@ -14,6 +14,8 @@
 
 include "ground/relocation/tr_pap_pat.ma".
 
+(* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
+
 (* Main inversions **********************************************************)
 
 (*** apply_inj *)

@@ -17,6 +17,12 @@ include "ground/relocation/tr_pap.ma".
 
 (* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
 
+(* Constructions with tr_push ***********************************************)
+
+lemma tr_pap_push (f):
+      ∀i. ↑(f@❨i❩) = (⫯f)@❨↑i❩.
+// qed.
+
 (* Constructions with tr_next ***********************************************)
 
 (*** apply_S2 *)
