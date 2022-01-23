@@ -109,6 +109,10 @@ lemma lift_path_m_sn (f) (p):
 
 (* Basic constructions with proj_rmap ***************************************)
 
+lemma lift_rmap_empty (f):
+      f = ↑[𝐞]f.
+// qed.
+
 lemma lift_rmap_d_sn (f) (p) (n):
       ↑[p](f∘𝐮❨ninj n❩) = ↑[𝗱n◗p]f.
 #f * // qed.

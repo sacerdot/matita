@@ -18,8 +18,7 @@ include "delayed_updating/substitution/fsubst_lift.ma".
 include "delayed_updating/substitution/lift_structure_depth.ma".
 include "delayed_updating/syntax/prototerm_proper_constructors.ma".
 include "delayed_updating/syntax/path_structure_depth.ma".
-include "ground/relocation/tr_id_pap.ma".
-include "ground/relocation/tr_id_pushs.ma".
+include "ground/relocation/tr_pap_pushs.ma".
 
 (* DELAYED FOCUSED REDUCTION ************************************************)
 
@@ -29,9 +28,10 @@ lemma dfr_lift_bi (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
 * #b #n * #Hb #Hn  #Ht1 #Ht2
 @(ex1_2_intro … (⊗b) (❘⊗q❘)) @and4_intro
 [ //
-| //
-| lapply (in_comp_lift_bi f … Ht1) -Ht1 -H0t1 -Hb -Ht2 #Ht1
-  <depth_structure
+| #g <lift_rmap_structure <depth_structure
+  >tr_pushs_swap <tr_pap_pushs_le //
+| lapply (in_comp_lift_bi f … Ht1) -Ht1 -H0t1 -Hb -Ht2
+  <lift_d_empty_dx //
 | lapply (eq_lift_bi f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (lift_fsubst …))
