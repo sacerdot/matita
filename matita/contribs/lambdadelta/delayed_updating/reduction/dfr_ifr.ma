@@ -26,7 +26,7 @@ lemma dfr_lift_bi (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
       t1 ➡𝐝𝐟[p,q] t2 → ↑[f]t1 ➡𝐟[⊗p,⊗q] ↑[f]t2.
 #f #p #q #t1 #t2 #H0t1
 * #b #n * #Hb #Hn  #Ht1 #Ht2
-@(ex1_2_intro … (⊗b) (❘⊗q❘)) @and4_intro
+@(ex1_2_intro … (⊗b) (↑❘⊗q❘)) @and4_intro
 [ //
 | #g <lift_rmap_structure <depth_structure
   >tr_pushs_swap <tr_pap_pushs_le //

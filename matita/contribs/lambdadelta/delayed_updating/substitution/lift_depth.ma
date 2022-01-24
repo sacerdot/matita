@@ -12,45 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path.ma".
-include "ground/arith/nat_succ.ma".
-include "ground/notation/functions/verticalbars_1.ma".
+include "delayed_updating/substitution/lift.ma".
+include "delayed_updating/syntax/path_depth.ma".
+include "ground/relocation/tr_pushs.ma".
 
-(* DEPTH FOR PATH ***********************************************************)
+(* LIFT FOR PATH ***********************************************************)
 
-rec definition depth (p) on p: nat ≝
-match p with
-[ list_empty     ⇒ 𝟎
-| list_lcons l q ⇒
-  match l with
-  [ label_d _ ⇒ depth q
-  | label_m   ⇒ depth q
-  | label_L   ⇒ ↑(depth q)
-  | label_A   ⇒ depth q
-  | label_S   ⇒ depth q
-  ]
-].
+(* Basic constructions with depth ******************************************)
 
-interpretation
-  "depth (path)"
-  'VerticalBars p = (depth p).
-
-(* Basic constructions ******************************************************)
-
-lemma depth_empty: 𝟎 = ❘𝐞❘.
-// qed.
-
-lemma depth_d (q) (n): ❘q❘ = ❘𝗱n◗q❘.
-// qed.
-
-lemma depth_m (q): ❘q❘ = ❘𝗺◗q❘.
-// qed.
-
-lemma depth_L (q): ↑❘q❘ = ❘𝗟◗q❘.
-// qed.
-
-lemma depth_A (q): ❘q❘ = ❘𝗔◗q❘.
-// qed.
-
-lemma depth_S (q): ❘q❘ = ❘𝗦◗q❘.
-// qed.
+lemma pippo (p) (f):
+      (⫯*[❘p❘]f) ∘ (↑[p]𝐢) = ↑[p]f.
+#p elim p -p
+[ #f <lift_rmap_empty <lift_rmap_empty <tr_pushs_zero
+| * [ #n ] #p #IH #f //
+  <lift_rmap_d_sn <lift_rmap_d_sn <depth_d
+  @(trans_eq … (IH …)) -IH
+      

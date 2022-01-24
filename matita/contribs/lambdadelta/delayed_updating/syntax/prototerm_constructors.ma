@@ -55,8 +55,21 @@ interpretation
   "application (prototerm)"
   'At u t = (prototerm_node_2 label_S label_A u t).
 
+(* Basic constructions *******************************************************)
+
+lemma in_comp_iref (t) (q) (n):
+      q ϵ t → 𝗱n◗𝗺◗q ϵ 𝛗n.t.
+/2 width=3 by ex2_intro/ qed.
+
 (* Basic Inversions *********************************************************)
 
+lemma in_comp_inv_iref (t) (p) (n):
+      p ϵ 𝛗n.t →
+      ∃∃q. 𝗱n◗𝗺◗q = p & q ϵ t.
+#t #p #n * #q #Hq #Hp
+/2 width=3 by ex2_intro/
+qed-.
+(*
 lemma prototerm_in_root_inv_lcons_oref:
       ∀p,l,n. l◗p ϵ ▵#n →
       ∧∧ 𝗱n = l & 𝐞 = p.
@@ -98,3 +111,4 @@ lemma prototerm_in_root_inv_lcons_appl:
 <list_append_lcons_sn #H0 destruct
 /4 width=2 by ex_intro, or_introl, or_intror, conj/
 qed-.
+*)

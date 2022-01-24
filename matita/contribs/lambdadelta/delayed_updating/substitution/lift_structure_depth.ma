@@ -23,11 +23,10 @@ include "ground/arith/nat_pred_succ.ma".
 (* Basic constructions with structure and depth ****************************)
 
 lemma lift_rmap_structure (p) (f):
-      (⫯*[↓❘p❘]f) = ↑[⊗p]f.
+      (⫯*[❘p❘]f) = ↑[⊗p]f.
 #p elim p -p //
 * [ #n ] #p #IH #f //
-[ <lift_rmap_L_sn <IH -IH >tr_pushs_swap //
-| <lift_rmap_A_sn //
+[ <lift_rmap_A_sn //
 | <lift_rmap_S_sn //
 ]
 qed.
