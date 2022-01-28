@@ -12,46 +12,65 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(*
 include "ground/relocation/pstream_tls.ma".
 include "ground/relocation/pstream_istot.ma".
-include "ground/relocation/rtmap_after.ma".
+*)
+include "ground/arith/pnat_plus.ma".
+include "ground/relocation/pr_after.ma".
+include "ground/relocation/tr_map.ma".
 
 (* Properties on after (specific) *********************************************)
 
-lemma after_O2: ∀f2,f1,f. f2 ⊚ f1 ≘ f →
-                ∀p. p⨮f2 ⊚ ⫯f1 ≘ p⨮f.
+(*** after_O2 *)
+lemma tr_after_push_dx:
+      ∀f2,f1,f. 𝐭❨f2❩ ⊚ f1 ≘ 𝐭❨f❩ →
+      ∀p. 𝐭❨p⨮f2❩ ⊚ ⫯f1 ≘ 𝐭❨p⨮f❩.
 #f2 #f1 #f #Hf #p elim p -p
-/2 width=7 by gr_after_refl, gr_after_next/
+/2 width=7 by pr_after_refl, pr_after_next/
 qed.
 
-lemma after_S2: ∀f2,f1,f,p1,p. f2 ⊚ p1⨮f1 ≘ p⨮f →
-                ∀p2. p2⨮f2 ⊚ ↑p1⨮f1 ≘ (p+p2)⨮f.
+(*** after_S2 *) 
+lemma tr_after_next_dx:
+      ∀f2,f1,f,p1,p. 𝐭❨f2❩ ⊚ 𝐭❨p1⨮f1❩ ≘ 𝐭❨p⨮f❩ →
+      ∀p2. 𝐭❨p2⨮f2❩ ⊚ 𝐭❨↑p1⨮f1❩ ≘ 𝐭❨(p+p2)⨮f❩.
 #f2 #f1 #f #p1 #p #Hf #p2 elim p2 -p2
-/2 width=7 by gr_after_next, gr_after_push/
+/2 width=7 by pr_after_next, pr_after_push/
 qed.
 
-lemma after_apply: ∀p1,f2,f1,f.
-      (⫰*[ninj p1] f2) ⊚ f1 ≘ f → f2 ⊚ p1⨮f1 ≘ f2@❨p1❩⨮f.
+include "ground/lib/stream_tls.ma".
+include "ground/relocation/tr_pap.ma".
+
+(*** after_apply *)
+lemma tr_after_pap:
+      ∀p1,f2,f1,f. 𝐭❨⇂*[ninj p1]f2❩ ⊚ 𝐭❨f1❩ ≘ 𝐭❨f❩ →
+      (𝐭❨f2❩) ⊚ 𝐭❨p1⨮f1❩ ≘ 𝐭❨f2@❨p1❩⨮f❩.
 #p1 elim p1 -p1
-[ * /2 width=1 by after_O2/
+[ * /2 width=1 by tr_after_push_dx/
 | #p1 #IH * #p2 #f2 >nsucc_inj <stream_tls_swap
-  /3 width=1 by after_S2/
+  /3 width=1 by tr_after_next_dx/
 ]
 qed-.
 
-corec lemma after_total_aux: ∀f2,f1,f. f2 ∘ f1 = f → f2 ⊚ f1 ≘ f.
+include "ground/relocation/tr_compose_pn.ma".
+
+(*** after_total_aux *)
+corec fact tr_after_total_aux:
+      ∀f2,f1,f. f2 ∘ f1 = f → 𝐭❨f2❩ ⊚ 𝐭❨f1❩ ≘ 𝐭❨f❩.
 * #p2 #f2 * #p1 #f1 * #p #f cases p2 -p2
 [ cases p1 -p1
-  [ #H cases (compose_inv_O2 … H) -H /3 width=7 by gr_after_refl, eq_f2/
-  | #p1 #H cases (compose_inv_S2 … H) -H * -p /3 width=7 by gr_after_push/
+  [ #H cases (tr_compose_inv_push_dx … H) -H /3 width=7 by pr_after_refl, eq_f2/
+  | #p1 #H cases (tr_compose_inv_succ_dx … H) -H * -p /3 width=7 by pr_after_push/
   ]
-| #p2 >gr_next_unfold #H cases (compose_inv_S1 … H) -H * -p >gr_next_unfold
-  /3 width=5 by gr_after_next/
+| #p2 >tr_next_unfold #H cases (tr_compose_inv_next_sn … H) -H * -p
+  /3 width=5 by pr_after_next/
 ]
 qed-.
 
-theorem after_total: ∀f1,f2. f2 ⊚ f1 ≘ f2 ∘ f1.
-/2 width=1 by after_total_aux/ qed.
+(*** after_total *)
+theorem tr_after_total:
+        ∀f1,f2. 𝐭❨f2❩ ⊚ 𝐭❨f1❩ ≘ 𝐭❨f2 ∘ f1❩.
+/2 width=1 by tr_after_total_aux/ qed.
 
 (* Inversion lemmas on after (specific) ***************************************)
 
@@ -112,7 +131,3 @@ lemma after_inv_apply: ∀f2,f1,f,p2,p1,p. p2⨮f2 ⊚ p1⨮f1 ≘ p⨮f →
                        (p2⨮f2)@❨p1❩ = p ∧ (⫰*[↓p1]f2) ⊚ f1 ≘ f.
 /3 width=3 by after_fwd_tls, after_fwd_hd, conj/ qed-.
 
-(* Properties on apply ******************************************************)
-
-lemma compose_apply (f2) (f1) (i): f2@❨f1@❨i❩❩ = (f2∘f1)@❨i❩.
-/4 width=6 by gr_after_des_pat, at_inv_total, sym_eq/ qed.

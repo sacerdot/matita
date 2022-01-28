@@ -15,7 +15,7 @@
 include "ground/lib/stream_tls.ma".
 include "ground/relocation/tr_pap.ma".
 
-(* COMPOSITION FOR PARTIAL RELOCATION MAPS **********************************)
+(* COMPOSITION FOR TOTAL RELOCATION MAPS ************************************)
 
 corec definition tr_compose: tr_map → tr_map → tr_map.
 #f2 * #p1 #f1

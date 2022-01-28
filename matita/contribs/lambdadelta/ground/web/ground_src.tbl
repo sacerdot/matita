@@ -32,8 +32,8 @@ table {
       [ { "total relocation" * } {
           [ "tr_uni ( 𝐮❨?❩ )" * ]
           [ "tr_id ( 𝐢 ) " "tr_id_pushs" "tr_id_pap" * ]
-          [ "tr_compose ( ?∘? )" "tr_compose_pn" * ]
-          [ "tr_pap ( ?@❨?❩ )" "tr_pap_eq" "tr_pap_pat" "tr_pap_pn" "tr_pap_pushs" "tr_pap_pap" * ]
+          [ "tr_compose ( ?∘? )" "tr_compose_tls" "tr_compose_pn" "tr_compose_pap" "tr_compose_compose" * ]
+          [ "tr_pap ( ?@❨?❩ )" "tr_pap_eq" "tr_pap_tls" "tr_pap_pat" "tr_pap_pn" "tr_pap_pushs" "tr_pap_pap" * ]
           [ "tr_pushs ( ⫯*[?]? )" * ]
           [ "tr_pn ( ⫯? ) ( ↑? )" "tr_pn_hdtl" "tr_pn_tls" * ]
           [ "tr_map ( 𝐭❨?❩ )" "tr_eq" "tr_nexts" "tr_pat" "tr_ist" * ]
@@ -110,7 +110,7 @@ table {
           [ "nat_max ( ?∨? )" * ]
           [ "nat_minus ( ?-? )" "nat_minus_plus" * ]
           [ "nat_plus ( ?+? )" "nat_plus_pred" "nat_plus_rplus" * ]
-          [ "nat_rplus ( ?+? )" "nat_rplus_succ" * ]
+          [ "nat_rplus ( ?+? )" "nat_rplus_pplus" "nat_rplus_succ" * ]
           [ "nat_pred ( ↓? )" "nat_pred_succ" * ]
           [ "nat_succ ( ↑? )" "nat_succ_iter" "nat_succ_tri" * ]
           [ "nat ( 𝟎 )" "nat_iter ( ?^{?}? )" *"nat_tri"  ]
@@ -129,7 +129,7 @@ table {
   class "yellow"
   [ { "extensions to the library" * } {
       [ { "streams" * } {
-          [ "stream_tls ( ⇂*{?}[?]? )" "stream_tls_eq" * ]
+          [ "stream_tls ( ⇂*{?}[?]? )" "stream_tls_eq" "stream_tls_plus" * ]
           [ "stream_hdtl ( ⇃{?}? ) ( ⇂{?}? )" * ]
           [ "stream_eq ( ? ≗{?} ? )" "stream_eq_eq" * ]
           [ "stream ( ? ⨮{?} ? )" * ]
