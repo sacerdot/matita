@@ -12,30 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/stream_eq.ma".
-include "ground/relocation/tr_pap.ma".
+include "ground/relocation/tr_compose.ma".
+include "ground/relocation/tr_pap_eq.ma".
+include "ground/lib/stream_tls_eq.ma".
 
-(* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
+(* COMPOSITION FOR TOTAL RELOCATION MAPS ************************************)
 
-(* Main constructions with stream_eq ****************************************)
+(* Constructions with stream_eq *********************************************)
 
-(*** apply_eq_repl *)
-theorem tr_pap_eq_repl (i):
-        stream_eq_repl … (λf1,f2. f1@❨i❩ = f2@❨i❩).
-#i elim i -i [2: #i #IH ] * #p1 #f1 * #p2 #f2 #H
-elim (stream_eq_inv_cons_bi … H) -H [1,8: |*: // ] #Hp #Hf //
-<tr_pap_succ <tr_pap_succ /3 width=1 by eq_f2/
+corec lemma tr_compose_eq_repl (f2) (g2):
+            f2 ≗ g2 → stream_eq_repl … (λf1,g1. f2∘f1 ≗ g2∘g1).
+#Hfg2 * #p1 #f1 * #q1 #g1 #H
+cases (stream_eq_inv_cons_bi … H) -H [|*: // ] * #Hfg1 -q1
+cases tr_compose_unfold cases tr_compose_unfold
+/5 width=1 by tr_pap_eq_repl, stream_tls_eq_repl, stream_eq_cons/
 qed.
-
-(* Main inversions with stream_eq *******************************************)
-
-corec theorem nstream_eq_inv_ext:
-              ∀f1,f2. (∀i. f1@❨i❩ = f2@❨i❩) → f1 ≗ f2.
-* #p1 #f1 * #p2 #f2 #Hf @stream_eq_cons
-[ @(Hf (𝟏))
-| @nstream_eq_inv_ext -nstream_eq_inv_ext #i
-  lapply (Hf (𝟏)) <tr_pap_unit <tr_pap_unit #H destruct
-  lapply (Hf (↑i)) <tr_pap_succ <tr_pap_succ #H
-  /3 width=2 by eq_inv_pplus_bi_dx, eq_inv_psucc_bi/
-]
-qed-.
