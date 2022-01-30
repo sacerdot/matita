@@ -19,7 +19,7 @@ include "ground/relocation/tr_pn.ma".
 
 (* Constructions with stream_eq *********************************************)
 
-lemma tr_push_eq_bi:
+lemma tr_push_eq_repl:
       stream_eq_repl … (λf1,f2. ⫯f1 ≗ ⫯f2).
 /2 width=1 by stream_eq_cons/ qed.
 
