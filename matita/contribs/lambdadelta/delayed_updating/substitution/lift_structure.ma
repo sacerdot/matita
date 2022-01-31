@@ -16,7 +16,6 @@ include "delayed_updating/substitution/lift_eq.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/syntax/path_proper.ma".
 include "ground/xoa/ex_4_2.ma".
-include "ground/xoa/ex_3_2.ma".
 
 (* LIFT FOR PATH ***********************************************************)
 

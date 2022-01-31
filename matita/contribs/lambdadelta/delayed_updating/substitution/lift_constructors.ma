@@ -12,31 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/tr_compose_compose.ma".
-include "ground/relocation/tr_compose_pn.ma".
-include "delayed_updating/substitution/lift_eq.ma".
-
-lemma lift_path_after (p) (f1) (f2):
-      ↑[f2]↑[f1]p = ↑[f2∘f1]p.
-#p @(path_ind_lift … p) -p // [ #n #l #p | #p ] #IH #f1 #f2
-[ <lift_path_d_lcons_sn <lift_path_d_lcons_sn
-  >(lift_path_eq_repl … (tr_compose_assoc …)) //
-| <lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
-  >tr_compose_push_bi //
-]
-qed.
-
-include "delayed_updating/substitution/lift_prototerm.ma".
-
-axiom lift_term_after (t) (f1) (f2):
-      ↑[f2]↑[f1]t ⇔ ↑[f2∘f1]t.
-
+include "delayed_updating/substitution/lift_prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_constructors.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)
 
-lemma lift_iref_after_sn (f) (t) (n:pnat):
-      (↑[f∘𝐮❨n❩]t) ⊆ ↑[f](𝛗n.t).
+lemma lift_iref_after_sn (f) (t:prototerm) (n:pnat):
+      ↑[f∘𝐮❨n❩]t ⊆ ↑[f](𝛗n.t).
 #f #t #n #p * #q #Hq #H0 destruct
 @(ex2_intro … (𝗱n◗𝗺◗q))
 /2 width=1 by in_comp_iref/

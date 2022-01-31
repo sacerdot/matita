@@ -32,7 +32,7 @@ lemma dfr_lift_bi (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
   >tr_pushs_swap <tr_pap_pushs_le //
 | lapply (in_comp_lift_bi f … Ht1) -Ht1 -H0t1 -Hb -Ht2
   <lift_d_empty_dx //
-| lapply (eq_lift_bi f … Ht2) -Ht2 #Ht2
+| lapply (lift_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (lift_fsubst …))
   [ <structure_append <structure_A_sn <structure_append <structure_L_sn

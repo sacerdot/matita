@@ -12,25 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/fsubst.ma".
+include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/substitution/lift_eq.ma".
 include "delayed_updating/substitution/lift_prototerm.ma".
-include "delayed_updating/syntax/prototerm_equivalence.ma".
-include "delayed_updating/syntax/path_depth.ma".
-include "delayed_updating/syntax/path_structure.ma".
-include "delayed_updating/syntax/path_balanced.ma".
-include "delayed_updating/notation/relations/black_rightarrow_f_4.ma".
-include "ground/xoa/ex_1_2.ma".
-include "ground/xoa/and_4.ma".
 
-(* IMMEDIATE FOCUSED REDUCTION ************************************************)
+(* LIFT FOR PROTOTERM *******************************************************)
 
-definition ifr (p) (q): relation2 prototerm prototerm ≝
-           λt1,t2. ∃∃b,n.
-           let r ≝ p●𝗔◗b●𝗟◗q in
-           ∧∧ ⊗b ϵ 𝐁 & ∀f. ↑❘q❘ = (↑[q]⫯f)@❨n❩ & r◖𝗱n ϵ t1 &
-              t1[⋔r←↑[𝐮❨❘b●𝗟◗q❘❩](t1⋔(p◖𝗦))] ⇔ t2
-.
+(* Constructions with subset_equivalence ************************************)
 
-interpretation
-  "focused balanced reduction with immediate updating (prototerm)"
-  'BlackRightArrowF t1 p q t2 = (ifr p q t1 t2).
+lemma lift_term_eq_repl_sn (f1) (f2) (t):
+      f1 ≗ f2 → ↑[f1]t ⇔ ↑[f2]t.
+/3 width=1 by subset_equivalence_ext_f1_exteq, lift_path_eq_repl/
+qed.
+
+lemma lift_term_eq_repl_dx (f) (t1) (t2):
+      t1 ⇔ t2 → ↑[f]t1 ⇔ ↑[f]t2.
+/2 width=1 by subset_equivalence_ext_f1_bi/
+qed.
+
+lemma lift_term_after (f1) (f2) (t):
+      ↑[f2]↑[f1]t ⇔ ↑[f2∘f1]t.
+#f1 #f2 #t @subset_eq_trans
+[
+| @subset_inclusion_ext_f1_compose
+| @subset_equivalence_ext_f1_exteq /2 width=5/
+]
+qed. 

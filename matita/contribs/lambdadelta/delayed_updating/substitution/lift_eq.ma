@@ -13,6 +13,8 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift.ma".
+include "ground/relocation/tr_compose_compose.ma".
+include "ground/relocation/tr_compose_pn.ma".
 include "ground/relocation/tr_compose_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".
 
@@ -99,3 +101,13 @@ lemma lift_path_A_sn (f) (p):
 lemma lift_path_S_sn (f) (p):
       (𝗦◗↑[f]p) = ↑[f](𝗦◗p).
 // qed.
+
+lemma lift_path_after (p) (f1) (f2):
+      ↑[f2]↑[f1]p = ↑[f2∘f1]p.
+#p @(path_ind_lift … p) -p // [ #n #l #p | #p ] #IH #f1 #f2
+[ <lift_path_d_lcons_sn <lift_path_d_lcons_sn
+  >(lift_path_eq_repl … (tr_compose_assoc …)) //
+| <lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
+  >tr_compose_push_bi //
+]
+qed.

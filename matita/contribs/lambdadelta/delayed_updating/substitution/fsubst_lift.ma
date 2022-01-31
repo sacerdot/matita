@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/fsubst.ma".
-include "delayed_updating/substitution/lift_prototerm.ma".
+include "delayed_updating/substitution/lift_prototerm_eq.ma".
 include "delayed_updating/substitution/lift_structure.ma".
 include "delayed_updating/syntax/preterm.ma".
 include "delayed_updating/syntax/prototerm_proper.ma".

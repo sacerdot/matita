@@ -14,7 +14,7 @@
 
 include "delayed_updating/substitution/lift.ma".
 include "delayed_updating/syntax/prototerm.ma".
-include "ground/lib/subset_ext_equivalence.ma".
+include "ground/lib/subset_ext.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)
 
@@ -27,9 +27,4 @@ interpretation
 lemma in_comp_lift_bi (f) (p) (t):
       p ϵ t → ↑[f]p ϵ ↑[f]t.
 /2 width=1 by subset_in_ext_f1_dx/
-qed.
-
-lemma eq_lift_bi (f) (t1) (t2):
-      t1 ⇔ t2 → ↑[f]t1 ⇔ ↑[f]t2.
-/2 width=1 by subset_equivalence_ext_f1_bi/
 qed.
