@@ -15,6 +15,8 @@
 include "delayed_updating/reduction/dfr.ma".
 include "delayed_updating/reduction/ifr.ma".
 include "delayed_updating/substitution/fsubst_lift.ma".
+include "delayed_updating/substitution/fsubst_eq.ma".
+include "delayed_updating/substitution/lift_constructors.ma". 
 include "delayed_updating/substitution/lift_structure_depth.ma".
 include "delayed_updating/syntax/prototerm_proper_constructors.ma".
 include "delayed_updating/syntax/path_structure_depth.ma".
@@ -36,6 +38,8 @@ lemma dfr_lift_bi (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (lift_fsubst …))
   [ <structure_append <structure_A_sn <structure_append <structure_L_sn
+    @fsubst_eq_repl [ // ]
+    @(subset_eq_trans … (lift_iref …))
   | //
   | /2 width=2 by ex_intro/
   | //

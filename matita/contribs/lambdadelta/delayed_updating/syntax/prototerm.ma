@@ -42,3 +42,11 @@ lemma prototerm_in_comp_root (p) (t):
       p ϵ t → p ϵ ▵t.
 /2 width=2 by ex_intro/
 qed.
+
+(* Basic destructions *******************************************************)
+
+lemma prototerm_in_root_append_des_sn (t) (p) (q):
+      p●q ϵ ▵t → p ϵ ▵t.
+#t #p #q * #r #Hr
+/2 width=2 by ex_intro/
+qed-.

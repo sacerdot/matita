@@ -12,29 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset_ext_equivalence.ma".
-include "delayed_updating/substitution/lift_eq.ma".
-include "delayed_updating/substitution/lift_prototerm.ma".
-
-(* LIFT FOR PROTOTERM *******************************************************)
+include "delayed_updating/substitution/fsubst.ma".
+include "delayed_updating/syntax/prototerm_equivalence.ma".
 
 (* Constructions with subset_equivalence ************************************)
 
-lemma lift_term_eq_repl_sn (f1) (f2) (t):
-      f1 ≗ f2 → ↑[f1]t ⇔ ↑[f2]t.
-/3 width=1 by subset_equivalence_ext_f1_exteq, lift_path_eq_repl/
-qed.
-
-lemma lift_term_eq_repl_dx (f) (t1) (t2):
-      t1 ⇔ t2 → ↑[f]t1 ⇔ ↑[f]t2.
-/2 width=1 by subset_equivalence_ext_f1_bi/
-qed.
-
-lemma lift_term_after (f1) (f2) (t):
-      ↑[f2]↑[f1]t ⇔ ↑[f2∘f1]t.
-#f1 #f2 #t @subset_eq_trans
-[
-| @subset_inclusion_ext_f1_compose
-| @subset_equivalence_ext_f1_exteq /2 width=5/
+lemma subset_inclusion_fsubst_bi (t1) (t2) (u1) (u2) (p):
+      t1 ⊆ t2 → u1 ⊆ u2 → t1[⋔p←u1] ⊆ t2[⋔p←u2].
+#t1 #t2 #u1 #u2 #p #Ht #Hu #q * *
+[ #r #Hr #H0 destruct
+  /4 width=3 by ex2_intro, or_introl/
+| /4 width=2 by or_intror, conj/
 ]
+qed.
+
+lemma fsubst_eq_repl (t1) (t2) (u1) (u2) (p):
+      t1 ⇔ t2 → u1 ⇔ u2 → t1[⋔p←u1] ⇔ t2[⋔p←u2].
+#t1 #t2 #u1 #u2 #p * #H1t #H2t * #H1u #H2u
+/3 width=5 by conj, subset_inclusion_fsubst_bi/
 qed.

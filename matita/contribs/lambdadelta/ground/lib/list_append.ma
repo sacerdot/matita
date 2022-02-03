@@ -68,6 +68,15 @@ lemma eq_inv_list_empty_append (A):
 ]
 qed-.
 
+(* Advanced inversions ******************************************************)
+
+lemma eq_inv_list_append_dx_sn_refl (A) (l1) (l2):
+      l1 = l1⨁{A}l2 → ⓔ = l2.
+#A #l1 elim l1 -l1 [ // ]
+#a1 #l1 #IH #l2 <list_append_lcons_sn #H0 destruct -H0
+/2 width=1 by/
+qed-.
+
 (* Advanced eliminations ****************************************************)
 
 lemma list_ind_append_dx (A) (Q:predicate …):
