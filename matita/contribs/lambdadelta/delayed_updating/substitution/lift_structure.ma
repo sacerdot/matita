@@ -14,6 +14,7 @@
 
 include "delayed_updating/substitution/lift_eq.ma".
 include "delayed_updating/syntax/path_structure.ma".
+include "delayed_updating/syntax/path_inner.ma".
 include "delayed_updating/syntax/path_proper.ma".
 include "ground/xoa/ex_4_2.ma".
 
@@ -53,34 +54,51 @@ lemma lift_append_proper_dx (p2) (p1) (f): p2 ϵ 𝐏 →
 ]
 qed-.
 
-(* Advanced constructions with structure ************************************)
+(* Constructions with inner condition for path ******************************)
 
-lemma lift_d_empty_dx (n) (p) (f):
+lemma lift_append_inner_sn (p1) (p2) (f): p1 ϵ 𝐈 →
+      (⊗p1)●(↑[↑[p1]f]p2) = ↑[f](p1●p2).
+#p1 @(list_ind_rcons … p1) -p1 // #p1 *
+[ #n ] #_ #p2 #f #Hp1
+[ elim (pic_inv_d_dx … Hp1)
+| <list_append_rcons_sn <lift_append_proper_dx //
+| <list_append_rcons_sn <lift_append_proper_dx //
+  <structure_L_dx <list_append_rcons_sn //
+| <list_append_rcons_sn <lift_append_proper_dx //
+  <structure_A_dx <list_append_rcons_sn //
+| <list_append_rcons_sn <lift_append_proper_dx //
+  <structure_S_dx <list_append_rcons_sn //
+]
+qed-.
+
+(* Advanced constructions with proj_path ************************************)
+
+lemma lift_path_d_empty_dx (n) (p) (f):
       (⊗p)◖𝗱((↑[p]f)@❨n❩) = ↑[f](p◖𝗱n).
 #n #p #f <lift_append_proper_dx // 
 qed.
 
-lemma lift_m_dx (p) (f):
+lemma lift_path_m_dx (p) (f):
       ⊗p = ↑[f](p◖𝗺).
 #p #f <lift_append_proper_dx //
 qed.
 
-lemma lift_L_dx (p) (f):
+lemma lift_path_L_dx (p) (f):
       (⊗p)◖𝗟 = ↑[f](p◖𝗟).
 #p #f <lift_append_proper_dx //
 qed.
 
-lemma lift_A_dx (p) (f):
+lemma lift_path_A_dx (p) (f):
       (⊗p)◖𝗔 = ↑[f](p◖𝗔).
 #p #f <lift_append_proper_dx //
 qed.
 
-lemma lift_S_dx (p) (f):
+lemma lift_path_S_dx (p) (f):
       (⊗p)◖𝗦 = ↑[f](p◖𝗦).
 #p #f <lift_append_proper_dx //
 qed.
 
-lemma lift_root (f) (p):
+lemma lift_path_root (f) (p):
       ∃∃r. 𝐞 = ⊗r & ⊗p●r = ↑[f]p.
 #f #p @(list_ind_rcons … p) -p
 [ /2 width=3 by ex2_intro/
@@ -208,6 +226,44 @@ lemma lift_inv_append_proper_dx (q2) (q1) (p) (f):
     elim (IH … Hs1) -IH -Hs1 // -Hq2 #p1 #p2 #H1 #H2 #H3 destruct
     @(ex3_2_intro … (r1●𝗦◗p1)) //
     <structure_append <Hr1 -Hr1 //
+  ]
+]
+qed-.
+
+(* Inversions with inner condition for path *********************************)
+
+lemma lift_inv_append_inner_sn (q1) (q2) (p) (f):
+      q1 ϵ 𝐈 → q1●q2 = ↑[f]p →
+      ∃∃p1,p2. ⊗p1 = q1 & ↑[↑[p1]f]p2 = q2 & p1●p2 = p.
+#q1 @(list_ind_rcons … q1) -q1
+[ #q2 #p #f #Hq1 <list_append_empty_sn #H destruct
+  /2 width=5 by ex3_2_intro/
+| #q1 * [ #n1 ] #_ #q2 #p #f #Hq2
+  [ elim (pic_inv_d_dx … Hq2)
+  | <list_append_rcons_sn #H0
+    elim (lift_inv_append_proper_dx … H0) -H0 // #p1 #p2 #H1 #H2 #H3 destruct
+    elim (lift_path_inv_m_sn … (sym_eq … H2))
+  | <list_append_rcons_sn #H0
+    elim (lift_inv_append_proper_dx … H0) -H0 // #p1 #p2 #H1 #H2 #H3 destruct
+    elim (lift_path_inv_L_sn … (sym_eq … H2)) -H2 #r2 #s2 #Hr2 #Hs2 #H0 destruct
+    @(ex3_2_intro … (p1●r2◖𝗟)) [1,3: // ]
+    [ <structure_append <structure_L_dx <Hr2 -Hr2 //
+    | <list_append_assoc <list_append_rcons_sn //
+    ]
+  | <list_append_rcons_sn #H0
+    elim (lift_inv_append_proper_dx … H0) -H0 // #p1 #p2 #H1 #H2 #H3 destruct
+    elim (lift_path_inv_A_sn … (sym_eq … H2)) -H2 #r2 #s2 #Hr2 #Hs2 #H0 destruct
+    @(ex3_2_intro … (p1●r2◖𝗔)) [1,3: // ]
+    [ <structure_append <structure_A_dx <Hr2 -Hr2 //
+    | <list_append_assoc <list_append_rcons_sn //
+    ]
+  | <list_append_rcons_sn #H0
+    elim (lift_inv_append_proper_dx … H0) -H0 // #p1 #p2 #H1 #H2 #H3 destruct
+    elim (lift_path_inv_S_sn … (sym_eq … H2)) -H2 #r2 #s2 #Hr2 #Hs2 #H0 destruct
+    @(ex3_2_intro … (p1●r2◖𝗦)) [1,3: // ]
+    [ <structure_append <structure_S_dx <Hr2 -Hr2 //
+    | <list_append_assoc <list_append_rcons_sn //
+    ]
   ]
 ]
 qed-.

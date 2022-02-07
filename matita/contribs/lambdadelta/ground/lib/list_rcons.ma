@@ -47,8 +47,26 @@ lemma list_append_rcons_dx (A):
 
 lemma eq_inv_list_empty_rcons (A):
       ∀l,a. ⓔ = l⨭{A}a → ⊥.
-#A #l #a #H
-elim (eq_inv_list_empty_append … H) -H #_ #H destruct
+#A #l #a #H0
+elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 destruct
+qed-.
+
+(* Advanced inversions ******************************************************)
+
+lemma eq_inv_list_rcons_bi (A):
+      ∀a1,a2,l1,l2. l1 ⨭{A} a1 = l2 ⨭ a2 →
+      ∧∧ l1 = l2 & a1 = a2.
+#A #a1 #a2 #l1 elim l1 -l1 [| #b1 #l1 #IH ] *
+[ <list_append_empty_sn <list_append_empty_sn #H destruct
+  /2 width=1 by conj/
+| #b2 #l2 <list_append_empty_sn <list_append_lcons_sn #H destruct -H
+  elim (eq_inv_list_empty_rcons ??? e0)
+| <list_append_lcons_sn <list_append_empty_sn #H destruct -H
+  elim (eq_inv_list_empty_rcons ??? (sym_eq … e0))
+| #b2 #l2 <list_append_lcons_sn <list_append_lcons_sn #H destruct -H
+  elim (IH … e0) -IH -e0 #H1 #H2 destruct
+  /2 width=1 by conj/
+]
 qed-.
 
 (* Advanced eliminations ****************************************************)

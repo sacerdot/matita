@@ -144,6 +144,24 @@ lemma lift_rmap_append (p2) (p1) (f):
 ]
 qed.
 
+(* Advanced constructions with proj_rmap and path_rcons *********************)
+
+lemma lift_rmap_m_dx (f) (p):
+      ↑[p]f = ↑[p◖𝗺]f.
+// qed.
+
+lemma lift_rmap_L_dx (f) (p):
+      (⫯↑[p]f) = ↑[p◖𝗟]f.
+// qed.
+
+lemma lift_rmap_A_dx (f) (p):
+      ↑[p]f = ↑[p◖𝗔]f.
+// qed.
+
+lemma lift_rmap_S_dx (f) (p):
+      ↑[p]f = ↑[p◖𝗦]f.
+// qed.
+
 (* Advanced eliminations with path ******************************************)
 
 lemma path_ind_lift (Q:predicate …):

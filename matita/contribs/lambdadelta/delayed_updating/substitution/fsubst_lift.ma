@@ -29,7 +29,7 @@ lemma lift_fsubst_sn (f) (t) (u) (p): u ϵ 𝐏 →
 | * #q #Hq #H1 #H0
   @(ex2_intro … H1) @or_intror @conj // *
   [ <list_append_empty_dx #H2 destruct
-    elim (lift_root f q) #r #_ #Hr /2 width=2 by/
+    elim (lift_path_root f q) #r #_ #Hr /2 width=2 by/
   | #l #r #H2 destruct
     @H0 -H0 [| <lift_append_proper_dx /2 width=3 by ppc_lcons/ ]
   ]
