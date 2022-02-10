@@ -56,3 +56,11 @@ theorem subset_eq_trans (A):
 #A #u1 #u2 * #H12 #H21 #u3 * #H23 #H32
 /3 width=5 by subset_le_trans, conj/
 qed-.
+
+theorem subset_eq_canc_sn (A):
+        left_cancellable … (subset_eq A).
+/3 width=3 by subset_eq_trans, subset_eq_sym/ qed-.
+
+theorem subset_eq_canc_dx (A):
+        right_cancellable … (subset_eq A).
+/3 width=3 by subset_eq_trans, subset_eq_sym/ qed-.
