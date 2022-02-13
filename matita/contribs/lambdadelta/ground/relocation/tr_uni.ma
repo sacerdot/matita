@@ -26,6 +26,9 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
+lemma tr_uni_unfold (n): ↑n ⨮ 𝐢 = 𝐮❨n❩.
+// qed.
+
 lemma tr_uni_zero: 𝐢 = 𝐮❨𝟎❩.
 <tr_id_unfold //
 qed.

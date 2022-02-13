@@ -19,7 +19,7 @@ include "ground/relocation/tr_id_pushs.ma".
 
 (* Coonstructions with tr_pap ***********************************************)
 
-lemma tr_pap_id (p):
+lemma tr_id_pap (p):
       p = 𝐢@❨p❩.
 #p >(tr_pushs_id p)
 /2 width=1 by tr_pap_pushs_le/

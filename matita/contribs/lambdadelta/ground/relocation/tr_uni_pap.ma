@@ -12,19 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/tr_pap.ma".
-include "ground/lib/stream_tls.ma".
+include "ground/relocation/tr_uni.ma".
+include "ground/relocation/tr_id_pap.ma".
+include "ground/arith/nat_rplus_succ.ma".
 
-(* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
+(* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS *******************************)
 
-(* Constructions with stream_tls ********************************************)
+(* Coonstructions with tr_pap ***********************************************)
 
-lemma tr_pap_plus (p1) (p2) (f):
-      (⇂*[ninj p2]f)@❨p1❩+f@❨p2❩ = f@❨p1+p2❩.
-#p1 #p2 elim p2 -p2
-[ * #p #f //
-| #i #IH * #p #f
-  <pplus_succ_dx <tr_pap_succ <tr_pap_succ
-  <IH -IH >nsucc_inj //
-]
+lemma tr_uni_pap_unit (n):
+      ↑n = 𝐮❨n❩@❨𝟏❩.
+// qed.
+
+lemma tr_uni_pap (n) (p):
+      p + n = 𝐮❨n❩@❨p❩.
+#n @(nat_ind_succ … n) -n //
+#n #IH * [| #p ] //
 qed.
