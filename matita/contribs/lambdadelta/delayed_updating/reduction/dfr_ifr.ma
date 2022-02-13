@@ -21,7 +21,10 @@ include "delayed_updating/substitution/lift_preterm_eq.ma".
 include "delayed_updating/substitution/lift_structure_depth.ma".
 include "delayed_updating/syntax/prototerm_proper_constructors.ma".
 include "delayed_updating/syntax/path_structure_depth.ma".
+include "ground/relocation/tr_uni_compose.ma".
 include "ground/relocation/tr_pap_pushs.ma".
+
+include "ground/lib/stream_eq_eq.ma".
 
 (* DELAYED FOCUSED REDUCTION ************************************************)
 
@@ -38,7 +41,9 @@ lemma dfr_lift_bi (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
 | lapply (lift_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (lift_fsubst …))
-  [ <structure_append <structure_A_sn <structure_append <structure_L_sn
+  [ <lift_rmap_append <lift_rmap_A_sn <lift_rmap_append <lift_rmap_L_sn
+    <structure_append <structure_A_sn <structure_append <structure_L_sn
+    <depth_plus <depth_L_sn <depth_structure <depth_structure
     @fsubst_eq_repl [ // ]
     @(subset_eq_trans … (lift_iref …))
     @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))
@@ -46,6 +51,10 @@ lemma dfr_lift_bi (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
     @(subset_eq_trans … (lift_term_after …))
     @(subset_eq_canc_dx … (lift_term_after …))
     @lift_term_eq_repl_sn -t1
+    @(stream_eq_trans … (tr_compose_uni_dx …))
+(*    
+    >nrplus_inj_dx <tr_pap_plus
+*)    
   | //
   | /2 width=2 by ex_intro/
   | //

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path.ma".
-include "ground/arith/nat_succ.ma".
+include "ground/arith/nat_plus.ma".
 include "ground/notation/functions/verticalbars_1.ma".
 
 (* DEPTH FOR PATH ***********************************************************)
@@ -40,17 +40,31 @@ interpretation
 lemma depth_empty: 𝟎 = ❘𝐞❘.
 // qed.
 
-lemma depth_d (q) (n): ❘q❘ = ❘𝗱n◗q❘.
+lemma depth_d_sn (q) (n): ❘q❘ = ❘𝗱n◗q❘.
 // qed.
 
-lemma depth_m (q): ❘q❘ = ❘𝗺◗q❘.
+lemma depth_m_sn (q): ❘q❘ = ❘𝗺◗q❘.
 // qed.
 
-lemma depth_L (q): ↑❘q❘ = ❘𝗟◗q❘.
+lemma depth_L_sn (q): ↑❘q❘ = ❘𝗟◗q❘.
 // qed.
 
-lemma depth_A (q): ❘q❘ = ❘𝗔◗q❘.
+lemma depth_A_sn (q): ❘q❘ = ❘𝗔◗q❘.
 // qed.
 
-lemma depth_S (q): ❘q❘ = ❘𝗦◗q❘.
+lemma depth_S_sn (q): ❘q❘ = ❘𝗦◗q❘.
 // qed.
+
+(* Advanced constructions with nplus ****************************************)
+
+lemma depth_plus (p1) (p2):
+      ❘p2❘+❘p1❘ = ❘p1●p2❘.
+#p1 elim p1 -p1 //
+* [ #n ] #p1 #IH #p2 <list_append_lcons_sn
+[ <depth_d_sn <depth_d_sn //
+| <depth_m_sn <depth_m_sn //
+| <depth_L_sn <depth_L_sn //
+| <depth_A_sn <depth_A_sn //
+| <depth_S_sn <depth_S_sn //
+]
+qed.

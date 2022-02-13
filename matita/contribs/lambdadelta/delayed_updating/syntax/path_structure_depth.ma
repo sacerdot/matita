@@ -23,8 +23,8 @@ lemma depth_structure (p):
       ❘p❘ = ❘⊗p❘.
 #p elim p -p //
 * [ #n ] #p #IH //
-[ <structure_L_sn <depth_L <depth_L //
-| <structure_A_sn <depth_A <depth_A //
-| <structure_S_sn <depth_S <depth_S //
+[ <structure_L_sn <depth_L_sn <depth_L_sn //
+| <structure_A_sn <depth_A_sn <depth_A_sn //
+| <structure_S_sn <depth_S_sn <depth_S_sn //
 ]
 qed.
