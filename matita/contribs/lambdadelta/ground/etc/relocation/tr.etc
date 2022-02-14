@@ -3,14 +3,6 @@ lemma pippo (f):
 * #p #f //
 qed.
 
-corec lemma tr_compose_id_dx (f):
-            f ≗ f∘𝐢.
-cases tr_id_unfold
-cases tr_compose_unfold
-cases (pippo f) in ⊢ (??%?);
-@stream_eq_cons /2 width=1 by/
-qed.
-
 axiom pippo2 (f) (p):
       f@❨p❩ + (⇂*[ninj p]f)@❨𝟏❩ = f@❨↑p❩.
 
