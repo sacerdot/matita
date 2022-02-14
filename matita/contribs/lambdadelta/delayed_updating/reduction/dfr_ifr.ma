@@ -43,7 +43,7 @@ lemma dfr_lift_bi (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
   @(subset_eq_trans … (lift_fsubst …))
   [ <lift_rmap_append <lift_rmap_A_sn <lift_rmap_append <lift_rmap_L_sn
     <structure_append <structure_A_sn <structure_append <structure_L_sn
-    <depth_plus <depth_L_sn <depth_structure <depth_structure
+    <depth_append <depth_L_sn <depth_structure <depth_structure
     @fsubst_eq_repl [ // ]
     @(subset_eq_trans … (lift_iref …))
     @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))

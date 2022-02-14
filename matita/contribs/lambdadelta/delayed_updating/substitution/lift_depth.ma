@@ -25,6 +25,6 @@ lemma pippo (p) (f):
 #p elim p -p
 [ #f <lift_rmap_empty <lift_rmap_empty <tr_pushs_zero
 | * [ #n ] #p #IH #f //
-  <lift_rmap_d_sn <lift_rmap_d_sn <depth_d
+  <lift_rmap_d_sn <lift_rmap_d_sn <depth_d_sn
   @(trans_eq … (IH …)) -IH
       

@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift.ma".
+include "ground/relocation/tr_uni_compose.ma".
 include "ground/relocation/tr_compose_compose.ma".
-include "ground/relocation/tr_compose_pn.ma".
 include "ground/relocation/tr_compose_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".
 
@@ -110,4 +110,13 @@ lemma lift_path_after (p) (f1) (f2):
 | <lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
   >tr_compose_push_bi //
 ]
+qed.
+
+(* Advanced constructions with proj_rmap and stream_tls *********************)
+
+lemma lift_rmap_tls_d_dx (f) (p) (m) (n):
+      ⇂*[m+n]↑[p]f ≗ ⇂*[m]↑[p◖𝗱n]f.
+#f #p #m #n
+<lift_rmap_d_dx >nrplus_inj_dx
+/2 width=1 by tr_tls_compose_uni_dx/
 qed.

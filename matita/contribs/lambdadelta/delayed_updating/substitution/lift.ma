@@ -146,6 +146,10 @@ qed.
 
 (* Advanced constructions with proj_rmap and path_rcons *********************)
 
+lemma lift_rmap_d_dx (f) (p) (n):
+      (↑[p]f)∘𝐮❨ninj n❩ = ↑[p◖𝗱n]f.
+// qed.
+
 lemma lift_rmap_m_dx (f) (p):
       ↑[p]f = ↑[p◖𝗺]f.
 // qed.
