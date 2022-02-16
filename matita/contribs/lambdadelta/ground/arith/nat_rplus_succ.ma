@@ -26,6 +26,9 @@ qed.
 lemma nrplus_succ_shift (p) (n): ↑p + n = p + ↑n.
 // qed.
 
+lemma nrplus_succ_sn (p) (n): ↑(p+n) = ↑p + n.
+// qed.
+
 lemma nrplus_unit_sn (n): ↑n = 𝟏 + n.
 #n @(nat_ind_succ … n) -n //
 qed.

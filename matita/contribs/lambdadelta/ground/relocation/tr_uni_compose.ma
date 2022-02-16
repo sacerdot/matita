@@ -44,8 +44,8 @@ qed.
 
 (* Main constructions with tr_compose and tr_tls ****************************)
 
-theorem tr_compose_uni_dx (f) (p):
-        (𝐮❨f@❨p❩❩∘⇂*[p]f ≗ f∘𝐮❨p❩).
+theorem tr_compose_uni_dx (f) (n):
+        (𝐮❨f@❨n❩❩∘⇂*[n]f ≗ f∘𝐮❨n❩).
 #f #p
 @nstream_eq_inv_ext #q
 <tr_compose_pap <tr_compose_pap
