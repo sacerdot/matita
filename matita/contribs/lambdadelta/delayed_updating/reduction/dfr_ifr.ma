@@ -52,6 +52,7 @@ lemma dfr_lift_bi (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
     @(subset_eq_canc_dx … (lift_term_after …))
     @lift_term_eq_repl_sn -t1
     @(stream_eq_trans … (tr_compose_uni_dx …))
+    @tr_compose_eq_repl
 (*    
     >nrplus_inj_dx <tr_pap_plus
 *)    

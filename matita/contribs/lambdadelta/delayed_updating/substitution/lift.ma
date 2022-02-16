@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/tr_compose.ma".
-include "ground/relocation/tr_uni.ma".
+include "ground/relocation/tr_compose_pap.ma".
+include "ground/relocation/tr_uni_pap.ma".
 include "delayed_updating/syntax/path.ma".
 include "delayed_updating/notation/functions/uparrow_4.ma".
 include "delayed_updating/notation/functions/uparrow_2.ma".
@@ -165,6 +165,12 @@ lemma lift_rmap_A_dx (f) (p):
 lemma lift_rmap_S_dx (f) (p):
       ↑[p]f = ↑[p◖𝗦]f.
 // qed.
+
+lemma lift_rmap_pap_d_dx (f) (p) (n) (m):
+      ↑[p]f@❨m+n❩ = ↑[p◖𝗱n]f@❨m❩.
+#f #p #n #m
+<lift_rmap_d_dx <tr_compose_pap <tr_uni_pap //
+qed.
 
 (* Advanced eliminations with path ******************************************)
 

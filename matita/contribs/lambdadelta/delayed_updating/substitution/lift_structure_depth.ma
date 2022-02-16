@@ -15,7 +15,6 @@
 include "delayed_updating/substitution/lift.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/syntax/path_depth.ma".
-include "ground/relocation/tr_pushs.ma".
 include "ground/arith/nat_pred_succ.ma".
 
 (* LIFT FOR PATH ***********************************************************)

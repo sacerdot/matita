@@ -20,7 +20,6 @@ include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/syntax/path_balanced.ma".
 include "delayed_updating/syntax/path_depth.ma".
 include "delayed_updating/notation/relations/black_rightarrow_df_4.ma".
-include "ground/arith/nat_rplus.ma".
 include "ground/xoa/ex_1_2.ma".
 include "ground/xoa/and_4.ma".
 

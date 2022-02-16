@@ -14,17 +14,28 @@
 
 include "delayed_updating/substitution/lift.ma".
 include "delayed_updating/syntax/path_depth.ma".
-include "ground/relocation/tr_pushs.ma".
+include "ground/relocation/tr_id_compose.ma".
+include "ground/relocation/tr_compose_compose.ma".
+include "ground/relocation/tr_compose_pn.ma".
+include "ground/relocation/tr_compose_eq.ma".
+include "ground/relocation/tr_pn_eq.ma".
+include "ground/lib/stream_eq_eq.ma".
 
 (* LIFT FOR PATH ***********************************************************)
 
-(* Basic constructions with depth ******************************************)
+(* Constructions with depth ************************************************)
 
-lemma pippo (p) (f):
-      (⫯*[❘p❘]f) ∘ (↑[p]𝐢) = ↑[p]f.
-#p elim p -p
-[ #f <lift_rmap_empty <lift_rmap_empty <tr_pushs_zero
-| * [ #n ] #p #IH #f //
-  <lift_rmap_d_sn <lift_rmap_d_sn <depth_d_sn
-  @(trans_eq … (IH …)) -IH
-      
+lemma lift_rmap_decompose (p) (f):
+      ↑[p]f ≗ (⫯*[❘p❘]f)∘(↑[p]𝐢).
+#p @(list_ind_rcons … p) -p
+[ #f <lift_rmap_empty <lift_rmap_empty <tr_pushs_zero //
+| #p * [ #n ] #IH #f //
+  [ <lift_rmap_d_dx <lift_rmap_d_dx <depth_d_dx
+    @(stream_eq_trans … (tr_compose_assoc …))
+    /2 width=1 by tr_compose_eq_repl/
+  | <lift_rmap_L_dx <lift_rmap_L_dx <depth_L_dx
+    <tr_pushs_succ <tr_compose_push_bi
+    /2 width=1 by tr_push_eq_repl/
+  ]
+]
+qed.
