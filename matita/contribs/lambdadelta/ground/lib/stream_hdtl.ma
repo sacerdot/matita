@@ -36,11 +36,11 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma stream_hd_cons (A) (a) (t):
+lemma stream_hd_lcons (A) (a) (t):
       a = ⇃{A}(a⨮t).
 // qed.
 
-lemma stream_tl_cons (A) (a) (t):
+lemma stream_tl_lcons (A) (a) (t):
       t = ⇂{A}(a⨮t).
 // qed.
 

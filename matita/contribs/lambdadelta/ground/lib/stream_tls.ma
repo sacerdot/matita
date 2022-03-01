@@ -52,3 +52,7 @@ lemma stream_tls_swap (A) (n) (t):
 lemma stream_tls_unit (A) (t):
       ⇂t = ⇂*{A}[𝟏]t.
 // qed.
+
+lemma stream_tls_succ_lcons (A) (n) (a) (t):
+      ⇂*[n]t = ⇂*{A}[↑n](a⨮t).
+// qed.

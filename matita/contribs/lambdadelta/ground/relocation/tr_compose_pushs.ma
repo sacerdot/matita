@@ -12,19 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/tr_compose.ma".
-include "ground/lib/stream_tls_plus.ma".
-include "ground/arith/nat_plus_rplus.ma".
-include "ground/arith/nat_rplus_pplus.ma".
+include "ground/relocation/tr_pushs.ma".
+include "ground/relocation/tr_compose_pn.ma".
 
 (* COMPOSITION FOR TOTAL RELOCATION MAPS ************************************)
 
-(* Advanced constructions with stream_tls ***********************************)
+(* Constructions with tr_pushs **********************************************)
 
-lemma tr_compose_tls (p) (f1) (f2):
-      (⇂*[f1@❨p❩]f2)∘(⇂*[p]f1) = ⇂*[p](f2∘f1).
-#p elim p -p [| #p #IH ] * #q1 #f1 #f2 //
-<tr_compose_unfold <tr_pap_succ
->nsucc_inj <stream_tls_succ_lcons <stream_tls_succ_lcons
-<IH -IH >nrplus_inj_dx >nrplus_inj_sn <stream_tls_plus //
+lemma tr_compose_pushs_bi (n) (f2) (f1):
+      (⫯*[n](f2∘f1)) = (⫯*[n]f2)∘(⫯*[n]f1).
+#n @(nat_ind_succ … n) -n //
+#n #IH #f1 #f2
+<tr_pushs_succ <tr_pushs_succ <tr_pushs_succ
+<tr_compose_push_bi //
 qed.
