@@ -39,3 +39,10 @@ lemma lift_rmap_decompose (p) (f):
   ]
 ]
 qed.
+
+lemma lift_rmap_pap_le (f) (p) (n):
+      (↑[p]𝐢)@❨n❩ < ↑❘p❘ → (↑[p]𝐢)@❨n❩ = (↑[p]f)@❨n❩.
+#f #p #n #Hn
+>(tr_pap_eq_repl … (↑[p]f) … (lift_rmap_decompose …))
+<tr_compose_pap @tr_pap_pushs_le //
+qed.
