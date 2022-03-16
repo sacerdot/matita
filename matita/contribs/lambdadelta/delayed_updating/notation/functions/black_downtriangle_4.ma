@@ -12,18 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/class_b_0.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* BALANCE CONDITION FOR PATH ***********************************************)
+notation < "hvbox( ▼❨ term 46 k, break term 46 p, break term 46 f ❩ )"
+  non associative with precedence 70
+  for @{ 'BlackDownTriangle $S $k $p $f }.
 
-(* Note: this condition applies to a structural path *)
-inductive pbc: predicate path ≝
-| pbc_empty: pbc (𝐞)
-| pbc_redex: ∀b. pbc b → pbc (𝗔◗b◖𝗟)
-| pbc_after: ∀b1,b2. pbc b1 → pbc b2 → pbc (b1●b2)
-.
+notation > "hvbox( ▼❨ term 46 k, break term 46 p, break term 46 f ❩ )"
+  non associative with precedence 70
+  for @{ 'BlackDownTriangle ? $k $p $f }.
 
-interpretation
-  "balance condition (path)"
-  'ClassB = (pbc).
+notation > "hvbox( ▼{ term 46 S }❨ break term 46 k, break term 46 p, break term 46 f ❩ )"
+  non associative with precedence 70
+  for @{ 'BlackDownTriangle $S $k $p $f }.

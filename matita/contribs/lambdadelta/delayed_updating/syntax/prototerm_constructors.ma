@@ -69,7 +69,7 @@ lemma in_comp_inv_iref (t) (p) (n):
 #t #p #n * #q #Hq #Hp
 /2 width=3 by ex2_intro/
 qed-.
-(*
+(* COMMENT
 lemma prototerm_in_root_inv_lcons_oref:
       ∀p,l,n. l◗p ϵ ▵#n →
       ∧∧ 𝗱n = l & 𝐞 = p.

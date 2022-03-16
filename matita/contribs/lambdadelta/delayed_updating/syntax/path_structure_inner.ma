@@ -12,18 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/class_b_0.ma".
+include "delayed_updating/syntax/path_structure.ma".
+include "delayed_updating/syntax/path_inner.ma".
 
-(* BALANCE CONDITION FOR PATH ***********************************************)
+(* STRUCTURE FOR PATH *******************************************************)
 
-(* Note: this condition applies to a structural path *)
-inductive pbc: predicate path ≝
-| pbc_empty: pbc (𝐞)
-| pbc_redex: ∀b. pbc b → pbc (𝗔◗b◖𝗟)
-| pbc_after: ∀b1,b2. pbc b1 → pbc b2 → pbc (b1●b2)
-.
+(* Constructions with pic ***************************************************)
 
-interpretation
-  "balance condition (path)"
-  'ClassB = (pbc).
+lemma structure_pic (p):
+      ⊗p ϵ 𝐈.
+#p @(list_ind_rcons … p) -p
+[ <structure_empty //
+| #p * [ #n ] #IH
+  [ <structure_d_dx //
+  | <structure_m_dx //
+  | <structure_L_dx //
+  | <structure_A_dx //
+  | <structure_S_dx //
+  ]
+]
+qed.

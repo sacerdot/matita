@@ -35,7 +35,7 @@ interpretation
   "by-depth delayed (prototerm)"
   'ClassDPhi = (bdd).
 
-(*
+(* COMMENT
 
 (* Basic inversions *********************************************************)
 
