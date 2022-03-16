@@ -12,43 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/tr_uni_pap.ma".
-include "ground/relocation/tr_id_compose.ma".
-include "ground/relocation/tr_compose_pn.ma".
-include "ground/lib/stream_hdtl_eq.ma".
+include "ground/relocation/tr_uni.ma".
+include "ground/lib/stream_eq.ma".
 
 (* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS *******************************)
 
-(* Constructions with tr_compose and tr_tl **********************************)
+(* Constructions with stream_eq *********************************************)
 
-lemma tr_tl_compose_uni_sn (n) (f):
-      ⇂f ≗ ⇂(𝐮❨n❩∘f).
-#n @(nat_ind_succ … n) -n //
-/2 width=1 by stream_tl_eq_repl/
-qed.
-
-(* Constructions with tr_compose and tr_tls *********************************)
-
-lemma tr_tl_compose_uni_dx (f) (n):
-      ⇂*[↑n]f ≗ ⇂(f∘𝐮❨n❩).
+lemma tr_uni_eq_repl (n1) (n2):
+      n1 = n2 → 𝐮❨n1❩ ≗ 𝐮❨n2❩.
 // qed.
-
-lemma tr_tls_compose_uni_dx (f) (p) (n):
-      ⇂*[p+n]f ≗ ⇂*[p](f∘𝐮❨n❩).
-#f #p elim p -p [| #p #IH ] #n
-[ <nrplus_unit_sn //
-| <nrplus_succ_sn >nsucc_inj >nsucc_inj
-  /2 width=3 by stream_tl_eq_repl/
-]
-qed.
-
-(* Main constructions with tr_compose and tr_tls ****************************)
-
-theorem tr_compose_uni_dx (f) (p):
-        (𝐮❨f@❨p❩❩∘⇂*[p]f) ≗ f∘𝐮❨p❩.
-#f #p
-@nstream_eq_inv_ext #q
-<tr_compose_pap <tr_compose_pap
-<tr_uni_pap <tr_uni_pap
-<tr_pap_plus //
-qed.
