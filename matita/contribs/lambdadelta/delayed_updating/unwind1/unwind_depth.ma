@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift.ma".
+include "delayed_updating/unwind1/unwind.ma".
 include "delayed_updating/syntax/path_depth.ma".
 include "ground/relocation/tr_id_compose.ma".
 include "ground/relocation/tr_compose_compose.ma".
@@ -21,28 +21,29 @@ include "ground/relocation/tr_compose_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".
 include "ground/lib/stream_eq_eq.ma".
 
-(* LIFT FOR PATH ***********************************************************)
-
+(* UNWIND FOR PATH *********************************************************)
+(* COMMENT
 (* Constructions with depth ************************************************)
 
-lemma lift_rmap_decompose (p) (f):
-      ↑[p]f ≗ (⫯*[❘p❘]f)∘(↑[p]𝐢).
+lemma unwind_rmap_decompose (p) (f):
+      ▼[p]f ≗ (▼[p]𝐢)∘(⫯*[❘p❘]f).
 #p @(list_ind_rcons … p) -p
-[ #f <lift_rmap_empty <lift_rmap_empty <tr_pushs_zero //
+[ #f <unwind_rmap_empty <unwind_rmap_empty <tr_pushs_zero //
 | #p * [ #n ] #IH #f //
-  [ <lift_rmap_d_dx <lift_rmap_d_dx <depth_d_dx
-    @(stream_eq_trans … (tr_compose_assoc …))
+  [ <unwind_rmap_d_dx <unwind_rmap_d_dx <depth_d_dx
+    @(stream_eq_canc_dx … (tr_compose_assoc …))
     /2 width=1 by tr_compose_eq_repl/
-  | <lift_rmap_L_dx <lift_rmap_L_dx <depth_L_dx
+  | <unwind_rmap_L_dx <unwind_rmap_L_dx <depth_L_dx
     <tr_pushs_succ <tr_compose_push_bi
     /2 width=1 by tr_push_eq_repl/
   ]
 ]
 qed.
 
-lemma lift_rmap_pap_le (f) (p) (n):
-      (↑[p]𝐢)@❨n❩ < ↑❘p❘ → (↑[p]𝐢)@❨n❩ = (↑[p]f)@❨n❩.
+lemma unwind_rmap_pap_le (f) (p) (n):
+      n < ▼❘p❘ → (▼[p]𝐢)@❨n❩ = (▼[p]f)@❨n❩.
 #f #p #n #Hn
->(tr_pap_eq_repl … (↑[p]f) … (lift_rmap_decompose …))
-<tr_compose_pap @tr_pap_pushs_le //
+>(tr_pap_eq_repl … (▼[p]f) … (unwind_rmap_decompose …))
+<tr_compose_pap <tr_pap_pushs_le //
 qed.
+*)

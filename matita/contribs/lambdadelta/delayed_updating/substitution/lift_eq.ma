@@ -13,10 +13,14 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift.ma".
+(*
 include "ground/relocation/tr_uni_compose.ma".
 include "ground/relocation/tr_compose_compose.ma".
 include "ground/relocation/tr_compose_eq.ma".
+*)
+include "ground/relocation/tr_pap_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".
+include "ground/lib/stream_tls_eq.ma".
 
 (* LIFT FOR PATH ***********************************************************)
 
@@ -31,14 +35,12 @@ interpretation
 
 lemma lift_eq_repl (A) (p) (k1) (k2):
       k1 ≗{A} k2 → stream_eq_repl … (λf1,f2. ↑❨k1, f1, p❩ = ↑❨k2, f2, p❩).
-#A #p @(path_ind_lift … p) -p [| #n #IH | #n #l0 #q #IH |*: #q #IH ]
-#k1 #k2 #f1 #f2 #Hk #Hf
+#A #p elim p -p [| * [ #n ] #q #IH ]
+#k1 #k2 #Hk #f1 #f2 #Hf
 [ <lift_empty <lift_empty /2 width=1 by/
-| <lift_d_empty_sn <lift_d_empty_sn <(tr_pap_eq_repl … Hf)
-  /3 width=1 by tr_compose_eq_repl, stream_eq_refl/
-| <lift_d_lcons_sn <lift_d_lcons_sn
-  /3 width=1 by tr_compose_eq_repl, stream_eq_refl/
-| /2 width=1 by/
+| <lift_d_sn <lift_d_sn <(tr_pap_eq_repl … Hf)
+  /3 width=3 by stream_tls_eq_repl, compose_repl_fwd_sn/
+| /3 width=1 by/
 | /3 width=1 by tr_push_eq_repl/
 | /3 width=1 by/
 | /3 width=1 by/
@@ -72,16 +74,15 @@ lemma lift_path_eq_repl (p):
 
 lemma lift_path_append_sn (p) (f) (q):
       q●↑[f]p = ↑❨(λg,p. proj_path g (q●p)), f, p❩.
-#p @(path_ind_lift … p) -p // [ #n #l #p |*: #p ] #IH #f #q
-[ <lift_d_lcons_sn <lift_d_lcons_sn <IH -IH //
-| <lift_m_sn <lift_m_sn //
-| <lift_L_sn <lift_L_sn >lift_lcons_alt // >lift_append_rcons_sn //
-  <IH <IH -IH <list_append_rcons_sn //
-| <lift_A_sn <lift_A_sn >lift_lcons_alt >lift_append_rcons_sn //
-  <IH <IH -IH <list_append_rcons_sn //
-| <lift_S_sn <lift_S_sn >lift_lcons_alt >lift_append_rcons_sn //
-  <IH <IH -IH <list_append_rcons_sn //
-]
+#p elim p -p // * [ #n ] #p #IH #f #q
+[ <lift_d_sn <lift_d_sn
+| <lift_m_sn <lift_m_sn
+| <lift_L_sn <lift_L_sn
+| <lift_A_sn <lift_A_sn
+| <lift_S_sn <lift_S_sn
+] 
+>lift_lcons_alt // >lift_append_rcons_sn //
+<IH <IH -IH <list_append_rcons_sn //
 qed.
 
 lemma lift_path_lcons (f) (p) (l):
@@ -89,6 +90,14 @@ lemma lift_path_lcons (f) (p) (l):
 #f #p #l
 >lift_lcons_alt <lift_path_append_sn //
 qed.
+
+lemma lift_path_d_sn (f) (p) (n):
+      (𝗱(f@❨n❩)◗↑[⇂*[n]f]p) = ↑[f](𝗱n◗p).
+// qed.
+
+lemma lift_path_m_sn (f) (p):
+      (𝗺◗↑[f]p) = ↑[f](𝗺◗p).
+// qed.
 
 lemma lift_path_L_sn (f) (p):
       (𝗟◗↑[⫯f]p) = ↑[f](𝗟◗p).
@@ -101,16 +110,7 @@ lemma lift_path_A_sn (f) (p):
 lemma lift_path_S_sn (f) (p):
       (𝗦◗↑[f]p) = ↑[f](𝗦◗p).
 // qed.
-
-lemma lift_path_after (p) (f1) (f2):
-      ↑[f2]↑[f1]p = ↑[f2∘f1]p.
-#p @(path_ind_lift … p) -p // [ #n #l #p | #p ] #IH #f1 #f2
-[ <lift_path_d_lcons_sn <lift_path_d_lcons_sn
-  >(lift_path_eq_repl … (tr_compose_assoc …)) //
-| <lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
-  >tr_compose_push_bi //
-]
-qed.
+(* COMMENT 
 
 (* Advanced constructions with proj_rmap and stream_tls *********************)
 
@@ -120,3 +120,4 @@ lemma lift_rmap_tls_d_dx (f) (p) (m) (n):
 <lift_rmap_d_dx >nrplus_inj_dx
 /2 width=1 by tr_tls_compose_uni_dx/
 qed.
+*)

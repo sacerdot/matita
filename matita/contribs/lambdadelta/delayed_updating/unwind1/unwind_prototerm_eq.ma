@@ -12,26 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_prototerm_eq.ma".
-include "delayed_updating/syntax/prototerm_constructors.ma".
+include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/unwind1/unwind_eq.ma".
+include "delayed_updating/unwind1/unwind_prototerm.ma".
 
-(* LIFT FOR PROTOTERM *******************************************************)
+(* UNWIND FOR PROTOTERM *****************************************************)
 
-lemma lift_iref_sn (f) (t:prototerm) (n:pnat):
-      (𝛗f@❨n❩.↑[⇂*[n]f]t) ⊆ ↑[f](𝛗n.t).
-#f #t #n #p * #q * #r #Hr #H1 #H2 destruct
-@(ex2_intro … (𝗱n◗𝗺◗r))
-/2 width=1 by in_comp_iref/
-qed-.
+(* Constructions with subset_equivalence ************************************)
 
-lemma lift_iref_dx (f) (t) (n:pnat):
-      ↑[f](𝛗n.t) ⊆ 𝛗f@❨n❩.↑[⇂*[n]f]t.
-#f #t #n #p * #q #Hq #H0 destruct
-elim (in_comp_inv_iref … Hq) -Hq #p #H0 #Hp destruct
-/3 width=1 by in_comp_iref, in_comp_lift_bi/
-qed-.
+lemma unwind_term_eq_repl_sn (f1) (f2) (t):
+      f1 ≗ f2 → ▼[f1]t ⇔ ▼[f2]t.
+/3 width=1 by subset_equivalence_ext_f1_exteq, unwind_path_eq_repl/
+qed.
 
-lemma lift_iref (f) (t) (n:pnat):
-      (𝛗f@❨n❩.↑[⇂*[n]f]t) ⇔ ↑[f](𝛗n.t).
-/3 width=1 by conj, lift_iref_sn, lift_iref_dx/
+lemma unwind_term_eq_repl_dx (f) (t1) (t2):
+      t1 ⇔ t2 → ▼[f]t1 ⇔ ▼[f]t2.
+/2 width=1 by subset_equivalence_ext_f1_bi/
+qed.
+
+lemma unwind_term_after_id_sn (f) (t):
+      ▼[𝐢]▼[f]t ⇔ ▼[f]t.
+#f #t @subset_eq_trans
+[
+| @subset_inclusion_ext_f1_compose
+| @subset_equivalence_ext_f1_exteq
+  #p @unwind_path_after_id_sn
+]
 qed.

@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "delayed_updating/unwind1/unwind.ma".
+include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/syntax/prototerm_constructors.ma".
 include "delayed_updating/syntax/prototerm_equivalence.ma".
-include "delayed_updating/substitution/fsubst.ma".
-include "delayed_updating/substitution/lift.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/syntax/path_balanced.ma".
 include "delayed_updating/syntax/path_depth.ma".
@@ -28,7 +28,7 @@ include "ground/xoa/and_4.ma".
 definition dfr (p) (q): relation2 prototerm prototerm ≝
            λt1,t2. ∃∃b,n.
            let r ≝ p●𝗔◗b●𝗟◗q in
-           ∧∧ ⊗b ϵ 𝐁 & ∀f. ↑❘q❘ = (↑[q]⫯f)@❨n❩ & r◖𝗱n ϵ t1 &
+           ∧∧ ⊗b ϵ 𝐁 & ↑❘q❘ = (▼[r]𝐢)@❨n❩ & r◖𝗱n ϵ t1 &
               t1[⋔r←𝛗(n+❘b❘).(t1⋔(p◖𝗦))] ⇔ t2
 .
 

@@ -12,26 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_prototerm_eq.ma".
-include "delayed_updating/syntax/prototerm_constructors.ma".
+include "delayed_updating/unwind2/unwind.ma".
+include "delayed_updating/syntax/path_structure.ma".
+include "delayed_updating/syntax/path_depth.ma".
+include "ground/arith/nat_pred_succ.ma".
 
-(* LIFT FOR PROTOTERM *******************************************************)
+(* UNWIND FOR PATH **********************************************************)
 
-lemma lift_iref_sn (f) (t:prototerm) (n:pnat):
-      (𝛗f@❨n❩.↑[⇂*[n]f]t) ⊆ ↑[f](𝛗n.t).
-#f #t #n #p * #q * #r #Hr #H1 #H2 destruct
-@(ex2_intro … (𝗱n◗𝗺◗r))
-/2 width=1 by in_comp_iref/
-qed-.
+(* Basic constructions with structure and depth *****************************)
 
-lemma lift_iref_dx (f) (t) (n:pnat):
-      ↑[f](𝛗n.t) ⊆ 𝛗f@❨n❩.↑[⇂*[n]f]t.
-#f #t #n #p * #q #Hq #H0 destruct
-elim (in_comp_inv_iref … Hq) -Hq #p #H0 #Hp destruct
-/3 width=1 by in_comp_iref, in_comp_lift_bi/
-qed-.
-
-lemma lift_iref (f) (t) (n:pnat):
-      (𝛗f@❨n❩.↑[⇂*[n]f]t) ⇔ ↑[f](𝛗n.t).
-/3 width=1 by conj, lift_iref_sn, lift_iref_dx/
+lemma unwind_rmap_structure (p) (f):
+      (⫯*[❘p❘]f) = ▼[⊗p]f.
+#p elim p -p //
+* [ #n ] #p #IH #f //
+[ <unwind_rmap_A_sn //
+| <unwind_rmap_S_sn //
+]
 qed.

@@ -6,3 +6,6 @@
 lemma pr_pat_after_uni_tls (i2) (i1):
       ∀f2. @❨i1, f2❩ ≘ i2 →
       ∀f. 𝐮❨i2❩ ⊚ ⫰*[i2] f2 ≘ f → f2 ⊚ 𝐮❨i1❩ ≘ f.
+
+. replace.sh . "/substitution/" "/unwind/"
+. replace.sh . ↑ ▼ 

@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/lib/subset_ext_equivalence.ma".
-include "delayed_updating/substitution/lift_eq.ma".
+include "delayed_updating/substitution/lift_after.ma".
 include "delayed_updating/substitution/lift_prototerm.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)

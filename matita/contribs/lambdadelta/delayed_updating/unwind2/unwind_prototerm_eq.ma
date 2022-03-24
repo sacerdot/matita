@@ -12,20 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift.ma".
-include "delayed_updating/syntax/path_structure.ma".
-include "delayed_updating/syntax/path_depth.ma".
-include "ground/arith/nat_pred_succ.ma".
+include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/unwind2/unwind_eq.ma".
+include "delayed_updating/unwind2/unwind_prototerm.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* UNWIND FOR PROTOTERM *****************************************************)
 
-(* Basic constructions with structure and depth ****************************)
+(* Constructions with subset_equivalence ************************************)
 
-lemma lift_rmap_structure (p) (f):
-      (⫯*[❘p❘]f) = ↑[⊗p]f.
-#p elim p -p //
-* [ #n ] #p #IH #f //
-[ <lift_rmap_A_sn //
-| <lift_rmap_S_sn //
+lemma unwind_term_eq_repl_sn (f1) (f2) (t):
+      f1 ≗ f2 → ▼[f1]t ⇔ ▼[f2]t.
+/3 width=1 by subset_equivalence_ext_f1_exteq, unwind_path_eq_repl/
+qed.
+
+lemma unwind_term_eq_repl_dx (f) (t1) (t2):
+      t1 ⇔ t2 → ▼[f]t1 ⇔ ▼[f]t2.
+/2 width=1 by subset_equivalence_ext_f1_bi/
+qed.
+
+lemma unwind_term_after (f1) (f2) (t):
+      ▼[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
+#f1 #f2 #t @subset_eq_trans
+[
+| @subset_inclusion_ext_f1_compose
+| @subset_equivalence_ext_f1_exteq /2 width=5/
 ]
 qed.

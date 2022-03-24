@@ -16,77 +16,77 @@ include "ground/arith/nat_plus.ma".
 include "delayed_updating/syntax/path.ma".
 include "delayed_updating/notation/functions/hash_1.ma".
 
-(* UPDATE COUNT FOR PATH ****************************************************)
+(* HEIGHT FOR PATH **********************************************************)
 
-rec definition update (p) on p: nat ≝
+rec definition height (p) on p: nat ≝
 match p with
 [ list_empty     ⇒ 𝟎
 | list_lcons l q ⇒
   match l with
-  [ label_d n ⇒ n + update q
-  | label_m   ⇒ update q
-  | label_L   ⇒ update q
-  | label_A   ⇒ update q
-  | label_S   ⇒ update q
+  [ label_d n ⇒ n + height q
+  | label_m   ⇒ height q
+  | label_L   ⇒ height q
+  | label_A   ⇒ height q
+  | label_S   ⇒ height q
   ]
 ].
 
 interpretation
-  "update count (path)"
-  'Hash p = (update p).
+  "height (path)"
+  'Hash p = (height p).
 
 (* Basic constructions ******************************************************)
 
-lemma update_empty: 𝟎 = ⧣𝐞.
+lemma height_empty: 𝟎 = ⧣𝐞.
 // qed.
 
-lemma update_d_sn (q) (n): ninj n+⧣q = ⧣(𝗱n◗q).
+lemma height_d_sn (q) (n): ninj n+⧣q = ⧣(𝗱n◗q).
 // qed.
 
-lemma update_m_sn (q): ⧣q = ⧣(𝗺◗q).
+lemma height_m_sn (q): ⧣q = ⧣(𝗺◗q).
 // qed.
 
-lemma update_L_sn (q): ⧣q = ⧣(𝗟◗q).
+lemma height_L_sn (q): ⧣q = ⧣(𝗟◗q).
 // qed.
 
-lemma update_A_sn (q): ⧣q = ⧣(𝗔◗q).
+lemma height_A_sn (q): ⧣q = ⧣(𝗔◗q).
 // qed.
 
-lemma update_S_sn (q): ⧣q = ⧣(𝗦◗q).
+lemma height_S_sn (q): ⧣q = ⧣(𝗦◗q).
 // qed.
 
 (* Main constructions *******************************************************)
 
-theorem update_append (p1) (p2):
+theorem height_append (p1) (p2):
         (⧣p2+⧣p1) = ⧣(p1●p2).
 #p1 elim p1 -p1 //
 * [ #n ] #p1 #IH #p2 <list_append_lcons_sn
-[ <update_d_sn <update_d_sn //
-| <update_m_sn <update_m_sn //
-| <update_L_sn <update_L_sn //
-| <update_A_sn <update_A_sn //
-| <update_S_sn <update_S_sn //
+[ <height_d_sn <height_d_sn //
+| <height_m_sn <height_m_sn //
+| <height_L_sn <height_L_sn //
+| <height_A_sn <height_A_sn //
+| <height_S_sn <height_S_sn //
 ]
 qed.
 
 (* Constructions with list_rcons ********************************************)
 
-lemma update_d_dx (p) (n):
+lemma height_d_dx (p) (n):
       (⧣p)+(ninj n) = ⧣(p◖𝗱n).
 // qed.
 
-lemma update_m_dx (p):
+lemma height_m_dx (p):
       (⧣p) = ⧣(p◖𝗺).
 // qed.
 
-lemma update_L_dx (p):
+lemma height_L_dx (p):
       (⧣p) = ⧣(p◖𝗟).
 // qed.
 
-lemma update_A_dx (p):
+lemma height_A_dx (p):
       (⧣p) = ⧣(p◖𝗔).
 // qed.
 
-lemma update_S_dx (p):
+lemma height_S_dx (p):
       (⧣p) = ⧣(p◖𝗦).
 // qed.
