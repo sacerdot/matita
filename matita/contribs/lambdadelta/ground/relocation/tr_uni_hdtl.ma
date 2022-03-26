@@ -12,19 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/element_i_0.ma".
-include "ground/relocation/tr_pn.ma".
+include "ground/lib/stream_hdtl.ma".
+include "ground/relocation/tr_uni.ma".
 
-(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS *******************************)
+(* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS *******************************)
 
-corec definition tr_id: tr_map ≝ ⫯tr_id.
+(* Constructions with stream_hd *********************************************)
 
-interpretation
-  "identity element (total relocation streams)"
-  'ElementI = (tr_id).
+lemma tr_hd_uni (n):
+      ↑n = ⇃𝐮❨n❩.
+// qed.
 
-(* Basic constructions ******************************************************)
+(* Constructions with stream_tl *********************************************)
 
-lemma tr_id_unfold: ⫯𝐢 = 𝐢.
-<(stream_unfold … (𝐢)) in ⊢ (???%); //
-qed.
+lemma tr_tl_uni (n):
+      (𝐢) = ⇂𝐮❨n❩.
+// qed.
