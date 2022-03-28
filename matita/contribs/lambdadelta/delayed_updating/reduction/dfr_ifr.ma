@@ -20,6 +20,7 @@ include "delayed_updating/unwind1/unwind_preterm_eq.ma".
 include "delayed_updating/unwind1/unwind_structure_depth.ma".
 include "delayed_updating/unwind1/unwind_depth.ma".
 include "delayed_updating/substitution/fsubst_eq.ma".
+include "delayed_updating/substitution/lift_prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_proper_constructors.ma".
 include "delayed_updating/syntax/path_structure_depth.ma".
 include "ground/relocation/tr_uni_compose.ma".
@@ -83,6 +84,11 @@ lemma dfr_unwind_id_bi (p) (q) (t1) (t2): t1 ϵ 𝐓 →
     <depth_append <depth_L_sn <depth_structure <depth_structure
     @fsubst_eq_repl [ // ]
     @(subset_eq_trans … (unwind_iref …))
+
+    elim Hb -Hb #Hb #H0 <H0 -H0 <nrplus_zero_dx <nplus_zero_dx <Hn
+    @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))
+    [ @unwind_grafted_S /2 width=2 by ex_intro/ | skip ]
+
 (*
     @(subset_eq_canc_sn … (unwind_term_eq_repl_dx …))
     [ @unwind_grafted_S /2 width=2 by ex_intro/ | skip ]
