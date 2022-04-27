@@ -12,9 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_id.ma".
+include "delayed_updating/substitution/lift_eq.ma".
 include "ground/relocation/tr_uni_pap.ma".
-include "ground/relocation/tr_uni_tls.ma".
 
 (* LIFT FOR PATH ***********************************************************)
 
@@ -22,7 +21,4 @@ include "ground/relocation/tr_uni_tls.ma".
 
 lemma lift_path_d_sn_uni (p) (m) (n):
       (𝗱(n+m)◗p) = ↑[𝐮❨m❩](𝗱(n)◗p).
-#p #m #n
-<lift_path_d_sn <tr_uni_pap >nsucc_pnpred
-<tr_tls_succ_uni //
-qed.
+// qed.
