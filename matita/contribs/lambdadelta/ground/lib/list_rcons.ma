@@ -40,7 +40,7 @@ lemma list_append_rcons_sn (A):
 // qed.
 
 lemma list_append_rcons_dx (A):
-      ∀l1,l2,a. l1 ⨁ l2 ⨭ a = l1 ⨁{A} (l2 ⨭ a).
+      ∀l1,l2,a. (l1 ⨁ l2) ⨭ a = l1 ⨁{A} (l2 ⨭ a).
 // qed.
 
 (* Basic inversions *********************************************************)

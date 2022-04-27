@@ -29,6 +29,12 @@ qed.
 
 (* Constructions with tr_compose and tr_tls *********************************)
 
+lemma tr_tls_compose_uni_sn (f) (n) (p:pnat):
+      ⇂*[p]f ≗ ⇂*[p](𝐮❨n❩∘f).
+#f #n #p elim p -p //
+#p #IH /2 width=1 by stream_tl_eq_repl/
+qed.
+
 lemma tr_tl_compose_uni_dx (f) (n):
       ⇂*[↑n]f ≗ ⇂(f∘𝐮❨n❩).
 // qed.

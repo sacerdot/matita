@@ -41,6 +41,9 @@ lemma npsucc_zero: (𝟏) = ↑𝟎.
 lemma npsucc_inj (p): (↑p) = ↑(ninj p).
 // qed.
 
+lemma nsucc_unfold (n): ninj (↑n) = ↑n.
+// qed-.
+
 lemma nsucc_zero: ninj (𝟏) = ↑𝟎.
 // qed.
 
