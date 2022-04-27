@@ -1,0 +1,26 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "delayed_updating/relocation/sbr_pap.ma".
+include "ground/relocation/tr_id.ma".
+
+(* POSITIVE APPLICATION FOR STACKS OF BASIC RELOCATION MAPS *****************)
+
+(* Constructions with tr_id *************************************************)
+
+lemma sbr_pap_id (p):
+      p = 𝐢❘@❨p❩.
+#p elim p -p [| #p #IH ] <tr_id_unfold //
+<sbr_pap_unfold_unit_succ //
+qed.

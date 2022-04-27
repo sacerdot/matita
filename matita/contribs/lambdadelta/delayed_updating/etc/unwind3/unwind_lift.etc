@@ -1,0 +1,32 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "delayed_updating/unwind3/unwind_structure.ma".
+include "delayed_updating/substitution/lift_structure.ma".
+
+(* UNWIND FOR PATH **********************************************************)
+
+(* Constructions with lift **************************************************)
+
+lemma pippo (p) (n:pnat) (f):
+      ↑[𝐮❨n❩]▼[⇂*[n]f]p = ▼[𝐮❨n❩∘f]p.
+#p @(list_ind_rcons … p) -p //
+#p * [ #m ] #IH #n #f //
+[
+| <unwind_path_m_dx
+
+ //
+<depth_d_dx >list_cons_shift <list_append_assoc <unwind_rmap_d_dx
+/3 width=3 by tr_tls_compose_uni_sn, stream_eq_trans/
+qed.
