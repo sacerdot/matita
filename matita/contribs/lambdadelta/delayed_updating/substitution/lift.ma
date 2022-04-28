@@ -111,6 +111,14 @@ lemma lift_rmap_S_sn (f) (p):
       ↑[p]f = ↑[𝗦◗p]f.
 // qed.
 
+(* Advanced cinstructionswith proj_rmap and tr_id ***************************)
+
+lemma lift_rmap_id (p):
+      (𝐢) = ↑[p]𝐢.
+#p elim p -p //
+* [ #n ] #p #IH //
+qed.
+
 (* Advanced constructions with proj_rmap and path_append ********************)
 
 lemma lift_rmap_append (p2) (p1) (f):
