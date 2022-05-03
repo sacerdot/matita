@@ -14,7 +14,7 @@
 
 include "ground/arith/nat_plus.ma".
 include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/hash_1.ma".
+include "delayed_updating/notation/functions/sharp_1.ma".
 
 (* HEIGHT FOR PATH **********************************************************)
 
@@ -33,32 +33,32 @@ match p with
 
 interpretation
   "height (path)"
-  'Hash p = (height p).
+  'Sharp p = (height p).
 
 (* Basic constructions ******************************************************)
 
-lemma height_empty: 𝟎 = ⧣𝐞.
+lemma height_empty: 𝟎 = ♯𝐞.
 // qed.
 
-lemma height_d_sn (q) (n): ninj n+⧣q = ⧣(𝗱n◗q).
+lemma height_d_sn (q) (n): ninj n+♯q = ♯(𝗱n◗q).
 // qed.
 
-lemma height_m_sn (q): ⧣q = ⧣(𝗺◗q).
+lemma height_m_sn (q): ♯q = ♯(𝗺◗q).
 // qed.
 
-lemma height_L_sn (q): ⧣q = ⧣(𝗟◗q).
+lemma height_L_sn (q): ♯q = ♯(𝗟◗q).
 // qed.
 
-lemma height_A_sn (q): ⧣q = ⧣(𝗔◗q).
+lemma height_A_sn (q): ♯q = ♯(𝗔◗q).
 // qed.
 
-lemma height_S_sn (q): ⧣q = ⧣(𝗦◗q).
+lemma height_S_sn (q): ♯q = ♯(𝗦◗q).
 // qed.
 
 (* Main constructions *******************************************************)
 
 theorem height_append (p1) (p2):
-        (⧣p2+⧣p1) = ⧣(p1●p2).
+        (♯p2+♯p1) = ♯(p1●p2).
 #p1 elim p1 -p1 //
 * [ #n ] #p1 #IH #p2 <list_append_lcons_sn
 [ <height_d_sn <height_d_sn //
@@ -72,21 +72,21 @@ qed.
 (* Constructions with list_rcons ********************************************)
 
 lemma height_d_dx (p) (n):
-      (⧣p)+(ninj n) = ⧣(p◖𝗱n).
+      (♯p)+(ninj n) = ♯(p◖𝗱n).
 // qed.
 
 lemma height_m_dx (p):
-      (⧣p) = ⧣(p◖𝗺).
+      (♯p) = ♯(p◖𝗺).
 // qed.
 
 lemma height_L_dx (p):
-      (⧣p) = ⧣(p◖𝗟).
+      (♯p) = ♯(p◖𝗟).
 // qed.
 
 lemma height_A_dx (p):
-      (⧣p) = ⧣(p◖𝗔).
+      (♯p) = ♯(p◖𝗔).
 // qed.
 
 lemma height_S_dx (p):
-      (⧣p) = ⧣(p◖𝗦).
+      (♯p) = ♯(p◖𝗦).
 // qed.
