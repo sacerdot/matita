@@ -12,17 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
-include "ground/relocation/tr_compose_pap.ma".
-include "ground/relocation/tr_compose_pn.ma".
+include "delayed_updating/relocation/sbr_pap.ma".
+include "ground/relocation/tr_id.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* POSITIVE APPLICATION FOR STACKS OF BASIC RELOCATION MAPS *****************)
 
-(* Constructions with tr_after *********************************************)
+(* Constructions with tr_id *************************************************)
 
-lemma lift_path_after (p) (f1) (f2):
-      ↑[f2]↑[f1]p = ↑[f2∘f1]p.
-#p elim p -p [| * ] // #p #IH #f1 #f2
-<lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
->tr_compose_push_bi //
+lemma sbr_pap_id (p):
+      p = 𝐢❘@❨p❩.
+#p elim p -p [| #p #IH ] <tr_id_unfold //
+<sbr_pap_unfold_unit_succ //
 qed.

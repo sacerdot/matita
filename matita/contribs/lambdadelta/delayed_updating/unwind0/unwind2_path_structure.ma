@@ -12,22 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_prototerm_eq.ma".
-include "delayed_updating/substitution/lift_id.ma".
+include "delayed_updating/unwind0/unwind2_rmap.ma".
+include "delayed_updating/unwind0/unwind2_path.ma".
+include "delayed_updating/unwind0/unwind1_path_structure.ma".
 
-lemma lift_term_id_sn (t):
-      t ⊆ ↑[𝐢]t.
-#t #p #Hp
->(lift_path_id p)
-/2 width=1 by in_comp_lift_bi/
-qed-.
+(* EXTENDED UNWIND FOR PATH *************************************************)
 
-lemma lift_term_id_dx (t):
-      ↑[𝐢]t ⊆ t.
-#t #p * #q #Hq #H destruct //
-qed-.
+(* Constructions with structure *********************************************)
 
-lemma lift_term_id (t):
-      t ⇔ ↑[𝐢]t.
-/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/      
+lemma unwind2_path_d_dx (f) (p) (n):
+      (⊗p)◖𝗱((▶[f]p)@❨n❩) = ▼[f](p◖𝗱n).
+#f #p #n
+<unwind2_path_unfold <lift_path_d_dx <unwind1_path_d_dx
+<structure_lift >tr_compose_pap //
 qed.

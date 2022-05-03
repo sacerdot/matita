@@ -14,11 +14,13 @@
 
 include "delayed_updating/reduction/dfr.ma".
 include "delayed_updating/reduction/ifr.ma".
+
 include "delayed_updating/unwind1/unwind_fsubst.ma".
 include "delayed_updating/unwind1/unwind_constructors.ma".
 include "delayed_updating/unwind1/unwind_preterm_eq.ma".
 include "delayed_updating/unwind1/unwind_structure_depth.ma".
 include "delayed_updating/unwind1/unwind_depth.ma".
+
 include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_proper_constructors.ma".
@@ -71,9 +73,9 @@ lemma dfr_unwind_id_bi (p) (q) (t1) (t2): t1 ϵ 𝐓 →
       t1 ➡𝐝𝐟[p,q] t2 → ▼[𝐢]t1 ➡𝐟[⊗p,⊗q] ▼[𝐢]t2.
 #p #q #t1 #t2 #H0t1
 * #b #n * #Hb #Hn #Ht1 #Ht2
-@(ex1_2_intro … (⊗b) (↑❘⊗q❘)) @and4_intro
+@(ex1_2_intro … (⊗b) (↑♭⊗q)) @and4_intro
 [ //
-| //
+| (*//*)
 | lapply (in_comp_unwind_bi (𝐢) … Ht1) -Ht1 -H0t1 -Hb -Ht2
   <unwind_path_d_empty_dx <depth_structure //
 | lapply (unwind_term_eq_repl_dx (𝐢) … Ht2) -Ht2 #Ht2
@@ -85,11 +87,21 @@ lemma dfr_unwind_id_bi (p) (q) (t1) (t2): t1 ϵ 𝐓 →
     @fsubst_eq_repl [ // ]
     @(subset_eq_trans … (unwind_iref …))
 
-    elim Hb -Hb #Hb #H0 <H0 -H0 <nrplus_zero_dx <nplus_zero_dx <Hn
+    elim Hb -Hb #Hb #H0 <H0 -H0 <nrplus_zero_dx <nplus_zero_dx <nsucc_unfold
+    >Hn
     @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))
     [ @unwind_grafted_S /2 width=2 by ex_intro/ | skip ]
-
+    <Hn <Hn
+(*    
+    @(subset_eq_trans … (lift_term_eq_repl_dx …))
+    [ @(unwind_term_eq_repl_sn … (tls_succ_unwind q …)) | skip ]
+*)
 (*
+    
+    @subset_eq_trans
+    [2: @unwind_term_eq_repl_dx
+    @(subset_eq_canc_sn … (unwind_term_eq_repl_dx …))
+
     @(subset_eq_canc_sn … (unwind_term_eq_repl_dx …))
     [ @unwind_grafted_S /2 width=2 by ex_intro/ | skip ]
 
@@ -115,4 +127,7 @@ lemma dfr_unwind_id_bi (p) (q) (t1) (t2): t1 ϵ 𝐓 →
 Hn : ↑❘q❘ = ↑[p●𝗔◗b●𝗟◗q]𝐢@❨n❩
 ---------------------------
 ↑[𝐮❨↑❘q❘+❘b❘❩] ↑[↑[p]𝐢] t ⇔ ↑[𝐮❨↑[p●𝗔◗b●𝗟◗q]𝐢@❨n+❘b❘❩❩] t
+*)
+(*
+(↑[𝐮❨↑❘q❘❩]▼[⇂*[↑❘q❘]▼[p●𝗟◗q]𝐢](t1⋔(p◖𝗦))⇔▼[𝐮❨↑❘q❘❩∘▼[p●𝗔◗b●𝗟◗q]𝐢](t1⋔(p◖𝗦))
 *)

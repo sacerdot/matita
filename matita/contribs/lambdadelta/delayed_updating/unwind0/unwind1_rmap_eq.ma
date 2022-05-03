@@ -12,17 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/notation/functions/pitchforkleftarrow_3.ma".
+include "delayed_updating/unwind0/unwind1_rmap.ma".
+include "ground/relocation/tr_id_compose.ma".
 
-(* FOCALIZED SUBSTITUTION ***************************************************)
+(* BASIC UNWIND FOR RELOCATION MAP ******************************************)
 
-definition fsubst (p) (u): prototerm → prototerm ≝
-           λt,q.
-           ∨∨ ∃∃r. r ϵ u & p●r = q
-            | ∧∧ q ϵ t & (∀r. p●r = q → ⊥)
-.
+(* Constructions with stream_eq *********************************************)
 
-interpretation
-  "focalized substitution (prototerm)"
-  'PitchforkLeftArrow t p u = (fsubst p u t).
+lemma unwind1_rmap_d_empty (n:pnat):
+      (𝐮❨n❩) ≗ ▶(𝗱n◗𝐞).
+// qed.

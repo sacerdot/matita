@@ -12,17 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
-include "ground/relocation/tr_compose_pap.ma".
-include "ground/relocation/tr_compose_pn.ma".
+include "delayed_updating/unwind3/unwind.ma".
+include "delayed_updating/syntax/path_depth.ma".
+include "ground/relocation/tr_uni_compose.ma".
+include "ground/lib/stream_tls_plus.ma".
+include "ground/lib/stream_eq_eq.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* UNWIND FOR PATH **********************************************************)
 
-(* Constructions with tr_after *********************************************)
+(* Constructions with depth *************************************************)
 
-lemma lift_path_after (p) (f1) (f2):
-      ↑[f2]↑[f1]p = ↑[f2∘f1]p.
-#p elim p -p [| * ] // #p #IH #f1 #f2
-<lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
->tr_compose_push_bi //
+lemma tls_succ_unwind (q) (p) (f):
+      ▼[p]f ≗ ⇂*[↑❘q❘]▼[p●𝗟◗q]f.
+#q @(list_ind_rcons … q) -q //
+#q * [ #n ] #IH #p #f //
+<depth_d_dx >list_cons_shift <list_append_assoc <unwind_rmap_d_dx
+/3 width=3 by tr_tls_compose_uni_sn, stream_eq_trans/
 qed.

@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( ▼[ term 46 t1 ] break term 70 t2  )"
+notation "hvbox( ▼[ term 46 f ] break term 70 p )"
   non associative with precedence 70
-  for @{ 'BlackDownTriangle $t1 $t2 }.
+  for @{ 'BlackDownTriangle $f $p }.

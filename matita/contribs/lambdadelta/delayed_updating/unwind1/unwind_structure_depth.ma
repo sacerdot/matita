@@ -22,7 +22,7 @@ include "ground/arith/nat_pred_succ.ma".
 (* Basic constructions with structure and depth ****************************)
 
 lemma unwind_rmap_structure (p) (f):
-      (⫯*[❘p❘]f) = ▼[⊗p]f.
+      (⫯*[♭p]f) = ▼[⊗p]f.
 #p elim p -p //
 * [ #n ] #p #IH #f //
 [ <unwind_rmap_A_sn //

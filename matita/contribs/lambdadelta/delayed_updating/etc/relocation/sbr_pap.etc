@@ -12,17 +12,37 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
-include "ground/relocation/tr_compose_pap.ma".
-include "ground/relocation/tr_compose_pn.ma".
+include "ground/arith/pnat_plus.ma".
+include "ground/relocation/tr_map.ma".
+include "delayed_updating/notation/functions/verticalbarat_2.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* POSITIVE APPLICATION FOR STACKS OF BASIC RELOCATION MAPS *****************)
 
-(* Constructions with tr_after *********************************************)
+rec definition sbr_pap (i: pnat) on i: tr_map → pnat.
+* #p #f cases i -i
+[ @(p)
+| #i cases p -p
+  [ lapply (sbr_pap i f) -sbr_pap -i -f
+    #i @(↑i)
+  | #p @(i+↑p)
+  ]
+]
+defined.
 
-lemma lift_path_after (p) (f1) (f2):
-      ↑[f2]↑[f1]p = ↑[f2∘f1]p.
-#p elim p -p [| * ] // #p #IH #f1 #f2
-<lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
->tr_compose_push_bi //
-qed.
+interpretation
+  "functional positive application (stack of relocation maps)"
+  'VerticalBarAt f i = (sbr_pap i f).
+
+(* Basic constructions ******************************************************)
+
+lemma sbr_pap_unfold_unit (f):
+      ∀p. p = (p⨮f)❘@❨𝟏❩.
+// qed.
+
+lemma sbr_pap_unfold_unit_succ (f):
+      ∀i. ↑(f❘@❨i❩) = (𝟏⨮f)❘@❨↑i❩.
+// qed.
+
+lemma sbr_pap_unfold_succ_bi (f):
+      ∀p,i. i+↑p = (↑p⨮f)❘@❨↑i❩.
+// qed.

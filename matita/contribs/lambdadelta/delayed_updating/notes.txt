@@ -9,3 +9,7 @@ lemma pr_pat_after_uni_tls (i2) (i1):
 
 . replace.sh . "/substitution/" "/unwind/"
 . replace.sh . ↑ ▼ 
+
+266D;MUSIC FLAT SIGN;So;0;ON;;;;;N;FLAT;;;;
+266E;MUSIC NATURAL SIGN;So;0;ON;;;;;N;NATURAL;;;;
+266F;MUSIC SHARP SIGN;Sm;0;ON;;;;;N;SHARP;;;;

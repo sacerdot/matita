@@ -12,22 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/fsubst.ma".
-include "delayed_updating/syntax/prototerm_equivalence.ma".
+include "delayed_updating/relocation/sbr_pap.ma".
+include "ground/relocation/tr_eq.ma".
 
-(* Constructions with subset_equivalence ************************************)
+(* POSITIVE APPLICATION FOR STACKS OF BASIC RELOCATION MAPS *****************)
 
-lemma subset_inclusion_fsubst_bi (t1) (t2) (u1) (u2) (p):
-      t1 ⊆ t2 → u1 ⊆ u2 → t1[⋔p←u1] ⊆ t2[⋔p←u2].
-#t1 #t2 #u1 #u2 #p #Ht #Hu #q * *
-[ #r #Hr #H0 destruct
-  /4 width=3 by ex2_intro, or_introl/
-| /4 width=2 by or_intror, conj/
-]
-qed.
+(* Main constructions with stream_eq ****************************************)
 
-lemma fsubst_eq_repl (t1) (t2) (u1) (u2) (p):
-      t1 ⇔ t2 → u1 ⇔ u2 → t1[⋔p←u1] ⇔ t2[⋔p←u2].
-#t1 #t2 #u1 #u2 #p * #H1t #H2t * #H1u #H2u
-/3 width=5 by conj, subset_inclusion_fsubst_bi/
+theorem sbr_pap_eq_repl_sn (i):
+        stream_eq_repl … (λf1,f2. f1❘@❨i❩ = f2❘@❨i❩).
+#i elim i -i [| #i #IH ]
+* [ #p1 | * [| #p1 ]] #f1
+* #p2 #f2 #H
+elim (stream_eq_inv_cons_bi … H) -H [1,8,15: |*: // ] #Hp #Hf destruct //
+<sbr_pap_unfold_unit_succ <sbr_pap_unfold_unit_succ
+/3 width=1 by eq_f/
 qed.
