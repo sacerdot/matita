@@ -20,7 +20,7 @@ include "delayed_updating/syntax/path_depth.ma".
 (* Constructions with depth *************************************************)
 
 lemma depth_structure (p):
-      ❘p❘ = ❘⊗p❘.
+      ♭p = ♭⊗p.
 #p elim p -p //
 * [ #n ] #p #IH //
 [ <structure_L_sn <depth_L_sn <depth_L_sn //

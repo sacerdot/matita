@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path.ma".
+include "delayed_updating/notation/functions/flat_1.ma".
 include "ground/arith/nat_plus.ma".
-include "ground/notation/functions/verticalbars_1.ma".
 
 (* DEPTH FOR PATH ***********************************************************)
 
@@ -33,32 +33,32 @@ match p with
 
 interpretation
   "depth (path)"
-  'VerticalBars p = (depth p).
+  'Flat p = (depth p).
 
 (* Basic constructions ******************************************************)
 
-lemma depth_empty: 𝟎 = ❘𝐞❘.
+lemma depth_empty: 𝟎 = ♭𝐞.
 // qed.
 
-lemma depth_d_sn (q) (n): ❘q❘ = ❘𝗱n◗q❘.
+lemma depth_d_sn (q) (n): ♭q = ♭(𝗱n◗q).
 // qed.
 
-lemma depth_m_sn (q): ❘q❘ = ❘𝗺◗q❘.
+lemma depth_m_sn (q): ♭q = ♭(𝗺◗q).
 // qed.
 
-lemma depth_L_sn (q): ↑❘q❘ = ❘𝗟◗q❘.
+lemma depth_L_sn (q): ↑♭q = ♭(𝗟◗q).
 // qed.
 
-lemma depth_A_sn (q): ❘q❘ = ❘𝗔◗q❘.
+lemma depth_A_sn (q): ♭q = ♭(𝗔◗q).
 // qed.
 
-lemma depth_S_sn (q): ❘q❘ = ❘𝗦◗q❘.
+lemma depth_S_sn (q): ♭q = ♭(𝗦◗q).
 // qed.
 
 (* Main constructions *******************************************************)
 
 theorem depth_append (p1) (p2):
-        ❘p2❘+❘p1❘ = ❘p1●p2❘.
+        (♭p2)+(♭p1) = ♭(p1●p2).
 #p1 elim p1 -p1 //
 * [ #n ] #p1 #IH #p2 <list_append_lcons_sn
 [ <depth_d_sn <depth_d_sn //
@@ -72,21 +72,21 @@ qed.
 (* Constructions with list_rcons ********************************************)
 
 lemma depth_d_dx (p) (n):
-      ❘p❘ = ❘p◖𝗱n❘.
+      ♭p = ♭(p◖𝗱n).
 // qed.
 
 lemma depth_m_dx (p):
-      ❘p❘ = ❘p◖𝗺❘.
+      ♭p = ♭(p◖𝗺).
 // qed.
 
 lemma depth_L_dx (p):
-      ↑❘p❘ = ❘p◖𝗟❘.
+      ↑♭p = ♭(p◖𝗟).
 // qed.
 
 lemma depth_A_dx (p):
-      ❘p❘ = ❘p◖𝗔❘.
+      ♭p = ♭(p◖𝗔).
 // qed.
 
 lemma depth_S_dx (p):
-      ❘p❘ = ❘p◖𝗦❘.
+      ♭p = ♭(p◖𝗦).
 // qed.

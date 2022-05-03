@@ -46,7 +46,7 @@ lemma unwind_append_proper_dx (p2) (p1) (f): p2 ϵ 𝐏 →
 #p2 #p1 @(path_ind_unwind … p1) -p1 //
 [ #n | #n #l #p1 |*: #p1 ] #IH #f #Hp2
 [ elim (ppc_inv_lcons … Hp2) -Hp2 #l #q #H destruct //
-| <unwind_path_d_lcons_sn <IH //
+| <unwind_path_d_lcons <IH //
 | <unwind_path_m_sn <IH //
 | <unwind_path_L_sn <IH //
 | <unwind_path_A_sn <IH //
@@ -114,9 +114,9 @@ lemma unwind_path_inv_d_sn (k) (q) (p) (f):
 #k #q #p @(path_ind_unwind … p) -p
 [| #n | #n #l #p |*: #p ] [|*: #IH ] #f
 [ <unwind_path_empty #H destruct
-| <unwind_path_d_empty_sn #H destruct -IH
+| <unwind_path_d_empty #H destruct -IH
   /2 width=5 by ex4_2_intro/
-| <unwind_path_d_lcons_sn #H
+| <unwind_path_d_lcons #H
   elim (IH … H) -IH -H #r #h #Hr #Hh #Hq #Hp destruct
   /2 width=5 by ex4_2_intro/
 | <unwind_path_m_sn #H
@@ -133,8 +133,8 @@ lemma unwind_path_inv_m_sn (q) (p) (f):
 #q #p @(path_ind_unwind … p) -p
 [| #n | #n #l #p |*: #p ] [|*: #IH ] #f
 [ <unwind_path_empty #H destruct
-| <unwind_path_d_empty_sn #H destruct
-| <unwind_path_d_lcons_sn #H /2 width=2 by/
+| <unwind_path_d_empty #H destruct
+| <unwind_path_d_lcons #H /2 width=2 by/
 | <unwind_path_m_sn #H /2 width=2 by/
 | <unwind_path_L_sn #H destruct
 | <unwind_path_A_sn #H destruct
@@ -148,8 +148,8 @@ lemma unwind_path_inv_L_sn (q) (p) (f):
 #q #p @(path_ind_unwind … p) -p
 [| #n | #n #l #p |*: #p ] [|*: #IH ] #f
 [ <unwind_path_empty #H destruct
-| <unwind_path_d_empty_sn #H destruct
-| <unwind_path_d_lcons_sn #H
+| <unwind_path_d_empty #H destruct
+| <unwind_path_d_lcons #H
   elim (IH … H) -IH -H #r1 #r2 #Hr1 #Hq #Hp destruct
   /2 width=5 by ex3_2_intro/
 | <unwind_path_m_sn #H
@@ -168,8 +168,8 @@ lemma unwind_path_inv_A_sn (q) (p) (f):
 #q #p @(path_ind_unwind … p) -p
 [| #n | #n #l #p |*: #p ] [|*: #IH ] #f
 [ <unwind_path_empty #H destruct
-| <unwind_path_d_empty_sn #H destruct
-| <unwind_path_d_lcons_sn #H
+| <unwind_path_d_empty #H destruct
+| <unwind_path_d_lcons #H
   elim (IH … H) -IH -H #r1 #r2 #Hr1 #Hq #Hp destruct
   /2 width=5 by ex3_2_intro/
 | <unwind_path_m_sn #H
@@ -188,8 +188,8 @@ lemma unwind_path_inv_S_sn (q) (p) (f):
 #q #p @(path_ind_unwind … p) -p
 [| #n | #n #l #p |*: #p ] [|*: #IH ] #f
 [ <unwind_path_empty #H destruct
-| <unwind_path_d_empty_sn #H destruct
-| <unwind_path_d_lcons_sn #H
+| <unwind_path_d_empty #H destruct
+| <unwind_path_d_lcons #H
   elim (IH … H) -IH -H #r1 #r2 #Hr1 #Hq #Hp destruct
   /2 width=5 by ex3_2_intro/
 | <unwind_path_m_sn #H

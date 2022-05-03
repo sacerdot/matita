@@ -63,11 +63,11 @@ lemma unwind_empty (A) (k) (f):
       k f (𝐞) = ▼{A}❨k, f, 𝐞❩.
 // qed.
 
-lemma unwind_d_empty_sn (A) (k) (n) (f):
+lemma unwind_d_empty (A) (k) (n) (f):
       ▼❨(λg,p. k g (𝗱(f@❨n❩)◗p)), 𝐮❨f@❨n❩❩, 𝐞❩ = ▼{A}❨k, f, 𝗱n◗𝐞❩.
 // qed.
 
-lemma unwind_d_lcons_sn (A) (k) (p) (l) (n) (f):
+lemma unwind_d_lcons (A) (k) (p) (l) (n) (f):
       ▼❨k, 𝐮❨f@❨n❩❩, l◗p❩ = ▼{A}❨k, f, 𝗱n◗l◗p❩.
 // qed.
 
@@ -93,11 +93,11 @@ lemma unwind_path_empty (f):
       (𝐞) = ▼[f]𝐞.
 // qed.
 
-lemma unwind_path_d_empty_sn (f) (n):
+lemma unwind_path_d_empty (f) (n):
       𝗱(f@❨n❩)◗𝐞 = ▼[f](𝗱n◗𝐞).
 // qed.
 
-lemma unwind_path_d_lcons_sn (f) (p) (l) (n):
+lemma unwind_path_d_lcons (f) (p) (l) (n):
       ▼[𝐮❨f@❨n❩❩](l◗p) = ▼[f](𝗱n◗l◗p).
 // qed.
 

@@ -33,9 +33,9 @@ lemma unwind_eq_repl (A) (p) (k1) (k2):
 #A #p @(path_ind_unwind … p) -p [| #n #IH | #n #l0 #q #IH |*: #q #IH ]
 #k1 #k2 #Hk #f1 #f2 #Hf
 [ <unwind_empty <unwind_empty /2 width=1 by/
-| <unwind_d_empty_sn <unwind_d_empty_sn <(tr_pap_eq_repl … Hf)
+| <unwind_d_empty <unwind_d_empty <(tr_pap_eq_repl … Hf)
   /2 width=1 by stream_eq_refl/
-| <unwind_d_lcons_sn <unwind_d_lcons_sn
+| <unwind_d_lcons <unwind_d_lcons
   /5 width=1 by tr_uni_eq_repl, tr_pap_eq_repl, eq_f/ 
 | /2 width=1 by/
 | /3 width=1 by tr_push_eq_repl/
@@ -72,7 +72,7 @@ lemma unwind_path_eq_repl (p):
 lemma unwind_path_append_sn (p) (f) (q):
       q●▼[f]p = ▼❨(λg,p. proj_path g (q●p)), f, p❩.
 #p @(path_ind_unwind … p) -p // [ #n #l #p |*: #p ] #IH #f #q
-[ <unwind_d_lcons_sn <unwind_d_lcons_sn <IH -IH //
+[ <unwind_d_lcons <unwind_d_lcons <IH -IH //
 | <unwind_m_sn <unwind_m_sn //
 | <unwind_L_sn <unwind_L_sn >unwind_lcons_alt // >unwind_append_rcons_sn //
   <IH <IH -IH <list_append_rcons_sn //
@@ -104,8 +104,8 @@ lemma unwind_path_S_sn (f) (p):
 lemma unwind_path_after_id_sn (p) (f):
       ▼[𝐢]▼[f]p = ▼[f]p.
 #p @(path_ind_unwind … p) -p // [ #n | #n #l #p | #p ] #IH #f
-[ <unwind_path_d_empty_sn //
-| <unwind_path_d_lcons_sn //
+[ <unwind_path_d_empty //
+| <unwind_path_d_lcons //
 | <unwind_path_L_sn <unwind_path_L_sn //
 ]
 qed.
