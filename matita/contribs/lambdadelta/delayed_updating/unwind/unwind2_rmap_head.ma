@@ -12,20 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
-include "ground/relocation/tr_compose_pap.ma".
-include "ground/relocation/tr_compose_pn.ma".
-include "ground/relocation/tr_compose_tls.ma".
+include "delayed_updating/unwind/unwind2_rmap_labels.ma".
+include "delayed_updating/unwind/nap.ma".
+include "delayed_updating/syntax/path_head_depth.ma".
+include "delayed_updating/syntax/path_height.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* UNWIND MAP FOR PATH ******************************************************)
 
-(* Constructions with tr_after *********************************************)
+(* Constructions with path_head *********************************************)
 
-lemma lift_path_after (p) (f1) (f2):
-      ↑[f2]↑[f1]p = ↑[f2∘f1]p.
-#p elim p -p [| * ] // [ #n ] #p #IH #f1 #f2
-[ <lift_path_d_sn <lift_path_d_sn <lift_path_d_sn //
-| <lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
-  >tr_compose_push_bi //
+lemma unwind2_rmap_head_push (f) (p) (n):
+      n + ♯(↳[n]p) = (▶[⫯f]↳[n]p)@↑❨n❩.
+#f #p elim p -p
+[ #n <path_head_empty <unwind2_rmap_labels_L <height_labels_L
+  >tr_pushs_swap <tr_nap_pushs_lt //
+| #l #p #IH #n @(nat_ind_succ … n) -n //
+  #n #_ cases l [ #m ]
+  [ <unwind2_rmap_d_sn <path_head_d_sn <height_d_sn
+    <nplus_assoc >IH -IH <tr_compose_nap //
+  | <unwind2_rmap_m_sn <path_head_m_sn <height_m_sn //
+  | <unwind2_rmap_L_sn <path_head_L_sn <height_L_sn
+    <tr_nap_push <npred_succ //
+  | <unwind2_rmap_A_sn <path_head_A_sn <height_A_sn //
+  | <unwind2_rmap_S_sn <path_head_S_sn <height_S_sn //
+  ]
 ]
 qed.

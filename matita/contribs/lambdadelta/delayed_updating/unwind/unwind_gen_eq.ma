@@ -12,33 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path_tail.ma".
-include "delayed_updating/syntax/path_depth.ma".
-include "delayed_updating/syntax/path_height.ma".
-(*
-include "ground/arith/nat_plus.ma".
-include "ground/arith/nat_pred_succ.ma".
-*)
-(* TAIL FOR PATH ************************************************************)
+include "delayed_updating/unwind/unwind_gen.ma".
+include "ground/relocation/tr_pap_eq.ma".
 
-(* Constructions with depth and height **************************************)
+(* GENERIC UNWIND FOR PATH **************************************************)
 
-axiom depth_lablels_L (n):
-      n = ♭(𝗟∗∗n).
+(* Constructions with stream_eq *********************************************)
 
-axiom height_lablels_L (n):
-      (𝟎) = ♯(𝗟∗∗n).
-
-lemma tail_depth (p) (n):
-      n + ♯(↳[n]p) = ♭↳[n]p.
-#p elim p -p // #l #p #IH
-#n @(nat_ind_succ … n) -n // #n #_
-cases l [ #m ]
-[ <tail_d_sn <height_d_sn <depth_d_sn //
-| <tail_m_sn <height_m_sn <depth_m_sn //
-| <tail_L_sn <height_L_sn <depth_L_sn
-  <nplus_succ_sn //
-| <tail_A_sn <height_A_sn <depth_A_sn //
-| <tail_S_sn <height_S_sn <depth_S_sn //
+lemma unwind_gen_eq_repl (p):
+      stream_eq_repl … (λf1,f2. ◆[f1]p = ◆[f2]p).
+#p @(path_ind_unwind … p) -p // [ #n |*: #p ] #IH #f1 #f2 #Hf
+[ <unwind_gen_d_empty <unwind_gen_d_empty
+  <(tr_pap_eq_repl … Hf) -f2 -IH //
+| <unwind_gen_L_sn <unwind_gen_L_sn
+  <(IH … Hf) -f2 -IH //
+| <unwind_gen_A_sn <unwind_gen_A_sn
+  <(IH … Hf) -f2 -IH //
+| <unwind_gen_S_sn <unwind_gen_S_sn
+  <(IH … Hf) -f2 -IH //
 ]
-qed.
+qed-.

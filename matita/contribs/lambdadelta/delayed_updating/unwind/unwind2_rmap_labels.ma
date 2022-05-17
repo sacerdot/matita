@@ -12,20 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
-include "ground/relocation/tr_compose_pap.ma".
-include "ground/relocation/tr_compose_pn.ma".
-include "ground/relocation/tr_compose_tls.ma".
+include "delayed_updating/unwind/unwind2_rmap.ma".
+include "delayed_updating/syntax/path_labels.ma".
+include "ground/relocation/tr_pushs.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* UNWIND MAP FOR PATH ******************************************************)
 
-(* Constructions with tr_after *********************************************)
+(* Constructions with labels ************************************************)
 
-lemma lift_path_after (p) (f1) (f2):
-      ↑[f2]↑[f1]p = ↑[f2∘f1]p.
-#p elim p -p [| * ] // [ #n ] #p #IH #f1 #f2
-[ <lift_path_d_sn <lift_path_d_sn <lift_path_d_sn //
-| <lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
-  >tr_compose_push_bi //
-]
+lemma unwind2_rmap_labels_L (f) (n):
+      (⫯*[n]f) = ▶[f](𝗟∗∗n).
+#f #n @(nat_ind_succ … n) -n //
+#n #IH
+<labels_succ <unwind2_rmap_L_sn //
 qed.

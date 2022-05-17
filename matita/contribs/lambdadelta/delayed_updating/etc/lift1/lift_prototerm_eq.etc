@@ -12,40 +12,46 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_prototerm_id.ma".
-include "delayed_updating/substitution/lift_uni.ma".
-include "delayed_updating/syntax/prototerm_constructors.ma".
+include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/substitution/lift_after.ma".
+include "delayed_updating/substitution/lift_prototerm.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)
 
-lemma lift_iref_bi (t1) (t2) (n):
-      t1 ⇔ t2 → 𝛗n.t1 ⇔ 𝛗n.t2.
+(* Constructions with subset_equivalence ************************************)
+
+lemma lift_term_eq_repl_sn (f1) (f2) (t):
+      f1 ≗ f2 → ↑[f1]t ⇔ ↑[f2]t.
+/3 width=1 by subset_equivalence_ext_f1_exteq, lift_path_eq_repl/
+qed.
+
+lemma lift_term_eq_repl_dx (f) (t1) (t2):
+      t1 ⇔ t2 → ↑[f]t1 ⇔ ↑[f]t2.
 /2 width=1 by subset_equivalence_ext_f1_bi/
 qed.
 
-lemma lift_iref_sn (f) (t:prototerm) (n:pnat):
-      (𝛗f@❨n❩.↑[⇂*[n]f]t) ⊆ ↑[f](𝛗n.t).
-#f #t #n #p * #q * #r #Hr #H1 #H2 destruct
-@(ex2_intro … (𝗱n◗𝗺◗r))
-/2 width=1 by in_comp_iref/
-qed-.
-
-lemma lift_iref_dx (f) (t) (n:pnat):
-      ↑[f](𝛗n.t) ⊆ 𝛗f@❨n❩.↑[⇂*[n]f]t.
-#f #t #n #p * #q #Hq #H0 destruct
-elim (in_comp_inv_iref … Hq) -Hq #p #H0 #Hp destruct
-/3 width=1 by in_comp_iref, in_comp_lift_bi/
-qed-.
-
-lemma lift_iref (f) (t) (n:pnat):
-      (𝛗f@❨n❩.↑[⇂*[n]f]t) ⇔ ↑[f](𝛗n.t).
-/3 width=1 by conj, lift_iref_sn, lift_iref_dx/
+lemma lift_term_after (f1) (f2) (t):
+      ↑[f2]↑[f1]t ⇔ ↑[f2∘f1]t.
+#f1 #f2 #t @subset_eq_trans
+[
+| @subset_inclusion_ext_f1_compose
+| @subset_equivalence_ext_f1_exteq /2 width=5/
+]
 qed.
 
-lemma lift_iref_uni (t) (m) (n):
-      (𝛗(n+m).t) ⇔ ↑[𝐮❨m❩](𝛗n.t).
-#t #m #n
-@(subset_eq_trans … (lift_iref …))
-<tr_uni_pap >nsucc_pnpred <tr_tls_succ_uni
-/3 width=1 by lift_iref_bi, lift_term_id/
+lemma lift_term_id_sn (t):
+      t ⊆ ↑[𝐢]t.
+#t #p #Hp
+>(lift_path_id p)
+/2 width=1 by in_comp_lift_bi/
+qed-.
+
+lemma lift_term_id_dx (t):
+      ↑[𝐢]t ⊆ t.
+#t #p * #q #Hq #H destruct //
+qed-.
+
+lemma lift_term_id (t):
+      t ⇔ ↑[𝐢]t.
+/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/
 qed.

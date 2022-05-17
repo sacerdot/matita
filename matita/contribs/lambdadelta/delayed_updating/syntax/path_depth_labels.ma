@@ -12,17 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_id.ma".
-include "ground/relocation/tr_uni_pap.ma".
-include "ground/relocation/tr_uni_tls.ma".
+include "delayed_updating/syntax/path_depth.ma".
+include "delayed_updating/syntax/path_labels.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* DEPTH FOR PATH ***********************************************************)
 
-(* Constructions with tr_uni ***********************************************)
+(* Constructions with labels ************************************************)
 
-lemma lift_path_d_sn_uni (p) (m) (n):
-      (𝗱(n+m)◗p) = ↑[𝐮❨m❩](𝗱(n)◗p).
-#p #m #n
-<lift_path_d_sn <tr_uni_pap >nsucc_pnpred
-<tr_tls_succ_uni //
+lemma depth_labels_L (n):
+      n = ♭(𝗟∗∗n).
+#n @(nat_ind_succ … n) -n //
+#n #IH <labels_succ <depth_L_sn //
 qed.

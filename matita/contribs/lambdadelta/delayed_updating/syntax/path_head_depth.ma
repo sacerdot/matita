@@ -12,20 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
-include "ground/relocation/tr_compose_pap.ma".
-include "ground/relocation/tr_compose_pn.ma".
-include "ground/relocation/tr_compose_tls.ma".
+include "delayed_updating/syntax/path_head.ma".
+include "delayed_updating/syntax/path_depth_labels.ma".
+include "delayed_updating/syntax/path_height_labels.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* HEAD FOR PATH ************************************************************)
 
-(* Constructions with tr_after *********************************************)
+(* Constructions with depth and height **************************************)
 
-lemma lift_path_after (p) (f1) (f2):
-      ↑[f2]↑[f1]p = ↑[f2∘f1]p.
-#p elim p -p [| * ] // [ #n ] #p #IH #f1 #f2
-[ <lift_path_d_sn <lift_path_d_sn <lift_path_d_sn //
-| <lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
-  >tr_compose_push_bi //
+lemma path_head_depth (p) (n):
+      n + ♯(↳[n]p) = ♭↳[n]p.
+#p elim p -p // #l #p #IH
+#n @(nat_ind_succ … n) -n // #n #_
+cases l [ #m ]
+[ <path_head_d_sn <height_d_sn <depth_d_sn //
+| <path_head_m_sn <height_m_sn <depth_m_sn //
+| <path_head_L_sn <height_L_sn <depth_L_sn
+  <nplus_succ_sn //
+| <path_head_A_sn <height_A_sn <depth_A_sn //
+| <path_head_S_sn <height_S_sn <depth_S_sn //
 ]
 qed.
