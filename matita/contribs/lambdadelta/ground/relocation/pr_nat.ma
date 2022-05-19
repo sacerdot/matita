@@ -19,7 +19,7 @@ include "ground/relocation/pr_pat.ma".
 (* NON-NEGATIVE APPLICATION FOR PARTIAL RELOCATION MAPS *********************)
 
 definition pr_nat: relation3 pr_map nat nat ≝
-           λf,l1,l2. @❨↑l1,f❩ ≘ ↑l2.
+           λf,l1,l2. ＠⧣❨↑l1,f❩ ≘ ↑l2.
 
 interpretation
   "relational non-negative application (partial relocation maps)"
@@ -46,7 +46,7 @@ lemma pr_nat_next (f) (l1) (l2) (g) (k2):
 qed.
 
 lemma pr_nat_pred_bi (f) (i1) (i2):
-      @❨i1,f❩ ≘ i2 → @↑❨↓i1,f❩ ≘ ↓i2.
+      ＠⧣❨i1,f❩ ≘ i2 → @↑❨↓i1,f❩ ≘ ↓i2.
 #f #i1 #i2
 >(npsucc_pred i1) in ⊢ (%→?); >(npsucc_pred i2) in ⊢ (%→?);
 //

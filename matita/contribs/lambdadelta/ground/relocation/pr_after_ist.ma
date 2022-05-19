@@ -47,8 +47,8 @@ qed-.
 
 (*** after_at1_fwd *)
 lemma pr_after_des_ist_pat:
-      ∀f1,i1,i2. @❨i1, f1❩ ≘ i2 → ∀f2. 𝐓❨f2❩ → ∀f. f2 ⊚ f1 ≘ f →
-      ∃∃i. @❨i2, f2❩ ≘ i & @❨i1, f❩ ≘ i.
+      ∀f1,i1,i2. ＠⧣❨i1, f1❩ ≘ i2 → ∀f2. 𝐓❨f2❩ → ∀f. f2 ⊚ f1 ≘ f →
+      ∃∃i. ＠⧣❨i2, f2❩ ≘ i & ＠⧣❨i1, f❩ ≘ i.
 #f1 #i1 #i2 #Hf1 #f2 #Hf2 #f #Hf elim (Hf2 i2) -Hf2
 /3 width=8 by pr_after_des_pat, ex2_intro/
 qed-.

@@ -92,7 +92,7 @@ lemma lift_path_lcons (f) (p) (l):
 qed.
 
 lemma lift_path_d_sn (f) (p) (n):
-      (𝗱(f@❨n❩)◗↑[⇂*[n]f]p) = ↑[f](𝗱n◗p).
+      (𝗱(f＠⧣❨n❩)◗↑[⇂*[n]f]p) = ↑[f](𝗱n◗p).
 // qed.
 
 lemma lift_path_m_sn (f) (p):

@@ -28,7 +28,7 @@ match p with
 [ list_empty     ⇒ k f (𝐞)
 | list_lcons l q ⇒
   match l with
-  [ label_d n ⇒ lift_gen (A) (λg,p. k g (𝗱(f@❨n❩)◗p)) (⇂*[n]f) q
+  [ label_d n ⇒ lift_gen (A) (λg,p. k g (𝗱(f＠⧣❨n❩)◗p)) (⇂*[n]f) q
   | label_m   ⇒ lift_gen (A) (λg,p. k g (𝗺◗p)) f q
   | label_L   ⇒ lift_gen (A) (λg,p. k g (𝗟◗p)) (⫯f) q
   | label_A   ⇒ lift_gen (A) (λg,p. k g (𝗔◗p)) f q
@@ -61,7 +61,7 @@ lemma lift_empty (A) (k) (f):
 // qed.
 
 lemma lift_d_sn (A) (k) (p) (n) (f):
-      ↑❨(λg,p. k g (𝗱(f@❨n❩)◗p)), ⇂*[n]f, p❩ = ↑{A}❨k, f, 𝗱n◗p❩.
+      ↑❨(λg,p. k g (𝗱(f＠⧣❨n❩)◗p)), ⇂*[n]f, p❩ = ↑{A}❨k, f, 𝗱n◗p❩.
 // qed.
 
 lemma lift_m_sn (A) (k) (p) (f):
@@ -146,5 +146,5 @@ lemma lift_rmap_S_dx (f) (p):
 // qed.
 
 lemma lift_rmap_pap_d_dx (f) (p) (n) (m):
-      ↑[p]f@❨m+n❩ = ↑[p◖𝗱n]f@❨m❩+↑[p]f@❨n❩.
+      ↑[p]f＠⧣❨m+n❩ = ↑[p◖𝗱n]f＠⧣❨m❩+↑[p]f＠⧣❨n❩.
 // qed.

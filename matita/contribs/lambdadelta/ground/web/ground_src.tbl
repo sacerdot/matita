@@ -22,7 +22,7 @@ table {
   class "green"
   [ { "relocation maps" * } {
       [ { "finite relocation with pairs" * } {
-          [ "fr2_nat ( @❨?,?❩ ≘ ? )" "fr2_nat_nat" * ]
+          [ "fr2_nat ( ＠⧣❨?,?❩ ≘ ? )" "fr2_nat_nat" * ]
           [ "fr2_minus ( ? ▭ ? ≘ ? )" * ]
           [ "fr2_append ( ?●? )" * ]
           [ "fr2_plus ( ?+? )" * ]
@@ -33,7 +33,7 @@ table {
           [ "tr_uni ( 𝐮❨?❩ )" "tr_uni_eq" "tr_uni_hdtl" "tr_uni_tls" "tr_uni_pap" "tr_uni_compose" * ]
           [ "tr_id ( 𝐢 ) " "tr_id_hdtl" "tr_id_pushs" "tr_id_tls" "tr_id_pap" "tr_id_compose" * ]
           [ "tr_compose ( ?∘? )" "tr_compose_eq" "tr_compose_tls" "tr_compose_pn" "tr_compose_pushs" "tr_compose_pap" "tr_compose_compose" * ]
-          [ "tr_pap ( ?@❨?❩ )" "tr_pap_eq" "tr_pap_tls" "tr_pap_pat" "tr_pap_pn" "tr_pap_pushs" "tr_pap_pap" * ]
+          [ "tr_pap ( ?＠⧣❨?❩ )" "tr_pap_eq" "tr_pap_tls" "tr_pap_pat" "tr_pap_pn" "tr_pap_pushs" "tr_pap_pap" * ]
           [ "tr_pushs ( ⫯*[?]? )" * ]
           [ "tr_pn ( ⫯? ) ( ↑? )" "tr_pn_eq" "tr_pn_hdtl" "tr_pn_tls" * ]
           [ "tr_map ( 𝐭❨?❩ )" "tr_eq" "tr_nexts" "tr_pat" "tr_ist" * ]
@@ -53,7 +53,7 @@ table {
           [ "pr_isu ( 𝐔❨?❩ )" "pr_isu_tl" "pr_isu_uni" * ]
           [ "pr_isi ( 𝐈❨?❩ )" "pr_isi_eq" "pr_isi_tl" "pr_isi_pushs" "pr_isi_tls" "pr_isi_id" "pr_isi_uni" "pr_isi_pat" "pr_isi_nat" * ]
           [ "pr_nat ( @↑❨?,?❩ ≘ ? )" "pr_nat_uni" "pr_nat_basic" "pr_nat_nat" * ]
-          [ "pr_pat ( @❨?,?❩ ≘ ? )" "pr_pat_lt" "pr_pat_eq" "pr_pat_tls" "pr_pat_id" "pr_pat_uni" "pr_pat_basic" "pr_pat_pat" "pr_pat_pat_id" * ]
+          [ "pr_pat ( ＠⧣❨?,?❩ ≘ ? )" "pr_pat_lt" "pr_pat_eq" "pr_pat_tls" "pr_pat_id" "pr_pat_uni" "pr_pat_basic" "pr_pat_pat" "pr_pat_pat_id" * ]
           [ "pr_basic ( 𝐛❨?,?❩ )" * ]
           [ "pr_uni ( 𝐮❨?❩ )" "pr_uni_eq" * ]
           [ "pr_id ( 𝐢 ) " "pr_id_eq" * ]
@@ -71,10 +71,10 @@ table {
             "" "" "nstream_isid" "nstream_id ( 𝐢 )" ""
             "" "" "" ""
             "" "" "" "nstream_sor"
-            "" "nstream_istot ( ?@❨?❩ )" "nstream_after ( ? ∘ ? )" "nstream_coafter ( ? ~∘ ? )"
+            "" "nstream_istot ( ?＠⧣❨?❩ )" "nstream_after ( ? ∘ ? )" "nstream_coafter ( ? ~∘ ? )"
             "nstream_basic" ""
           * ]
-          [ "trace ( ∥?∥ )" "trace_at ( @❨?,?❩ ≘ ? )" "trace_after ( ? ⊚ ? ≘ ? )" "trace_isid ( 𝐈❨?❩ )" "trace_isun ( 𝐔❨?❩ )"
+          [ "trace ( ∥?∥ )" "trace_at ( ＠⧣❨?,?❩ ≘ ? )" "trace_after ( ? ⊚ ? ≘ ? )" "trace_isid ( 𝐈❨?❩ )" "trace_isun ( 𝐔❨?❩ )"
             "trace_sle ( ? ⊆ ? )" "trace_sor ( ? ⋓ ? ≘ ? )" "trace_snot ( ∁ ? )"
           * ]
         }

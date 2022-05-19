@@ -23,7 +23,7 @@ include "ground/lib/stream_eq_eq.ma".
 
 lemma unwind_rmap_pap_le (f1) (f2) (p) (m:pnat) (l:nat):
       ninj (m+⧣p+l) = ❘p❘ →
-      (▼[p]f1)@❨m❩ = (▼[p]f2)@❨m❩.
+      (▼[p]f1)＠⧣❨m❩ = (▼[p]f2)＠⧣❨m❩.
 #f1 #f2 #p @(list_ind_rcons … p) -p
 [ #m #l <depth_empty #H0 destruct
 | #p * [ #n ] #IH #m #l
@@ -43,7 +43,7 @@ lemma unwind_rmap_pap_le (f1) (f2) (p) (m:pnat) (l:nat):
 qed.
 
 lemma unwind_rmap_pap_gt (f) (p) (m):
-      f@❨m+⧣p❩+❘p❘ = (▼[p]f)@❨m+❘p❘❩.
+      f＠⧣❨m+⧣p❩+❘p❘ = (▼[p]f)＠⧣❨m+❘p❘❩.
 #f #p @(list_ind_rcons … p) -p [ // ]
 #p * [ #n ] #IH #m
 [ <update_d_dx <depth_d_dx

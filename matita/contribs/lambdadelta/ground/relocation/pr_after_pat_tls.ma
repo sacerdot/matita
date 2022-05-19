@@ -23,7 +23,7 @@ include "ground/relocation/pr_after.ma".
 (* Note: this requires ↑ on first n *)
 (*** after_tls *)
 lemma pr_after_tls_sn_tls (n):
-      ∀f1,f2,f. @❨𝟏, f1❩ ≘ ↑n →
+      ∀f1,f2,f. ＠⧣❨𝟏, f1❩ ≘ ↑n →
       f1 ⊚ f2 ≘ f → ⫰*[n]f1 ⊚ f2 ≘ ⫰*[n]f.
 #n @(nat_ind_succ … n) -n //
 #n #IH #f1 #f2 #f #Hf1 #Hf

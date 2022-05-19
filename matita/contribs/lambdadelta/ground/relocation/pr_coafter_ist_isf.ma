@@ -28,7 +28,7 @@ definition H_pr_coafter_des_ist_isf: predicate pr_map ≝
 
 (*** coafter_isfin2_fwd_O_aux *)
 fact pr_coafter_des_ist_isf_unit_aux:
-     ∀f1. @❨𝟏, f1❩ ≘ 𝟏 → H_pr_coafter_des_ist_isf f1.
+     ∀f1. ＠⧣❨𝟏, f1❩ ≘ 𝟏 → H_pr_coafter_des_ist_isf f1.
 #f1 #Hf1 #f2 #H
 generalize in match Hf1; generalize in match f1; -f1
 @(pr_isf_ind … H) -f2
@@ -44,8 +44,8 @@ qed-.
 
 (*** coafter_isfin2_fwd_aux *)
 fact pr_coafter_des_ist_isf_aux:
-     (∀f1. @❨𝟏, f1❩ ≘ 𝟏 → H_pr_coafter_des_ist_isf f1) →
-     ∀i2,f1. @❨𝟏, f1❩ ≘ i2 → H_pr_coafter_des_ist_isf f1.
+     (∀f1. ＠⧣❨𝟏, f1❩ ≘ 𝟏 → H_pr_coafter_des_ist_isf f1) →
+     ∀i2,f1. ＠⧣❨𝟏, f1❩ ≘ i2 → H_pr_coafter_des_ist_isf f1.
 #H0 #i2 elim i2 -i2 /2 width=1 by/ -H0
 #i2 #IH #f1 #H1f1 #f2 #Hf2 #H2f1 #f #Hf
 elim (pr_pat_inv_unit_succ … H1f1) -H1f1 [ |*: // ] #g1 #Hg1 #H1

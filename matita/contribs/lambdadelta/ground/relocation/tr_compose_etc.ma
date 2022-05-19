@@ -44,7 +44,7 @@ include "ground/relocation/tr_pap.ma".
 (*** after_apply *)
 lemma tr_after_pap:
       ∀p1,f2,f1,f. 𝐭❨⇂*[ninj p1]f2❩ ⊚ 𝐭❨f1❩ ≘ 𝐭❨f❩ →
-      (𝐭❨f2❩) ⊚ 𝐭❨p1⨮f1❩ ≘ 𝐭❨f2@❨p1❩⨮f❩.
+      (𝐭❨f2❩) ⊚ 𝐭❨p1⨮f1❩ ≘ 𝐭❨f2＠⧣❨p1❩⨮f❩.
 #p1 elim p1 -p1
 [ * /2 width=1 by tr_after_push_dx/
 | #p1 #IH * #p2 #f2 >nsucc_inj <stream_tls_swap
@@ -113,7 +113,7 @@ lemma after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 ∘ f1 ≐ f.
 
 (* Forward lemmas on after (specific) *****************************************)
 
-lemma after_fwd_hd: ∀f2,f1,f,p1,p. f2 ⊚ p1⨮f1 ≘ p⨮f → f2@❨p1❩ = p.
+lemma after_fwd_hd: ∀f2,f1,f,p1,p. f2 ⊚ p1⨮f1 ≘ p⨮f → f2＠⧣❨p1❩ = p.
 #f2 #f1 #f #p1 #p #H lapply (gr_after_des_pat ? p1 (𝟏) … H) -H [4:|*: // ]
 /3 width=2 by at_inv_O1, sym_eq/
 qed-.
@@ -128,6 +128,6 @@ lemma after_fwd_tls: ∀f,f1,p1,f2,p2,p. p2⨮f2 ⊚ p1⨮f1 ≘ p⨮f →
 qed-.
 
 lemma after_inv_apply: ∀f2,f1,f,p2,p1,p. p2⨮f2 ⊚ p1⨮f1 ≘ p⨮f →
-                       (p2⨮f2)@❨p1❩ = p ∧ (⫰*[↓p1]f2) ⊚ f1 ≘ f.
+                       (p2⨮f2)＠⧣❨p1❩ = p ∧ (⫰*[↓p1]f2) ⊚ f1 ≘ f.
 /3 width=3 by after_fwd_tls, after_fwd_hd, conj/ qed-.
 

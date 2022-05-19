@@ -12,13 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/tr_pap_pat.ma".
+(* GROUND NOTATION **********************************************************)
 
-(* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
-
-(* Main inversions **********************************************************)
-
-(*** apply_inj *)
-theorem tr_pap_inj (f):
-        ∀i1,i2,j. f＠⧣❨i1❩ = j → f＠⧣❨i2❩ = j → i1 = i2.
-/2 width=4 by pr_pat_inj/ qed-.
+notation "hvbox( ＠⧣❨ term 46 T1 , break term 46 f ❩ ≘ break term 46 T2 )"
+  non associative with precedence 45
+  for @{ 'RAtSharp $T1 $f $T2 }.

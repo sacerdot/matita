@@ -25,7 +25,7 @@ match p with
   match l with
   [ label_d n ⇒
     match q with
-    [ list_empty     ⇒ 𝗱((f n)@❨n❩)◗(unwind_gen f q)
+    [ list_empty     ⇒ 𝗱((f n)＠⧣❨n❩)◗(unwind_gen f q)
     | list_lcons _ _ ⇒ unwind_gen f q
     ]
   | label_m   ⇒ unwind_gen f q
@@ -46,7 +46,7 @@ lemma unwind_gen_empty (f):
 // qed.
 
 lemma unwind_gen_d_empty (f) (n):
-      𝗱((f n)@❨n❩)◗𝐞 = ◆[f](𝗱n◗𝐞).
+      𝗱((f n)＠⧣❨n❩)◗𝐞 = ◆[f](𝗱n◗𝐞).
 // qed.
 
 lemma unwind_gen_d_lcons (f) (p) (l) (n):

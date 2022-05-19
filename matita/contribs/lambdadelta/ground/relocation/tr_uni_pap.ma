@@ -21,11 +21,11 @@ include "ground/arith/nat_rplus_succ.ma".
 (* Coonstructions with tr_pap ***********************************************)
 
 lemma tr_uni_pap_unit (n):
-      ↑n = 𝐮❨n❩@❨𝟏❩.
+      ↑n = 𝐮❨n❩＠⧣❨𝟏❩.
 // qed.
 
 lemma tr_uni_pap (n) (p):
-      p + n = 𝐮❨n❩@❨p❩.
+      p + n = 𝐮❨n❩＠⧣❨p❩.
 #n @(nat_ind_succ … n) -n //
 #n #IH * [| #p ] //
 qed.

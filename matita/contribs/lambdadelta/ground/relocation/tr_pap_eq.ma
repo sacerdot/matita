@@ -21,7 +21,7 @@ include "ground/relocation/tr_pap.ma".
 
 (*** apply_eq_repl *)
 theorem tr_pap_eq_repl (i):
-        stream_eq_repl … (λf1,f2. f1@❨i❩ = f2@❨i❩).
+        stream_eq_repl … (λf1,f2. f1＠⧣❨i❩ = f2＠⧣❨i❩).
 #i elim i -i [2: #i #IH ] * #p1 #f1 * #p2 #f2 #H
 elim (stream_eq_inv_cons_bi … H) -H [1,8: |*: // ] #Hp #Hf //
 <tr_pap_succ <tr_pap_succ /3 width=1 by eq_f2/
@@ -30,7 +30,7 @@ qed.
 (* Main inversions with stream_eq *******************************************)
 
 corec theorem nstream_eq_inv_ext:
-              ∀f1,f2. (∀i. f1@❨i❩ = f2@❨i❩) → f1 ≗ f2.
+              ∀f1,f2. (∀i. f1＠⧣❨i❩ = f2＠⧣❨i❩) → f1 ≗ f2.
 * #p1 #f1 * #p2 #f2 #Hf @stream_eq_cons
 [ @(Hf (𝟏))
 | @nstream_eq_inv_ext -nstream_eq_inv_ext #i

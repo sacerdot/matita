@@ -19,7 +19,7 @@ include "ground/relocation/pr_pat.ma".
 
 (*** istot *)
 definition pr_ist: predicate pr_map ≝
-           λf. ∀i. ∃j. @❨i,f❩ ≘ j.
+           λf. ∀i. ∃j. ＠⧣❨i,f❩ ≘ j.
 
 interpretation
   "totality condition (partial relocation maps)"

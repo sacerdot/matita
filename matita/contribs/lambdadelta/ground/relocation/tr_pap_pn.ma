@@ -20,13 +20,13 @@ include "ground/relocation/tr_pap.ma".
 (* Constructions with tr_push ***********************************************)
 
 lemma tr_pap_push (f):
-      ∀i. ↑(f@❨i❩) = (⫯f)@❨↑i❩.
+      ∀i. ↑(f＠⧣❨i❩) = (⫯f)＠⧣❨↑i❩.
 // qed.
 
 (* Constructions with tr_next ***********************************************)
 
 (*** apply_S2 *)
 lemma tr_pap_next (f):
-      ∀i. ↑(f@❨i❩) = (↑f)@❨i❩.
+      ∀i. ↑(f＠⧣❨i❩) = (↑f)＠⧣❨i❩.
 * #p #f * //
 qed.

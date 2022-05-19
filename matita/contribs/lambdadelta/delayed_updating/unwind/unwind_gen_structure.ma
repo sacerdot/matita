@@ -74,7 +74,7 @@ qed-.
 (* Advanced constructions with list_rcons ***********************************)
 
 lemma unwind_gen_d_empty_dx (n) (p) (f):
-      (⊗p)◖𝗱((f n)@❨n❩) = ◆[f](p◖𝗱n).
+      (⊗p)◖𝗱((f n)＠⧣❨n❩) = ◆[f](p◖𝗱n).
 #n #p #f <unwind_gen_append_proper_dx // 
 qed.
 
@@ -110,7 +110,7 @@ qed-.
 
 lemma unwind_gen_inv_d_sn (k) (q) (p) (f):
       (𝗱k◗q) = ◆[f]p →
-      ∃∃r,h. 𝐞 = ⊗r & (f h)@❨h❩ = k & 𝐞 = q & r◖𝗱h = p.
+      ∃∃r,h. 𝐞 = ⊗r & (f h)＠⧣❨h❩ = k & 𝐞 = q & r◖𝗱h = p.
 #k #q #p @(path_ind_unwind … p) -p
 [| #n | #n #l #p |*: #p ] [|*: #IH ] #f
 [ <unwind_gen_empty #H destruct

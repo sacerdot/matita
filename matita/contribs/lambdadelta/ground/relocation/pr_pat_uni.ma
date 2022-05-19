@@ -22,7 +22,7 @@ include "ground/relocation/pr_pat_pat_id.ma".
 
 (*** at_uni *)
 lemma pr_pat_uni (n) (i):
-      @❨i,𝐮❨n❩❩ ≘ i+n.
+      ＠⧣❨i,𝐮❨n❩❩ ≘ i+n.
 #n @(nat_ind_succ … n) -n
 /2 width=5 by pr_pat_next/
 qed.
@@ -31,5 +31,5 @@ qed.
 
 (*** at_inv_uni *)
 lemma pr_pat_inv_uni (n) (i) (j):
-      @❨i,𝐮❨n❩❩ ≘ j → j = i+n.
+      ＠⧣❨i,𝐮❨n❩❩ ≘ j → j = i+n.
 /2 width=4 by pr_pat_mono/ qed-.

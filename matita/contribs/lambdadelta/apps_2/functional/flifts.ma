@@ -21,7 +21,7 @@ include "static_2/relocation/lifts.ma".
 rec definition flifts f U on U ≝ match U with
 [ TAtom I     ⇒ match I with
   [ Sort _ ⇒ U
-  | LRef i ⇒ #(f@❨i❩)
+  | LRef i ⇒ #(f＠⧣❨i❩)
   | GRef _ ⇒ U
   ]
 | TPair I V T ⇒ match I with
@@ -38,7 +38,7 @@ interpretation "uniform functional relocation (term)"
 
 (* Basic properties *********************************************************)
 
-lemma flifts_lref (f) (i): ↑*[f](#i) = #(f@❨i❩).
+lemma flifts_lref (f) (i): ↑*[f](#i) = #(f＠⧣❨i❩).
 // qed.
 
 lemma flifts_bind (f) (p) (I) (V) (T): ↑*[f](ⓑ[p,I]V.T) = ⓑ[p,I]↑*[f]V.↑*[⫯f]T.

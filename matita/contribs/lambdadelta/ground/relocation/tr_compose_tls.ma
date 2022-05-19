@@ -22,7 +22,7 @@ include "ground/arith/nat_rplus_pplus.ma".
 (* Advanced constructions with stream_tls ***********************************)
 
 lemma tr_compose_tls (p) (f1) (f2):
-      (⇂*[f1@❨p❩]f2)∘(⇂*[p]f1) = ⇂*[p](f2∘f1).
+      (⇂*[f1＠⧣❨p❩]f2)∘(⇂*[p]f1) = ⇂*[p](f2∘f1).
 #p elim p -p [| #p #IH ] * #q1 #f1 #f2 //
 <tr_compose_unfold <tr_pap_succ
 >nsucc_inj <stream_tls_succ_lcons <stream_tls_succ_lcons

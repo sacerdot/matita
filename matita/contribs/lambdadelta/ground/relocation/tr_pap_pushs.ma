@@ -21,7 +21,7 @@ include "ground/relocation/tr_pap_pn.ma".
 (* Constructions with tr_pushs **********************************************)
 
 lemma tr_pap_pushs_le (n) (p) (f):
-      p < ↑n → p = (⫯*[n]f)@❨p❩.
+      p < ↑n → p = (⫯*[n]f)＠⧣❨p❩.
 #n @(nat_ind_succ … n) -n
 [ #p #f #H0
   elim (plt_inv_unit_dx … H0)

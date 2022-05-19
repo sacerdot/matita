@@ -418,12 +418,12 @@ qed-.
 
 (* Properties with application **********************************************)
 
-lemma drops_tls_at: ∀f,i1,i2. @❨i1,f❩ ≘ i2 →
+lemma drops_tls_at: ∀f,i1,i2. ＠⧣❨i1,f❩ ≘ i2 →
                     ∀b,L1,L2. ⇩*[b,⫰*[i2]f] L1 ≘ L2 →
                     ⇩*[b,⫯⫰*[↑i2]f] L1 ≘ L2.
 /3 width=3 by drops_eq_repl_fwd, pr_pat_inv_succ_dx_tls/ qed-.
 
-lemma drops_split_trans_bind2: ∀b,f,I,L,K0. ⇩*[b,f] L ≘ K0.ⓘ[I] → ∀i. @❨O,f❩ ≘ i →
+lemma drops_split_trans_bind2: ∀b,f,I,L,K0. ⇩*[b,f] L ≘ K0.ⓘ[I] → ∀i. ＠⧣❨O,f❩ ≘ i →
                                ∃∃J,K. ⇩[i]L ≘ K.ⓘ[J] & ⇩*[b,⫰*[↑i]f] K ≘ K0 & ⇧*[⫰*[↑i]f] I ≘ J.
 #b #f #I #L #K0 #H #i #Hf
 elim (drops_split_trans … H) -H [ |5: @(pr_after_nat_uni … Hf) |2,3: skip ] /2 width=1 by pr_after_isi_dx/ #Y #HLY #H

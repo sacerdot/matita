@@ -21,7 +21,7 @@ include "ground/relocation/tr_pap_tls.ma".
 
 (*** compose_apply *)
 lemma tr_compose_pap (i) (f1) (f2):
-      f2@❨f1@❨i❩❩ = (f2∘f1)@❨i❩.
+      f2＠⧣❨f1＠⧣❨i❩❩ = (f2∘f1)＠⧣❨i❩.
 #i elim i -i
 [ * #p1 #f1 #f2
   <tr_compose_unfold <tr_pap_unit <tr_pap_unit //

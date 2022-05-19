@@ -13,14 +13,14 @@ lemma nlt_npsucc_bi (n1) (n2):
 qed.
 
 definition tr_nap (f) (l:nat): nat ≝
-           ↓(f@❨↑l❩).
+           ↓(f＠⧣❨↑l❩).
 
 interpretation
   "functional non-negative application (total relocation maps)"
   'ApplySucc f l = (tr_nap f l).
 
 lemma tr_nap_unfold (f) (l):
-      ↓(f@❨↑l❩) = f@↑❨l❩.
+      ↓(f＠⧣❨↑l❩) = f@↑❨l❩.
 // qed.
 
 lemma tr_compose_nap (f2) (f1) (l):

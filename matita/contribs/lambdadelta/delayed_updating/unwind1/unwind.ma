@@ -29,8 +29,8 @@ match p with
   match l with
   [ label_d n ⇒
     match q with
-    [ list_empty     ⇒ unwind_gen (A) (λg,p. k g (𝗱(f@❨n❩)◗p)) (𝐮❨f@❨n❩❩) q
-    | list_lcons _ _ ⇒ unwind_gen (A) k (𝐮❨f@❨n❩❩) q
+    [ list_empty     ⇒ unwind_gen (A) (λg,p. k g (𝗱(f＠⧣❨n❩)◗p)) (𝐮❨f＠⧣❨n❩❩) q
+    | list_lcons _ _ ⇒ unwind_gen (A) k (𝐮❨f＠⧣❨n❩❩) q
     ]
   | label_m   ⇒ unwind_gen (A) k f q
   | label_L   ⇒ unwind_gen (A) (λg,p. k g (𝗟◗p)) (⫯f) q
@@ -64,11 +64,11 @@ lemma unwind_empty (A) (k) (f):
 // qed.
 
 lemma unwind_d_empty (A) (k) (n) (f):
-      ▼❨(λg,p. k g (𝗱(f@❨n❩)◗p)), 𝐮❨f@❨n❩❩, 𝐞❩ = ▼{A}❨k, f, 𝗱n◗𝐞❩.
+      ▼❨(λg,p. k g (𝗱(f＠⧣❨n❩)◗p)), 𝐮❨f＠⧣❨n❩❩, 𝐞❩ = ▼{A}❨k, f, 𝗱n◗𝐞❩.
 // qed.
 
 lemma unwind_d_lcons (A) (k) (p) (l) (n) (f):
-      ▼❨k, 𝐮❨f@❨n❩❩, l◗p❩ = ▼{A}❨k, f, 𝗱n◗l◗p❩.
+      ▼❨k, 𝐮❨f＠⧣❨n❩❩, l◗p❩ = ▼{A}❨k, f, 𝗱n◗l◗p❩.
 // qed.
 
 lemma unwind_m_sn (A) (k) (p) (f):
@@ -94,11 +94,11 @@ lemma unwind_path_empty (f):
 // qed.
 
 lemma unwind_path_d_empty (f) (n):
-      𝗱(f@❨n❩)◗𝐞 = ▼[f](𝗱n◗𝐞).
+      𝗱(f＠⧣❨n❩)◗𝐞 = ▼[f](𝗱n◗𝐞).
 // qed.
 
 lemma unwind_path_d_lcons (f) (p) (l) (n):
-      ▼[𝐮❨f@❨n❩❩](l◗p) = ▼[f](𝗱n◗l◗p).
+      ▼[𝐮❨f＠⧣❨n❩❩](l◗p) = ▼[f](𝗱n◗l◗p).
 // qed.
 
 lemma unwind_path_m_sn (f) (p):
@@ -112,7 +112,7 @@ lemma unwind_rmap_empty (f):
 // qed.
 
 lemma unwind_rmap_d_sn (f) (p) (n):
-      ▼[p](𝐮❨f@❨n❩❩) = ▼[𝗱n◗p]f.
+      ▼[p](𝐮❨f＠⧣❨n❩❩) = ▼[𝗱n◗p]f.
 #f * // qed.
 
 lemma unwind_rmap_m_sn (f) (p):
@@ -145,7 +145,7 @@ qed.
 (* Advanced constructions with proj_rmap and path_rcons *********************)
 
 lemma unwind_rmap_d_dx (f) (p) (n):
-      (𝐮❨(▼[p]f)@❨n❩❩) = ▼[p◖𝗱n]f.
+      (𝐮❨(▼[p]f)＠⧣❨n❩❩) = ▼[p◖𝗱n]f.
 // qed.
 
 lemma unwind_rmap_m_dx (f) (p):
@@ -165,7 +165,7 @@ lemma unwind_rmap_S_dx (f) (p):
 // qed.
 
 lemma unwind_rmap_pap_d_dx (f) (p) (n) (m):
-      ▼[p]f@❨n❩+m = ▼[p◖𝗱n]f@❨m❩.
+      ▼[p]f＠⧣❨n❩+m = ▼[p◖𝗱n]f＠⧣❨m❩.
 #f #p #n #m
 <unwind_rmap_d_dx <tr_uni_pap <pplus_comm //
 qed.

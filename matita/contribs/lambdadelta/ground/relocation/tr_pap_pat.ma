@@ -21,7 +21,7 @@ include "ground/relocation/tr_pap.ma".
 (* Constructions with pr_pat ***********************************************)
 
 (*** at_total *)
-lemma tr_pat_total: ∀i1,f. @❨i1,𝐭❨f❩❩ ≘ f@❨i1❩.
+lemma tr_pat_total: ∀i1,f. ＠⧣❨i1,𝐭❨f❩❩ ≘ f＠⧣❨i1❩.
 #i1 elim i1 -i1
 [ * // | #i #IH * /3 width=1 by tr_pat_succ_sn/ ]
 qed.
@@ -30,5 +30,5 @@ qed.
 
 (*** at_inv_total *)
 lemma tr_pat_inv_total (f):
-      ∀i1,i2. @❨i1, 𝐭❨f❩❩ ≘ i2 → f@❨i1❩ = i2.
+      ∀i1,i2. ＠⧣❨i1, 𝐭❨f❩❩ ≘ i2 → f＠⧣❨i1❩ = i2.
 /2 width=6 by pr_pat_mono/ qed-.

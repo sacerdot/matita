@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/apply_2.ma".
+include "ground/notation/functions/atsharp_2.ma".
 include "ground/arith/pnat_plus.ma".
 include "ground/relocation/tr_map.ma".
 
@@ -29,16 +29,16 @@ defined.
 
 interpretation
   "functional positive application (total relocation maps)"
-  'Apply f i = (tr_pap i f).
+  'AtSharp f i = (tr_pap i f).
 
 (* Basic constructions ******************************************************)
 
 (*** apply_O1 *)
 lemma tr_pap_unit (f):
-      ∀p. p = (p⨮f)@❨𝟏❩.
+      ∀p. p = (p⨮f)＠⧣❨𝟏❩.
 // qed.
 
 (*** apply_S1 *)
 lemma tr_pap_succ (f):
-      ∀p,i. f@❨i❩+p = (p⨮f)@❨↑i❩.
+      ∀p,i. f＠⧣❨i❩+p = (p⨮f)＠⧣❨↑i❩.
 // qed.

@@ -61,7 +61,7 @@ qed-.
 (*** compose_inv_S1 *)
 lemma tr_compose_inv_next_sn (f2) (f1):
       ∀f,p1,p. (↑f2)∘(p1⨮f1) = p⨮f →
-      ∧∧ ↑(f2@❨p1❩) = p & f2∘(p1⨮f1) = f2@❨p1❩⨮f.
+      ∧∧ ↑(f2＠⧣❨p1❩) = p & f2∘(p1⨮f1) = f2＠⧣❨p1❩⨮f.
 #f2 #f1 #f #p1 #p
 <tr_compose_unfold #H destruct
 /2 width=1 by conj/

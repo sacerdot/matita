@@ -20,7 +20,7 @@ include "ground/lib/stream_tls.ma".
 (* Constructions with stream_tls ********************************************)
 
 lemma tr_pap_plus (p1) (p2) (f):
-      (⇂*[ninj p2]f)@❨p1❩+f@❨p2❩ = f@❨p1+p2❩.
+      (⇂*[ninj p2]f)＠⧣❨p1❩+f＠⧣❨p2❩ = f＠⧣❨p1+p2❩.
 #p1 #p2 elim p2 -p2
 [ * #p #f //
 | #i #IH * #p #f
