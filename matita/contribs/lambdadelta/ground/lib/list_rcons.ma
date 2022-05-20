@@ -51,6 +51,12 @@ lemma eq_inv_list_empty_rcons (A):
 elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 destruct
 qed-.
 
+lemma eq_inv_list_rcons_empty (A):
+      ∀l,a. l⨭{A}a = ⓔ → ⊥.
+#A #l #a #H0
+elim (eq_inv_list_append_empty … H0) -H0 #_ #H0 destruct
+qed-.
+
 (* Advanced inversions ******************************************************)
 
 lemma eq_inv_list_rcons_bi (A):

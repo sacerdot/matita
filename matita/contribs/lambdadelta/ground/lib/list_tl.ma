@@ -12,35 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/circled_element_e_1.ma".
-include "ground/notation/functions/oplusright_3.ma".
-include "ground/lib/relations.ma".
+include "ground/notation/functions/downharpoonright_2.ma".
+include "ground/lib/list.ma".
 
-(* LISTS ********************************************************************)
+(* TAIL FOR LISTS ***********************************************************)
 
-inductive list (A:Type[0]): Type[0] :=
-| list_empty: list A
-| list_lcons: A → list A → list A
-.
+definition list_tl (A:Type[0]): list A → list A.
+#A * [ @(ⓔ) | #_ #t @t ]
+defined.
 
 interpretation
-  "empty (lists)"
-  'CircledElementE A = (list_empty A).
+  "tail (streams)"
+  'DownHarpoonRight A t = (list_tl A t).
 
-interpretation
-  "left cons (lists)"
-  'OPlusRight A hd tl = (list_lcons A hd tl).
+(* Basic constructions ******************************************************)
 
-rec definition list_all A (R:predicate A) (l:list A) on l ≝ match l with
-[ list_empty       ⇒ ⊤
-| list_lcons hd tl ⇒ ∧∧ R hd & list_all A R tl
-].
+lemma list_tl_empty (A):
+      ⓔ = ⇂{A}ⓔ.
+// qed.
 
-(* Basic inversions *********************************************************)
-
-lemma eq_inv_list_lcons_bi (A) (a1) (a2) (l1) (l2):
-      a1⨮l1 = a2⨮{A}l2 →
-      ∧∧ a1 = a2 & l1 = l2.
-#A #a1 #a2 #l1 #l2 #H0 destruct
-/2 width=1 by conj/
-qed-.
+lemma list_tl_lcons (A) (a) (t):
+      t = ⇂{A}(a⨮t).
+// qed.
