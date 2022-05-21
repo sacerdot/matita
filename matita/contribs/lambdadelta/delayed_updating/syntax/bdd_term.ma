@@ -27,7 +27,7 @@ inductive bdd: 𝒫❨prototerm❩ ≝
 | bdd_oref: ∀n. bdd (⧣n)
 | bdd_iref: ∀t,n. bdd t → bdd (𝛗n.t)
 | bdd_abst: ∀t. bdd t → bdd (𝛌.t)
-| bdd_appl: ∀u,t. bdd u → bdd t → bdd (@u.t)
+| bdd_appl: ∀u,t. bdd u → bdd t → bdd (＠u.t)
 | bdd_conv: ∀t1,t2. t1 ⇔ t2 → bdd t1 → bdd t2
 .
 

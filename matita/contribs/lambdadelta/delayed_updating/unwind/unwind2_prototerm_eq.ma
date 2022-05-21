@@ -12,23 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind_gen.ma".
-include "ground/relocation/tr_pap_eq.ma".
+(**) (* reverse include *)
+include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/unwind/unwind2_path_eq.ma".
+include "delayed_updating/unwind/unwind2_prototerm.ma".
 
-(* GENERIC UNWIND FOR PATH **************************************************)
+(* UNWIND FOR PROTOTERM *****************************************************)
 
-(* Constructions with stream_eq *********************************************)
+(* Constructions with subset_equivalence ************************************)
 
-lemma unwind_gen_eq_repl (p):
-      stream_eq_repl … (λf1,f2. ◆[f1]p = ◆[f2]p).
-#p @(path_ind_unwind … p) -p // [ #n |*: #p ] #IH #f1 #f2 #Hf
-[ <unwind_gen_d_empty <unwind_gen_d_empty
-  <(tr_pap_eq_repl … Hf) -f2 -IH //
-| <unwind_gen_L_sn <unwind_gen_L_sn
-  <(IH … Hf) -f2 -IH //
-| <unwind_gen_A_sn <unwind_gen_A_sn
-  <(IH … Hf) -f2 -IH //
-| <unwind_gen_S_sn <unwind_gen_S_sn
-  <(IH … Hf) -f2 -IH //
+lemma unwind2_term_eq_repl_sn (f1) (f2) (t):
+      f1 ≗ f2 → ▼[f1]t ⇔ ▼[f2]t.
+/3 width=1 by subset_equivalence_ext_f1_exteq, unwind2_path_eq_repl/
+qed.
+
+lemma unwind2_term_eq_repl_dx (f) (t1) (t2):
+      t1 ⇔ t2 → ▼[f]t1 ⇔ ▼[f]t2.
+/2 width=1 by subset_equivalence_ext_f1_bi/
+qed.
+
+lemma unwind2_term_after (f1) (f2) (t):
+      ▼[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
+#f1 #f2 #t @subset_eq_trans
+[
+| @subset_inclusion_ext_f1_compose
+| @subset_equivalence_ext_f1_exteq /2 width=5/
 ]
-qed-.
+qed.

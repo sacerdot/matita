@@ -1,6 +1,5 @@
 include "ground/relocation/tr_uni_pap.ma".
 include "ground/relocation/tr_compose_pap.ma".
-include "ground/relocation/tr_pap_pn.ma".
 include "ground/notation/functions/applysucc_2.ma".
 include "ground/arith/nat_lt.ma".
 include "ground/arith/nat_plus_rplus.ma".

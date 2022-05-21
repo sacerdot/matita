@@ -73,29 +73,29 @@ qed-.
 
 (* Advanced constructions with list_rcons ***********************************)
 
-lemma unwind_gen_d_empty_dx (n) (p) (f):
-      (⊗p)◖𝗱((f n)＠⧣❨n❩) = ◆[f](p◖𝗱n).
-#n #p #f <unwind_gen_append_proper_dx // 
+lemma unwind_gen_d_dx (f) (p) (n):
+      (⊗p)◖𝗱(f＠⧣❨n❩) = ◆[f](p◖𝗱n).
+#f #p #n <unwind_gen_append_proper_dx //
 qed.
 
-lemma unwind_gen_m_dx (p) (f):
+lemma unwind_gen_m_dx (f) (p):
       ⊗p = ◆[f](p◖𝗺).
-#p #f <unwind_gen_append_proper_dx //
+#f #p <unwind_gen_append_proper_dx //
 qed.
 
-lemma unwind_gen_L_dx (p) (f):
+lemma unwind_gen_L_dx (f) (p):
       (⊗p)◖𝗟 = ◆[f](p◖𝗟).
-#p #f <unwind_gen_append_proper_dx //
+#f #p <unwind_gen_append_proper_dx //
 qed.
 
-lemma unwind_gen_A_dx (p) (f):
+lemma unwind_gen_A_dx (f) (p):
       (⊗p)◖𝗔 = ◆[f](p◖𝗔).
-#p #f <unwind_gen_append_proper_dx //
+#f #p <unwind_gen_append_proper_dx //
 qed.
 
-lemma unwind_gen_S_dx (p) (f):
+lemma unwind_gen_S_dx (f) (p):
       (⊗p)◖𝗦 = ◆[f](p◖𝗦).
-#p #f <unwind_gen_append_proper_dx //
+#f #p <unwind_gen_append_proper_dx //
 qed.
 
 lemma unwind_gen_root (f) (p):
@@ -110,7 +110,7 @@ qed-.
 
 lemma unwind_gen_inv_d_sn (k) (q) (p) (f):
       (𝗱k◗q) = ◆[f]p →
-      ∃∃r,h. 𝐞 = ⊗r & (f h)＠⧣❨h❩ = k & 𝐞 = q & r◖𝗱h = p.
+      ∃∃r,h. 𝐞 = ⊗r & f＠⧣❨h❩ = k & 𝐞 = q & r◖𝗱h = p.
 #k #q #p @(path_ind_unwind … p) -p
 [| #n | #n #l #p |*: #p ] [|*: #IH ] #f
 [ <unwind_gen_empty #H destruct

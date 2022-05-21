@@ -47,3 +47,11 @@ lemma ppc_inv_lcons (p):
 | #l #q #_ /2 width=3 by ex1_2_intro/
 ]
 qed-.
+
+lemma ppc_inv_rcons (p):
+      p ϵ 𝐏 → ∃∃q,l. q◖l = p.
+#p @(list_ind_rcons … p) -p
+[ #H0 elim (ppc_inv_empty … H0)
+| #q #l #_ #_ /2 width=3 by ex1_2_intro/
+]
+qed-.

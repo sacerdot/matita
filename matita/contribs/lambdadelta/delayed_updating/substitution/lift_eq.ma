@@ -13,11 +13,6 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift.ma".
-(*
-include "ground/relocation/tr_uni_compose.ma".
-include "ground/relocation/tr_compose_compose.ma".
-include "ground/relocation/tr_compose_eq.ma".
-*)
 include "ground/relocation/tr_pap_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".
 include "ground/lib/stream_tls_eq.ma".
@@ -110,6 +105,44 @@ lemma lift_path_A_sn (f) (p):
 lemma lift_path_S_sn (f) (p):
       (𝗦◗↑[f]p) = ↑[f](𝗦◗p).
 // qed.
+
+lemma lift_path_append (p2) (p1) (f):
+      (↑[f]p1)●(↑[↑[p1]f]p2) = ↑[f](p1●p2).
+#p2 #p1 elim p1 -p1 //
+* [ #n1 ] #p1 #IH #f
+[ <lift_path_d_sn <lift_path_d_sn <IH //
+| <lift_path_m_sn <lift_path_m_sn <IH //
+| <lift_path_L_sn <lift_path_L_sn <IH //
+| <lift_path_A_sn <lift_path_A_sn <IH //
+| <lift_path_S_sn <lift_path_S_sn <IH //
+]
+qed.
+
+lemma lift_path_d_dx (f) (p) (n):
+      (↑[f]p)◖𝗱((↑[p]f)＠⧣❨n❩) = ↑[f](p◖𝗱n).
+#f #p #n <lift_path_append //
+qed.
+
+lemma lift_path_m_dx (f) (p):
+      (↑[f]p)◖𝗺 = ↑[f](p◖𝗺).
+#f #p <lift_path_append //
+qed.
+
+lemma lift_path_L_dx (f) (p):
+      (↑[f]p)◖𝗟 = ↑[f](p◖𝗟).
+#f #p <lift_path_append //
+qed.
+
+lemma lift_path_A_dx (f) (p):
+      (↑[f]p)◖𝗔 = ↑[f](p◖𝗔).
+#f #p <lift_path_append //
+qed.
+
+lemma lift_path_S_dx (f) (p):
+      (↑[f]p)◖𝗦 = ↑[f](p◖𝗦).
+#f #p <lift_path_append //
+qed.
+
 (* COMMENT 
 
 (* Advanced constructions with proj_rmap and stream_tls *********************)
