@@ -12,22 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/fsubst.ma".
-include "delayed_updating/syntax/prototerm_equivalence.ma".
+include "delayed_updating/syntax/path_head.ma".
+include "delayed_updating/syntax/path_structure.ma".
+include "delayed_updating/syntax/path_depth.ma".
 
-(* Constructions with subset_equivalence ************************************)
+(* HEAD FOR PATH ************************************************************)
 
-lemma subset_inclusion_fsubst_bi (t1) (t2) (u1) (u2) (p):
-      t1 ⊆ t2 → u1 ⊆ u2 → t1[⋔p←u1] ⊆ t2[⋔p←u2].
-#t1 #t2 #u1 #u2 #p #Ht #Hu #q * *
-[ #r #Hr #H0 destruct
-  /4 width=3 by ex2_intro, or_introl/
-| /4 width=2 by or_intror, conj/
+(* Constructions with structure *********************************************)
+
+axiom path_head_structure (p) (q):
+      ⊗p = ↳[♭⊗p]((⊗p)●q).
+(*
+#p elim p -p
+[ #q <path_head_zero //
+| * [ #n ] #p #IH #q
+  [ <structure_d_sn //
+  | <structure_m_sn //
+  | <structure_L_sn
+  | <structure_A_sn <list_append_lcons_sn 
+    <path_head_A_sn //
+  | <structure_S_sn //
+  ]
 ]
-qed.
-
-lemma fsubst_eq_repl (t1) (t2) (u1) (u2) (p1) (p2):
-      t1 ⇔ t2 → p1 = p2 → u1 ⇔ u2 → t1[⋔p1←u1] ⇔ t2[⋔p2←u2].
-#t1 #t2 #u1 #u2 #p1 #p2 * #H1t #H2t #Hp * #H1u #H2u
-/3 width=5 by conj, subset_inclusion_fsubst_bi/
-qed.
+*)

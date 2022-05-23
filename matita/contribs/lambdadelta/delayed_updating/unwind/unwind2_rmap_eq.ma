@@ -13,8 +13,10 @@
 (**************************************************************************)
 
 include "delayed_updating/unwind/unwind2_rmap.ma".
+include "ground/relocation/tr_uni_compose.ma".
 include "ground/relocation/tr_compose_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".
+include "ground/arith/nat_rplus_pplus.ma".
 
 (* UNWIND MAP FOR PATH ******************************************************)
 
@@ -31,3 +33,10 @@ lemma unwind2_rmap_eq_repl (p):
 | /2 width=1 by/
 ]
 qed-.
+
+lemma tls_unwind2_rmap_d_sn (f) (p) (m) (n):
+      ⇂*[m+n]▶[f]p ≗ ⇂*[m]▶[f](𝗱n◗p).
+#f #p #m #n
+<unwind2_rmap_d_sn >nrplus_inj_dx
+/2 width=1 by tr_tls_compose_uni_dx/
+qed.

@@ -14,7 +14,6 @@
 
 include "delayed_updating/unwind/unwind2_path_eq.ma".
 include "delayed_updating/substitution/lift_eq.ma".
-include "ground/relocation/tr_uni_compose.ma".
 
 (* UNWIND FOR PATH **********************************************************)
 

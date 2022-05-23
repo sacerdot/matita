@@ -13,53 +13,61 @@
 (**************************************************************************)
 
 include "delayed_updating/unwind/unwind2_rmap_labels.ma".
+include "delayed_updating/unwind/unwind2_rmap_eq.ma".
 include "delayed_updating/unwind/xap.ma".
 include "delayed_updating/syntax/path_head_depth.ma".
+include "ground/lib/stream_eq_eq.ma".
 include "ground/arith/nat_le_plus.ma".
 
 (* UNWIND MAP FOR PATH ******************************************************)
 
 (* Constructions with path_head *********************************************)
 
-lemma unwind2_rmap_head_xap_closed (f) (p) (n) (k):
-      (∃q. p = (↳[n]p)●q) → k ≤ n →
+lemma unwind2_rmap_head_xap_le_closed (f) (p) (q) (n) (k):
+      p = (↳[n]p)●q → k ≤ n →
       (▶[f]p)＠❨k❩ = (▶[f]↳[n]p)＠❨k❩.
 #f #p elim p -p
-[ #n #k * #q #Hq #Hk
+[ #q #n #k #Hq #Hk
   elim (eq_inv_list_empty_append … Hq) -Hq * #_ //
-| #l #p #IH #n @(nat_ind_succ … n) -n
+| #l #p #IH #q #n @(nat_ind_succ … n) -n
   [ #k #_ #Hk <(nle_inv_zero_dx … Hk) -k -IH
    <path_head_zero <unwind2_rmap_empty //
-  | #n #_ #k cases l [ #m ] * #q
+  | #n #_ #k cases l [ #m ]
     [ <path_head_d_sn <list_append_lcons_sn #Hq #Hk
       elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
       <unwind2_rmap_d_sn <unwind2_rmap_d_sn
       <tr_compose_xap <tr_compose_xap
-      @IH [ /2 width=2 by ex_intro/ ] (**) (* auto too slow *)
+      @(IH … Hq) -IH -Hq (**) (* auto too slow *)
       @nle_trans [| @tr_uni_xap ]
       /2 width=1 by nle_plus_bi_dx/
     | <path_head_m_sn <list_append_lcons_sn #Hq #Hk
       elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
       <unwind2_rmap_m_sn <unwind2_rmap_m_sn
-      /3 width=2 by ex_intro/
+      /2 width=2 by/
     | <path_head_L_sn <list_append_lcons_sn #Hq
       @(nat_ind_succ … k) -k // #k #_ #Hk
       lapply (nle_inv_succ_bi … Hk) -Hk #Hk
       elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
       <unwind2_rmap_L_sn <unwind2_rmap_L_sn
       <tr_xap_push <tr_xap_push
-      /4 width=2 by ex_intro, eq_f/
+      /3 width=2 by eq_f/
     | <path_head_A_sn <list_append_lcons_sn #Hq #Hk
       elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
       <unwind2_rmap_A_sn <unwind2_rmap_A_sn
-      /3 width=2 by ex_intro/
+      /2 width=2 by/
     | <path_head_S_sn <list_append_lcons_sn #Hq #Hk
       elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
       <unwind2_rmap_S_sn <unwind2_rmap_S_sn
-      /3 width=2 by ex_intro/
+      /2 width=2 by/
     ]
   ]
 ]
+qed-.
+
+lemma unwind2_rmap_head_append_xap_closed (f) (p) (q) (n):
+      p = ↳[n](p●q) →
+      ▶[f](p●q)＠❨n❩ = ▶[f]↳[n](p●q)＠❨n❩.
+/2 width=2 by unwind2_rmap_head_xap_le_closed/
 qed-.
 
 lemma unwind2_rmap_head_xap (f) (p) (n):
@@ -78,4 +86,49 @@ lemma unwind2_rmap_head_xap (f) (p) (n):
   | <unwind2_rmap_S_sn <path_head_S_sn <height_S_sn //
   ]
 ]
+qed.
+
+lemma unwind2_rmap_append_pap_closed (f) (p) (q) (n:pnat):
+      p = ↳[n](p●q) →
+      ♭p = ninj (▶[f](p●q)＠⧣❨n❩).
+#f #p #q #n #Hn
+>tr_xap_ninj >Hn in ⊢ (??%?);
+>(unwind2_rmap_head_append_xap_closed … Hn) -Hn //
+qed.
+
+lemma tls_unwind2_rmap_plus_closed (f) (p) (q) (n) (k):
+      p = (↳[n]p)●q →
+      ⇂*[k]▶[f]q ≗ ⇂*[n+k]▶[f]p.
+#f #p elim p -p
+[ #q #n #k #Hq
+  elim (eq_inv_list_empty_append … Hq) -Hq #Hn #H0 destruct
+  <path_head_empty in Hn; #Hn
+  <(eq_inv_empty_labels … Hn) -n //
+| #l #p #IH #q #n @(nat_ind_succ … n) -n //
+  #n #_ #k cases l [ #m ]
+  [ <path_head_d_sn <list_append_lcons_sn #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq <nrplus_inj_sn
+    @(stream_eq_trans … (tls_unwind2_rmap_d_sn …))
+    >nrplus_inj_dx >nrplus_inj_sn >nrplus_inj_sn <nplus_plus_comm_23
+    /2 width=1 by/
+  | <path_head_m_sn <list_append_lcons_sn #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+    <unwind2_rmap_m_sn /2 width=1 by/
+  | <path_head_L_sn <list_append_lcons_sn #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+    <unwind2_rmap_L_sn <nplus_succ_sn /2 width=1 by/
+  | <path_head_A_sn <list_append_lcons_sn #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+    <unwind2_rmap_A_sn /2 width=2 by/
+  | <path_head_S_sn <list_append_lcons_sn #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+    <unwind2_rmap_S_sn /2 width=2 by/
+  ]
+]
+qed-.
+
+lemma tls_unwind2_rmap_append_closed (f) (p) (q) (n):
+      p = ↳[n](p●q) →
+      ▶[f]q ≗ ⇂*[n]▶[f](p●q).
+/2 width=1 by tls_unwind2_rmap_plus_closed/
 qed.

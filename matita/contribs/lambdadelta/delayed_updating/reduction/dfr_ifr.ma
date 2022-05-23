@@ -15,119 +15,63 @@
 include "delayed_updating/reduction/dfr.ma".
 include "delayed_updating/reduction/ifr.ma".
 
-include "delayed_updating/unwind1/unwind_fsubst.ma".
-include "delayed_updating/unwind1/unwind_constructors.ma".
-include "delayed_updating/unwind1/unwind_preterm_eq.ma".
-include "delayed_updating/unwind1/unwind_structure_depth.ma".
-include "delayed_updating/unwind1/unwind_depth.ma".
+include "delayed_updating/unwind/unwind2_constructors.ma".
+include "delayed_updating/unwind/unwind2_preterm_fsubst.ma".
+include "delayed_updating/unwind/unwind2_preterm_eq.ma".
+include "delayed_updating/unwind/unwind2_prototerm_lift.ma".
+include "delayed_updating/unwind/unwind2_rmap_head.ma".
 
 include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
+
 include "delayed_updating/syntax/prototerm_proper_constructors.ma".
+include "delayed_updating/syntax/path_head_structure.ma".
 include "delayed_updating/syntax/path_structure_depth.ma".
-include "ground/relocation/tr_uni_compose.ma".
-include "ground/relocation/tr_pap_pushs.ma".
+include "delayed_updating/syntax/path_structure_reverse.ma".
+include "delayed_updating/syntax/path_depth_reverse.ma".
 
 (* DELAYED FOCUSED REDUCTION ************************************************)
 
-(* COMMENT
-axiom pippo (b) (q) (n):
-      ↑❘q❘ = (↑[q]𝐢)＠⧣❨n❩ →
-      ↑❘q❘+❘b❘= (↑[b●𝗟◗q]𝐢)＠⧣❨n+❘b❘❩.
+(* Main destructions with ifr ***********************************************)
 
-lemma unwind_rmap_tls_eq_id (p) (n):
-      ❘p❘ = ↑[p]𝐢＠⧣❨n❩ →
-      (𝐢) ≗ ⇂*[n]↑[p]𝐢.
-#p @(list_ind_rcons … p) -p
-[ #n <depth_empty #H destruct
-| #p * [ #m ] #IH #n
-  [ <depth_d_dx <unwind_rmap_pap_d_dx #H0
-    @(stream_eq_trans … (unwind_rmap_tls_d_dx …))
-    @(stream_eq_trans … (IH …)) -IH //
-  | /2 width=1 by/
-  | <depth_L_dx <unwind_rmap_L_dx
-    cases n -n [| #n ] #H0
-    [
-    | 
-    ]
-  | /2 width=1 by/
-  | /2 width=1 by/
-  ]
-]
-
-
-(*  (↑❘q❘+❘b❘=↑[b●𝗟◗q]𝐢＠⧣❨n+❘b❘❩ *)
-(* [↑[p]𝐢＠⧣❨n❩]⫯*[❘p❘]f∘⇂*[n]↑[p]𝐢) *)
-lemma unwind_rmap_tls_eq (f) (p) (n):
-      ❘p❘ = ↑[p]𝐢＠⧣❨n❩ →
-      f ≗ ⇂*[n]↑[p]f.
-#f #p #n #Hp
-@(stream_eq_canc_dx … (stream_tls_eq_repl …))
-[| @unwind_rmap_decompose | skip ]
-<tr_compose_tls <Hp
-
-@(stream_eq_canc_dx) … (unwind_rmap_decompose …)) 
-
-*)
-lemma dfr_unwind_id_bi (p) (q) (t1) (t2): t1 ϵ 𝐓 →
-      t1 ➡𝐝𝐟[p,q] t2 → ▼[𝐢]t1 ➡𝐟[⊗p,⊗q] ▼[𝐢]t2.
-#p #q #t1 #t2 #H0t1
-* #b #n * #Hb #Hn #Ht1 #Ht2
-@(ex1_2_intro … (⊗b) (↑♭⊗q)) @and4_intro
-[ //
-| (*//*)
-| lapply (in_comp_unwind_bi (𝐢) … Ht1) -Ht1 -H0t1 -Hb -Ht2
-  <unwind_path_d_empty_dx <depth_structure //
-| lapply (unwind_term_eq_repl_dx (𝐢) … Ht2) -Ht2 #Ht2
+theorem dfr_des_ifr (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
+        t1 ➡𝐝𝐟[p,q] t2 → ▼[f]t1 ➡𝐟[⊗p,⊗q] ▼[f]t2.
+#f #p #q #t1 #t2 #H0t1
+* #n * #H1n #Ht1 #Ht2
+@(ex_intro … (↑♭⊗q)) @and3_intro
+[ -H0t1 -H1n -Ht1 -Ht2
+  >list_append_rcons_sn <reverse_append
+  >nsucc_unfold >depth_reverse >depth_L_dx >reverse_lcons
+  >structure_L_sn >structure_reverse
+  <path_head_structure //
+| lapply (in_comp_unwind2_path_term f … Ht1) -Ht2 -Ht1 -H0t1
+  <unwind2_path_d_dx <depth_structure
+  >list_append_rcons_sn in H1n; <reverse_append #H1n
+  lapply (unwind2_rmap_append_pap_closed f … H1n)
+  <reverse_lcons <depth_L_dx #H2n
+  lapply (eq_inv_ninj_bi … H2n) -H2n #H2n <H2n -H2n -H1n #Ht1 //
+| lapply (unwind2_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
-  @(subset_eq_trans … (unwind_fsubst …))
-  [ (*<unwind_rmap_append <unwind_rmap_A_sn <unwind_rmap_append <unwind_rmap_L_sn *)
-    <structure_append <structure_A_sn <structure_append <structure_L_sn
-    <depth_append <depth_L_sn <depth_structure <depth_structure
-    @fsubst_eq_repl [ // ]
-    @(subset_eq_trans … (unwind_iref …))
-
-    elim Hb -Hb #Hb #H0 <H0 -H0 <nrplus_zero_dx <nplus_zero_dx <nsucc_unfold
-    >Hn
+  @(subset_eq_trans … (unwind2_term_fsubst …))
+  [ @fsubst_eq_repl [ // | // ]
+    @(subset_eq_trans … (unwind2_term_iref …))
     @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))
-    [ @unwind_grafted_S /2 width=2 by ex_intro/ | skip ]
-    <Hn <Hn
-(*    
-    @(subset_eq_trans … (lift_term_eq_repl_dx …))
-    [ @(unwind_term_eq_repl_sn … (tls_succ_unwind q …)) | skip ]
-*)
-(*
-    
-    @subset_eq_trans
-    [2: @unwind_term_eq_repl_dx
-    @(subset_eq_canc_sn … (unwind_term_eq_repl_dx …))
-
-    @(subset_eq_canc_sn … (unwind_term_eq_repl_dx …))
-    [ @unwind_grafted_S /2 width=2 by ex_intro/ | skip ]
-
-    @(subset_eq_trans … (unwind_term_after …))
-    @(subset_eq_canc_dx … (unwind_term_after …))
-    @unwind_term_eq_repl_sn -t1
-    @(stream_eq_trans … (tr_compose_uni_dx …))
-    lapply (Hn (𝐢)) -Hn >tr_id_unfold #Hn
-    lapply (pippo … b … Hn) -Hn #Hn
-    @tr_compose_eq_repl
-    [ <unwind_rmap_pap_le //
-      <Hn <nrplus_inj_sn //
-    |
-    ]
-*)
+    [ @unwind2_term_grafted_S /2 width=2 by ex_intro/ | skip ] -Ht1
+    @(subset_eq_trans … (unwind2_lift_term_after …))
+    @unwind2_term_eq_repl_sn
+(* Note: crux of the proof begins *)
+    @nstream_eq_inv_ext #m
+    <tr_compose_pap <tr_compose_pap
+    <tr_uni_pap <tr_uni_pap <tr_pap_plus
+    >list_append_rcons_sn in H1n; <reverse_append #H1n
+    lapply (unwind2_rmap_append_pap_closed f … H1n) #H2n
+    >nrplus_inj_dx in ⊢ (???%); <H2n -H2n
+    lapply (tls_unwind2_rmap_append_closed f … H1n) #H2n
+    <(tr_pap_eq_repl … H2n) -H2n -H1n //
+(* Note: crux of the proof ends *)
   | //
   | /2 width=2 by ex_intro/
   | //
   ]
 ]
-
-(*
-Hn : ↑❘q❘ = ↑[p●𝗔◗b●𝗟◗q]𝐢＠⧣❨n❩
----------------------------
-↑[𝐮❨↑❘q❘+❘b❘❩] ↑[↑[p]𝐢] t ⇔ ↑[𝐮❨↑[p●𝗔◗b●𝗟◗q]𝐢＠⧣❨n+❘b❘❩❩] t
-*)
-(*
-(↑[𝐮❨↑❘q❘❩]▼[⇂*[↑❘q❘]▼[p●𝗟◗q]𝐢](t1⋔(p◖𝗦))⇔▼[𝐮❨↑❘q❘❩∘▼[p●𝗔◗b●𝗟◗q]𝐢](t1⋔(p◖𝗦))
-*)
+qed.

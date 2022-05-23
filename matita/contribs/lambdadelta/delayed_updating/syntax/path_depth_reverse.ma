@@ -12,22 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/fsubst.ma".
-include "delayed_updating/syntax/prototerm_equivalence.ma".
+include "delayed_updating/syntax/path_depth.ma".
+include "delayed_updating/syntax/path_reverse.ma".
 
-(* Constructions with subset_equivalence ************************************)
+(* DEPTH FOR PATH ***********************************************************)
 
-lemma subset_inclusion_fsubst_bi (t1) (t2) (u1) (u2) (p):
-      t1 ⊆ t2 → u1 ⊆ u2 → t1[⋔p←u1] ⊆ t2[⋔p←u2].
-#t1 #t2 #u1 #u2 #p #Ht #Hu #q * *
-[ #r #Hr #H0 destruct
-  /4 width=3 by ex2_intro, or_introl/
-| /4 width=2 by or_intror, conj/
+(* Constructions with reverse ***********************************************)
+
+lemma depth_reverse (p):
+      ♭p = ♭pᴿ.
+#p elim p -p //
+* [ #n ] #p #IH <reverse_lcons
+[ <depth_d_sn <depth_d_dx //
+| <depth_m_sn <depth_m_dx //
+| <depth_L_sn <depth_L_dx //
+| <depth_A_sn <depth_A_dx //
+| <depth_S_sn <depth_S_dx //
 ]
-qed.
-
-lemma fsubst_eq_repl (t1) (t2) (u1) (u2) (p1) (p2):
-      t1 ⇔ t2 → p1 = p2 → u1 ⇔ u2 → t1[⋔p1←u1] ⇔ t2[⋔p2←u2].
-#t1 #t2 #u1 #u2 #p1 #p2 * #H1t #H2t #Hp * #H1u #H2u
-/3 width=5 by conj, subset_inclusion_fsubst_bi/
 qed.

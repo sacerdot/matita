@@ -15,5 +15,5 @@
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
 notation "hvbox( p ᴿ )"
-  non associative with precedence 70
+  non associative with precedence 71
   for @{ 'NEcR $p }.

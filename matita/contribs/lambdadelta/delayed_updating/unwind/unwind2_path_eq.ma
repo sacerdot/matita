@@ -16,7 +16,6 @@ include "delayed_updating/unwind/unwind2_path.ma".
 include "delayed_updating/unwind/unwind2_rmap_eq.ma".
 include "delayed_updating/unwind/unwind_gen_eq.ma".
 include "ground/relocation/tr_compose_compose.ma".
-include "ground/relocation/tr_compose_pn.ma".
 
 (* UNWIND FOR PATH **********************************************************)
 

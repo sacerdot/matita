@@ -40,3 +40,11 @@ lemma labels_succ (l) (n):
 #l #n
 <labels_unfold <labels_unfold <niter_succ //
 qed.
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_empty_labels (l) (n):
+      (𝐞) = l∗∗n → 𝟎 = n.
+#l #n @(nat_ind_succ … n) -n //
+#n #_ <labels_succ #H0 destruct
+qed-.

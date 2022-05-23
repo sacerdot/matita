@@ -51,3 +51,12 @@ lemma reverse_rcons (p) (l):
 #p #l
 <reverse_append //
 qed.
+
+(* Main constructions *******************************************************)
+
+theorem reverse_revrse (p):
+        p = pᴿᴿ.
+#p elim p -p //
+#l #p #IH
+<reverse_lcons <reverse_rcons //
+qed.

@@ -14,9 +14,6 @@
 
 include "delayed_updating/unwind/unwind2_path.ma".
 include "delayed_updating/unwind/unwind_gen_structure.ma".
-include "delayed_updating/syntax/path_inner.ma".
-include "delayed_updating/syntax/path_proper.ma".
-include "ground/xoa/ex_4_2.ma".
 
 (* UNWIND FOR PATH **********************************************************)
 
