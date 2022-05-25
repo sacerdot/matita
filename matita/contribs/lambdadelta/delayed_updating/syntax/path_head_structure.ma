@@ -12,26 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path_head.ma".
-include "delayed_updating/syntax/path_structure.ma".
-include "delayed_updating/syntax/path_depth.ma".
+include "delayed_updating/syntax/path_head_depth.ma".
+include "delayed_updating/syntax/path_structure_labels.ma".
 
 (* HEAD FOR PATH ************************************************************)
 
 (* Constructions with structure *********************************************)
 
-axiom path_head_structure (p) (q):
-      ⊗p = ↳[♭⊗p]((⊗p)●q).
-(*
-#p elim p -p
-[ #q <path_head_zero //
-| * [ #n ] #p #IH #q
-  [ <structure_d_sn //
-  | <structure_m_sn //
-  | <structure_L_sn
-  | <structure_A_sn <list_append_lcons_sn 
-    <path_head_A_sn //
-  | <structure_S_sn //
-  ]
+lemma path_head_structure_height (p) (m):
+      ⊗↳[m]p = ↳[m+♯↳[m]p]⊗p.
+#p elim p -p //
+#l #p #IH #m @(nat_ind_succ … m) -m //
+#m #_ cases l [ #n ]
+[ <height_d_sn <structure_d_sn //
+| <structure_m_sn //
+| <structure_L_sn //
+| <height_A_sn <structure_A_sn <nplus_succ_sn <path_head_A_sn //
+| <height_S_sn <structure_S_sn <nplus_succ_sn <path_head_S_sn //
 ]
-*)
+qed.
+
+lemma path_head_structure_depth (p) (m):
+      ⊗↳[m]p = ↳[♭↳[m]p]⊗p.
+#p #m
+<path_head_depth //
+qed.

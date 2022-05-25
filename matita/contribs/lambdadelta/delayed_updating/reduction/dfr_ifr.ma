@@ -39,11 +39,9 @@ theorem dfr_des_ifr (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
 #f #p #q #t1 #t2 #H0t1
 * #n * #H1n #Ht1 #Ht2
 @(ex_intro … (↑♭⊗q)) @and3_intro
-[ -H0t1 -H1n -Ht1 -Ht2
-  >list_append_rcons_sn <reverse_append
-  >nsucc_unfold >depth_reverse >depth_L_dx >reverse_lcons
+[ -H0t1 -Ht1 -Ht2
   >structure_L_sn >structure_reverse
-  <path_head_structure //
+  >H1n >path_head_structure_depth <H1n -H1n //
 | lapply (in_comp_unwind2_path_term f … Ht1) -Ht2 -Ht1 -H0t1
   <unwind2_path_d_dx <depth_structure
   >list_append_rcons_sn in H1n; <reverse_append #H1n

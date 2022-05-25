@@ -1,0 +1,70 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "delayed_updating/syntax/path_labels.ma".
+include "delayed_updating/notation/functions/downarrowrightsharp_2.ma".
+include "ground/arith/pnat_plus.ma".
+
+(* HEAD BY DEPTH FOR PATH ***************************************************)
+
+rec definition path_dhd (m) (p) on p: path ≝
+match p with
+[ list_empty     ⇒ 𝗟∗∗m
+| list_lcons l q ⇒
+  match l with
+  [ label_d n ⇒ l◗(path_dhd (m+n) q)
+  | label_m   ⇒ l◗(path_dhd m q)
+  | label_L   ⇒
+    match m with
+    [ punit   ⇒ l◗𝐞
+    | psucc o ⇒ l◗(path_dhd o q)
+    ]
+  | label_A   ⇒ l◗(path_dhd m q)
+  | label_S   ⇒ l◗(path_dhd m q)
+  ]
+].
+
+interpretation
+  "head by depth (reversed path)"
+  'DownArrowRightSharp n p = (path_dhd n p).
+
+(* basic constructions ****************************************************)
+
+lemma path_dhd_empty (n:pnat):
+      (𝗟∗∗n) = ↳⧣[n]𝐞.
+// qed.
+
+lemma path_dhd_d_sn (p) (n) (m):
+      (𝗱m◗↳⧣[n+m]p) = ↳⧣[n](𝗱m◗p).
+// qed.
+
+lemma path_dhd_m_sn (p) (n):
+      (𝗺◗↳⧣[n]p) = ↳⧣[n](𝗺◗p).
+// qed.
+
+lemma path_dhd_L_sn_unit (p):
+      (𝗟◗𝐞) = ↳⧣[𝟏](𝗟◗p).
+// qed.
+
+lemma path_dhd_L_sn_succ (p) (n):
+      (𝗟◗↳⧣[n]p) = ↳⧣[↑n](𝗟◗p).
+// qed.
+
+lemma path_dhd_A_sn (p) (n):
+      (𝗔◗↳⧣[n]p) = ↳⧣[n](𝗔◗p).
+// qed.
+
+lemma path_dhd_S_sn (p) (n):
+      (𝗦◗↳⧣[n]p) = ↳⧣[n](𝗦◗p).
+// qed.

@@ -14,8 +14,8 @@
 
 include "delayed_updating/unwind/unwind2_rmap_labels.ma".
 include "delayed_updating/unwind/unwind2_rmap_eq.ma".
-include "delayed_updating/unwind/xap.ma".
 include "delayed_updating/syntax/path_head_depth.ma".
+include "ground/relocation/xap.ma".
 include "ground/lib/stream_eq_eq.ma".
 include "ground/arith/nat_le_plus.ma".
 
@@ -93,7 +93,8 @@ lemma unwind2_rmap_append_pap_closed (f) (p) (q) (n:pnat):
       ♭p = ninj (▶[f](p●q)＠⧣❨n❩).
 #f #p #q #n #Hn
 >tr_xap_ninj >Hn in ⊢ (??%?);
->(unwind2_rmap_head_append_xap_closed … Hn) -Hn //
+>(unwind2_rmap_head_append_xap_closed … Hn) -Hn
+<path_head_depth //
 qed.
 
 lemma tls_unwind2_rmap_plus_closed (f) (p) (q) (n) (k):
