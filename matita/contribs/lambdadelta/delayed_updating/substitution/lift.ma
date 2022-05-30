@@ -18,7 +18,7 @@ include "delayed_updating/syntax/path.ma".
 include "ground/relocation/tr_uni.ma".
 include "ground/relocation/tr_pap_tls.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* LIFT FOR PATH ************************************************************)
 
 definition lift_continuation (A:Type[0]) ≝
            tr_map → path → A.

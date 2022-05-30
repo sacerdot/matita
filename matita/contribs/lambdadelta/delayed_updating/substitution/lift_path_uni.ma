@@ -12,29 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset_ext_equivalence.ma".
-include "delayed_updating/substitution/lift_path_after.ma".
-include "delayed_updating/substitution/lift_prototerm.ma".
+include "delayed_updating/substitution/lift_path_id.ma".
+include "ground/relocation/tr_uni_pap.ma".
+include "ground/relocation/tr_uni_tls.ma".
 
-(* LIFT FOR PROTOTERM *******************************************************)
+(* LIFT FOR PATH ************************************************************)
 
-(* Constructions with subset_equivalence ************************************)
+(* Constructions with tr_uni ************************************************)
 
-lemma lift_term_eq_repl_sn (f1) (f2) (t):
-      f1 ≗ f2 → ↑[f1]t ⇔ ↑[f2]t.
-/3 width=1 by subset_equivalence_ext_f1_exteq, lift_path_eq_repl/
-qed.
-
-lemma lift_term_eq_repl_dx (f) (t1) (t2):
-      t1 ⇔ t2 → ↑[f]t1 ⇔ ↑[f]t2.
-/2 width=1 by subset_equivalence_ext_f1_bi/
-qed.
-
-lemma lift_term_after (f1) (f2) (t):
-      ↑[f2]↑[f1]t ⇔ ↑[f2∘f1]t.
-#f1 #f2 #t @subset_eq_trans
-[
-| @subset_inclusion_ext_f1_compose
-| @subset_equivalence_ext_f1_exteq /2 width=5/
-]
+lemma lift_path_d_sn_uni (p) (m) (n):
+      (𝗱(n+m)◗p) = ↑[𝐮❨m❩](𝗱(n)◗p).
+#p #m #n
+<lift_path_d_sn <tr_uni_pap >nsucc_pnpred
+<tr_tls_succ_uni //
 qed.

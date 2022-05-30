@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift_prototerm_id.ma".
-include "delayed_updating/substitution/lift_uni.ma".
+include "delayed_updating/substitution/lift_path_uni.ma".
 include "delayed_updating/syntax/prototerm_constructors.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)

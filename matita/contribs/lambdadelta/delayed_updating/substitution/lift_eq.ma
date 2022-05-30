@@ -17,7 +17,7 @@ include "ground/relocation/tr_pap_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".
 include "ground/lib/stream_tls_eq.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* LIFT FOR PATH ************************************************************)
 
 definition lift_exteq (A): relation2 (lift_continuation A) (lift_continuation A) ≝
            λk1,k2. ∀f1,f2,p. f1 ≗ f2 → k1 f1 p = k2 f2 p.
@@ -153,4 +153,5 @@ lemma lift_rmap_tls_d_dx (f) (p) (m) (n):
 <lift_rmap_d_dx >nrplus_inj_dx
 /2 width=1 by tr_tls_compose_uni_dx/
 qed.
+
 *)

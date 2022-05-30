@@ -13,18 +13,30 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift_eq.ma".
-include "ground/relocation/tr_id_pap.ma".
-include "ground/relocation/tr_id_tls.ma".
+include "delayed_updating/syntax/path_proper.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* LIFT FOR PATH ************************************************************)
 
-(* Constructions with tr_id ************************************************)
+(* Constructions with proper condition for path *****************************)
 
-lemma lift_path_id (p):
-      p = ↑[𝐢]p.
-#p elim p -p //
-* [ #n ] #p #IH //
-[ <lift_path_d_sn //
-| <lift_path_L_sn //
+lemma lift_path_proper (f) (p):
+      p ϵ 𝐏 → ↑[f]p ϵ 𝐏.
+#f *
+[ #H0 elim (ppc_inv_empty … H0)
+| * [ #n ] #p #_
+  [ <lift_path_d_sn /2 width=3 by ppc_lcons/
+  | <lift_path_m_sn /2 width=3 by ppc_lcons/
+  | <lift_path_L_sn /2 width=3 by ppc_lcons/
+  | <lift_path_A_sn /2 width=3 by ppc_lcons/
+  | <lift_path_S_sn /2 width=3 by ppc_lcons/
+  ]
 ]
 qed.
+
+(* Inversions with proper condition for path ********************************)
+
+lemma lift_path_inv_proper (f) (p):
+      ↑[f]p ϵ 𝐏 → p ϵ 𝐏.
+#f * //
+#H0 elim (ppc_inv_empty … H0)
+qed-.

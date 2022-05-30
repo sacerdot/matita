@@ -13,7 +13,11 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
-include "delayed_updating/substitution/lift_id.ma".
+include "delayed_updating/substitution/lift_path_id.ma".
+
+(* LIFT FOR PROTOTERM *******************************************************)
+
+(* Constructions with tr_id *************************************************)
 
 lemma lift_term_id_sn (t):
       t ⊆ ↑[𝐢]t.
