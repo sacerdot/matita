@@ -12,34 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/syntax/path_proper.ma".
-include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/syntax/prototerm_proper.ma".
+include "delayed_updating/syntax/path_inner_proper.ma".
+include "ground/lib/subset_overlap.ma".
 
 (* PROPER CONDITION FOR PROTOTERM *******************************************)
 
-interpretation
-  "proper condition (prototerm)"
-  'ClassP = (subset_ext_p1 path ppc).
+(* Constructions with inner condition for prototerm *************************)
 
-(* Basic constructions ******************************************************)
-
-lemma tpc_i (t):
-      (𝐞 ⧸ϵ t) → t ϵ 𝐏.
-#t #Ht * //
-#H elim (Ht H)
+lemma term_proper_outer (t):
+      t ⧸≬ 𝐈 → t ϵ 𝐏.
+/4 width=3 by path_des_outer_proper, subset_ol_i/
 qed.
-
-(* Basic destructions *******************************************************)
-
-lemma in_comp_tpc_trans (t) (p):
-      p ϵ t → t ϵ 𝐏 → p ϵ 𝐏.
-#t #p #Hp #Ht
-@(Ht … Hp)
-qed-.
-
-(* Basic inversions *********************************************************)
-
-lemma tpc_inv_empty (t):
-      (𝐞) ϵ t → t ϵ 𝐏 → ⊥.
-/2 width=5 by in_comp_tpc_trans/ qed-.

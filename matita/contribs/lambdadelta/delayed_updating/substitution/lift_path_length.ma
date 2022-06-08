@@ -12,34 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/syntax/path_proper.ma".
-include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/substitution/lift_eq.ma".
+include "ground/lib/list_length.ma".
 
-(* PROPER CONDITION FOR PROTOTERM *******************************************)
+(* LIFT FOR PATH ************************************************************)
 
-interpretation
-  "proper condition (prototerm)"
-  'ClassP = (subset_ext_p1 path ppc).
+(* Constructions with list_length *******************************************)
 
-(* Basic constructions ******************************************************)
-
-lemma tpc_i (t):
-      (𝐞 ⧸ϵ t) → t ϵ 𝐏.
-#t #Ht * //
-#H elim (Ht H)
+lemma lift_path_length (p) (f):
+      ❘p❘ = ❘↑[f]p❘.
+#p elim p -p // * [ #n ] #p #IH #f //
+[ <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+]
+>list_length_lcons >list_length_lcons //
 qed.
-
-(* Basic destructions *******************************************************)
-
-lemma in_comp_tpc_trans (t) (p):
-      p ϵ t → t ϵ 𝐏 → p ϵ 𝐏.
-#t #p #Hp #Ht
-@(Ht … Hp)
-qed-.
-
-(* Basic inversions *********************************************************)
-
-lemma tpc_inv_empty (t):
-      (𝐞) ϵ t → t ϵ 𝐏 → ⊥.
-/2 width=5 by in_comp_tpc_trans/ qed-.

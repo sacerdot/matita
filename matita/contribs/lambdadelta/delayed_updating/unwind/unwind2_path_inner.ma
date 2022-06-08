@@ -12,34 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/syntax/path_proper.ma".
-include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/unwind/unwind2_path_structure.ma".
+include "delayed_updating/syntax/path_inner.ma".
 
-(* PROPER CONDITION FOR PROTOTERM *******************************************)
+(* UNWIND FOR PATH **********************************************************)
 
-interpretation
-  "proper condition (prototerm)"
-  'ClassP = (subset_ext_p1 path ppc).
+(* Destructions with inner condition for path *******************************)
 
-(* Basic constructions ******************************************************)
-
-lemma tpc_i (t):
-      (𝐞 ⧸ϵ t) → t ϵ 𝐏.
-#t #Ht * //
-#H elim (Ht H)
-qed.
-
-(* Basic destructions *******************************************************)
-
-lemma in_comp_tpc_trans (t) (p):
-      p ϵ t → t ϵ 𝐏 → p ϵ 𝐏.
-#t #p #Hp #Ht
-@(Ht … Hp)
+lemma unwind2_path_des_inner (f) (p):
+      ▼[f]p ϵ 𝐈 → p ϵ 𝐈.
+#f #p @(list_ind_rcons … p) -p //
+#p * [ #n ] #_ //
+<unwind2_path_d_dx #H0
+elim (pic_inv_d_dx … H0)
 qed-.
-
-(* Basic inversions *********************************************************)
-
-lemma tpc_inv_empty (t):
-      (𝐞) ϵ t → t ϵ 𝐏 → ⊥.
-/2 width=5 by in_comp_tpc_trans/ qed-.

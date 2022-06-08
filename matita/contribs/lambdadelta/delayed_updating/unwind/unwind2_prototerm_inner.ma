@@ -12,34 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/syntax/path_proper.ma".
-include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/unwind/unwind2_prototerm.ma".
+include "delayed_updating/unwind/unwind2_path_inner.ma".
+include "ground/lib/subset_overlap.ma".
 
-(* PROPER CONDITION FOR PROTOTERM *******************************************)
+(* UNWIND FOR PROTOTERM *****************************************************)
 
-interpretation
-  "proper condition (prototerm)"
-  'ClassP = (subset_ext_p1 path ppc).
+(* Destructions with inner condition for path *******************************)
 
-(* Basic constructions ******************************************************)
-
-lemma tpc_i (t):
-      (𝐞 ⧸ϵ t) → t ϵ 𝐏.
-#t #Ht * //
-#H elim (Ht H)
-qed.
-
-(* Basic destructions *******************************************************)
-
-lemma in_comp_tpc_trans (t) (p):
-      p ϵ t → t ϵ 𝐏 → p ϵ 𝐏.
-#t #p #Hp #Ht
-@(Ht … Hp)
+lemma unwind2_term_des_inner (f) (t):
+      ▼[f]t ≬ 𝐈 → t ≬ 𝐈.
+#f #t * #p * #q #Hq #H0 #Hp destruct
+@(subset_ol_i … Hq) -Hq (**) (* auto does not work *)
+@(unwind2_path_des_inner … Hp)
 qed-.
-
-(* Basic inversions *********************************************************)
-
-lemma tpc_inv_empty (t):
-      (𝐞) ϵ t → t ϵ 𝐏 → ⊥.
-/2 width=5 by in_comp_tpc_trans/ qed-.

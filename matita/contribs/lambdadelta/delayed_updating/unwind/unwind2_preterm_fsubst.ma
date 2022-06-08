@@ -27,7 +27,7 @@ lemma unwind2_term_fsubst_sn (f) (t) (u) (p): u ϵ 𝐏 →
 #f #t #u #p #Hu #ql * *
 [ #rl * #r #Hr #H1 #H2 destruct
   >unwind2_path_append_proper_dx
-  /4 width=5 by in_comp_unwind2_path_term, in_ppc_comp_trans, or_introl, ex2_intro/
+  /4 width=5 by in_comp_unwind2_path_term, in_comp_tpc_trans, or_introl, ex2_intro/
 | * #q #Hq #H1 #H0
   @(ex2_intro … H1) @or_intror @conj // *
   [ <list_append_empty_dx #H2 destruct
@@ -43,7 +43,7 @@ lemma unwind2_term_fsubst_dx (f) (t) (u) (p): u ϵ 𝐏 → p ϵ ▵t → t ϵ �
 #f #t #u #p #Hu #H1p #H2p #ql * #q * *
 [ #r #Hu #H1 #H2 destruct
   @or_introl @ex2_intro
-  [|| <unwind2_path_append_proper_dx /2 width=5 by in_ppc_comp_trans/ ]
+  [|| <unwind2_path_append_proper_dx /2 width=5 by in_comp_tpc_trans/ ]
   /2 width=3 by ex2_intro/
 | #Hq #H0 #H1 destruct
   @or_intror @conj [ /2 width=1 by in_comp_unwind2_path_term/ ] *

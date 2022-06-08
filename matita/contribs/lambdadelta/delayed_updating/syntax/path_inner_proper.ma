@@ -12,19 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
-include "ground/relocation/tr_id_pap.ma".
-include "ground/relocation/tr_id_tls.ma".
+include "delayed_updating/syntax/path_inner.ma".
+include "delayed_updating/syntax/path_proper.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* INNER CONDITION FOR PATH *************************************************)
 
-(* Constructions with tr_id *************************************************)
+(* Destructions with proper condition for path ******************************)
 
-lemma lift_path_id (p):
-      p = ↑[𝐢]p.
-#p elim p -p //
-* [ #n ] #p #IH //
-[ <lift_path_d_sn //
-| <lift_path_L_sn //
-]
-qed.
+lemma path_des_outer_proper (p):
+      p ⧸ϵ 𝐈 → p ϵ 𝐏.
+#p #H1 #H2 destruct
+@H1 -H1 // (**) (* auto fails *)
+qed-.

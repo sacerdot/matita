@@ -12,26 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_prototerm_eq.ma".
-include "delayed_updating/substitution/lift_path_id.ma".
+include "delayed_updating/substitution/lift_eq.ma".
+include "delayed_updating/syntax/path_structure.ma".
 
-(* LIFT FOR PROTOTERM *******************************************************)
+(* LIFT FOR PATH ************************************************************)
 
-(* Constructions with tr_id *************************************************)
+(* Constructions with structure *********************************************)
 
-lemma lift_term_id_sn (t):
-      t ⊆ ↑[𝐢]t.
-#t #p #Hp
->(lift_path_id p)
-/2 width=1 by in_comp_lift_bi/
-qed-.
+lemma structure_lift_path (p) (f):
+      ⊗p = ⊗↑[f]p.
+#p elim p -p //
+* [ #n ] #p #IH #f //
+[ <lift_path_m_sn <structure_m_sn <structure_m_sn //
+| <lift_path_L_sn <structure_L_sn <structure_L_sn //
+]
+qed.
 
-lemma lift_term_id_dx (t):
-      ↑[𝐢]t ⊆ t.
-#t #p * #q #Hq #H destruct //
-qed-.
-
-lemma lift_term_id (t):
-      t ⇔ ↑[𝐢]t.
-/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/      
+lemma lift_path_structure (p) (f):
+      ⊗p = ↑[f]⊗p.
+#p elim p -p //
+* [ #n ] #p #IH #f //
 qed.

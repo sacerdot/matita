@@ -30,7 +30,12 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma ppc_lcons (l) (q): l◗q ϵ 𝐏.
-#l #p #H destruct
+#l #q #H0 destruct
+qed.
+
+lemma ppc_rcons (l) (q): q◖l ϵ 𝐏.
+#l #q #H
+elim (eq_inv_list_empty_rcons ??? H)
 qed.
 
 (* Basic inversions ********************************************************)
