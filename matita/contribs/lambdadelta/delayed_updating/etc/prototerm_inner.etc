@@ -1,0 +1,37 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "delayed_updating/syntax/prototerm.ma".
+include "delayed_updating/syntax/path_inner.ma".
+include "ground/lib/subset_ext_equivalence.ma".
+
+(* INNER CONDITION FOR PROTOTERM ********************************************)
+
+interpretation
+  "inner condition (prototerm)"
+  'ClassI = (subset_ext_p1 path pic).
+
+(* Basic destructions *******************************************************)
+
+lemma in_comp_tic_trans (t) (p):
+      p ϵ t → t ϵ 𝐈 → p ϵ 𝐈.
+#t #p #Hp #Ht
+@(Ht … Hp)
+qed-.
+
+(* Basic inversions *********************************************************)
+
+lemma tic_inv_d_dx (t) (p) (n):
+      p◖𝗱n ϵ t → t ϵ 𝐈 → ⊥.
+/2 width=7 by in_comp_tic_trans/ qed-.

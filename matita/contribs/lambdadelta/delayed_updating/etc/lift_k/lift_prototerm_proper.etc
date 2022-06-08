@@ -12,13 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
-include "ground/relocation/tr_uni_pap.ma".
+include "delayed_updating/substitution/lift_prototerm.ma".
+include "delayed_updating/substitution/lift_path_proper.ma".
+include "delayed_updating/syntax/prototerm_proper.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* LIFT FOR PROTOTERM *******************************************************)
 
-(* Constructions with tr_uni ***********************************************)
+(* Constructions with proper condition for path *****************************)
 
-lemma lift_path_d_sn_uni (p) (m) (n):
-      (𝗱(n+m)◗p) = ↑[𝐮❨m❩](𝗱(n)◗p).
-// qed.
+lemma lift_term_proper (f) (t):
+      t ϵ 𝐏 → ↑[f]t ϵ 𝐏.
+#f #t #Ht #p * #q #Hq #H0 destruct
+@lift_path_proper @Ht -Ht // (**) (* auto fails *)
+qed.
+
+(* Inversions with proper condition for path ********************************)
+
+lemma lift_term_inv_proper (f) (t):
+      ↑[f]t ϵ 𝐏 → t ϵ 𝐏.
+#f #t #Ht #p #Hp
+@(lift_path_inv_proper f)
+@Ht -Ht @in_comp_lift_bi // (**) (* auto fails *)
+qed-.

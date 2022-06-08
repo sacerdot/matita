@@ -13,23 +13,19 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift_eq.ma".
-include "delayed_updating/syntax/path_structure.ma".
+include "ground/relocation/tr_compose_pap.ma".
+include "ground/relocation/tr_compose_pn.ma".
+include "ground/relocation/tr_compose_tls.ma".
 
-(* LIFT FOR PATH ***********************************************************)
+(* LIFT FOR PATH ************************************************************)
 
-(* Constructions with structure ********************************************)
+(* Constructions with tr_after **********************************************)
 
-lemma structure_lift (p) (f):
-      ⊗p = ⊗↑[f]p.
-#p elim p -p //
-* [ #n ] #p #IH #f //
-[ <lift_path_m_sn <structure_m_sn <structure_m_sn //
-| <lift_path_L_sn <structure_L_sn <structure_L_sn //
+lemma lift_path_after (p) (f1) (f2):
+      ↑[f2]↑[f1]p = ↑[f2∘f1]p.
+#p elim p -p [| * ] // [ #n ] #p #IH #f1 #f2
+[ <lift_path_d_sn <lift_path_d_sn <lift_path_d_sn //
+| <lift_path_L_sn <lift_path_L_sn <lift_path_L_sn
+  >tr_compose_push_bi //
 ]
-qed.
-
-lemma lift_structure (p) (f):
-      ⊗p = ↑[f]⊗p.
-#p elim p -p //
-* [ #n ] #p #IH #f //
 qed.
