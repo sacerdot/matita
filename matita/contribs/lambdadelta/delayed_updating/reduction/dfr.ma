@@ -30,5 +30,5 @@ definition dfr (p) (q): relation2 prototerm prototerm ≝
 .
 
 interpretation
-  "focused balanced reduction with delayed updating (prototerm)"
+  "focused reduction with delayed updating (prototerm)"
   'BlackRightArrowDF t1 p q t2 = (dfr p q t1 t2).

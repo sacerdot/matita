@@ -32,9 +32,9 @@ include "delayed_updating/syntax/path_depth_reverse.ma".
 
 (* Constructions with unwind ************************************************)
 
-theorem ifr_unwind_bi (f) (p) (q) (t1) (t2):
-        t1 ϵ 𝐓 → t1⋔(p◖𝗦) ⧸≬ 𝐈 →
-        t1 ➡𝐟[p,q] t2 → ▼[f]t1 ➡𝐟[⊗p,⊗q] ▼[f]t2.
+lemma ifr_unwind_bi (f) (p) (q) (t1) (t2):
+      t1 ϵ 𝐓 → t1⋔(p◖𝗦) ⧸≬ 𝐈 →
+      t1 ➡𝐟[p,q] t2 → ▼[f]t1 ➡𝐟[⊗p,⊗q] ▼[f]t2.
 #f #p #q #t1 #t2 #H1t1 #H2t1
 * #n * #H1n #Ht1 #Ht2
 @(ex_intro … (↑♭q)) @and3_intro
