@@ -17,7 +17,7 @@ include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/syntax/prototerm_equivalence.ma".
 include "delayed_updating/syntax/path_head.ma".
 include "delayed_updating/syntax/path_reverse.ma".
-include "delayed_updating/notation/relations/black_rightarrow_f_4.ma".
+include "delayed_updating/notation/relations/black_rightarrow_if_4.ma".
 
 (* IMMEDIATE FOCUSED REDUCTION ************************************************)
 
@@ -30,4 +30,4 @@ definition ifr (p) (q): relation2 prototerm prototerm ≝
 
 interpretation
   "focused reduction with immediate updating (prototerm)"
-  'BlackRightArrowF t1 p q t2 = (ifr p q t1 t2).
+  'BlackRightArrowIF t1 p q t2 = (ifr p q t1 t2).

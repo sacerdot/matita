@@ -23,12 +23,23 @@ include "delayed_updating/unwind/unwind2_rmap_head.ma".
 *)
 include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
+include "delayed_updating/substitution/lift_path_head.ma".
 
 include "delayed_updating/syntax/prototerm_proper_constructors.ma".
+
 
 (* DELAYED FOCUSED REDUCTION ************************************************)
 
 (* Constructions with lift **************************************************)
+(*
+lemma pippo (f) (r):
+      ↑[↑[r]f](rᴿ) = (↑[f]r)ᴿ.
+#f #r @(list_ind_rcons … r) -r //
+#p * [ #n ] #IH
+[ <reverse_rcons <lift_path_d_sn <lift_rmap_d_dx
+  <lift_path_d_dx <reverse_rcons
+  <IH  
+*)
 
 theorem dfr_lift_bi (f) (p) (q) (t1) (t2): (*t1 ϵ 𝐓 → *)
         t1 ➡𝐝𝐟[p,q] t2 → ↑[f]t1 ➡𝐟[↑[f]p,↑[↑[p◖𝗔◖𝗟]f]q] ↑[f]t2.
@@ -36,7 +47,10 @@ theorem dfr_lift_bi (f) (p) (q) (t1) (t2): (*t1 ϵ 𝐓 → *)
 * #n * #H1n #Ht1 #Ht2
 @(ex_intro … ((↑[p●𝗔◗𝗟◗q]f)＠⧣❨n❩)) @and3_intro
 [ -Ht1 -Ht2
-  >H1n >path_head_structure_depth <H1n -H1n //
+  <lift_rmap_L_dx >lift_path_L_sn
+  >list_append_rcons_sn in H1n; <reverse_append #H1n
+  <(lift_path_head … H1n) -H1n //
+(*
 | lapply (in_comp_unwind2_path_term f … Ht1) -Ht2 -Ht1 -H0t1
   <unwind2_path_d_dx <depth_structure
   >list_append_rcons_sn in H1n; <reverse_append #H1n
@@ -68,3 +82,4 @@ theorem dfr_lift_bi (f) (p) (q) (t1) (t2): (*t1 ϵ 𝐓 → *)
   ]
 ]
 qed.
+*)

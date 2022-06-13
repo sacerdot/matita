@@ -33,7 +33,7 @@ include "delayed_updating/syntax/path_depth_reverse.ma".
 (* Main destructions with ifr ***********************************************)
 
 theorem dfr_des_ifr (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
-        t1 ➡𝐝𝐟[p,q] t2 → ▼[f]t1 ➡𝐟[⊗p,⊗q] ▼[f]t2.
+        t1 ➡𝐝𝐟[p,q] t2 → ▼[f]t1 ➡𝐢𝐟[⊗p,⊗q] ▼[f]t2.
 #f #p #q #t1 #t2 #H0t1
 * #n * #H1n #Ht1 #Ht2
 @(ex_intro … (↑♭q)) @and3_intro

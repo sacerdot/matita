@@ -54,7 +54,7 @@ qed.
 
 (* Main constructions *******************************************************)
 
-theorem reverse_revrse (p):
+theorem reverse_reverse (p):
         p = pᴿᴿ.
 #p elim p -p //
 #l #p #IH

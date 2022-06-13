@@ -38,20 +38,3 @@ lemma lift_term_after (f1) (f2) (t):
 | @subset_equivalence_ext_f1_exteq /2 width=5/
 ]
 qed.
-
-lemma lift_term_id_sn (t):
-      t ⊆ ↑[𝐢]t.
-#t #p #Hp
->(lift_path_id p)
-/2 width=1 by in_comp_lift_bi/
-qed-.
-
-lemma lift_term_id_dx (t):
-      ↑[𝐢]t ⊆ t.
-#t #p * #q #Hq #H destruct //
-qed-.
-
-lemma lift_term_id (t):
-      t ⇔ ↑[𝐢]t.
-/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/
-qed.

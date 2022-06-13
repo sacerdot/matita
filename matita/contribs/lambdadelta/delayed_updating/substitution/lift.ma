@@ -15,7 +15,8 @@
 include "delayed_updating/notation/functions/uparrow_4.ma".
 include "delayed_updating/notation/functions/uparrow_2.ma".
 include "delayed_updating/syntax/path.ma".
-include "ground/relocation/tr_id_pap.ma".
+include "ground/relocation/tr_uni.ma".
+include "ground/relocation/tr_pap_tls.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
@@ -27,7 +28,7 @@ match p with
 [ list_empty     ⇒ k f (𝐞)
 | list_lcons l q ⇒
   match l with
-  [ label_d n ⇒ lift_gen (A) (λg,p. k g (𝗱(f＠⧣❨n❩)◗p)) (𝐢) q
+  [ label_d n ⇒ lift_gen (A) (λg,p. k g (𝗱(f＠⧣❨n❩)◗p)) (⇂*[n]f) q
   | label_m   ⇒ lift_gen (A) (λg,p. k g (𝗺◗p)) f q
   | label_L   ⇒ lift_gen (A) (λg,p. k g (𝗟◗p)) (⫯f) q
   | label_A   ⇒ lift_gen (A) (λg,p. k g (𝗔◗p)) f q
@@ -60,7 +61,7 @@ lemma lift_empty (A) (k) (f):
 // qed.
 
 lemma lift_d_sn (A) (k) (p) (n) (f):
-      ↑❨(λg,p. k g (𝗱(f＠⧣❨n❩)◗p)), 𝐢, p❩ = ↑{A}❨k, f, 𝗱n◗p❩.
+      ↑❨(λg,p. k g (𝗱(f＠⧣❨n❩)◗p)), ⇂*[n]f, p❩ = ↑{A}❨k, f, 𝗱n◗p❩.
 // qed.
 
 lemma lift_m_sn (A) (k) (p) (f):
@@ -92,7 +93,7 @@ lemma lift_rmap_empty (f):
 // qed.
 
 lemma lift_rmap_d_sn (f) (p) (n):
-      ↑[p]𝐢 = ↑[𝗱n◗p]f.
+      ↑[p](⇂*[ninj n]f) = ↑[𝗱n◗p]f.
 // qed.
 
 lemma lift_rmap_m_sn (f) (p):
@@ -111,21 +112,12 @@ lemma lift_rmap_S_sn (f) (p):
       ↑[p]f = ↑[𝗦◗p]f.
 // qed.
 
-(* Advanced cinstructionswith proj_rmap and tr_id ***************************)
-
-lemma lift_rmap_id (p):
-      (𝐢) = ↑[p]𝐢.
-#p elim p -p //
-* [ #n ] #p #IH //
-qed.
-
 (* Advanced constructions with proj_rmap and path_append ********************)
 
 lemma lift_rmap_append (p2) (p1) (f):
       ↑[p2]↑[p1]f = ↑[p1●p2]f.
 #p2 #p1 elim p1 -p1 // * [ #n ] #p1 #IH #f //
-[ <lift_rmap_d_sn <lift_rmap_d_sn //
-| <lift_rmap_m_sn <lift_rmap_m_sn //
+[ <lift_rmap_m_sn <lift_rmap_m_sn //
 | <lift_rmap_A_sn <lift_rmap_A_sn //
 | <lift_rmap_S_sn <lift_rmap_S_sn //
 ]
@@ -134,7 +126,7 @@ qed.
 (* Advanced constructions with proj_rmap and path_rcons *********************)
 
 lemma lift_rmap_d_dx (f) (p) (n):
-      (𝐢) = ↑[p◖𝗱n]f.
+      ⇂*[ninj n](↑[p]f) = ↑[p◖𝗱n]f.
 // qed.
 
 lemma lift_rmap_m_dx (f) (p):
@@ -154,5 +146,5 @@ lemma lift_rmap_S_dx (f) (p):
 // qed.
 
 lemma lift_rmap_pap_d_dx (f) (p) (n) (m):
-      m = ↑[p◖𝗱n]f＠⧣❨m❩.
+      ↑[p]f＠⧣❨m+n❩ = ↑[p◖𝗱n]f＠⧣❨m❩+↑[p]f＠⧣❨n❩.
 // qed.

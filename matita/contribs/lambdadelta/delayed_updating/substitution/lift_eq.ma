@@ -15,6 +15,7 @@
 include "delayed_updating/substitution/lift.ma".
 include "ground/relocation/tr_pap_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".
+include "ground/lib/stream_tls_eq.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
@@ -33,7 +34,7 @@ lemma lift_eq_repl (A) (p) (k1) (k2):
 #k1 #k2 #Hk #f1 #f2 #Hf
 [ <lift_empty <lift_empty /2 width=1 by/
 | <lift_d_sn <lift_d_sn <(tr_pap_eq_repl … Hf)
-  /3 width=1 by stream_eq_refl/
+  /3 width=3 by stream_tls_eq_repl, compose_repl_fwd_sn/
 | /3 width=1 by/
 | /3 width=1 by tr_push_eq_repl/
 | /3 width=1 by/
@@ -86,7 +87,7 @@ lemma lift_path_lcons (f) (p) (l):
 qed.
 
 lemma lift_path_d_sn (f) (p) (n):
-      (𝗱(f＠⧣❨n❩)◗↑[𝐢]p) = ↑[f](𝗱n◗p).
+      (𝗱(f＠⧣❨n❩)◗↑[⇂*[n]f]p) = ↑[f](𝗱n◗p).
 // qed.
 
 lemma lift_path_m_sn (f) (p):
@@ -105,15 +106,6 @@ lemma lift_path_S_sn (f) (p):
       (𝗦◗↑[f]p) = ↑[f](𝗦◗p).
 // qed.
 
-lemma lift_path_id (p):
-      p = ↑[𝐢]p.
-#p elim p -p //
-* [ #n ] #p #IH //
-[ <lift_path_d_sn //
-| <lift_path_L_sn //
-]
-qed.
-
 lemma lift_path_append (p2) (p1) (f):
       (↑[f]p1)●(↑[↑[p1]f]p2) = ↑[f](p1●p2).
 #p2 #p1 elim p1 -p1 //
@@ -126,29 +118,29 @@ lemma lift_path_append (p2) (p1) (f):
 ]
 qed.
 
-lemma lift_path_d_dx (n) (p) (f):
+lemma lift_path_d_dx (f) (p) (n):
       (↑[f]p)◖𝗱((↑[p]f)＠⧣❨n❩) = ↑[f](p◖𝗱n).
-#n #p #f <lift_path_append //
+#f #p #n <lift_path_append //
 qed.
 
-lemma lift_path_m_dx (p) (f):
+lemma lift_path_m_dx (f) (p):
       (↑[f]p)◖𝗺 = ↑[f](p◖𝗺).
-#p #f <lift_path_append //
+#f #p <lift_path_append //
 qed.
 
-lemma lift_path_L_dx (p) (f):
+lemma lift_path_L_dx (f) (p):
       (↑[f]p)◖𝗟 = ↑[f](p◖𝗟).
-#p #f <lift_path_append //
+#f #p <lift_path_append //
 qed.
 
-lemma lift_path_A_dx (p) (f):
+lemma lift_path_A_dx (f) (p):
       (↑[f]p)◖𝗔 = ↑[f](p◖𝗔).
-#p #f <lift_path_append //
+#f #p <lift_path_append //
 qed.
 
-lemma lift_path_S_dx (p) (f):
+lemma lift_path_S_dx (f) (p):
       (↑[f]p)◖𝗦 = ↑[f](p◖𝗦).
-#p #f <lift_path_append //
+#f #p <lift_path_append //
 qed.
 
 (* COMMENT 
@@ -161,4 +153,5 @@ lemma lift_rmap_tls_d_dx (f) (p) (m) (n):
 <lift_rmap_d_dx >nrplus_inj_dx
 /2 width=1 by tr_tls_compose_uni_dx/
 qed.
+
 *)
