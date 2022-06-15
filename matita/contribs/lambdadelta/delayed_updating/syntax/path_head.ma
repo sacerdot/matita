@@ -71,3 +71,20 @@ lemma path_head_A_sn (p) (n):
 lemma path_head_S_sn (p) (n):
       (𝗦◗↳[↑n]p) = ↳[↑n](𝗦◗p).
 // qed.
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_path_empty_head (p) (n):
+      (𝐞) = ↳[n]p → 𝟎 = n.
+*
+[ #m <path_head_empty #H0
+  <(eq_inv_empty_labels … H0) -m //
+| * [ #n ] #p #n @(nat_ind_succ … n) -n // #m #_
+  [ <path_head_d_sn
+  | <path_head_m_sn
+  | <path_head_L_sn
+  | <path_head_A_sn
+  | <path_head_S_sn
+  ] #H0 destruct
+]
+qed-.

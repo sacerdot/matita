@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/prototerm_constructors.ma".
-include "delayed_updating/syntax/prototerm_equivalence.ma".
+include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/notation/functions/class_d_phi_0.ma".
 include "ground/xoa/or_5.ma".
 include "ground/xoa/ex_3_1.ma".

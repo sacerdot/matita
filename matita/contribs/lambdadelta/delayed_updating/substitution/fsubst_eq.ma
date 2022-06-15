@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/fsubst.ma".
-include "delayed_updating/syntax/prototerm_equivalence.ma".
+include "delayed_updating/syntax/prototerm_eq.ma".
 
 (* Constructions with subset_equivalence ************************************)
 

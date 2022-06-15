@@ -1,6 +1,8 @@
+include "ground/arith/nat_rplus_pplus.ma".
 include "ground/relocation/nap.ma".
 include "ground/notation/functions/apply_2.ma".
 include "ground/relocation/tr_compose_pn.ma".
+include "ground/relocation/tr_pap_tls.ma".
 
 definition tr_xap (f) (l:nat): nat ≝
            (⫯f)@↑❨l❩.
@@ -20,6 +22,12 @@ lemma tr_xap_zero (f):
 lemma tr_xap_ninj (f) (p):
       ninj (f＠⧣❨p❩) = f＠❨ninj p❩.
 // qed.
+
+lemma tr_xap_succ_nap (f) (n):
+      ↑(f@↑❨n❩) = f＠❨↑n❩.
+#f #n
+<tr_xap_ninj //
+qed.
 
 lemma tr_compose_xap (f2) (f1) (l):
       f2＠❨f1＠❨l❩❩ = (f2∘f1)＠❨l❩.
@@ -53,3 +61,11 @@ lemma tr_xap_pushs_le (f) (n) (m):
 <tr_xap_unfold >tr_pushs_succ <tr_nap_pushs_lt //
 /2 width=1 by nlt_succ_dx/
 qed-.
+
+lemma tr_xap_plus (n1) (n2) (f):
+      (⇂*[n2]f)＠❨n1❩+f＠❨n2❩ = f＠❨n1+n2❩.
+* [| #n1 ] // * [| #n2 ] // #f
+<nrplus_inj_sn <nrplus_inj_dx
+<nrplus_inj_sn <nrplus_inj_dx
+>tr_pap_plus //
+qed.

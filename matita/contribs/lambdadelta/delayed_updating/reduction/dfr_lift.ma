@@ -42,7 +42,7 @@ lemma pippo (f) (r):
 *)
 
 theorem dfr_lift_bi (f) (p) (q) (t1) (t2): (*t1 ϵ 𝐓 → *)
-        t1 ➡𝐝𝐟[p,q] t2 → ↑[f]t1 ➡𝐟[↑[f]p,↑[↑[p◖𝗔◖𝗟]f]q] ↑[f]t2.
+        t1 ➡𝐝𝐟[p,q] t2 → ↑[f]t1 ➡𝐝𝐟[↑[f]p,↑[↑[p◖𝗔◖𝗟]f]q] ↑[f]t2.
 #f #p #q #t1 #t2
 * #n * #H1n #Ht1 #Ht2
 @(ex_intro … ((↑[p●𝗔◗𝗟◗q]f)＠⧣❨n❩)) @and3_intro
@@ -50,15 +50,11 @@ theorem dfr_lift_bi (f) (p) (q) (t1) (t2): (*t1 ϵ 𝐓 → *)
   <lift_rmap_L_dx >lift_path_L_sn
   >list_append_rcons_sn in H1n; <reverse_append #H1n
   <(lift_path_head … H1n) -H1n //
-(*
-| lapply (in_comp_unwind2_path_term f … Ht1) -Ht2 -Ht1 -H0t1
-  <unwind2_path_d_dx <depth_structure
-  >list_append_rcons_sn in H1n; <reverse_append #H1n
-  lapply (unwind2_rmap_append_pap_closed f … H1n)
-  <reverse_lcons <depth_L_dx #H2n
-  lapply (eq_inv_ninj_bi … H2n) -H2n #H2n <H2n -H2n -H1n #Ht1 //
-| lapply (unwind2_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
+| lapply (in_comp_lift_path_term f … Ht1) -Ht2 -Ht1 -H1n
+  <lift_path_d_dx #Ht1 //
+| lapply (lift_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
+(*  
   @(subset_eq_trans … (unwind2_term_fsubst …))
   [ @fsubst_eq_repl [ // | // ]
     @(subset_eq_trans … (unwind2_term_iref …))

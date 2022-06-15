@@ -12,31 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
-include "delayed_updating/syntax/path_proper.ma".
+include "delayed_updating/syntax/prototerm.ma".
+include "ground/lib/subset_equivalence.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* EQUIVALENCE FOR PROTOTERM ************************************************)
 
-(* Constructions with proper condition for path *****************************)
+(* Constructions with prototerm_root ****************************************)
 
-lemma lift_path_proper (f) (p):
-      p ϵ 𝐏 → ↑[f]p ϵ 𝐏.
-#f *
-[ #H0 elim (ppc_inv_empty … H0)
-| * [ #n ] #p #_
-  [ <lift_path_d_sn /2 width=3 by ppc_lcons/
-  | <lift_path_m_sn /2 width=3 by ppc_lcons/
-  | <lift_path_L_sn /2 width=3 by ppc_lcons/
-  | <lift_path_A_sn /2 width=3 by ppc_lcons/
-  | <lift_path_S_sn /2 width=3 by ppc_lcons/
-  ]
-]
+lemma prototerm_root_incl_repl:
+      ∀t1,t2. t1 ⊆ t2 → ▵t1 ⊆ ▵t2.
+#t1 #t2 #Ht #p * #q #Hq
+/3 width=2 by ex_intro/
 qed.
 
-(* Inversions with proper condition for path ********************************)
-
-lemma lift_path_inv_proper (f) (p):
-      ↑[f]p ϵ 𝐏 → p ϵ 𝐏.
-#f * //
-#H0 elim (ppc_inv_empty … H0)
-qed-.
+lemma prototerm_root_eq_repl:
+      ∀t1,t2. t1 ⇔ t2 → ▵t1 ⇔ ▵t2.
+#t1 #t2 * #H1 #H2
+/3 width=3 by conj, prototerm_root_incl_repl/
+qed.

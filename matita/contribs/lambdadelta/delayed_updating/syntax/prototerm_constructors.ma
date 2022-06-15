@@ -61,7 +61,7 @@ lemma in_comp_iref (t) (q) (n):
       q ϵ t → 𝗱n◗𝗺◗q ϵ 𝛗n.t.
 /2 width=3 by ex2_intro/ qed.
 
-(* Basic Inversions *********************************************************)
+(* Basic inversions *********************************************************)
 
 lemma in_comp_inv_iref (t) (p) (n):
       p ϵ 𝛗n.t →

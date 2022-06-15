@@ -32,5 +32,5 @@ lemma lift_term_inv_proper (f) (t):
       ↑[f]t ϵ 𝐏 → t ϵ 𝐏.
 #f #t #Ht #p #Hp
 @(lift_path_inv_proper f)
-@Ht -Ht @in_comp_lift_bi // (**) (* auto fails *)
+@Ht -Ht @in_comp_lift_path_term // (**) (* auto fails *)
 qed-.

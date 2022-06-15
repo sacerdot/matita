@@ -14,7 +14,7 @@
 
 include "delayed_updating/unwind/unwind2_prototerm.ma".
 include "delayed_updating/substitution/fsubst.ma".
-include "delayed_updating/syntax/prototerm_equivalence.ma".
+include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/path_head.ma".
 include "delayed_updating/syntax/path_reverse.ma".
 include "delayed_updating/notation/relations/black_rightarrow_if_4.ma".

@@ -22,6 +22,10 @@ lemma tr_nap_unfold (f) (l):
       ↓(f＠⧣❨↑l❩) = f@↑❨l❩.
 // qed.
 
+lemma tr_pap_succ_nap (f) (l):
+      ↑(f@↑❨l❩) = f＠⧣❨↑l❩.
+// qed.
+
 lemma tr_compose_nap (f2) (f1) (l):
       f2@↑❨f1@↑❨l❩❩ = (f2∘f1)@↑❨l❩.
 #f2 #f1 #l

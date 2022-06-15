@@ -14,7 +14,7 @@
 
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/syntax/prototerm_constructors.ma".
-include "delayed_updating/syntax/prototerm_equivalence.ma".
+include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/path_head.ma".
 include "delayed_updating/syntax/path_depth.ma".
 include "delayed_updating/syntax/path_reverse.ma".

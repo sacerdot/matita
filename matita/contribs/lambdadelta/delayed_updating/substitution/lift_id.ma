@@ -12,29 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset_ext_equivalence.ma".
-include "delayed_updating/unwind2/unwind_eq.ma".
-include "delayed_updating/unwind2/unwind_prototerm.ma".
+include "delayed_updating/substitution/lift_eq.ma".
+include "ground/relocation/tr_id_pap.ma".
+include "ground/relocation/tr_id_tls.ma".
 
-(* UNWIND FOR PROTOTERM *****************************************************)
+(* LIFT FOR PATH ************************************************************)
 
-(* Constructions with subset_equivalence ************************************)
+(* Constructions with proj_path and tr_id ***********************************)
 
-lemma unwind_term_eq_repl_sn (f1) (f2) (t):
-      f1 ≗ f2 → ▼[f1]t ⇔ ▼[f2]t.
-/3 width=1 by subset_equivalence_ext_f1_exteq, unwind_path_eq_repl/
-qed.
-
-lemma unwind_term_eq_repl_dx (f) (t1) (t2):
-      t1 ⇔ t2 → ▼[f]t1 ⇔ ▼[f]t2.
-/2 width=1 by subset_equivalence_ext_f1_bi/
-qed.
-
-lemma unwind_term_after (f1) (f2) (t):
-      ▼[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
-#f1 #f2 #t @subset_eq_trans
-[
-| @subset_inclusion_ext_f1_compose
-| @subset_equivalence_ext_f1_exteq /2 width=5/
+lemma lift_path_id (p):
+      p = ↑[𝐢]p.
+#p elim p -p //
+* [ #n ] #p #IH //
+[ <lift_path_d_sn //
+| <lift_path_L_sn //
 ]
+qed.
+
+(* Constructions with proj_rmap and tr_id ***********************************)
+
+lemma lift_rmap_id (p):
+      (𝐢) = ↑[p]𝐢.
+#p elim p -p //
+* [ #n ] #p #IH //
 qed.

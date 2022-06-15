@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
-include "delayed_updating/substitution/lift_path_id.ma".
+include "delayed_updating/substitution/lift_id.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)
 
@@ -23,7 +23,7 @@ lemma lift_term_id_sn (t):
       t ⊆ ↑[𝐢]t.
 #t #p #Hp
 >(lift_path_id p)
-/2 width=1 by in_comp_lift_bi/
+/2 width=1 by in_comp_lift_path_term/
 qed-.
 
 lemma lift_term_id_dx (t):

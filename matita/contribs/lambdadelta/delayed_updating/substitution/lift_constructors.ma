@@ -14,14 +14,9 @@
 
 include "delayed_updating/substitution/lift_prototerm_id.ma".
 include "delayed_updating/substitution/lift_path_uni.ma".
-include "delayed_updating/syntax/prototerm_constructors.ma".
+include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)
-
-lemma lift_iref_bi (t1) (t2) (n):
-      t1 ⇔ t2 → 𝛗n.t1 ⇔ 𝛗n.t2.
-/2 width=1 by subset_equivalence_ext_f1_bi/
-qed.
 
 lemma lift_iref_sn (f) (t:prototerm) (n:pnat):
       (𝛗f＠⧣❨n❩.↑[⇂*[n]f]t) ⊆ ↑[f](𝛗n.t).
@@ -34,7 +29,7 @@ lemma lift_iref_dx (f) (t) (n:pnat):
       ↑[f](𝛗n.t) ⊆ 𝛗f＠⧣❨n❩.↑[⇂*[n]f]t.
 #f #t #n #p * #q #Hq #H0 destruct
 elim (in_comp_inv_iref … Hq) -Hq #p #H0 #Hp destruct
-/3 width=1 by in_comp_iref, in_comp_lift_bi/
+/3 width=1 by in_comp_iref, in_comp_lift_path_term/
 qed-.
 
 lemma lift_iref (f) (t) (n:pnat):
@@ -47,5 +42,5 @@ lemma lift_iref_uni (t) (m) (n):
 #t #m #n
 @(subset_eq_trans … (lift_iref …))
 <tr_uni_pap >nsucc_pnpred <tr_tls_succ_uni
-/3 width=1 by lift_iref_bi, lift_term_id/
+/3 width=1 by iref_eq_repl, lift_term_id/
 qed.
