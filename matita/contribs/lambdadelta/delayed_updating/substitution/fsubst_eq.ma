@@ -15,6 +15,8 @@
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 
+(* FOCALIZED SUBSTITUTION ***************************************************)
+
 (* Constructions with subset_equivalence ************************************)
 
 lemma subset_inclusion_fsubst_bi (t1) (t2) (u1) (u2) (p):

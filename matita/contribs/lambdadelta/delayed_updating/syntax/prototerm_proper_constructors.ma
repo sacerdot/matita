@@ -20,6 +20,6 @@ include "delayed_updating/syntax/prototerm_constructors.ma".
 (* Constructions with prototerm constructors ********************************)
 
 lemma ppc_iref (t) (n):
-      (𝛗n.t) ϵ 𝐏.
+      (𝛕n.t) ϵ 𝐏.
 #t #n #p * #q #Hq #H0 destruct //
 qed.

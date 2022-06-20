@@ -19,9 +19,9 @@ include "delayed_updating/syntax/path_proper.ma".
 include "ground/xoa/ex_4_2.ma".
 include "ground/xoa/ex_3_2.ma".
 
-(* GENERIC UNWIND FOR PATH *************************************************)
+(* GENERIC UNWIND FOR PATH **************************************************)
 
-(* Basic constructions with structure **************************************)
+(* Basic constructions with structure ***************************************)
 
 lemma structure_unwind_gen (p) (f):
       ⊗p = ⊗◆[f]p.

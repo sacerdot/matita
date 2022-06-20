@@ -18,7 +18,7 @@ include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/syntax/preterm.ma".
 include "delayed_updating/syntax/prototerm_proper.ma".
 
-(* UNWIND FOR PRETERM ******************************************************)
+(* UNWIND FOR PRETERM *******************************************************)
 
 (* Constructions with fsubst ************************************************)
 

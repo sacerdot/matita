@@ -15,7 +15,7 @@
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/notation/functions/m_hook_1.ma".
 include "delayed_updating/notation/functions/hash_1.ma".
-include "delayed_updating/notation/functions/phi_2.ma".
+include "delayed_updating/notation/functions/tau_2.ma".
 include "delayed_updating/notation/functions/lamda_1.ma".
 include "delayed_updating/notation/functions/at_2.ma".
 
@@ -45,7 +45,7 @@ interpretation
 
 interpretation
   "inner variable reference by depth (prototerm)"
-  'Phi n t = (prototerm_node_1_2 (label_d n) label_m t).
+  'Tau n t = (prototerm_node_1_2 (label_d n) label_m t).
 
 interpretation
   "name-free functional abstraction (prototerm)"
@@ -58,13 +58,13 @@ interpretation
 (* Basic constructions *******************************************************)
 
 lemma in_comp_iref (t) (q) (n):
-      q ϵ t → 𝗱n◗𝗺◗q ϵ 𝛗n.t.
+      q ϵ t → 𝗱n◗𝗺◗q ϵ 𝛕n.t.
 /2 width=3 by ex2_intro/ qed.
 
 (* Basic inversions *********************************************************)
 
 lemma in_comp_inv_iref (t) (p) (n):
-      p ϵ 𝛗n.t →
+      p ϵ 𝛕n.t →
       ∃∃q. 𝗱n◗𝗺◗q = p & q ϵ t.
 #t #p #n * #q #Hq #Hp
 /2 width=3 by ex2_intro/
@@ -80,7 +80,7 @@ elim (eq_inv_list_empty_append … e0) -e0 #H0 #_
 qed-.
 
 lemma prototerm_in_root_inv_lcons_iref:
-      ∀t,p,l,n. l◗p ϵ ▵𝛗n.t →
+      ∀t,p,l,n. l◗p ϵ ▵𝛕n.t →
       ∧∧ 𝗱n = l & p ϵ ▵ɱ.t.
 #t #p #l #n * #q * #r #Hr
 <list_append_lcons_sn #H0 destruct -H0

@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift.ma".
+include "ground/relocation/tr_pap_pap.ma".
 include "ground/relocation/tr_pap_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".
 include "ground/lib/stream_tls_eq.ma".
@@ -142,6 +143,139 @@ lemma lift_path_S_dx (f) (p):
       (↑[f]p)◖𝗦 = ↑[f](p◖𝗦).
 #f #p <lift_path_append //
 qed.
+
+(* Advanced inversions ******************************************************)
+
+lemma lift_path_inv_empty (f) (p):
+      (𝐞) = ↑[f]p → 𝐞 = p.
+#f * // * [ #n ] #p
+[ <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+qed-.
+
+lemma lift_path_inv_d_sn (f) (p) (q) (k):
+      (𝗱k◗q) = ↑[f]p →
+      ∃∃r,h. k = f＠⧣❨h❩ & q = ↑[⇂*[h]f]r & 𝗱h◗r = p.
+#f * [| * [ #n ] #p ] #q #k
+[ <lift_path_empty
+| <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+/2 width=5 by ex3_2_intro/
+qed-.
+
+lemma lift_path_inv_m_sn (f) (p) (q):
+      (𝗺◗q) = ↑[f]p →
+      ∃∃r. q = ↑[f]r & 𝗺◗r = p.
+#f * [| * [ #n ] #p ] #q
+[ <lift_path_empty
+| <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma lift_path_inv_L_sn (f) (p) (q):
+      (𝗟◗q) = ↑[f]p →
+      ∃∃r. q = ↑[⫯f]r & 𝗟◗r = p.
+#f * [| * [ #n ] #p ] #q
+[ <lift_path_empty
+| <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma lift_path_inv_A_sn (f) (p) (q):
+      (𝗔◗q) = ↑[f]p →
+      ∃∃r. q = ↑[f]r & 𝗔◗r = p.
+#f * [| * [ #n ] #p ] #q
+[ <lift_path_empty
+| <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma lift_path_inv_S_sn (f) (p) (q):
+      (𝗦◗q) = ↑[f]p →
+      ∃∃r. q = ↑[f]r & 𝗦◗r = p.
+#f * [| * [ #n ] #p ] #q
+[ <lift_path_empty
+| <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma lift_path_inv_append_dx (q2) (q1) (p) (f):
+      q1●q2 = ↑[f]p →
+      ∃∃p1,p2. q1 = ↑[f]p1 & q2 = ↑[↑[p1]f]p2 & p1●p2 = p.
+#q2 #q1 elim q1 -q1
+[| * [ #n1 ] #q1 #IH ] #p #f
+[ <list_append_empty_sn #H0 destruct
+  /2 width=5 by ex3_2_intro/
+| <list_append_lcons_sn #H0
+  elim (lift_path_inv_d_sn … H0) -H0 #r1 #m1 #_ #_ #H0 #_ -IH
+    elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 destruct
+    elim Hq2 -Hq2 //
+  | elim (lift_path_inv_m_sn … H)
+  | elim (lift_path_inv_L_sn … H) -H #r1 #s1 #Hr1 #Hs1 #H0 destruct
+    elim (IH … Hs1) -IH -Hs1 // -Hq2 #p1 #p2 #H1 #H2 #H3 destruct
+    @(ex3_2_intro … (r1●𝗟◗p1)) //
+    <structure_append <Hr1 -Hr1 //
+  | elim (lift_path_inv_A_sn … H) -H #r1 #s1 #Hr1 #Hs1 #H0 destruct
+    elim (IH … Hs1) -IH -Hs1 // -Hq2 #p1 #p2 #H1 #H2 #H3 destruct
+    @(ex3_2_intro … (r1●𝗔◗p1)) //
+    <structure_append <Hr1 -Hr1 //
+  | elim (lift_path_inv_S_sn … H) -H #r1 #s1 #Hr1 #Hs1 #H0 destruct
+    elim (IH … Hs1) -IH -Hs1 // -Hq2 #p1 #p2 #H1 #H2 #H3 destruct
+    @(ex3_2_intro … (r1●𝗦◗p1)) //
+    <structure_append <Hr1 -Hr1 //
+  ]
+]
+qed-.
+
+(* Main inversions **********************************************************)
+
+theorem lift_path_inj (q:path) (p) (f):
+        ↑[f]q = ↑[f]p → q = p.
+#q elim q -q [| * [ #k ] #q #IH ] #p #f
+[ <lift_path_empty #H0
+  <(lift_path_inv_empty … H0) -H0 //
+| <lift_path_d_sn #H0
+  elim (lift_path_inv_d_sn … H0) -H0 #r #h #H0
+  <(tr_pap_inj ????? H0) -h [1,3: // ] #Hr #H0 destruct
+| <lift_path_m_sn #H0
+  elim (lift_path_inv_m_sn … H0) -H0 #r #Hr #H0 destruct
+| <lift_path_L_sn #H0
+  elim (lift_path_inv_L_sn … H0) -H0 #r #Hr #H0 destruct
+| <lift_path_A_sn #H0
+  elim (lift_path_inv_A_sn … H0) -H0 #r #Hr #H0 destruct
+| <lift_path_S_sn #H0
+  elim (lift_path_inv_S_sn … H0) -H0 #r #Hr #H0 destruct
+]
+<(IH … Hr) -r -IH //
+qed-.
 
 (* COMMENT 
 
