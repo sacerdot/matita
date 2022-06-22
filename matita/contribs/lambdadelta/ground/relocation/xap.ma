@@ -1,8 +1,9 @@
+
+(**) (* reverse include *)
 include "ground/arith/nat_rplus_pplus.ma".
+include "ground/relocation/tr_compose_pn.ma".
 include "ground/relocation/nap.ma".
 include "ground/notation/functions/apply_2.ma".
-include "ground/relocation/tr_compose_pn.ma".
-include "ground/relocation/tr_pap_tls.ma".
 
 definition tr_xap (f) (l:nat): nat ≝
            (⫯f)@↑❨l❩.
