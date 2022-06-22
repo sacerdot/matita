@@ -38,3 +38,27 @@ lemma lift_term_after (f1) (f2) (t):
 | @subset_equivalence_ext_f1_exteq /2 width=5/
 ]
 qed.
+
+lemma lift_term_grafted_sn (f) (t) (p):
+      ↑[↑[p]f](t⋔p) ⊆ (↑[f]t)⋔(↑[f]p).
+#f #t #p #q * #r #Hr #H0 destruct
+@(ex2_intro … Hr) -Hr
+<lift_path_append_sn //
+qed-.
+
+lemma lift_term_grafted_dx (f) (t) (p):
+      (↑[f]t)⋔(↑[f]p) ⊆ ↑[↑[p]f](t⋔p).
+#f #t #p #q * #r #Hr #H0
+elim (lift_path_inv_append_sn … (sym_eq … H0)) -H0
+#p0 #q0 #Hp0 #Hq0 #H0 destruct
+lapply (lift_path_inj … Hp0) -Hp0 #Hp0 destruct
+/2 width=1 by in_comp_lift_path_term/
+qed-.
+
+lemma lift_term_grafted (f) (t) (p):
+      ↑[↑[p]f](t⋔p) ⇔ (↑[f]t)⋔(↑[f]p).
+/3 width=1 by lift_term_grafted_sn, lift_term_grafted_dx, conj/ qed.
+
+lemma lift_term_grafted_S (f) (t) (p):
+      ↑[↑[p]f](t⋔(p◖𝗦)) ⇔ (↑[f]t)⋔((↑[f]p)◖𝗦).
+// qed.

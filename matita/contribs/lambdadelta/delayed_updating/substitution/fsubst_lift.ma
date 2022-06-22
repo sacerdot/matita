@@ -14,10 +14,7 @@
 
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
-(*
-include "delayed_updating/syntax/preterm.ma".
-include "delayed_updating/syntax/prototerm_proper.ma".
-*)
+
 (* FOCALIZED SUBSTITUTION ***************************************************)
 
 (* Constructions with lift for preterm **************************************)
@@ -43,7 +40,7 @@ lemma lift_term_fsubst_dx (f) (t) (u) (p):
   /2 width=3 by ex2_intro/
 | #Hq #H0 #H1 destruct
   @or_intror @conj [ /2 width=1 by in_comp_lift_path_term/ ] -Hq #r #Hr
-  elim (lift_path_inv_append_dx … Hr) -Hr #s1 #s2 #Hs1 #_ #H1 destruct
+  elim (lift_path_inv_append_sn … Hr) -Hr #s1 #s2 #Hs1 #_ #H1 destruct
   lapply (lift_path_inj … Hs1) -Hs1 #H1 destruct 
   /2 width=2 by/
 ]
