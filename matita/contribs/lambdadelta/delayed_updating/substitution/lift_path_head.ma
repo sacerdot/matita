@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
+include "delayed_updating/substitution/lift_gen_eq.ma".
 include "delayed_updating/syntax/path_head.ma".
 include "delayed_updating/syntax/path_reverse.ma".
 include "ground/relocation/xap.ma".

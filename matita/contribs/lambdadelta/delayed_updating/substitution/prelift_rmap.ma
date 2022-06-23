@@ -12,26 +12,44 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_prototerm_eq.ma".
-include "delayed_updating/substitution/lift_path_id.ma".
+include "delayed_updating/notation/functions/uparrow_2.ma".
+include "delayed_updating/syntax/label.ma".
+include "ground/relocation/tr_pn.ma".
+include "ground/lib/stream_tls.ma".
 
-(* LIFT FOR PROTOTERM *******************************************************)
+(* PRELIFT FOR RELOCATION MAP ***********************************************)
 
-(* Constructions with tr_id *************************************************)
+definition prelift_rmap (f) (l): tr_map ≝
+match l with
+[ label_d n ⇒ ⇂*[n]f
+| label_m   ⇒ f
+| label_L   ⇒ ⫯f
+| label_A   ⇒ f
+| label_S   ⇒ f
+].
 
-lemma lift_term_id_sn (t):
-      t ⊆ ↑[𝐢]t.
-#t #p #Hp
->(lift_path_id p)
-/2 width=1 by in_comp_lift_path_term/
-qed-.
+interpretation
+  "prelift (relocation map)"
+  'UpArrow l f = (prelift_rmap f l).
 
-lemma lift_term_id_dx (t):
-      ↑[𝐢]t ⊆ t.
-#t #p * #q #Hq #H destruct //
-qed-.
+(* Basic constructions ******************************************************)
 
-lemma lift_term_id (t):
-      t ⇔ ↑[𝐢]t.
-/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/      
-qed.
+lemma prelift_rmap_d (f) (n:pnat):
+      ⇂*[n]f = ↑[𝗱n]f.
+// qed.
+
+lemma prelift_rmap_m (f):
+      f = ↑[𝗺]f.
+// qed.
+
+lemma prelift_rmap_L (f):
+      (⫯f) = ↑[𝗟]f.
+// qed.
+
+lemma prelift_rmap_A (f):
+      f = ↑[𝗔]f.
+// qed.
+
+lemma prelift_rmap_S (f):
+      f = ↑[𝗦]f.
+// qed.

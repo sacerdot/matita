@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift.ma".
+include "delayed_updating/substitution/lift_gen.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "ground/lib/subset_ext.ma".
 

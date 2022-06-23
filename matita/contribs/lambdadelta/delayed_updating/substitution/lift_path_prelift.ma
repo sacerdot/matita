@@ -12,26 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_prototerm_eq.ma".
-include "delayed_updating/substitution/lift_path_id.ma".
+include "delayed_updating/substitution/lift_gen_eq.ma".
+include "delayed_updating/substitution/prelift_label.ma".
+include "delayed_updating/substitution/prelift_rmap.ma".
 
-(* LIFT FOR PROTOTERM *******************************************************)
+(* LIFT FOR PATH ************************************************************)
 
-(* Constructions with tr_id *************************************************)
+(* Constructions with prelift_rmap and prelift_path *************************)
 
-lemma lift_term_id_sn (t):
-      t ⊆ ↑[𝐢]t.
-#t #p #Hp
->(lift_path_id p)
-/2 width=1 by in_comp_lift_path_term/
-qed-.
+lemma lift_path_lcons_prelift (f) (p) (l):
+      (↑[f]l)◗↑[↑[l]f]p = ↑[f](l◗p).
+#f #p * [ #n ] //
+qed.
 
-lemma lift_term_id_dx (t):
-      ↑[𝐢]t ⊆ t.
-#t #p * #q #Hq #H destruct //
-qed-.
-
-lemma lift_term_id (t):
-      t ⇔ ↑[𝐢]t.
-/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/      
+lemma lift_path_rcons_prelift (f) (p) (l):
+      (↑[f]p)◖↑[↑[p]f]l = ↑[f](p◖l).
+#f #p * [ #n ] //
 qed.

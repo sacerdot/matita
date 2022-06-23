@@ -22,10 +22,18 @@ include "delayed_updating/unwind/unwind2_prototerm.ma".
 
 (* Constructions with lift_prototerm ****************************************)
 
-lemma unwind2_lift_term_after (f1) (f2) (t):
+lemma lift_unwind2_term_after (f1) (f2) (t):
       ↑[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
 #f1 #f2 #t @subset_eq_trans
 [| @subset_inclusion_ext_f1_compose ]
 @subset_equivalence_ext_f1_exteq #p
-@unwind2_lift_path_after
+@lift_unwind2_path_after
+qed.
+
+lemma unwind2_term_after_lift (f1) (f2) (t):
+      ▼[f2]↑[f1]t ⇔ ▼[f2∘f1]t.
+#f1 #f2 #t @subset_eq_trans
+[| @subset_inclusion_ext_f1_compose ]
+@subset_equivalence_ext_f1_exteq #p
+@unwind2_path_after_lift
 qed.

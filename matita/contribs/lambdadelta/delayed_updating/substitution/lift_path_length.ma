@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_eq.ma".
+include "delayed_updating/substitution/lift_gen_eq.ma".
 include "ground/lib/list_length.ma".
 
 (* LIFT FOR PATH ************************************************************)

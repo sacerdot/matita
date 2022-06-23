@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift.ma".
+include "delayed_updating/substitution/lift_gen.ma".
 include "ground/relocation/tr_pap_pap.ma".
 include "ground/relocation/tr_pap_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_id.ma".
+include "delayed_updating/substitution/lift_path_id.ma".
 include "ground/relocation/tr_uni_pap.ma".
 include "ground/relocation/tr_uni_tls.ma".
 

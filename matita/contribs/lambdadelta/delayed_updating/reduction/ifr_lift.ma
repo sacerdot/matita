@@ -12,21 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/dfr.ma".
+include "delayed_updating/reduction/ifr.ma".
+
+include "delayed_updating/unwind/unwind2_path_lift.ma".
 
 include "delayed_updating/substitution/fsubst_lift.ma".
 include "delayed_updating/substitution/fsubst_eq.ma".
-include "delayed_updating/substitution/lift_constructors.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
 include "delayed_updating/substitution/lift_path_head.ma".
 include "delayed_updating/substitution/lift_rmap_head.ma".
 
-(* DELAYED FOCUSED REDUCTION ************************************************)
+(* IMMEDIATE FOCUSED REDUCTION **********************************************)
 
 (* Constructions with lift **************************************************)
 
-theorem dfr_lift_bi (f) (p) (q) (t1) (t2):
-        t1 ➡𝐝𝐟[p,q] t2 → ↑[f]t1 ➡𝐝𝐟[↑[f]p,↑[↑[p◖𝗔◖𝗟]f]q] ↑[f]t2.
+theorem ifr_lift_bi (f) (p) (q) (t1) (t2):
+        t1 ➡𝐢𝐟[p,q] t2 → ↑[f]t1 ➡𝐢𝐟[↑[f]p,↑[↑[p◖𝗔◖𝗟]f]q] ↑[f]t2.
 #f #p #q #t1 #t2
 * #n * #H1n #Ht1 #Ht2
 @(ex_intro … ((↑[p●𝗔◗𝗟◗q]f)＠⧣❨n❩)) @and3_intro
@@ -39,7 +40,8 @@ theorem dfr_lift_bi (f) (p) (q) (t1) (t2):
 | lapply (lift_term_eq_repl_dx f … Ht2) -Ht2 #Ht2 -Ht1
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (lift_term_fsubst …))
-  @fsubst_eq_repl [ // | // ]
+  @fsubst_eq_repl [ // | <lift_path_append // ]
+(*  
   @(subset_eq_trans … (lift_term_iref …))
   @iref_eq_repl
   @(subset_eq_canc_sn … (lift_term_grafted_S …))
@@ -50,3 +52,4 @@ theorem dfr_lift_bi (f) (p) (q) (t1) (t2):
 (* Note: crux of the proof ends *)
 ]
 qed.
+*)
