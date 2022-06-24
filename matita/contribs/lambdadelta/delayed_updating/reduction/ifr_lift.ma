@@ -14,13 +14,13 @@
 
 include "delayed_updating/reduction/ifr.ma".
 
-include "delayed_updating/unwind/unwind2_path_lift.ma".
-
 include "delayed_updating/substitution/fsubst_lift.ma".
 include "delayed_updating/substitution/fsubst_eq.ma".
-include "delayed_updating/substitution/lift_prototerm_eq.ma".
 include "delayed_updating/substitution/lift_path_head.ma".
 include "delayed_updating/substitution/lift_rmap_head.ma".
+
+include "ground/relocation/tr_uni_compose.ma".
+include "ground/relocation/tr_compose_eq.ma".
 
 (* IMMEDIATE FOCUSED REDUCTION **********************************************)
 
@@ -41,15 +41,16 @@ theorem ifr_lift_bi (f) (p) (q) (t1) (t2):
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (lift_term_fsubst …))
   @fsubst_eq_repl [ // | <lift_path_append // ]
-(*  
-  @(subset_eq_trans … (lift_term_iref …))
-  @iref_eq_repl
-  @(subset_eq_canc_sn … (lift_term_grafted_S …))
+  @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))
+  [ @lift_term_grafted_S | skip ]
+  @(subset_eq_trans … (lift_term_after …))
+  @(subset_eq_canc_dx … (lift_term_after …))
   @lift_term_eq_repl_sn
 (* Note: crux of the proof begins *)
+  @(stream_eq_trans … (tr_compose_uni_dx …))
+  @tr_compose_eq_repl //
   >list_append_rcons_sn in H1n; #H1n >lift_rmap_A_dx
   /2 width=1 by tls_lift_rmap_append_closed/
 (* Note: crux of the proof ends *)
 ]
 qed.
-*)

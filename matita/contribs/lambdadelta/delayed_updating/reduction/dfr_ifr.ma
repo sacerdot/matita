@@ -18,9 +18,11 @@ include "delayed_updating/reduction/ifr.ma".
 include "delayed_updating/unwind/unwind2_constructors.ma".
 include "delayed_updating/unwind/unwind2_preterm_fsubst.ma".
 include "delayed_updating/unwind/unwind2_preterm_eq.ma".
+include "delayed_updating/unwind/unwind2_prototerm_lift.ma".
 include "delayed_updating/unwind/unwind2_rmap_head.ma".
 
 include "delayed_updating/substitution/fsubst_eq.ma".
+include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
 include "delayed_updating/syntax/prototerm_proper_constructors.ma".
 include "delayed_updating/syntax/path_head_structure.ma".
@@ -51,9 +53,9 @@ theorem dfr_des_ifr (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
   @(subset_eq_trans … (unwind2_term_fsubst …))
   [ @fsubst_eq_repl [ // | // ]
     @(subset_eq_trans … (unwind2_term_iref …))
-    @(subset_eq_canc_sn … (unwind2_term_eq_repl_dx …))
+    @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))
     [ @unwind2_term_grafted_S /2 width=2 by ex_intro/ | skip ] -Ht1
-    @(subset_eq_trans … (unwind2_term_after …))
+    @(subset_eq_trans … (lift_unwind2_term_after …))
     @unwind2_term_eq_repl_sn
 (* Note: crux of the proof begins *)
     @nstream_eq_inv_ext #m

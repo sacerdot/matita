@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/unwind/unwind2_prototerm.ma".
-include "delayed_updating/unwind/unwind2_path_inner.ma".
+include "delayed_updating/unwind/unwind2_path_structure.ma".
 include "ground/lib/subset_overlap.ma".
 
 (* UNWIND FOR PROTOTERM *****************************************************)

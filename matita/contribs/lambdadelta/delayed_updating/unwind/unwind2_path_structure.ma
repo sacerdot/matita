@@ -111,3 +111,13 @@ elim (unwind_gen_inv_append_inner_sn … Hq1 H0) -Hq1 -H0
 <reverse_rcons <list_tl_lcons <unwind2_rmap_append
 @ex3_2_intro [4: |*: // ] <unwind2_path_unfold // (**) (* auto fails *)
 qed-.
+
+(* Destructions with inner condition for path *******************************)
+
+lemma unwind2_path_des_inner (f) (p):
+      ▼[f]p ϵ 𝐈 → p ϵ 𝐈.
+#f #p @(list_ind_rcons … p) -p //
+#p * [ #n ] #_ //
+<unwind2_path_d_dx #H0
+elim (pic_inv_d_dx … H0)
+qed-.
