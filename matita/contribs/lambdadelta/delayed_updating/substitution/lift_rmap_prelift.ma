@@ -13,14 +13,18 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift_gen.ma".
-include "ground/relocation/tr_id_tls.ma".
+include "delayed_updating/substitution/prelift_rmap.ma".
 
 (* LIFT FOR RELOCATION MAP **************************************************)
 
-(* Constructions with proj_rmap and tr_id ***********************************)
+(* Constructions with prelift_rmap ******************************************)
 
-lemma lift_rmap_id (p):
-      (𝐢) = ↑[p]𝐢.
-#p elim p -p //
-* [ #n ] #p #IH //
+lemma lift_rmap_lcons_prelift (f) (p) (l):
+      ↑[p]↑[l]f = ↑[l◗p]f.
+#f #p * [ #n ] //
+qed.
+
+lemma lift_rmap_rcons_prelift (f) (p) (l):
+      ↑[l]↑[p]f = ↑[p◖l]f.
+#f #p * [ #n ] //
 qed.

@@ -57,14 +57,13 @@ lemma ifr_unwind_bi (f) (p) (q) (t1) (t2):
     @(subset_eq_canc_dx … (unwind2_term_after_lift …))
     @unwind2_term_eq_repl_sn
 (* Note: crux of the proof begins *)
-    @nstream_eq_inv_ext #m
-    <tr_compose_pap <tr_compose_pap
-    <tr_uni_pap <tr_uni_pap <tr_pap_plus
     >list_append_rcons_sn in H1n; <reverse_append #H1n
-    lapply (unwind2_rmap_append_pap_closed f … H1n) #H2n
-    >nrplus_inj_dx in ⊢ (???%); <H2n -H2n
-    lapply (tls_unwind2_rmap_append_closed f … H1n) -H1n #H2n
-    <(tr_pap_eq_repl … H2n) -H2n //
+    @(stream_eq_trans … (tr_compose_uni_dx …))
+    @tr_compose_eq_repl
+    [ <unwind2_rmap_append_pap_closed //
+    | >unwind2_rmap_A_sn <reverse_rcons
+      /2 width=1 by tls_unwind2_rmap_append_closed/
+    ]
 (* Note: crux of the proof ends *)
   | //
   | /2 width=2 by ex_intro/
