@@ -40,13 +40,12 @@ lemma ifr_unwind_bi (f) (p) (q) (t1) (t2):
 @(ex_intro … (↑♭q)) @and3_intro
 [ -H1t1 -H2t1 -Ht1 -Ht2
   >structure_L_sn >structure_reverse
-  >H1n >path_head_structure_depth <H1n -H1n //
+  >H1n in ⊢ (??%?); >path_head_structure_depth <H1n -H1n //
 | lapply (in_comp_unwind2_path_term f … Ht1) -Ht2 -Ht1 -H1t1 -H2t1
-  <unwind2_path_d_dx
-  >list_append_rcons_sn in H1n; <reverse_append #H1n
-  lapply (unwind2_rmap_append_pap_closed f … H1n)
+  <unwind2_path_d_dx >(list_append_rcons_sn … p) <reverse_append
+  lapply (unwind2_rmap_append_pap_closed f … (p◖𝗔)ᴿ … H1n) -H1n
   <reverse_lcons <depth_L_dx #H2n
-  lapply (eq_inv_ninj_bi … H2n) -H2n #H2n <H2n -H2n -H1n #Ht1 //
+  lapply (eq_inv_ninj_bi … H2n) -H2n #H2n <H2n -H2n #Ht1 //
 | lapply (unwind2_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (unwind2_term_fsubst …))
@@ -57,12 +56,12 @@ lemma ifr_unwind_bi (f) (p) (q) (t1) (t2):
     @(subset_eq_canc_dx … (unwind2_term_after_lift …))
     @unwind2_term_eq_repl_sn
 (* Note: crux of the proof begins *)
-    >list_append_rcons_sn in H1n; <reverse_append #H1n
+    >list_append_rcons_sn <reverse_append
     @(stream_eq_trans … (tr_compose_uni_dx …))
     @tr_compose_eq_repl
     [ <unwind2_rmap_append_pap_closed //
     | >unwind2_rmap_A_sn <reverse_rcons
-      /2 width=1 by tls_unwind2_rmap_append_closed/
+      /2 width=1 by tls_unwind2_rmap_closed/
     ]
 (* Note: crux of the proof ends *)
   | //
