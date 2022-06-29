@@ -74,6 +74,11 @@ lemma path_head_S_sn (p) (n):
 
 (* Basic inversions *********************************************************)
 
+lemma eq_inv_path_head_zero_dx (q) (p):
+      q = ↳[𝟎]p → 𝐞 = q.
+#q * //
+qed-.
+
 lemma eq_inv_path_empty_head (p) (n):
       (𝐞) = ↳[n]p → 𝟎 = n.
 *
@@ -86,5 +91,44 @@ lemma eq_inv_path_empty_head (p) (n):
   | <path_head_A_sn
   | <path_head_S_sn
   ] #H0 destruct
+]
+qed-.
+
+(* Constructions with list_append *******************************************)
+
+lemma path_head_refl_append (p) (q) (n):
+      q = ↳[n]q → q = ↳[n](q●p).
+#p #q elim q -q
+[ #n #Hn <(eq_inv_path_empty_head … Hn) -Hn //
+| #l #q #IH #n @(nat_ind_succ … n) -n
+  [ #Hq | #n #_ cases l [ #m ] ]
+  [ lapply (eq_inv_path_head_zero_dx … Hq) -Hq #Hq destruct
+  | <path_head_d_sn <path_head_d_sn
+  | <path_head_m_sn <path_head_m_sn
+  | <path_head_L_sn <path_head_L_sn
+  | <path_head_A_sn <path_head_A_sn
+  | <path_head_S_sn <path_head_S_sn
+  ] #Hq
+  elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+  /3 width=1 by eq_f/
+]
+qed-.
+
+(* Inversions with list_append **********************************************)
+
+lemma eq_inv_path_head_refl_append (p) (q) (n):
+      q = ↳[n](q●p) → q = ↳[n]q.
+#p #q elim q -q
+[ #n #Hn <(eq_inv_path_empty_head … Hn) -p //
+| #l #q #IH #n @(nat_ind_succ … n) -n //
+  #n #_ cases l [ #m ]
+  [ <path_head_d_sn <path_head_d_sn
+  | <path_head_m_sn <path_head_m_sn
+  | <path_head_L_sn <path_head_L_sn
+  | <path_head_A_sn <path_head_A_sn
+  | <path_head_S_sn <path_head_S_sn
+  ] #Hq
+  elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+  /3 width=1 by eq_f/
 ]
 qed-.

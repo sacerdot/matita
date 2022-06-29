@@ -12,6 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(* A SYSTEM OF λ-CALCULUS WITH DELAYED UPDATING 
+ * Initial invocation: - Patience on me to gain peace and perfection! -
+ *)
+
 include "ground/arith/pnat.ma".
 include "delayed_updating/notation/functions/nodelabel_d_1.ma".
 include "delayed_updating/notation/functions/nodelabel_m_0.ma".
