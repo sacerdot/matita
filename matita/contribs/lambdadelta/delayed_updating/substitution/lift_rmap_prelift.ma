@@ -12,17 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_path_structure.ma".
-include "delayed_updating/syntax/path_inner.ma".
+include "delayed_updating/substitution/lift_gen.ma".
+include "delayed_updating/substitution/prelift_rmap.ma".
 
-(* UNWIND FOR PATH **********************************************************)
+(* LIFT FOR RELOCATION MAP **************************************************)
 
-(* Destructions with inner condition for path *******************************)
+(* Constructions with prelift_rmap ******************************************)
 
-lemma unwind2_path_des_inner (f) (p):
-      ▼[f]p ϵ 𝐈 → p ϵ 𝐈.
-#f #p @(list_ind_rcons … p) -p //
-#p * [ #n ] #_ //
-<unwind2_path_d_dx #H0
-elim (pic_inv_d_dx … H0)
-qed-.
+lemma lift_rmap_lcons_prelift (f) (p) (l):
+      ↑[p]↑[l]f = ↑[l◗p]f.
+#f #p * [ #n ] //
+qed.
+
+lemma lift_rmap_rcons_prelift (f) (p) (l):
+      ↑[l]↑[p]f = ↑[p◖l]f.
+#f #p * [ #n ] //
+qed.

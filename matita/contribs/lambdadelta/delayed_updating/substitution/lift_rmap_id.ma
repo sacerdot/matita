@@ -15,7 +15,7 @@
 include "delayed_updating/substitution/lift_gen.ma".
 include "ground/relocation/tr_id_tls.ma".
 
-(* LIFT FOR RELOCATION MAP  *************************************************)
+(* LIFT FOR RELOCATION MAP **************************************************)
 
 (* Constructions with proj_rmap and tr_id ***********************************)
 
