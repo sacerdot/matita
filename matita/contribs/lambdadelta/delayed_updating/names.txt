@@ -1,0 +1,9 @@
+METAVARIABLES
+
+  b         : balanced path
+  f, g      : update function
+  h, k      : reference index by depth
+  l         : label
+  m, n      : natural number
+  p, q, r, s: path
+  t, u, v, w: term
