@@ -86,3 +86,13 @@ lemma list_ind_rcons (A) (Q:predicate …):
 @pull_2 #l2 elim l2 -l2 //
 #a2 #l2 #IH0 #l1 #IH /3 width=1 by/
 qed-.
+
+(* Advanced inversions with list_append *************************************)
+
+lemma eq_inv_list_append_dx_dx_refl (A) (l1) (l2):
+      l1 = l2⨁{A}l1 → ⓔ = l2.
+#A #l1 @(list_ind_rcons … l1) -l1 [ // ]
+#l1 #a1 #IH #l2 <list_append_rcons_dx #H0
+elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_
+/2 width=1 by/
+qed-.
