@@ -24,8 +24,8 @@ include "ground/xoa/ex_5_3.ma".
 (* BY-DEPTH DELAYED (BDD) TERM **********************************************)
 
 inductive bdd: 𝒫❨prototerm❩ ≝
-| bdd_oref: ∀n. bdd (⧣n)
-| bdd_iref: ∀t,n. bdd t → bdd (𝛕n.t)
+| bdd_oref: ∀k. bdd (⧣k)
+| bdd_iref: ∀t,k. bdd t → bdd (𝛕k.t)
 | bdd_abst: ∀t. bdd t → bdd (𝛌.t)
 | bdd_appl: ∀u,t. bdd u → bdd t → bdd (＠u.t)
 | bdd_conv: ∀t1,t2. t1 ⇔ t2 → bdd t1 → bdd t2

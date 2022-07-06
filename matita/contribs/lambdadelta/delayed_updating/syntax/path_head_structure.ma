@@ -19,21 +19,21 @@ include "delayed_updating/syntax/path_structure_labels.ma".
 
 (* Constructions with structure *********************************************)
 
-lemma path_head_structure_height (p) (m):
-      ⊗↳[m]p = ↳[m+♯↳[m]p]⊗p.
+lemma path_head_structure_height (p) (n):
+      ⊗↳[n]p = ↳[n+♯↳[n]p]⊗p.
 #p elim p -p //
-#l #p #IH #m @(nat_ind_succ … m) -m //
-#m #_ cases l [ #n ]
-[ <height_d_sn <structure_d_sn //
-| <structure_m_sn //
-| <structure_L_sn //
-| <height_A_sn <structure_A_sn <nplus_succ_sn <path_head_A_sn //
-| <height_S_sn <structure_S_sn <nplus_succ_sn <path_head_S_sn //
+#l #p #IH #n @(nat_ind_succ … n) -n //
+#n #_ cases l [ #k ]
+[ <height_d_dx <structure_d_dx //
+| <structure_m_dx //
+| <structure_L_dx //
+| <height_A_dx <structure_A_dx <nplus_succ_sn <path_head_A_dx //
+| <height_S_dx <structure_S_dx <nplus_succ_sn <path_head_S_dx //
 ]
 qed.
 
-lemma path_head_structure_depth (p) (m):
-      ⊗↳[m]p = ↳[♭↳[m]p]⊗p.
-#p #m
+lemma path_head_structure_depth (p) (n):
+      ⊗↳[n]p = ↳[♭↳[n]p]⊗p.
+#p #n
 <path_head_depth //
 qed.

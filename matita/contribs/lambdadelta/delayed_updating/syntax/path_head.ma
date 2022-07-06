@@ -19,25 +19,25 @@ include "ground/arith/nat_pred_succ.ma".
 
 (* HEAD FOR PATH ************************************************************)
 
-rec definition path_head (m) (p) on p: path ≝
-match m with
+rec definition path_head (n) (p) on p: path ≝
+match n with
 [ nzero  ⇒ 𝐞
-| ninj o ⇒ 
+| ninj m ⇒
   match p with
-  [ list_empty     ⇒ 𝗟∗∗m
+  [ list_empty     ⇒ 𝗟∗∗n
   | list_lcons l q ⇒
     match l with
-    [ label_d n ⇒ l◗(path_head (m+n) q)
-    | label_m   ⇒ l◗(path_head m q)
-    | label_L   ⇒ l◗(path_head (↓o) q)
-    | label_A   ⇒ l◗(path_head m q)
-    | label_S   ⇒ l◗(path_head m q)
+    [ label_d k ⇒ (path_head (n+k) q)◖l
+    | label_m   ⇒ (path_head n q)◖l
+    | label_L   ⇒ (path_head (↓m) q)◖l
+    | label_A   ⇒ (path_head n q)◖l
+    | label_S   ⇒ (path_head n q)◖l
     ]
   ]
 ].
 
 interpretation
-  "head (reversed path)"
+  "head (path)"
   'DownArrowRight n p = (path_head n p).
 
 (* basic constructions ****************************************************)
@@ -50,26 +50,26 @@ lemma path_head_empty (n):
       (𝗟∗∗n) = ↳[n]𝐞.
 * // qed.
 
-lemma path_head_d_sn (p) (n) (m:pnat):
-      (𝗱m◗↳[↑n+m]p) = ↳[↑n](𝗱m◗p).
+lemma path_head_d_dx (p) (n) (k:pnat):
+      (↳[↑n+k]p)◖𝗱k = ↳[↑n](p◖𝗱k).
 // qed.
 
-lemma path_head_m_sn (p) (n):
-      (𝗺◗↳[↑n]p) = ↳[↑n](𝗺◗p).
+lemma path_head_m_dx (p) (n):
+      (↳[↑n]p)◖𝗺 = ↳[↑n](p◖𝗺).
 // qed.
 
-lemma path_head_L_sn (p) (n):
-      (𝗟◗↳[n]p) = ↳[↑n](𝗟◗p).
+lemma path_head_L_dx (p) (n):
+      (↳[n]p)◖𝗟 = ↳[↑n](p◖𝗟).
 #p #n
 whd in ⊢ (???%); //
 qed.
 
-lemma path_head_A_sn (p) (n):
-      (𝗔◗↳[↑n]p) = ↳[↑n](𝗔◗p).
+lemma path_head_A_dx (p) (n):
+      (↳[↑n]p)◖𝗔 = ↳[↑n](p◖𝗔).
 // qed.
 
-lemma path_head_S_sn (p) (n):
-      (𝗦◗↳[↑n]p) = ↳[↑n](𝗦◗p).
+lemma path_head_S_dx (p) (n):
+      (↳[↑n]p)◖𝗦 = ↳[↑n](p◖𝗦).
 // qed.
 
 (* Basic inversions *********************************************************)
@@ -82,51 +82,51 @@ qed-.
 lemma eq_inv_path_empty_head (p) (n):
       (𝐞) = ↳[n]p → 𝟎 = n.
 *
-[ #m <path_head_empty #H0
-  <(eq_inv_empty_labels … H0) -m //
-| * [ #n ] #p #n @(nat_ind_succ … n) -n // #m #_
-  [ <path_head_d_sn
-  | <path_head_m_sn
-  | <path_head_L_sn
-  | <path_head_A_sn
-  | <path_head_S_sn
+[ #n <path_head_empty #H0
+  <(eq_inv_empty_labels … H0) -n //
+| * [ #k ] #p #n @(nat_ind_succ … n) -n // #n #_
+  [ <path_head_d_dx
+  | <path_head_m_dx
+  | <path_head_L_dx
+  | <path_head_A_dx
+  | <path_head_S_dx
   ] #H0 destruct
 ]
 qed-.
 
-(* Constructions with list_append *******************************************)
+(* Constructions with path_append *******************************************)
 
 lemma path_head_refl_append (p) (q) (n):
-      q = ↳[n]q → q = ↳[n](q●p).
+      q = ↳[n]q → q = ↳[n](p●q).
 #p #q elim q -q
 [ #n #Hn <(eq_inv_path_empty_head … Hn) -Hn //
 | #l #q #IH #n @(nat_ind_succ … n) -n
-  [ #Hq | #n #_ cases l [ #m ] ]
+  [ #Hq | #n #_ cases l [ #k ] ]
   [ lapply (eq_inv_path_head_zero_dx … Hq) -Hq #Hq destruct
-  | <path_head_d_sn <path_head_d_sn
-  | <path_head_m_sn <path_head_m_sn
-  | <path_head_L_sn <path_head_L_sn
-  | <path_head_A_sn <path_head_A_sn
-  | <path_head_S_sn <path_head_S_sn
+  | <path_head_d_dx <path_head_d_dx
+  | <path_head_m_dx <path_head_m_dx
+  | <path_head_L_dx <path_head_L_dx
+  | <path_head_A_dx <path_head_A_dx
+  | <path_head_S_dx <path_head_S_dx
   ] #Hq
   elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
   /3 width=1 by eq_f/
 ]
 qed-.
 
-(* Inversions with list_append **********************************************)
+(* Inversions with path_append **********************************************)
 
 lemma eq_inv_path_head_refl_append (p) (q) (n):
-      q = ↳[n](q●p) → q = ↳[n]q.
+      q = ↳[n](p●q) → q = ↳[n]q.
 #p #q elim q -q
 [ #n #Hn <(eq_inv_path_empty_head … Hn) -p //
 | #l #q #IH #n @(nat_ind_succ … n) -n //
-  #n #_ cases l [ #m ]
-  [ <path_head_d_sn <path_head_d_sn
-  | <path_head_m_sn <path_head_m_sn
-  | <path_head_L_sn <path_head_L_sn
-  | <path_head_A_sn <path_head_A_sn
-  | <path_head_S_sn <path_head_S_sn
+  #n #_ cases l [ #k ]
+  [ <path_head_d_dx <path_head_d_dx
+  | <path_head_m_dx <path_head_m_dx
+  | <path_head_L_dx <path_head_L_dx
+  | <path_head_A_dx <path_head_A_dx
+  | <path_head_S_dx <path_head_S_dx
   ] #Hq
   elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
   /3 width=1 by eq_f/

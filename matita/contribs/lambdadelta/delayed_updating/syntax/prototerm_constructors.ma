@@ -41,11 +41,11 @@ interpretation
 
 interpretation
   "outer variable reference by depth (prototerm)"
-  'Hash n = (prototerm_node_0 (label_d n)).
+  'Hash k = (prototerm_node_0 (label_d k)).
 
 interpretation
   "inner variable reference by depth (prototerm)"
-  'Tau n t = (prototerm_node_1_2 (label_d n) label_m t).
+  'Tau k t = (prototerm_node_1_2 (label_d k) label_m t).
 
 interpretation
   "name-free functional abstraction (prototerm)"
@@ -57,18 +57,19 @@ interpretation
 
 (* Basic constructions *******************************************************)
 
-lemma in_comp_iref (t) (q) (n):
-      q ϵ t → 𝗱n◗𝗺◗q ϵ 𝛕n.t.
+lemma in_comp_iref (t) (q) (k):
+      q ϵ t → 𝗱k◗𝗺◗q ϵ 𝛕k.t.
 /2 width=3 by ex2_intro/ qed.
 
 (* Basic inversions *********************************************************)
 
-lemma in_comp_inv_iref (t) (p) (n):
-      p ϵ 𝛕n.t →
-      ∃∃q. 𝗱n◗𝗺◗q = p & q ϵ t.
-#t #p #n * #q #Hq #Hp
+lemma in_comp_inv_iref (t) (p) (k):
+      p ϵ 𝛕k.t →
+      ∃∃q. 𝗱k◗𝗺◗q = p & q ϵ t.
+#t #p #k * #q #Hq #Hp
 /2 width=3 by ex2_intro/
 qed-.
+
 (* COMMENT
 lemma prototerm_in_root_inv_lcons_oref:
       ∀p,l,n. l◗p ϵ ▵#n →

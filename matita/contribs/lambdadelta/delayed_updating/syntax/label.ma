@@ -35,7 +35,7 @@ inductive label: Type[0] ≝
 
 interpretation
   "variable reference by depth (label)"
-  'NodeLabelD p = (label_d p).
+  'NodeLabelD k = (label_d k).
 
 interpretation
   "mark (label)"

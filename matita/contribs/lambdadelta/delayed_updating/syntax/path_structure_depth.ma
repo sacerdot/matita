@@ -22,9 +22,9 @@ include "delayed_updating/syntax/path_depth.ma".
 lemma depth_structure (p):
       ♭p = ♭⊗p.
 #p elim p -p //
-* [ #n ] #p #IH //
-[ <structure_L_sn <depth_L_sn <depth_L_sn //
-| <structure_A_sn <depth_A_sn <depth_A_sn //
-| <structure_S_sn <depth_S_sn <depth_S_sn //
+* [ #k ] #p #IH //
+[ <structure_L_dx <depth_L_dx <depth_L_dx //
+| <structure_A_dx <depth_A_dx <depth_A_dx //
+| <structure_S_dx <depth_S_dx <depth_S_dx //
 ]
 qed.

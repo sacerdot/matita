@@ -22,5 +22,5 @@ include "delayed_updating/syntax/path_labels.ma".
 lemma depth_labels_L (n):
       n = ♭(𝗟∗∗n).
 #n @(nat_ind_succ … n) -n //
-#n #IH <labels_succ <depth_L_sn //
+#n #IH <labels_succ <depth_L_dx //
 qed.

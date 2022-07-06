@@ -30,12 +30,12 @@ interpretation
 
 (* Basic inversions *********************************************************)
 
-lemma preterm_in_root_append_inv_structure_empty_dx (t) (p) (r):
-      p●r ϵ ▵t → t ϵ 𝐓 →  𝐞 = ⊗r → 𝐞 = r.
-#t #p #r #Hpr #Ht #Hr
-lapply (Ht p ?? Hpr ?)
+lemma preterm_in_root_append_inv_structure_empty_dx (t) (p) (q):
+      p●q ϵ ▵t → t ϵ 𝐓 → 𝐞 = ⊗q → 𝐞 = q.
+#t #p #q #Hpq #Ht #Hq
+lapply (Ht p ?? Hpq ?)
 [ <structure_append //
 | /2 width=2 by prototerm_in_root_append_des_sn/
-| /2 width=3 by eq_inv_list_append_dx_sn_refl/
+| /2 width=3 by eq_inv_list_append_dx_dx_refl/
 ]
 qed-.

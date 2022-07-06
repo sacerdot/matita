@@ -19,7 +19,7 @@ include "ground/lib/subset_ext_equivalence.ma".
 
 (* Constructions with equivalence for prototerm *****************************)
 
-lemma iref_eq_repl (t1) (t2) (n):
-      t1 ⇔ t2 → 𝛕n.t1 ⇔ 𝛕n.t2.
+lemma iref_eq_repl (t1) (t2) (k):
+      t1 ⇔ t2 → 𝛕k.t1 ⇔ 𝛕k.t2.
 /2 width=1 by subset_equivalence_ext_f1_bi/
 qed.

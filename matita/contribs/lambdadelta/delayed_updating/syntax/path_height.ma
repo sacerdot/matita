@@ -23,7 +23,7 @@ match p with
 [ list_empty     ⇒ 𝟎
 | list_lcons l q ⇒
   match l with
-  [ label_d n ⇒ n + height q
+  [ label_d k ⇒ height q + k
   | label_m   ⇒ height q
   | label_L   ⇒ height q
   | label_A   ⇒ height q
@@ -40,39 +40,8 @@ interpretation
 lemma height_empty: 𝟎 = ♯𝐞.
 // qed.
 
-lemma height_d_sn (q) (n): ninj n+♯q = ♯(𝗱n◗q).
-// qed.
-
-lemma height_m_sn (q): ♯q = ♯(𝗺◗q).
-// qed.
-
-lemma height_L_sn (q): ♯q = ♯(𝗟◗q).
-// qed.
-
-lemma height_A_sn (q): ♯q = ♯(𝗔◗q).
-// qed.
-
-lemma height_S_sn (q): ♯q = ♯(𝗦◗q).
-// qed.
-
-(* Main constructions *******************************************************)
-
-theorem height_append (p1) (p2):
-        (♯p2+♯p1) = ♯(p1●p2).
-#p1 elim p1 -p1 //
-* [ #n ] #p1 #IH #p2 <list_append_lcons_sn
-[ <height_d_sn <height_d_sn //
-| <height_m_sn <height_m_sn //
-| <height_L_sn <height_L_sn //
-| <height_A_sn <height_A_sn //
-| <height_S_sn <height_S_sn //
-]
-qed.
-
-(* Constructions with list_rcons ********************************************)
-
-lemma height_d_dx (p) (n):
-      (♯p)+(ninj n) = ♯(p◖𝗱n).
+lemma height_d_dx (p) (k:pnat):
+      (♯p)+k = ♯(p◖𝗱k).
 // qed.
 
 lemma height_m_dx (p):
@@ -89,4 +58,40 @@ lemma height_A_dx (p):
 
 lemma height_S_dx (p):
       (♯p) = ♯(p◖𝗦).
+// qed.
+
+(* Main constructions *******************************************************)
+
+theorem height_append (p) (q):
+        (♯p+♯q) = ♯(p●q).
+#p #q elim q -q //
+* [ #k ] #q #IH <list_append_lcons_sn
+[ <height_d_dx <height_d_dx //
+| <height_m_dx <height_m_dx //
+| <height_L_dx <height_L_dx //
+| <height_A_dx <height_A_dx //
+| <height_S_dx <height_S_dx //
+]
+qed.
+
+(* Constructions with path_lcons ********************************************)
+
+lemma height_d_sn (p) (k:pnat):
+      k+♯p = ♯(𝗱k◗p).
+// qed.
+
+lemma height_m_sn (p):
+      ♯p = ♯(𝗺◗p).
+// qed.
+
+lemma height_L_sn (p):
+      ♯p = ♯(𝗟◗p).
+// qed.
+
+lemma height_A_sn (p):
+      ♯p = ♯(𝗔◗p).
+// qed.
+
+lemma height_S_sn (p):
+      ♯p = ♯(𝗦◗p).
 // qed.

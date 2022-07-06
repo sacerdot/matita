@@ -40,39 +40,8 @@ interpretation
 lemma depth_empty: 𝟎 = ♭𝐞.
 // qed.
 
-lemma depth_d_sn (q) (n): ♭q = ♭(𝗱n◗q).
-// qed.
-
-lemma depth_m_sn (q): ♭q = ♭(𝗺◗q).
-// qed.
-
-lemma depth_L_sn (q): ↑♭q = ♭(𝗟◗q).
-// qed.
-
-lemma depth_A_sn (q): ♭q = ♭(𝗔◗q).
-// qed.
-
-lemma depth_S_sn (q): ♭q = ♭(𝗦◗q).
-// qed.
-
-(* Main constructions *******************************************************)
-
-theorem depth_append (p1) (p2):
-        (♭p2)+(♭p1) = ♭(p1●p2).
-#p1 elim p1 -p1 //
-* [ #n ] #p1 #IH #p2 <list_append_lcons_sn
-[ <depth_d_sn <depth_d_sn //
-| <depth_m_sn <depth_m_sn //
-| <depth_L_sn <depth_L_sn //
-| <depth_A_sn <depth_A_sn //
-| <depth_S_sn <depth_S_sn //
-]
-qed.
-
-(* Constructions with list_rcons ********************************************)
-
-lemma depth_d_dx (p) (n):
-      ♭p = ♭(p◖𝗱n).
+lemma depth_d_dx (p) (k):
+      ♭p = ♭(p◖𝗱k).
 // qed.
 
 lemma depth_m_dx (p):
@@ -89,4 +58,40 @@ lemma depth_A_dx (p):
 
 lemma depth_S_dx (p):
       ♭p = ♭(p◖𝗦).
+// qed.
+
+(* Main constructions *******************************************************)
+
+theorem depth_append (p) (q):
+        (♭p)+(♭q) = ♭(p●q).
+#p #q elim q -q //
+* [ #k ] #q #IH <list_append_lcons_sn
+[ <depth_d_dx <depth_d_dx //
+| <depth_m_dx <depth_m_dx //
+| <depth_L_dx <depth_L_dx //
+| <depth_A_dx <depth_A_dx //
+| <depth_S_dx <depth_S_dx //
+]
+qed.
+
+(* Constructions with path_lcons ********************************************)
+
+lemma depth_d_sn (p) (k):
+      ♭p = ♭(𝗱k◗p).
+// qed.
+
+lemma depth_m_sn (p):
+      ♭p = ♭(𝗺◗p).
+// qed.
+
+lemma depth_L_sn (p):
+      ↑♭p = ♭(𝗟◗p).
+// qed.
+
+lemma depth_A_sn (p):
+      ♭p = ♭(𝗔◗p).
+// qed.
+
+lemma depth_S_sn (p):
+      ♭p = ♭(𝗦◗p).
 // qed.

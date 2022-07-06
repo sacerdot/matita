@@ -21,7 +21,8 @@ include "delayed_updating/syntax/label.ma".
 
 (* PATH *********************************************************************)
 
-(* Note: a path is a list of labels *) 
+(* Note: a path is a list of labels *)
+(* Note: constructed from the leaf (right end) to the root (left end) *)
 definition path ≝ list label.
 
 interpretation
@@ -29,13 +30,13 @@ interpretation
   'ElementE = (list_empty label).
 
 interpretation
-  "left cons (paths)"
-  'BlackHalfCircleRight l p = (list_lcons label l p).
+  "right cons (paths)"
+  'BlackHalfCircleLeft p l = (list_lcons label l p).
 
 interpretation
   "append (paths)"
-  'BlackCircle l1 l2 = (list_append label l1 l2).
+  'BlackCircle p q = (list_append label q p).
 
 interpretation
-  "right cons (paths)"
-  'BlackHalfCircleLeft p l = (list_append label p (list_lcons label l (list_empty label))).
+  "left cons (paths)"
+  'BlackHalfCircleRight l p = (list_append label p (list_lcons label l (list_empty label))).

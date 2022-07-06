@@ -22,11 +22,11 @@ match p with
 [ list_empty     ⇒ 𝐞
 | list_lcons l q ⇒
    match l with
-   [ label_d n ⇒ structure q
+   [ label_d k ⇒ structure q
    | label_m   ⇒ structure q
-   | label_L   ⇒ 𝗟◗structure q
-   | label_A   ⇒ 𝗔◗structure q
-   | label_S   ⇒ 𝗦◗structure q
+   | label_L   ⇒ (structure q)◖𝗟
+   | label_A   ⇒ (structure q)◖𝗔
+   | label_S   ⇒ (structure q)◖𝗦
    ]
 ].
 
@@ -40,62 +40,62 @@ lemma structure_empty:
       𝐞 = ⊗𝐞.
 // qed.
 
-lemma structure_d_sn (p) (n):
-      ⊗p = ⊗(𝗱n◗p).
+lemma structure_d_dx (p) (k):
+      ⊗p = ⊗(p◖𝗱k).
 // qed.
 
-lemma structure_m_sn (p):
-      ⊗p = ⊗(𝗺◗p).
+lemma structure_m_dx (p):
+      ⊗p = ⊗(p◖𝗺).
 // qed.
 
-lemma structure_L_sn (p):
-      (𝗟◗⊗p) = ⊗(𝗟◗p).
+lemma structure_L_dx (p):
+      (⊗p)◖𝗟 = ⊗(p◖𝗟).
 // qed.
 
-lemma structure_A_sn (p):
-      (𝗔◗⊗p) = ⊗(𝗔◗p).
+lemma structure_A_dx (p):
+      (⊗p)◖𝗔 = ⊗(p◖𝗔).
 // qed.
 
-lemma structure_S_sn (p):
-      (𝗦◗⊗p) = ⊗(𝗦◗p).
+lemma structure_S_dx (p):
+      (⊗p)◖𝗦 = ⊗(p◖𝗦).
 // qed.
 
 (* Main constructions *******************************************************)
 
 theorem structure_idem (p):
         ⊗p = ⊗⊗p.
-#p elim p -p [| * [ #n ] #p #IH ] //
+#p elim p -p [| * [ #k ] #p #IH ] //
 qed.
 
-theorem structure_append (p1) (p2):
-        ⊗p1●⊗p2 = ⊗(p1●p2).
-#p1 elim p1 -p1 [| * [ #n ] #p1 #IH ] #p2
+theorem structure_append (p) (q):
+        ⊗p●⊗q = ⊗(p●q).
+#p #q elim q -q [| * [ #k ] #q #IH ]
 [||*: <list_append_lcons_sn ] //
 qed.
 
-(* Constructions with list_rcons ********************************************)
+(* Constructions with path_lcons ********************************************)
 
-lemma structure_d_dx (p) (n):
-      ⊗p = ⊗(p◖𝗱n).
+lemma structure_d_sn (p) (k):
+      ⊗p = ⊗(𝗱k◗p).
 #p #n <structure_append //
 qed.
 
-lemma structure_m_dx (p):
-      ⊗p = ⊗(p◖𝗺).
+lemma structure_m_sn (p):
+      ⊗p = ⊗(𝗺◗p).
 #p <structure_append //
 qed.
 
-lemma structure_L_dx (p):
-      (⊗p)◖𝗟 = ⊗(p◖𝗟).
+lemma structure_L_sn (p):
+      (𝗟◗⊗p) = ⊗(𝗟◗p).
 #p <structure_append //
 qed.
 
-lemma structure_A_dx (p):
-      (⊗p)◖𝗔 = ⊗(p◖𝗔).
+lemma structure_A_sn (p):
+      (𝗔◗⊗p) = ⊗(𝗔◗p).
 #p <structure_append //
 qed.
 
-lemma structure_S_dx (p):
-      (⊗p)◖𝗦 = ⊗(p◖𝗦).
+lemma structure_S_sn (p):
+      (𝗦◗⊗p) = ⊗(𝗦◗p).
 #p <structure_append //
 qed.

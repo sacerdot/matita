@@ -36,7 +36,7 @@ lemma labels_zero (l):
 // qed.
 
 lemma labels_succ (l) (n):
-      l◗(l∗∗n) = l∗∗(↑n).
+      (l∗∗n)◖l = l∗∗(↑n).
 #l #n
 <labels_unfold <labels_unfold <niter_succ //
 qed.

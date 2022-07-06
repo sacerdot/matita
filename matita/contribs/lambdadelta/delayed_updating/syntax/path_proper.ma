@@ -29,13 +29,15 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma ppc_lcons (l) (q): l◗q ϵ 𝐏.
-#l #q #H0 destruct
+lemma ppc_rcons (p) (l):
+      p◖l ϵ 𝐏.
+#p #l #H0 destruct
 qed.
 
-lemma ppc_rcons (l) (q): q◖l ϵ 𝐏.
-#l #q #H
-elim (eq_inv_list_empty_rcons ??? H)
+lemma ppc_lcons (p) (l):
+      l◗p ϵ 𝐏.
+#p #l #H0
+elim (eq_inv_list_empty_rcons ??? H0)
 qed.
 
 (* Basic inversions ********************************************************)
@@ -45,16 +47,16 @@ lemma ppc_inv_empty:
 #H0 @H0 -H0 //
 qed-.
 
-lemma ppc_inv_lcons (p):
-      p ϵ 𝐏 → ∃∃l,q. l◗q = p.
+lemma ppc_inv_rcons (p):
+      p ϵ 𝐏 → ∃∃q,l. q◖l = p.
 *
 [ #H0 elim (ppc_inv_empty … H0)
 | #l #q #_ /2 width=3 by ex1_2_intro/
 ]
 qed-.
 
-lemma ppc_inv_rcons (p):
-      p ϵ 𝐏 → ∃∃q,l. q◖l = p.
+lemma ppc_inv_lcons (p):
+      p ϵ 𝐏 → ∃∃q,l. l◗q = p.
 #p @(list_ind_rcons … p) -p
 [ #H0 elim (ppc_inv_empty … H0)
 | #q #l #_ #_ /2 width=3 by ex1_2_intro/

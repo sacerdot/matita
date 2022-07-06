@@ -21,9 +21,9 @@ include "delayed_updating/syntax/path_inner.ma".
 
 lemma structure_pic (p):
       ⊗p ϵ 𝐈.
-#p @(list_ind_rcons … p) -p
+#p elim p -p
 [ <structure_empty //
-| #p * [ #n ] #IH
+| * [ #k ] #p #IH
   [ <structure_d_dx //
   | <structure_m_dx //
   | <structure_L_dx //

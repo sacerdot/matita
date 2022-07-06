@@ -22,5 +22,5 @@ include "delayed_updating/syntax/path_labels.ma".
 lemma height_labels_L (n):
       (𝟎) = ♯(𝗟∗∗n).
 #n @(nat_ind_succ … n) -n //
-#n #IH <labels_succ <height_L_sn //
+#n #IH <labels_succ <height_L_dx //
 qed.
