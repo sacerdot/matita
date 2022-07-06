@@ -21,42 +21,40 @@ include "ground/lib/stream_eq_eq.ma".
 
 (* Constructions with path_head *********************************************)
 
-lemma tls_plus_lift_rmap_reverse_closed (f) (q) (p) (n) (k):
-      q = (↳[n]q)●p →
-      ⇂*[k]↑[pᴿ]f ≗ ⇂*[n+k]↑[qᴿ]f.
+lemma tls_plus_lift_rmap_reverse_closed (f) (q) (n) (k):
+      q = ↳[n]q →
+      ⇂*[k]f ≗ ⇂*[n+k]↑[qᴿ]f.
 #f #q elim q -q
-[ #p #n #k #Hp
-  elim (eq_inv_list_empty_append … Hp) -Hp #Hn #H0 destruct
-  <path_head_empty in Hn; #Hn
-  <(eq_inv_empty_labels … Hn) -n //
-| #l #q #IH #p #n @(nat_ind_succ … n) -n //
+[ #n #k #Hq
+  <(eq_inv_path_empty_head … Hq) -n //
+| #l #q #IH #n @(nat_ind_succ … n) -n //
   #n #_ #k cases l [ #m ]
-  [ <path_head_d_sn <list_append_lcons_sn #Hp
-    elim (eq_inv_list_lcons_bi ????? Hp) -Hp #_ #Hp <nrplus_inj_sn
+  [ <path_head_d_sn #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hp <nrplus_inj_sn
     <reverse_lcons
     @(stream_eq_trans … (tls_lift_rmap_d_dx …))
     >nrplus_inj_dx >nrplus_inj_sn >nrplus_inj_sn <nplus_plus_comm_23
     >nsucc_unfold /2 width=1 by/
-  | <path_head_m_sn <list_append_lcons_sn #Hp
-    elim (eq_inv_list_lcons_bi ????? Hp) -Hp #_ #Hp
+  | <path_head_m_sn #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
     <reverse_lcons <lift_rmap_m_dx /2 width=1 by/
-  | <path_head_L_sn <list_append_lcons_sn #Hp
-    elim (eq_inv_list_lcons_bi ????? Hp) -Hp #_ #Hp
+  | <path_head_L_sn #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
     <reverse_lcons <lift_rmap_L_dx <nplus_succ_sn /2 width=1 by/
-  | <path_head_A_sn <list_append_lcons_sn #Hp
-    elim (eq_inv_list_lcons_bi ????? Hp) -Hp #_ #Hp
+  | <path_head_A_sn #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
     <reverse_lcons <lift_rmap_A_dx /2 width=2 by/
-  | <path_head_S_sn <list_append_lcons_sn #Hp
-    elim (eq_inv_list_lcons_bi ????? Hp) -Hp #_ #Hp
+  | <path_head_S_sn #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
     <reverse_lcons <lift_rmap_S_dx /2 width=2 by/
   ]
 ]
 qed-.
 
-lemma tls_lift_rmap_append_closed (f) (p) (q) (n):
-      qᴿ = ↳[n](p●q)ᴿ →
-      ↑[p]f ≗ ⇂*[n]↑[p●q]f.
-#f #p #q #n #H0
->(reverse_reverse p) >(reverse_reverse q)
+lemma tls_lift_rmap_closed (f) (q) (n):
+      qᴿ = ↳[n](qᴿ) →
+      f ≗ ⇂*[n]↑[q]f.
+#f #q #n #H0
+>(reverse_reverse q)
 /2 width=1 by tls_plus_lift_rmap_reverse_closed/
 qed.

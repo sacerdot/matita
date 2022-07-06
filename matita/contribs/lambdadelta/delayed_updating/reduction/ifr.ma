@@ -24,7 +24,7 @@ include "delayed_updating/notation/relations/black_rightarrow_if_4.ma".
 definition ifr (p) (q): relation2 prototerm prototerm ≝
            λt1,t2. ∃n:pnat.
            let r ≝ p●𝗔◗𝗟◗q in
-           ∧∧ (𝗟◗q)ᴿ = ↳[n](rᴿ) & r◖𝗱n ϵ t1 &
+           ∧∧ (𝗟◗q)ᴿ = ↳[n](𝗟◗q)ᴿ & r◖𝗱n ϵ t1 &
               t1[⋔r←↑[𝐮❨n❩](t1⋔(p◖𝗦))] ⇔ t2
 .
 
