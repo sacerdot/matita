@@ -12,18 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path_id.ma".
-include "ground/relocation/tr_uni_pap.ma".
-include "ground/relocation/tr_uni_tls.ma".
-include "ground/arith/nat_pred_succ.ma".
+include "delayed_updating/substitution/lift_prototerm_eq.ma".
+include "delayed_updating/substitution/lift_path_after.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* LIFT FOR PROTOTERM *******************************************************)
 
-(* Constructions with tr_uni ************************************************)
+(* Constructions with tr_after **********************************************)
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = ↑[𝐮❨n❩](𝗱k◗p).
-#p #n #k
-<lift_path_d_sn <tr_uni_pap >nsucc_pnpred
-<tr_tls_succ_uni //
+lemma lift_term_after (f) (g) (t):
+      ↑[g]↑[f]t ⇔ ↑[g∘f]t.
+#f #g #t @subset_eq_trans
+[
+| @subset_inclusion_ext_f1_compose
+| @subset_equivalence_ext_f1_exteq /2 width=5/
+]
 qed.

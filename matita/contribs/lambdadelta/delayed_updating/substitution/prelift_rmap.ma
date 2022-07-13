@@ -21,7 +21,7 @@ include "ground/lib/stream_tls.ma".
 
 definition prelift_rmap (f) (l): tr_map ≝
 match l with
-[ label_d n ⇒ ⇂*[n]f
+[ label_d k ⇒ ⇂*[k]f
 | label_m   ⇒ f
 | label_L   ⇒ ⫯f
 | label_A   ⇒ f
@@ -34,8 +34,8 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma prelift_rmap_d (f) (n:pnat):
-      ⇂*[n]f = ↑[𝗱n]f.
+lemma prelift_rmap_d (f) (k:pnat):
+      ⇂*[k]f = ↑[𝗱k]f.
 // qed.
 
 lemma prelift_rmap_m (f):

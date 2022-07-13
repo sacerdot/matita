@@ -12,21 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_gen_eq.ma".
+include "delayed_updating/substitution/lift_path.ma".
 include "ground/lib/list_length.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
 (* Constructions with list_length *******************************************)
 
-lemma lift_path_length (p) (f):
+lemma lift_path_length (f) (p):
       ❘p❘ = ❘↑[f]p❘.
-#p elim p -p // * [ #n ] #p #IH #f
-[ <lift_path_d_sn
-| <lift_path_m_sn
-| <lift_path_L_sn
-| <lift_path_A_sn
-| <lift_path_S_sn
+#f #p elim p -p // * [ #k ] #p #IH
+[ <lift_path_d_dx
+| <lift_path_m_dx
+| <lift_path_L_dx
+| <lift_path_A_dx
+| <lift_path_S_dx
 ]
 >list_length_lcons >list_length_lcons //
 qed.

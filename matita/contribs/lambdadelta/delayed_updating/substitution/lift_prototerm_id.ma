@@ -33,5 +33,5 @@ qed-.
 
 lemma lift_term_id (t):
       t ⇔ ↑[𝐢]t.
-/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/      
+/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/
 qed.

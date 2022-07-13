@@ -12,18 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path_id.ma".
-include "ground/relocation/tr_uni_pap.ma".
-include "ground/relocation/tr_uni_tls.ma".
-include "ground/arith/nat_pred_succ.ma".
+include "delayed_updating/substitution/lift_rmap.ma".
+include "ground/relocation/tr_pn_eq.ma".
+include "ground/lib/stream_tls_plus.ma".
+include "ground/lib/stream_tls_eq.ma".
+include "ground/arith/nat_plus_rplus.ma".
+include "ground/arith/nat_rplus_pplus.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* LIFT FOR RELOCATION MAP **************************************************)
 
-(* Constructions with tr_uni ************************************************)
+(* Constructions with lift_eq ***********************************************)
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = ↑[𝐮❨n❩](𝗱k◗p).
-#p #n #k
-<lift_path_d_sn <tr_uni_pap >nsucc_pnpred
-<tr_tls_succ_uni //
+lemma lift_rmap_eq_repl (p):
+      stream_eq_repl … (λf1,f2. ↑[p]f1 ≗ ↑[p]f2).
+#p elim p -p //
+* [ #k ] #p #IH #f1 #f2 #Hf
+[ /3 width=1 by stream_tls_eq_repl/
+| /2 width=1 by/
+| /3 width=1 by tr_push_eq_repl/
+| /2 width=1 by/
+| /2 width=1 by/
+]
+qed.
+
+lemma tls_lift_rmap_d_dx (f) (p) (n) (k):
+      ⇂*[n+k]↑[p]f ≗ ⇂*[n]↑[p◖𝗱k]f.
+#f #p #n #k
+<lift_rmap_d_dx >nrplus_inj_dx >nrplus_inj_sn //
 qed.

@@ -12,19 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_gen_eq.ma".
-include "ground/relocation/tr_id_pap.ma".
-include "ground/relocation/tr_id_tls.ma".
+include "delayed_updating/substitution/lift_path.ma".
+include "delayed_updating/substitution/lift_rmap_id.ma".
+include "delayed_updating/substitution/prelift_label_id.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
-(* Constructions with proj_path and tr_id ***********************************)
+(* Constructions with tr_id *************************************************)
 
 lemma lift_path_id (p):
       p = ↑[𝐢]p.
 #p elim p -p //
-* [ #n ] #p #IH //
-[ <lift_path_d_sn //
-| <lift_path_L_sn //
-]
+#l #p #IH
+<lift_path_rcons //
 qed.

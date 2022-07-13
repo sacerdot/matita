@@ -12,19 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_gen.ma".
-include "delayed_updating/substitution/prelift_rmap.ma".
+include "delayed_updating/substitution/prelift_label.ma".
+include "ground/relocation/tr_compose_pap.ma".
 
-(* LIFT FOR RELOCATION MAP **************************************************)
+(* PRELIFT FOR LABEL ********************************************************)
 
-(* Constructions with prelift_rmap ******************************************)
+(* Constructions with tr_after **********************************************)
 
-lemma lift_rmap_lcons_prelift (f) (p) (l):
-      ↑[p]↑[l]f = ↑[l◗p]f.
-#f #p * [ #n ] //
-qed.
-
-lemma lift_rmap_rcons_prelift (f) (p) (l):
-      ↑[l]↑[p]f = ↑[p◖l]f.
-#f #p * [ #n ] //
+lemma prelift_label_after (g) (f) (l):
+      ↑[g]↑[f]l = ↑[g∘f]l.
+#g #f * [ #k ] //
 qed.

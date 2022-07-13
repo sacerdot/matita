@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_gen.ma".
+include "delayed_updating/substitution/lift_path.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "ground/lib/subset_ext.ma".
 
@@ -20,11 +20,11 @@ include "ground/lib/subset_ext.ma".
 
 interpretation
   "lift (prototerm)"
-  'UpArrow f t = (subset_ext_f1 ? ? (lift_gen ? proj_path f) t).
+  'UpArrow f t = (subset_ext_f1 ? ? (lift_path f) t).
 
 (* Basic constructions ******************************************************)
 
-lemma in_comp_lift_path_term (f) (p) (t):
+lemma in_comp_lift_path_term (f) (t) (p):
       p ϵ t → ↑[f]p ϵ ↑[f]t.
 /2 width=1 by subset_in_ext_f1_dx/
 qed.

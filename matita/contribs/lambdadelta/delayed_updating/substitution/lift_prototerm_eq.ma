@@ -12,8 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+(**) (* reverse include *)
 include "ground/lib/subset_ext_equivalence.ma".
-include "delayed_updating/substitution/lift_path_after.ma".
+include "delayed_updating/substitution/lift_path_eq.ma".
 include "delayed_updating/substitution/lift_prototerm.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)
@@ -30,20 +31,10 @@ lemma lift_term_eq_repl_dx (f) (t1) (t2):
 /2 width=1 by subset_equivalence_ext_f1_bi/
 qed.
 
-lemma lift_term_after (f1) (f2) (t):
-      ↑[f2]↑[f1]t ⇔ ↑[f2∘f1]t.
-#f1 #f2 #t @subset_eq_trans
-[
-| @subset_inclusion_ext_f1_compose
-| @subset_equivalence_ext_f1_exteq /2 width=5/
-]
-qed.
-
 lemma lift_term_grafted_sn (f) (t) (p):
       ↑[↑[p]f](t⋔p) ⊆ (↑[f]t)⋔(↑[f]p).
 #f #t #p #q * #r #Hr #H0 destruct
-@(ex2_intro … Hr) -Hr
-<lift_path_append_sn //
+/2 width=3 by ex2_intro/
 qed-.
 
 lemma lift_term_grafted_dx (f) (t) (p):

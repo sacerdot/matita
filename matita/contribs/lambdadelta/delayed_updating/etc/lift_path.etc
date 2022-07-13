@@ -1,0 +1,69 @@
+lemma lift_path_inv_d_sn (f) (p) (q) (k):
+      (𝗱k◗q) = ↑[f]p →
+      ∃∃r,h. k = f＠⧣❨h❩ & q = ↑[⇂*[h]f]r & 𝗱h◗r = p.
+#f * [| * [ #n ] #p ] #q #k
+[ <lift_path_empty
+| <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+/2 width=5 by ex3_2_intro/
+qed-.
+
+lemma lift_path_inv_m_sn (f) (p) (q):
+      (𝗺◗q) = ↑[f]p →
+      ∃∃r. q = ↑[f]r & 𝗺◗r = p.
+#f * [| * [ #n ] #p ] #q
+[ <lift_path_empty
+| <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma lift_path_inv_L_sn (f) (p) (q):
+      (𝗟◗q) = ↑[f]p →
+      ∃∃r. q = ↑[⫯f]r & 𝗟◗r = p.
+#f * [| * [ #n ] #p ] #q
+[ <lift_path_empty
+| <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma lift_path_inv_A_sn (f) (p) (q):
+      (𝗔◗q) = ↑[f]p →
+      ∃∃r. q = ↑[f]r & 𝗔◗r = p.
+#f * [| * [ #n ] #p ] #q
+[ <lift_path_empty
+| <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma lift_path_inv_S_sn (f) (p) (q):
+      (𝗦◗q) = ↑[f]p →
+      ∃∃r. q = ↑[f]r & 𝗦◗r = p.
+#f * [| * [ #n ] #p ] #q
+[ <lift_path_empty
+| <lift_path_d_sn
+| <lift_path_m_sn
+| <lift_path_L_sn
+| <lift_path_A_sn
+| <lift_path_S_sn
+] #H destruct
+/2 width=3 by ex2_intro/
+qed-.

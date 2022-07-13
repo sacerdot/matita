@@ -12,18 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path_id.ma".
-include "ground/relocation/tr_uni_pap.ma".
-include "ground/relocation/tr_uni_tls.ma".
-include "ground/arith/nat_pred_succ.ma".
+include "delayed_updating/substitution/prelift_rmap.ma".
+include "delayed_updating/substitution/prelift_label.ma".
+include "ground/relocation/tr_compose_pn.ma".
+include "ground/relocation/tr_compose_tls.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* PRELIFT FOR RELOCATION MAP ***********************************************)
 
-(* Constructions with tr_uni ************************************************)
+(* Constructions with tr_after **********************************************)
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = ↑[𝐮❨n❩](𝗱k◗p).
-#p #n #k
-<lift_path_d_sn <tr_uni_pap >nsucc_pnpred
-<tr_tls_succ_uni //
+lemma prelift_rmap_after (g) (f) (l):
+      ↑[↑[f]l]g∘↑[l]f = ↑[l](g∘f).
+#g #f * [ #k ] //
+<prelift_rmap_d //
 qed.

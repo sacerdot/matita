@@ -12,25 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_gen_eq.ma".
+include "delayed_updating/substitution/lift_path.ma".
 include "delayed_updating/syntax/path_structure.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
 (* Constructions with structure *********************************************)
 
-lemma structure_lift_path (p) (f):
+lemma structure_lift_path (f) (p):
       ⊗p = ⊗↑[f]p.
-#p elim p -p //
-* [ #n ] #p #IH #f //
-[ <lift_path_d_sn <structure_d_sn <structure_d_sn //
-| <lift_path_m_sn <structure_m_sn <structure_m_sn //
-| <lift_path_L_sn <structure_L_sn <structure_L_sn //
+#f #p elim p -p //
+* [ #k ] #p #IH //
+[ <lift_path_d_dx <structure_d_dx <structure_d_dx //
+| <lift_path_m_dx <structure_m_dx <structure_m_dx //
 ]
 qed.
 
-lemma lift_path_structure (p) (f):
+lemma lift_path_structure (f) (p):
       ⊗p = ↑[f]⊗p.
-#p elim p -p //
-* [ #n ] #p #IH #f //
+#f #p elim p -p //
+* [ #k ] #p #IH //
 qed.

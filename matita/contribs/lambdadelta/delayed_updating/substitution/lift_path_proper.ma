@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_gen_eq.ma".
+include "delayed_updating/substitution/lift_path.ma".
 include "delayed_updating/syntax/path_proper.ma".
 
 (* LIFT FOR PATH ************************************************************)
@@ -23,13 +23,14 @@ lemma lift_path_proper (f) (p):
       p ϵ 𝐏 → ↑[f]p ϵ 𝐏.
 #f *
 [ #H0 elim (ppc_inv_empty … H0)
-| * [ #n ] #p #_
-  [ <lift_path_d_sn /2 width=3 by ppc_lcons/
-  | <lift_path_m_sn /2 width=3 by ppc_lcons/
-  | <lift_path_L_sn /2 width=3 by ppc_lcons/
-  | <lift_path_A_sn /2 width=3 by ppc_lcons/
-  | <lift_path_S_sn /2 width=3 by ppc_lcons/
+| * [ #k ] #p #_
+  [ <lift_path_d_dx
+  | <lift_path_m_dx
+  | <lift_path_L_dx
+  | <lift_path_A_dx
+  | <lift_path_S_dx
   ]
+  /2 width=3 by ppc_rcons/
 ]
 qed.
 

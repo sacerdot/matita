@@ -12,18 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path_id.ma".
-include "ground/relocation/tr_uni_pap.ma".
-include "ground/relocation/tr_uni_tls.ma".
-include "ground/arith/nat_pred_succ.ma".
+include "delayed_updating/substitution/lift_path.ma".
+include "delayed_updating/substitution/lift_rmap_eq.ma".
+include "delayed_updating/substitution/prelift_label_eq.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
-(* Constructions with tr_uni ************************************************)
+(* Constructions with path_eq ***********************************************)
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = ↑[𝐮❨n❩](𝗱k◗p).
-#p #n #k
-<lift_path_d_sn <tr_uni_pap >nsucc_pnpred
-<tr_tls_succ_uni //
+lemma lift_path_eq_repl (p):
+      stream_eq_repl … (λf1,f2. ↑[f1]p = ↑[f2]p).
+#p elim p -p //
+#l #p #IH #f1 #f2 #Hf
+<lift_path_rcons <lift_path_rcons
+@eq_f2 (**) (* auto fails *)
+[ /3 width=1 by lift_rmap_eq_repl, prelift_label_eq_repl/
+| @IH -IH //
+]
 qed.
