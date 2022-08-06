@@ -18,7 +18,7 @@ include "delayed_updating/substitution/lift_prototerm.ma".
 include "delayed_updating/unwind/unwind2_path_lift.ma".
 include "delayed_updating/unwind/unwind2_prototerm.ma".
 
-(* UNWIND FOR PROTOTERM *****************************************************)
+(* TAILED UNWIND FOR PROTOTERM **********************************************)
 
 (* Constructions with lift_prototerm ****************************************)
 
@@ -30,10 +30,10 @@ lemma lift_unwind2_term_after (f1) (f2) (t):
 @lift_unwind2_path_after
 qed.
 
-lemma unwind2_term_after_lift (f1) (f2) (t):
+lemma unwind2_lift_term_after (f1) (f2) (t):
       ▼[f2]↑[f1]t ⇔ ▼[f2∘f1]t.
 #f1 #f2 #t @subset_eq_trans
 [| @subset_inclusion_ext_f1_compose ]
 @subset_equivalence_ext_f1_exteq #p
-@unwind2_path_after_lift
+@unwind2_lift_path_after
 qed.

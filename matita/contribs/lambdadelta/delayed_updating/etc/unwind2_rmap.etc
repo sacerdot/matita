@@ -1,0 +1,5 @@
+include "delayed_updating/notation/functions/black_righttriangle_1.ma".
+
+interpretation
+  "unwind map (reversed path)"
+  'BlackRightTriangle p = (unwind2_rmap tr_id p).

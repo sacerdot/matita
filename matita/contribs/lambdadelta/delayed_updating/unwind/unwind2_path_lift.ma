@@ -12,35 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_path_eq.ma".
-include "delayed_updating/substitution/lift_path_prelift.ma".
+include "delayed_updating/unwind/unwind2_path.ma".
+include "delayed_updating/unwind/unwind2_rmap_lift.ma".
+include "delayed_updating/substitution/lift_path_structure.ma".
 
-(* UNWIND FOR PATH **********************************************************)
+(* TAILED UNWIND FOR PATH ***************************************************)
 
 (* Constructions with lift_path *********************************************)
 
-lemma lift_unwind2_path_after (p) (f1) (f2):
-      ↑[f2]▼[f1]p = ▼[f2∘f1]p.
-#p @(path_ind_unwind … p) -p // [ #n | #p ] #IH #f1 #f2
-[ <unwind2_path_d_empty <unwind2_path_d_empty
-  <lift_path_d_sn <lift_path_empty //
-| <unwind2_path_L_sn <unwind2_path_L_sn <lift_path_L_sn
-  >tr_compose_push_bi //
-]
+lemma lift_unwind2_path_after (g) (f) (p):
+      ↑[g]▼[f]p = ▼[g∘f]p.
+#g #f * // * [ #k ] #p //
+<unwind2_path_d_dx <unwind2_path_d_dx <lift_path_d_dx
+<lift_path_structure >tr_compose_pap
+/4 width=1 by tr_pap_eq_repl, eq_f2, eq_f/
 qed.
 
-lemma unwind2_path_after_lift (p) (f1) (f2):
-      ▼[f2]↑[f1]p = ▼[f2∘f1]p.
-#p @(path_ind_unwind … p) -p // [ #n #l ] #p #IH #f1 #f2
-[ <lift_path_d_sn <unwind2_path_d_lcons
-  <lift_path_lcons_prelift <unwind2_path_d_lcons >lift_path_lcons_prelift
-  >IH -IH
-  >(unwind2_path_eq_repl … (tr_compose_assoc …))
-  >(unwind2_path_eq_repl … (tr_compose_assoc …))
-  <unwind2_path_after <unwind2_path_after in ⊢ (???%);
-  /3 width=1 by unwind2_path_eq_repl, eq_f/
-| <lift_path_m_sn <unwind2_path_m_sn <unwind2_path_m_sn //
-| <lift_path_L_sn <unwind2_path_L_sn <unwind2_path_L_sn 
-  >tr_compose_push_bi //
+lemma unwind2_lift_path_after (g) (f) (p):
+      ▼[g]↑[f]p = ▼[g∘f]p.
+#g #f * // * [ #k ] #p
+[ <unwind2_path_d_dx <unwind2_path_d_dx
+  <structure_lift_path >tr_compose_pap
+  /4 width=1 by tr_pap_eq_repl, eq_f2, eq_f/
+| <unwind2_path_m_dx <unwind2_path_m_dx //
+| <unwind2_path_L_dx <unwind2_path_L_dx //
+| <unwind2_path_A_dx <unwind2_path_A_dx //
+| <unwind2_path_S_dx <unwind2_path_S_dx //
 ]
 qed.

@@ -13,30 +13,24 @@
 (**************************************************************************)
 
 include "delayed_updating/unwind/unwind2_rmap.ma".
+include "delayed_updating/unwind/preunwind2_rmap_eq.ma".
 include "ground/relocation/tr_uni_compose.ma".
-include "ground/relocation/tr_compose_eq.ma".
-include "ground/relocation/tr_pn_eq.ma".
 include "ground/arith/nat_rplus_pplus.ma".
 
-(* UNWIND MAP FOR PATH ******************************************************)
+(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
-(* Constructions with stream_eq *********************************************)
+(* Constructions with tr_map_eq *********************************************)
 
 lemma unwind2_rmap_eq_repl (p):
       stream_eq_repl … (λf1,f2. ▶[f1]p ≗ ▶[f2]p).
 #p elim p -p //
-* [ #n ] #p #IH #f1 #f2 #Hf
-[ /3 width=1 by tr_compose_eq_repl/
-| /2 width=1 by/
-| /3 width=1 by tr_push_eq_repl/
-| /2 width=1 by/
-| /2 width=1 by/
-]
+#l #p #IH #f1 #f2 #Hf
+/3 width=1 by preunwind2_rmap_eq_repl/
 qed-.
 
-lemma tls_unwind2_rmap_d_sn (f) (p) (m) (n):
-      ⇂*[m+n]▶[f]p ≗ ⇂*[m]▶[f](𝗱n◗p).
-#f #p #m #n
-<unwind2_rmap_d_sn >nrplus_inj_dx
+lemma tls_unwind2_rmap_d_dx (f) (p) (n) (k):
+      ⇂*[n+k]▶[f]p ≗ ⇂*[n]▶[f](p◖𝗱k).
+#f #p #n #k
+<unwind2_rmap_d_dx >nrplus_inj_dx
 /2 width=1 by tr_tls_compose_uni_dx/
 qed.

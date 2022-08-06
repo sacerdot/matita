@@ -13,10 +13,10 @@
 (**************************************************************************)
 
 include "delayed_updating/unwind/unwind2_prototerm.ma".
-include "delayed_updating/unwind/unwind2_path_structure.ma".
+include "delayed_updating/unwind/unwind2_path_append.ma".
 include "ground/lib/subset_overlap.ma".
 
-(* UNWIND FOR PROTOTERM *****************************************************)
+(* TAILED UNWIND FOR PROTOTERM **********************************************)
 
 (* Destructions with inner condition for path *******************************)
 

@@ -16,7 +16,7 @@ include "delayed_updating/unwind/unwind2_rmap.ma".
 include "delayed_updating/syntax/path_labels.ma".
 include "ground/relocation/tr_pushs.ma".
 
-(* UNWIND MAP FOR PATH ******************************************************)
+(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
 (* Constructions with labels ************************************************)
 
@@ -24,5 +24,5 @@ lemma unwind2_rmap_labels_L (f) (n):
       (⫯*[n]f) = ▶[f](𝗟∗∗n).
 #f #n @(nat_ind_succ … n) -n //
 #n #IH
-<labels_succ <unwind2_rmap_L_sn //
+<labels_succ <unwind2_rmap_L_dx //
 qed.

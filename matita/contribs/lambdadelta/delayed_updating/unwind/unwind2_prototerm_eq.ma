@@ -17,7 +17,7 @@ include "ground/lib/subset_ext_equivalence.ma".
 include "delayed_updating/unwind/unwind2_path_eq.ma".
 include "delayed_updating/unwind/unwind2_prototerm.ma".
 
-(* UNWIND FOR PROTOTERM *****************************************************)
+(* TAILED UNWIND FOR PROTOTERM **********************************************)
 
 (* Constructions with subset_equivalence ************************************)
 
@@ -29,13 +29,4 @@ qed.
 lemma unwind2_term_eq_repl_dx (f) (t1) (t2):
       t1 ⇔ t2 → ▼[f]t1 ⇔ ▼[f]t2.
 /2 width=1 by subset_equivalence_ext_f1_bi/
-qed.
-
-lemma unwind2_term_after (f1) (f2) (t):
-      ▼[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
-#f1 #f2 #t @subset_eq_trans
-[
-| @subset_inclusion_ext_f1_compose
-| @subset_equivalence_ext_f1_exteq /2 width=5/
-]
 qed.

@@ -59,3 +59,37 @@ lemma pic_inv_d_dx (p) (k):
       p◖𝗱k ϵ 𝐈 → ⊥.
 #p #k #H0 @H0 -H0 //
 qed-.
+
+(* Constructions with path_lcons ********************************************)
+
+lemma pic_m_sn (p):
+      p ϵ 𝐈 → 𝗺◗p ϵ 𝐈.
+* [| * [ #k ] #p #Hp <list_cons_shift ] //
+[ #_ <list_cons_comm //
+| elim (pic_inv_d_dx … Hp)
+]
+qed.
+
+lemma pic_L_sn (p):
+      p ϵ 𝐈 → 𝗟◗p ϵ 𝐈.
+* [| * [ #k ] #p #Hp <list_cons_shift ] //
+[ #_ <list_cons_comm //
+| elim (pic_inv_d_dx … Hp)
+]
+qed.
+
+lemma pic_A_sn (p):
+      p ϵ 𝐈 → 𝗔◗p ϵ 𝐈.
+* [| * [ #k ] #p #Hp <list_cons_shift ] //
+[ #_ <list_cons_comm //
+| elim (pic_inv_d_dx … Hp)
+]
+qed.
+
+lemma pic_S_sn (p):
+      p ϵ 𝐈 → 𝗦◗p ϵ 𝐈.
+* [| * [ #k ] #p #Hp <list_cons_shift ] //
+[ #_ <list_cons_comm //
+| elim (pic_inv_d_dx … Hp)
+]
+qed.

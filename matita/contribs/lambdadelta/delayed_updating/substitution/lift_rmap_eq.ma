@@ -13,9 +13,8 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift_rmap.ma".
-include "ground/relocation/tr_pn_eq.ma".
+include "delayed_updating/substitution/prelift_rmap_eq.ma".
 include "ground/lib/stream_tls_plus.ma".
-include "ground/lib/stream_tls_eq.ma".
 include "ground/arith/nat_plus_rplus.ma".
 include "ground/arith/nat_rplus_pplus.ma".
 
@@ -26,13 +25,8 @@ include "ground/arith/nat_rplus_pplus.ma".
 lemma lift_rmap_eq_repl (p):
       stream_eq_repl … (λf1,f2. ↑[p]f1 ≗ ↑[p]f2).
 #p elim p -p //
-* [ #k ] #p #IH #f1 #f2 #Hf
-[ /3 width=1 by stream_tls_eq_repl/
-| /2 width=1 by/
-| /3 width=1 by tr_push_eq_repl/
-| /2 width=1 by/
-| /2 width=1 by/
-]
+#l #p #IH #f1 #f2 #Hf
+/3 width=1 by prelift_rmap_eq_repl/
 qed.
 
 lemma tls_lift_rmap_d_dx (f) (p) (n) (k):

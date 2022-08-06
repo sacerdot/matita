@@ -12,23 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind_gen.ma".
-include "ground/relocation/tr_pap_eq.ma".
+include "delayed_updating/unwind/preunwind2_rmap.ma".
+include "ground/relocation/tr_compose_eq.ma".
+include "ground/relocation/tr_pn_eq.ma".
 
-(* GENERIC UNWIND FOR PATH **************************************************)
+(* TAILED PREUNWIND FOR RELOCATION MAP **************************************)
 
-(* Constructions with stream_eq *********************************************)
+(* Constructions with tr_map_eq *********************************************)
 
-lemma unwind_gen_eq_repl (p):
-      stream_eq_repl … (λf1,f2. ◆[f1]p = ◆[f2]p).
-#p @(path_ind_unwind … p) -p // [ #n |*: #p ] #IH #f1 #f2 #Hf
-[ <unwind_gen_d_empty <unwind_gen_d_empty
-  <(tr_pap_eq_repl … Hf) -f2 -IH //
-| <unwind_gen_L_sn <unwind_gen_L_sn
-  <(IH … Hf) -f2 -IH //
-| <unwind_gen_A_sn <unwind_gen_A_sn
-  <(IH … Hf) -f2 -IH //
-| <unwind_gen_S_sn <unwind_gen_S_sn
-  <(IH … Hf) -f2 -IH //
-]
+lemma preunwind2_rmap_eq_repl (l):
+      stream_eq_repl … (λf1,f2. ▶[f1]l ≗ ▶[f2]l).
+* // #k #f1 #f2 #Hf
+/2 width=1 by tr_compose_eq_repl/
 qed-.

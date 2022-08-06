@@ -14,7 +14,6 @@
 
 include "delayed_updating/substitution/prelift_label.ma".
 include "delayed_updating/substitution/lift_rmap.ma".
-include "ground/xoa/ex_3_2.ma".
 
 (* LIFT FOR PATH ************************************************************)
 

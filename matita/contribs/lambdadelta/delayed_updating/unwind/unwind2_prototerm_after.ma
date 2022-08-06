@@ -12,16 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR DELAYED UPDATING ********************************************)
+include "delayed_updating/unwind/unwind2_prototerm_eq.ma".
+include "delayed_updating/unwind/unwind2_path_after.ma".
 
-notation < "hvbox( ↑❨ term 46 k, break term 46 p, break term 46 f ❩ )"
-  non associative with precedence 70
-  for @{ 'UpArrow $S $k $p $f }.
+(* TAILED UNWIND FOR PROTOTERM **********************************************)
 
-notation > "hvbox( ↑❨ term 46 k, break term 46 p, break term 46 f ❩ )"
-  non associative with precedence 70
-  for @{ 'UpArrow ? $k $p $f }.
+(* Constructions with tr_after **********************************************)
 
-notation > "hvbox( ↑{ term 46 S }❨ break term 46 k, break term 46 p, break term 46 f ❩ )"
-  non associative with precedence 70
-  for @{ 'UpArrow $S $k $p $f }.
+lemma unwind2_term_after (f1) (f2) (t):
+      ▼[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
+#f1 #f2 #t @subset_eq_trans
+[
+| @subset_inclusion_ext_f1_compose
+| @subset_equivalence_ext_f1_exteq /2 width=5/
+]
+qed.

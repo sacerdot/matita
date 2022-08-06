@@ -12,21 +12,44 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_rmap.ma".
-include "delayed_updating/syntax/path_structure.ma".
-include "delayed_updating/syntax/path_depth.ma".
-include "ground/relocation/tr_pushs.ma".
+include "delayed_updating/syntax/label.ma".
+include "delayed_updating/notation/functions/black_righttriangle_2.ma".
+include "ground/relocation/tr_uni.ma".
+include "ground/relocation/tr_compose.ma".
 
-(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
+(* TAILED PREUNWIND FOR RELOCATION MAP **************************************)
 
-(* Constructions with structure and depth ***********************************)
+definition preunwind2_rmap (f) (l): tr_map ≝
+match l with
+[ label_d k ⇒ f∘𝐮❨k❩
+| label_m   ⇒ f
+| label_L   ⇒ ⫯f
+| label_A   ⇒ f
+| label_S   ⇒ f
+].
 
-lemma unwind2_rmap_structure (f) (p):
-      (⫯*[♭p]f) = ▶[f]⊗p.
-#f #p elim p -p //
-* [ #k ] #p #IH //
-[ <unwind2_rmap_L_dx //
-| <unwind2_rmap_A_dx //
-| <unwind2_rmap_S_dx //
-]
-qed.
+interpretation
+  "tailed preunwind (relocation map)"
+  'BlackRightTriangle f l = (preunwind2_rmap f l).
+
+(* Basic constructions ******************************************************)
+
+lemma preunwind2_rmap_d (f) (k:pnat):
+      f∘𝐮❨k❩ = ▶[f]𝗱k.
+// qed.
+
+lemma preunwind2_rmap_m (f):
+      f = ▶[f]𝗺.
+// qed.
+
+lemma preunwind2_rmap_L (f):
+      (⫯f) = ▶[f]𝗟.
+// qed.
+
+lemma preunwind2_rmap_A (f):
+      f = ▶[f]𝗔.
+// qed.
+
+lemma preunwind2_rmap_S (f):
+      f = ▶[f]𝗦.
+// qed.

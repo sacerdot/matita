@@ -12,14 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind_gen.ma".
-include "ground/relocation/tr_compose_pap.ma".
+include "delayed_updating/unwind/unwind2_rmap.ma".
+include "delayed_updating/syntax/path_structure.ma".
+include "ground/relocation/tr_compose_compose.ma".
+include "ground/relocation/tr_compose_pn.ma".
+include "ground/relocation/tr_compose_eq.ma".
+include "ground/relocation/tr_pn_eq.ma".
+include "ground/lib/stream_eq_eq.ma".
 
-(* GENERIC UNWIND FOR PATH **************************************************)
+(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
-(* Properties with tr_compose ***********************************************)
+(* Constructions with tr_after **********************************************)
 
-lemma unwind_gen_after (f2) (f1) (p):
-      ◆[f2]◆[f1]p = ◆[f2∘f1]p.
-#f2 #f1 #p @(path_ind_unwind … p) -p //
+lemma unwind2_rmap_after (g) (f) (p:path):
+      ▶[g]⊗p∘▶[f]p ≗ ▶[g∘f]p.
+#g #f #p elim p -p // * [ #k ] #p #IH //
+[ <structure_d_dx <unwind2_rmap_d_dx <unwind2_rmap_d_dx
+  @(stream_eq_canc_sn … (tr_compose_assoc …))
+  /2 width=1 by tr_compose_eq_repl/
+| <structure_L_dx <unwind2_rmap_L_dx <unwind2_rmap_L_dx <unwind2_rmap_L_dx
+  /2 width=1 by tr_push_eq_repl/
+]
 qed.
