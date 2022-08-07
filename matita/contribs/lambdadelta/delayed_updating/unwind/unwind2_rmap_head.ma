@@ -89,12 +89,12 @@ lemma unwind2_rmap_head_xap (f) (p) (n):
 ]
 qed.
 
-lemma unwind2_rmap_append_pap_closed (f) (p) (q) (n:pnat):
-      q = ↳[n]q →
-      ♭q = ninj (▶[f](p●q)＠⧣❨n❩).
-#f #p #q #n #Hn
->tr_xap_ninj >(path_head_refl_append p … Hn) in ⊢ (??%?);
->(unwind2_rmap_head_xap_closed … Hn) -Hn
+lemma unwind2_rmap_append_pap_closed (f) (p) (q) (h:pnat):
+      q = ↳[h]q →
+      ♭q = ninj (▶[f](p●q)＠⧣❨h❩).
+#f #p #q #h #Hh
+>tr_xap_ninj >(path_head_refl_append p … Hh) in ⊢ (??%?);
+>(unwind2_rmap_head_xap_closed … Hh) -Hh
 <path_head_depth //
 qed.
 
