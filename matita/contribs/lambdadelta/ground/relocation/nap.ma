@@ -1,5 +1,6 @@
 include "ground/relocation/tr_uni_pap.ma".
 include "ground/relocation/tr_compose_pap.ma".
+include "ground/relocation/tr_pap_eq.ma".
 include "ground/notation/functions/applysucc_2.ma".
 include "ground/arith/nat_lt.ma".
 include "ground/arith/nat_plus_rplus.ma".
@@ -53,3 +54,10 @@ lemma tr_nap_pushs_lt (f) (n) (m):
 <tr_nap_unfold <tr_pap_pushs_le
 /2 width=1 by nlt_npsucc_bi/
 qed-.
+
+theorem tr_nap_eq_repl (i):
+        stream_eq_repl … (λf1,f2. f1@↑❨i❩ = f2@↑❨i❩).
+#i #f1 #f2 #Hf
+<tr_nap_unfold <tr_nap_unfold
+/3 width=1 by tr_pap_eq_repl, eq_f/
+qed.

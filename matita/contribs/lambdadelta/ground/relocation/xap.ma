@@ -1,6 +1,7 @@
 
 (**) (* reverse include *)
 include "ground/arith/nat_rplus_pplus.ma".
+include "ground/relocation/tr_pn_eq.ma".
 include "ground/relocation/tr_compose_pn.ma".
 include "ground/relocation/nap.ma".
 include "ground/notation/functions/apply_2.ma".
@@ -69,4 +70,11 @@ lemma tr_xap_plus (n1) (n2) (f):
 <nrplus_inj_sn <nrplus_inj_dx
 <nrplus_inj_sn <nrplus_inj_dx
 >tr_pap_plus //
+qed.
+
+theorem tr_xap_eq_repl (i):
+        stream_eq_repl … (λf1,f2. f1＠❨i❩ = f2＠❨i❩).
+#i #f1 #f2 #Hf
+<tr_xap_unfold <tr_xap_unfold
+/3 width=1 by tr_push_eq_repl, tr_nap_eq_repl/
 qed.
