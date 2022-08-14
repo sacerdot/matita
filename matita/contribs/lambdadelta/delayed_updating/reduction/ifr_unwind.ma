@@ -20,7 +20,6 @@ include "delayed_updating/unwind/unwind2_prototerm_lift.ma".
 include "delayed_updating/unwind/unwind2_rmap_head.ma".
 
 include "delayed_updating/substitution/fsubst_eq.ma".
-include "delayed_updating/substitution/lift_prototerm_proper.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
 include "delayed_updating/syntax/path_head_structure.ma".
@@ -30,23 +29,24 @@ include "delayed_updating/syntax/path_structure_depth.ma".
 
 (* Constructions with unwind2 ***********************************************)
 
-lemma ifr_unwind_bi (f) (p) (q) (t1) (t2):
-      t1 ϵ 𝐓 → t1⋔(p◖𝗦) ϵ 𝐏 →
-      t1 ➡𝐢𝐟[p,q] t2 → ▼[f]t1 ➡𝐢𝐟[⊗p,⊗q] ▼[f]t2.
-#f #p #q #t1 #t2 #H1t1 #H2t1
-* #k * #H1k #Ht1 #Ht2
-@(ex_intro … (↑♭q)) @and3_intro
-[ -H1t1 -H2t1 -Ht1 -Ht2
+lemma ifr_unwind_bi (f) (t1) (t2) (r):
+      t1 ϵ 𝐓 → r ϵ 𝐈 →
+      t1 ➡𝐢𝐟[r] t2 → ▼[f]t1 ➡𝐢𝐟[⊗r] ▼[f]t2.
+#f #t1 #t2 #r #H1t1 #H2r
+* #p #q #k #Hr #H1k #Ht1 #Ht2 destruct
+@(ex4_3_intro … (⊗p) (⊗q) (↑♭q))
+[ -H1t1 -H2r -H1k -Ht1 -Ht2 //
+| -H1t1 -H2r -Ht1 -Ht2
   >structure_L_sn
   >H1k in ⊢ (??%?); >path_head_structure_depth <H1k -H1k //
-| lapply (in_comp_unwind2_path_term f … Ht1) -Ht2 -Ht1 -H1t1 -H2t1
+| lapply (in_comp_unwind2_path_term f … Ht1) -Ht2 -Ht1 -H1t1 -H2r
   <unwind2_path_d_dx <list_append_rcons_sn
   lapply (unwind2_rmap_append_pap_closed f … (p◖𝗔) … H1k) -H1k
   <depth_L_sn #H2k
   lapply (eq_inv_ninj_bi … H2k) -H2k #H2k <H2k -H2k #Ht1 //
 | lapply (unwind2_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
-  @(subset_eq_trans … (unwind2_term_fsubst …))
+  @(subset_eq_trans … (unwind2_term_fsubst_pic …))
   [ @fsubst_eq_repl [ // | // ]
     @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))
     [ @unwind2_term_grafted_S /2 width=2 by ex_intro/ | skip ] -Ht1
@@ -64,7 +64,7 @@ lemma ifr_unwind_bi (f) (p) (q) (t1) (t2):
 (* Note: crux of the proof ends *)
   | //
   | /2 width=2 by ex_intro/
-  | /2 width=6 by lift_term_proper/
+  | //
   ]
 ]
 qed.

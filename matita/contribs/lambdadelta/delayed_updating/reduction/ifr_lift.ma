@@ -27,12 +27,13 @@ include "ground/relocation/tr_compose_eq.ma".
 
 (* Constructions with lift **************************************************)
 
-theorem ifr_lift_bi (f) (p) (q) (t1) (t2):
-        t1 ➡𝐢𝐟[p,q] t2 → ↑[f]t1 ➡𝐢𝐟[↑[f]p,↑[↑[p◖𝗔◖𝗟]f]q] ↑[f]t2.
-#f #p #q #t1 #t2
-* #k * #H1k #Ht1 #Ht2
-@(ex_intro … ((↑[p●𝗔◗𝗟◗q]f)＠⧣❨k❩)) @and3_intro
-[ -Ht1 -Ht2
+theorem ifr_lift_bi (f) (t1) (t2) (r):
+        t1 ➡𝐢𝐟[r] t2 → ↑[f]t1 ➡𝐢𝐟[↑[f]r] ↑[f]t2.
+#f #t1 #t2 #r
+* #p #q #k #Hr #H1k #Ht1 #Ht2 destruct
+@(ex4_3_intro … (↑[f]p) (↑[↑[p◖𝗔◖𝗟]f]q) ((↑[p●𝗔◗𝗟◗q]f)＠⧣❨k❩))
+[ -H1k -Ht1 -Ht2 //
+| -Ht1 -Ht2
   <lift_rmap_L_dx >lift_path_L_sn
   <(lift_path_head_closed … H1k) in ⊢ (??%?); -H1k //
 | lapply (in_comp_lift_path_term f … Ht1) -Ht2 -Ht1 -H1k

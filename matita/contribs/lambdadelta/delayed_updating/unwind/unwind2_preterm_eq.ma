@@ -26,13 +26,13 @@ lemma unwind2_term_grafted_sn (f) (t) (p): p ϵ 𝐈 →
       ▼[▶[f]p](t⋔p) ⊆ (▼[f]t)⋔(⊗p).
 #f #t #p #Hp #q * #r #Hr #H0 destruct
 @(ex2_intro … Hr) -Hr
-<unwind2_path_append_inner_sn //
+<unwind2_path_append_pic_sn //
 qed-.
 
 lemma unwind2_term_grafted_dx (f) (t) (p): p ϵ 𝐈 → p ϵ ▵t → t ϵ 𝐓 →
       (▼[f]t)⋔(⊗p) ⊆ ▼[▶[f]p](t⋔p).
 #f #t #p #H1p #H2p #Ht #q * #r #Hr #H0
-elim (unwind2_path_des_append_inner_sn … (sym_eq … H0)) -H0 //
+elim (unwind2_path_des_append_pic_sn … (sym_eq … H0)) -H0 //
 #p0 #q0 #Hp0 #Hq0 #H0 destruct
 >(Ht … Hp0) [|*: /2 width=2 by ex_intro/ ] -p
 /2 width=1 by in_comp_unwind2_path_term/
@@ -46,7 +46,7 @@ lemma unwind2_term_grafted_S_dx (f) (t) (p): p ϵ ▵t → t ϵ 𝐓 →
       (▼[f]t)⋔((⊗p)◖𝗦) ⊆ ▼[▶[f]p](t⋔(p◖𝗦)).
 #f #t #p #Hp #Ht #q * #r #Hr
 >list_append_rcons_sn #H0
-elim (unwind2_path_inv_append_proper_dx … (sym_eq … H0)) -H0 //
+elim (unwind2_path_inv_append_ppc_dx … (sym_eq … H0)) -H0 //
 #p0 #q0 #Hp0 #Hq0 #H0 destruct
 >(Ht … Hp0) [|*: /2 width=2 by ex_intro/ ] -p
 elim (eq_inv_S_sn_unwind2_path … Hq0) -Hq0

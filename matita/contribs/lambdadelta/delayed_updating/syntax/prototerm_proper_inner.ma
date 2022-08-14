@@ -18,7 +18,7 @@ include "ground/lib/subset_overlap.ma".
 
 (* PROPER CONDITION FOR PROTOTERM *******************************************)
 
-(* Constructions with inner condition for prototerm *************************)
+(* Constructions with pic ***************************************************)
 
 lemma term_proper_outer (t):
       t ⧸≬ 𝐈 → t ϵ 𝐏.

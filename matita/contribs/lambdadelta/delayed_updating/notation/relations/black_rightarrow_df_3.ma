@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( t1 ➡𝐝𝐟[ break term 46 p, break term 46 q ] break term 46 t2 )"
+notation "hvbox( t1 ➡𝐝𝐟[ break term 46 r ] break term 46 t2 )"
    non associative with precedence 45
-   for @{ 'BlackRightArrowDF $t1 $p $q $t2 }.
+   for @{ 'BlackRightArrowDF $t1 $r $t2 }.

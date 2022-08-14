@@ -32,12 +32,13 @@ include "delayed_updating/syntax/path_structure_depth.ma".
 
 (* Main destructions with ifr ***********************************************)
 
-theorem dfr_des_ifr (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
-        t1 ➡𝐝𝐟[p,q] t2 → ▼[f]t1 ➡𝐢𝐟[⊗p,⊗q] ▼[f]t2.
-#f #p #q #t1 #t2 #H0t1
-* #k * #H1k #Ht1 #Ht2
-@(ex_intro … (↑♭q)) @and3_intro
-[ -H0t1 -Ht1 -Ht2
+theorem dfr_des_ifr (f) (t1) (t2) (r): t1 ϵ 𝐓 →
+        t1 ➡𝐝𝐟[r] t2 → ▼[f]t1 ➡𝐢𝐟[⊗r] ▼[f]t2.
+#f #t1 #t2 #r #H0t1
+* #p #q #k #Hr #H1k #Ht1 #Ht2 destruct
+@(ex4_3_intro … (⊗p) (⊗q) (↑♭q))
+[ -H0t1 -H1k -Ht1 -Ht2 //
+| -H0t1 -Ht1 -Ht2
   >structure_L_sn
   >H1k in ⊢ (??%?); >path_head_structure_depth <H1k -H1k //
 | lapply (in_comp_unwind2_path_term f … Ht1) -Ht2 -Ht1 -H0t1
@@ -47,7 +48,7 @@ theorem dfr_des_ifr (f) (p) (q) (t1) (t2): t1 ϵ 𝐓 →
   lapply (eq_inv_ninj_bi … H2k) -H2k #H2k <H2k -H2k #Ht1 //
 | lapply (unwind2_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
-  @(subset_eq_trans … (unwind2_term_fsubst …))
+  @(subset_eq_trans … (unwind2_term_fsubst_ppc …))
   [ @fsubst_eq_repl [ // | // ]
     @(subset_eq_trans … (unwind2_term_iref …))
     @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))

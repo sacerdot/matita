@@ -18,11 +18,11 @@ include "ground/lib/subset_overlap.ma".
 
 (* TAILED UNWIND FOR PROTOTERM **********************************************)
 
-(* Destructions with inner condition for path *******************************)
+(* Destructions with pic ****************************************************)
 
-lemma unwind2_term_des_inner (f) (t):
+lemma unwind2_term_des_pic (f) (t):
       ▼[f]t ≬ 𝐈 → t ≬ 𝐈.
 #f #t * #p * #q #Hq #H0 #Hp destruct
 @(subset_ol_i … Hq) -Hq (**) (* auto does not work *)
-@(unwind2_path_des_inner … Hp)
+@(unwind2_path_des_pic … Hp)
 qed-.
