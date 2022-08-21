@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/dfr.ma".
+include "delayed_updating/reduction/dbfr.ma".
 
 include "delayed_updating/substitution/fsubst_lift.ma".
 include "delayed_updating/substitution/fsubst_eq.ma".
@@ -20,12 +20,12 @@ include "delayed_updating/substitution/lift_constructors.ma".
 include "delayed_updating/substitution/lift_path_head.ma".
 include "delayed_updating/substitution/lift_rmap_head.ma".
 
-(* DELAYED FOCUSED REDUCTION ************************************************)
+(* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 
 (* Constructions with lift **************************************************)
 
 theorem dfr_lift_bi (f) (t1) (t2) (r):
-        t1 ➡𝐝𝐟[r] t2 → ↑[f]t1 ➡𝐝𝐟[↑[f]r] ↑[f]t2.
+        t1 ➡𝐝𝐛𝐟[r] t2 → ↑[f]t1 ➡𝐝𝐛𝐟[↑[f]r] ↑[f]t2.
 #f #t1 #t2 #r
 * #p #q #k #Hr #H1k #Ht1 #Ht2 destruct
 @(ex4_3_intro … (↑[f]p) (↑[↑[p◖𝗔◖𝗟]f]q) ((↑[p●𝗔◗𝗟◗q]f)＠⧣❨k❩))

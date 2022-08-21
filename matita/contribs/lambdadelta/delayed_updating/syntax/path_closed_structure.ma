@@ -12,8 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR DELAYED UPDATING ********************************************)
+include "delayed_updating/syntax/path_closed_height.ma".
+include "delayed_updating/syntax/path_structure.ma".
 
-notation "hvbox( ▶[ break term 46 f ] break term 70 p )"
-  non associative with precedence 70
-  for @{ 'BlackRightTriangle $f $p }.
+(* CLOSED CONDITION FOR PATH ************************************************)
+
+(* Constructions with structure *********************************************)
+
+lemma path_closed_structure_height (p) (n):
+      p ϵ 𝐂❨n❩ → ⊗p ϵ 𝐂❨♯p+n❩.
+#p #n #Hn elim Hn -Hn //
+#p #n #_ #IH [ <nplus_succ_dx ]
+/2 width=1 by pcc_L_dx, pcc_A_dx, pcc_S_dx/
+qed.
+
+lemma path_closed_structure_depth (p) (n):
+      p ϵ 𝐂❨n❩ → ⊗p ϵ 𝐂❨♭p❩.
+#p #n #Hp <path_closed_depth
+/2 width=3 by path_closed_structure_height/
+qed.

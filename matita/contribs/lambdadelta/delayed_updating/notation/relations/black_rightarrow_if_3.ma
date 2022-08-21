@@ -15,5 +15,5 @@
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
 notation "hvbox( t1 ➡𝐢𝐟[ break term 46 r ] break term 46 t2 )"
-   non associative with precedence 45
-   for @{ 'BlackRightArrowIF $t1 $r $t2 }.
+  non associative with precedence 45
+  for @{ 'BlackRightArrowIF $t1 $r $t2 }.

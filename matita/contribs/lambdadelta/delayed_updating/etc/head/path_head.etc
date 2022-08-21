@@ -96,7 +96,35 @@ qed-.
 
 (* Constructions with path_append *******************************************)
 
-lemma path_head_refl_append (p) (q) (n):
+lemma path_head_refl_append_bi (p) (q) (m) (n):
+      p = ↳[m]p → q = ↳[n]q → p●q = ↳[n+m](p●q).
+#p #q elim q -q
+[ #m #n #Hp #H0
+  <(eq_inv_path_empty_head … H0) -n //
+| #l #q #IH #m #n #Hp
+  @(nat_ind_succ … n) -n // #n #_
+  cases l [ #k ]
+  <list_append_lcons_sn <nplus_succ_sn
+  [ <path_head_d_dx <path_head_d_dx #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+    >(IH … Hp Hq) in ⊢ (??%?); -IH -Hp -Hq
+    <nplus_plus_comm_23 //
+  | <path_head_m_dx <path_head_m_dx #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+    >(IH … Hp Hq) in ⊢ (??%?); -IH -Hp -Hq //
+  | <path_head_L_dx <path_head_L_dx #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+    >(IH … Hp Hq) in ⊢ (??%?); -IH -Hp -Hq //
+  | <path_head_A_dx <path_head_A_dx #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+    >(IH … Hp Hq) in ⊢ (??%?); -IH -Hp -Hq //
+  | <path_head_S_dx <path_head_S_dx #Hq
+    elim (eq_inv_list_lcons_bi ????? Hq) -Hq #_ #Hq
+    >(IH … Hp Hq) in ⊢ (??%?); -IH -Hp -Hq //
+  ]
+qed.
+
+lemma path_head_refl_append_sn (p) (q) (n):
       q = ↳[n]q → q = ↳[n](p●q).
 #p #q elim q -q
 [ #n #Hn <(eq_inv_path_empty_head … Hn) -Hn //
@@ -116,7 +144,7 @@ qed-.
 
 (* Inversions with path_append **********************************************)
 
-lemma eq_inv_path_head_refl_append (p) (q) (n):
+lemma eq_inv_path_head_refl_append_sn (p) (q) (n):
       q = ↳[n](p●q) → q = ↳[n]q.
 #p #q elim q -q
 [ #n #Hn <(eq_inv_path_empty_head … Hn) -p //

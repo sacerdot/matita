@@ -12,8 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR DELAYED UPDATING ********************************************)
+include "delayed_updating/substitution/lift_rmap_eq.ma".
+include "delayed_updating/syntax/path_closed.ma".
+include "ground/lib/stream_eq_eq.ma".
 
-notation "hvbox( ▶[ break term 46 f ] break term 70 p )"
-  non associative with precedence 70
-  for @{ 'BlackRightTriangle $f $p }.
+(* LIFT MAP FOR PATH ********************************************************)
+
+(* Destructions with cpp ****************************************************)
+
+lemma tls_plus_lift_rmap_closed (f) (q) (n):
+      q ϵ 𝐂❨n❩ →
+      ∀m. ⇂*[m]f ≗ ⇂*[m+n]↑[q]f.
+#f #q #n #Hq elim Hq -q -n //
+#q #n #_ #IH #m
+<nplus_succ_dx <stream_tls_swap //
+qed-.
+
+lemma tls_lift_rmap_closed (f) (q) (n):
+      q ϵ 𝐂❨n❩ →
+      f ≗ ⇂*[n]↑[q]f.
+#f #q #n #H0
+/2 width=1 by tls_plus_lift_rmap_closed/
+qed-.

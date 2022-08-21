@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( ▵ term 70 t )"
+notation "hvbox( ▵ break term 70 t )"
   non associative with precedence 70
   for @{ 'UpTriangle $t }.

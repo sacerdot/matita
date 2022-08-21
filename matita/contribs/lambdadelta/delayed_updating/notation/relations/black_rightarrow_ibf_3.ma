@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( ↳[ term 46 n ] break term 70 p )"
-  non associative with precedence 70
-  for @{ 'DownArrowRight $n $p }.
+notation "hvbox( t1 ➡𝐢𝐛𝐟[ break term 46 r ] break term 46 t2 )"
+  non associative with precedence 45
+  for @{ 'BlackRightArrowIBF $t1 $r $t2 }.

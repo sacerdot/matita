@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( ↑[ term 46 t1 ] break term 70 t2  )"
+notation "hvbox( ↑[ break term 46 t1 ] break term 70 t2  )"
   non associative with precedence 70
   for @{ 'UpArrow $t1 $t2 }.
