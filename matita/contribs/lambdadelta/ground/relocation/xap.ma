@@ -1,20 +1,19 @@
-
 (**) (* reverse include *)
 include "ground/arith/nat_rplus_pplus.ma".
 include "ground/relocation/tr_pn_eq.ma".
 include "ground/relocation/tr_compose_pn.ma".
 include "ground/relocation/nap.ma".
-include "ground/notation/functions/apply_2.ma".
+include "ground/notation/functions/at_2.ma".
 
 definition tr_xap (f) (l:nat): nat ≝
-           (⫯f)@↑❨l❩.
+           (⫯f)＠§❨l❩.
 
 interpretation
   "functional extended application (total relocation maps)"
-  'Apply f l = (tr_xap f l).
+  'At f l = (tr_xap f l).
 
 lemma tr_xap_unfold (f) (l):
-      (⫯f)@↑❨l❩ = f＠❨l❩.
+      (⫯f)＠§❨l❩ = f＠❨l❩.
 // qed.
 
 lemma tr_xap_zero (f):
@@ -26,7 +25,7 @@ lemma tr_xap_ninj (f) (p):
 // qed.
 
 lemma tr_xap_succ_nap (f) (n):
-      ↑(f@↑❨n❩) = f＠❨↑n❩.
+      ↑(f＠§❨n❩) = f＠❨↑n❩.
 #f #n
 <tr_xap_ninj //
 qed.

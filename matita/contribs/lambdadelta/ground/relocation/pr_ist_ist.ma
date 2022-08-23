@@ -70,7 +70,7 @@ qed-.
 
 (* Advanced constructions with pr_nat ***************************************)
 
-lemma is_pr_nat_dec (f) (l2): 𝐓❨f❩ → Decidable (∃l1. @↑❨l1,f❩ ≘ l2).
+lemma is_pr_nat_dec (f) (l2): 𝐓❨f❩ → Decidable (∃l1. ＠§❨l1,f❩ ≘ l2).
 #f #l2 #Hf elim (is_pr_pat_dec … (↑l2) Hf)
 [ * /3 width=2 by ex_intro, or_introl/
 | #H @or_intror * /3 width=2 by ex_intro/

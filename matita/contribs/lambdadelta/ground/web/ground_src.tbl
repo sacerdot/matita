@@ -52,7 +52,7 @@ table {
           [ "pr_fcla ( 𝐂❨?❩ ≘ ? )" "pr_fcla_eq" "fcla_uni" "pr_fcla_fcla" * ]
           [ "pr_isu ( 𝐔❨?❩ )" "pr_isu_tl" "pr_isu_uni" * ]
           [ "pr_isi ( 𝐈❨?❩ )" "pr_isi_eq" "pr_isi_tl" "pr_isi_pushs" "pr_isi_tls" "pr_isi_id" "pr_isi_uni" "pr_isi_pat" "pr_isi_nat" * ]
-          [ "pr_nat ( @↑❨?,?❩ ≘ ? )" "pr_nat_uni" "pr_nat_basic" "pr_nat_nat" * ]
+          [ "pr_nat ( ＠§❨?,?❩ ≘ ? )" "pr_nat_uni" "pr_nat_basic" "pr_nat_nat" * ]
           [ "pr_pat ( ＠⧣❨?,?❩ ≘ ? )" "pr_pat_lt" "pr_pat_eq" "pr_pat_tls" "pr_pat_id" "pr_pat_uni" "pr_pat_basic" "pr_pat_pat" "pr_pat_pat_id" * ]
           [ "pr_basic ( 𝐛❨?,?❩ )" * ]
           [ "pr_uni ( 𝐮❨?❩ )" "pr_uni_eq" * ]

@@ -20,7 +20,7 @@ include "ground/relocation/pr_nat_uni.ma".
 (* Constructions with pr_basic **********************************************)
 
 lemma pr_nat_basic_lt (m) (n) (l):
-      l < m → @↑❨l, 𝐛❨m,n❩❩ ≘ l.
+      l < m → ＠§❨l, 𝐛❨m,n❩❩ ≘ l.
 #m @(nat_ind_succ … m) -m
 [ #n #i #H elim (nlt_inv_zero_dx … H)
 | #m #IH #n #l @(nat_ind_succ … l) -l
@@ -33,7 +33,7 @@ lemma pr_nat_basic_lt (m) (n) (l):
 qed.
 
 lemma pr_nat_basic_ge (m) (n) (l):
-      m ≤ l → @↑❨l, 𝐛❨m,n❩❩ ≘ l+n.
+      m ≤ l → ＠§❨l, 𝐛❨m,n❩❩ ≘ l+n.
 #m @(nat_ind_succ … m) -m //
 #m #IH #n #l #H
 elim (nle_inv_succ_sn … H) -H #Hml #H >H -H
@@ -43,9 +43,9 @@ qed.
 (* Inversions with pr_basic *************************************************)
 
 lemma pr_nat_basic_inv_lt (m) (n) (l) (k):
-      l < m → @↑❨l, 𝐛❨m,n❩❩ ≘ k → l = k.
+      l < m → ＠§❨l, 𝐛❨m,n❩❩ ≘ k → l = k.
 /3 width=4 by pr_nat_basic_lt, pr_nat_mono/ qed-.
 
 lemma pr_nat_basic_inv_ge (m) (n) (l) (k):
-      m ≤ l → @↑❨l, 𝐛❨m,n❩❩ ≘ k → l+n = k.
+      m ≤ l → ＠§❨l, 𝐛❨m,n❩❩ ≘ k → l+n = k.
 /3 width=4 by pr_nat_basic_ge, pr_nat_mono/ qed-.

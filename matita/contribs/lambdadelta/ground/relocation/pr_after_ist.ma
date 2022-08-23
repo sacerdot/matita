@@ -54,8 +54,8 @@ lemma pr_after_des_ist_pat:
 qed-.
 
 lemma pr_after_des_ist_nat:
-      ∀f1,l1,l2. @↑❨l1, f1❩ ≘ l2 → ∀f2. 𝐓❨f2❩ → ∀f. f2 ⊚ f1 ≘ f →
-      ∃∃l. @↑❨l2, f2❩ ≘ l & @↑❨l1, f❩ ≘ l.
+      ∀f1,l1,l2. ＠§❨l1, f1❩ ≘ l2 → ∀f2. 𝐓❨f2❩ → ∀f. f2 ⊚ f1 ≘ f →
+      ∃∃l. ＠§❨l2, f2❩ ≘ l & ＠§❨l1, f❩ ≘ l.
 #f1 #l1 #l2 #H1 #f2 #H2 #f #Hf
 elim (pr_after_des_ist_pat … H1 … H2 … Hf) -f1 -H2
 /2 width=3 by ex2_intro/

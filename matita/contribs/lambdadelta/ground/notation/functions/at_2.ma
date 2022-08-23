@@ -14,6 +14,6 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( @↑❨ term 46 T1 , break term 46 f ❩ ≘ break term 46 T2 )"
-  non associative with precedence 45
-  for @{ 'RAtSucc $T1 $f $T2 }.
+notation "hvbox( f ＠❨ break term 46 a ❩ )"
+  non associative with precedence 60
+  for @{ 'At $f $a }.

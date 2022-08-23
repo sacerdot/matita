@@ -1,7 +1,7 @@
 include "ground/relocation/tr_uni_pap.ma".
 include "ground/relocation/tr_compose_pap.ma".
 include "ground/relocation/tr_pap_eq.ma".
-include "ground/notation/functions/applysucc_2.ma".
+include "ground/notation/functions/atsection_2.ma".
 include "ground/arith/nat_lt.ma".
 include "ground/arith/nat_plus_rplus.ma".
 include "ground/arith/nat_pred_succ.ma".
@@ -17,46 +17,46 @@ definition tr_nap (f) (l:nat): nat ≝
 
 interpretation
   "functional non-negative application (total relocation maps)"
-  'ApplySucc f l = (tr_nap f l).
+  'AtSection f l = (tr_nap f l).
 
 lemma tr_nap_unfold (f) (l):
-      ↓(f＠⧣❨↑l❩) = f@↑❨l❩.
+      ↓(f＠⧣❨↑l❩) = f＠§❨l❩.
 // qed.
 
 lemma tr_pap_succ_nap (f) (l):
-      ↑(f@↑❨l❩) = f＠⧣❨↑l❩.
+      ↑(f＠§❨l❩) = f＠⧣❨↑l❩.
 // qed.
 
 lemma tr_compose_nap (f2) (f1) (l):
-      f2@↑❨f1@↑❨l❩❩ = (f2∘f1)@↑❨l❩.
+      f2＠§❨f1＠§❨l❩❩ = (f2∘f1)＠§❨l❩.
 #f2 #f1 #l
 <tr_nap_unfold <tr_nap_unfold <tr_nap_unfold
 <tr_compose_pap <npsucc_pred //
 qed.
 
 lemma tr_uni_nap (n) (m):
-      m + n = 𝐮❨n❩@↑❨m❩.
+      m + n = 𝐮❨n❩＠§❨m❩.
 #n #m
 <tr_nap_unfold
 <tr_uni_pap <nrplus_npsucc_sn //
 qed.
 
 lemma tr_nap_push (f):
-      ∀l. ↑(f@↑❨l❩) = (⫯f)@↑❨↑l❩.
+      ∀l. ↑(f＠§❨l❩) = (⫯f)＠§❨↑l❩.
 #f #l
 <tr_nap_unfold <tr_nap_unfold
 <tr_pap_push <pnpred_psucc //
 qed.
 
 lemma tr_nap_pushs_lt (f) (n) (m):
-      m < n → m = (⫯*[n]f)@↑❨m❩.
+      m < n → m = (⫯*[n]f)＠§❨m❩.
 #f #n #m #Hmn
 <tr_nap_unfold <tr_pap_pushs_le
 /2 width=1 by nlt_npsucc_bi/
 qed-.
 
 theorem tr_nap_eq_repl (i):
-        stream_eq_repl … (λf1,f2. f1@↑❨i❩ = f2@↑❨i❩).
+        stream_eq_repl … (λf1,f2. f1＠§❨i❩ = f2＠§❨i❩).
 #i #f1 #f2 #Hf
 <tr_nap_unfold <tr_nap_unfold
 /3 width=1 by tr_pap_eq_repl, eq_f/

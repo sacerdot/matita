@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/ratsucc_3.ma".
+include "ground/notation/relations/ratsection_3.ma".
 include "ground/arith/nat_plus.ma".
 include "ground/arith/nat_lt.ma".
 include "ground/relocation/fr2_map.ma".
@@ -34,13 +34,13 @@ inductive fr2_nat: fr2_map → relation nat ≝
 
 interpretation
   "non-negative relational application (finite relocation maps with pairs)"
-  'RAtSucc l1 f l2 = (fr2_nat f l1 l2).
+  'RAtSection l1 f l2 = (fr2_nat f l1 l2).
 
 (* Basic inversions *********************************************************)
 
 (*** at_inv_nil *)
 lemma fr2_nat_inv_empty (l1) (l2):
-      @↑❨l1, 𝐞❩ ≘ l2 → l1 = l2.
+      ＠§❨l1, 𝐞❩ ≘ l2 → l1 = l2.
 #l1 #l2 @(insert_eq_1 … (𝐞))
 #f * -f -l1 -l2
 [ //
@@ -51,9 +51,9 @@ qed-.
 
 (*** at_inv_cons *)
 lemma fr2_nat_inv_lcons (f) (d) (h) (l1) (l2):
-      @↑❨l1, ❨d,h❩◗f❩ ≘ l2 →
-      ∨∨ ∧∧ l1 < d & @↑❨l1, f❩ ≘ l2 
-       | ∧∧ d ≤ l1 & @↑❨l1+h, f❩ ≘ l2.
+      ＠§❨l1, ❨d,h❩◗f❩ ≘ l2 →
+      ∨∨ ∧∧ l1 < d & ＠§❨l1, f❩ ≘ l2 
+       | ∧∧ d ≤ l1 & ＠§❨l1+h, f❩ ≘ l2.
 #g #d #h #l1 #l2 @(insert_eq_1 … (❨d, h❩◗g))
 #f * -f -l1 -l2
 [ #l #H destruct
@@ -64,7 +64,7 @@ qed-.
 
 (*** at_inv_cons *)
 lemma fr2_nat_inv_lcons_lt (f) (d) (h) (l1) (l2):
-      @↑❨l1, ❨d,h❩◗f❩ ≘ l2 → l1 < d → @↑❨l1, f❩ ≘ l2.
+      ＠§❨l1, ❨d,h❩◗f❩ ≘ l2 → l1 < d → ＠§❨l1, f❩ ≘ l2.
 #f #d #h #l1 #h2 #H
 elim (fr2_nat_inv_lcons … H) -H * // #Hdl1 #_ #Hl1d
 elim (nlt_ge_false … Hl1d Hdl1)
@@ -72,7 +72,7 @@ qed-.
 
 (*** at_inv_cons *)
 lemma fr2_nat_inv_lcons_ge (f) (d) (h) (l1) (l2):
-      @↑❨l1, ❨d,h❩◗f❩ ≘ l2 → d ≤ l1 → @↑❨l1+h, f❩ ≘ l2.
+      ＠§❨l1, ❨d,h❩◗f❩ ≘ l2 → d ≤ l1 → ＠§❨l1+h, f❩ ≘ l2.
 #f #d #h #l1 #h2 #H
 elim (fr2_nat_inv_lcons … H) -H * // #Hl1d #_ #Hdl1
 elim (nlt_ge_false … Hl1d Hdl1)

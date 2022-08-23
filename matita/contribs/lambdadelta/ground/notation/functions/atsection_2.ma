@@ -14,6 +14,6 @@
 
 (* GROUND NOTATION **********************************************************)
 
-notation "hvbox( f ＠❨ break term 46 a ❩ )"
+notation "hvbox( f ＠§❨ break term 46 a ❩ )"
   non associative with precedence 60
-  for @{ 'Apply $f $a }.
+  for @{ 'AtSection $f $a }.
