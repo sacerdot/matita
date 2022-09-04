@@ -28,9 +28,9 @@ lemma unwind2_rmap_eq_repl (p):
 /3 width=1 by preunwind2_rmap_eq_repl/
 qed-.
 
-lemma tls_unwind2_rmap_d_dx (f) (p) (n) (k):
-      ⇂*[n+k]▶[f]p ≗ ⇂*[n]▶[f](p◖𝗱k).
-#f #p #n #k
+lemma tls_unwind2_rmap_d_dx (f) (p) (h) (k):
+      ⇂*[h+k]▶[f]p ≗ ⇂*[h]▶[f](p◖𝗱k).
+#f #p #h #k
 <unwind2_rmap_d_dx >nrplus_inj_dx
 /2 width=1 by tr_tls_compose_uni_dx/
 qed.

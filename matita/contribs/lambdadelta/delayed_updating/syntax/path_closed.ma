@@ -65,7 +65,7 @@ qed-.
 
 lemma pcc_inv_L_dx (p) (n):
       p◖𝗟 ϵ 𝐂❨n❩ →
-      ∧∧ p ϵ 𝐂❨↓n❩ & ↑↓n = n.
+      ∧∧ p ϵ 𝐂❨↓n❩ & n = ↑↓n.
 #p #n @(insert_eq_1 … (p◖𝗟))
 #x * -x -n
 [|*: #x #n [ #k ] #Hx ] #H0 destruct
@@ -99,7 +99,7 @@ lemma pcc_inv_L_dx_zero (p):
       p◖𝗟 ϵ 𝐂❨𝟎❩ → ⊥.
 #p #H0
 elim (pcc_inv_L_dx … H0) -H0 #_ #H0
-/2 width=7 by eq_inv_nsucc_zero/
+/2 width=7 by eq_inv_zero_nsucc/
 qed-.
 
 lemma pcc_inv_L_dx_succ (p) (n):
@@ -117,9 +117,39 @@ theorem pcc_append_bi (p) (q) (m) (n):
 /2 width=1 by pcc_d_dx, pcc_m_dx, pcc_L_dx, pcc_A_dx, pcc_S_dx/
 qed.
 
+(* Constructions with path_lcons ********************************************)
+
+lemma pcc_m_sn (q) (n):
+      q ϵ 𝐂❨n❩ → (𝗺◗q) ϵ 𝐂❨n❩.
+#q #n #Hq
+lapply (pcc_append_bi (𝐞◖𝗺) … Hq) -Hq
+/2 width=3 by pcc_m_dx/
+qed.
+
+lemma pcc_L_sn (q) (n):
+      q ϵ 𝐂❨n❩ → (𝗟◗q) ϵ 𝐂❨↑n❩.
+#q #n #Hq
+lapply (pcc_append_bi (𝐞◖𝗟) … Hq) -Hq
+/2 width=3 by pcc_L_dx/
+qed.
+
+lemma pcc_A_sn (q) (n):
+      q ϵ 𝐂❨n❩ → (𝗔◗q) ϵ 𝐂❨n❩.
+#q #n #Hq
+lapply (pcc_append_bi (𝐞◖𝗔) … Hq) -Hq
+/2 width=3 by pcc_A_dx/
+qed.
+
+lemma pcc_S_sn (q) (n):
+      q ϵ 𝐂❨n❩ → (𝗦◗q) ϵ 𝐂❨n❩.
+#q #n #Hq
+lapply (pcc_append_bi (𝐞◖𝗦) … Hq) -Hq
+/2 width=3 by pcc_S_dx/
+qed.
+
 (* Main inversions **********************************************************)
 
-theorem ppc_mono (q) (n1):
+theorem pcc_mono (q) (n1):
         q ϵ 𝐂❨n1❩ → ∀n2. q ϵ 𝐂❨n2❩ → n1 = n2.
 #q1 #n1 #Hn1 elim Hn1 -q1 -n1
 [|*: #q1 #n1 [ #k1 ] #_ #IH ] #n2 #Hn2
@@ -159,4 +189,13 @@ elim (eq_inv_list_lcons_bi ????? H0) -H0 #H0 #H1 destruct
   <(IH … Hq2) //
 | elim (pcc_inv_empty_succ … Hq2)
 ]
+qed-.
+
+theorem pcc_inv_L_sn (q) (n) (m):
+        (𝗟◗q) ϵ 𝐂❨n❩ → q ϵ 𝐂❨m❩ →
+        ∧∧ ↓n = m & n = ↑↓n.
+#q #n #m #H1q #H2q
+lapply (pcc_L_sn … H2q) -H2q #H2q
+<(pcc_mono … H2q … H1q) -q -n
+/2 width=1 by conj/
 qed-.

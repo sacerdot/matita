@@ -34,3 +34,10 @@ lemma tls_lift_rmap_closed (f) (q) (n):
 #f #q #n #H0
 /2 width=1 by tls_plus_lift_rmap_closed/
 qed-.
+
+lemma tls_succ_lift_rmap_append_L_closed_dx (f) (p) (q) (n):
+      q ϵ 𝐂❨n❩ →
+      ↑[p]f ≗ ⇂*[↑n]↑[p●𝗟◗q]f.
+#f #p #q #n #Hq
+/3 width=1 by tls_lift_rmap_closed, pcc_L_sn/
+qed-.
