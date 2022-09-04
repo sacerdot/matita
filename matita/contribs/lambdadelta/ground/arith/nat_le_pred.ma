@@ -17,11 +17,29 @@ include "ground/arith/nat_le.ma".
 
 (* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)
 
-(* Destructions with npred **************************************************)
+(* Inversions with npred ****************************************************)
 
 lemma nle_inv_pred_sn (m) (n): ↓m ≤ n → m ≤ ↑n.
 #m #n @(nat_ind_succ … m) -m
 /2 width=1 by nle_succ_bi/
+qed-.
+
+(*** le_inv_S1 *)
+lemma nle_inv_succ_sn (m) (n):
+      ↑m ≤ n → ∧∧ m ≤ ↓n & n = ↑↓n.
+#m #n * -n
+[ /2 width=3 by nle_refl, conj/
+| #n #Hn /3 width=1 by nle_des_succ_sn, conj/
+]
+qed-.
+
+lemma nle_inv_succ_dx (m) (n):
+      m ≤ ↑n → ∨∨ 𝟎 = m | ∧∧ ↓m ≤ n & m = ↑↓m.
+#m #n @(nat_ind_succ … m) -m
+[ /2 width=1 by or_introl/
+| #m #_ #H0
+  /4 width=1 by nle_inv_succ_bi, or_intror, conj/
+]
 qed-.
 
 (* Constructions with npred *************************************************)
@@ -43,15 +61,4 @@ qed.
 lemma nle_pred_sn (m) (n): m ≤ ↑n → ↓m ≤ n.
 #m #n @(nat_ind_succ … m) -m //
 /2 width=1 by nle_pred_bi/
-qed-.
-
-(* Inversions with npred ****************************************************)
-
-(*** le_inv_S1 *)
-lemma nle_inv_succ_sn (m) (n):
-      ↑m ≤ n → ∧∧ m ≤ ↓n & n = ↑↓n.
-#m #n * -n
-[ /2 width=3 by nle_refl, conj/
-| #n #Hn /3 width=1 by nle_des_succ_sn, conj/
-]
-qed-.
+qed.

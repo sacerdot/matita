@@ -50,7 +50,7 @@ qed.
 
 (* Main constructions with tr_compose and tr_tls ****************************)
 
-theorem tr_compose_uni_dx (f) (p):
+theorem tr_compose_uni_dx_pap (f) (p):
         (𝐮❨f＠⧣❨p❩❩∘⇂*[p]f) ≗ f∘𝐮❨p❩.
 #f #p
 @nstream_eq_inv_ext #q
