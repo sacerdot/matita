@@ -19,6 +19,13 @@ include "ground/lib/stream_hdtl_eq.ma".
 
 (* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS *******************************)
 
+(* Constructions with tr_compose and tr_next ********************************)
+
+lemma tr_compose_uni_unit_sn (f):
+      ↑f ≗ 𝐮❨𝟏❩∘f.
+#f >nsucc_zero <tr_uni_succ //
+qed.
+
 (* Constructions with tr_compose and tr_tl **********************************)
 
 lemma tr_tl_compose_uni_sn (n) (f):

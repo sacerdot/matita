@@ -48,7 +48,7 @@ lemma unwind2_rmap_append_closed_dx_xap_le (f) (p) (q) (n):
 ]
 qed-.
 
-lemma unwind2_rmap_append_L_closed_dx_nap (f) (p) (q) (n):
+lemma unwind2_rmap_append_closed_Lq_dx_nap (f) (p) (q) (n):
       q ϵ 𝐂❨n❩ →
       ▶[f](𝗟◗q)＠§❨n❩ = ▶[f](p●𝗟◗q)＠§❨n❩.
 #f #p #q #n #Hq
@@ -66,11 +66,11 @@ lemma unwind2_rmap_push_closed_nap (f) (q) (n):
 <unwind2_rmap_d_dx <tr_compose_nap //
 qed-.
 
-lemma unwind2_rmap_append_closed_nap (f) (p) (q) (n):
+lemma unwind2_rmap_append_closed_Lq_dx_nap_depth (f) (p) (q) (n):
       q ϵ 𝐂❨n❩ →
       ♭q = ▶[f](p●𝗟◗q)＠§❨n❩.
 #f #p #q #n #Hq
-<unwind2_rmap_append_L_closed_dx_nap //
+<unwind2_rmap_append_closed_Lq_dx_nap //
 /2 width=1 by unwind2_rmap_push_closed_nap/
 qed-.
 
@@ -85,8 +85,18 @@ lemma tls_succ_plus_unwind2_rmap_push_closed (f) (q) (n):
 ]
 qed-.
 
-lemma tls_succ_unwind2_rmap_append_L_closed_dx (f) (p) (q) (n):
+lemma tls_succ_unwind2_rmap_append_closed_Lq_dx (f) (p) (q) (n):
       q ϵ 𝐂❨n❩ →
       ▶[f]p ≗ ⇂*[↑n]▶[f](p●𝗟◗q).
 /2 width=1 by tls_succ_plus_unwind2_rmap_push_closed/
+qed-.
+
+lemma unwind2_rmap_append_closed_Lq_dx_nap_plus (f) (p) (q) (m) (n):
+      q ϵ 𝐂❨n❩ →
+      ▶[f]p＠❨m❩+♭q = ▶[f](p●𝗟◗q)＠§❨m+n❩.
+#f #p #q #m #n #Hq
+<tr_nap_plus @eq_f2
+[ <(tr_xap_eq_repl … (tls_succ_unwind2_rmap_append_closed_Lq_dx …)) //
+| /2 width=1 by unwind2_rmap_append_closed_Lq_dx_nap_depth/
+]
 qed-.

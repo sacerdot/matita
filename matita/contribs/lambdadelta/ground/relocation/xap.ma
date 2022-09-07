@@ -77,3 +77,8 @@ theorem tr_xap_eq_repl (i):
 <tr_xap_unfold <tr_xap_unfold
 /3 width=1 by tr_push_eq_repl, tr_nap_eq_repl/
 qed.
+
+lemma tr_nap_plus (f) (m) (n):
+      ⇂*[↑n]f＠❨m❩+f＠§❨n❩ = f＠§❨m+n❩.
+/2 width=1 by eq_inv_nsucc_bi/
+qed.
