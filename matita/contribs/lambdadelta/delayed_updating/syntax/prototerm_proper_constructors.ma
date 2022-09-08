@@ -23,3 +23,8 @@ lemma ppc_iref (t) (k):
       (𝛕k.t) ϵ 𝐏.
 #t #k #p * #q #Hq #H0 destruct //
 qed.
+
+lemma ppc_iref2 (t) (k) (d):
+      (𝛕❨k,d❩.t) ϵ 𝐏.
+#t #k #d #p * #q #Hq #H0 destruct //
+qed.
