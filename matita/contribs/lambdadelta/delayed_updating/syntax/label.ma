@@ -16,9 +16,8 @@
  * Initial invocation: - Patience on me to gain peace and perfection! -
  *)
 
-include "ground/arith/nat.ma".
+include "ground/arith/pnat.ma".
 include "delayed_updating/notation/functions/nodelabel_d_1.ma".
-include "delayed_updating/notation/functions/nodelabel_d_2.ma".
 include "delayed_updating/notation/functions/nodelabel_m_0.ma".
 include "delayed_updating/notation/functions/edgelabel_l_0.ma".
 include "delayed_updating/notation/functions/edgelabel_a_0.ma".
@@ -27,21 +26,16 @@ include "delayed_updating/notation/functions/edgelabel_s_0.ma".
 (* LABEL ********************************************************************)
 
 inductive label: Type[0] ≝
-| label_d : pnat → label
-| label_d2: pnat → nat → label
-| label_m : label
-| label_L : label
-| label_A : label
-| label_S : label
+| label_d: pnat → label
+| label_m: label
+| label_L: label
+| label_A: label
+| label_S: label
 .
 
 interpretation
   "variable reference by depth (label)"
   'NodeLabelD k = (label_d k).
-
-interpretation
-  "variable reference by depth with offset (label)"
-  'NodeLabelD k d = (label_d2 k d).
 
 interpretation
   "mark (label)"

@@ -16,7 +16,6 @@ include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/notation/functions/m_hook_1.ma".
 include "delayed_updating/notation/functions/hash_1.ma".
 include "delayed_updating/notation/functions/tau_2.ma".
-include "delayed_updating/notation/functions/tau_3.ma".
 include "delayed_updating/notation/functions/lamda_1.ma".
 include "delayed_updating/notation/functions/at_2.ma".
 
@@ -49,10 +48,6 @@ interpretation
   'Tau k t = (prototerm_node_1_2 (label_d k) label_m t).
 
 interpretation
-  "inner variable reference by depth with offset (prototerm)"
-  'Tau k d t = (prototerm_node_1_2 (label_d2 k d) label_m t).
-
-interpretation
   "name-free functional abstraction (prototerm)"
   'Lamda t = (prototerm_node_1 label_L t).
 
@@ -66,23 +61,12 @@ lemma in_comp_iref (t) (q) (k):
       q ϵ t → 𝗱k◗𝗺◗q ϵ 𝛕k.t.
 /2 width=3 by ex2_intro/ qed.
 
-lemma in_comp_iref2 (t) (q) (k) (d):
-      q ϵ t → 𝗱❨k,d❩◗𝗺◗q ϵ 𝛕❨k,d❩.t.
-/2 width=3 by ex2_intro/ qed.
-
 (* Basic inversions *********************************************************)
 
 lemma in_comp_inv_iref (t) (p) (k):
       p ϵ 𝛕k.t →
       ∃∃q. 𝗱k◗𝗺◗q = p & q ϵ t.
 #t #p #k * #q #Hq #Hp
-/2 width=3 by ex2_intro/
-qed-.
-
-lemma in_comp_inv_iref2 (t) (p) (k) (d):
-      p ϵ 𝛕❨k,d❩.t →
-      ∃∃q. 𝗱❨k,d❩◗𝗺◗q = p & q ϵ t.
-#t #p #k #d * #q #Hq #Hp
 /2 width=3 by ex2_intro/
 qed-.
 

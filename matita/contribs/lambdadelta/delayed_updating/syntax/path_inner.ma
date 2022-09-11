@@ -39,12 +39,6 @@ lemma pic_inv_d_dx (p) (k):
 #q * -q [|*: #q ] #H0 destruct
 qed-.
 
-lemma pic_inv_d2_dx (p) (k) (d):
-      p◖𝗱❨k,d❩ ϵ 𝐈 → ⊥.
-#p #k #d @(insert_eq_1 … (p◖𝗱❨k,d❩))
-#q * -q [|*: #q ] #H0 destruct
-qed-.
-
 (* Constructions with path_lcons ********************************************)
 
 lemma pic_m_sn (p):

@@ -23,12 +23,11 @@ match p with
 [ list_empty     ⇒ 𝟎
 | list_lcons l q ⇒
   match l with
-  [ label_d k    ⇒ depth q
-  | label_d2 k d ⇒ depth q
-  | label_m      ⇒ depth q
-  | label_L      ⇒ ↑(depth q)
-  | label_A      ⇒ depth q
-  | label_S      ⇒ depth q
+  [ label_d k ⇒ depth q
+  | label_m   ⇒ depth q
+  | label_L   ⇒ ↑(depth q)
+  | label_A   ⇒ depth q
+  | label_S   ⇒ depth q
   ]
 ].
 
@@ -43,10 +42,6 @@ lemma depth_empty: 𝟎 = ♭𝐞.
 
 lemma depth_d_dx (p) (k):
       ♭p = ♭(p◖𝗱k).
-// qed.
-
-lemma depth_d2_dx (p) (k) (d):
-      ♭p = ♭(p◖𝗱❨k,d❩).
 // qed.
 
 lemma depth_m_dx (p):
@@ -70,9 +65,8 @@ lemma depth_S_dx (p):
 theorem depth_append (p) (q):
         (♭p)+(♭q) = ♭(p●q).
 #p #q elim q -q //
-* [ #k | #k #d ] #q #IH <list_append_lcons_sn
+* [ #k ] #q #IH <list_append_lcons_sn
 [ <depth_d_dx <depth_d_dx //
-| <depth_d2_dx <depth_d2_dx //
 | <depth_m_dx <depth_m_dx //
 | <depth_L_dx <depth_L_dx //
 | <depth_A_dx <depth_A_dx //
@@ -84,10 +78,6 @@ qed.
 
 lemma depth_d_sn (p) (k):
       ♭p = ♭(𝗱k◗p).
-// qed.
-
-lemma depth_d2_sn (p) (k) (d):
-      ♭p = ♭(𝗱❨k,d❩◗p).
 // qed.
 
 lemma depth_m_sn (p):

@@ -23,9 +23,8 @@ lemma structure_pic (p):
       ⊗p ϵ 𝐈.
 #p elim p -p
 [ <structure_empty //
-| * [ #k | #k #d ] #p #IH
+| * [ #k ] #p #IH
   [ <structure_d_dx //
-  | <structure_d2_dx //
   | <structure_m_dx //
   | <structure_L_dx //
   | <structure_A_dx //

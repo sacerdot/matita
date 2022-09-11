@@ -1,0 +1,77 @@
+include "delayed_updating/notation/functions/nodelabel_d_2.ma".
+
+| label_d2: pnat → nat → label
+
+interpretation
+  "variable reference by depth with offset (label)"
+  'NodeLabelD k d = (label_d2 k d).
+
+  | label_d2 k d ⇒ depth q
+
+lemma depth_d2_dx (p) (k) (d):
+      ♭p = ♭(p◖𝗱❨k,d❩).
+// qed.
+
+lemma depth_d2_sn (p) (k) (d):
+      ♭p = ♭(𝗱❨k,d❩◗p).
+// qed.
+
+   | label_d2 k d ⇒ structure q
+
+lemma structure_d2_dx (p) (k) (d):
+      ⊗p = ⊗(p◖𝗱❨k,d❩).
+// qed.
+
+lemma structure_d2_sn (p) (k) (d):
+      ⊗p = ⊗(𝗱❨k,d❩◗p).
+#p #k #d <structure_append //
+qed.
+
+lemma eq_inv_d2_dx_structure (d) (h) (q) (p):
+      q◖𝗱❨h,d❩ = ⊗p → ⊥.
+#d #h #q #p elim p -p [| * [ #k | #k #d ] #p #IH ]
+[ <structure_empty #H0 destruct
+| <structure_d_dx #H0 /2 width=1 by/
+| <structure_d2_dx #H0 /2 width=1 by/
+| <structure_m_dx #H0 /2 width=1 by/
+| <structure_L_dx #H0 destruct
+| <structure_A_dx #H0 destruct
+| <structure_S_dx #H0 destruct
+]
+qed-.
+
+lemma eq_inv_d2_sn_structure (d) (h) (q) (p):
+      (𝗱❨h,d❩◗q) = ⊗p → ⊥.
+#d #h #q #p >list_cons_comm #H0
+elim (eq_inv_append_structure … H0) -H0 #r1 #r2
+<list_cons_comm #H0 #H1 #H2 destruct
+elim (eq_inv_d2_dx_structure … H0)
+qed-.
+
+include "delayed_updating/notation/functions/tau_3.ma".
+
+interpretation
+  "inner variable reference by depth with offset (prototerm)"
+  'Tau k d t = (prototerm_node_1_2 (label_d2 k d) label_m t).
+
+lemma in_comp_iref2 (t) (q) (k) (d):
+      q ϵ t → 𝗱❨k,d❩◗𝗺◗q ϵ 𝛕❨k,d❩.t.
+/2 width=3 by ex2_intro/ qed.
+
+lemma in_comp_inv_iref2 (t) (p) (k) (d):
+      p ϵ 𝛕❨k,d❩.t →
+      ∃∃q. 𝗱❨k,d❩◗𝗺◗q = p & q ϵ t.
+#t #p #k #d * #q #Hq #Hp
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma ppc_iref2 (t) (k) (d):
+      (𝛕❨k,d❩.t) ϵ 𝐏.
+#t #k #d #p * #q #Hq #H0 destruct //
+qed.
+
+lemma pic_inv_d2_dx (p) (k) (d):
+      p◖𝗱❨k,d❩ ϵ 𝐈 → ⊥.
+#p #k #d @(insert_eq_1 … (p◖𝗱❨k,d❩))
+#q * -q [|*: #q ] #H0 destruct
+qed-.
