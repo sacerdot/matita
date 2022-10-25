@@ -57,7 +57,7 @@ theorem dfr_des_ifr (f) (t1) (t2) (r): t1 ϵ 𝐓 →
     @(stream_eq_trans … (tr_compose_uni_dx_pap …)) <tr_pap_succ_nap
     @tr_compose_eq_repl
     [ <unwind2_rmap_append_closed_Lq_dx_nap_depth //
-    | /2 width=1 by tls_succ_unwind2_rmap_append_closed_Lq_dx/
+    | /2 width=2 by tls_succ_unwind2_rmap_append_closed_Lq_dx/
     ]
 (* Note: crux of the proof ends *)
   | //

@@ -24,11 +24,11 @@ include "ground/arith/nat_le_pred.ma".
 
 (* Destructions with cpp ****************************************************)
 
-lemma unwind2_rmap_append_closed_dx_xap_le (f) (p) (q) (n):
-      q ϵ 𝐂❨n❩ → ∀m. m ≤ n →
+lemma unwind2_rmap_append_closed_dx_xap_le (o) (f) (p) (q) (n):
+      q ϵ 𝐂❨o,n❩ → ∀m. m ≤ n →
       ▶[f]q＠❨m❩ = ▶[f](p●q)＠❨m❩.
-#f #p #q #n #Hq elim Hq -q -n
-[|*: #q #n [ #k ] #_ #IH ] #m #Hm
+#o #f #p #q #n #Hq elim Hq -q -n
+[|*: #q #n [ #k #_ ] #_ #IH ] #m #Hm
 [ <(nle_inv_zero_dx … Hm) -m //
 | <unwind2_rmap_d_dx <unwind2_rmap_d_dx
   <tr_compose_xap <tr_compose_xap
@@ -48,55 +48,55 @@ lemma unwind2_rmap_append_closed_dx_xap_le (f) (p) (q) (n):
 ]
 qed-.
 
-lemma unwind2_rmap_append_closed_Lq_dx_nap (f) (p) (q) (n):
-      q ϵ 𝐂❨n❩ →
+lemma unwind2_rmap_append_closed_Lq_dx_nap (o) (f) (p) (q) (n):
+      q ϵ 𝐂❨o,n❩ →
       ▶[f](𝗟◗q)＠§❨n❩ = ▶[f](p●𝗟◗q)＠§❨n❩.
-#f #p #q #n #Hq
+#o #f #p #q #n #Hq
 lapply (pcc_L_sn … Hq) -Hq #Hq
-lapply (unwind2_rmap_append_closed_dx_xap_le f p … Hq (↑n) ?) -Hq //
+lapply (unwind2_rmap_append_closed_dx_xap_le o f p … Hq (↑n) ?) -Hq //
 <tr_xap_succ_nap <tr_xap_succ_nap #Hq
 /2 width=1 by eq_inv_nsucc_bi/
 qed-.
 
-lemma unwind2_rmap_push_closed_nap (f) (q) (n):
-      q ϵ 𝐂❨n❩ →
+lemma unwind2_rmap_push_closed_nap (o) (f) (q) (n):
+      q ϵ 𝐂❨o,n❩ →
       ♭q = ▶[⫯f]q＠§❨n❩.
-#f #q #n #Hq elim Hq -q -n
-[|*: #q #n [ #k ] #_ #IH ] //
+#o #f #q #n #Hq elim Hq -q -n
+[|*: #q #n [ #k #_ ] #_ #IH ] //
 <unwind2_rmap_d_dx <tr_compose_nap //
 qed-.
 
-lemma unwind2_rmap_append_closed_Lq_dx_nap_depth (f) (p) (q) (n):
-      q ϵ 𝐂❨n❩ →
+lemma unwind2_rmap_append_closed_Lq_dx_nap_depth (o) (f) (p) (q) (n):
+      q ϵ 𝐂❨o,n❩ →
       ♭q = ▶[f](p●𝗟◗q)＠§❨n❩.
-#f #p #q #n #Hq
+#o #f #p #q #n #Hq
 <unwind2_rmap_append_closed_Lq_dx_nap //
-/2 width=1 by unwind2_rmap_push_closed_nap/
+/2 width=2 by unwind2_rmap_push_closed_nap/
 qed-.
 
-lemma tls_succ_plus_unwind2_rmap_push_closed (f) (q) (n):
-      q ϵ 𝐂❨n❩ →
+lemma tls_succ_plus_unwind2_rmap_push_closed (o) (f) (q) (n):
+      q ϵ 𝐂❨o,n❩ →
       ∀m. ⇂*[m]f ≗ ⇂*[↑(m+n)]▶[⫯f]q.
-#f #q #n #Hq elim Hq -q -n //
-#q #n [ #k ] #_ #IH #m
+#o #f #q #n #Hq elim Hq -q -n //
+#q #n [ #k #_ ] #_ #IH #m
 [ @(stream_eq_trans … (tls_unwind2_rmap_d_dx …))
   >nrplus_inj_dx >nrplus_inj_sn >nsucc_unfold //
 | <unwind2_rmap_L_dx <nplus_succ_dx //
 ]
 qed-.
 
-lemma tls_succ_unwind2_rmap_append_closed_Lq_dx (f) (p) (q) (n):
-      q ϵ 𝐂❨n❩ →
+lemma tls_succ_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (n):
+      q ϵ 𝐂❨o,n❩ →
       ▶[f]p ≗ ⇂*[↑n]▶[f](p●𝗟◗q).
-/2 width=1 by tls_succ_plus_unwind2_rmap_push_closed/
+/2 width=2 by tls_succ_plus_unwind2_rmap_push_closed/
 qed-.
 
-lemma unwind2_rmap_append_closed_Lq_dx_nap_plus (f) (p) (q) (m) (n):
-      q ϵ 𝐂❨n❩ →
+lemma unwind2_rmap_append_closed_Lq_dx_nap_plus (o) (f) (p) (q) (m) (n):
+      q ϵ 𝐂❨o,n❩ →
       ▶[f]p＠❨m❩+♭q = ▶[f](p●𝗟◗q)＠§❨m+n❩.
-#f #p #q #m #n #Hq
+#o #f #p #q #m #n #Hq
 <tr_nap_plus @eq_f2
 [ <(tr_xap_eq_repl … (tls_succ_unwind2_rmap_append_closed_Lq_dx …)) //
-| /2 width=1 by unwind2_rmap_append_closed_Lq_dx_nap_depth/
+| /2 width=2 by unwind2_rmap_append_closed_Lq_dx_nap_depth/
 ]
 qed-.

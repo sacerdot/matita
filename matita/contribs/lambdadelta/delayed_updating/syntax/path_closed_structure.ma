@@ -20,8 +20,8 @@ include "delayed_updating/syntax/path_depth.ma".
 
 (* Constructions with structure *********************************************)
 
-lemma path_closed_structure_depth (p):
-      ⊗p ϵ 𝐂❨♭p❩.
-#p elim p -p // *
+lemma path_closed_structure_depth (o) (p):
+      ⊗p ϵ 𝐂❨o,♭p❩.
+#o #p elim p -p // *
 /2 width=1 by pcc_L_dx, pcc_A_dx, pcc_S_dx/
 qed.

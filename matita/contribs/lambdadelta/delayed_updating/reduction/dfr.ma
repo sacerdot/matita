@@ -24,7 +24,7 @@ include "ground/xoa/ex_4_3.ma".
 definition dfr (r): relation2 prototerm prototerm ≝
            λt1,t2.
            ∃∃p,q,n. p●𝗔◗𝗟◗q = r &
-           q ϵ 𝐂❨n❩ & r◖𝗱↑n ϵ t1 &
+           q ϵ 𝐂❨Ⓕ,n❩ & r◖𝗱↑n ϵ t1 &
            t1[⋔r←𝛕↑n.(t1⋔(p◖𝗦))] ⇔ t2
 .
 

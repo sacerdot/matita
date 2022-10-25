@@ -12,13 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/dfr.ma".
-
 include "delayed_updating/substitution/fsubst_lift.ma".
 include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/substitution/lift_constructors.ma".
 include "delayed_updating/substitution/lift_path_closed.ma".
 include "delayed_updating/substitution/lift_rmap_closed.ma".
+
+(**) (* reverse include *)
+include "delayed_updating/reduction/dfr.ma".
 
 (* DELAYED FOCUSED REDUCTION ************************************************)
 
@@ -43,7 +44,7 @@ theorem dfr_lift_bi (f) (t1) (t2) (r):
   @(subset_eq_canc_sn … (lift_term_grafted_S …))
   @lift_term_eq_repl_sn
 (* Note: crux of the proof begins *)
-  /2 width=1 by tls_succ_lift_rmap_append_L_closed_dx/
+  /2 width=2 by tls_succ_lift_rmap_append_L_closed_dx/
 (* Note: crux of the proof ends *)
 ]
 qed.

@@ -6,5 +6,6 @@ METAVARIABLES
   h, k      : reference index by depth
   l         : label
   m, n      : natural number
+  o         : option
   p, q, r, s: path
   t, u, v, w: term

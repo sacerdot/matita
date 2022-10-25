@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( 𝐂❨ break term 46 n ❩ )"
+notation "hvbox( 𝐂❨ break term 46 b, break term 46 n ❩ )"
   non associative with precedence 70
-  for @{ 'ClassC $n }.
+  for @{ 'ClassC $b $n }.

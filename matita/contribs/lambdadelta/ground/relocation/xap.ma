@@ -82,3 +82,9 @@ lemma tr_nap_plus (f) (m) (n):
       ⇂*[↑n]f＠❨m❩+f＠§❨n❩ = f＠§❨m+n❩.
 /2 width=1 by eq_inv_nsucc_bi/
 qed.
+
+lemma tr_xap_pos (f) (n):
+      n = ↑↓n → f＠❨n❩=↑↓(f＠❨n❩).
+#f #n #H0 >H0 -H0
+<tr_xap_ninj <nsucc_pnpred //
+qed.

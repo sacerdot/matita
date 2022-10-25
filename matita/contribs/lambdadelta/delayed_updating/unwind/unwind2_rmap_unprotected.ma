@@ -30,8 +30,8 @@ lemma b_balanced: ⊗b ϵ 𝐁.
 /2 width=1 by pbc_empty, pbc_redex/
 qed.
 
-lemma b_closed: b ϵ 𝐂❨𝟎❩.
-/4 width=1 by pcc_A_sn, pcc_empty, pcc_d_dx, pcc_L_dx/
+lemma b_closed: b ϵ 𝐂❨Ⓕ,𝟎❩.
+/4 width=1 by pcc_A_sn, pcc_empty, pcc_false_d_dx, pcc_L_dx/
 qed.
 
 lemma b_unwind2_rmap_unfold (f):
