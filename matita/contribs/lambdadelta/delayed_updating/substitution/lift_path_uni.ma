@@ -22,7 +22,7 @@ include "ground/arith/nat_pred_succ.ma".
 (* Constructions with tr_uni ************************************************)
 
 lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = ↑[𝐮❨n❩](𝗱k◗p).
+      (𝗱(k+n)◗p) = 🠡[𝐮❨n❩](𝗱k◗p).
 #p #n #k
 <lift_path_d_sn <tr_uni_pap >nsucc_pnpred
 <tr_tls_succ_uni //

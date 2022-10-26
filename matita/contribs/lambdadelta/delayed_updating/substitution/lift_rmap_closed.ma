@@ -22,7 +22,7 @@ include "ground/lib/stream_eq_eq.ma".
 
 lemma tls_plus_lift_rmap_closed (o) (f) (q) (n):
       q ϵ 𝐂❨o,n❩ →
-      ∀m. ⇂*[m]f ≗ ⇂*[m+n]↑[q]f.
+      ∀m. ⇂*[m]f ≗ ⇂*[m+n]🠢[f]q.
 #o #f #q #n #Hq elim Hq -q -n //
 #q #n #_ #IH #m
 <nplus_succ_dx <stream_tls_swap //
@@ -30,14 +30,14 @@ qed-.
 
 lemma tls_lift_rmap_closed (o) (f) (q) (n):
       q ϵ 𝐂❨o,n❩ →
-      f ≗ ⇂*[n]↑[q]f.
+      f ≗ ⇂*[n]🠢[f]q.
 #o #f #q #n #H0
 /2 width=2 by tls_plus_lift_rmap_closed/
 qed-.
 
 lemma tls_succ_lift_rmap_append_L_closed_dx (o) (f) (p) (q) (n):
       q ϵ 𝐂❨o,n❩ →
-      ↑[p]f ≗ ⇂*[↑n]↑[p●𝗟◗q]f.
+      🠢[f]p ≗ ⇂*[↑n]🠢[f](p●𝗟◗q).
 #o #f #p #q #n #Hq
 /3 width=2 by tls_lift_rmap_closed, pcc_L_sn/
 qed-.

@@ -16,6 +16,7 @@ include "delayed_updating/unwind/unwind2_rmap_eq.ma".
 include "delayed_updating/syntax/path_closed.ma".
 include "delayed_updating/syntax/path_depth.ma".
 include "ground/relocation/xap.ma".
+include "ground/lib/stream_tls_plus.ma".
 include "ground/lib/stream_eq_eq.ma".
 include "ground/arith/nat_le_plus.ma".
 include "ground/arith/nat_le_pred.ma".
@@ -74,21 +75,44 @@ lemma unwind2_rmap_append_closed_Lq_dx_nap_depth (o) (f) (p) (q) (n):
 /2 width=2 by unwind2_rmap_push_closed_nap/
 qed-.
 
+lemma unwind2_rmap_append_closed_true_dx_xap_depth (f) (p) (q) (n):
+      q ϵ 𝐂❨Ⓣ,n❩ → ♭q = ▶[f](p●q)＠❨n❩.
+#f #p #q #n #Hq elim Hq -q -n //
+#q #n #k #Ho #_ #IH
+<unwind2_rmap_d_dx <tr_compose_xap
+>Ho // <tr_uni_xap_succ <Ho //
+qed-.
+
 lemma tls_succ_plus_unwind2_rmap_push_closed (o) (f) (q) (n):
       q ϵ 𝐂❨o,n❩ →
       ∀m. ⇂*[m]f ≗ ⇂*[↑(m+n)]▶[⫯f]q.
 #o #f #q #n #Hq elim Hq -q -n //
-#q #n [ #k #_ ] #_ #IH #m
-[ @(stream_eq_trans … (tls_unwind2_rmap_d_dx …))
-  >nrplus_inj_dx >nrplus_inj_sn >nsucc_unfold //
-| <unwind2_rmap_L_dx <nplus_succ_dx //
-]
+#q #n #k #_ #_ #IH #m
+@(stream_eq_trans … (tls_unwind2_rmap_d_dx …))
+>nrplus_inj_dx >nrplus_inj_sn >nsucc_unfold //
+qed-.
+
+lemma tls_plus_unwind2_rmap_closed_true (f) (q) (n):
+      q ϵ 𝐂❨Ⓣ,n❩ →
+      ∀m. ⇂*[m]f ≗ ⇂*[m+n]▶[f]q.
+#f #q #n #Hq elim Hq -q -n //
+#q #n #k #Ho #_ #IH #m
+>Ho // <nplus_succ_dx
+@(stream_eq_trans … (tls_unwind2_rmap_d_dx …))
+>nrplus_inj_dx >nrplus_inj_sn >nsucc_unfold
+>nplus_succ_dx <Ho //
 qed-.
 
 lemma tls_succ_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (n):
       q ϵ 𝐂❨o,n❩ →
       ▶[f]p ≗ ⇂*[↑n]▶[f](p●𝗟◗q).
 /2 width=2 by tls_succ_plus_unwind2_rmap_push_closed/
+qed-.
+
+lemma tls_unwind2_rmap_append_closed_true_dx (f) (p) (q) (n):
+      q ϵ 𝐂❨Ⓣ,n❩ →
+      ▶[f]p ≗ ⇂*[n]▶[f](p●q).
+/2 width=1 by tls_plus_unwind2_rmap_closed_true/
 qed-.
 
 lemma unwind2_rmap_append_closed_Lq_dx_nap_plus (o) (f) (p) (q) (m) (n):
@@ -99,4 +123,22 @@ lemma unwind2_rmap_append_closed_Lq_dx_nap_plus (o) (f) (p) (q) (m) (n):
 [ <(tr_xap_eq_repl … (tls_succ_unwind2_rmap_append_closed_Lq_dx …)) //
 | /2 width=2 by unwind2_rmap_append_closed_Lq_dx_nap_depth/
 ]
+qed-.
+
+lemma unwind2_rmap_append_closed_bLq_dx_nap_plus (o) (f) (p) (b) (q) (m) (n):
+      b ϵ 𝐂❨Ⓣ,m❩ → q ϵ 𝐂❨o,n❩ →
+      ♭b+♭q = ▶[f](p●b●𝗟◗q)＠§❨m+n❩.
+#o #f #p #b #q #m #n #Hb #Hq
+>(unwind2_rmap_append_closed_true_dx_xap_depth f p … Hb) -Hb
+>(unwind2_rmap_append_closed_Lq_dx_nap_plus … Hq) -Hq //
+qed-.
+
+lemma tls_succ_plus_unwind2_rmap_append_closed_bLq_dx (o) (f) (p) (b) (q) (m) (n):
+      b ϵ 𝐂❨Ⓣ,m❩ → q ϵ 𝐂❨o,n❩ →
+      ▶[f]p ≗ ⇂*[↑(m+n)]▶[f](p●b●𝗟◗q).
+#o #f #p #b #q #m #n #Hb #Hq
+>nplus_succ_dx <stream_tls_plus
+@(stream_eq_trans … (tls_unwind2_rmap_append_closed_true_dx … Hb)) -Hb
+@stream_tls_eq_repl
+@(stream_eq_trans … (tls_succ_unwind2_rmap_append_closed_Lq_dx … Hq)) -Hq //
 qed-.

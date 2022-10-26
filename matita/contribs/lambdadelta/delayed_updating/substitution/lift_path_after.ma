@@ -20,7 +20,7 @@ include "delayed_updating/substitution/prelift_label_after.ma".
 (* Constructions with tr_after **********************************************)
 
 lemma lift_path_after (g) (f) (p):
-      ↑[g]↑[f]p = ↑[g∘f]p.
+      🠡[g]🠡[f]p = 🠡[g∘f]p.
 #g #f #p elim p -p //
 #l #p #IH
 <lift_path_rcons <lift_path_rcons  <IH -IH //

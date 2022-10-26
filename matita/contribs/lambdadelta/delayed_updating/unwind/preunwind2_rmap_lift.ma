@@ -25,7 +25,7 @@ include "ground/lib/stream_eq_eq.ma".
 (* Constructions with lift_path *********************************************)
 
 lemma preunwind2_lift_rmap_after (g) (f) (l):
-      ▶[g]↑[f]l∘↑[l]f ≗ ▶[g∘f]l.
+      ▶[g]🠡[f]l∘🠢[f]l ≗ ▶[g∘f]l.
 #g #f * // #k
 <prelift_label_d <prelift_rmap_d <preunwind2_rmap_d <preunwind2_rmap_d
 @(stream_eq_trans … (tr_compose_assoc …))

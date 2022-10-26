@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/notation/functions/uparrow_2.ma".
+include "delayed_updating/notation/functions/righttrianglearrow_2.ma".
 include "delayed_updating/syntax/label.ma".
 include "ground/relocation/tr_pn.ma".
 include "ground/lib/stream_tls.ma".
@@ -30,26 +30,26 @@ match l with
 
 interpretation
   "prelift (relocation map)"
-  'UpArrow l f = (prelift_rmap f l).
+  'RightTriangleArrow f l = (prelift_rmap f l).
 
 (* Basic constructions ******************************************************)
 
 lemma prelift_rmap_d (f) (k:pnat):
-      ⇂*[k]f = ↑[𝗱k]f.
+      ⇂*[k]f = 🠢[f]𝗱k.
 // qed.
 
 lemma prelift_rmap_m (f):
-      f = ↑[𝗺]f.
+      f = 🠢[f]𝗺.
 // qed.
 
 lemma prelift_rmap_L (f):
-      (⫯f) = ↑[𝗟]f.
+      (⫯f) = 🠢[f]𝗟.
 // qed.
 
 lemma prelift_rmap_A (f):
-      f = ↑[𝗔]f.
+      f = 🠢[f]𝗔.
 // qed.
 
 lemma prelift_rmap_S (f):
-      f = ↑[𝗦]f.
+      f = 🠢[f]𝗦.
 // qed.

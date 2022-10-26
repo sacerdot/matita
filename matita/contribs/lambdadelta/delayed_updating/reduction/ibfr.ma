@@ -28,8 +28,8 @@ include "ground/xoa/ex_6_5.ma".
 definition ibfr (r): relation2 prototerm prototerm ≝
            λt1,t2.
            ∃∃p,b,q,m,n. p●𝗔◗b●𝗟◗q = r &
-           ⊗b ϵ 𝐁 & b ϵ 𝐂❨m❩ & q ϵ 𝐂❨n❩ & r◖𝗱↑n ϵ t1 &
-           t1[⋔r←↑[𝐮❨↑(m+n)❩](t1⋔(p◖𝗦))] ⇔ t2
+           ⊗b ϵ 𝐁 & b ϵ 𝐂❨Ⓣ,m❩ & q ϵ 𝐂❨Ⓕ,n❩ & r◖𝗱↑n ϵ t1 &
+           t1[⋔r←🠡[𝐮❨↑(m+n)❩](t1⋔(p◖𝗦))] ⇔ t2
 .
 
 interpretation

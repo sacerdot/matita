@@ -12,24 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path.ma".
-include "delayed_updating/syntax/path_structure.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* LIFT FOR PATH ************************************************************)
-
-(* Constructions with structure *********************************************)
-
-lemma structure_lift_path (f) (p):
-      ⊗p = ⊗🠡[f]p.
-#f #p elim p -p //
-* [ #k ] #p #IH //
-[ <lift_path_d_dx <structure_d_dx <structure_d_dx //
-| <lift_path_m_dx <structure_m_dx <structure_m_dx //
-]
-qed.
-
-lemma lift_path_structure (f) (p):
-      ⊗p = 🠡[f]⊗p.
-#f #p elim p -p //
-* [ #k ] #p #IH //
-qed.
+notation "hvbox( 🠡[ break term 46 t1 ] break term 70 t2  )"
+  non associative with precedence 70
+  for @{ 'UpTriangleArrow $t1 $t2 }.

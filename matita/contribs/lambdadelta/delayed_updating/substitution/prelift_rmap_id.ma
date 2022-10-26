@@ -20,6 +20,6 @@ include "ground/relocation/tr_id_tls.ma".
 (* Constructions with tr_id *************************************************)
 
 lemma prelift_rmap_id (l):
-      (𝐢) = ↑[l]𝐢.
+      (𝐢) = 🠢[𝐢]l.
 * [ #k ] //
 qed.

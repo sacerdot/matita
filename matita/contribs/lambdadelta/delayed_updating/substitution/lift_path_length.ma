@@ -20,7 +20,7 @@ include "ground/lib/list_length.ma".
 (* Constructions with list_length *******************************************)
 
 lemma lift_path_length (f) (p):
-      ❘p❘ = ❘↑[f]p❘.
+      ❘p❘ = ❘🠡[f]p❘.
 #f #p elim p -p // * [ #k ] #p #IH
 [ <lift_path_d_dx
 | <lift_path_m_dx

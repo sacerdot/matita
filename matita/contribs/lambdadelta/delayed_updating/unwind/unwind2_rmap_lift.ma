@@ -23,7 +23,7 @@ include "delayed_updating/syntax/path_structure.ma".
 (* Constructions with lift_path *********************************************)
 
 lemma lift_unwind2_rmap_after (g) (f) (p):
-      ↑[⊗p]g∘▶[f]p ≗ ▶[g∘f]p.
+      🠢[g]⊗p∘▶[f]p ≗ ▶[g∘f]p.
 #g #f #p elim p -p //
 * [ #k ] #p #IH //
 [ <unwind2_rmap_d_dx <unwind2_rmap_d_dx
@@ -35,7 +35,7 @@ lemma lift_unwind2_rmap_after (g) (f) (p):
 qed.
 
 lemma unwind2_lift_rmap_after (g) (f) (p:path):
-      ▶[g]↑[f]p∘↑[p]f ≗ ▶[g∘f]p.
+      ▶[g]🠡[f]p∘🠢[f]p ≗ ▶[g∘f]p.
 #g #f #p elim p -p // #l #p #IH
 <lift_path_rcons <lift_rmap_rcons <unwind2_rmap_rcons <unwind2_rmap_rcons
 @(stream_eq_trans … (preunwind2_lift_rmap_after …))

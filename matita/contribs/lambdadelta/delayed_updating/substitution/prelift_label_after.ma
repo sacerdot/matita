@@ -20,6 +20,6 @@ include "ground/relocation/tr_compose_pap.ma".
 (* Constructions with tr_after **********************************************)
 
 lemma prelift_label_after (g) (f) (l):
-      ↑[g]↑[f]l = ↑[g∘f]l.
+      🠡[g]🠡[f]l = 🠡[g∘f]l.
 #g #f * [ #k ] //
 qed.

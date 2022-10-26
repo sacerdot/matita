@@ -20,7 +20,7 @@ include "ground/relocation/tr_pap_eq.ma".
 (* constructions with tr_map_eq *********************************************)
 
 lemma prelift_label_eq_repl (l):
-      stream_eq_repl … (λf1,f2. ↑[f1]l = ↑[f2]l).
+      stream_eq_repl … (λf1,f2. 🠡[f1]l = 🠡[f2]l).
 * //
 #k #f1 #f2 #Hf
 <prelift_label_d <prelift_label_d

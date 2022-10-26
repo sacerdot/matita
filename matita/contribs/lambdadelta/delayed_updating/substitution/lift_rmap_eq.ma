@@ -23,14 +23,14 @@ include "ground/arith/nat_rplus_pplus.ma".
 (* Constructions with lift_eq ***********************************************)
 
 lemma lift_rmap_eq_repl (p):
-      stream_eq_repl … (λf1,f2. ↑[p]f1 ≗ ↑[p]f2).
+      stream_eq_repl … (λf1,f2. 🠢[f1]p ≗ 🠢[f2]p).
 #p elim p -p //
 #l #p #IH #f1 #f2 #Hf
 /3 width=1 by prelift_rmap_eq_repl/
 qed.
 
 lemma tls_lift_rmap_d_dx (f) (p) (n) (k):
-      ⇂*[n+k]↑[p]f ≗ ⇂*[n]↑[p◖𝗱k]f.
+      ⇂*[n+k]🠢[f]p ≗ ⇂*[n]🠢[f](p◖𝗱k).
 #f #p #n #k
 <lift_rmap_d_dx >nrplus_inj_dx >nrplus_inj_sn //
 qed.

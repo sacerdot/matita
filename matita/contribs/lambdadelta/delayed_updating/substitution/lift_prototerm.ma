@@ -20,11 +20,11 @@ include "ground/lib/subset_ext.ma".
 
 interpretation
   "lift (prototerm)"
-  'UpArrow f t = (subset_ext_f1 ? ? (lift_path f) t).
+  'UpTriangleArrow f t = (subset_ext_f1 ? ? (lift_path f) t).
 
 (* Basic constructions ******************************************************)
 
 lemma in_comp_lift_path_term (f) (t) (p):
-      p ϵ t → ↑[f]p ϵ ↑[f]t.
+      p ϵ t → 🠡[f]p ϵ 🠡[f]t.
 /2 width=1 by subset_in_ext_f1_dx/
 qed.

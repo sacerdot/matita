@@ -20,6 +20,6 @@ include "delayed_updating/substitution/prelift_rmap_id.ma".
 (* Constructions with tr_id *************************************************)
 
 lemma lift_rmap_id (p):
-      (𝐢) = ↑[p]𝐢.
+      (𝐢) = 🠢[𝐢]p.
 #p elim p -p //
 qed.

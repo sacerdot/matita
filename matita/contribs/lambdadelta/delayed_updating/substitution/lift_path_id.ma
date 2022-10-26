@@ -21,7 +21,7 @@ include "delayed_updating/substitution/prelift_label_id.ma".
 (* Constructions with tr_id *************************************************)
 
 lemma lift_path_id (p):
-      p = ↑[𝐢]p.
+      p = 🠡[𝐢]p.
 #p elim p -p //
 #l #p #IH
 <lift_path_rcons //

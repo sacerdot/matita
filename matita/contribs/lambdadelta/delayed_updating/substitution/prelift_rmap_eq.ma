@@ -21,6 +21,6 @@ include "ground/lib/stream_tls_eq.ma".
 (* constructions with tr_map_eq *********************************************)
 
 lemma prelift_rmap_eq_repl (l):
-      stream_eq_repl … (λf1,f2. ↑[l]f1 ≗ ↑[l]f2).
+      stream_eq_repl … (λf1,f2. 🠢[f1]l ≗ 🠢[f2]l).
 * //
 qed.

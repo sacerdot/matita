@@ -21,7 +21,7 @@ include "ground/relocation/xap.ma".
 (* Constructions with pcc ***************************************************)
 
 lemma lift_path_closed (o) (f) (q) (n):
-      q ϵ 𝐂❨o,n❩ → ↑[f]q ϵ 𝐂❨o,↑[q]f＠❨n❩❩.
+      q ϵ 𝐂❨o,n❩ → 🠡[f]q ϵ 𝐂❨o,🠢[f]q＠❨n❩❩.
 #o #f #q #n #H0 elim H0 -q -n //
 #q #n [ #k #Ho ] #_ #IH
 /2 width=1 by pcc_m_dx, pcc_L_dx, pcc_A_dx, pcc_S_dx/
@@ -29,14 +29,14 @@ lemma lift_path_closed (o) (f) (q) (n):
 qed.
 
 lemma lift_path_rmap_closed (o) (f) (p) (q) (n):
-      q ϵ 𝐂❨o,n❩ → ↑[↑[p]f]q ϵ 𝐂❨o,↑[p●q]f＠❨n❩❩.
+      q ϵ 𝐂❨o,n❩ → 🠡[🠢[f]p]q ϵ 𝐂❨o,🠢[f](p●q)＠❨n❩❩.
 /2 width=1 by lift_path_closed/
 qed.
 
 lemma lift_path_rmap_closed_L (o) (f) (p) (q) (n):
-      q ϵ 𝐂❨o,n❩ → ↑[↑[p◖𝗟]f]q ϵ 𝐂❨o,↑[p●𝗟◗q]f＠§❨n❩❩.
+      q ϵ 𝐂❨o,n❩ → 🠡[🠢[f](p◖𝗟)]q ϵ 𝐂❨o,🠢[f](p●𝗟◗q)＠§❨n❩❩.
 #o #f #p #q #n #Hq
-lapply (lift_path_closed … (↑[p◖𝗟]f) … Hq) #Hq0
+lapply (lift_path_closed … (🠢[f](p◖𝗟)) … Hq) #Hq0
 lapply (pcc_L_sn … Hq) -Hq #Hq1
 lapply (lift_path_rmap_closed … f p … Hq1) -Hq1
 <lift_path_L_sn >lift_rmap_L_dx #Hq1

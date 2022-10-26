@@ -20,7 +20,7 @@ include "delayed_updating/syntax/path_proper.ma".
 (* Constructions with proper condition for path *****************************)
 
 lemma lift_path_proper (f) (p):
-      p ϵ 𝐏 → ↑[f]p ϵ 𝐏.
+      p ϵ 𝐏 → 🠡[f]p ϵ 𝐏.
 #f *
 [ #H0 elim (ppc_inv_empty … H0)
 | * [ #k ] #p #_
@@ -37,7 +37,7 @@ qed.
 (* Inversions with proper condition for path ********************************)
 
 lemma lift_path_inv_proper (f) (p):
-      ↑[f]p ϵ 𝐏 → p ϵ 𝐏.
+      🠡[f]p ϵ 𝐏 → p ϵ 𝐏.
 #f * //
 #H0 elim (ppc_inv_empty … H0)
 qed-.

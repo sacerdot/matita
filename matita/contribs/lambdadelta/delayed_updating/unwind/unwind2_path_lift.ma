@@ -21,7 +21,7 @@ include "delayed_updating/substitution/lift_path_structure.ma".
 (* Constructions with lift_path *********************************************)
 
 lemma lift_unwind2_path_after (g) (f) (p):
-      ↑[g]▼[f]p = ▼[g∘f]p.
+      🠡[g]▼[f]p = ▼[g∘f]p.
 #g #f * // * [ #k ] #p //
 <unwind2_path_d_dx <unwind2_path_d_dx <lift_path_d_dx
 <lift_path_structure >tr_compose_pap
@@ -29,7 +29,7 @@ lemma lift_unwind2_path_after (g) (f) (p):
 qed.
 
 lemma unwind2_lift_path_after (g) (f) (p):
-      ▼[g]↑[f]p = ▼[g∘f]p.
+      ▼[g]🠡[f]p = ▼[g∘f]p.
 #g #f * // * [ #k ] #p
 [ <unwind2_path_d_dx <unwind2_path_d_dx
   <structure_lift_path >tr_compose_pap

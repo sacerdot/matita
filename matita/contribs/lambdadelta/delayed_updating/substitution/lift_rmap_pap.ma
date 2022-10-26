@@ -20,5 +20,5 @@ include "ground/relocation/tr_pap_tls.ma".
 (* Constructions with tr_pap ************************************************)
 
 lemma lift_rmap_pap_d_dx (f) (p) (k) (h):
-      ↑[p]f＠⧣❨h+k❩ = ↑[p◖𝗱k]f＠⧣❨h❩+↑[p]f＠⧣❨k❩.
+      🠢[f]p＠⧣❨h+k❩ = 🠢[f](p◖𝗱k)＠⧣❨h❩+🠢[f]p＠⧣❨k❩.
 // qed.
