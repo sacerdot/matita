@@ -40,7 +40,7 @@ lemma ifr_unwind_bi (f) (t1) (t2) (r):
   /2 width=2 by path_closed_structure_depth/
 | lapply (in_comp_unwind2_path_term f … Ht1) -Ht2 -Ht1 -H1t1 -H2r
   <unwind2_path_d_dx <tr_pap_succ_nap <list_append_rcons_sn
-  <unwind2_rmap_append_closed_Lq_dx_nap_depth //
+  <nap_unwind2_rmap_append_closed_Lq_dx_depth //
 | lapply (unwind2_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (unwind2_term_fsubst_pic …))
@@ -54,7 +54,7 @@ lemma ifr_unwind_bi (f) (t1) (t2) (r):
     <list_append_rcons_sn
     @(stream_eq_trans … (tr_compose_uni_dx_pap …)) <tr_pap_succ_nap
     @tr_compose_eq_repl
-    [ <unwind2_rmap_append_closed_Lq_dx_nap_depth //
+    [ <nap_unwind2_rmap_append_closed_Lq_dx_depth //
     | /2 width=2 by tls_succ_unwind2_rmap_append_closed_Lq_dx/
     ]
 (* Note: crux of the proof ends *)

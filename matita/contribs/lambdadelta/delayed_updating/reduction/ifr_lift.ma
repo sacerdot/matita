@@ -49,7 +49,7 @@ theorem ifr_lift_bi (f) (t1) (t2) (r):
 (* Note: crux of the proof begins *)
   @(stream_eq_trans … (tr_compose_uni_dx_pap …)) <tr_pap_succ_nap
   @tr_compose_eq_repl // >nsucc_unfold
-  /2 width=2 by tls_succ_lift_rmap_append_L_closed_dx/
+  /2 width=2 by tls_succ_lift_rmap_append_closed_Lq_dx/
 (* Note: crux of the proof ends *)
 ]
 qed.

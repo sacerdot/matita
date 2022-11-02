@@ -45,7 +45,7 @@ theorem dbfr_des_ibfr (f) (t1) (t2) (r): t1 ϵ 𝐓 →
   /2 width=2 by path_closed_structure_depth/
 | lapply (in_comp_unwind2_path_term f … Ht1) -H0t1 -Hb -Hm -Ht2 -Ht1
   <unwind2_path_d_dx <tr_pap_succ_nap >list_append_rcons_dx >list_append_assoc
-  <unwind2_rmap_append_closed_Lq_dx_nap_depth //
+  <nap_unwind2_rmap_append_closed_Lq_dx_depth //
 | lapply (unwind2_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (unwind2_term_fsubst_ppc …))
@@ -59,7 +59,7 @@ theorem dbfr_des_ibfr (f) (t1) (t2) (r): t1 ϵ 𝐓 →
     <list_append_rcons_sn
     @(stream_eq_trans … (tr_compose_uni_dx_pap …)) <tr_pap_succ_nap
     @tr_compose_eq_repl
-    [ <unwind2_rmap_append_closed_bLq_dx_nap_plus //
+    [ <nap_plus_unwind2_rmap_append_closed_bLq_dx_depth //
     | >unwind2_rmap_A_dx
       /2 width=2 by tls_succ_plus_unwind2_rmap_append_closed_bLq_dx/
     ]
