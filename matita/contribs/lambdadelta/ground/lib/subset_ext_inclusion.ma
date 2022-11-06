@@ -44,6 +44,13 @@ lemma subset_inclusion_ext_f1_compose_dx (A0) (A1) (A2) (f1) (f2) (u):
 /3 width=1 by subset_in_ext_f1_dx/
 qed.
 
+lemma subset_inclusion_ext_f1_1_bi (A11) (A21) (A0) (f1) (f2) (u11) (u21) (v11) (v21):
+      u11 ⊆ v11 → u21 ⊆ v21 →
+      subset_ext_f1_1 A11 A21 A0 f1 f2 u11 u21 ⊆ subset_ext_f1_1 A11 A21 A0 f1 f2 v11 v21.
+#A11 #A21 #A0 #f1 #f2 #u11 #u21 #v11 #v21 #Huv11 #Huv21 #a0 *
+/3 width=3 by subset_inclusion_ext_f1_bi, or_introl, or_intror/
+qed.
+
 lemma subset_inclusion_ext_p1_trans (A1) (Q) (u1) (v1):
       u1 ⊆ v1 → subset_ext_p1 A1 Q v1 → subset_ext_p1 A1 Q u1.
 #A1 #Q #u1 #v1 #Huv1 #Hv1
