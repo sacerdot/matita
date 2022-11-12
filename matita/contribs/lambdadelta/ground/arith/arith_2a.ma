@@ -12,15 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/two_0.ma".
+include "ground/arith/pnat_two.ma".
 include "ground/arith/nat_le_minus_plus.ma".
 include "ground/arith/nat_lt.ma".
 
 (* ARITHMETICAL PROPERTIES FOR λδ-2A ****************************************)
-
-interpretation
-  "zero (non-negative integers)"
-  'Two = (ninj (psucc punit)).
 
 (* Equalities ***************************************************************)
 
