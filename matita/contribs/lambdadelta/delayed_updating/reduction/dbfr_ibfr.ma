@@ -15,7 +15,7 @@
 include "delayed_updating/reduction/dbfr.ma".
 include "delayed_updating/reduction/ibfr.ma".
 
-include "delayed_updating/unwind/unwind2_constructors.ma".
+include "delayed_updating/unwind/unwind2_prototerm_constructors.ma".
 include "delayed_updating/unwind/unwind2_preterm_fsubst.ma".
 include "delayed_updating/unwind/unwind2_preterm_eq.ma".
 include "delayed_updating/unwind/unwind2_prototerm_lift.ma".

@@ -20,24 +20,24 @@ include "delayed_updating/syntax/path_structure.ma".
 
 (* Example of unprotected balanced path *************************************)
 
-definition b: path ≝ 𝐞◖𝗔◖𝗟◖𝗱𝟏.
+definition l3_b: path ≝ 𝐞◖𝗔◖𝗟◖𝗱𝟏.
 
-lemma b_unfold: 𝐞◖𝗔◖𝗟◖𝗱𝟏 = b.
+lemma l3_b_unfold: 𝐞◖𝗔◖𝗟◖𝗱𝟏 = l3_b.
 // qed.
 
-lemma b_balanced: ⊗b ϵ 𝐁.
-<b_unfold <structure_d_dx
+lemma l3_b_balanced: ⊗l3_b ϵ 𝐁.
+<l3_b_unfold <structure_d_dx
 /2 width=1 by pbc_empty, pbc_redex/
 qed.
 
-lemma b_closed: b ϵ 𝐂❨Ⓕ,𝟎❩.
+lemma l3_b_closed: l3_b ϵ 𝐂❨Ⓕ,𝟎❩.
 /4 width=1 by pcc_A_sn, pcc_empty, pcc_false_d_dx, pcc_L_dx/
 qed.
 
-lemma b_unwind2_rmap_unfold (f):
-      (⫯f)∘𝐮❨𝟏❩ = ▶[f]b.
+lemma l3_b_unwind2_rmap_unfold (f):
+      (⫯f)∘𝐮❨𝟏❩ = ▶[f]l3_b.
 // qed.
 
-lemma b_unwind2_rmap_pap_unit (f):
-      ↑(f＠⧣❨𝟏❩) = ▶[f]b＠⧣❨𝟏❩.
+lemma l3_b_unwind2_rmap_pap_unit (f):
+      ↑(f＠⧣❨𝟏❩) = ▶[f]l3_b＠⧣❨𝟏❩.
 // qed.

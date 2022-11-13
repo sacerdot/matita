@@ -35,3 +35,12 @@ definition ibfr (r): relation2 prototerm prototerm ≝
 interpretation
   "balanced focused reduction with immediate updating (prototerm)"
   'BlackRightArrowIBF t1 r t2 = (ibfr r t1 t2).
+
+(* Constructions with subset_equivalence ************************************)
+
+lemma ibfr_eq_trans (t) (t1) (t2) (r):
+      t1 ➡𝐢𝐛𝐟[r] t → t ⇔ t2 → t1 ➡𝐢𝐛𝐟[r] t2.
+#t #t1 #t2 #r
+* #p #b #q #m #n #Hr #Hb #Hm #Hn #Ht1 #Ht #Ht2
+/3 width=13 by subset_eq_trans, ex6_5_intro/
+qed-.

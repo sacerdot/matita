@@ -57,9 +57,25 @@ interpretation
 
 (* Basic constructions *******************************************************)
 
-lemma in_comp_iref (t) (q) (k):
+lemma in_comp_oref_hd (k):
+      (𝗱k◗𝐞) ϵ ⧣k.
+// qed.
+
+lemma in_comp_iref_hd (t) (q) (k):
       q ϵ t → 𝗱k◗𝗺◗q ϵ 𝛕k.t.
 /2 width=3 by ex2_intro/ qed.
+
+lemma in_comp_abst_hd (t) (q):
+      q ϵ t → 𝗟◗q ϵ 𝛌.t.
+/2 width=3 by ex2_intro/ qed.
+
+lemma in_comp_appl_sd (u) (t) (q):
+      q ϵ u → 𝗦◗q ϵ ＠u.t.
+/3 width=3 by ex2_intro, or_introl/ qed.
+
+lemma in_comp_appl_hd (u) (t) (q):
+      q ϵ t → 𝗔◗q ϵ ＠u.t.
+/3 width=3 by ex2_intro, or_intror/ qed.
 
 (* Basic inversions *********************************************************)
 
@@ -70,46 +86,40 @@ lemma in_comp_inv_iref (t) (p) (k):
 /2 width=3 by ex2_intro/
 qed-.
 
-(* COMMENT
-lemma prototerm_in_root_inv_lcons_oref:
-      ∀p,l,n. l◗p ϵ ▵#n →
-      ∧∧ 𝗱n = l & 𝐞 = p.
-#p #l #n * #q
-<list_append_lcons_sn #H0 destruct -H0
-elim (eq_inv_list_empty_append … e0) -e0 #H0 #_
-/2 width=1 by conj/
+lemma in_comp_inv_abst (t) (p):
+      p ϵ 𝛌.t →
+      ∃∃q. 𝗟◗q = p & q ϵ t.
+#t #p * #q #Hq #Hp
+/2 width=3 by ex2_intro/
 qed-.
 
-lemma prototerm_in_root_inv_lcons_iref:
-      ∀t,p,l,n. l◗p ϵ ▵𝛕n.t →
-      ∧∧ 𝗱n = l & p ϵ ▵ɱ.t.
-#t #p #l #n * #q * #r #Hr
-<list_append_lcons_sn #H0 destruct -H0
-/4 width=4 by ex2_intro, ex_intro, conj/
+lemma in_comp_inv_appl (u) (t) (p):
+      p ϵ ＠u.t →
+      ∨∨ ∃∃q. 𝗦◗q = p & q ϵ u
+       | ∃∃q. 𝗔◗q = p & q ϵ t.
+#u #t #p * * #q #Hq #Hp
+/3 width=3 by ex2_intro, or_introl, or_intror/
 qed-.
 
-lemma prototerm_in_root_inv_lcons_mark:
-      ∀t,p,l. l◗p ϵ ▵ɱ.t →
-      ∧∧ 𝗺 = l & p ϵ ▵t.
-#t #p #l * #q * #r #Hr
-<list_append_lcons_sn #H0 destruct
-/3 width=2 by ex_intro, conj/
-qed-.
+(* Advanced inversions ******************************************************)
 
-lemma prototerm_in_root_inv_lcons_abst:
-      ∀t,p,l. l◗p ϵ ▵𝛌.t →
-      ∧∧ 𝗟 = l & p ϵ ▵t.
-#t #p #l * #q * #r #Hr
-<list_append_lcons_sn #H0 destruct
-/3 width=2 by ex_intro, conj/
-qed-.
+lemma in_comp_inv_abst_hd (t) (p):
+      (𝗟◗p) ϵ 𝛌.t → p ϵ t.
+#t #p #H0
+elim (in_comp_inv_abst … H0) -H0 #q #H0 #Hq
+elim (eq_inv_list_rcons_bi ????? H0) -H0 #H1 #H2 destruct //
+qed-. 
 
-lemma prototerm_in_root_inv_lcons_appl:
-      ∀u,t,p,l. l◗p ϵ ▵@u.t →
-      ∨∨ ∧∧ 𝗦 = l & p ϵ ▵u
-       | ∧∧ 𝗔 = l & p ϵ ▵t.
-#u #t #p #l * #q * * #r #Hr
-<list_append_lcons_sn #H0 destruct
-/4 width=2 by ex_intro, or_introl, or_intror, conj/
-qed-.
-*)
+lemma in_comp_inv_appl_sd (u) (t) (p):
+      (𝗦◗p) ϵ ＠u.t → p ϵ u.
+#u #t #p #H0
+elim (in_comp_inv_appl … H0) -H0 * #q #H0 #Hq
+elim (eq_inv_list_rcons_bi ????? H0) -H0 #H1 #H2 destruct //
+qed-. 
+
+lemma in_comp_inv_appl_hd (u) (t) (p):
+      (𝗔◗p) ϵ ＠u.t → p ϵ t.
+#u #t #p #H0
+elim (in_comp_inv_appl … H0) -H0 * #q #H0 #Hq
+elim (eq_inv_list_rcons_bi ????? H0) -H0 #H1 #H2 destruct //
+qed-. 

@@ -19,6 +19,15 @@ include "delayed_updating/syntax/prototerm_eq.ma".
 
 (* Constructions with subset_equivalence ************************************)
 
+lemma fsubst_empty_rc (t) (u):
+      u ⇔ t[⋔𝐞←u].
+#t #u @conj #p
+[ #Hp /3 width=3 by or_introl, ex2_intro/ ]
+* *
+[ #r #Hr #H0 destruct // ]
+#H1p #H2p elim H2p -H2p //
+qed.
+
 lemma subset_inclusion_fsubst_bi (t1) (t2) (u1) (u2) (p):
       t1 ⊆ t2 → u1 ⊆ u2 → t1[⋔p←u1] ⊆ t2[⋔p←u2].
 #t1 #t2 #u1 #u2 #p #Ht #Hu #q * *

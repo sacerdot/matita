@@ -1,0 +1,43 @@
+(* COMMENT
+lemma prototerm_in_root_inv_lcons_oref:
+      ∀p,l,n. l◗p ϵ ▵#n →
+      ∧∧ 𝗱n = l & 𝐞 = p.
+#p #l #n * #q
+<list_append_lcons_sn #H0 destruct -H0
+elim (eq_inv_list_empty_append … e0) -e0 #H0 #_
+/2 width=1 by conj/
+qed-.
+
+lemma prototerm_in_root_inv_lcons_iref:
+      ∀t,p,l,n. l◗p ϵ ▵𝛕n.t →
+      ∧∧ 𝗱n = l & p ϵ ▵ɱ.t.
+#t #p #l #n * #q * #r #Hr
+<list_append_lcons_sn #H0 destruct -H0
+/4 width=4 by ex2_intro, ex_intro, conj/
+qed-.
+
+lemma prototerm_in_root_inv_lcons_mark:
+      ∀t,p,l. l◗p ϵ ▵ɱ.t →
+      ∧∧ 𝗺 = l & p ϵ ▵t.
+#t #p #l * #q * #r #Hr
+<list_append_lcons_sn #H0 destruct
+/3 width=2 by ex_intro, conj/
+qed-.
+
+lemma prototerm_in_root_inv_lcons_abst:
+      ∀t,p,l. l◗p ϵ ▵𝛌.t →
+      ∧∧ 𝗟 = l & p ϵ ▵t.
+#t #p #l * #q * #r #Hr
+<list_append_lcons_sn #H0 destruct
+/3 width=2 by ex_intro, conj/
+qed-.
+
+lemma prototerm_in_root_inv_lcons_appl:
+      ∀u,t,p,l. l◗p ϵ ▵@u.t →
+      ∨∨ ∧∧ 𝗦 = l & p ϵ ▵u
+       | ∧∧ 𝗔 = l & p ϵ ▵t.
+#u #t #p #l * #q * * #r #Hr
+<list_append_lcons_sn #H0 destruct
+/4 width=2 by ex_intro, or_introl, or_intror, conj/
+qed-.
+*)

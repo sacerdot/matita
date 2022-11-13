@@ -18,13 +18,13 @@ include "delayed_updating/syntax/prototerm_constructors.ma".
 
 (* TAILED UNWIND FOR PROTOTERM **********************************************)
 
-(* Constructions with constructors ******************************************)
+(* Constructions with constructors for prototerm ****************************)
 
 lemma unwind2_term_iref_sn (f) (t) (k:pnat):
       ▼[f∘𝐮❨k❩]t ⊆ ▼[f](𝛕k.t).
 #f #t #k #p * #q #Hq #H0 destruct
 @(ex2_intro … (𝗱k◗𝗺◗q))
-/2 width=1 by in_comp_iref/
+/2 width=1 by in_comp_iref_hd/
 qed-.
 
 lemma unwind2_term_iref_dx (f) (t) (k:pnat):

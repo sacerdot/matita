@@ -16,7 +16,7 @@ include "delayed_updating/reduction/dbfr.ma".
 
 include "delayed_updating/substitution/fsubst_lift.ma".
 include "delayed_updating/substitution/fsubst_eq.ma".
-include "delayed_updating/substitution/lift_constructors.ma".
+include "delayed_updating/substitution/lift_prototerm_constructors.ma".
 include "delayed_updating/substitution/lift_path_structure.ma".
 include "delayed_updating/substitution/lift_path_closed.ma".
 include "delayed_updating/substitution/lift_rmap_closed.ma".

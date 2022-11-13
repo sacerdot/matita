@@ -30,11 +30,17 @@ interpretation
   'Pitchfork t p = (prototerm_grafted p t).
 
 definition prototerm_root: prototerm → prototerm ≝
-           λt,q. ∃r. q●r ϵ t.
+           λt,q. ∃r. r ϵ t⋔q.
 
 interpretation
   "root (prototerm)"
   'UpTriangle t = (prototerm_root t).
+
+(* Basic inversions *********************************************************)
+
+lemma prototerm_grafted_inv_gen (t) (p) (q):
+      q ϵ t⋔p → p●q ϵ t.
+// qed-.
 
 (* Basic constructions ******************************************************)
 
