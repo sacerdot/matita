@@ -1,0 +1,3 @@
+lemma list_rcons_prop_1 (A) (a1) (a2):
+      ⓔ ⨭ a1 ⨭{A} a2 = a1 ⨮ (ⓔ ⨭ a2).
+// qed.
