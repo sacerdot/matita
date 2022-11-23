@@ -14,11 +14,11 @@
 
 include "delayed_updating/syntax/path.ma".
 include "delayed_updating/notation/functions/class_c_2.ma".
-include "ground/arith/nat_plus.ma".
-include "ground/arith/nat_pred_succ.ma".
+include "ground/arith/nat_plus_pred.ma".
 include "ground/lib/subset.ma".
 include "ground/lib/bool_and.ma".
 include "ground/generated/insert_eq_1.ma".
+include "ground/xoa/ex_3_2.ma".
 
 (* CLOSED CONDITION FOR PATH ************************************************)
 
@@ -179,6 +179,36 @@ theorem pcc_append_bi (o1) (o2) (p) (q) (m) (n):
 | <nplus_succ_dx /2 width=1 by pcc_L_dx/
 ]
 qed.
+
+(* Inversions with path_append **********************************************)
+
+lemma pcc_false_inv_append_bi (x) (m) (n):
+      x ϵ 𝐂❨Ⓕ,m+n❩ →
+      ∃∃p,q. p ϵ 𝐂❨Ⓕ,m❩ & q ϵ 𝐂❨Ⓕ,n❩ & p●q = x.
+#x #m #n #Hx
+@(insert_eq_1 … (m+n) … Hx) -Hx #y #Hy
+generalize in match n; -n
+generalize in match m; -m
+elim Hy -x -y [|*: #x #y [ #k #_ ] #Hx #IH ] #m #n #Hy destruct
+[ elim (eq_inv_nplus_zero … Hy) -Hy #H1 #H2 destruct
+  /2 width=5 by pcc_empty, ex3_2_intro/
+| elim (IH m (n+k)) -IH // #p #q #Hp #Hq #H0 destruct -Hx
+  /3 width=5 by pcc_false_d_dx, ex3_2_intro/
+| elim (IH m n) -IH // #p #q #Hp #Hq #H0 destruct -Hx
+  /3 width=5 by pcc_m_dx, ex3_2_intro/
+| elim (eq_inv_succ_nplus_dx … (sym_eq … Hy)) -Hy * #H1 #H2 (**) (* sym_eq *)
+  [ destruct -IH
+    /3 width=5 by pcc_empty, pcc_L_dx, ex3_2_intro/
+  | elim (IH m (↓n)) -IH // #p #q #Hp #Hq #H0 destruct -Hx
+    /3 width=5 by pcc_L_dx, ex3_2_intro/
+  ]
+| elim (IH m n) -IH // #p #q #Hp #Hq #H0 destruct -Hx
+  /3 width=5 by pcc_A_dx, ex3_2_intro/
+| elim (IH m n) -IH // #p #q #Hp #Hq #H0 destruct -Hx
+  /3 width=5 by pcc_S_dx, ex3_2_intro/
+]
+qed-.
+
 
 (* Constructions with path_lcons ********************************************)
 

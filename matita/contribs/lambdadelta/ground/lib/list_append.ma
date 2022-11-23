@@ -96,3 +96,12 @@ lemma list_ind_append_dx (A) (Q:predicate …):
 #a #l >(list_append_empty_sn … (a⨮l))
 /2 width=1 by/
 qed-.
+
+lemma list_ind_append_sn (A) (Q:predicate …):
+      Q (ⓔ{A}) →
+      (∀l1,l2. Q l2 -> Q (l1⨁l2)) →
+      ∀l. Q l.
+#A #Q #IH1 #IH2 * //
+#a #l >(list_append_empty_dx … (a⨮l))
+/2 width=1 by/
+qed-.
