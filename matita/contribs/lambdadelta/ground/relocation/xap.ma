@@ -1,5 +1,4 @@
 (**) (* reverse include *)
-include "ground/arith/nat_rplus_pplus.ma".
 include "ground/relocation/tr_pn_eq.ma".
 include "ground/relocation/tr_compose_pn.ma".
 include "ground/relocation/nap.ma".
@@ -78,10 +77,14 @@ theorem tr_xap_eq_repl (i):
 /3 width=1 by tr_push_eq_repl, tr_nap_eq_repl/
 qed.
 
-lemma tr_nap_plus (f) (m) (n):
+lemma tr_nap_plus_dx_xap (f) (m) (n):
       ⇂*[↑n]f＠❨m❩+f＠§❨n❩ = f＠§❨m+n❩.
-/2 width=1 by eq_inv_nsucc_bi/
+/2 width=1 by tr_nap_eq_repl/
 qed.
+
+lemma tr_nap_plus_sn_xap (f) (m) (n):
+      ⇂*[n]f＠§❨m❩+f＠❨n❩ = f＠§❨m+n❩.
+// qed.
 
 lemma tr_xap_pos (f) (n):
       n = ↑↓n → f＠❨n❩=↑↓(f＠❨n❩).

@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/arith/pnat_plus.ma".
+include "ground/arith/nat_pred.ma".
 include "ground/arith/nat_rplus_succ.ma".
 
 (* RIGHT ADDITION FOR NON-NEGATIVE INTEGERS *********************************)
@@ -22,6 +23,11 @@ include "ground/arith/nat_rplus_succ.ma".
 lemma nrplus_inj_dx (p) (q):
       p + q = p + ninj q.
 // qed.
+
+lemma nrplus_pnpred_dx (p) (q):
+      pnpred (p+q) = nrplus p (pnpred q).
+#p * //
+qed.
 
 lemma nrplus_pplus_assoc (p,q:pnat) (n:nat):
       (p+q)+n = p+(q+n).

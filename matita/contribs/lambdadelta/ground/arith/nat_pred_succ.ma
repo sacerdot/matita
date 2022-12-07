@@ -43,6 +43,15 @@ lemma npred_succ (n): n = ↓↑n.
 * //
 qed.
 
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_pnpred_bi:
+      injective … pnpred.
+#p1 #p2 #Hp
+>(npsucc_pred p1) >(npsucc_pred p2)
+<Hp -Hp @refl
+qed-.
+
 (* Inversions with nsucc ****************************************************)
 
 (*** nat_split *)

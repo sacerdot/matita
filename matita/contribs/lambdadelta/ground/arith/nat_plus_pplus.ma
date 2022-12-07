@@ -12,38 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/stream_hdtl.ma".
-include "ground/lib/stream_eq.ma".
+include "ground/arith/nat_rplus_pplus.ma".
+include "ground/arith/nat_plus_rplus.ma".
 
-(* HEAD AND TAIL FOR STREAMS ************************************************)
+(* ADDITION FOR NON-NEGATIVE INTEGERS ***************************************)
 
-(* Constructions with stream_eq *********************************************)
+lemma nplus_inj_bi (p) (q):
+      ninj (pplus p q) = nplus (ninj p) (ninj q).
+// qed.
 
-lemma stream_hd_eq_repl (A):
-      stream_eq_repl A (λt1,t2. ⇃t1 = ⇃t2).
-#A * #a1 #t1 * #a2 #t2 #H
-elim (stream_eq_inv_cons_bi … H) -H
-/2 width=7 by/
+lemma nplus_pnpred_sn (p) (q):
+      pnpred (p + q) = nplus (pnpred p) (ninj q).
+#p #q
+<pplus_comm >nplus_comm >nrplus_pnpred_dx //
 qed.
-
-lemma stream_tl_eq_repl (A):
-      stream_eq_repl A (λt1,t2. ⇂t1 ≗ ⇂t2).
-#A * #a1 #t1 * #a2 #t2 #H
-elim (stream_eq_inv_cons_bi … H) -H
-/2 width=7 by/
-qed.
-
-lemma stream_hd_tl_eq_repl (A) (t1) (t2):
-      t1 ≗{A} t2 →
-      ∧∧ ⇃t1 = ⇃t2 & ⇂t1 ≗ ⇂t2.
-#A #t1 #t2 #H
-/3 width=1 by stream_tl_eq_repl, stream_hd_eq_repl, conj/
-qed-.
-
-(* Inversions with stram_eq *************************************************)
-
-lemma stream_eq_inv_hd_tl_bi (A) (t1) (t2):
-      ⇃t1 = ⇃t2 → ⇂t1 ≗ ⇂t2 → t1 ≗{A} t2.
-#A * #a1 #t1 * #a2 #t2
-/2 width=1 by stream_eq_cons/
-qed-.
