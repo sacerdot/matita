@@ -59,7 +59,8 @@ qed-.
 
 lemma nap_plus_lift_rmap_append_closed_Lq_dx (o) (f) (p) (q) (m) (n):
       q ϵ 𝐂❨o,n❩ →
-      🠢[f](p)＠❨m❩+🠢[f](p●𝗟◗q)＠§❨n❩ = 🠢[f](p●𝗟◗q)＠§❨m+n❩.
+      🠢[f]p＠❨m❩+🠢[f](p●𝗟◗q)＠§❨n❩ = 🠢[f](p●𝗟◗q)＠§❨m+n❩.
 #o #f #p #q #m #n #Hq
+<tr_nap_plus_dx_xap
 /4 width=2 by eq_f2, tr_xap_eq_repl, tls_succ_lift_rmap_append_closed_Lq_dx/
 qed-.

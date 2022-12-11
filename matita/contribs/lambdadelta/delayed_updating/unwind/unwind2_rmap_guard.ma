@@ -12,23 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path_closed.ma".
-include "delayed_updating/syntax/path_height.ma".
-include "delayed_updating/syntax/path_depth.ma".
+include "delayed_updating/unwind/unwind2_rmap.ma".
+include "delayed_updating/syntax/path_guard.ma".
+include "ground/relocation/nap.ma".
 
-(* CLOSED CONDITION FOR PATH ************************************************)
+(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
-(* Destructions with height and depth ***************************************)
+(* Destructions with pgc ****************************************************)
 
-lemma path_closed_des_depth (o) (q) (n):
-      q ϵ 𝐂❨o,n❩ → ♯q + n = ♭q.
-#o #q #n #Hq elim Hq -q -n //
-#q #n #_ #IH <nplus_succ_dx //
+lemma unwind2_rmap_push_guard (f) (p):
+      p ϵ 𝐆 → ⫯⇂▶[⫯f]p = ▶[⫯f]p.
+#f #p * //
 qed-.
 
-lemma path_closed_des_succ_depth (o) (q) (n):
-      q ϵ 𝐂❨o,↑n❩ → ♭q = ↑↓♭q.
-#o #q #n #Hq
-<(path_closed_des_depth … Hq) -Hq
-<nplus_succ_dx <npred_succ //
+lemma nap_zero_unwind2_rmap_push_guard (f) (p):
+      p ϵ 𝐆 → 𝟎 = ▶[⫯f]p＠§❨𝟎❩.
+#f #p #Hp
+<(unwind2_rmap_push_guard … Hp) -Hp //
 qed-.

@@ -1,0 +1,44 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "delayed_updating/unwind/unwind2_rmap_closed.ma".
+include "delayed_updating/syntax/path_closed_height.ma".
+
+(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
+
+(* Destructions with cpp and height *****************************************)
+
+lemma nap_depth_unwind2_rmap_closed (o) (f) (q) (n):
+      q ϵ 𝐂❨o,n❩ →
+      f＠§❨♯q❩+♭q = ▶[f]q＠§❨♭q❩.
+#o #f #q #n #Hq
+<(path_closed_des_depth … Hq) in ⊢ (???%);
+/2 width=2 by nap_plus_unwind2_rmap_closed_depth/
+qed-.
+
+lemma tls_depth_unwind2_rmap_closed (o) (f) (q) (n):
+      q ϵ 𝐂❨o,n❩ →
+      ⇂*[♯q]f ≗ ⇂*[♭q]▶[f]q.
+#o #f #q #n #Hq elim Hq -q -n //
+#q #n #k #_
+>(npsucc_pred k) in ⊢ (%→?); <nplus_succ_dx #Hq #IH
+<height_d_dx <depth_d_dx
+>(path_closed_des_succ_depth … Hq)
+@(stream_eq_trans … (tls_unwind2_rmap_d_dx …))
+>nrplus_inj_dx >nrplus_inj_sn >nsucc_unfold
+<(path_closed_des_succ_depth … Hq) -Hq
+<nplus_comm <stream_tls_plus
+<nplus_comm <stream_tls_plus
+/2 width=1 by stream_tls_eq_repl/
+qed-.

@@ -12,32 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_rmap_closed.ma".
-include "delayed_updating/syntax/path_balanced.ma".
-include "delayed_updating/syntax/path_structure.ma".
+(* IMMEDIATE BALANCED FOCUSED REDUCTION *************************************)
 
-(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
+include "delayed_updating/reduction/ibfr.ma".
+include "delayed_updating/substitution/fsubst_eq.ma".
+include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
-(* Example of unprotected balanced path *************************************)
+(* Constructions with subset_equivalence ************************************)
 
-definition l3_b: path ≝ 𝐞◖𝗔◖𝗟◖𝗱𝟏.
+lemma ibfr_eq_canc_sn (t) (t1) (t2) (r):
+      t ⇔ t1 → t ➡𝐢𝐛𝐟[r] t2 → t1 ➡𝐢𝐛𝐟[r] t2.
+#t #t1 #t2 #r #Ht1
+* #p #b #q #m #n #Hr#Hp #Hb #Hm #Hn #Ht #Ht2 destruct
+@(ex7_5_intro … Hp Hb Hm Hn) [ // ] -Hp -Hb -Hm -Hn
+[ /2 width=3 by subset_in_eq_repl_back/
+| /5 width=3 by subset_eq_canc_sn, fsubst_eq_repl, lift_term_eq_repl_dx, grafted_eq_repl/
+]
+qed-.
 
-lemma l3_b_unfold: 𝐞◖𝗔◖𝗟◖𝗱𝟏 = l3_b.
-// qed.
-
-lemma l3_b_balanced: ⊗l3_b ϵ 𝐁.
-<l3_b_unfold <structure_d_dx
-/2 width=1 by pbc_empty, pbc_redex/
-qed.
-
-lemma l3_b_closed: l3_b ϵ 𝐂❨Ⓕ,𝟎❩.
-/4 width=1 by pcc_A_sn, pcc_empty, pcc_false_d_dx, pcc_L_dx/
-qed.
-
-lemma l3_b_unwind2_rmap_unfold (f):
-      (⫯f)∘𝐮❨𝟏❩ = ▶[f]l3_b.
-// qed.
-
-lemma l3_b_unwind2_rmap_pap_unit (f):
-      ↑(f＠⧣❨𝟏❩) = ▶[f]l3_b＠⧣❨𝟏❩.
-// qed.
+lemma ibfr_eq_repl (t1) (t2) (u1) (u2) (r):
+      t1 ⇔ u1 → t2 ⇔ u2 → t1 ➡𝐢𝐛𝐟[r] t2 → u1 ➡𝐢𝐛𝐟[r] u2.
+/3 width=3 by ibfr_eq_canc_sn, ibfr_eq_trans/
+qed-.

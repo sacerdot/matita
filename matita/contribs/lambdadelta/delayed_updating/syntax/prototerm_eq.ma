@@ -24,6 +24,18 @@ lemma grafted_empty_dx (t):
 /2 width=1 by conj/
 qed.
 
+lemma grafted_incl_repl (t1) (t2) (p):
+      t1 ⊆ t2 → t1⋔p ⊆ t2⋔p.
+#t1 #t2 #p #Ht #q #Hq
+/2 width=1 by/
+qed.
+
+lemma grafted_eq_repl (t1) (t2) (p):
+      t1 ⇔ t2 → t1⋔p ⇔ t2⋔p.
+#t1 #t2 #p * #H1t #H2t
+/3 width=1 by conj, grafted_incl_repl/
+qed.
+
 (* Constructions with prototerm_root ****************************************)
 
 lemma prototerm_root_incl_repl:

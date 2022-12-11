@@ -1,8 +1,3 @@
-1) (⫯f)@(1) = 1
-2) f@❨d-n❩ = k → n <= d → (f∘𝐮❨n❩)@❨d❩ = k
-3) f@❨d-1❩ = k-1 → 1 < d → 1 < k → (⫯f)@❨d❩ = k
-
-
 lemma pr_pat_after_uni_tls (i2) (i1):
       ∀f2. @❨i1, f2❩ ≘ i2 →
       ∀f. 𝐮❨i2❩ ⊚ ⫰*[i2] f2 ≘ f → f2 ⊚ 𝐮❨i1❩ ≘ f.
@@ -13,3 +8,5 @@ lemma pr_pat_after_uni_tls (i2) (i1):
 266D;MUSIC FLAT SIGN;So;0;ON;;;;;N;FLAT;;;;
 266E;MUSIC NATURAL SIGN;So;0;ON;;;;;N;NATURAL;;;;
 266F;MUSIC SHARP SIGN;Sm;0;ON;;;;;N;SHARP;;;;
+
+include "ground/xoa/ex_6_5.ma".
