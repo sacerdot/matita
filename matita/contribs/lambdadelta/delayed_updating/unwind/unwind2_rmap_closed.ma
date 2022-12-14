@@ -12,10 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "delayed_updating/unwind/unwind2_rmap_lift.ma".
 include "delayed_updating/unwind/unwind2_rmap_eq.ma".
+include "delayed_updating/substitution/lift_rmap_structure.ma".
 include "delayed_updating/syntax/path_closed.ma".
 include "delayed_updating/syntax/path_depth.ma".
 include "ground/relocation/nap.ma".
+include "ground/relocation/tr_pushs_tls.ma".
 include "ground/lib/stream_tls_plus.ma".
 include "ground/lib/stream_eq_eq.ma".
 
@@ -33,6 +36,13 @@ lemma nap_plus_unwind2_rmap_closed (o) (f) (q) (m) (n):
 | <depth_L_dx <unwind2_rmap_L_dx
   <tr_nap_push <nplus_succ_dx //
 ]
+qed-.
+
+lemma nap_unwind2_rmap_closed (o) (f) (q) (n):
+      q ϵ 𝐂❨o,n❩ →
+      f＠§❨𝟎❩+♭q = ▶[f]q＠§❨n❩.
+#o #f #q #n #Hn
+/2 width=2 by nap_plus_unwind2_rmap_closed/
 qed-.
 
 lemma nap_plus_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (m) (n):
@@ -62,7 +72,7 @@ qed-.
 
 lemma tls_succ_unwind2_rmap_push_closed (o) (f) (q) (n):
       q ϵ 𝐂❨o,n❩ →
-      f ≗ ⇂*[↑n]▶[⫯f](q).
+      f ≗ ⇂*[↑n]▶[⫯f]q.
 #o #f #q #n #Hn
 /2 width=2 by tls_succ_plus_unwind2_rmap_push_closed/
 qed-.
@@ -72,4 +82,20 @@ lemma tls_succ_plus_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (n):
       ∀m. ⇂*[m]▶[f]p ≗ ⇂*[↑(m+n)]▶[f](p●𝗟◗q).
 #o #f #p #q #n #Hn #m
 /2 width=2 by tls_succ_plus_unwind2_rmap_push_closed/
+qed-.
+
+lemma tls_succ_unwind2_rmap_closed (f) (q) (n):
+      q ϵ 𝐂❨Ⓕ,n❩ →
+      ⇂f ≗ ⇂*[↑n]▶[f]q.
+#f #q #n #Hn
+@(stream_eq_canc_dx … (stream_tls_eq_repl …))
+[| @(unwind2_rmap_eq_repl … (tr_compose_id_dx …)) | skip ]
+@(stream_eq_trans … (stream_tls_eq_repl …))
+[| @(lift_unwind2_rmap_after … ) | skip ]
+<tr_compose_tls <tr_id_unfold
+@(stream_eq_trans … (tr_compose_eq_repl …))
+[| @(tls_succ_unwind2_rmap_push_closed … Hn) | skip | // | skip ]
+@(stream_eq_trans ????? (tr_compose_id_dx …))
+<tr_pap_succ_nap <(nap_unwind2_rmap_closed … Hn) <nplus_zero_sn
+<lift_rmap_structure <stream_tls_succ <tr_tls_pushs //
 qed-.

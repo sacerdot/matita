@@ -19,7 +19,6 @@ include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/substitution/lift_prototerm_after.ma".
 include "delayed_updating/substitution/lift_path_structure.ma".
 include "delayed_updating/substitution/lift_path_closed.ma".
-include "delayed_updating/substitution/lift_path_guard.ma".
 include "delayed_updating/substitution/lift_rmap_closed.ma".
 
 include "ground/relocation/tr_uni_compose.ma".
@@ -32,19 +31,17 @@ include "ground/relocation/tr_compose_eq.ma".
 theorem ibfr_lift_bi (f) (t1) (t2) (r):
         t1 ➡𝐢𝐛𝐟[r] t2 → 🠡[f]t1 ➡𝐢𝐛𝐟[🠡[f]r] 🠡[f]t2.
 #f #t1 #t2 #r
-* #p #b #q #m #n #Hr #Hp #Hb #Hm #Hn #Ht1 #Ht2 destruct
-@(ex7_5_intro … (🠡[f]p) (🠡[🠢[f](p◖𝗔)]b) (🠡[🠢[f](p◖𝗔●b◖𝗟)]q) (🠢[f](p●𝗔◗b)＠❨m❩) (🠢[f](p●𝗔◗b●𝗟◗q)＠§❨n❩))
-[ -Hp -Hb -Hm -Hn -Ht1 -Ht2 //
-| -Hb -Hm -Hn -Ht1 -Ht2
-  /2 width=1 by lift_path_guard/
-| -Hp -Hm -Hn -Ht1 -Ht2 //
-| -Hp -Hb -Hn -Ht1 -Ht2
+* #p #b #q #m #n #Hr #Hb #Hm #Hn #Ht1 #Ht2 destruct
+@(ex6_5_intro … (🠡[f]p) (🠡[🠢[f](p◖𝗔)]b) (🠡[🠢[f](p◖𝗔●b◖𝗟)]q) (🠢[f](p●𝗔◗b)＠❨m❩) (🠢[f](p●𝗔◗b●𝗟◗q)＠§❨n❩))
+[ -Hb -Hm -Hn -Ht1 -Ht2 //
+| -Hm -Hn -Ht1 -Ht2 //
+| -Hb -Hn -Ht1 -Ht2
   /2 width=1 by lift_path_closed/
-| -Hp -Hb -Hm -Ht1 -Ht2
+| -Hb -Hm -Ht1 -Ht2
   /2 width=1 by lift_path_rmap_closed_L/
-| lapply (in_comp_lift_path_term f … Ht1) -Ht2 -Ht1 -Hp -Hn
+| lapply (in_comp_lift_path_term f … Ht1) -Ht2 -Ht1 -Hn
   <lift_path_d_dx #Ht1 //
-| lapply (lift_term_eq_repl_dx f … Ht2) -Ht2 #Ht2 -Ht1 -Hp
+| lapply (lift_term_eq_repl_dx f … Ht2) -Ht2 #Ht2 -Ht1
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (lift_term_fsubst …))
   @fsubst_eq_repl [ // | <lift_path_append // ]
@@ -53,6 +50,7 @@ theorem ibfr_lift_bi (f) (t1) (t2) (r):
   @(subset_eq_trans … (lift_term_after …))
   @(subset_eq_canc_dx … (lift_term_after …))
   @lift_term_eq_repl_sn
+(* 𝐮❨ ↑(🠢[f](p●𝗔◗b)＠❨m❩ + 🠢[f](p●𝗔◗b●𝗟◗q)＠§❨n❩) ❩ ∘ 🠢[f]p ≗ 🠢[f](p●𝗔◗b●𝗟◗q) ∘ 𝐮❨↑(m+n)❩ *)
 (* Note: crux of the proof begins *)
   @(stream_eq_trans … (tr_compose_uni_dx_pap …)) <tr_pap_succ_nap
   @tr_compose_eq_repl

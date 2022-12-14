@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "delayed_updating/unwind/unwind2_rmap_closed.ma".
-include "delayed_updating/unwind/unwind2_rmap_guard.ma".
 
 (* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
@@ -21,9 +20,9 @@ include "delayed_updating/unwind/unwind2_rmap_guard.ma".
 
 (* Note: crux of the commutation between unwind and balanced focused reduction *)
 lemma unwind2_rmap_uni_crux (f) (p) (b) (q) (m) (n):
-      p ϵ 𝐆 → b ϵ 𝐂❨Ⓕ,m❩ → q ϵ 𝐂❨Ⓕ,n❩ →
-      (𝐮❨↑(♭b+♭q)❩ ∘ ▶[⫯f]p ≗ ▶[⫯f](p●𝗔◗b●𝗟◗q) ∘ 𝐮❨↑(m+n)❩).
-#f #p #b #q #m #n #Hp #Hm #Hn
+      b ϵ 𝐂❨Ⓕ,m❩ → q ϵ 𝐂❨Ⓕ,n❩ →
+      (𝐮❨↑(♭b+♭q)❩ ∘ ▶[f]p ≗ ▶[f](p●𝗔◗b●𝗟◗q) ∘ 𝐮❨↑(m+n)❩).
+#f #p #b #q #m #n #Hm #Hn
 <list_append_rcons_sn <list_append_rcons_sn >list_append_assoc
 >list_append_rcons_sn >(list_append_rcons_sn … b)
 @(stream_eq_trans … (tr_compose_uni_dx_pap …)) <tr_pap_succ_nap
@@ -33,14 +32,12 @@ lemma unwind2_rmap_uni_crux (f) (p) (b) (q) (m) (n):
 ] -Hn
 @tr_eq_inv_nap_zero_tl_bi
 [ <tr_compose_nap <tr_compose_nap <tr_uni_nap <tr_uni_nap
-  <nap_zero_unwind2_rmap_push_guard // <nplus_zero_sn
-  >nsucc_unfold >nplus_succ_dx >nplus_succ_dx <nplus_assoc
-  >tr_nap_plus_dx <unwind2_rmap_append
-  <nap_plus_unwind2_rmap_closed [|*: /2 width=2 by pcc_A_sn/ ]
-  <nap_zero_unwind2_rmap_push_guard //
+  >nsucc_unfold >nplus_succ_dx >nplus_succ_dx <nplus_assoc <nplus_assoc
+  >tr_nap_plus_dx <unwind2_rmap_append <nap_plus_unwind2_rmap_closed
+  /2 width=2 by pcc_A_sn/
 | @(stream_eq_canc_sn … (tr_tl_compose_uni_sn …))
   @(stream_eq_trans ????? (tr_tl_compose_uni_sn …))
-  >stream_tls_succ <unwind2_rmap_append <unwind2_rmap_push_guard
-  /2 width=2 by tls_succ_plus_unwind2_rmap_push_closed/
+  >stream_tls_succ <unwind2_rmap_append
+  /3 width=2 by tls_succ_unwind2_rmap_closed, pcc_A_sn/
 ]
 qed-.
