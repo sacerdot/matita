@@ -34,11 +34,11 @@ interpretation
 (* Basic constructions ******************************************************)
 
 (*** apply_O1 *)
-lemma tr_pap_unit (f):
+lemma tr_cons_pap_unit (f):
       ∀p. p = (p⨮f)＠⧣❨𝟏❩.
 // qed.
 
 (*** apply_S1 *)
-lemma tr_pap_succ (f):
+lemma tr_cons_pap_succ (f):
       ∀p,i. f＠⧣❨i❩+p = (p⨮f)＠⧣❨↑i❩.
 // qed.

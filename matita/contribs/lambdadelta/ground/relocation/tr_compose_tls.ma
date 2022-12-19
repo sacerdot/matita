@@ -24,7 +24,7 @@ include "ground/arith/nat_rplus_pplus.ma".
 lemma tr_compose_tls (p) (f1) (f2):
       (⇂*[f1＠⧣❨p❩]f2)∘(⇂*[p]f1) = ⇂*[p](f2∘f1).
 #p elim p -p [| #p #IH ] * #q1 #f1 #f2 //
-<tr_compose_unfold <tr_pap_succ
+<tr_compose_unfold <tr_cons_pap_succ
 >nsucc_inj <stream_tls_succ_lcons <stream_tls_succ_lcons
 <IH -IH >nrplus_inj_dx >nrplus_inj_sn <stream_tls_plus //
 qed.
