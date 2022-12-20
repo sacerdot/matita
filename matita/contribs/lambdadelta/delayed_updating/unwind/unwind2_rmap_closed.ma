@@ -26,10 +26,10 @@ include "ground/lib/stream_eq_eq.ma".
 
 (* Destructions with cpp ****************************************************)
 
-lemma nap_plus_unwind2_rmap_closed (o) (f) (q) (m) (n):
-      q ϵ 𝐂❨o,n❩ →
-      f＠§❨m❩+♭q = ▶[f]q＠§❨m+n❩.
-#o #f #q #m #n #Hq elim Hq -q -n //
+lemma nap_plus_unwind2_rmap_closed (o) (e) (f) (q) (m) (n):
+      q ϵ 𝐂❨o,n,e❩ →
+      f＠§❨m+e❩+♭q = ▶[f]q＠§❨m+n❩.
+#o #e #f #q #m #n #Hq elim Hq -q -n //
 #q #n [ #k #_ ] #_ #IH
 [ <depth_d_dx <unwind2_rmap_d_dx
   <tr_compose_nap <tr_uni_nap //
@@ -39,21 +39,21 @@ lemma nap_plus_unwind2_rmap_closed (o) (f) (q) (m) (n):
 qed-.
 
 lemma nap_unwind2_rmap_closed (o) (f) (q) (n):
-      q ϵ 𝐂❨o,n❩ →
+      q ϵ 𝐂❨o,n,𝟎❩ →
       f＠§❨𝟎❩+♭q = ▶[f]q＠§❨n❩.
 #o #f #q #n #Hn
 /2 width=2 by nap_plus_unwind2_rmap_closed/
 qed-.
 
 lemma nap_plus_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (m) (n):
-      q ϵ 𝐂❨o,n❩ →
+      q ϵ 𝐂❨o,n,𝟎❩ →
       (⫯▶[f]p)＠§❨m❩+♭q = ▶[f](p●𝗟◗q)＠§❨m+n❩.
 #o #f #p #q #m #n #Hn
 /2 width=2 by nap_plus_unwind2_rmap_closed/
 qed-.
 
 lemma nap_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (n):
-      q ϵ 𝐂❨o,n❩ →
+      q ϵ 𝐂❨o,n,𝟎❩ →
       ♭q = ▶[f](p●𝗟◗q)＠§❨n❩.
 #o #f #p #q #n #Hn
 >(nplus_zero_sn n)
@@ -62,7 +62,7 @@ lemma nap_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (n):
 qed-.
 
 lemma tls_succ_plus_unwind2_rmap_push_closed (o) (f) (q) (n):
-      q ϵ 𝐂❨o,n❩ →
+      q ϵ 𝐂❨o,n,𝟎❩ →
       ∀m. ⇂*[m]f ≗ ⇂*[↑(m+n)]▶[⫯f]q.
 #o #f #q #n #Hn elim Hn -q -n //
 #q #n #k #_ #_ #IH #m
@@ -71,21 +71,21 @@ lemma tls_succ_plus_unwind2_rmap_push_closed (o) (f) (q) (n):
 qed-.
 
 lemma tls_succ_unwind2_rmap_push_closed (o) (f) (q) (n):
-      q ϵ 𝐂❨o,n❩ →
+      q ϵ 𝐂❨o,n,𝟎❩ →
       f ≗ ⇂*[↑n]▶[⫯f]q.
 #o #f #q #n #Hn
 /2 width=2 by tls_succ_plus_unwind2_rmap_push_closed/
 qed-.
 
 lemma tls_succ_plus_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (n):
-      q ϵ 𝐂❨o,n❩ →
+      q ϵ 𝐂❨o,n,𝟎❩ →
       ∀m. ⇂*[m]▶[f]p ≗ ⇂*[↑(m+n)]▶[f](p●𝗟◗q).
 #o #f #p #q #n #Hn #m
 /2 width=2 by tls_succ_plus_unwind2_rmap_push_closed/
 qed-.
 
 lemma tls_succ_unwind2_rmap_closed (f) (q) (n):
-      q ϵ 𝐂❨Ⓕ,n❩ →
+      q ϵ 𝐂❨Ⓕ,n,𝟎❩ →
       ⇂f ≗ ⇂*[↑n]▶[f]q.
 #f #q #n #Hn
 @(stream_eq_canc_dx … (stream_tls_eq_repl …))

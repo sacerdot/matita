@@ -20,7 +20,7 @@ include "delayed_updating/unwind/unwind2_rmap_closed.ma".
 
 (* Note: crux of the commutation between unwind and balanced focused reduction *)
 lemma unwind2_rmap_uni_crux (f) (p) (b) (q) (m) (n):
-      b ϵ 𝐂❨Ⓕ,m❩ → q ϵ 𝐂❨Ⓕ,n❩ →
+      b ϵ 𝐂❨Ⓕ,m,𝟎❩ → q ϵ 𝐂❨Ⓕ,n,𝟎❩ →
       (𝐮❨↑(♭b+♭q)❩ ∘ ▶[f]p ≗ ▶[f](p●𝗔◗b●𝗟◗q) ∘ 𝐮❨↑(m+n)❩).
 #f #p #b #q #m #n #Hm #Hn
 <list_append_rcons_sn <list_append_rcons_sn >list_append_assoc
@@ -34,7 +34,7 @@ lemma unwind2_rmap_uni_crux (f) (p) (b) (q) (m) (n):
 [ <tr_compose_nap <tr_compose_nap <tr_uni_nap <tr_uni_nap
   >nsucc_unfold >nplus_succ_dx >nplus_succ_dx <nplus_assoc <nplus_assoc
   >tr_nap_plus_dx <unwind2_rmap_append <nap_plus_unwind2_rmap_closed
-  /2 width=2 by pcc_A_sn/
+  /2 width=4 by pcc_A_sn/
 | @(stream_eq_canc_sn … (tr_tl_compose_uni_sn …))
   @(stream_eq_trans ????? (tr_tl_compose_uni_sn …))
   >stream_tls_succ <unwind2_rmap_append

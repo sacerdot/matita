@@ -20,15 +20,17 @@ include "delayed_updating/syntax/path_depth.ma".
 
 (* Destructions with height and depth ***************************************)
 
-lemma path_closed_des_depth (o) (q) (n):
-      q ϵ 𝐂❨o,n❩ → ♯q + n = ♭q.
-#o #q #n #Hq elim Hq -q -n //
-#q #n #_ #IH <nplus_succ_dx //
+lemma path_closed_des_depth (o) (e) (q) (n):
+      q ϵ 𝐂❨o,n,e❩ → ♯q + n = ♭q + e.
+#o #e #q #n #Hq elim Hq -q -n //
+#q #n #_ #IH
+<nplus_succ_dx <nplus_succ_sn //
 qed-.
 
-lemma path_closed_des_succ_depth (o) (q) (n):
-      q ϵ 𝐂❨o,↑n❩ → ♭q = ↑↓♭q.
+lemma path_closed_des_succ_zero_depth (o) (q) (n):
+      q ϵ 𝐂❨o,↑n,𝟎❩ → ♭q = ↑↓♭q.
 #o #q #n #Hq
+>(nplus_zero_dx (♭q))
 <(path_closed_des_depth … Hq) -Hq
 <nplus_succ_dx <npred_succ //
 qed-.

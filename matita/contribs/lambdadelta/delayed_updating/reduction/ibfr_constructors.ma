@@ -65,7 +65,7 @@ lemma ibfr_appl_sd (v1) (v2) (t) (r):
 qed.
 
 lemma ibfr_beta_0 (v) (t) (q) (n):
-      q ϵ 𝐂❨Ⓕ,n❩ → q◖𝗱↑n ϵ t →
+      q ϵ 𝐂❨Ⓕ,n,𝟎❩ → q◖𝗱↑n ϵ t →
       ＠v.𝛌.t ➡𝐢𝐛𝐟[𝗔◗𝗟◗q] ＠v.𝛌.(t[⋔q←🠡[𝐮❨↑n❩]v]).
 #v #t #q #n #Hn #Ht
 @(ex6_5_intro … (𝐞) (𝐞) q (𝟎) … Hn) -Hn
@@ -82,7 +82,7 @@ lemma ibfr_beta_0 (v) (t) (q) (n):
 qed.
 
 lemma ibfr_beta_1 (v) (v1) (t) (q) (n):
-      q ϵ 𝐂❨Ⓕ,n❩ → q◖𝗱↑n ϵ t →
+      q ϵ 𝐂❨Ⓕ,n,𝟎❩ → q◖𝗱↑n ϵ t →
       ＠v.＠v1.𝛌.𝛌.t ➡𝐢𝐛𝐟[𝗔◗𝗔◗𝗟◗𝗟◗q] ＠v.＠v1.𝛌.𝛌.(t[⋔q←🠡[𝐮❨↑↑n❩]v]).
 #v #v1 #t #q #n #Hn #Ht
 @(ex6_5_intro … (𝐞) (𝗔◗𝗟◗𝐞) q (𝟏) … Hn) -Hn
