@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_rmap.ma".
+include "delayed_updating/unwind_k/unwind2_rmap.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/notation/functions/black_downtriangle_2.ma".
 

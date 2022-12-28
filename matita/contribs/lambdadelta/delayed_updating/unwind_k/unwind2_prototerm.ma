@@ -12,18 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_prototerm_eq.ma".
-include "delayed_updating/unwind/unwind2_path_after.ma".
+include "delayed_updating/unwind_k/unwind2_path.ma".
+include "delayed_updating/syntax/prototerm.ma".
+include "ground/lib/subset_ext.ma".
 
 (* TAILED UNWIND FOR PROTOTERM **********************************************)
 
-(* Constructions with tr_after **********************************************)
+interpretation
+  "unwind (prototerm)"
+  'BlackDownTriangle f t = (subset_ext_f1 ? ? (unwind2_path f) t).
 
-lemma unwind2_term_after (f1) (f2) (t):
-      ▼[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
-#f1 #f2 #t @subset_eq_trans
-[
-| @subset_inclusion_ext_f1_compose
-| @subset_equivalence_ext_f1_exteq /2 width=5/
-]
+(* Basic constructions ******************************************************)
+
+lemma in_comp_unwind2_path_term (f) (p) (t):
+      p ϵ t → ▼[f]p ϵ ▼[f]t.
+/2 width=1 by subset_in_ext_f1_dx/
 qed.

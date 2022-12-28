@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_path_append.ma".
+include "delayed_updating/unwind_k/unwind2_path_append.ma".
 include "delayed_updating/syntax/path_depth.ma".
 include "ground/relocation/tr_id_compose.ma".
 include "ground/relocation/tr_compose_compose.ma".

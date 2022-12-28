@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_path.ma".
+include "delayed_updating/unwind_k/unwind2_path.ma".
 include "delayed_updating/syntax/path_inner.ma".
 include "delayed_updating/syntax/path_proper.ma".
 include "ground/xoa/ex_4_2.ma".

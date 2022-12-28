@@ -12,17 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_prototerm.ma".
-include "delayed_updating/unwind/unwind2_path_append.ma".
-include "ground/lib/subset_overlap.ma".
+include "delayed_updating/unwind_k/unwind2_path_eq.ma".
+include "delayed_updating/unwind_k/unwind2_rmap_after.ma".
 
-(* TAILED UNWIND FOR PROTOTERM **********************************************)
+(* TAILED UNWIND FOR PATH ***************************************************)
 
-(* Destructions with pic ****************************************************)
+(* Properties with tr_after *************************************************)
 
-lemma unwind2_term_des_pic (f) (t):
-      ▼[f]t ≬ 𝐈 → t ≬ 𝐈.
-#f #t * #p * #q #Hq #H0 #Hp destruct
-@(subset_ol_i … Hq) -Hq (**) (* auto does not work *)
-@(unwind2_path_des_pic … Hp)
-qed-.
+lemma unwind2_path_after (g) (f) (p):
+      ▼[g]▼[f]p = ▼[g∘f]p.
+#g #f * // * [ #k ] #p //
+<unwind2_path_d_dx <unwind2_path_d_dx
+@eq_f2 // @eq_f >tr_compose_pap
+/2 width=3 by tr_pap_eq_repl/
+qed.

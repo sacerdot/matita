@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_prototerm.ma".
-include "delayed_updating/unwind/unwind2_path_append.ma".
+include "delayed_updating/unwind_k/unwind2_prototerm.ma".
+include "delayed_updating/unwind_k/unwind2_path_append.ma".
 include "delayed_updating/syntax/preterm.ma".
 include "delayed_updating/syntax/path_structure_inner.ma".
 include "ground/lib/subset_equivalence.ma".

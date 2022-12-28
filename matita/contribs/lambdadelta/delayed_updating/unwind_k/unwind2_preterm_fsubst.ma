@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_prototerm_eq.ma".
-include "delayed_updating/unwind/unwind2_path_append.ma".
+include "delayed_updating/unwind_k/unwind2_prototerm_eq.ma".
+include "delayed_updating/unwind_k/unwind2_path_append.ma".
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/syntax/preterm.ma".
 include "delayed_updating/syntax/prototerm_proper.ma".

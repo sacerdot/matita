@@ -12,31 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_path.ma".
-include "delayed_updating/unwind/unwind2_rmap_lift.ma".
-include "delayed_updating/substitution/lift_path_structure.ma".
+include "delayed_updating/unwind_k/unwind2_prototerm.ma".
+include "delayed_updating/unwind_k/unwind2_path_append.ma".
+include "ground/lib/subset_overlap.ma".
 
-(* TAILED UNWIND FOR PATH ***************************************************)
+(* TAILED UNWIND FOR PROTOTERM **********************************************)
 
-(* Constructions with lift_path *********************************************)
+(* Destructions with pic ****************************************************)
 
-lemma lift_unwind2_path_after (g) (f) (p):
-      🠡[g]▼[f]p = ▼[g∘f]p.
-#g #f * // * [ #k ] #p //
-<unwind2_path_d_dx <unwind2_path_d_dx <lift_path_d_dx
-<lift_path_structure >tr_compose_pap
-/4 width=1 by tr_pap_eq_repl, eq_f2, eq_f/
-qed.
-
-lemma unwind2_lift_path_after (g) (f) (p):
-      ▼[g]🠡[f]p = ▼[g∘f]p.
-#g #f * // * [ #k ] #p
-[ <unwind2_path_d_dx <unwind2_path_d_dx
-  <structure_lift_path >tr_compose_pap
-  /4 width=1 by tr_pap_eq_repl, eq_f2, eq_f/
-| <unwind2_path_m_dx <unwind2_path_m_dx //
-| <unwind2_path_L_dx <unwind2_path_L_dx //
-| <unwind2_path_A_dx <unwind2_path_A_dx //
-| <unwind2_path_S_dx <unwind2_path_S_dx //
-]
-qed.
+lemma unwind2_term_des_pic (f) (t):
+      ▼[f]t ≬ 𝐈 → t ≬ 𝐈.
+#f #t * #p * #q #Hq #H0 #Hp destruct
+@(subset_ol_i … Hq) -Hq (**) (* auto does not work *)
+@(unwind2_path_des_pic … Hp)
+qed-.

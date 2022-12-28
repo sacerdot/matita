@@ -12,21 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_rmap.ma".
-include "delayed_updating/syntax/path_structure.ma".
-include "delayed_updating/syntax/path_depth.ma".
-include "ground/relocation/tr_pushs.ma".
+include "delayed_updating/unwind_k/unwind2_prototerm_eq.ma".
+include "delayed_updating/unwind_k/unwind2_path_after.ma".
 
-(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
+(* TAILED UNWIND FOR PROTOTERM **********************************************)
 
-(* Constructions with structure and depth ***********************************)
+(* Constructions with tr_after **********************************************)
 
-lemma unwind2_rmap_structure (f) (p):
-      (⫯*[♭p]f) = ▶[f]⊗p.
-#f #p elim p -p //
-* [ #k ] #p #IH //
-[ <unwind2_rmap_L_dx //
-| <unwind2_rmap_A_dx //
-| <unwind2_rmap_S_dx //
+lemma unwind2_term_after (f1) (f2) (t):
+      ▼[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
+#f1 #f2 #t @subset_eq_trans
+[
+| @subset_inclusion_ext_f1_compose
+| @subset_equivalence_ext_f1_exteq /2 width=5/
 ]
 qed.

@@ -12,19 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_path.ma".
-include "delayed_updating/syntax/prototerm.ma".
-include "ground/lib/subset_ext.ma".
+include "delayed_updating/unwind_k/preunwind2_rmap.ma".
+include "delayed_updating/substitution/prelift_label.ma".
+include "delayed_updating/substitution/prelift_rmap.ma".
+include "ground/relocation/tr_uni_compose.ma".
+include "ground/relocation/tr_compose_compose.ma".
+include "ground/relocation/tr_compose_eq.ma".
+include "ground/lib/stream_eq_eq.ma".
 
-(* TAILED UNWIND FOR PROTOTERM **********************************************)
+(* TAILED PREUNWIND FOR RELOCATION MAP **************************************)
 
-interpretation
-  "unwind (prototerm)"
-  'BlackDownTriangle f t = (subset_ext_f1 ? ? (unwind2_path f) t).
+(* Constructions with lift_path *********************************************)
 
-(* Basic constructions ******************************************************)
-
-lemma in_comp_unwind2_path_term (f) (p) (t):
-      p ϵ t → ▼[f]p ϵ ▼[f]t.
-/2 width=1 by subset_in_ext_f1_dx/
+lemma preunwind2_lift_rmap_after (g) (f) (l):
+      ▶[g]🠡[f]l∘🠢[f]l ≗ ▶[g∘f]l.
+#g #f * // #k
+<prelift_label_d <prelift_rmap_d <preunwind2_rmap_d <preunwind2_rmap_d
+@(stream_eq_trans … (tr_compose_assoc …))
+@(stream_eq_canc_dx … (tr_compose_assoc …))
+/2 width=1 by tr_compose_eq_repl/
 qed.

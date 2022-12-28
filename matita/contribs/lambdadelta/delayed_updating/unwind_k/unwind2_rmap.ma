@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/preunwind2_rmap.ma".
+include "delayed_updating/unwind_k/preunwind2_rmap.ma".
 include "delayed_updating/syntax/path.ma".
 
 (* TAILED UNWIND FOR RELOCATION MAP *****************************************)

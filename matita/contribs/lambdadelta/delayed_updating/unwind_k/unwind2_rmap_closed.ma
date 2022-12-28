@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_rmap_lift.ma".
-include "delayed_updating/unwind/unwind2_rmap_eq.ma".
+include "delayed_updating/unwind_k/unwind2_rmap_lift.ma".
+include "delayed_updating/unwind_k/unwind2_rmap_eq.ma".
 include "delayed_updating/substitution/lift_rmap_structure.ma".
 include "delayed_updating/syntax/path_closed.ma".
 include "delayed_updating/syntax/path_depth.ma".

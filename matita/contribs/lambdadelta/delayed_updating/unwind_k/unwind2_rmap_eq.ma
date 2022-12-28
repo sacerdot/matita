@@ -12,21 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(**) (* reverse include *)
-include "ground/lib/subset_ext_equivalence.ma".
-include "delayed_updating/unwind/unwind2_path_eq.ma".
-include "delayed_updating/unwind/unwind2_prototerm.ma".
+include "delayed_updating/unwind_k/unwind2_rmap.ma".
+include "delayed_updating/unwind_k/preunwind2_rmap_eq.ma".
+include "ground/relocation/tr_uni_compose.ma".
+include "ground/arith/nat_rplus_pplus.ma".
 
-(* TAILED UNWIND FOR PROTOTERM **********************************************)
+(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
-(* Constructions with subset_equivalence ************************************)
+(* Constructions with tr_map_eq *********************************************)
 
-lemma unwind2_term_eq_repl_sn (f1) (f2) (t):
-      f1 ≗ f2 → ▼[f1]t ⇔ ▼[f2]t.
-/3 width=1 by subset_equivalence_ext_f1_exteq, unwind2_path_eq_repl/
-qed.
+lemma unwind2_rmap_eq_repl (p):
+      stream_eq_repl … (λf1,f2. ▶[f1]p ≗ ▶[f2]p).
+#p elim p -p //
+#l #p #IH #f1 #f2 #Hf
+/3 width=1 by preunwind2_rmap_eq_repl/
+qed-.
 
-lemma unwind2_term_eq_repl_dx (f) (t1) (t2):
-      t1 ⇔ t2 → ▼[f]t1 ⇔ ▼[f]t2.
-/2 width=1 by subset_equivalence_ext_f1_bi/
+lemma tls_unwind2_rmap_d_dx (f) (p) (h) (k):
+      ⇂*[h+k]▶[f]p ≗ ⇂*[h]▶[f](p◖𝗱k).
+#f #p #h #k
+<unwind2_rmap_d_dx >nrplus_inj_dx
+/2 width=1 by tr_tls_compose_uni_dx/
 qed.

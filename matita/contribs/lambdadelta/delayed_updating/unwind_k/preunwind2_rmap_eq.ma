@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/preunwind2_rmap.ma".
+include "delayed_updating/unwind_k/preunwind2_rmap.ma".
 include "ground/relocation/tr_compose_eq.ma".
 include "ground/relocation/tr_pn_eq.ma".
 

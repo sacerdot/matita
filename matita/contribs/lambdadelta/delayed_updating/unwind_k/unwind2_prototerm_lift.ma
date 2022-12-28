@@ -12,17 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_path_eq.ma".
-include "delayed_updating/unwind/unwind2_rmap_after.ma".
+(**) (* reverse include *)
+include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/substitution/lift_prototerm.ma".
+include "delayed_updating/unwind_k/unwind2_path_lift.ma".
+include "delayed_updating/unwind_k/unwind2_prototerm.ma".
 
-(* TAILED UNWIND FOR PATH ***************************************************)
+(* TAILED UNWIND FOR PROTOTERM **********************************************)
 
-(* Properties with tr_after *************************************************)
+(* Constructions with lift_prototerm ****************************************)
 
-lemma unwind2_path_after (g) (f) (p):
-      ▼[g]▼[f]p = ▼[g∘f]p.
-#g #f * // * [ #k ] #p //
-<unwind2_path_d_dx <unwind2_path_d_dx
-@eq_f2 // @eq_f >tr_compose_pap
-/2 width=3 by tr_pap_eq_repl/
+lemma lift_unwind2_term_after (f1) (f2) (t):
+      🠡[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
+#f1 #f2 #t @subset_eq_trans
+[| @subset_inclusion_ext_f1_compose ]
+@subset_equivalence_ext_f1_exteq #p
+@lift_unwind2_path_after
+qed.
+
+lemma unwind2_lift_term_after (f1) (f2) (t):
+      ▼[f2]🠡[f1]t ⇔ ▼[f2∘f1]t.
+#f1 #f2 #t @subset_eq_trans
+[| @subset_inclusion_ext_f1_compose ]
+@subset_equivalence_ext_f1_exteq #p
+@unwind2_lift_path_after
 qed.

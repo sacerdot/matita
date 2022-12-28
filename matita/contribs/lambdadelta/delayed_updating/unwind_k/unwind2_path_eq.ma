@@ -12,23 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/preunwind2_rmap.ma".
-include "delayed_updating/substitution/prelift_label.ma".
-include "delayed_updating/substitution/prelift_rmap.ma".
-include "ground/relocation/tr_uni_compose.ma".
-include "ground/relocation/tr_compose_compose.ma".
-include "ground/relocation/tr_compose_eq.ma".
-include "ground/lib/stream_eq_eq.ma".
+include "delayed_updating/unwind_k/unwind2_path.ma".
+include "delayed_updating/unwind_k/unwind2_rmap_eq.ma".
 
-(* TAILED PREUNWIND FOR RELOCATION MAP **************************************)
+(* TAILED UNWIND FOR PATH ***************************************************)
 
-(* Constructions with lift_path *********************************************)
+(* Constructions with tr_map_eq *********************************************)
 
-lemma preunwind2_lift_rmap_after (g) (f) (l):
-      ▶[g]🠡[f]l∘🠢[f]l ≗ ▶[g∘f]l.
-#g #f * // #k
-<prelift_label_d <prelift_rmap_d <preunwind2_rmap_d <preunwind2_rmap_d
-@(stream_eq_trans … (tr_compose_assoc …))
-@(stream_eq_canc_dx … (tr_compose_assoc …))
-/2 width=1 by tr_compose_eq_repl/
-qed.
+lemma unwind2_path_eq_repl (p):
+      stream_eq_repl … (λf1,f2. ▼[f1]p = ▼[f2]p).
+* // * [ #k ] #p #f1 #f2 #Hf //
+<unwind2_path_d_dx <unwind2_path_d_dx
+lapply (unwind2_rmap_eq_repl … Hf) -Hf
+[| #Hf <(tr_pap_eq_repl … Hf) -f2 ] //
+qed-.
+

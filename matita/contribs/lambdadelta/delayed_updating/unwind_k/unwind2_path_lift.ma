@@ -12,32 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_rmap.ma".
-include "delayed_updating/unwind/preunwind2_rmap_lift.ma".
-include "delayed_updating/unwind/preunwind2_rmap_eq.ma".
-include "delayed_updating/substitution/lift_path.ma".
-include "delayed_updating/syntax/path_structure.ma".
+include "delayed_updating/unwind_k/unwind2_path.ma".
+include "delayed_updating/unwind_k/unwind2_rmap_lift.ma".
+include "delayed_updating/substitution/lift_path_structure.ma".
 
-(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
+(* TAILED UNWIND FOR PATH ***************************************************)
 
 (* Constructions with lift_path *********************************************)
 
-lemma lift_unwind2_rmap_after (g) (f) (p):
-      🠢[g]⊗p∘▶[f]p ≗ ▶[g∘f]p.
-#g #f #p elim p -p //
-* [ #k ] #p #IH //
-[ <unwind2_rmap_d_dx <unwind2_rmap_d_dx
-  @(stream_eq_canc_sn … (tr_compose_assoc …))
-  /2 width=1 by tr_compose_eq_repl/
-| <unwind2_rmap_L_dx <unwind2_rmap_L_dx <lift_rmap_L_dx
-  /2 width=1 by tr_push_eq_repl/
-]
+lemma lift_unwind2_path_after (g) (f) (p):
+      🠡[g]▼[f]p = ▼[g∘f]p.
+#g #f * // * [ #k ] #p //
+<unwind2_path_d_dx <unwind2_path_d_dx <lift_path_d_dx
+<lift_path_structure >tr_compose_pap
+/4 width=1 by tr_pap_eq_repl, eq_f2, eq_f/
 qed.
 
-lemma unwind2_lift_rmap_after (g) (f) (p:path):
-      ▶[g]🠡[f]p∘🠢[f]p ≗ ▶[g∘f]p.
-#g #f #p elim p -p // #l #p #IH
-<lift_path_rcons <lift_rmap_rcons <unwind2_rmap_rcons <unwind2_rmap_rcons
-@(stream_eq_trans … (preunwind2_lift_rmap_after …))
-/2 width=1 by preunwind2_rmap_eq_repl/
+lemma unwind2_lift_path_after (g) (f) (p):
+      ▼[g]🠡[f]p = ▼[g∘f]p.
+#g #f * // * [ #k ] #p
+[ <unwind2_path_d_dx <unwind2_path_d_dx
+  <structure_lift_path >tr_compose_pap
+  /4 width=1 by tr_pap_eq_repl, eq_f2, eq_f/
+| <unwind2_path_m_dx <unwind2_path_m_dx //
+| <unwind2_path_L_dx <unwind2_path_L_dx //
+| <unwind2_path_A_dx <unwind2_path_A_dx //
+| <unwind2_path_S_dx <unwind2_path_S_dx //
+]
 qed.
