@@ -400,6 +400,8 @@ let interactive_error_interp ~all_passes
    dialog#toplevel#destroy ()
   ) ()
 
+let ref_kill_worker = ref (fun _ -> assert false)
+
 class gui () =
     (* creation order _is_ relevant for windows placement *)
   let main = new mainWin () in
@@ -552,13 +554,15 @@ class gui () =
        let source_view = (s ())#source_view in
         main#buttonsToolbar#misc#set_sensitive false;
         main#scriptMenu#misc#set_sensitive false;
-        source_view#set_editable false
+        source_view#set_editable false;
+        main#scriptAbortButton#set_sensitive true
       in
       let unlock_world _ =
        let source_view = (s ())#source_view in
         main#buttonsToolbar#misc#set_sensitive true;
         main#scriptMenu#misc#set_sensitive true;
-        source_view#set_editable true
+        source_view#set_editable true;
+        main#scriptAbortButton#set_sensitive false
       in
       let worker_thread = ref None in
       let notify_exn (source_view : GSourceView3.source_view) exn =
@@ -648,6 +652,7 @@ class gui () =
          match !worker_thread with
             None -> assert false
           | Some t -> interrupt := Some (Thread.id t) in
+      ref_kill_worker := kill_worker ;
       let keep_focus f (script: MatitaScript.script) =
          try
           f script; script#source_view#misc#grab_focus ()
@@ -782,6 +787,7 @@ class gui () =
       connect_button main#scriptBottomButton bottom;
       connect_button main#scriptJumpButton jump;
       connect_button main#scriptAbortButton kill_worker;
+      main#scriptAbortButton#set_sensitive false;
       connect_menu_item main#scriptAdvanceMenuItem advance;
       connect_menu_item main#scriptRetractMenuItem retract;
       connect_menu_item main#scriptTopMenuItem top;
@@ -983,6 +989,8 @@ class gui () =
         in
         script#addObserver sequents_observer;
         script#addObserver browser_observer
+
+    method kill_worker () = !ref_kill_worker ()      
 
     method loadScript file =       
      let page = main#scriptNotebook#current_page in
