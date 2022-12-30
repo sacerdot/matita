@@ -106,7 +106,7 @@ let compact_disambiguation_errors all_passes errorll =
       filter choices
    in
     filter_phase_3
-     (List.map (fun o,l -> o,List.sort choices_compare_by_passes l)
+     (List.map (fun (o,l) -> o,List.sort choices_compare_by_passes l)
        (uniq (List.stable_sort choices_compare choices)))
   in
    choices
@@ -155,8 +155,7 @@ let rec to_string exn =
   | MatitaEngine.TryingToAdd msg ->
      None, "Attempt to insert an alias in batch mode: " ^ Lazy.force msg
   | MatitaEngine.AlreadyLoaded msg ->
-     None, "The file " ^ Lazy.force msg ^ " needs recompilation but it is
-     already loaded; undo the inclusion and try again."
+     None, "The file " ^ Lazy.force msg ^ " needs recompilation but it is already loaded; undo the inclusion and try again."
   | MatitaEngine.FailureCompiling (filename,exn) ->
      None, "Compiling " ^ filename ^ ":\n" ^ snd (to_string exn)
   | NCicRefiner.AssertFailure msg ->

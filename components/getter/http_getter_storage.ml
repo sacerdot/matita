@@ -70,7 +70,7 @@ let normalize_root uri =  (* add trailing slash to roots *)
   with Invalid_argument _ -> uri
 
 let remove_duplicates l =
-  Http_getter_misc.list_uniq (List.stable_sort Pervasives.compare l)
+  Http_getter_misc.list_uniq (List.stable_sort Stdlib.compare l)
 
 let has_rdonly l =  List.exists ((=) `Read_only) l
 let has_legacy l =  List.exists ((=) `Legacy) l

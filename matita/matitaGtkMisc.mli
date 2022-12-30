@@ -76,7 +76,9 @@ class multiStringListModel:
     method list_store: GTree.list_store (** list_store forwarding *)
 
     method easy_mappend:     string list -> unit        (** append + set *)
+
     method easy_minsert:     int -> string list -> unit (** insert + set *)
+
     method easy_mselection:  unit -> string list list
   end
   
@@ -87,7 +89,9 @@ class stringListModel:
     inherit multiStringListModel
 
     method easy_append:     string -> unit        (** append + set *)
+
     method easy_insert:     int -> string -> unit (** insert + set *)
+
     method easy_selection:  unit -> string list
   end
   

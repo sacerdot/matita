@@ -85,7 +85,7 @@ let one_step_depend cache_of_processed_baseuri suri dbtype dbd =
                 Filename.dirname (strip_xpointer occ) = buri -> 
                   l := uri :: !l
             | _ -> ());
-        let l = List.sort Pervasives.compare !l in
+        let l = List.sort Stdlib.compare !l in
         HExtlib.list_uniq l
       with
         exn -> raise exn (* no errors should be accepted *)
@@ -120,7 +120,7 @@ let db_uris_of_baseuri buri =
       | Some uri when Filename.dirname (strip_xpointer uri) = buri -> 
           l := uri :: !l
       | _ -> ());
-  let l = List.sort Pervasives.compare !l in
+  let l = List.sort Stdlib.compare !l in
   HExtlib.list_uniq l
  with
   exn -> raise exn (* no errors should be accepted *)
@@ -135,7 +135,7 @@ let close_uri_list cache_of_processed_baseuri uri_to_remove =
   (* to remove an uri you have to remove the whole script *)
   let buri_to_remove = 
     HExtlib.list_uniq 
-      (List.fast_sort Pervasives.compare 
+      (List.fast_sort Stdlib.compare 
         (List.map safe_buri_of_suri uri_to_remove))
   in
   (* cleand the already visided baseuris *)
@@ -177,7 +177,7 @@ let close_uri_list cache_of_processed_baseuri uri_to_remove =
   in
   let uri_to_remove = uri_to_remove @ uri_to_remove_from_db in
   let uri_to_remove =
-   HExtlib.list_uniq (List.sort Pervasives.compare uri_to_remove) in
+   HExtlib.list_uniq (List.sort Stdlib.compare uri_to_remove) in
   (* now we want the list of all uri that depend on them *) 
   let depend = 
     List.fold_left
@@ -185,7 +185,7 @@ let close_uri_list cache_of_processed_baseuri uri_to_remove =
     [] uri_to_remove
   in
   let depend = 
-    HExtlib.list_uniq (List.fast_sort Pervasives.compare depend) 
+    HExtlib.list_uniq (List.fast_sort Stdlib.compare depend) 
   in
   uri_to_remove, depend
 ;;
@@ -229,7 +229,7 @@ let clean_baseuris ?verbose:(_=true) _buris =
   if debug then
     List.iter debug_prerr buris; 
   let l = close_db cache_of_processed_baseuri [] buris in
-  let l = HExtlib.list_uniq (List.fast_sort Pervasives.compare l) in
+  let l = HExtlib.list_uniq (List.fast_sort Stdlib.compare l) in
   let l = List.map NUri.uri_of_string l in
   debug_prerr "clean_baseuri will remove:";
   if debug then
@@ -245,6 +245,6 @@ let clean_baseuris ?verbose:(_=true) _buris =
        HExtlib.safe_remove lexiconfile;
        HExtlib.rmdir_descend (Filename.chop_extension lexiconfile)
      with Http_getter_types.Key_not_found _ -> ())
-   (HExtlib.list_uniq (List.fast_sort Pervasives.compare
+   (HExtlib.list_uniq (List.fast_sort Stdlib.compare
      (List.map NUri.baseuri_of_uri l @ buris)))
 *)

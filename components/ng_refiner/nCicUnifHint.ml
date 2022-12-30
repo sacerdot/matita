@@ -21,14 +21,14 @@ with type t = int * NCic.term  * NCic.term * NCic.term =
   struct
         (* precedence, skel1, skel2, term *)
         type t = int * NCic.term * NCic.term * NCic.term
-        let compare = Pervasives.compare
+        let compare = Stdlib.compare
   end
 
 module EOT : Set.OrderedType 
 with type t = int * NCic.term =
   struct
         type t = int * NCic.term 
-        let compare = Pervasives.compare
+        let compare = Stdlib.compare
   end
 
 module HintSet = Set.Make(HOT)
@@ -310,7 +310,7 @@ let look_for_hint (status:#status) metasenv subst context t1 t2 =
     rc
   in
   let rc = 
-    List.sort (fun (x,_,_,_) (y,_,_,_) -> Pervasives.compare x y) rc
+    List.sort (fun (x,_,_,_) (y,_,_,_) -> Stdlib.compare x y) rc
   in 
   let rc = List.map (fun (_,x,y,z) -> x,y,z) rc in
 

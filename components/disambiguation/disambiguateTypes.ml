@@ -41,7 +41,7 @@ exception Invalid_choice of (Stdpp.location * string) Lazy.t
 module OrderedDomain =
   struct
     type t = domain_item
-    let compare = Pervasives.compare
+    let compare = Stdlib.compare
   end
 
 (* module Domain = Set.Make (OrderedDomain) *)

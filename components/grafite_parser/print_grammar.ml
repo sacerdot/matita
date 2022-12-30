@@ -84,7 +84,6 @@ and is_entry_dummy = function
 and is_symbol_dummy = function
   | Stoken ("DUMMY", _) -> true
   | Stoken _ -> false
-  | Smeta (_, lt, _) -> List.for_all is_symbol_dummy lt
   | Snterm e | Snterml (e, _) -> is_entry_dummy e
   | Slist1 x | Slist0 x -> is_symbol_dummy x
   | Slist1sep (x,y,false) | Slist0sep (x,y,false) -> is_symbol_dummy x && is_symbol_dummy y
@@ -170,15 +169,6 @@ let visit_description desc fmt self =
     
   and visit_symbol s todo is_son  =
     match s with
-    | Smeta (name, sl, _) -> 
-        Format.fprintf fmt "%s " name;
-        List.fold_left (
-          fun acc s -> 
-            let todo = visit_symbol s acc is_son  in
-            if is_son then
-              Format.fprintf fmt "@ ";
-            todo) 
-        todo sl
     | Snterm entry -> visit_entry entry todo is_son  
     | Snterml (entry,level) -> visit_entry entry ~level todo is_son 
     | Slist0 symbol -> 
@@ -256,7 +246,7 @@ let rec visit_entries fmt todo pped =
           ~eq:(fun e1 e2 -> (name_of_entry e1) = (name_of_entry e2))
           (List.sort 
             (fun e1 e2 -> 
-              Pervasives.compare (name_of_entry e1) (name_of_entry e2))
+              Stdlib.compare (name_of_entry e1) (name_of_entry e2))
             todo),
         pped
       in

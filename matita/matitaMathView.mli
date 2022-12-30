@@ -30,6 +30,7 @@ val sequentsViewer_instance: GPack.notebook -> MatitaGuiTypes.sequentsViewer
 val refresh_all_browsers: unit -> unit  (** act on all cicBrowsers *)
 
 (** {2 Rendering in a browser} *)
+
 (** @param reuse if set reused last opened cic browser otherwise 
 *  opens a new one. default is false *)
 val cicBrowser: ?reuse:bool -> MatitaTypes.mathViewer_entry option -> unit
@@ -42,6 +43,7 @@ val has_selection: unit -> bool
    * @raise Failure "no selection" *)
 val copy_selection: unit -> unit
 val has_clipboard: unit -> bool (** clipboard is not empty *)
+
 val empty_clipboard: unit -> unit (** empty the clipboard *)
 
   (** @raise Failure "empty clipboard" *)

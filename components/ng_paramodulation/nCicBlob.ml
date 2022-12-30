@@ -80,7 +80,7 @@ with type t = NCic.term and type input = NCic.term = struct
     | ( NCic.Meta _ | NCic.Appl _ ), NCic.Const _ -> 1
     | NCic.Appl _, NCic.Meta _ -> ~-1
     | NCic.Meta _, NCic.Appl _ -> 1
-    | _ -> Pervasives.compare x y
+    | _ -> Stdlib.compare x y
 	(* was assert false, but why? *)
 	
   ;;

@@ -183,7 +183,7 @@ let gunzip ?(keep = false) ?output fname =
       (try
         while true do
           let bytes = Gzip.input ic buf 0 bufsiz in
-          if bytes = 0 then raise End_of_file else Pervasives.output oc buf 0 bytes
+          if bytes = 0 then raise End_of_file else Stdlib.output oc buf 0 bytes
         done
       with End_of_file -> ());
 	close_out oc;

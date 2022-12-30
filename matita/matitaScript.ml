@@ -102,7 +102,7 @@ let eval_nmacro _include_paths (_buffer : GText.buffer) status _unparsed_text pa
        let name = Filename.dirname (script#filename) ^ "/" ^ name in
        let sequents = 
          let selected = Continuationals.Stack.head_goals status#stack in
-         List.filter (fun x,_ -> List.mem x selected) menv         
+         List.filter (fun (x,_) -> List.mem x selected) menv         
        in
        CicMathView.screenshot status sequents menv subst name;
        [status, parsed_text], "", parsed_text_length

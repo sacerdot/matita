@@ -35,7 +35,8 @@ val is_proof_object: string -> bool
   * it *)
 val append_phrase_sep: string -> string
 
-val normalize_dir: string -> string (** add trailing "/" if missing *)
+  (** add trailing "/" if missing *)
+val normalize_dir: string -> string
 val strip_suffix: suffix:string -> string -> string
 
   (** @return tl tail of a list starting at a given element
@@ -50,8 +51,12 @@ type 'a memento
 class type ['a] history =
   object ('b)
     method add : 'a -> unit
-    method next : 'a        (** @raise History_failure *)
-    method previous : 'a    (** @raise History_failure *)
+
+     (** @raise History_failure *)
+    method next : 'a
+
+     (** @raise History_failure *)
+    method previous : 'a
     method load: 'a memento -> unit
     method save: 'a memento
     method is_begin: bool 

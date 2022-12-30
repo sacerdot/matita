@@ -19,7 +19,7 @@ exception KeepReducingThis of
   string Lazy.t * (NCicReduction.machine * bool) * 
                   (NCicReduction.machine * bool) ;;
 
-let (===) x y = Pervasives.compare x y = 0 ;;
+let (===) x y = Stdlib.compare x y = 0 ;;
 
 let mk_msg (status:#NCic.status) metasenv subst context t1 t2 =
  (lazy (

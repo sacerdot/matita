@@ -8,7 +8,11 @@ INTERFACE_FILES = \
 
 IMPLEMENTATION_FILES = $(INTERFACE_FILES:%.mli=%.ml)
 
-all:
+all: hash.o
+opt: hash.o
+
+hash.o:
+	gcc -I `ocamlc -where`/caml/ -c hash.c
 
 include ../../Makefile.defs
 include ../Makefile.common

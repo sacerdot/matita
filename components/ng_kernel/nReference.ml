@@ -37,7 +37,7 @@ let hash (Ref (uri,spec)) =
 module OrderedStrings =
  struct
   type t = string
-  let compare (s1 : t) (s2 : t) = Pervasives.compare s1 s2
+  let compare (s1 : t) (s2 : t) = Stdlib.compare s1 s2
  end
 ;;
 

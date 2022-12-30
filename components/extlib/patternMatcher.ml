@@ -33,7 +33,7 @@ type pattern_id = int
 module OrderedInt =
 struct
   type t = int
-  let compare (x1:t) (x2:t) = Pervasives.compare x2 x1  (* reverse order *)
+  let compare (x1:t) (x2:t) = Stdlib.compare x2 x1  (* reverse order *)
 end
 
 module IntSet = Set.Make (OrderedInt)

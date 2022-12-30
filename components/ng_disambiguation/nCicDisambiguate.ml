@@ -103,7 +103,7 @@ let find_in_context name context =
   aux 1 context
 
 let interpretate_term_and_interpretate_term_option (status: #NCic.status)
-  ?(create_dummy_ids=false) ~obj_context ~mk_choice ~env ~uri ~is_path
+  ~create_dummy_ids ~obj_context ~mk_choice ~env ~uri ~is_path
   ~localization_tbl 
 =
   (* create_dummy_ids shouldbe used only for interpretating patterns *)

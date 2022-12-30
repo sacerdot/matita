@@ -97,7 +97,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
       goal2win <- [];
       _metasenv <- [],[]
 
-    method nload_sequents : 'status. #GrafiteTypes.status as 'status -> unit
+    method nload_sequents : 'status. (#GrafiteTypes.status as 'status) -> unit
     = fun (status : #GrafiteTypes.status) ->
      let _,_,metasenv,subst,_ = status#obj in
       _metasenv <- metasenv,subst;
@@ -151,7 +151,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
         end
       in
       let add_switch _ _ (_, sw) = add_tab (render_switch sw) sw in
-      Stack.iter  (** populate notebook with tabs *)
+      Stack.iter  (* populate notebook with tabs *)
         ~env:(fun depth _tag (pos, sw) ->
           let markup =
             match depth, pos with
@@ -172,7 +172,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
           self#render_page status ~page ~goal_switch))
 
     method private render_page:
-     'status. #ApplyTransformation.status as 'status -> page:int ->
+     'status. (#ApplyTransformation.status as 'status) -> page:int ->
        goal_switch:Stack.switch -> unit
      = fun status ~page:_ ~goal_switch ->
       (match goal_switch with
@@ -204,7 +204,7 @@ class sequentsViewer ~(notebook:GPack.notebook) ~(cicMathView:cicMathView) () =
              (w#vadjustment#upper -. w#vadjustment#page_size));
       with Not_found -> assert false)
 
-    method goto_sequent: 'status. #ApplyTransformation.status as 'status -> int -> unit
+    method goto_sequent: 'status. (#ApplyTransformation.status as 'status) -> int -> unit
      = fun status goal ->
       let goal_switch, page =
         try
@@ -532,10 +532,10 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
           (Virtuals.get_all_eqclass ()));
       Printf.bprintf b "\n\nVirtual keys (trigger with ALT-L):\n\n";
       List.iter 
-        (fun tag, items -> 
+        (fun (tag, items) -> 
            Printf.bprintf b "  %s:\n" tag;
            List.iter 
-             (fun names, symbol ->
+             (fun (names, symbol) ->
                 Printf.bprintf b "  \t%s\t%s\n" 
                   (Glib.Utf8.from_unichar symbol)
                   (String.concat ", " names))

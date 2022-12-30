@@ -637,7 +637,7 @@ object (self)
   val mutable current_mathml = None
 
   method nload_sequent:
-   'status. #ApplyTransformation.status as 'status -> NCic.metasenv ->
+   'status. (#ApplyTransformation.status as 'status) -> NCic.metasenv ->
      NCic.substitution -> int -> unit
    = fun status metasenv subst metano ->
     let sequent = List.assoc metano metasenv in
@@ -654,7 +654,7 @@ object (self)
     self#load_root ~root:txt
 
   method load_nobject :
-   'status. #ApplyTransformation.status as 'status -> NCic.obj -> unit
+   'status. (#ApplyTransformation.status as 'status) -> NCic.obj -> unit
    = fun status obj ->
     let txt = ApplyTransformation.ntxt_of_cic_object ~map_unicode_to_tex:false
     80 status obj in
@@ -675,7 +675,7 @@ object (self)
           ignore (domImpl#saveDocumentToFile ~name ~doc:mathml ())
         end;*)
         self#load_root ~root:txt;
-        (*current_mathml <- Some mathml*)(*)*);
+        (*current_mathml <- Some mathml*)(* ) *);
 end
 
  (** constructors *)
@@ -686,7 +686,7 @@ let cicMathView (*?auto_indent ?highlight_current_line ?indent_on_tab ?indent_wi
       GContainer.pack_container ~create:(fun pl ->
         let obj = SourceView.new_ () in
         Gobject.set_params (Gobject.try_cast obj "GtkSourceView") pl;
-        new _cicMathView obj)(*)) ?auto_indent ?highlight_current_line ?indent_on_tab ?indent_width ?insert_spaces_instead_of_tabs ?right_margin_position ?show_line_marks ?show_line_numbers ?show_right_margin ?smart_home_end ?tab_width ?editable ?cursor_visible ?justification ?wrap_mode ?accepts_tab ?border_width*) [] ?width ?height ?packing ?show () :> cicMathView)
+        new _cicMathView obj)(* )) ?auto_indent ?highlight_current_line ?indent_on_tab ?indent_width ?insert_spaces_instead_of_tabs ?right_margin_position ?show_line_marks ?show_line_numbers ?show_right_margin ?smart_home_end ?tab_width ?editable ?cursor_visible ?justification ?wrap_mode ?accepts_tab ?border_width*) [] ?width ?height ?packing ?show () :> cicMathView)
 
 let screenshot _status _sequents _metasenv _subst (_filename (*as ofn*)) =
  () (*MATITA 1.0

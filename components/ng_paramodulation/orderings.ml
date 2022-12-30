@@ -130,7 +130,7 @@ let compare_weights (h1, w1) (h2, w2) =
       | ((var1, w1)::tl1) as l1, (((var2, w2)::tl2) as l2) ->
           if var1 = var2 then
             let diffs = (w1 - w2) + diffs in
-            let r = Pervasives.compare w1 w2 in
+            let r = Stdlib.compare w1 w2 in
             let lt = lt || (r < 0) in
             let gt = gt || (r > 0) in
               if lt && gt then XINCOMPARABLE else

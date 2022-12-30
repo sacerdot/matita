@@ -1,4 +1,5 @@
-AC_INIT(matita/matitaTypes.ml)
+AC_INIT
+AC_CONFIG_SRCDIR([matita/matitaTypes.ml])
 
 # Distribution settings
 # (i.e. settings (automatically) manipulated before a release)
@@ -63,6 +64,7 @@ echo "done"
 FINDLIB_LIBSREQUIRES="\
 expat \
 http \
+camlp-streams \
 pcre \
 str \
 unix \
@@ -205,11 +207,12 @@ AC_SUBST(RT_BASE_DIR)
 AC_SUBST(SRCROOT)
 AC_SUBST(TRANSFORMER_MODULE)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
   components/extlib/componentsConf.ml
   matita/matita.conf.xml
   matita/buildTimeConf.ml
   matita/help/C/version.txt
   Makefile.defs
 ])
+AC_OUTPUT
 

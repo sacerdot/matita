@@ -206,7 +206,7 @@ module R = Reduction(RS);;
 
 let whd = R.whd
 
-let (===) x y = Pervasives.compare x y = 0 ;;
+let (===) x y = Stdlib.compare x y = 0 ;;
 
 let get_relevance = ref (fun _ ~metasenv:_ ~subst:_ _ _ -> assert false);;
 

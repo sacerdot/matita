@@ -58,7 +58,7 @@ module Utils (B : Orderings.Blob) = struct
     match l1, l2 with
     | Terms.Predicate p1, Terms.Predicate p2 -> compare_foterm p1 p2
     | Terms.Equation (l1,r1,ty1,o1), Terms.Equation (l2,r2,ty2,o2) ->
-        let c = Pervasives.compare o1 o2 in
+        let c = Stdlib.compare o1 o2 in
         if c <> 0 then c else
           let c = compare_foterm l1 l2 in
           if c <> 0 then c else
@@ -70,7 +70,7 @@ module Utils (B : Orderings.Blob) = struct
   ;;
 
   let eq_unit_clause (id1,_,_,_) (id2,_,_,_) = id1 = id2
-  let compare_unit_clause (id1,_,_,_) (id2,_,_,_) = Pervasives.compare id1 id2
+  let compare_unit_clause (id1,_,_,_) (id2,_,_,_) = Stdlib.compare id1 id2
     
   let relocate maxvar varlist subst =
     List.fold_right

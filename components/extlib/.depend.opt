@@ -1,18 +1,30 @@
-componentsConf.cmx : componentsConf.cmi
+componentsConf.cmx : \
+    componentsConf.cmi
 componentsConf.cmi :
-discrimination_tree.cmx : trie.cmx hExtlib.cmx discrimination_tree.cmi
+discrimination_tree.cmx : \
+    trie.cmx \
+    hExtlib.cmx \
+    discrimination_tree.cmi
 discrimination_tree.cmi :
-graphvizPp.cmx : graphvizPp.cmi
+graphvizPp.cmx : \
+    graphvizPp.cmi
 graphvizPp.cmi :
-hExtlib.cmx : hExtlib.cmi
+hExtlib.cmx : \
+    hExtlib.cmi
 hExtlib.cmi :
-hLog.cmx : hLog.cmi
+hLog.cmx : \
+    hLog.cmi
 hLog.cmi :
-hMarshal.cmx : hExtlib.cmx hMarshal.cmi
+hMarshal.cmx : \
+    hExtlib.cmx \
+    hMarshal.cmi
 hMarshal.cmi :
-hTopoSort.cmx : hTopoSort.cmi
+hTopoSort.cmx : \
+    hTopoSort.cmi
 hTopoSort.cmi :
-patternMatcher.cmx : patternMatcher.cmi
+patternMatcher.cmx : \
+    patternMatcher.cmi
 patternMatcher.cmi :
-trie.cmx : trie.cmi
+trie.cmx : \
+    trie.cmi
 trie.cmi :

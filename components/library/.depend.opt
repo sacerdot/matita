@@ -1,6 +1,9 @@
-librarian.cmx : librarian.cmi
+librarian.cmx : \
+    librarian.cmi
 librarian.cmi :
-libraryClean.cmx : libraryClean.cmi
+libraryClean.cmx : \
+    libraryClean.cmi
 libraryClean.cmi :
-libraryMisc.cmx : libraryMisc.cmi
+libraryMisc.cmx : \
+    libraryMisc.cmi
 libraryMisc.cmi :

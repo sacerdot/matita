@@ -29,7 +29,7 @@ open Discrimination_tree
 
 module TermOT : Set.OrderedType with type t = NCic.term = struct 
   type t = NCic.term 
-  let compare = Pervasives.compare 
+  let compare = Stdlib.compare 
 end
 
 module TermSet = Set.Make(TermOT)
@@ -37,7 +37,7 @@ module TermSet = Set.Make(TermOT)
 module TermListOT : Set.OrderedType with type t = NCic.term list =
  struct
    type t = NCic.term list
-   let compare = Pervasives.compare
+   let compare = Stdlib.compare
  end
 
 module TermListSet : Set.S with type elt = NCic.term list =
@@ -91,8 +91,8 @@ let compare e1 e2 =
   match e1,e2 with
   | Constant (u1,a1),Constant (u2,a2) -> 
        let x = NReference.compare u1 u2 in
-       if x = 0 then Pervasives.compare a1 a2 else x
-  | e1,e2 -> Pervasives.compare e1 e2
+       if x = 0 then Stdlib.compare a1 a2 else x
+  | e1,e2 -> Stdlib.compare e1 e2
 ;;
 
 let string_of_path l = String.concat "." (List.map ppelem l) ;;

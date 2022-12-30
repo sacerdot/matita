@@ -18,7 +18,7 @@ utf8MacroTable.ml:
 	./make_table $@ $@.txt
 utf8MacroTable.cmo: utf8MacroTable.ml
 	@echo "  OCAMLC $<"
-	$(H)@$(OCAMLFIND) ocamlc -c $<
+	$(H)@$(OCAMLFIND) ocamlc -rectypes -c $<
 
 pa_unicode_macro.cmo: pa_unicode_macro.ml utf8Macro.cmo
 	@echo "  OCAMLC $<"
@@ -29,7 +29,7 @@ pa_unicode_macro.cma: utf8MacroTable.cmo utf8Macro.cmo pa_unicode_macro.cmo
 
 profiling_macros.cmo: profiling_macros.ml
 	@echo "  OCAMLC $<"
-	$(H)@$(OCAMLFIND) ocamlc -package camlp5 -pp "camlp5o -loc loc" -c $<
+	$(H)@$(OCAMLFIND) ocamlc -package camlp5 -package str -pp "camlp5o -loc loc" -c $<
 profiling_macros.cma:profiling_macros.cmo
 	@echo "  OCAMLC -a $@"
 	$(H)@$(OCAMLFIND) ocamlc -a -o $@ $^

@@ -21,7 +21,7 @@ module Index(B : Orderings.Blob) = struct
       type t = Terms.direction * B.t Terms.unit_clause
  
       let compare (d1,uc1) (d2,uc2) = 
-        let c = Pervasives.compare d1 d2 in
+        let c = Stdlib.compare d1 d2 in
         if c <> 0 then c else U.compare_unit_clause uc1 uc2
       ;;
     end
@@ -61,7 +61,7 @@ module Index(B : Orderings.Blob) = struct
         match e1,e2 with 
         | Constant (a1,ar1), Constant (a2,ar2) ->
             let c = B.compare a1 a2 in
-            if c <> 0 then c else Pervasives.compare ar1 ar2
+            if c <> 0 then c else Stdlib.compare ar1 ar2
         | Variable, Variable -> 0
         | Constant _, Variable -> ~-1
         | Variable, Constant _ -> 1

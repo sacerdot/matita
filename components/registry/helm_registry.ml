@@ -412,7 +412,7 @@ let ls registry prefix =
         | _ -> assert false)
       ([], []) matching_keys
   in
-  (list_uniq (List.sort Pervasives.compare sections), keys)
+  (list_uniq (List.sort Stdlib.compare sections), keys)
 
 (** {2 API implementation}
  * functional methods above are wrapped so that they work on a default

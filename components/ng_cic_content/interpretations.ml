@@ -38,10 +38,12 @@ let hide_coercions = ref true;;
 
 type cic_id = string
 
+(*
 type term_info =
   { sort: (cic_id, Ast.sort_kind) Hashtbl.t;
     uri: (cic_id, NReference.reference) Hashtbl.t;
   }
+*)
 
 module IntMap = Map.Make(struct type t = int let compare = compare end);;
 module StringMap = Map.Make(String);;
@@ -185,7 +187,7 @@ let lookup_interpretations status ?(sorted=true) symbol =
           dsc, args, appl_pattern
       ) (StringMap.find symbol status#interp_db.interpretations)
     in
-    if sorted then HExtlib.list_uniq (List.sort Pervasives.compare raw)
+    if sorted then HExtlib.list_uniq (List.sort Stdlib.compare raw)
               else raw
   with Not_found -> raise Interpretation_not_found
 
