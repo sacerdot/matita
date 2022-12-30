@@ -106,9 +106,9 @@ let init_debugging_menu gui =
 
 let _ =
   at_exit (fun () -> print_endline "\nThanks for using Matita!\n");
-  Sys.catch_break true;
   let args = Helm_registry.get_list Helm_registry.string "matita.args" in
   let gui = MatitaGui.instance () in
+  Sys.set_signal Sys.sigint (Sys.Signal_handle(fun _ -> gui#kill_worker ()));
   init_debugging_menu gui;
   List.iter gui#loadScript (List.rev args);
   gui#main#mainWin#show ();

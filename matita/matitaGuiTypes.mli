@@ -30,6 +30,8 @@ object
 
     (** {2 Utility methods} *)
   method loadScript: string -> unit
+
+  method kill_worker: unit -> unit
 end
 
 type paste_kind = [ `Term | `Pattern ]
