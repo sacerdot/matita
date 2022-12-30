@@ -169,7 +169,7 @@ class interpErrorModel =
         tree_store#clear ();
         let idx1 = ref ~-1 in
         List.iter
-          (fun _,lll ->
+          (fun (_,lll) ->
             incr idx1;
             let loc_row =
              if List.length choices = 1 then
@@ -196,7 +196,7 @@ class interpErrorModel =
                 Some loc_row) in
             let idx2 = ref ~-1 in
              List.iter
-              (fun passes,envs_and_diffs,_,_ ->
+              (fun (passes,envs_and_diffs,_,_) ->
                 incr idx2;
                 let msg_row =
                  if List.length lll = 1 then
@@ -375,7 +375,7 @@ let interactive_error_interp ~all_passes
          String.concat "\n"
           ("" ::
             List.map
-             (fun k,desc -> 
+             (fun (k,desc) -> 
                let alias =
                 match k with
                 | DisambiguateTypes.Id id ->
@@ -716,7 +716,6 @@ class gui () =
           "apply rule (∃#e (…) {…} […] (…));\n\t[\n\t|\n\t]\n");
 
     
-      let module Hr = Helm_registry in
       MatitaGtkMisc.toggle_callback ~check:main#fullscreenMenuItem
         ~callback:(function 
           | true -> main#toplevel#fullscreen () 

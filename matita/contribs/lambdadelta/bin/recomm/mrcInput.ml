@@ -41,7 +41,7 @@ let read_dir file =
     Filename.remove_extension name
   in
   let dir = Array.to_list (Sys.readdir file) in
-  let mods = List.fast_sort Pervasives.compare (list_rev_filter_map filter map dir) in
+  let mods = List.fast_sort Stdlib.compare (list_rev_filter_map filter map dir) in
   {
     ET.cdir = file; mods;
   }
@@ -62,7 +62,7 @@ let read_index dir =
     try read_mods mods ich with
     | End_of_file -> close_in ich 
   end;
-  let mods = List.fast_sort Pervasives.compare !mods in
+  let mods = List.fast_sort Stdlib.compare !mods in
   {
     ET.cdir = dir; mods;
   }

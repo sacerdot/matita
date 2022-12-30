@@ -59,7 +59,7 @@ let registry_defaults = [
 
 let set_registry_values =
   List.iter 
-    (fun key, value -> 
+    (fun (key, value) -> 
        if not (Helm_registry.has key) then Helm_registry.set ~key ~value)
 
 let fill_registry init_status =
@@ -116,7 +116,7 @@ let initialize_environment init_status =
   
 let status = ref []
 
-let usages = Hashtbl.create 11 (** app name (e.g. "matitac") -> usage string *)
+let usages = Hashtbl.create 11 (* app name (e.g. "matitac") -> usage string *)
 let _ =
   List.iter
     (fun (name, s) -> Hashtbl.replace usages name s)

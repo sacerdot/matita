@@ -69,7 +69,7 @@ let metas_of_term status subst context term =
             List.fold_left (aux ctx) (i::acc) l)
     | t -> NCicUtils.fold (fun e c -> e::c) ctx aux acc t
   in
-    HExtlib.list_uniq (List.sort Pervasives.compare (aux context [] term))
+    HExtlib.list_uniq (List.sort Stdlib.compare (aux context [] term))
 ;;
 
 module NCicHash =
@@ -282,7 +282,7 @@ let max_kind k1 k2 =
 module OT = 
   struct 
     type t = int * NCic.conjecture
-    let compare (i,_) (j,_) = Pervasives.compare i j
+    let compare (i,_) (j,_) = Stdlib.compare i j
   end
 
 module MS = HTopoSort.Make(OT)

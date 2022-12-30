@@ -1,9 +1,22 @@
-content.cmx : content.cmi
+content.cmx : \
+    content.cmi
 content.cmi :
-notationEnv.cmx : notationUtil.cmx notationPt.cmx notationEnv.cmi
-notationEnv.cmi : notationPt.cmx
-notationPp.cmx : notationPt.cmx notationEnv.cmx notationPp.cmi
-notationPp.cmi : notationPt.cmx notationEnv.cmi
+notationEnv.cmx : \
+    notationUtil.cmx \
+    notationPt.cmx \
+    notationEnv.cmi
+notationEnv.cmi : \
+    notationPt.cmx
+notationPp.cmx : \
+    notationPt.cmx \
+    notationEnv.cmx \
+    notationPp.cmi
+notationPp.cmi : \
+    notationPt.cmx \
+    notationEnv.cmi
 notationPt.cmx :
-notationUtil.cmx : notationPt.cmx notationUtil.cmi
-notationUtil.cmi : notationPt.cmx
+notationUtil.cmx : \
+    notationPt.cmx \
+    notationUtil.cmi
+notationUtil.cmi : \
+    notationPt.cmx

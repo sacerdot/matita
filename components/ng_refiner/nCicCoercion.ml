@@ -21,7 +21,7 @@ module COT : Set.OrderedType
 with type t = string * NCic.term * int * int  * NCic.term * NCic.term = 
   struct
      type t = string * NCic.term * int * int * NCic.term * NCic.term
-     let compare = Pervasives.compare
+     let compare = Stdlib.compare
   end
 
 module CoercionSet = Set.Make(COT)

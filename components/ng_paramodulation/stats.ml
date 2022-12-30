@@ -129,7 +129,7 @@ module Stats (B : Terms.Blob) =
 		    | _ -> dependencies op tl acc
     ;;
 
-    let dependencies op clauses = HExtlib.list_uniq (List.sort Pervasives.compare (dependencies op clauses []));;
+    let dependencies op clauses = HExtlib.list_uniq (List.sort Stdlib.compare (dependencies op clauses []));;
 
     (* let max_weight_hyp = *)
 

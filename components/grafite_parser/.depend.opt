@@ -1,4 +1,7 @@
-grafiteParser.cmx : grafiteParser.cmi
+grafiteParser.cmx : \
+    grafiteParser.cmi
 grafiteParser.cmi :
-print_grammar.cmx : print_grammar.cmi
-print_grammar.cmi : grafiteParser.cmi
+print_grammar.cmx : \
+    print_grammar.cmi
+print_grammar.cmi : \
+    grafiteParser.cmi

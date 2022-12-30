@@ -38,8 +38,8 @@ let strip_suffix ~suffix s =
 let absolute_path file =
   if file.[0] = '/' then file else Unix.getcwd () ^ "/" ^ file
   
-let is_proof_script _fname = true  (** TODO Zack *)
-let is_proof_object _fname = true  (** TODO Zack *)
+let is_proof_script _fname = true  (* TODO Zack *)
+let is_proof_object _fname = true  (* TODO Zack *)
 
 let append_phrase_sep s =
   if not (Pcre.pmatch ~pat:(sprintf "%s$" BuildTimeConf.phrase_sep) s) then

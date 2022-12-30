@@ -1,4 +1,7 @@
-interpretations.cmx : ncic2astMatcher.cmx interpretations.cmi
+interpretations.cmx : \
+    ncic2astMatcher.cmx \
+    interpretations.cmi
 interpretations.cmi :
-ncic2astMatcher.cmx : ncic2astMatcher.cmi
+ncic2astMatcher.cmx : \
+    ncic2astMatcher.cmi
 ncic2astMatcher.cmi :

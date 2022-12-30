@@ -36,6 +36,11 @@ exception Level_not_found of int
 let min_precedence = 0
 let max_precedence = 100
 
+let hash_expr e =
+ e
+ |> Hashtbl.hash
+ |> Printf.sprintf "%08x"
+
 type ('a,'b,'c,'d,'e) grammars = {
   level1_pattern: 'a Grammar.Entry.e;
   level2_ast: 'b Grammar.Entry.e;
@@ -74,7 +79,7 @@ type db = {
 
 let int_of_string s =
   try
-    Pervasives.int_of_string s
+    Stdlib.int_of_string s
   with Failure _ ->
     failwith (sprintf "Lexer failure: string_of_int \"%s\" failed" s)
 
@@ -197,7 +202,8 @@ let extract_term_production status pattern =
         in
         [ Env (List.map Env.opt_declaration p_names),
           Gramext.srules
-            [ [ Gramext.Sopt (Gramext.srules [ p_atoms, p_action ]) ],
+            [ [ Gramext.Sopt (Gramext.srules [ p_atoms, hash_expr p_action, p_action ]) ],
+              hash_expr action,
               Gramext.action action ] ]
     | Ast.List0 (p, _)
     | Ast.List1 (p, _) ->
@@ -215,7 +221,8 @@ let extract_term_production status pattern =
         in
         [ Env (List.map Env.list_declaration p_names),
           Gramext.srules
-            [ [ gram_of_list (Gramext.srules [ p_atoms, p_action ]) ],
+            [ [ gram_of_list (Gramext.srules [ p_atoms, hash_expr p_action, p_action ]) ],
+              hash_expr action,
               Gramext.action action ] ]
     | _ -> assert false
   and aux_variable =
@@ -246,7 +253,7 @@ let compare_rule_id x y =
     | _,[] -> 1
     | ((s1::tl1) as x),((s2::tl2) as y) ->
         if Gramext.eq_symbol s1 s2 then aux (tl1,tl2)
-        else Pervasives.compare x y 
+        else Stdlib.compare x y 
   in
     aux (x,y)
 
@@ -384,7 +391,7 @@ let initialize_grammars grammars =
   in
   (* Needed since campl4 on "delete_rule" remove the precedence level if it gets
    * empty after the deletion. The lexer never generate the Stoken below. *)
-  let dummy_prod = [ [ Gramext.Stoken ("DUMMY", "") ], dummy_action ] in
+  let dummy_prod = [ [ Gramext.Stoken ("DUMMY", "") ], "DUMMY", dummy_action ] in
   let mk_level_list first last =
     let rec aux acc = function
       | i when i < first -> acc
@@ -862,6 +869,7 @@ let extend (status : #status) (CL1P (level1_pattern,precedence)) action =
         [ None,
           Some (*Gramext.NonA*) Gramext.NonA,
           [ p_atoms, 
+            hash_expr "(make_action (fun (env: NotationEnv.t) (loc: Ast.location) -> (action env loc)) p_bindings)",
             (make_action
               (fun (env: NotationEnv.t) (loc: Ast.location) ->
                 (action env loc))

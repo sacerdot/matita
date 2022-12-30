@@ -63,7 +63,7 @@ let vars_of_term t =
 module OT =
  struct
    type t = int 
-   let compare = Pervasives.compare
+   let compare = Stdlib.compare
  end
 
 module M : Map.S with type key = int 

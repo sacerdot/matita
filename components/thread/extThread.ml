@@ -37,7 +37,7 @@ exception Thread_not_found of Thread.t
 module OrderedPid =
   struct
     type t = int
-    let compare = Pervasives.compare
+    let compare = Stdlib.compare
   end
 module PidSet = Set.Make (OrderedPid)
 

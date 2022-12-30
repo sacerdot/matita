@@ -11,7 +11,7 @@
 
 (* $Id: orderings.ml 9869 2009-06-11 22:52:38Z denes $ *)
 
-module OT = struct type t = string  let compare = Pervasives.compare end 
+module OT = struct type t = string  let compare = Stdlib.compare end 
 module HC = Map.Make(OT)
 module TS = HTopoSort.Make(OT)
 
@@ -159,7 +159,7 @@ end
 
  let compute_stats goal hypotheses =
    let module C = 
-     struct type t = leaf let cmp (a,_) (b,_) = Pervasives.compare a b end 
+     struct type t = leaf let cmp (a,_) (b,_) = Stdlib.compare a b end 
    in
    let module B = MakeBlob(C) in
    let module Pp = Pp.Pp(B) in
@@ -189,8 +189,8 @@ end
         if a1 = 0 && a2 = 0 then 0
         else if a1 = 0 then -1
         else if a2 = 0 then 1
-        else let res = Pervasives.compare (a1,o1,-go1,p1) (a2,o2,-go2,p2)
-             in if res = 0 then Pervasives.compare (HExtlib.list_index ((=) n1) oplist) (HExtlib.list_index ((=) n2) oplist)
+        else let res = Stdlib.compare (a1,o1,-go1,p1) (a2,o2,-go2,p2)
+             in if res = 0 then Stdlib.compare (HExtlib.list_index ((=) n1) oplist) (HExtlib.list_index ((=) n2) oplist)
                 else res)
      data
  ;;
@@ -211,12 +211,12 @@ let worker order ~useage ~printmsg goal hypotheses =
         then
           ((*prerr_endline "NO CLASH, using fixed ground order";*)
            fun a b ->
-            Pervasives.compare 
+            Stdlib.compare 
               (pos a stats)
               (pos b stats))
         else
           ((*prerr_endline "CLASH, statistics insufficient";*)
-            fun (a,_) (b,_) -> Pervasives.compare a b)
+            fun (a,_) (b,_) -> Stdlib.compare a b)
       ;;
      end
    in

@@ -70,7 +70,7 @@ let print_stat _status tbl =
   let l = RefHash.fold (fun a v l -> (a,v)::l) tbl [] in
   let relevance v = float !(v.uses) /. float !(v.nominations) in
   let vcompare (_,v1) (_,v2) =
-    Pervasives.compare (relevance v1) (relevance v2) in
+    Stdlib.compare (relevance v1) (relevance v2) in
   let l = List.sort vcompare l in
   let short_name r = 
     Filename.chop_extension 
@@ -1490,7 +1490,7 @@ let pp_goals status l =
 module M = 
   struct 
     type t = int
-    let compare = Pervasives.compare
+    let compare = Stdlib.compare
   end
 ;;
 

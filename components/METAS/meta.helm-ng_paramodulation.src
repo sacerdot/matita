@@ -1,5 +1,5 @@
 requires="helm-ng_refiner"
 version="0.0.1"
-archive(byte)="ng_paramodulation.cma"
-archive(native)="ng_paramodulation.cmxa"
-linkopts=""
+archive(byte)="ng_paramodulation.cma hash.o"
+archive(native)="ng_paramodulation.cmxa hash.o"
+linkopts(byte)="-custom"

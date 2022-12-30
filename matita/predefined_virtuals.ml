@@ -1497,7 +1497,7 @@ let predefined_virtuals = [
 
 let load_predefined_virtuals () =
   List.iter 
-    (fun a,b,c -> 
+    (fun (a,b,c) -> 
        Virtuals.add_virtual a (Glib.Utf8.first_char b) c) 
     predefined_virtuals
 ;;

@@ -1,20 +1,61 @@
-common.cmx : ocamlExtractionTable.cmx mlutil.cmx coq.cmx common.cmi
-common.cmi : ocamlExtractionTable.cmi coq.cmi
-coq.cmx : coq.cmi
+common.cmx : \
+    ocamlExtractionTable.cmx \
+    mlutil.cmx \
+    coq.cmx \
+    common.cmi
+common.cmi : \
+    ocamlExtractionTable.cmi \
+    coq.cmi
+coq.cmx : \
+    coq.cmi
 coq.cmi :
-extraction.cmx : ocamlExtractionTable.cmx mlutil.cmx miniml.cmx coq.cmx \
-    common.cmx extraction.cmi
-extraction.cmi : ocamlExtractionTable.cmi miniml.cmx
-miniml.cmx : coq.cmx
-mlutil.cmx : ocamlExtractionTable.cmx miniml.cmx coq.cmx mlutil.cmi
-mlutil.cmi : ocamlExtractionTable.cmi miniml.cmx coq.cmi
-nCicExtraction.cmx : nCicExtraction.cmi
+extraction.cmx : \
+    ocamlExtractionTable.cmx \
+    mlutil.cmx \
+    miniml.cmx \
+    coq.cmx \
+    common.cmx \
+    extraction.cmi
+extraction.cmi : \
+    ocamlExtractionTable.cmi \
+    miniml.cmx
+miniml.cmx : \
+    coq.cmx
+mlutil.cmx : \
+    ocamlExtractionTable.cmx \
+    miniml.cmx \
+    coq.cmx \
+    mlutil.cmi
+mlutil.cmi : \
+    ocamlExtractionTable.cmi \
+    miniml.cmx \
+    coq.cmi
+nCicExtraction.cmx : \
+    nCicExtraction.cmi
 nCicExtraction.cmi :
-ocaml.cmx : ocamlExtractionTable.cmx mlutil.cmx miniml.cmx coq.cmx \
-    common.cmx ocaml.cmi
-ocaml.cmi : ocamlExtractionTable.cmi miniml.cmx coq.cmi
-ocamlExtraction.cmx : ocamlExtractionTable.cmx ocaml.cmx extraction.cmx \
-    coq.cmx ocamlExtraction.cmi
-ocamlExtraction.cmi : ocamlExtractionTable.cmi
-ocamlExtractionTable.cmx : miniml.cmx coq.cmx ocamlExtractionTable.cmi
-ocamlExtractionTable.cmi : miniml.cmx coq.cmi
+ocaml.cmx : \
+    ocamlExtractionTable.cmx \
+    mlutil.cmx \
+    miniml.cmx \
+    coq.cmx \
+    common.cmx \
+    ocaml.cmi
+ocaml.cmi : \
+    ocamlExtractionTable.cmi \
+    miniml.cmx \
+    coq.cmi
+ocamlExtraction.cmx : \
+    ocamlExtractionTable.cmx \
+    ocaml.cmx \
+    extraction.cmx \
+    coq.cmx \
+    ocamlExtraction.cmi
+ocamlExtraction.cmi : \
+    ocamlExtractionTable.cmi
+ocamlExtractionTable.cmx : \
+    miniml.cmx \
+    coq.cmx \
+    ocamlExtractionTable.cmi
+ocamlExtractionTable.cmi : \
+    miniml.cmx \
+    coq.cmi

@@ -568,8 +568,8 @@ let compare e1 e2 =
   match e1,e2 with
   | Constant (u1,a1),Constant (u2,a2) -> 
        let x = NUri.compare u1 u2 in
-       if x = 0 then Pervasives.compare a1 a2 else x
-  | e1,e2 -> Pervasives.compare e1 e2
+       if x = 0 then Stdlib.compare a1 a2 else x
+  | e1,e2 -> Stdlib.compare e1 e2
 ;;
 
 
@@ -578,7 +578,7 @@ end
 module Ncic_termOT : Set.OrderedType with type t = cic_term =
  struct
    type t = cic_term
-   let compare = Pervasives.compare
+   let compare = Stdlib.compare
  end
 
 module Ncic_termSet : Set.S with type elt = cic_term = Set.Make(Ncic_termOT)

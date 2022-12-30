@@ -50,7 +50,7 @@ let tex_of_unicode s =
        (Hashtbl.find_all Utf8MacroTable.utf82macro s)
     in
     List.sort 
-      (fun x y -> Pervasives.compare (String.length x) (String.length y)) 
+      (fun x y -> Stdlib.compare (String.length x) (String.length y)) 
       alt
   with Not_found -> []
 
