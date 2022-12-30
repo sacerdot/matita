@@ -599,6 +599,8 @@ class gui () =
        let source_view = script#source_view in
        let thread_main =
         fun () -> 
+          ignore (Thread.sigmask Unix.SIG_UNBLOCK [Sys.sigint]);
+          ignore (Thread.sigmask Unix.SIG_UNBLOCK [Sys.sigvtalrm]);
           lock_world ();
           let saved_use_library= !MultiPassDisambiguator.use_library in
           try
@@ -630,18 +632,22 @@ class gui () =
                with Sys.Break as e -> notify_exn source_view e);
               unlock_world ()
        in
-       (*thread_main ();*)
        worker_thread := Some (Thread.create thread_main ())
       in
       let kill_worker =
-       (* the following lines are from Xavier Leroy: http://alan.petitepomme.net/cwn/2005.11.08.html *)
        let interrupt = ref None in
        let old_callback = ref (function _ -> ()) in
        let force_interrupt n =
-         (* This function is called just before the thread's timeslice ends *)
+         (* This function is called every 1s (see Unix.setitimer call above) *)
          !old_callback n;
          if Some(Thread.id(Thread.self())) = !interrupt then
-          (interrupt := None; raise Sys.Break) in
+          (interrupt := None; raise Sys.Break)
+         else if !interrupt <> None then
+           (* Code executed in the non-worker thread; delay it to let the
+              worker thread catch the signal *)
+           Thread.delay 3.;
+       in
+       ignore (Unix.setitimer Unix.ITIMER_VIRTUAL {Unix.it_interval = 1.; it_value = 1.});
        let _ =
         match Sys.signal Sys.sigvtalrm (Sys.Signal_handle force_interrupt) with
            Sys.Signal_handle f -> old_callback := f
