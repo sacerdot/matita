@@ -558,9 +558,7 @@ class gui () =
        let source_view = (s ())#source_view in
         main#buttonsToolbar#misc#set_sensitive true;
         main#scriptMenu#misc#set_sensitive true;
-        source_view#set_editable true;
-        (*The next line seems sufficient to avoid some unknown race condition *)
-        GtkThread.sync (fun () -> ()) ()
+        source_view#set_editable true
       in
       let worker_thread = ref None in
       let notify_exn (source_view : GSourceView3.source_view) exn =

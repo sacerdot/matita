@@ -773,7 +773,8 @@ object (self)
       | n (* when n < 0 *) -> current_mark_pos#backward_chars (abs n)
     in
     buffer#move_mark mark ~where:new_mark_pos;
-    buffer#apply_tag locked_tag ~start:buffer#start_iter ~stop:new_mark_pos;
+    (* CSC: the next line is required to avoid race conditions (deadlocks) *)
+    GtkThread.sync(fun () -> buffer#apply_tag locked_tag ~start:buffer#start_iter ~stop:new_mark_pos) ();
     buffer#move_mark `INSERT old_insert;
     let mark_position = buffer#get_iter_at_mark mark in
     if source_view#move_mark_onscreen mark then
