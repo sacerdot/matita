@@ -6,7 +6,7 @@ AC_CONFIG_SRCDIR([matita/matitaTypes.ml])
 DEBUG_DEFAULT="true"
 DEFAULT_DBHOST="mysql://mowgli.cs.unibo.it"
 RT_BASE_DIR_DEFAULT="`pwd`/matita"
-MATITA_VERSION="0.99.4"
+MATITA_VERSION="0.99.5"
 DISTRIBUTED="yes"  # "yes" for distributed tarballs
 # End of distribution settings
 
