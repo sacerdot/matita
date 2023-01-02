@@ -83,6 +83,9 @@ matitaMisc.cmx : \
     matitaMisc.cmi
 matitaMisc.cmi : \
     matitaGuiTypes.cmi
+matitaMiscCli.cmx : \
+    matitaMiscCli.cmi
+matitaMiscCli.cmi :
 matitaScript.cmx : \
     virtuals.cmx \
     matitaTypes.cmx \
@@ -99,12 +102,12 @@ matitaTypes.cmx : \
 matitaTypes.cmi :
 matitac.cmx : \
     matitaclean.cmx \
-    matitaMisc.cmx \
+    matitaMiscCli.cmx \
     matitaInit.cmx \
     matitaExcPp.cmx \
     matitaEngine.cmx
 matitaclean.cmx : \
-    matitaMisc.cmx \
+    matitaMiscCli.cmx \
     matitaInit.cmx \
     matitaclean.cmi
 matitaclean.cmi :

@@ -33,7 +33,7 @@ val empty_db: db
    index_coercion db c A B \arity_left(c ??x??) \position(x,??x??) 
 *)
 val index_coercion: 
-  #status as 'status -> string ->
+  (#status as 'status) -> string ->
    NCic.term -> NCic.term -> NCic.term -> int -> int -> 'status
 
 (* NOTE: the name of the coercion is used to sort coercions, thus 

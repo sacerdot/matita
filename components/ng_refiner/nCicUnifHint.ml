@@ -60,7 +60,7 @@ class virtual status =
   method uhint_db = db
   method set_uhint_db v = {< db = v >}
   method set_unifhint_status
-   : 'status. #g_status as 'status -> 'self
+   : 'status. (#g_status as 'status) -> 'self
    = fun o -> {< db = o#uhint_db >}
  end
 
@@ -403,10 +403,10 @@ let generate_dot_file (status:#status) fmt =
             edges := (mangle l, mangle r, shint, precedence, hint) :: !edges)
         (HintSet.elements dataset);
     );
-  List.iter (fun x, l -> Pp.node x ~attrs:["label",l] fmt) !nodes;
-  List.iter (fun x, y, _l, _, _ -> 
+  List.iter (fun (x, l) -> Pp.node x ~attrs:["label",l] fmt) !nodes;
+  List.iter (fun (x, y, _l, _, _) -> 
       Pp.raw (Printf.sprintf "%s -- %s [ label=\"%s\" ];\n" x y "?") fmt)
   !edges;
   edges := List.sort (fun (_,_,_,p1,_) (_,_,_,p2,_) -> p1 - p2) !edges;
-  List.iter (fun _x, _y, _, p, l -> pp_hint l p) !edges;
+  List.iter (fun (_x, _y, _, p, l) -> pp_hint l p) !edges;
 ;;

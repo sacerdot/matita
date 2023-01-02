@@ -36,10 +36,10 @@ class virtual status :
   inherit g_status
   inherit CicNotationParser.status
   method set_parser_db : db -> 'self
-  method set_parser_status : 'status. #g_status as 'status -> 'self
+  method set_parser_status : 'status. (#g_status as 'status) -> 'self
  end
 
-val extend : #status as 'status ->
+val extend : (#status as 'status) ->
            CicNotationParser.checked_l1_pattern ->
            (NotationEnv.t -> NotationPt.location -> NotationPt.term) -> 'status
 

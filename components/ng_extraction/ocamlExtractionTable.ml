@@ -228,7 +228,7 @@ class virtual status =
               db1,db2,dbi,dbgp,dbp,dbids,dbrefs,ch,dbmn1,dbmn2,dbo,curi,empty_info >}
   method set_ocaml_extraction_db v = {< ocaml_extraction_db = v >}
   method set_ocaml_extraction_status
-   : 'status. #g_status as 'status -> 'self
+   : 'status. (#g_status as 'status) -> 'self
    = fun o -> {< ocaml_extraction_db = o#ocaml_extraction_db >}
  end
 

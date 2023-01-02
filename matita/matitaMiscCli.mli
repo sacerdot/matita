@@ -23,35 +23,5 @@
  * http://helm.cs.unibo.it/
  *)
 
-  (** {2 state handling} *)
-
-type db
-
-class type g_status =
-  object
-    method content_pres_db: db
-  end
-
-class virtual status :
-  object ('self)
-    inherit NCic.status
-    method content_pres_db: db
-    method set_content_pres_db: db -> 'self
-    method set_content_pres_status: #g_status -> 'self
-  end
-
-val add_pretty_printer:
- (#status as 'status) ->
-  NotationPt.term ->             (* level 2 pattern *)
-  CicNotationParser.checked_l1_pattern ->
-   'status
-
-  (** {2 content -> pres} *)
-
-val pp_ast: #status -> NotationPt.term -> NotationPt.term
-
-  (** {2 pres -> content} *)
-
-  (** fills a term pattern instantiating variable magics *)
-val instantiate_level2:
- #NCic.status -> NotationEnv.t -> NotationPt.term -> NotationPt.term
+  (** 2>/dev/null, HLog = (fun _ -> ()) *)
+val shutup: unit -> unit

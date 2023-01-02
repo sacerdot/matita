@@ -217,7 +217,7 @@ input
           | Some (env', ctors', 0) ->
               let env' =
                 List.map
-                  (fun (name, (_ty, _v)) as binding ->
+                  (fun ((name, (_ty, _v)) as binding) ->
                     if List.exists (fun (name', _) -> name = name') p_opt_decls
                     then Env.opt_binding_some binding
                     else binding)

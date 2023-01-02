@@ -35,7 +35,7 @@ module Make :
       val remove : M.key list -> 'a t -> 'a t
       val map : ('a -> 'b) -> 'a t -> 'b t
       val mapi : (M.key list -> 'a -> 'b) -> 'a t -> 'b t
-      val iter : (M.key list -> 'a -> 'b) -> 'a t -> unit
+      val iter : (M.key list -> 'a -> unit) -> 'a t -> unit
       val fold : (M.key list -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
       val compare : ('a -> 'a -> int) -> 'a t -> 'a t -> int
       val equal : ('a -> 'a -> bool) -> 'a t -> 'a t -> bool

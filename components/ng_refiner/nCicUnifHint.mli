@@ -29,10 +29,10 @@ class virtual status :
  end
 
 val index_hint: 
-  #status as 'status -> NCic.context -> NCic.term -> NCic.term -> int -> 'status
+  (#status as 'status) -> NCic.context -> NCic.term -> NCic.term -> int -> 'status
 
 val add_user_provided_hint :
-  #status as 'status -> NCic.term -> int -> 'status
+  (#status as 'status) -> NCic.term -> int -> 'status
 
 val look_for_hint:
     #status ->

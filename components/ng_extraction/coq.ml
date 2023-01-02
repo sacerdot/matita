@@ -60,14 +60,14 @@ let lift_subscript id =
       else begin
         let newid = Bytes.of_string id in
         Bytes.fill newid (carrypos+1) (len-1-carrypos) '0';
-        newid.[carrypos] <- Char.chr (Char.code c + 1);
+        Bytes.set newid  carrypos (Char.chr (Char.code c + 1));
         Bytes.to_string newid
       end
     else begin
       let newid = Bytes.of_string (id^"0") in
       if carrypos < len-1 then begin
         Bytes.fill newid (carrypos+1) (len-1-carrypos) '0';
-        newid.[carrypos+1] <- '1'
+        Bytes.set newid (carrypos+1) '1'
       end;
       Bytes.to_string newid
     end

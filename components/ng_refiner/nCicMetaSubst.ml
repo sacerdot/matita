@@ -221,7 +221,7 @@ and restrict status metasenv subst i (restrictions as orig) =
         let subst_entry_i = i, (name, ctx, NCic.Meta (j, reloc_irl), ty) in
         let new_subst = 
           subst_entry_j :: List.map 
-            (fun (n,_) as orig -> if i = n then subst_entry_i else orig) subst
+            (fun ((n,_) as orig) -> if i = n then subst_entry_i else orig) subst
         in
         let diff = List.filter (fun x -> not (List.mem x orig)) restrictions in
         metasenv, new_subst, j, diff
@@ -250,7 +250,7 @@ and restrict status metasenv subst i (restrictions as orig) =
           pp (lazy ("BBB: dopo metasenv\n" ^  NCicPp.ppmetasenv ~subst [metasenv_entry]));*)
         let diff = List.filter (fun x -> not (List.mem x orig)) restrictions in
         List.map 
-          (fun (n,_) as orig -> if i = n then metasenv_entry else orig) 
+          (fun ((n,_) as orig) -> if i = n then metasenv_entry else orig) 
           metasenv,
         subst_entry :: subst, j, diff
       with Occur -> raise (MetaSubstFailure (lazy (Printf.sprintf
@@ -390,7 +390,7 @@ let delift status ~unify metasenv subst context n l t =
              if not clear then ms
              else 
                metasenv, 
-               (i,([],c,t,ty)) :: List.filter (fun j,_ -> i <> j) subst
+               (i,([],c,t,ty)) :: List.filter (fun (j,_) -> i <> j) subst
            in
            aux (context,k,in_scope) ms (NCicSubstitution.subst_meta status l1 t)
          with NCicUtils.Subst_not_found _ ->
@@ -572,7 +572,7 @@ let extend_meta metasenv n =
   | NCic.Implicit (`Typeof _) -> 
       let mk_meta context kind =
         let metasenv, _, ty, _ = mk_meta metasenv context kind in
-        (n, (attrs, cc, ty)) :: List.filter (fun x,_ -> x <> n) metasenv, ty
+        (n, (attrs, cc, ty)) :: List.filter (fun (x,_) -> x <> n) metasenv, ty
       in
       (match NCicUntrusted.kind_of_meta attrs with
        | `IsSort 

@@ -71,9 +71,9 @@ let nparamod status metasenv subst context t table =
       let context = context 
     end 
   in
-  let module B = B(C) in
+  (*let module B = B(C) in*)
   let module P = NCicParamod(C) in
-  let module Pp = Pp.Pp(B) in
+  (*let module Pp = Pp.Pp(B) in*)
   let bag, maxvar = Terms.empty_bag, 0 in
   let (bag,maxvar), goals = 
     HExtlib.list_mapi_acc (fun x _ a -> P.mk_goal a x) (bag,maxvar) [t]

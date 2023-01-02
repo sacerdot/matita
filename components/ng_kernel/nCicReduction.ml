@@ -373,7 +373,7 @@ let are_convertible status ~metasenv ~subst =
         R.reduce status ~delta ~subst context m2
      in
      let rec convert_machines test_eq_only
-       ((k1,e1,t1,s1),norm1 as m1),((k2,e2,t2,s2), norm2 as m2) 
+       (((k1,e1,t1,s1),norm1 as m1),((k2,e2,t2,s2), norm2 as m2))
      =
        (alpha_eq status test_eq_only
          (R.unwind status (k1,e1,t1,[])) (R.unwind status (k2,e2,t2,[])) &&

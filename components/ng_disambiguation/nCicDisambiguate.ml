@@ -602,7 +602,7 @@ let disambiguate_term (status: #NCicCoercion.status) ~context ~metasenv ~subst
      ~universe ~uri:None ~pp_thing:(NotationPp.pp_term status)
      ~passes:(MultiPassDisambiguator.passes ())
      ~lookup_in_library ~domain_of_thing:Disambiguate.domain_of_term
-     ~interpretate_thing:(interpretate_term status ~obj_context:[] ~mk_choice (?create_dummy_ids:None))
+     ~interpretate_thing:(interpretate_term status ~obj_context:[] ~mk_choice ?create_dummy_ids:None)
      ~refine_thing:(refine_term status) (text,prefix_len,term)
      ~mk_localization_tbl ~expty ~subst
    in

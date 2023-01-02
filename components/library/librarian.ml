@@ -152,6 +152,6 @@ let find_roots_in_dir dir =
 ;;
 
 (* scheme uri part as defined in URI Generic Syntax (RFC 3986) *)
-let uri_scheme_rex = Pcre.regexp "^[[:alpha:]][[:alnum:]\-+.]*:"
+let uri_scheme_rex = Pcre.regexp "^[[:alpha:]][[:alnum:]-+.]*:"
 
 let is_uri str = Pcre.pmatch ~rex:uri_scheme_rex str

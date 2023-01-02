@@ -13,5 +13,5 @@
 open Miniml
 
 val extract:
- #OcamlExtractionTable.status as 'status -> NCic.obj ->
+ (#OcamlExtractionTable.status as 'status) -> NCic.obj ->
   'status * ml_decl list * ml_spec list

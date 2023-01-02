@@ -114,9 +114,9 @@ let remove_all_items items =
            end *)
 *)
 
-let main () =
+let main_clean () =
   let _ = MatitaInit.initialize_all () in
-  if not (Helm_registry.get_bool "matita.verbose") then MatitaMisc.shutup ();
+  if not (Helm_registry.get_bool "matita.verbose") then MatitaMiscCli.shutup ();
   match Helm_registry.get_list Helm_registry.string "matita.args" with
     | [ "all" ] -> clean_all (); exit 0
     | []        -> 
@@ -124,3 +124,9 @@ let main () =
 	remove_all_items items
     | items     ->     
     	remove_all_items items
+
+let main () =
+  Sys.catch_break true;
+  main_clean ()
+
+let _ = main ()

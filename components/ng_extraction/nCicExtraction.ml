@@ -319,7 +319,7 @@ class virtual status =
   method extraction_db = extraction_db
   method set_extraction_db v = {< extraction_db = v >}
   method set_extraction_status
-   : 'status. #g_status as 'status -> 'self
+   : 'status. (#g_status as 'status) -> 'self
    = fun o -> {< extraction_db = o#extraction_db >}
  end
 
@@ -1213,11 +1213,11 @@ let rec pp_obj status (_,ref,obj_kind) =
  | Algebraic il ->
     String.concat "\n"
      (List.map
-      (fun _,ref,left,right,cl ->
+      (fun (_,ref,left,right,cl) ->
         "data " ^ pp_ref status ref ^ " " ^
         pretty_print_context (right@left) ^ " where\n  " ^
         String.concat "\n  " (List.map
-         (fun ref,tys ->
+         (fun (ref,tys) ->
            let namectx = namectx_of_ctx left in
             pp_ref status ref ^ " :: " ^
              pretty_print_type status namectx tys

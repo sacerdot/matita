@@ -46,7 +46,7 @@ class virtual status =
   method coerc_db = db
   method set_coerc_db v = {< db = v >}
   method set_coercion_status
-   : 'status. #g_status as 'status -> 'self
+   : 'status. (#g_status as 'status) -> 'self
    = fun o -> {< db = o#coerc_db >}#set_unifhint_status o
  end
 

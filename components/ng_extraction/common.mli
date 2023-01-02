@@ -35,9 +35,9 @@ val push_vars : identifier list -> env -> identifier list * env
 val get_db_name : int -> env -> identifier
 
 (* true = capitalize *)
-val modname_of_filename: #status as 'status-> bool -> string -> 'status * string
+val modname_of_filename: (#status as 'status)-> bool -> string -> 'status * string
 
 type kind = Term | Type | Cons
 
 val pp_global :
- #status as 'status -> kind -> NReference.reference -> 'status * string
+ (#status as 'status) -> kind -> NReference.reference -> 'status * string

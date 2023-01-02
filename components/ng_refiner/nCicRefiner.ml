@@ -234,7 +234,7 @@ let rec typeof (status:#NCicCoercion.status)
     (*D*)in outside true; rc with exc -> outside false; raise exc
   in
   let rec typeof_aux metasenv subst context expty = 
-    fun t as orig -> 
+    fun (t as orig) -> 
     (*D*)inside 'R'; try let rc = 
     pp (lazy (status#ppterm ~metasenv ~subst ~context t ^ " ::exp:: " ^
        match expty with `XTSort -> "Any sort" | `XTInd -> "Any (co)inductive type"
@@ -551,7 +551,7 @@ and try_coercions status
   | [] ->   
       pp (lazy "WWW: no more coercions!");
       raise (wrap_exc (lazy
-       let expty =
+       (let expty =
         match expty with
            `XTSome expty -> status#ppterm ~metasenv ~subst ~context expty
          | `XTSort -> "[[sort]]"
@@ -561,7 +561,7 @@ and try_coercions status
         "The term\n%s\nhas type\n%s\nbut is here used with type\n%s"
         (status#ppterm ~metasenv ~subst ~context t)
         (status#ppterm ~metasenv ~subst ~context infty)
-        expty)) exc)
+        expty))) exc)
   | (_,metasenv, newterm, newtype, meta)::tl ->
       try 
           pp (lazy("K=" ^ status#ppterm ~metasenv ~subst ~context newterm));

@@ -1,4 +1,4 @@
-(* Copyright (C) 2005, HELM Team.
+(* Copyright (C) 2004-2005, HELM Team.
  * 
  * This file is part of HELM, an Hypertextual, Electronic
  * Library of Mathematics, developed at the Computer Science
@@ -23,5 +23,12 @@
  * http://helm.cs.unibo.it/
  *)
 
-val main: unit -> unit
+(* $Id$ *)
 
+
+let shutup () = 
+  HLog.set_log_callback (fun _ _ -> ())
+(*
+  let out = open_out "/dev/null" in
+  Unix.dup2 (Unix.descr_of_out_channel out) (Unix.descr_of_out_channel stderr)
+*)

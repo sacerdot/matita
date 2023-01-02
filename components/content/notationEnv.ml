@@ -65,7 +65,7 @@ let lookup_value env name =
 let remove_name env name = List.remove_assoc name env
 
 let remove_names env names =
-  List.filter (fun name, _ -> not (List.mem name names)) env
+  List.filter (fun (name, _) -> not (List.mem name names)) env
 
 let lookup_term env name =
   match lookup env name with

@@ -37,41 +37,41 @@ val set_keywords : Idset.t -> unit
 
 val register_infos: db -> info -> db
 
-val to_be_included : #status as 'status -> NUri.uri -> 'status * bool
+val to_be_included : (#status as 'status) -> NUri.uri -> 'status * bool
 
-val open_file: #status as 'status -> baseuri:string -> string -> 'status
+val open_file: (#status as 'status) -> baseuri:string -> string -> 'status
 val print_ppcmds : #status -> in_ml:bool -> std_ppcmds -> unit
-val close_file: #status as 'status -> 'status
+val close_file: (#status as 'status) -> 'status
 
 val current_baseuri: #status -> string
 
-val add_term : #status as 'status -> NReference.reference -> ml_decl -> 'status
+val add_term : (#status as 'status) -> NReference.reference -> ml_decl -> 'status
 val lookup_term : #status -> NReference.reference -> ml_decl
 
-val add_type: #status as 'status -> NReference.reference -> ml_schema -> 'status
+val add_type: (#status as 'status) -> NReference.reference -> ml_schema -> 'status
 val lookup_type : #status -> NReference.reference -> ml_schema
 
-val add_ind : #status as 'status -> ?dummy:bool -> NUri.uri -> ml_ind -> 'status
+val add_ind : (#status as 'status) -> ?dummy:bool -> NUri.uri -> ml_ind -> 'status
 val lookup_ind : #status -> NUri.uri -> ml_ind
 
-val add_global_ids: #status as 'status -> string -> 'status
+val add_global_ids: (#status as 'status) -> string -> 'status
 val get_global_ids : #status -> Idset.t
 
 val add_name_for_reference:
- #status as 'status -> NReference.reference -> string -> 'status
+ (#status as 'status) -> NReference.reference -> string -> 'status
 val name_of_reference : #status -> NReference.reference -> string
 
-val add_modname: #status as 'status -> string -> 'status
+val add_modname: (#status as 'status) -> string -> 'status
 val get_modnames : #status -> Idset.t
 
 val add_modname_for_filename:
- #status as 'status -> string -> string -> 'status
+ (#status as 'status) -> string -> string -> 'status
 val modname_of_filename : #status -> string -> string
 
 val guess_projection:
- #status as 'status -> NUri.uri -> int -> 'status
+ (#status as 'status) -> NUri.uri -> int -> 'status
 val confirm_projection:
- #status as 'status -> NReference.reference -> 'status
+ (#status as 'status) -> NReference.reference -> 'status
 val is_projection : #status -> NReference.reference -> bool
 val projection_arity : #status -> NReference.reference -> int
 

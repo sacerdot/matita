@@ -145,8 +145,7 @@ let src_tgt_cpos_arity_of_ty_id_src_tgt status ty id src tgt =
                raise (GrafiteTypes.Command_error ("bad source pattern: " ^ 
 Lazy.force msg))
             | MultiPassDisambiguator.DisambiguationError _ ->
-               raise (GrafiteTypes.Command_error ("bad source pattern: 
-disambiguation error")))
+               raise (GrafiteTypes.Command_error ("bad source pattern: disambiguation error")))
       | _ -> assert false
     in
       aux 0 [] ty

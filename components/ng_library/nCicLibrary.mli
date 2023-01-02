@@ -25,9 +25,9 @@ class virtual status :
  end
 
 (* it also checks it and add it to the environment *)
-val add_obj: #status as 'status -> NCic.obj -> 'status
+val add_obj: (#status as 'status) -> NCic.obj -> 'status
 val add_constraint: 
-  #status as 'status -> acyclic:bool ->
+  (#status as 'status) -> acyclic:bool ->
   NCic.universe -> NCic.universe -> 'status
 val aliases_of: NUri.uri -> NReference.reference list
 val resolve: string -> NReference.reference list
@@ -57,7 +57,7 @@ class dumpable_status :
  end
 
 val get_transitively_included: #dumpable_status -> NUri.uri list
-val dump_obj: #dumpable_status as 'status -> obj -> 'status
+val dump_obj: (#dumpable_status as 'status) -> obj -> 'status
 
 module type SerializerType =
  sig

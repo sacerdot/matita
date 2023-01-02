@@ -183,7 +183,7 @@ class dumpable_status =
   method dump = db
   method set_dump v = {< db = v >}
   method set_dumpable_status
-   : 'status. #g_dumpable_status as 'status -> 'self
+   : 'status. (#g_dumpable_status as 'status) -> 'self
    = fun o -> {< db = o#dump >}
  end
 

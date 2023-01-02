@@ -136,23 +136,23 @@ let nargs it nleft consno =
 
 let default_pattern = "",0,(None,[],Some NotationPt.UserInput);; 
 let prod_pattern = 
-  "",0,(None,[],Some NotationPt.Binder 
+  "",0,(None,[],Some (NotationPt.Binder 
     (`Pi, (mk_id "_",Some (NotationPt.Appl
       [ NotationPt.Implicit `JustOne
       ; NotationPt.Implicit `JustOne
       ; NotationPt.UserInput
       ; NotationPt.Implicit `JustOne ])), 
-  NotationPt.Implicit `JustOne));;
+  NotationPt.Implicit `JustOne)));;
 
 let prod_pattern_jm = 
-  "",0,(None,[],Some NotationPt.Binder 
+  "",0,(None,[],Some (NotationPt.Binder 
     (`Pi, (mk_id "_",Some (NotationPt.Appl
       [ NotationPt.Implicit `JustOne
       ; NotationPt.Implicit `JustOne
       ; NotationPt.UserInput
       ; NotationPt.Implicit `JustOne
       ; NotationPt.Implicit `JustOne ])),
-  NotationPt.Implicit `JustOne));;
+  NotationPt.Implicit `JustOne)));;
 
 let hp_pattern n = 
   "",0,(None,[n, NotationPt.Appl
@@ -448,7 +448,7 @@ let saturate_skip status context skip =
 ;;
       
 let subst_tac ~context ~dir skip cur_eq =
-  fun status as oldstatus ->
+  fun (status as oldstatus) ->
   let eq_name,(NCic.Decl s | NCic.Def (s,_)) = List.nth context (cur_eq-1) in
   let _,ctx' = HExtlib.split_nth cur_eq context in
   let status, s = NTacStatus.whd status ctx' (mk_cic_term ctx' s) in

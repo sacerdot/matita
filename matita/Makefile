@@ -24,9 +24,9 @@ OCAMLC_FLAGS = $(OCAML_FLAGS) $(OCAML_THREADS_FLAGS)
 OCAMLC = $(OCAMLFIND) ocamlc$(OCAML_PROF) $(OCAMLC_FLAGS) $(OCAML_DEBUG_FLAGS)
 OCAMLOPT = $(OCAMLFIND) opt $(OCAMLC_FLAGS) $(OCAMLOPT_DEBUG_FLAGS)
 OCAMLDEP = $(OCAMLFIND) ocamldep $(OCAMLDEP_FLAGS)
-INSTALL_PROGRAMS= matita matitac
+INSTALL_PROGRAMS= matita matitac matitaclean
 INSTALL_PROGRAMS_LINKS_MATITA= 
-INSTALL_PROGRAMS_LINKS_MATITAC= matitaclean
+INSTALL_PROGRAMS_LINKS_MATITAC=
 
 MATITA_FLAGS = -noprofile
 NODB=false
@@ -37,6 +37,7 @@ endif
 MLI = \
 	lablGraphviz.mli	\
 	matitaTypes.mli		\
+	matitaMiscCli.mli	\
 	matitaMisc.mli		\
 	applyTransformation.mli	\
 	matitaEngine.mli	\
@@ -52,14 +53,13 @@ MLI = \
 	$(NULL)
 CMLI =				\
 	matitaTypes.mli		\
-	matitaMisc.mli		\
+	matitaMiscCli.mli	\
 	applyTransformation.mli	\
 	matitaEngine.mli	\
 	matitaExcPp.mli 	\
 	matitaInit.mli		\
 	$(NULL)
 MAINCMLI =			\
-	matitaclean.mli		\
 	$(NULL)
 # objects for matita (GTK GUI)
 ML = buildTimeConf.ml matitaGuiInit.ml matitaGeneratedGui.ml $(MLI:%.mli=%.ml)
@@ -108,12 +108,15 @@ links:
 	done
 	$(H)ln -sf matita.opt matita
 	$(H)ln -sf matitac.opt matitac
+	$(H)ln -sf matitaclean.opt matitaclean
 
 linkonly:
 	$(H)echo "  OCAMLC matita.ml"
 	$(H)$(OCAMLC) $(PKGS) -linkpkg -o matita $(CMOS) $(OCAML_DEBUG_FLAGS) matita.ml
 	$(H)echo "  OCAMLC matitac.ml"
 	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o matitac $(CCMOS) $(MAINCMOS) $(OCAML_DEBUG_FLAGS) matitac.ml
+	$(H)echo "  OCAMLC matitaclean.ml"
+	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o matitaclean $(CCMOS) $(MAINCMOS) $(OCAML_DEBUG_FLAGS) matitaclean.ml
 .PHONY: linkonly
 matita: matita.ml $(LIB_DEPS) $(CMOS)
 	$(H)echo "  OCAMLC $<"
@@ -129,6 +132,13 @@ matitac.opt: matitac.ml $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS)
 	$(H)echo "  OCAMLOPT $<"
 	$(H)$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitac.ml
 
+matitaclean: matitaclean.ml $(CLIB_DEPS) $(CCMOS) $(MAINCMOS)
+	$(H)echo "  OCAMLC $<"
+	$(H)$(OCAMLC) $(CPKGS) -linkpkg -o $@ $(CCMOS) $(MAINCMOS) matitaclean.ml
+matitaclean.opt: matitaclean.ml $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS)
+	$(H)echo "  OCAMLOPT $<"
+	$(H)$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitaclean.ml
+
 rottener: rottener.ml $(CLIB_DEPS) $(CCMOS) $(MAINCMOS)
 	$(H)echo "  OCAMLC $<"
 	$(H)$(OCAMLC) $(CPKGS) -package lablgtk2 -linkpkg -o $@ $(CCMOS) $(MAINCMOS) rottener.ml
@@ -137,11 +147,6 @@ rottener.opt: rottener.ml $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS)
 	$(H)$(OCAMLOPT) $(CPKGS) -package lablgtk2 -linkpkg -o $@ $(CCMXS) $(MAINCMXS) rottener.ml
 clean-rottened:
 	find . -type f -name "*.ma.*.rottened" -exec rm {} \;
-
-matitaclean: matitac
-	$(H)test -f $@ || ln -s $< $@
-matitaclean.opt: matitac.opt
-	$(H)test -f $@ || ln -s $< $@
 
 matitaGeneratedGui.ml: matita.ui
 	$(H)$(LABLGLADECC) -embed $< > matitaGeneratedGui.ml
@@ -302,8 +307,17 @@ matitac.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitac.ml
 		$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitac.ml \
 		$(STATIC_EXTRA_CLIBS)
 	strip $@
-matitaclean.opt.static: matitac.opt.static
-	$(H)test -f $@ || ln -s $< $@
+
+%.upx: %
+	cp $< $@
+	strip $@
+	upx $@
+
+matitaclean.opt.static: $(STATIC_LINK) $(CLIBX_DEPS) $(CCMXS) $(MAINCMXS) matitaclean.ml
+	$(STATIC_LINK) $(STATIC_CLIBS) -- \
+		$(OCAMLOPT) $(CPKGS) -linkpkg -o $@ $(CCMXS) $(MAINCMXS) matitaclean.ml \
+		$(STATIC_EXTRA_CLIBS)
+	strip $@
 
 %.upx: %
 	cp $< $@
