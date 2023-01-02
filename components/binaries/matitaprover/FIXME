@@ -1,0 +1,4 @@
+Dropped symbolic links:
+ast.ml -> ../../tptp_grafite/ast.ml
+lexer.mll -> ../../tptp_grafite/lexer.mll
+parser.mly -> ../../tptp_grafite/parser.mly
