@@ -5,5 +5,5 @@
  (foreign_stubs (language c) (names hash)
    (include_dirs %{ocaml_where}/caml)))
 (env
-  (dev
+  (_
     (flags (:standard -rectypes -w @A-52-4-34-37-45-9-44-48-6-32-20-58-7-57-3-68-69-70-50))))
