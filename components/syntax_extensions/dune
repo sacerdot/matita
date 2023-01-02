@@ -1,0 +1,36 @@
+(executable
+ (public_name make_table)
+ (name make_table)
+ (libraries helm_xml)
+ (modules make_table))
+
+(library
+ (name helm_syntax_extensions)
+ (libraries str)
+ (wrapped false)
+ (modules utf8Macro utf8MacroTable))
+
+(library
+ (name pa_unicode_macro)
+ (libraries camlp5 helm_syntax_extensions)
+ (wrapped false)
+ (preprocess (action (system "camlp5o q_MLast.cmo pa_extend.cmo -loc loc %{input-file}")))
+ (preprocessor_deps helm_syntax_extensions.cma)
+ (library_flags components/syntax_extensions/helm_syntax_extensions.cma)
+ (modules pa_unicode_macro))
+
+(library
+ (name profiling_macros)
+ (libraries str)
+ (wrapped false)
+ (modules profiling_macros))
+
+(rule
+ (targets utf8MacroTable.ml utf8MacroTable.ml.txt)
+ (deps (glob_files data/*.xml) make_table.exe)
+ (mode (promote))
+ (action (run ./make_table.exe utf8MacroTable.ml utf8MacroTable.ml.txt)))
+
+(env
+  (dev
+    (flags (:standard -w @A-52-4-34-37-45-9-44-48-6-32-20-58-7-57-3-68-69-70-50))))
