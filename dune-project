@@ -7,13 +7,16 @@
 (generate_opam_files true)
 
 (source
- (uri http://matita.cs.unibo.it/download.shtml))
+ (uri git://matita.cs.unibo.it/git/helm))
 
 (authors "HELM Team (Andrea Asperti, Ferruccio Guidi, Luca Padovani, Claudio Sacerdoti Coen, Enrico Tassi, Stefano Zacchiroli et alt.)")
 
 (maintainers "Claudio Sacerdoti Coen")
 
-(license GPL)
+(license GPL-2.0-or-later)
+
+
+(bug_reports "mailto:claudio.sacerdoticoen@unibo.it")
 
 (homepage http://matita.cs.unibo.it)
 
