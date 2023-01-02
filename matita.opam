@@ -8,10 +8,11 @@ maintainer: ["Claudio Sacerdoti Coen"]
 authors: [
   "HELM Team (Andrea Asperti, Ferruccio Guidi, Luca Padovani, Claudio Sacerdoti Coen, Enrico Tassi, Stefano Zacchiroli et alt.)"
 ]
-license: "GPL"
+license: "GPL-2.0-or-later"
 tags: ["interactive theorem proving" "calculus of constructions"]
 homepage: "http://matita.cs.unibo.it"
 doc: "http://matita.cs.unibo.it"
+bug-reports: "mailto:claudio.sacerdoticoen@unibo.it"
 depends: [
   "dune" {>= "3.6"}
   "ocamlnet" {= "4.1.9.git"}
@@ -35,4 +36,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "http://matita.cs.unibo.it/download.shtml"
+dev-repo: "git://matita.cs.unibo.it/git/helm"
