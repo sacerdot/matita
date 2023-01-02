@@ -1,5 +1,5 @@
 (executable
- (public_name make_table)
+ ;(public_name make_table)
  (name make_table)
  (libraries helm_xml)
  (modules make_table))
