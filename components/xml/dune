@@ -1,0 +1,9 @@
+(library
+ (name helm_xml)
+ (libraries zip expat helm_extlib camlp-streams)
+ (preprocess (action (system "camlp5o %{input-file}")))
+ (wrapped false)
+ (modules (:standard \ test)))
+(env
+  (dev
+    (flags (:standard -w @A-52-4-34-37-45-9-44-48-6-32-20-58-7-57-3-68-69-70-50))))

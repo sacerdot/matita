@@ -1,0 +1,9 @@
+(library
+ (name helm_grafite_parser)
+ (libraries helm_grafite ulex-camlp5 helm_ng_disambiguation helm_ng_library helm_content_pres)
+ (preprocess (action (system "camlp5o -I components/syntax_extensions -I `ocamlfind query ulex-camlp5` pa_extend.cmo pa_ulex.cma pa_unicode_macro.cma -loc loc %{input-file}")))
+ (preprocessor_deps ../syntax_extensions/pa_unicode_macro.cma)
+ (wrapped false))
+(env
+  (dev
+    (flags (:standard -rectypes -w @A-52-4-34-37-45-9-44-48-6-32-20-58-7-57-3-68-69-70-50-27)))) ; -27 is for generated files :-(

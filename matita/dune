@@ -1,0 +1,26 @@
+(library
+ (name matita_cli)
+ (wrapped false)
+ (libraries helm_grafite_engine lablgtk3-sourceview3)
+ (modules 
+   buildTimeConf matitaTypes matitaMiscCli applyTransformation matitaEngine matitaExcPp matitaInit))
+
+(executable
+ (name matita)
+ (public_name matita)
+ (promote (until-clean))
+ (libraries matita_cli)
+ (modules_without_implementation matitaGuiTypes)
+ (modules
+   matitaGuiInit matitaGeneratedGui lablGraphviz matitaGuiTypes matitaMisc matitaGtkMisc virtuals cicMathView predefined_virtuals matitaMathView matitaScript matitaGui matita))
+
+(executables
+ (names matitac matitaclean)
+ (public_names matitac matitaclean)
+ (promote (until-clean)) 
+ (libraries matita_cli)
+ (modules matitac matitaclean))
+
+(env
+  (dev
+    (flags (:standard -thread -rectypes -w @A-52-4-34-37-45-9-44-48-6-32-20-58-7-57-3-68-69-70-50-29)))) ; -29 for non portable strings
