@@ -6,7 +6,7 @@ description:
   "Matita (that means pencil in italian) is an experimental, interactive theorem prover under development at the Computer Science Department of the University of Bologna."
 maintainer: ["Claudio Sacerdoti Coen"]
 authors: [
-  "HELM Team (Andrea Asperti, Ferruccio Guidi, Claudio Sacerdoti Coen, Enrico Tassi, Stefano Zacchiroli et alt.)"
+  "HELM Team (Andrea Asperti, Ferruccio Guidi, Luca Padovani, Claudio Sacerdoti Coen, Enrico Tassi, Stefano Zacchiroli et alt.)"
 ]
 license: "GPL"
 tags: ["interactive theorem proving" "calculus of constructions"]
