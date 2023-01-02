@@ -202,7 +202,7 @@ let record_index_obj =
   if not alias_only then
     basic_index_obj
       (List.map 
-        (fun ks,v -> List.map refresh_uri_in_term ks, refresh_uri_in_term v) 
+        (fun (ks,v) -> List.map refresh_uri_in_term ks, refresh_uri_in_term v) 
       l) status
   else
    status
@@ -435,7 +435,7 @@ let eval_ng_tac tac =
       NnAuto.auto_tac ~params:(None,a) ?trace_ref:None
   | GrafiteAst.NAuto (_loc, (Some l,a)) ->
       NnAuto.auto_tac
-	~params:(Some List.map (fun x -> "",0,x) l,a) ?trace_ref:None
+	~params:(Some (List.map (fun x -> "",0,x) l),a) ?trace_ref:None
   | GrafiteAst.NBranch _ -> NTactics.branch_tac ~force:false
   | GrafiteAst.NCases (_loc, what, where) ->
       NTactics.cases_tac 

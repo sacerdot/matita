@@ -50,7 +50,7 @@ class virtual status =
   method disambiguate_db = disambiguate_db
   method set_disambiguate_db v = {< disambiguate_db = v >}
   method set_disambiguate_status
-   : 'status. #g_status as 'status -> 'self
+   : 'status. (#g_status as 'status) -> 'self
       = fun o -> ((self#set_interp_status o)#set_disambiguate_db o#disambiguate_db)
  end
 

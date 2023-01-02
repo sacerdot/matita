@@ -38,7 +38,7 @@ class virtual status: keywords:string list ->
   inherit NCic.status
   inherit g_status
   method set_notation_parser_db: db -> 'self
-  method set_notation_parser_status: 'status. #g_status as 'status -> 'self
+  method set_notation_parser_status: 'status. (#g_status as 'status) -> 'self
  end
 
 type checked_l1_pattern = private CL1P of NotationPt.term * int
@@ -64,7 +64,7 @@ val check_l1_pattern: (* level1_pattern, pponly, precedence, assoc *)
  NotationPt.term -> bool ->  int -> Gramext.g_assoc -> checked_l1_pattern
 
 val extend:
-  #status as 'status -> 
+  (#status as 'status) -> 
   checked_l1_pattern ->
   (NotationEnv.t -> NotationPt.location -> NotationPt.term) ->
     'status

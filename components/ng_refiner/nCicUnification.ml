@@ -276,7 +276,7 @@ let tipify status exc metasenv subst context t ty =
          let metasenv,subst,ty = sortfy status exc metasenv subst cc ty in
          let metasenv = 
            NCicUntrusted.replace_in_metasenv n
-            (fun attrs,cc,_ -> NCicUntrusted.set_kind `IsType attrs, cc, ty)
+            (fun (attrs,cc,_) -> NCicUntrusted.set_kind `IsType attrs, cc, ty)
             metasenv 
          in
           metasenv,subst,false
@@ -290,7 +290,7 @@ let tipify status exc metasenv subst context t ty =
           let metasenv,subst,ty = sortfy status exc metasenv subst cc ty in
           let subst = 
             NCicUntrusted.replace_in_subst n
-              (fun attrs,cc,bo,_->NCicUntrusted.set_kind `IsType attrs,cc,bo,ty)
+              (fun (attrs,cc,bo,_)->NCicUntrusted.set_kind `IsType attrs,cc,bo,ty)
              subst 
           in
            optimize_meta metasenv subst (NCicSubstitution.subst_meta status lc bo))
@@ -557,8 +557,7 @@ and fo_unif0 during_delift status swap test_eq_only metasenv subst context (norm
                i
           | NCic.Meta (i,_) -> (metasenv, subst), i
           | _ ->
-             raise (UnificationFailure (lazy "Locked term vs non
-              flexible term; probably not saturated enough yet!"))
+             raise (UnificationFailure (lazy "Locked term vs non flexible term; probably not saturated enough yet!"))
          in
           let t1 = NCicReduction.whd status ~subst context t1 in
           let j, lj = 

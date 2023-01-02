@@ -72,13 +72,13 @@ let debug c _ = c;;
           match t with
           | Terms.Leaf _ 
           | Terms.Var _ -> 
-              let module NCicBlob = NCicBlob.NCicBlob(
+              (*let module NCicBlob = NCicBlob.NCicBlob(
                         struct
                           let metasenv = [] let subst = [] let context = []
                         end)
                           in
-              let module Pp = Pp.Pp(NCicBlob) in  
-               (* prerr_endline ("term: " ^ Pp.pp_foterm ft); 
+               let module Pp = Pp.Pp(NCicBlob) in  
+                  prerr_endline ("term: " ^ Pp.pp_foterm ft); 
                   prerr_endline ("path: " ^ String.concat "," 
                  (List.map string_of_int p1));
                prerr_endline ("leading to: " ^ Pp.pp_foterm t); *)
@@ -192,14 +192,13 @@ let debug c _ = c;;
     ;;
 
   let mk_proof status ?(demod=false) (bag : NCic.term Terms.bag) mp subst steps=
-    let module NCicBlob = 
+    (*let module NCicBlob = 
        NCicBlob.NCicBlob(
 	 struct
 	   let metasenv = [] let subst = [] let context = []
 	 end)
      in
-     let  module Pp = Pp.Pp(NCicBlob) 
-     in
+     let  module Pp = Pp.Pp(NCicBlob) in*)
     let module Subst = FoSubst in
     (*let compose subst1 subst2 =
       let s1 = List.map (fun (x,t) -> (x, Subst.apply_subst subst2 t)) subst1 in
@@ -233,7 +232,7 @@ let debug c _ = c;;
       let lit =match lit with 
           | Terms.Predicate t -> t (* assert false *) 
           | Terms.Equation (l,r,ty,_) -> 
-              Terms.Node [ Terms.Leaf eqP(); ty; l; r]
+              Terms.Node [ Terms.Leaf (eqP()); ty; l; r]
       in
         lit, vl, proof
     in

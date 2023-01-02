@@ -11,11 +11,11 @@ let callbacks =
   { default_callbacks with
       start_element =
         Some (fun tag attrs ->
-          let length = List.length attrs in
+          let _length = List.length attrs in
           print (sprintf "opening %s [%s]"
             tag (String.concat ";" (List.map fst attrs))));
       end_element = Some (fun tag -> print ("closing " ^ tag));
-      character_data = Some (fun data -> print "character data ...");
+      character_data = Some (fun _data -> print "character data ...");
   }
 
 let xml_parser = create_parser callbacks

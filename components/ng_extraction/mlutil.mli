@@ -63,16 +63,16 @@ type 'status abbrev_map =
  'status -> NReference.reference -> ('status * ml_type) option
 
 val type_expand :
- #status as 'status -> 'status abbrev_map -> ml_type -> 'status * ml_type
-val type_simpl : #status as 'status -> ml_type -> 'status * ml_type
+ (#status as 'status) -> 'status abbrev_map -> ml_type -> 'status * ml_type
+val type_simpl : (#status as 'status) -> ml_type -> 'status * ml_type
 val type_to_sign :
- #status as 'status -> 'status abbrev_map -> ml_type -> 'status * sign
+ (#status as 'status) -> 'status abbrev_map -> ml_type -> 'status * sign
 val type_to_signature :
- #status as 'status -> 'status abbrev_map -> ml_type -> 'status * signature
+ (#status as 'status) -> 'status abbrev_map -> ml_type -> 'status * signature
 val type_expunge :
- #status as 'status -> 'status abbrev_map -> ml_type -> 'status * ml_type
+ (#status as 'status) -> 'status abbrev_map -> ml_type -> 'status * ml_type
 val type_expunge_from_sign :
- #status as 'status -> 'status abbrev_map -> signature -> ml_type -> 'status * ml_type
+ (#status as 'status) -> 'status abbrev_map -> signature -> ml_type -> 'status * ml_type
 
 val isDummy : ml_type -> bool
 val isKill : sign -> bool

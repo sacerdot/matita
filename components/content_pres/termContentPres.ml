@@ -326,7 +326,7 @@ class virtual status =
    method content_pres_db = content_pres_db
    method set_content_pres_db v = {< content_pres_db = v >}
    method set_content_pres_status
-    : 'status. #g_status as 'status -> 'self
+    : 'status. (#g_status as 'status) -> 'self
     = fun o -> {< content_pres_db = o#content_pres_db >}
  end
 

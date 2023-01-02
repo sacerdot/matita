@@ -57,7 +57,7 @@ let main_compiler () =
   let system_mode =  Helm_registry.get_bool "matita.system" in
   if system_mode then HLog.message "Compiling in system space";
   (* here we go *)
-  if not (Helm_registry.get_bool "matita.verbose") then MatitaMisc.shutup ();
+  if not (Helm_registry.get_bool "matita.verbose") then MatitaMiscCli.shutup ();
   if List.fold_left
    (fun b t ->
      (try
@@ -74,9 +74,7 @@ let main_compiler () =
 
 let main () =
   Sys.catch_break true;
-  let bin = Filename.basename Sys.argv.(0) in
-  if Pcre.pmatch ~pat:"^matitaclean"  bin then Matitaclean.main ()
-  else exit (main_compiler ())
+  exit (main_compiler ())
 ;;
 
 let _ = main ()

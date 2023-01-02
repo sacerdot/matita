@@ -645,7 +645,7 @@ in refine_profiler.HExtlib.profile foo ()
                   Not_found -> None)
                thing_dom
             in
-            let diff= List.map (fun a,b -> a,description_of_alias b) diff in
+            let diff= List.map (fun (a,b) -> a,description_of_alias b) diff in
              env',diff,loc_msg,significant
           ) errors
         in

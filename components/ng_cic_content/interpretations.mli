@@ -45,7 +45,7 @@ class virtual status :
   end
 
 val add_interpretation:
-  #status as 'status ->
+  (#status as 'status) ->
   string ->                                       (* id / description *)
   string * NotationPt.argument_pattern list -> (* symbol, level 2 pattern *)
   NotationPt.cic_appl_pattern ->               (* level 3 pattern *)
@@ -62,7 +62,7 @@ val lookup_interpretations:
 
   (** {3 Interpretations toggling} *)
 
-val toggle_active_interpretations: #status as 'status -> bool -> 'status
+val toggle_active_interpretations: (#status as 'status) -> bool -> 'status
 
   (** {2 content -> cic} *)
 

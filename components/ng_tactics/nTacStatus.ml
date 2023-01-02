@@ -48,7 +48,7 @@ class eq_status =
   method eq_cache = eq_cache
   method set_eq_cache v = {< eq_cache = v >}
   method set_eq_status
-   : 'status. #g_eq_status as 'status -> 'self
+   : 'status. (#g_eq_status as 'status) -> 'self
    = fun o -> self#set_eq_cache o#eq_cache
  end
 
@@ -63,7 +63,7 @@ class auto_status =
   method auto_cache = auto_cache
   method set_auto_cache v = {< auto_cache = v >}
   method set_auto_status
-   : 'status. #g_auto_status as 'status -> 'self
+   : 'status. (#g_auto_status as 'status) -> 'self
    = fun o -> self#set_auto_cache o#auto_cache
  end
 
@@ -84,7 +84,7 @@ class virtual pstatus =
    val obj = o
    method obj = obj
    method set_obj o = {< obj = o >}
-   method set_pstatus : 'status. #g_pstatus as 'status -> 'self
+   method set_pstatus : 'status. (#g_pstatus as 'status) -> 'self
    = fun o ->
     (((self#set_disambiguate_status o)#set_obj o#obj)#set_auto_status o)#set_eq_status o
   end
@@ -293,7 +293,7 @@ let get_subst status =
 
 let to_subst status i entry =
  let name,height,metasenv,subst,obj = status#obj in
- let metasenv = List.filter (fun j,_ -> j <> i) metasenv in
+ let metasenv = List.filter (fun (j,_) -> j <> i) metasenv in
  let subst = (i, entry) :: subst in
   status#set_obj (name,height,metasenv,subst,obj)
 ;;
@@ -334,7 +334,7 @@ let mk_meta status ?(attrs=[]) ctx bo_or_ty kind =
       let metasenv, metano, instance, _ = 
         NCicMetaSubst.mk_meta ~attrs metasenv ctx ~with_type:ty kind in
       let attrs,_,_ = NCicUtils.lookup_meta metano metasenv in
-      let metasenv = List.filter (fun j,_ -> j <> metano) metasenv in
+      let metasenv = List.filter (fun (j,_) -> j <> metano) metasenv in
       let subst = (metano, (attrs, ctx, bo_, ty)) :: subst in
       let status = status#set_obj (n,h,metasenv,subst,o) in
       status, (ctx,instance)
@@ -503,17 +503,17 @@ class virtual ['stack] status =
    val stack = s
    method stack = stack
    method set_stack s = {< stack = s >}
-   method set_status : 'status. 'stack #g_status as 'status -> 'self
+   method set_status : 'status. ('stack #g_status as 'status) -> 'self
    = fun o -> (self#set_pstatus o)#set_stack o#stack
   end
 
 class type virtual lowtac_status = [unit] status
 
-type 'status lowtactic = #lowtac_status as 'status -> int -> 'status
+type 'status lowtactic = (#lowtac_status as 'status) -> int -> 'status
 
 class type virtual tac_status = [Continuationals.Stack.t] status
 
-type 'status tactic = #tac_status as 'status -> 'status
+type 'status tactic = (#tac_status as 'status) -> 'status
 
 let pp_tac_status (status: #tac_status) = 
   prerr_endline (status#ppobj status#obj);

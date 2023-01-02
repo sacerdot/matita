@@ -12,6 +12,6 @@ open Coq
 open Miniml
 open OcamlExtractionTable
 
-val pp_decl : #status as 'status -> ml_decl -> 'status * std_ppcmds
-val pp_spec : #status as 'status -> ml_spec -> 'status * std_ppcmds
-val pp_open : #status as 'status -> string -> 'status * std_ppcmds
+val pp_decl : (#status as 'status) -> ml_decl -> 'status * std_ppcmds
+val pp_spec : (#status as 'status) -> ml_spec -> 'status * std_ppcmds
+val pp_open : (#status as 'status) -> string -> 'status * std_ppcmds

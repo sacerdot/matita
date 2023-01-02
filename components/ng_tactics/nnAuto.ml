@@ -252,7 +252,7 @@ let solve f status eq_cache goal =
           noprint (lazy (Printf.sprintf "Refined in %fs"
                      (Unix.gettimeofday() -. stamp))); 
           let status = status#set_obj (n,h,metasenv,subst,o) in
-          let metasenv = List.filter (fun j,_ -> j <> goal) metasenv in
+          let metasenv = List.filter (fun (j,_) -> j <> goal) metasenv in
           let subst = (goal,(gname,ctx,pt,pty)) :: subst in
             Some (status#set_obj (n,h,metasenv,subst,o))
     with 
@@ -452,7 +452,7 @@ let refresh metasenv =
          NCicMetaSubst.mk_meta ~attrs:iattr 
            metasenv ctx ~with_type:ty ikind in
        let s_entry = i,(iattr, ctx, instance, ty) in
-       let metasenv = List.filter (fun x,_ -> i <> x) metasenv in
+       let metasenv = List.filter (fun (x,_) -> i <> x) metasenv in
          metasenv,s_entry::subst) 
       (metasenv,[]) metasenv
 
@@ -502,7 +502,7 @@ let ground_instances status gl =
          let (_, ctx, t, _) = List.assoc i subst in
            noprint (lazy (status#ppterm ctx [] [] t));
            List.iter 
-             (fun (uri,_,_,_,_) as obj -> 
+             (fun ((uri,_,_,_,_) as obj) -> 
                 NCicEnvironment.invalidate_item (`Obj (uri, obj))) 
              objs;
            ())
@@ -869,7 +869,7 @@ let pp_idx status idx =
 
 let pp_th (status: #NTacStatus.pstatus) = 
   List.iter 
-    (fun ctx, idx ->
+    (fun (ctx, idx) ->
        noprint(lazy( "-----------------------------------------------"));
        noprint(lazy( (status#ppcontext ~metasenv:[] ~subst:[] ctx)));
        noprint(lazy( "||====>  "));
@@ -1245,7 +1245,7 @@ let applicative_case ~pfailed depth signature status flags gty cache =
       (fun elems cand ->
          if (only_one && (elems <> [])) then elems 
          else
-           match try_candidate (~smart:sm) 
+           match try_candidate ~smart:sm
              flags depth status cache.unit_eq context cand with
                | None -> elems
                | Some x -> x::elems)
@@ -1769,7 +1769,7 @@ auto_main flags signature cache depth ?(use_given_only=false) status: unit=
              debug_print ~depth 
                (lazy ("(re)considering goal " ^ 
                        (string_of_int g) ^" : "^ppterm status gty)); 
-             debug_print (~depth:depth) 
+             debug_print ~depth:depth
                (lazy ("Case: " ^ NotationPp.pp_term status t));
              let depth,cache =
                if t=Ast.Ident("__whd",None) || 
@@ -1887,7 +1887,7 @@ let auto_tac' candidates ~local_candidates ?(use_given_only=false) flags ?(trace
       let _ = debug_print (lazy("\n\nRound "^string_of_int x^"\n")) in
       let flags = { flags with maxdepth = x } 
       in 
-        try auto_clusters (~top:true) flags signature cache 0 status ~use_given_only;assert false 
+        try auto_clusters ~top:true flags signature cache 0 status ~use_given_only;assert false 
 (*
         try auto_main flags signature cache 0 status;assert false
 *)

@@ -53,9 +53,9 @@ let pp_tactic_pattern status ~map_unicode_to_tex (what, hyp, goal) =
 
 let pp_auto_params params status =
     match params with
-    | (None,flags) -> String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flags)
+    | (None,flags) -> String.concat " " (List.map (fun (a,b) -> a ^ "=" ^ b) flags)
     | (Some l,flags) -> (String.concat "," (List.map (NotationPp.pp_term status) l)) ^
-    String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flags)
+    String.concat " " (List.map (fun (a,b) -> a ^ "=" ^ b) flags)
 ;;
 
 let pp_just status just =
@@ -74,11 +74,11 @@ let rec pp_ntactic status ~map_unicode_to_tex =
   | NSmartApply (_,_t) -> "fixme"
   | NAuto (_,(None,flgs)) ->
       "nautobatch" ^
-        String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flgs)
+        String.concat " " (List.map (fun (a,b) -> a ^ "=" ^ b) flgs)
   | NAuto (_,(Some l,flgs)) ->
       "nautobatch" ^ " by " ^
          (String.concat "," (List.map (NotationPp.pp_term status) l)) ^
-        String.concat " " (List.map (fun a,b -> a ^ "=" ^ b) flgs)
+        String.concat " " (List.map (fun (a,b) -> a ^ "=" ^ b) flgs)
   | NCases (_,what,_where) -> "ncases " ^ NotationPp.pp_term status what ^
       "...to be implemented..." ^ " " ^ "...to be implemented..."
   | NConstructor (_,None,l) -> "@ " ^

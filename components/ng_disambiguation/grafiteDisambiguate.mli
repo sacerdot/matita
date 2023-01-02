@@ -40,11 +40,11 @@ class virtual status :
  end
 
 val eval_with_new_aliases:
- #status as 'status -> ('status -> (#status as 'a)) ->
+ (#status as 'status) -> ('status -> (#status as 'a)) ->
   (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list * 'a
 
 val set_proof_aliases:
- #status as 'status ->
+ (#status as 'status) ->
   implicit_aliases:bool -> (* implicit ones are made explicit *)
   GrafiteAst.inclusion_mode ->
   (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list -> 'status
@@ -59,13 +59,13 @@ val dump_aliases: (string -> unit) -> string -> #status -> unit
 exception BaseUriNotSetYet
 
 val disambiguate_nterm :
- #status as 'status ->
+ (#status as 'status) ->
  NCic.term NCicRefiner.expected_type -> NCic.context -> NCic.metasenv -> NCic.substitution ->
  NotationPt.term Disambiguate.disambiguator_input ->
    NCic.metasenv * NCic.substitution * 'status * NCic.term
 
 val disambiguate_nobj :
- #status as 'status -> ?baseuri:string ->
+ (#status as 'status) -> ?baseuri:string ->
  (NotationPt.term NotationPt.obj) Disambiguate.disambiguator_input ->
   'status * NCic.obj
 

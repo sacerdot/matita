@@ -27,6 +27,8 @@
 
 open Printf
 
+let _ = MatitaGuiInit.init ()
+
 let wrap_callback0 f = fun _ -> try f () with Not_found -> assert false
 let wrap_callback1 f = fun _ -> try f () with Not_found -> assert false
 let wrap_callback2 f = fun _ -> try f () with Not_found -> assert false

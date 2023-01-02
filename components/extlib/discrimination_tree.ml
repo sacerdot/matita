@@ -229,7 +229,7 @@ and type data = A.elt and type dataset = A.t =
         let to_list t =
           undup ~eq:(fun x y -> A.equal (A.singleton x) (A.singleton y)) 
             (List.flatten (List.map 
-              (fun x,_ -> A.elements x) (merge (S.elements t))))
+              (fun (x,_) -> A.elements x) (merge (S.elements t))))
 
         let inter t1 t2 =
           let l1 = merge (S.elements t1) in
@@ -237,7 +237,7 @@ and type data = A.elt and type dataset = A.t =
           let res = 
            List.flatten
             (List.map
-              (fun s, w ->
+              (fun (s, w) ->
                  HExtlib.filter_map (fun x ->
                    try Some (x, w + snd (List.find (fun (s,_w) -> A.mem x s) l2))
                    with Not_found -> None)

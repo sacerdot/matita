@@ -263,7 +263,7 @@ let distribute_tac tac (status : #tac_status) =
        ((status#set_stack stack)#set_obj(sn:>lowtac_status)#obj)#set_pstatus sn
 ;;
 
-let atomic_tac htac: #tac_status as 'a -> 'a = distribute_tac (exec htac) ;;
+let atomic_tac htac: (#tac_status as 'a) -> 'a = distribute_tac (exec htac) ;;
 
 let repeat_tac t s = 
   let rec repeat t (status : #tac_status as 'a) : 'a = 
@@ -546,10 +546,7 @@ let pp_cl cl =
     pp_aux cl
 ;;
 
-let pp_indtyinfo ity = "leftno: " ^ (string_of_int ity.leftno) ^ ", consno: " ^ (string_of_int
-                                                                                   ity.consno) ^ ", rightno: " ^
-                       (string_of_int ity.rightno) ^ ", reference: " ^ (pp_ref ity.reference) ^ ",
-                       cl: " ^ (pp_cl ity.cl);;
+let pp_indtyinfo ity = "leftno: " ^ (string_of_int ity.leftno) ^ ", consno: " ^ (string_of_int ity.consno) ^ ", rightno: " ^ (string_of_int ity.rightno) ^ ", reference: " ^ (pp_ref ity.reference) ^ ", cl: " ^ (pp_cl ity.cl);;
 
 let elim_tac ~what:(txt,len,what) ~where = 
   let what = txt, len, Ast.Appl [what; Ast.Implicit `Vector] in
@@ -663,7 +660,7 @@ let constructor_tac ?(num=1) ~args = distribute_tac (fun status goal ->
   let t = 
     if args = [] then Ast.NRef ref else
     Ast.Appl (HExtlib.list_concat ~sep:[Ast.Implicit `Vector]
-      ([Ast.NRef ref] :: List.map (fun _,_,x -> [x]) args))
+      ([Ast.NRef ref] :: List.map (fun (_,_,x) -> [x]) args))
   in
   exec (apply_tac ("",0,t)) status goal)
 ;;

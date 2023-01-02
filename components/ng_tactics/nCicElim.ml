@@ -91,7 +91,7 @@ let mk_elim status uri leftno it (outsort,suffix) pragma =
                   let NReference.Ref (uri',_) = nref in
                    NUri.eq uri uri'
                  ->
-                  let abs = List.rev_map (fun id,_ -> mk_id id) context in
+                  let abs = List.rev_map (fun (id,_) -> mk_id id) context in
                   let name = mk_id name in
                    (name, Some (
                    List.fold_right

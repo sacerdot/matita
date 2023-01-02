@@ -21,6 +21,6 @@ module type NCicContext =
     val context : NCic.context
   end
 
-module NCicBlob(C : NCicContext) : Terms.Blob 
+module NCicBlob(_ : NCicContext) : Terms.Blob 
 with type t = NCic.term and type input = NCic.term
 

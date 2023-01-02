@@ -430,7 +430,7 @@ let add_names_to_goals_tac (cl:NCic.constructor list ref) (status:#NTacStatus.ta
           [] -> []
         | hd :: tl -> if n = 0 then [] else hd :: (sublist (n-1) tl)
       in
-      List.map (fun _,sw -> goal_of_switch sw) (sublist (List.length !cl) g)
+      List.map (fun (_,sw) -> goal_of_switch sw) (sublist (List.length !cl) g)
   in
   let rec add_names_to_goals g cl metasenv =
     match g,cl with
@@ -590,8 +590,7 @@ let focus_on_case_tac case status =
       let loc = 
         try 
           loc_of_goal goal_to_focus t 
-        with _ -> fail (lazy "The given case is not part of the current induction/cases analysis
-        context")
+        with _ -> fail (lazy "The given case is not part of the current induction/cases analysis context")
       in
       let curloc = if has_focused_goal status then 
           let goal = extract_first_goal_from_status status in
@@ -605,8 +604,7 @@ let focus_on_case_tac case status =
 
 let case id l status =
   let ctx = status_parameter "context" status in
-  if ctx <> "induction" && ctx <> "cases" then fail (lazy "You can't use case outside of an
-  induction/cases analysis context")
+  if ctx <> "induction" && ctx <> "cases" then fail (lazy "You can't use case outside of an induction/cases analysis context")
 else
   (
     if has_focused_goal status then fail (lazy "Finish the current case before switching")

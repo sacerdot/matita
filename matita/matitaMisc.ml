@@ -154,13 +154,6 @@ let list_tl_at ?(equality=(==)) e l =
   in
   aux l
 
-let shutup () = 
-  HLog.set_log_callback (fun _ _ -> ())
-(*
-  let out = open_out "/dev/null" in
-  Unix.dup2 (Unix.descr_of_out_channel out) (Unix.descr_of_out_channel stderr)
-*)
-              
 (* FG: out_preamble *********************************************************)
 
 let out_comment och s =

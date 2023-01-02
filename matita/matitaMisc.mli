@@ -79,9 +79,6 @@ val singleton: (unit -> 'a) -> (unit -> 'a)
   (** given the base name of an image, returns its full path *)
 val image_path: string -> string
 
-  (** 2>/dev/null, HLog = (fun _ -> ()) *)
-val shutup: unit -> unit
-
   (** outputs the preamble of a generated .ma file *)
 val out_preamble: out_channel -> unit
 

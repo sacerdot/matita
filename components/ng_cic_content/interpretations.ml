@@ -81,7 +81,7 @@ class virtual status =
    method interp_db = match interp_db with None -> assert false | Some x -> x
    method set_interp_db v = {< interp_db = Some v >}
    method set_interp_status
-    : 'status. #g_status as 'status -> 'self
+    : 'status. (#g_status as 'status) -> 'self
     = fun o -> {< interp_db = Some o#interp_db >}#set_coercion_status o
    initializer
     interp_db <- Some (initial_db self)
@@ -434,7 +434,6 @@ let nmap_context0 status ~idref ~metasenv ~subst context =
 ;;
 
 let nmap_sequent0 status ~idref ~metasenv ~subst (i,(_n,context,ty)) =
- let module K = Content in
  let nast_of_cic =
   nast_of_cic1 status ~idref ~output_type:`Term ~metasenv ~subst in
  let context' = nmap_context0 status ~idref ~metasenv ~subst context in
