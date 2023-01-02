@@ -9,7 +9,7 @@
 (source
  (uri http://matita.cs.unibo.it/download.shtml))
 
-(authors "HELM Team (Andrea Asperti, Ferruccio Guidi, Claudio Sacerdoti Coen, Enrico Tassi, Stefano Zacchiroli et alt.)")
+(authors "HELM Team (Andrea Asperti, Ferruccio Guidi, Luca Padovani, Claudio Sacerdoti Coen, Enrico Tassi, Stefano Zacchiroli et alt.)")
 
 (maintainers "Claudio Sacerdoti Coen")
 
