@@ -31,6 +31,7 @@
    (ulex-camlp5 (= 1.3))
    (ocaml-expat (= 1.1.0))
    (lablgtk3-sourceview3 (= 3.1.3))
+   dune-build-info
    (camlp5 (= 8.00.04)))
  (tags
   ("interactive theorem proving" "calculus of constructions")))
