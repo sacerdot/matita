@@ -1,5 +1,0 @@
-requires="zip expat helm-extlib camlp-streams"
-version="0.0.1"
-archive(byte)="xml.cma"
-archive(native)="xml.cmxa"
-linkopts=""
