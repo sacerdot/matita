@@ -1,0 +1,5 @@
+(install
+ (section doc)
+ (files
+   matita.pdf
+  (glob_files_rec html/*)))
