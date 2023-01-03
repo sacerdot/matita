@@ -1,9 +1,0 @@
-S components/*
-S matita
-
-B components/*
-B matita
-
-PKG lablgtk3 helm-content helm-ng_disambiguation helm-content_pres helm-ng_extraction helm-disambiguation helm-ng_kernel helm-extlib helm-ng_library helm-getter helm-ng_paramodulation helm-grafite helm-ng_refiner helm-grafite_engine helm-ng_tactics helm-grafite_parser helm-registry helm-library helm-syntax_extensions helm-logger helm-thread helm-ng_cic_content helm-xml 
-
-FLG -rectypes

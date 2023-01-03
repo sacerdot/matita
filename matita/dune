@@ -9,6 +9,12 @@
  (module mysites)
  (sites matita))
 
+(rule
+ (target matitaGeneratedGui.ml)
+ (deps matita.ui)
+ (mode (promote))
+ (action (with-stdout-to %{target} (run lablgladecc3 -embed %{deps}))))
+
 (executable
  (name matita)
  (public_name matita)
@@ -29,7 +35,8 @@
  (section (site (matita myshare)))
  (files
   (glob_files_rec lib/*)
-  (glob_files_rec help/*) ; brutal
+  (glob_files_rec help/C/*.xml)
+  (glob_files_rec help/C/figures/*)
   (glob_files_rec icons/*)
   matita.gtkrc
   matita.lang

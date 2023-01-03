@@ -13,6 +13,17 @@ share_root: [
   "_build/install/default/share/matita/myshare/LICENSE" {"matita/myshare/LICENSE"}
   "_build/install/default/share/matita/myshare/closed.xml" {"matita/myshare/closed.xml"}
   "_build/install/default/share/matita/myshare/help/C/declarative_tactics_quickref.xml" {"matita/myshare/help/C/declarative_tactics_quickref.xml"}
+  "_build/install/default/share/matita/myshare/help/C/figures/database.dia" {"matita/myshare/help/C/figures/database.dia"}
+  "_build/install/default/share/matita/myshare/help/C/figures/database.png" {"matita/myshare/help/C/figures/database.png"}
+  "_build/install/default/share/matita/myshare/help/C/figures/matita.png" {"matita/myshare/help/C/figures/matita.png"}
+  "_build/install/default/share/matita/myshare/help/C/figures/vbox1.png" {"matita/myshare/help/C/figures/vbox1.png"}
+  "_build/install/default/share/matita/myshare/help/C/figures/vbox2.png" {"matita/myshare/help/C/figures/vbox2.png"}
+  "_build/install/default/share/matita/myshare/help/C/figures/vbox3.png" {"matita/myshare/help/C/figures/vbox3.png"}
+  "_build/install/default/share/matita/myshare/help/C/figures/vbox35.png" {"matita/myshare/help/C/figures/vbox35.png"}
+  "_build/install/default/share/matita/myshare/help/C/figures/vbox4.png" {"matita/myshare/help/C/figures/vbox4.png"}
+  "_build/install/default/share/matita/myshare/help/C/figures/vbox5.png" {"matita/myshare/help/C/figures/vbox5.png"}
+  "_build/install/default/share/matita/myshare/help/C/figures/vbox6.png" {"matita/myshare/help/C/figures/vbox6.png"}
+  "_build/install/default/share/matita/myshare/help/C/figures/vbox7.png" {"matita/myshare/help/C/figures/vbox7.png"}
   "_build/install/default/share/matita/myshare/help/C/legal.xml" {"matita/myshare/help/C/legal.xml"}
   "_build/install/default/share/matita/myshare/help/C/matita.xml" {"matita/myshare/help/C/matita.xml"}
   "_build/install/default/share/matita/myshare/help/C/sec_commands.xml" {"matita/myshare/help/C/sec_commands.xml"}
@@ -374,6 +385,17 @@ doc: [
   "_build/install/default/doc/matita/html/command_unification_hint.html" {"html/command_unification_hint.html"}
   "_build/install/default/doc/matita/html/command_universe_constraints.html" {"html/command_universe_constraints.html"}
   "_build/install/default/doc/matita/html/docbook.css" {"html/docbook.css"}
+  "_build/install/default/doc/matita/html/figures/database.dia" {"html/figures/database.dia"}
+  "_build/install/default/doc/matita/html/figures/database.png" {"html/figures/database.png"}
+  "_build/install/default/doc/matita/html/figures/matita.png" {"html/figures/matita.png"}
+  "_build/install/default/doc/matita/html/figures/vbox1.png" {"html/figures/vbox1.png"}
+  "_build/install/default/doc/matita/html/figures/vbox2.png" {"html/figures/vbox2.png"}
+  "_build/install/default/doc/matita/html/figures/vbox3.png" {"html/figures/vbox3.png"}
+  "_build/install/default/doc/matita/html/figures/vbox35.png" {"html/figures/vbox35.png"}
+  "_build/install/default/doc/matita/html/figures/vbox4.png" {"html/figures/vbox4.png"}
+  "_build/install/default/doc/matita/html/figures/vbox5.png" {"html/figures/vbox5.png"}
+  "_build/install/default/doc/matita/html/figures/vbox6.png" {"html/figures/vbox6.png"}
+  "_build/install/default/doc/matita/html/figures/vbox7.png" {"html/figures/vbox7.png"}
   "_build/install/default/doc/matita/html/index.html" {"html/index.html"}
   "_build/install/default/doc/matita/html/inst_from_src.html" {"html/inst_from_src.html"}
   "_build/install/default/doc/matita/html/macro_intro.html" {"html/macro_intro.html"}
