@@ -29,13 +29,14 @@
  (synopsis "An experimental, interactive theorem prover")
  (description "Matita (that means pencil in italian) is an experimental, interactive theorem prover under development at the Computer Science Department of the University of Bologna.")
  (depends
-   (ocamlnet (= 4.1.9.git))
-   (ulex-camlp5 (= 1.3))
-   (ocaml-expat (= 1.1.0))
-   (lablgtk3-sourceview3 (= 3.1.3))
+   (ocamlnet (>= 4.1.9.git))
+   (ulex-camlp5 (>= 1.3))
+   (ocaml-expat (>= 1.1.0))
+   (pcre (>= 7.5.0))
+   (lablgtk3-sourceview3 (>= 3.1.3))
    dune-build-info
    dune-site
-   (camlp5 (= 8.00.04)))
+   (camlp5 (>= 8.00.04)))
  (tags
   ("interactive theorem proving" "calculus of constructions"))
  (sites (share myshare)))
