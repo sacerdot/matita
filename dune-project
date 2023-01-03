@@ -1,4 +1,5 @@
 (lang dune 3.6)
+(using dune_site 0.1)
 
 (name matita)
 
@@ -32,8 +33,10 @@
    (ocaml-expat (= 1.1.0))
    (lablgtk3-sourceview3 (= 3.1.3))
    dune-build-info
+   dune-site
    (camlp5 (= 8.00.04)))
  (tags
-  ("interactive theorem proving" "calculus of constructions")))
+  ("interactive theorem proving" "calculus of constructions"))
+ (sites (share myshare)))
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project
