@@ -33,6 +33,7 @@
    (ulex-camlp5 (>= 1.3))
    (ocaml-expat (>= 1.1.0))
    (pcre (>= 7.5.0))
+   (ocaml-http (>= 0.1.6))
    (lablgtk3-sourceview3 (>= 3.1.3))
    dune-build-info
    dune-site
