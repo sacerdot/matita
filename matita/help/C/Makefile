@@ -1,5 +1,5 @@
 
-include ../../../Makefile.defs
+#include ../../../Makefile.defs
 
 XSLTPROC=xsltproc
 XHTML_XSL=xsl/matita-xhtml.xsl
@@ -28,11 +28,11 @@ pdf-stamp: $(patsubst %.xml,%.pdf,$(MAIN))
 	touch $@
 
 %.pdf: %.xml
-	dblatex -rscripts/fix-symbols.sh -tpdf $< 
+	dblatex -r scripts/fix-symbols.sh -t pdf $< 
 %.dvi: %.xml
-	dblatex -rscripts/fix-symbols.sh -tdvi $<
+	dblatex -r scripts/fix-symbols.sh -t dvi $<
 %.ps: %.xml
-	dblatex -rscripts/fix-symbols.sh -tps $<
+	dblatex -r scripts/fix-symbols.sh -t ps $<
 
 install: install-html install-pdf
 install-pdf: pdf-stamp
