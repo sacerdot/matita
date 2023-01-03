@@ -16,7 +16,6 @@
  (wrapped false)
  (preprocess (action (system "camlp5o q_MLast.cmo pa_extend.cmo -loc loc %{input-file}")))
  (preprocessor_deps helm_syntax_extensions.cma)
- ;(library_flags components/syntax_extensions/helm_syntax_extensions.cma)
  (modules pa_unicode_macro))
 
 (library
