@@ -12,24 +12,9 @@ share_root: [
   "_build/install/default/share/matita/myshare/AUTHORS" {"matita/myshare/AUTHORS"}
   "_build/install/default/share/matita/myshare/LICENSE" {"matita/myshare/LICENSE"}
   "_build/install/default/share/matita/myshare/closed.xml" {"matita/myshare/closed.xml"}
-  "_build/install/default/share/matita/myshare/help/C/Makefile" {"matita/myshare/help/C/Makefile"}
-  "_build/install/default/share/matita/myshare/help/C/TODO" {"matita/myshare/help/C/TODO"}
   "_build/install/default/share/matita/myshare/help/C/declarative_tactics_quickref.xml" {"matita/myshare/help/C/declarative_tactics_quickref.xml"}
-  "_build/install/default/share/matita/myshare/help/C/docbook.css" {"matita/myshare/help/C/docbook.css"}
-  "_build/install/default/share/matita/myshare/help/C/figures/database.dia" {"matita/myshare/help/C/figures/database.dia"}
-  "_build/install/default/share/matita/myshare/help/C/figures/database.png" {"matita/myshare/help/C/figures/database.png"}
-  "_build/install/default/share/matita/myshare/help/C/figures/matita.png" {"matita/myshare/help/C/figures/matita.png"}
-  "_build/install/default/share/matita/myshare/help/C/figures/vbox1.png" {"matita/myshare/help/C/figures/vbox1.png"}
-  "_build/install/default/share/matita/myshare/help/C/figures/vbox2.png" {"matita/myshare/help/C/figures/vbox2.png"}
-  "_build/install/default/share/matita/myshare/help/C/figures/vbox3.png" {"matita/myshare/help/C/figures/vbox3.png"}
-  "_build/install/default/share/matita/myshare/help/C/figures/vbox35.png" {"matita/myshare/help/C/figures/vbox35.png"}
-  "_build/install/default/share/matita/myshare/help/C/figures/vbox4.png" {"matita/myshare/help/C/figures/vbox4.png"}
-  "_build/install/default/share/matita/myshare/help/C/figures/vbox5.png" {"matita/myshare/help/C/figures/vbox5.png"}
-  "_build/install/default/share/matita/myshare/help/C/figures/vbox6.png" {"matita/myshare/help/C/figures/vbox6.png"}
-  "_build/install/default/share/matita/myshare/help/C/figures/vbox7.png" {"matita/myshare/help/C/figures/vbox7.png"}
   "_build/install/default/share/matita/myshare/help/C/legal.xml" {"matita/myshare/help/C/legal.xml"}
   "_build/install/default/share/matita/myshare/help/C/matita.xml" {"matita/myshare/help/C/matita.xml"}
-  "_build/install/default/share/matita/myshare/help/C/scripts/fix-symbols.sh" {"matita/myshare/help/C/scripts/fix-symbols.sh"}
   "_build/install/default/share/matita/myshare/help/C/sec_commands.xml" {"matita/myshare/help/C/sec_commands.xml"}
   "_build/install/default/share/matita/myshare/help/C/sec_declarative_tactics.xml" {"matita/myshare/help/C/sec_declarative_tactics.xml"}
   "_build/install/default/share/matita/myshare/help/C/sec_gettingstarted.xml" {"matita/myshare/help/C/sec_gettingstarted.xml"}
@@ -42,12 +27,6 @@ share_root: [
   "_build/install/default/share/matita/myshare/help/C/sec_usernotation.xml" {"matita/myshare/help/C/sec_usernotation.xml"}
   "_build/install/default/share/matita/myshare/help/C/tactic_quickref.xml" {"matita/myshare/help/C/tactic_quickref.xml"}
   "_build/install/default/share/matita/myshare/help/C/tactics_quickref.xml" {"matita/myshare/help/C/tactics_quickref.xml"}
-  "_build/install/default/share/matita/myshare/help/C/version.txt" {"matita/myshare/help/C/version.txt"}
-  "_build/install/default/share/matita/myshare/help/C/version.txt.in" {"matita/myshare/help/C/version.txt.in"}
-  "_build/install/default/share/matita/myshare/help/C/xhtml1-transitional.dtd" {"matita/myshare/help/C/xhtml1-transitional.dtd"}
-  "_build/install/default/share/matita/myshare/help/C/xsl/matita-fo.xsl" {"matita/myshare/help/C/xsl/matita-fo.xsl"}
-  "_build/install/default/share/matita/myshare/help/C/xsl/matita-xhtml.xsl" {"matita/myshare/help/C/xsl/matita-xhtml.xsl"}
-  "_build/install/default/share/matita/myshare/help/C/xsl/tactic_quickref.xsl" {"matita/myshare/help/C/xsl/tactic_quickref.xsl"}
   "_build/install/default/share/matita/myshare/icons/matita-32.xpm" {"matita/myshare/icons/matita-32.xpm"}
   "_build/install/default/share/matita/myshare/icons/matita-bulb-high.png" {"matita/myshare/icons/matita-bulb-high.png"}
   "_build/install/default/share/matita/myshare/icons/matita-bulb-low.png" {"matita/myshare/icons/matita-bulb-low.png"}
@@ -379,4 +358,76 @@ share_root: [
   "_build/install/default/share/matita/myshare/matita.gtkrc" {"matita/myshare/matita.gtkrc"}
   "_build/install/default/share/matita/myshare/matita.lang" {"matita/myshare/matita.lang"}
   "_build/install/default/share/matita/myshare/matita.ma.templ" {"matita/myshare/matita.ma.templ"}
+]
+doc: [
+  "_build/install/default/doc/matita/html/WrtCoq.html" {"html/WrtCoq.html"}
+  "_build/install/default/doc/matita/html/authoring.html" {"html/authoring.html"}
+  "_build/install/default/doc/matita/html/axiom_definition_declaration.html" {"html/axiom_definition_declaration.html"}
+  "_build/install/default/doc/matita/html/ch05s02.html" {"html/ch05s02.html"}
+  "_build/install/default/doc/matita/html/cicbrowser.html" {"html/cicbrowser.html"}
+  "_build/install/default/doc/matita/html/command_check.html" {"html/command_check.html"}
+  "_build/install/default/doc/matita/html/command_coercion.html" {"html/command_coercion.html"}
+  "_build/install/default/doc/matita/html/command_include.html" {"html/command_include.html"}
+  "_build/install/default/doc/matita/html/command_include_alias.html" {"html/command_include_alias.html"}
+  "_build/install/default/doc/matita/html/command_qed.html" {"html/command_qed.html"}
+  "_build/install/default/doc/matita/html/command_qed_minus.html" {"html/command_qed_minus.html"}
+  "_build/install/default/doc/matita/html/command_unification_hint.html" {"html/command_unification_hint.html"}
+  "_build/install/default/doc/matita/html/command_universe_constraints.html" {"html/command_universe_constraints.html"}
+  "_build/install/default/doc/matita/html/docbook.css" {"html/docbook.css"}
+  "_build/install/default/doc/matita/html/index.html" {"html/index.html"}
+  "_build/install/default/doc/matita/html/inst_from_src.html" {"html/inst_from_src.html"}
+  "_build/install/default/doc/matita/html/macro_intro.html" {"html/macro_intro.html"}
+  "_build/install/default/doc/matita/html/proofs.html" {"html/proofs.html"}
+  "_build/install/default/doc/matita/html/proofstatus.html" {"html/proofstatus.html"}
+  "_build/install/default/doc/matita/html/sec_commands.html" {"html/sec_commands.html"}
+  "_build/install/default/doc/matita/html/sec_declarative_tactics.html" {"html/sec_declarative_tactics.html"}
+  "_build/install/default/doc/matita/html/sec_gettingstarted.html" {"html/sec_gettingstarted.html"}
+  "_build/install/default/doc/matita/html/sec_install.html" {"html/sec_install.html"}
+  "_build/install/default/doc/matita/html/sec_intro.html" {"html/sec_intro.html"}
+  "_build/install/default/doc/matita/html/sec_license.html" {"html/sec_license.html"}
+  "_build/install/default/doc/matita/html/sec_tacticals.html" {"html/sec_tacticals.html"}
+  "_build/install/default/doc/matita/html/sec_tactics.html" {"html/sec_tactics.html"}
+  "_build/install/default/doc/matita/html/sec_terms.html" {"html/sec_terms.html"}
+  "_build/install/default/doc/matita/html/sec_usernotation.html" {"html/sec_usernotation.html"}
+  "_build/install/default/doc/matita/html/tac_andelim.html" {"html/tac_andelim.html"}
+  "_build/install/default/doc/matita/html/tac_apply.html" {"html/tac_apply.html"}
+  "_build/install/default/doc/matita/html/tac_applyS.html" {"html/tac_applyS.html"}
+  "_build/install/default/doc/matita/html/tac_assume.html" {"html/tac_assume.html"}
+  "_build/install/default/doc/matita/html/tac_assumption.html" {"html/tac_assumption.html"}
+  "_build/install/default/doc/matita/html/tac_auto.html" {"html/tac_auto.html"}
+  "_build/install/default/doc/matita/html/tac_bydone.html" {"html/tac_bydone.html"}
+  "_build/install/default/doc/matita/html/tac_byinduction.html" {"html/tac_byinduction.html"}
+  "_build/install/default/doc/matita/html/tac_bytermweproved.html" {"html/tac_bytermweproved.html"}
+  "_build/install/default/doc/matita/html/tac_case.html" {"html/tac_case.html"}
+  "_build/install/default/doc/matita/html/tac_cases.html" {"html/tac_cases.html"}
+  "_build/install/default/doc/matita/html/tac_change.html" {"html/tac_change.html"}
+  "_build/install/default/doc/matita/html/tac_clear.html" {"html/tac_clear.html"}
+  "_build/install/default/doc/matita/html/tac_conclude.html" {"html/tac_conclude.html"}
+  "_build/install/default/doc/matita/html/tac_constructor.html" {"html/tac_constructor.html"}
+  "_build/install/default/doc/matita/html/tac_cut.html" {"html/tac_cut.html"}
+  "_build/install/default/doc/matita/html/tac_decompose.html" {"html/tac_decompose.html"}
+  "_build/install/default/doc/matita/html/tac_destruct.html" {"html/tac_destruct.html"}
+  "_build/install/default/doc/matita/html/tac_elim.html" {"html/tac_elim.html"}
+  "_build/install/default/doc/matita/html/tac_existselim.html" {"html/tac_existselim.html"}
+  "_build/install/default/doc/matita/html/tac_generalize.html" {"html/tac_generalize.html"}
+  "_build/install/default/doc/matita/html/tac_intro.html" {"html/tac_intro.html"}
+  "_build/install/default/doc/matita/html/tac_intro_clear.html" {"html/tac_intro_clear.html"}
+  "_build/install/default/doc/matita/html/tac_inversion.html" {"html/tac_inversion.html"}
+  "_build/install/default/doc/matita/html/tac_lapply.html" {"html/tac_lapply.html"}
+  "_build/install/default/doc/matita/html/tac_let.html" {"html/tac_let.html"}
+  "_build/install/default/doc/matita/html/tac_letin.html" {"html/tac_letin.html"}
+  "_build/install/default/doc/matita/html/tac_normalize.html" {"html/tac_normalize.html"}
+  "_build/install/default/doc/matita/html/tac_obtain.html" {"html/tac_obtain.html"}
+  "_build/install/default/doc/matita/html/tac_rewrite.html" {"html/tac_rewrite.html"}
+  "_build/install/default/doc/matita/html/tac_rewrite_step.html" {"html/tac_rewrite_step.html"}
+  "_build/install/default/doc/matita/html/tac_suppose.html" {"html/tac_suppose.html"}
+  "_build/install/default/doc/matita/html/tac_thatisequivalentto.html" {"html/tac_thatisequivalentto.html"}
+  "_build/install/default/doc/matita/html/tac_thesisbecomes.html" {"html/tac_thesisbecomes.html"}
+  "_build/install/default/doc/matita/html/tac_weneedtoprove.html" {"html/tac_weneedtoprove.html"}
+  "_build/install/default/doc/matita/html/tac_weproceedbycases.html" {"html/tac_weproceedbycases.html"}
+  "_build/install/default/doc/matita/html/tac_weproceedbyinduction.html" {"html/tac_weproceedbyinduction.html"}
+  "_build/install/default/doc/matita/html/tac_whd.html" {"html/tac_whd.html"}
+  "_build/install/default/doc/matita/html/tacticals.html" {"html/tacticals.html"}
+  "_build/install/default/doc/matita/html/tacticargs.html" {"html/tacticargs.html"}
+  "_build/install/default/doc/matita/matita.pdf"
 ]

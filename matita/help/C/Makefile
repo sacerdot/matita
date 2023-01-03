@@ -1,12 +1,7 @@
-
-#include ../../../Makefile.defs
-
 XSLTPROC=xsltproc
 XHTML_XSL=xsl/matita-xhtml.xsl
 MAIN=matita.xml
 DEPS := $(wildcard *.xml)
-
-DESTDIR = /usr/local/share/doc/matita/
 
 all: quickref-stamp html-stamp pdf-stamp
 
@@ -21,6 +16,9 @@ declarative_tactics_quickref.xml: xsl/tactic_quickref.xsl sec_declarative_tactic
 html: quickref-stamp html-stamp
 html-stamp: $(MAIN) $(DEPS) $(XHTML_XSL)
 	$(XSLTPROC) $(XHTML_XSL) $<
+	cp *.css html
+	mv *.html html
+	cp -R figures/* html/figures/
 	touch $@
 
 pdf: quickref-stamp pdf-stamp
@@ -34,18 +32,6 @@ pdf-stamp: $(patsubst %.xml,%.pdf,$(MAIN))
 %.ps: %.xml
 	dblatex -r scripts/fix-symbols.sh -t ps $<
 
-install: install-html install-pdf
-install-pdf: pdf-stamp
-	mkdir -p $(DESTDIR)/pdf
-	cp matita.pdf $(DESTDIR)/pdf
-
-install-html: html-stamp 
-	mkdir -p $(DESTDIR)/html
-	cp *.html *.css $(DESTDIR)/html
-	test -d $(DESTDIR)/html/figures || mkdir $(DESTDIR)/html/figures
-	cp figures/* $(DESTDIR)/html/figures/
-
 clean:
-	rm -f *.html *.pdf *.ps *.dvi *.tex
+	rm -f html/*.html html/*.css html/figures/* *.pdf *.ps *.dvi *.tex
 	rm -f *-stamp 
-
