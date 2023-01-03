@@ -3,6 +3,7 @@
 
 (name matita)
 
+; Remember to change manually also matita/help/C/version.txt.in
 (version 0.99.5)
 
 (generate_opam_files true)
