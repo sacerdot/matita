@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>coercion</title><link rel="stylesheet" type="text/css" href="docbook.css" /><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" /><link rel="home" href="index.html" title="Matita V0.99.5 User Manual (rev. 0.99.5 )" /><link rel="up" href="sec_commands.html" title="Chapter 9. Other commands" /><link rel="prev" href="command_check.html" title="check" /><link rel="next" href="command_include.html" title="include" /></head><body><a xmlns="" href="../../../"><div class="matita_logo"><img src="figures/matita.png" alt="Tiny Matita logo" /><span>Matita Home</span></div></a><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">coercion</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="command_check.html">Prev</a> </td><th width="60%" align="center">Chapter 9. Other commands</th><td width="20%" align="right"> <a accesskey="n" href="command_include.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="command_coercion"></a>coercion</h2></div></div></div><p><strong class="userinput"><code>coercion nocomposites c : ty ≝ u on s : S to T</code></strong></p><p>
+     </p><div class="variablelist"><dl class="variablelist"><dt><span class="term">Synopsis:</span></dt><dd><p>
+			 <span class="bold"><strong>coercion</strong></span> 
+			 [ <span class="bold"><strong>nocomposites</strong></span> ] <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.id">id</a></em></span>
+			 [ :  <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.term">term</a></em></span> <span class="bold"><strong>≝</strong></span> <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.term">term</a></em></span>
+			      <span class="bold"><strong>on</strong></span>
+			      <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.id">id</a></em></span> : <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.term">term</a></em></span>
+			      <span class="bold"><strong>to</strong></span> <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.term">term</a></em></span> ]
+		 </p></dd><dt><span class="term">Action:</span></dt><dd><p>Declares <span class="command"><strong>c</strong></span> as an implicit coercion.
+            If only <span class="command"><strong>c</strong></span> is given, <span class="command"><strong>u</strong></span>
+	    is the constant named by <span class="command"><strong>c</strong></span>, 
+	    <span class="command"><strong>ty</strong></span> its declared type,
+	    <span class="command"><strong>s</strong></span> the name of the last variable abstracted in
+	    in <span class="command"><strong>ty</strong></span>, <span class="command"><strong>S</strong></span> the type of
+	    this last variable and <span class="command"><strong>T</strong></span> the target of
+	    <span class="command"><strong>ty</strong></span>. The user can specify all these component to
+	    have full control on how the coercion is indexed.
+	    The type of the body of the coercion <span class="command"><strong>u</strong></span> must be
+	    convertible to the declared one <span class="command"><strong>ty</strong></span>. Let it be
+	    <span class="command"><strong>∀x1:T1. … ∀x(n-1):T(n-1).Tn</strong></span>.
+	    Then <span class="command"><strong>s</strong></span> must be one of <span class="command"><strong>x1</strong></span> … 
+	    <span class="command"><strong>xn</strong></span> (possibly prefixed by <span class="command"><strong>_</strong></span>
+	    if the product is non dependent). Let <span class="command"><strong>s</strong></span>
+	    be <span class="command"><strong>xi</strong></span> in the following. 
+	    Then <span class="command"><strong>S</strong></span> must be <span class="command"><strong>Ti</strong></span>
+	    where all bound variables are replaced by <span class="command"><strong>?</strong></span>,
+	    and <span class="command"><strong>T</strong></span> must be <span class="command"><strong>Tn</strong></span>
+            where all bound variable are replaced by <span class="command"><strong>?</strong></span>.
+	    For example the following command
+	    declares a coercions from vectors of any length to lists of
+	    natural numbers.</p><p><strong class="userinput"><code>coercion nocomposites v2l : ∀n:nat.∀v:Vect nat n.
+            List nat ≝ l_of_v on _v : Vect nat ? to List nat</code></strong></p><p>Every time a term <span class="command"><strong>x</strong></span>
+            of a type that matches <span class="command"><strong>S</strong></span>
+	       (<span class="command"><strong>Vect nat ?</strong></span> here)	    
+		    is used with an expected 
+		    type that matches <span class="command"><strong>T</strong></span>
+		    (<span class="command"><strong>List nat</strong></span> here), Matita
+            automatically replaces <span class="command"><strong>x</strong></span> with
+            <span class="command"><strong>(u ? … ? x ? … ?)</strong></span> to avoid a typing error.
+            Note that the position of <span class="command"><strong>x</strong></span> is determined by
+	    <span class="command"><strong>s</strong></span>.</p><p>Implicit coercions are not displayed to the user:
+            <span class="command"><strong>(u ? … ? x)</strong></span> is rendered simply
+            as <span class="command"><strong>x</strong></span>.</p><p>When a coercion <span class="command"><strong>u</strong></span> is declared
+            from source <span class="command"><strong>s</strong></span> to target <span class="command"><strong>t</strong></span>
+            and there is already a coercion <span class="command"><strong>u'</strong></span> of
+            target <span class="command"><strong>s</strong></span> or source <span class="command"><strong>t</strong></span>,
+            a composite implicit coercion is automatically computed
+	    by Matita unless <span class="bold"><strong>nocomposites</strong></span> 
+	    is specified.</p><p>Note that <span class="command"><strong>Vect nat ?</strong></span> can be replaced with
+	    <span class="command"><strong>Vect ? ?</strong></span> to index the coercion is a loose way.</p></dd></dl></div><p>
+   </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="command_check.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="sec_commands.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="command_include.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">check </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> include</td></tr></table></div></body></html>

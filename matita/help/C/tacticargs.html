@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Tactic arguments</title><link rel="stylesheet" type="text/css" href="docbook.css" /><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" /><link rel="home" href="index.html" title="Matita V0.99.5 User Manual (rev. 0.99.5 )" /><link rel="up" href="sec_terms.html" title="Chapter 4. Syntax" /><link rel="prev" href="proofs.html" title="Proofs" /><link rel="next" href="sec_usernotation.html" title="Chapter 5. Extending the syntax" /></head><body><a xmlns="" href="../../../"><div class="matita_logo"><img src="figures/matita.png" alt="Tiny Matita logo" /><span>Matita Home</span></div></a><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Tactic arguments</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="proofs.html">Prev</a> </td><th width="60%" align="center">Chapter 4. Syntax</th><td width="20%" align="right"> <a accesskey="n" href="sec_usernotation.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="tacticargs"></a>Tactic arguments</h2></div></div></div><p>This section documents the syntax of some recurring arguments for
+    tactics.</p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="pattern"></a>pattern</h3></div></div></div><div class="table"><a id="idm1235"></a><p class="title"><strong>Table 4.13. pattern</strong></p><div class="table-contents"><table class="table" summary="pattern" style="border-collapse: collapse;border-top: 1px solid ; border-bottom: 1px solid ; "><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td style=""><a id="grammar.pattern"></a><span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.pattern">pattern</a></em></span></td><td style="">::=</td><td style=""><span class="bold"><strong>in</strong></span>
+          [<span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.id">id</a></em></span>[<span class="bold"><strong>:</strong></span> <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span>]]…
+          [<span class="bold"><strong>⊢</strong></span> <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span>]]<span class="bold"><strong>;</strong></span></td><td style="">simple pattern</td></tr><tr><td style=""> </td><td style="">|</td><td style=""><span class="bold"><strong>in</strong></span> <span class="bold"><strong>match</strong></span> <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span>
+          [<span class="bold"><strong>in</strong></span>
+          [<span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.id">id</a></em></span>[<span class="bold"><strong>:</strong></span> <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span>]]…
+          [<span class="bold"><strong>⊢</strong></span> <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span>]]<span class="bold"><strong>;</strong></span></td><td style="">full pattern</td></tr></tbody></table></div></div><br class="table-break" /><div class="table"><a id="idm1275"></a><p class="title"><strong>Table 4.14. path</strong></p><div class="table-contents"><table class="table" summary="path" style="border-collapse: collapse;border-top: 1px solid ; border-bottom: 1px solid ; "><colgroup><col /><col /><col /></colgroup><tbody><tr><td style=""><a id="grammar.path"></a><span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span></td><td style="">::=</td><td style=""><span class="emphasis"><em>〈〈any <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.sterm">sterm</a></em></span> without occurrences of <span class="bold"><strong>Set</strong></span>, <span class="bold"><strong>Prop</strong></span>, <span class="bold"><strong>CProp</strong></span>, <span class="bold"><strong>Type</strong></span>, <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.id">id</a></em></span>, <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.uri">uri</a></em></span> and user provided notation; however, <span class="bold"><strong>%</strong></span> is now an additional production for <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.sterm">sterm</a></em></span>〉〉</em></span></td></tr></tbody></table></div></div><br class="table-break" /><p>A <span class="emphasis"><em>path</em></span> locates zero or more subterms of a given term by mimicking the term structure up to:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Occurrences of the subterms to locate that are
+       represented by <span class="bold"><strong>%</strong></span>.</p></li><li class="listitem"><p>Subterms without any occurrence of subterms to locate
+       that can be represented by <span class="bold"><strong>?</strong></span>.
+       </p></li></ol></div><p>Warning: the format for a path for a <span class="bold"><strong>match</strong></span> … <span class="bold"><strong>with</strong></span>
+     expression is restricted to: <span class="bold"><strong>match</strong></span> <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span>
+     <span class="bold"><strong>with</strong></span>
+     <span class="bold"><strong>[</strong></span>
+     <span class="bold"><strong>_</strong></span>
+     <span class="bold"><strong>⇒</strong></span>
+     <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span>
+     <span class="bold"><strong>|</strong></span> …
+     <span class="bold"><strong>|</strong></span>
+     <span class="bold"><strong>_</strong></span>
+     <span class="bold"><strong>⇒</strong></span>
+     <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span>
+     <span class="bold"><strong>]</strong></span>
+     Its semantics is the following: the n-th 
+     "<span class="bold"><strong>_</strong></span>
+     <span class="bold"><strong>⇒</strong></span>
+     <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span>" branch is matched against the n-th constructor of the
+     inductive data type. The head λ-abstractions of <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.path">path</a></em></span> are matched
+     against the corresponding constructor arguments. 
+    </p><p>For instance, the path
+      <strong class="userinput"><code>∀_,_:?.(? ? % ?)→(? ? ? %)</code></strong>
+       locates at once the subterms
+      <strong class="userinput"><code>x+y</code></strong> and <strong class="userinput"><code>x*y</code></strong> in the
+      term <strong class="userinput"><code>∀x,y:nat.x+y=1→0=x*y</code></strong>
+      (where the notation <strong class="userinput"><code>A=B</code></strong> hides the term
+      <strong class="userinput"><code>(eq T A B)</code></strong> for some type <strong class="userinput"><code>T</code></strong>).
+    </p><p>A <span class="emphasis"><em>simple pattern</em></span> extends paths to locate
+     subterms in a whole sequent. In particular, the pattern
+     <strong class="userinput"><code>{ H: p  K: q ⊢ r }</code></strong> locates at once all the subterms
+     located by the pattern <strong class="userinput"><code>r</code></strong> in the conclusion of the
+     sequent and by the patterns <strong class="userinput"><code>p</code></strong> and
+     <strong class="userinput"><code>q</code></strong> in the hypotheses <strong class="userinput"><code>H</code></strong>
+     and <strong class="userinput"><code>K</code></strong> of the sequent.
+    </p><p>If no list of hypotheses is provided in a simple pattern, no subterm
+     is selected in the hypothesis. If the <strong class="userinput"><code>⊢ p</code></strong>
+     part of the pattern is not provided, no subterm will be matched in the
+     conclusion if at least one hypothesis is provided; otherwise the whole
+     conclusion is selected.
+    </p><p>Finally, a <span class="emphasis"><em>full pattern</em></span> is interpreted in three
+     steps. In the first step the <strong class="userinput"><code>match T in</code></strong>
+     part is ignored and a set <span class="emphasis"><em>S</em></span> of subterms is
+     located as for the case of
+     simple patterns. In the second step the term <strong class="userinput"><code>T</code></strong>
+     is parsed and interpreted in the context of each subterm
+     <span class="emphasis"><em>s ∈ S</em></span>. In the last term for each
+     <span class="emphasis"><em>s ∈ S</em></span> the interpreted term <strong class="userinput"><code>T</code></strong>
+     computed in the previous step is looked for. The final set of subterms
+     located by the full pattern is the set of occurrences of
+     the interpreted <strong class="userinput"><code>T</code></strong> in the subterms <span class="emphasis"><em>s</em></span>.
+    </p><p>A full pattern can always be replaced by a simple pattern,
+      often at the cost of increased verbosity or decreased readability.</p><p>Example: the pattern
+      <strong class="userinput"><code>{ match x+y in ⊢ ∀_,_:?.(? ? % ?) }</code></strong>
+      locates only the first occurrence of <strong class="userinput"><code>x+y</code></strong>
+      in the sequent <strong class="userinput"><code>x,y: nat ⊢ ∀z,w:nat. (x+y) * (z+w) =
+      z * (x+y) + w * (x+y)</code></strong>. The corresponding simple pattern
+      is <strong class="userinput"><code>{ ⊢ ∀_,_:?.(? ? (? % ?) ?) }</code></strong>.
+    </p><p>Every tactic that acts on subterms of the selected sequents have
+     a pattern argument for uniformity. To automatically generate a simple
+     pattern:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Select in the current goal the subterms to pass to the
+      tactic by using the mouse. In order to perform a multiple selection of
+      subterms, hold the Ctrl key while selecting every subterm after the
+      first one.</p></li><li class="listitem"><p>From the contextual menu select "Copy".</p></li><li class="listitem"><p>From the "Edit" or the contextual menu select
+      "Paste as pattern"</p></li></ol></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="reduction-kind"></a>reduction-kind</h3></div></div></div><p>Reduction kinds are normalization functions that transform a term
+     to a convertible but simpler one. Each reduction kind can be used both
+     as a tactic argument and as a stand-alone tactic.</p><div class="table"><a id="idm1378"></a><p class="title"><strong>Table 4.15. reduction-kind</strong></p><div class="table-contents"><table class="table" summary="reduction-kind" style="border-collapse: collapse;border-top: 1px solid ; border-bottom: 1px solid ; "><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td style=""><a id="grammar.reduction-kind"></a><span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.reduction-kind">reduction-kind</a></em></span></td><td style="">::=</td><td style=""><span class="bold"><strong>normalize</strong></span> [<span class="bold"><strong>nodelta</strong></span>]</td><td style="">Computes the βδιζ-normal form. If <strong class="userinput"><code>nodelta</code></strong>
+         is specified, δ-expansions are not performed.</td></tr><tr><td style=""> </td><td style="">|</td><td style=""><span class="bold"><strong>whd</strong></span> [<span class="bold"><strong>nodelta</strong></span>]</td><td style="">Computes the βδιζ-weak-head normal form. If <strong class="userinput"><code>nodelta</code></strong>
+         is specified, δ-expansions are not performed.</td></tr></tbody></table></div></div><br class="table-break" /></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="auto-params"></a>auto-params</h3></div></div></div><div class="table"><a id="idm1402"></a><p class="title"><strong>Table 4.16. auto-params</strong></p><div class="table-contents"><table class="table" summary="auto-params" style="border-collapse: collapse;border-top: 1px solid ; border-bottom: 1px solid ; "><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td style=""><a id="grammar.autoparams"></a><span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.autoparams">auto_params</a></em></span></td><td style="">::=</td><td style="">[<span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.nat">nat</a></em></span>] [<span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.simpleautoparam">simple_auto_param</a></em></span>]…
+               [<span class="bold"><strong>by</strong></span>
+                [<span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.sterm">sterm</a></em></span>… | <span class="bold"><strong>_</strong></span>]]
+        </td><td style="">The natural number, which defaults to 1, gives a bound to
+        the depth of the search tree. The terms listed is the only
+        knowledge base used by automation together with all indexed factual
+        and equational theorems in the included library. If the list of terms
+        is empty, only equational theorems and facts in the library are
+        used. If the list is omitted, it defaults to all indexed theorems
+        in the library. Finally, if the list is <span class="command"><strong>_</strong></span>,
+        the automation command becomes a macro that is expanded in a new
+        automation command where <span class="command"><strong>_</strong></span> is replaced with the
+        list of theorems required to prove the sequent.
+        </td></tr></tbody></table></div></div><br class="table-break" /><div class="table"><a id="idm1423"></a><p class="title"><strong>Table 4.17. simple-auto-param</strong></p><div class="table-contents"><table class="table" summary="simple-auto-param" style="border-collapse: collapse;border-top: 1px solid ; border-bottom: 1px solid ; "><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td style=""><a id="grammar.simpleautoparam"></a><span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.simpleautoparam">simple_auto_param</a></em></span></td><td style="">::=</td><td style=""><span class="bold"><strong>width=<span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.nat">nat</a></em></span></strong></span></td><td style="">The maximal width of the search tree</td></tr><tr><td style=""> </td><td style="">|</td><td style=""><span class="bold"><strong>size=<span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.nat">nat</a></em></span></strong></span></td><td style="">The maximal number of nodes in the proof</td></tr><tr><td style=""> </td><td style="">|</td><td style=""><span class="bold"><strong>demod</strong></span></td><td style="">Simplifies the current sequent using the current set of
+         equations known to automation 
+        </td></tr><tr><td style=""> </td><td style="">|</td><td style=""><span class="bold"><strong>paramod</strong></span></td><td style="">Try to close the goal performing unit-equality paramodulation
+        </td></tr><tr><td style=""> </td><td style="">|</td><td style=""><span class="bold"><strong>fast_paramod</strong></span></td><td style="">A bounded version of <span class="command"><strong>paramod</strong></span> that is granted to terminate quickly
+        </td></tr></tbody></table></div></div><br class="table-break" /></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="justification"></a>justification</h3></div></div></div><div class="table"><a id="idm1466"></a><p class="title"><strong>Table 4.18. justification</strong></p><div class="table-contents"><table class="table" summary="justification" style="border-collapse: collapse;border-top: 1px solid ; border-bottom: 1px solid ; "><colgroup><col /><col /><col /><col /></colgroup><tbody><tr><td style=""><a id="grammar.justification"></a><span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.justification">justification</a></em></span></td><td style="">::=</td><td style=""><span class="bold"><strong>using</strong></span> <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.term">term</a></em></span></td><td style="">Proof term manually provided</td></tr><tr><td style=""> </td><td style="">|</td><td style=""><span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.autoparams">auto_params</a></em></span></td><td style="">Call automation</td></tr></tbody></table></div></div><br class="table-break" /></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="proofs.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="sec_terms.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="sec_usernotation.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Proofs </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 5. Extending the syntax</td></tr></table></div></body></html>

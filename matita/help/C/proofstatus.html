@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>The proof status</title><link rel="stylesheet" type="text/css" href="docbook.css" /><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" /><link rel="home" href="index.html" title="Matita V0.99.5 User Manual (rev. 0.99.5 )" /><link rel="up" href="sec_tacticals.html" title="Chapter 6. Tacticals" /><link rel="prev" href="sec_tacticals.html" title="Chapter 6. Tacticals" /><link rel="next" href="tacticals.html" title="Tacticals" /></head><body><a xmlns="" href="../../../"><div class="matita_logo"><img src="figures/matita.png" alt="Tiny Matita logo" /><span>Matita Home</span></div></a><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The proof status</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="sec_tacticals.html">Prev</a> </td><th width="60%" align="center">Chapter 6. Tacticals</th><td width="20%" align="right"> <a accesskey="n" href="tacticals.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="proofstatus"></a>The proof status</h2></div></div></div><p>
+   During an interactive proof, the proof status is made of
+   the set of sequents to prove and the partial proof built so far.
+  </p><p>The partial proof can be <a class="link" href="cicbrowser.html#aboutproof" title="Looking at a proof under development">inspected</a>
+   on demand in the CIC browser. It will be shown in pseudo-natural language
+   produced on the fly from the proof term.</p><p>The set of sequents to prove is shown in the notebook of the
+   <a class="link" href="authoring.html#authoringinterface" title="The authoring interface">authoring interface</a>, in the
+   top-right corner of the main window of Matita. Each tab shows a different
+   sequent, named with a question mark followed by a number. The current
+   role of the sequent, according to the following description, is also
+   shown in the tab tag.
+  </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><a id="selectedsequents"></a>
+     <span class="bold"><strong>Selected sequents</strong></span>
+      (name in boldface, e.g. <span class="bold"><strong>?3</strong></span>).
+      The next tactic will be applied to every selected sequent, producing
+      new selected sequents. <a class="link" href="tacticals.html" title="Tacticals">Tacticals</a>
+      such as branching ("<span class="bold"><strong>[</strong></span>")
+      or "<span class="bold"><strong>focus</strong></span>" can be used
+      to change the set of selected sequents.
+    </p></li><li class="listitem"><p><a id="siblingsequents"></a>
+     <span class="bold"><strong>Sibling sequents</strong></span>
+     (name prefixed by a vertical bar and their position, e.g.
+      |<sub>3</sub>?2). When the set of selected sequents
+     has more than one element, the user can decide to focus in turn on each
+     of them. The branching <a class="link" href="tacticals.html" title="Tacticals">tactical</a>
+     ("<span class="bold"><strong>[</strong></span>") selects the first
+     sequent only, marking every previously selected sequent as a sibling
+     sequent. Each sibling sequent is given a different position. The
+     tactical "<span class="bold"><strong>2,3:</strong></span>" can be used to
+     select one or more sibling sequents, different from the one proposed,
+     according to their position. Once the user starts to work on the
+     selected sibling sequents it becomes impossible to select a new
+     set of siblings until the ("<span class="bold"><strong>|</strong></span>")
+     tactical is used to end work on the current one.
+    </p></li><li class="listitem"><p><a id="solvedsequents"></a>
+     <span class="bold"><strong>Automatically solved sibling sequents</strong></span>
+     (name strokethrough, e.g. |<sub>3</sub><span class="strikethrough">?2</span>).
+     Sometimes a tactic can close by side effects a sibling sequent the
+     user has not selected yet. The sequent is left in the automatically
+     solved status in order for the user to explicitly accept
+     (using the "<span class="bold"><strong>skip</strong></span>"
+     <a class="link" href="tacticals.html" title="Tacticals">tactical</a>) the automatic
+     instantiation in the proof script. This way the correspondence between
+     the number of branches in the proof script and the number of sequents
+     generated in the proof is preserved.
+    </p></li></ol></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="sec_tacticals.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="sec_tacticals.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="tacticals.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 6. Tacticals </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Tacticals</td></tr></table></div></body></html>
