@@ -40,7 +40,10 @@ let script_font = "Monospace";;
 let runtime_base_dir =
   try
     Sys.getenv "MATITA_RT_BASE_DIR"
-  with Not_found -> "/home/claudio/ricerca/matita5/helm/matita/matita";;
+  with Not_found ->
+   match Mysites.Sites.myshare with
+      [rt] -> rt (*It was: "/home/claudio/ricerca/matita5/helm/matita/matita"*)
+    | _ -> assert false
 
 let images_dir = runtime_base_dir ^ "/icons"
 let gtkrc_file = runtime_base_dir ^ "/matita.gtkrc"

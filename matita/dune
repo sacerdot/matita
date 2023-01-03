@@ -1,9 +1,13 @@
 (library
  (name matita_cli)
  (wrapped false)
- (libraries helm_grafite_engine lablgtk3-sourceview3 dune-build-info)
+ (libraries helm_grafite_engine lablgtk3-sourceview3 dune-build-info dune-site)
  (modules 
-   buildTimeConf matitaTypes matitaMiscCli applyTransformation matitaEngine matitaExcPp matitaInit))
+   mysites buildTimeConf matitaTypes matitaMiscCli applyTransformation matitaEngine matitaExcPp matitaInit))
+
+(generate_sites_module
+ (module mysites)
+ (sites matita))
 
 (executable
  (name matita)
@@ -22,7 +26,7 @@
  (modules matitac matitaclean))
 
 (install
- (section share)
+ (section (site (matita myshare)))
  (files
   (glob_files_rec lib/*)
   (glob_files_rec help/*) ; brutal

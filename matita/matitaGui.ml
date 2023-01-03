@@ -672,6 +672,7 @@ class gui () =
         ignore (adj#connect#changed
                 (fun _ -> adj#set_value (adj#upper -. adj#page_size)));
       console#message (sprintf "\tMatita version %s\n" BuildTimeConf.version);
+      console#message (sprintf "\tStandard library location:\n\t  %s\n" BuildTimeConf.new_stdlib_dir_devel);
         (* natural deduction palette *)
       main#tacticsButtonsHandlebox#misc#hide ();
       MatitaGtkMisc.toggle_callback
