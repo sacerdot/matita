@@ -1,6 +1,7 @@
 (library
  (name helm_extlib)
  (libraries str unix camlp5.gramlib)
+ (modules (:standard \ componentsConf))
  (wrapped false))
 (env
   (_
