@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 2. Installation</title><link rel="stylesheet" type="text/css" href="docbook.css" /><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" /><link rel="home" href="index.html" title="Matita V0.99.5 User Manual (rev. 0.99.5 )" /><link rel="up" href="index.html" title="Matita V0.99.5 User Manual (rev. 0.99.5 )" /><link rel="prev" href="WrtCoq.html" title="Matita vs Coq" /><link rel="next" href="inst_from_src.html" title="Installing from sources" /></head><body><a xmlns="" href="../../../"><div class="matita_logo"><img src="figures/matita.png" alt="Tiny Matita logo" /><span>Matita Home</span></div></a><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 2. Installation</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="WrtCoq.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="inst_from_src.html">Next</a></td></tr></table><hr /></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="sec_install"></a>Chapter 2. Installation</h1></div></div></div><div class="toc"><p><strong>Table of Contents</strong></p><dl class="toc"><dt><span class="sect1"><a href="sec_install.html#inst_livecd">Using the LiveCD</a></span></dt><dd><dl><dt><span class="sect2"><a href="sec_install.html#make_vmachine">Creating the virtual machine</a></span></dt><dt><span class="sect2"><a href="sec_install.html#idm148">Sharing files with the real PC</a></span></dt></dl></dd><dt><span class="sect1"><a href="inst_from_src.html">Installing from sources</a></span></dt><dd><dl><dt><span class="sect2"><a href="inst_from_src.html#get_source_code">Getting the source code</a></span></dt><dt><span class="sect2"><a href="inst_from_src.html#build_requirements">Requirements</a></span></dt><dt><span class="sect2"><a href="inst_from_src.html#build_instructions">Compiling and installing</a></span></dt></dl></dd></dl></div><p>
+	  Matita is a quite complex piece of software, we thus recommend
+	  you to either install al precompiled version or use the LiveCD.
+	  If you are running Debian GNU/Linux (or one of its derivatives
+	  like Ubuntu), you can install matita typing
+	   </p><pre class="programlisting"> aptitude install matita matita-standard-library </pre><p>
+          If you are running MacOSX or Windows, give the LiveCD a try before
+	  trying to compile Matita from its sources.
+  </p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="inst_livecd"></a>Using the LiveCD</h2></div></div></div><p>
+	    In the following, we will assume you have installed 
+	    <a class="ulink" href="http://www.virtualbox.org" target="_top">virtualbox</a>
+	    for your platform and downloaded the .iso image of the LiveCD
+    </p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="make_vmachine"></a>Creating the virtual machine</h3></div></div></div><p>
+	    Click on the New button, a wizard will popup, you should ask to
+	    its questions as follows
+      </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p> 
+		The name should be something like Matita, but can
+		be any meaningful string.
+	      </p></li><li class="listitem"><p> 
+	        The OS type should be Debian
+              </p></li><li class="listitem"><p> 
+	        The base memory size can be 256 mega bytes, but you may
+		want to increase it if you are going to work with huge
+		formalizations.
+	     </p></li><li class="listitem"><p> 
+	 The boot hard disk should be no hard disk. It may complain
+	 that this choice is not common, but it is right, since you
+	 will run a LiveCD you do not need to emulate an hard drive.
+	  </p></li></ol></div><p>
+      Now that you are done with the creation of the virtual machine, 
+      you need to insert the LiveCD in the virtual cd reader unit.
+      </p><div class="figure"><a id="idm116"></a><p class="title"><strong>Figure 2.1. The brand new virtual machine</strong></p><div class="figure-contents"><div class="mediaobject"><img src="figures/vbox1.png" alt="The breand new virtual machine" /></div></div></div><br class="figure-break" /><p>
+      Click on CD/DVD-ROM (that should display something like: Not mouted).
+      Then click on mount CD/DVD drive and select the ISO image
+      option. The combo-box should display no available image, you need to 
+      add the ISO image you downloaded from the Matita website clicking on
+      the button near the combo-box. 
+      to start the virtual machine. 
+    </p><div class="figure"><a id="idm124"></a><p class="title"><strong>Figure 2.2. Mounting an ISO image</strong></p><div class="figure-contents"><div class="mediaobject"><img src="figures/vbox2.png" alt="Mounting an ISO image" /></div></div></div><br class="figure-break" /><p>
+      In the newely opened window click 
+      the Add button
+    </p><div class="figure"><a id="idm132"></a><p class="title"><strong>Figure 2.3. Choosing the ISO image</strong></p><div class="figure-contents"><div class="mediaobject"><img src="figures/vbox3.png" alt="Choosing the ISO image" /></div></div></div><br class="figure-break" /><p>
+      A new windows will pop-up: choose the file you downloaded
+      (usually matita-version.iso) and click open.
+    </p><div class="figure"><a id="idm140"></a><p class="title"><strong>Figure 2.4. Choosing the ISO image</strong></p><div class="figure-contents"><div class="mediaobject"><img src="figures/vbox35.png" alt="Choosing the ISO image" /></div></div></div><br class="figure-break" /><p>
+	   Now select the new entry you just added as the CD image
+	   you want to insert in the virtual CD drive.
+	   You are now ready to start the virtual machine. 
+    </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="idm148"></a>Sharing files with the real PC</h3></div></div></div><p>
+		  The virtual machine Matita will run on, has its own file 
+		  system, that is completely separated from the one of your 
+		  real PC (thus your files are not available in the
+		  emulated environment) and moreover it is a non-presistent
+		  file system (thus you data is lost every time you
+		  turn off the virtual machine).
+          </p><p>
+		  Virtualbox allows you to share a real folder (beloging
+		  to your real PC) with the emulated computer. Since this 
+		  folder is persistent, you are encouraged to put
+		  your work there, so that it is not lost when the virtual 
+		  machine is powered off.
+          </p><p>
+		  The first step to set up a shared folder is to click
+		  on the shared folder configuration entry
+		  of the virtual machine.
+	  </p><div class="figure"><a id="idm153"></a><p class="title"><strong>Figure 2.5. Set up a shared folder</strong></p><div class="figure-contents"><div class="mediaobject"><img src="figures/vbox4.png" alt="Shared folder" /></div></div></div><br class="figure-break" /><p>
+		  Then you shuld add a shared folder clicking on the 
+		  plus icon on the right
+	  </p><div class="figure"><a id="idm161"></a><p class="title"><strong>Figure 2.6. Choosing the folder to share</strong></p><div class="figure-contents"><div class="mediaobject"><img src="figures/vbox5.png" alt="Shared folder" /></div></div></div><br class="figure-break" /><p>
+		  Then you have to specify the real PC folder you want to share
+		  and name it. A reasonable folder to share is /home on 
+		  a standard Unix system, while /Users on MaxOSX.
+		  The name you give to the share is important, you should
+		  remember it.
+	  </p><div class="figure"><a id="idm169"></a><p class="title"><strong>Figure 2.7. Naming the shared folder</strong></p><div class="figure-contents"><div class="mediaobject"><img src="figures/vbox6.png" alt="Shared folder" /></div></div></div><br class="figure-break" /><p>
+		  Once your virtual machine is up and running, you can
+		  mount (that meand have access to) the shared folder 
+		  by clicking on the Mount VirtualBox share icon, and typing
+		  the name of the share.
+	  </p><div class="figure"><a id="idm177"></a><p class="title"><strong>Figure 2.8. Using it from the virtual machine</strong></p><div class="figure-contents"><div class="mediaobject"><img src="figures/vbox7.png" alt="Shared folder at work" /></div></div></div><br class="figure-break" /><p>
+		  A window will then pop-up, and its content will be the
+		  the content of the real PC folder.
+	  </p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="WrtCoq.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="inst_from_src.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Matita vs Coq </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Installing from sources</td></tr></table></div></body></html>

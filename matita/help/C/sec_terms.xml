@@ -849,7 +849,6 @@
     </table>
     </sect2>
 
-    <!--
     <sect2 id="justification">
     <title>justification</title>
     <table frame="topbot" rowsep="0" colsep="0" role="grammar">
@@ -872,7 +871,6 @@
      </tgroup>
     </table>
     </sect2>
-    -->
   </sect1>
 
 </chapter>

@@ -27,6 +27,9 @@
     <xsl:variable name="tactic">
       <xsl:value-of select="ancestor::sect1/title" />
     </xsl:variable>
+    <xsl:variable name="tactic_id">
+      <xsl:value-of select="ancestor::sect1/@id" />
+    </xsl:variable>
 
     <row>
       <entry>
@@ -54,8 +57,7 @@
 	    <xsl:when test="string(.) = $tactic">
 	      <xsl:element name="link">
 		<xsl:attribute name="linkend">
-		  <xsl:text>tac_</xsl:text>
-		  <xsl:value-of select="$tactic" />
+		  <xsl:value-of select="$tactic_id" />
 		</xsl:attribute>
 		<xsl:copy-of select="." />
 	      </xsl:element>

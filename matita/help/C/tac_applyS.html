@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>applyS</title><link rel="stylesheet" type="text/css" href="docbook.css" /><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" /><link rel="home" href="index.html" title="Matita V0.99.5 User Manual (rev. 0.99.5 )" /><link rel="up" href="sec_tactics.html" title="Chapter 7. Tactics" /><link rel="prev" href="tac_rewrite.html" title="rewrite" /><link rel="next" href="tac_assumption.html" title="assumption" /></head><body><a xmlns="" href="../../../"><div class="matita_logo"><img src="figures/matita.png" alt="Tiny Matita logo" /><span>Matita Home</span></div></a><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">applyS</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="tac_rewrite.html">Prev</a> </td><th width="60%" align="center">Chapter 7. Tactics</th><td width="20%" align="right"> <a accesskey="n" href="tac_assumption.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="tac_applyS"></a>applyS</h2></div></div></div><p><strong class="userinput"><code>applyS t auto_params</code></strong></p><p>
+      </p><div class="variablelist"><dl class="variablelist"><dt><span class="term">Synopsis:</span></dt><dd><p><span class="bold"><strong>applyS</strong></span> <span class="emphasis"><em><a class="link" href="sec_terms.html#grammar.sterm">sterm</a></em></span> <span class="emphasis"><em><a class="link" href="tacticargs.html#grammar.autoparams">auto_params</a></em></span></p></dd><dt><span class="term">Pre-conditions:</span></dt><dd><p><span class="command"><strong>t</strong></span> must have type
+             <span class="command"><strong>T<sub>1</sub> → ... →
+              T<sub>n</sub> → G</strong></span>.</p></dd><dt><span class="term">Action:</span></dt><dd><p><span class="command"><strong>applyS</strong></span> is useful when
+             <span class="command"><strong>apply</strong></span> fails because the current goal
+             and the conclusion of the applied theorems are extensionally
+             equivalent up to instantiation of metavariables, but cannot
+             be unified. E.g. the goal is <span class="command"><strong>P(n*O+m)</strong></span> and
+             the theorem to be applied proves <span class="command"><strong>∀m.P(m+O)</strong></span>.
+            </p><p>
+             It tries to automatically rewrite the current goal using
+             <a class="link" href="tac_auto.html" title="auto">auto paramodulation</a>
+             to make it unifiable with <span class="command"><strong>G</strong></span>.
+             Then it closes the current sequent by applying
+             <span class="command"><strong>t</strong></span> to <span class="command"><strong>n</strong></span>
+             implicit arguments (that become new sequents).
+             The <span class="command"><strong>auto_params</strong></span> parameters are passed
+             directly to <span class="command"><strong>auto paramodulation</strong></span>.
+            </p></dd><dt><span class="term">New sequents to prove:</span></dt><dd><p>It opens a new sequent for each premise 
+             <span class="command"><strong>T<sub>i</sub></strong></span> that is not
+             instantiated by unification. <span class="command"><strong>T<sub>i</sub></strong></span> is
+             the conclusion of the <span class="command"><strong>i</strong></span>-th new sequent to
+             prove.</p></dd></dl></div><p>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tac_rewrite.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="sec_tactics.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="tac_assumption.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">rewrite </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> assumption</td></tr></table></div></body></html>

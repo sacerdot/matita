@@ -1,6 +1,101 @@
 <table frame="topbot" rowsep="0" colsep="0" role="grammar">
   <title>tactics</title>
   <tgroup cols="3">
-    <tbody/>
+    <tbody>
+      <row>
+        <entry id="grammar.declarative_tactic">&tactic;</entry>
+        <entry>::=</entry>
+        <entry>
+               <link linkend="tac_rewrite_step"><emphasis role="bold">=</emphasis></link> <emphasis><link linkend="grammar.term">term</link></emphasis> [<emphasis><link linkend="grammar.autoparams">auto_params</link></emphasis> | <emphasis role="bold">using</emphasis> <emphasis><link linkend="grammar.term">term</link></emphasis> | <emphasis role="bold">using once</emphasis> <emphasis><link linkend="grammar.term">term</link></emphasis> | <emphasis role="bold">proof</emphasis>] [<emphasis role="bold">done</emphasis>]
+           </entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><link linkend="tac_assume"><emphasis role="bold">assume</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis> <emphasis role="bold"> : </emphasis>
+             <emphasis><link linkend="grammar.sterm">sterm</link></emphasis> </entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><link linkend="tac_byinduction"><emphasis role="bold">by induction hypothesis we know</emphasis></link> <emphasis><link linkend="grammar.term">term</link></emphasis> <emphasis role="bold"> (</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis> <emphasis role="bold">)</emphasis></entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><link linkend="tac_case"><emphasis role="bold">case</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis> [<emphasis role="bold">(</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis> <emphasis role="bold">:</emphasis> <emphasis><link linkend="grammar.term">term</link></emphasis>  <emphasis role="bold">)</emphasis>] … [<emphasis role="bold">(</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis> <emphasis role="bold">:</emphasis> <emphasis><link linkend="grammar.term">term</link></emphasis>  <emphasis role="bold">)</emphasis>]</entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><link linkend="tac_conclude"><emphasis role="bold">conclude</emphasis></link> <emphasis><link linkend="grammar.term">term</link></emphasis></entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis><link linkend="grammar.justification">justification</link></emphasis> <link linkend="tac_bydone"><emphasis role="bold">done</emphasis></link></entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis><link linkend="grammar.justification">justification</link></emphasis> <emphasis role="bold">let</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis> 
+	            <emphasis role="bold">:</emphasis> <emphasis><link linkend="grammar.term">term</link></emphasis> <emphasis role="bold">such that</emphasis> <emphasis><link linkend="grammar.term">term</link></emphasis> 
+		     <emphasis role="bold">(</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis> <emphasis role="bold">)</emphasis></entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis role="bold">let</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis> <emphasis role="bold"> = </emphasis> <emphasis><link linkend="grammar.term">term</link></emphasis></entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><link linkend="tac_obtain"><emphasis role="bold">obtain</emphasis></link> <emphasis><link linkend="grammar.id">id</link></emphasis> <emphasis><link linkend="grammar.term">term</link></emphasis></entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><link linkend="tac_suppose"><emphasis role="bold">suppose</emphasis></link> <emphasis><link linkend="grammar.term">term</link></emphasis> <emphasis role="bold"> (</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis> 
+	     <emphasis role="bold">) </emphasis></entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry>
+               <link linkend="tac_thatisequivalentto"><emphasis role="bold">that is equivalent to</emphasis></link> <emphasis><link linkend="grammar.term">term</link></emphasis>
+           </entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><link linkend="tac_thesisbecomes"><emphasis role="bold">the thesis becomes</emphasis></link> <emphasis><link linkend="grammar.term">term</link></emphasis> </entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><link linkend="tac_weneedtoprove"><emphasis role="bold">we need to prove</emphasis></link> <emphasis><link linkend="grammar.term">term</link></emphasis>
+        [<emphasis role="bold">(</emphasis><emphasis><link linkend="grammar.id">id</link></emphasis>
+        <emphasis role="bold">)</emphasis>]
+        </entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><link linkend="tac_weproceedbycases"><emphasis role="bold">we proceed by cases on</emphasis></link> <emphasis><link linkend="grammar.term">term</link></emphasis> <emphasis role="bold">to prove</emphasis> <emphasis><link linkend="grammar.term">term</link></emphasis> </entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><link linkend="tac_weproceedbyinduction"><emphasis role="bold">we proceed by induction on</emphasis></link> <emphasis><link linkend="grammar.term">term</link></emphasis> <emphasis role="bold"> to prove </emphasis> <emphasis><link linkend="grammar.term">term</link></emphasis> </entry>
+      </row>
+      <row>
+        <entry/>
+        <entry>|</entry>
+        <entry><emphasis><link linkend="grammar.justification">justification</link></emphasis> <link linkend="tac_bytermweproved"><emphasis role="bold">we proved</emphasis></link> <emphasis><link linkend="grammar.term">term</link></emphasis> 
+         [<emphasis role="bold">(</emphasis> <emphasis><link linkend="grammar.id">id</link></emphasis> 
+         <emphasis role="bold">)</emphasis>]
+     </entry>
+      </row>
+    </tbody>
   </tgroup>
 </table>

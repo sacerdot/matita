@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 6. Tacticals</title><link rel="stylesheet" type="text/css" href="docbook.css" /><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" /><link rel="home" href="index.html" title="Matita V0.99.5 User Manual (rev. 0.99.5 )" /><link rel="up" href="index.html" title="Matita V0.99.5 User Manual (rev. 0.99.5 )" /><link rel="prev" href="ch05s02.html" title="interpretation" /><link rel="next" href="proofstatus.html" title="The proof status" /></head><body><a xmlns="" href="../../../"><div class="matita_logo"><img src="figures/matita.png" alt="Tiny Matita logo" /><span>Matita Home</span></div></a><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 6. Tacticals</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="proofstatus.html">Next</a></td></tr></table><hr /></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="sec_tacticals"></a>Chapter 6. Tacticals</h1></div></div></div><div class="toc"><p><strong>Table of Contents</strong></p><dl class="toc"><dt><span class="sect1"><a href="sec_tacticals.html#idm2224">Interactive proofs and definitions</a></span></dt><dt><span class="sect1"><a href="proofstatus.html">The proof status</a></span></dt><dt><span class="sect1"><a href="tacticals.html">Tacticals</a></span></dt></dl></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="idm2224"></a>Interactive proofs and definitions</h2></div></div></div><p>
+    An interactive definition is started by giving a
+    <a class="link" href="axiom_definition_declaration.html#definition" title="definition id[: term] [≝ term]">definition</a> command omitting
+    the definiens.
+    An interactive proof is started by using one of the
+    <a class="link" href="proofs.html" title="Proofs">proof commands</a> omitting
+    an explicit proof term.
+   </p><p>An interactive proof or definition can and must be terminated by
+    a <a class="link" href="command_qed.html" title="qed">qed</a> command when no more sequents are
+    left to prove. Between the command that starts the interactive session and
+    the qed command the user must provide a procedural proof script made
+    of <a class="link" href="sec_tactics.html" title="Chapter 7. Tactics">tactics</a> structured by means of
+    <a class="link" href="tacticals.html" title="Tacticals">tacticals</a>.</p><p>In the tradition of the LCF system, tacticals can be considered
+    higher order tactics. Their syntax is structured and they are executed
+    atomically. On the contrary, in Matita the syntax of several tacticals is
+    destructured into a sequence of tokens and tactics in such a way that is
+    is possible to stop execution after every single token or tactic.
+    The original semantics is preserved: the execution of the whole sequence
+    yields the result expected by the original LCF-like tactical.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05s02.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="proofstatus.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">interpretation </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> The proof status</td></tr></table></div></body></html>

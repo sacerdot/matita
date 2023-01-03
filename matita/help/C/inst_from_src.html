@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Installing from sources</title><link rel="stylesheet" type="text/css" href="docbook.css" /><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" /><link rel="home" href="index.html" title="Matita V0.99.5 User Manual (rev. 0.99.5 )" /><link rel="up" href="sec_install.html" title="Chapter 2. Installation" /><link rel="prev" href="sec_install.html" title="Chapter 2. Installation" /><link rel="next" href="sec_gettingstarted.html" title="Chapter 3. Getting started" /></head><body><a xmlns="" href="../../../"><div class="matita_logo"><img src="figures/matita.png" alt="Tiny Matita logo" /><span>Matita Home</span></div></a><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Installing from sources</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="sec_install.html">Prev</a> </td><th width="60%" align="center">Chapter 2. Installation</th><td width="20%" align="right"> <a accesskey="n" href="sec_gettingstarted.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="inst_from_src"></a>Installing from sources</h2></div></div></div><p>Install Matita from the sources is hard, you have been warned!
+    </p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="get_source_code"></a>Getting the source code</h3></div></div></div><p>You can get the Matita source code in two ways:
+	</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p> go to the <a class="ulink" href="http://matita.cs.unibo.it/download.shtml" target="_top">download
+		page</a> and get the <a class="ulink" href="http://matita.cs.unibo.it/sources/matita-latest.tar.gz" target="_top">latest released source tarball</a>;</p></li><li class="listitem"><p> get the development sources from <a class="ulink" href="http://helm.cs.unibo.it/websvn/listing.php?repname=helm&amp;path=%2F&amp;sc=0" target="_top">our
+		SVN repository</a>. You will need the
+	      <span class="application">components/</span> and
+	      <span class="application">matita/</span> directories from the
+	      <code class="filename">trunk/helm/software/</code> directory, plus the
+	      <code class="filename">configure</code> and <code class="filename">Makefile*</code>
+	      stuff from the same directory.  </p><p>In this case you will need to run
+		<span class="command"><strong>autoconf</strong></span> before proceding with the building
+		instructions below.</p></li></ol></div><p>
+      </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="build_requirements"></a>Requirements</h3></div></div></div><p>In order to build Matita from sources you will need some
+	tools and libraries. They are listed below.
+
+	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note for Debian (and derivatives) users</h3><p>If you are running a 
+		  <a class="ulink" href="http://www.debian.org" target="_top">Debian GNU/Linux</a>
+		  distribution,
+		  or any of its derivative like <a class="ulink" href="http://ubuntu.com" target="_top">Ubuntu</a>, 
+		  you can use APT to install all the required tools and
+		  libraries since they are all part of the Debian archive. 
+	  </p><p>	  
+		  apt-get install ocaml ocaml-findlib libgdome2-ocaml-dev liblablgtk2-ocaml-dev liblablgtkmathview-ocaml-dev liblablgtksourceview-ocaml-dev libsqlite3-ocaml-dev libocamlnet-ocaml-dev libzip-ocaml-dev libhttp-ocaml-dev ocaml-ulex08 libexpat-ocaml-dev libmysql-ocaml-dev camlp5
+	  </p><p>	  
+		  An official debian package is going to be added to the
+		  archive too.
+	  </p></div><p>
+
+	</p><div class="variablelist"><p class="title"><strong>Required tools and libraries</strong></p><dl class="variablelist"><dt><span class="term">
+	      <span class="application"> <a class="ulink" href="http://caml.inria.fr" target="_top">OCaml</a> </span>
+	    </span></dt><dd><p> the Objective Caml compiler, version 3.09 or above </p></dd><dt><span class="term">
+	      <span class="application"> <a class="ulink" href="http://www.ocaml-programming.de/packages/" target="_top">Findlib</a>
+	      </span>
+	    </span></dt><dd><p> OCaml package manager, version 1.1.1 or above</p></dd><dt><span class="term">
+	      <span class="application"> <a class="ulink" href="http://www.xs4all.nl/~mmzeeman/ocaml/" target="_top">OCaml
+		  Expat</a> </span>
+	    </span></dt><dd><p>OCaml bindings for the <span class="application"><a class="ulink" href="http://expat.sourceforge.net/" target="_top">expat</a>
+		  library</span> </p></dd><dt><span class="term">
+	      <span class="application"> <a class="ulink" href="http://wwwfun.kurims.kyoto-u.ac.jp/soft/lsl/lablgtk.html" target="_top">LablGTK</a>
+	      </span>
+	    </span></dt><dd><p> OCaml bindings for the <span class="application"> <a class="ulink" href="http://www.gtk.org" target="_top"> GTK+</a> library
+	      </span>, version 2.6.0 or above </p></dd><dt><span class="term">
+	      <span class="application"> <a class="ulink" href="http://gtksourceview.sourceforge.net/" target="_top">GtkSourceView</a>
+	      </span>
+	    , </span><span class="term">
+	      <span class="application"> <a class="ulink" href="http://helm.cs.unibo.it/software/lablgtksourceview/" target="_top">LablGtkSourceView</a>
+	      </span>
+	    </span></dt><dd><p> extension for the GTK+ text widget (adding the typical
+		features of source code editors) and its OCaml bindings </p></dd><dt><span class="term">
+	      <span class="application"> <a class="ulink" href="http://ocamlnet.sourceforge.net/" target="_top">Ocamlnet</a>
+	      </span>
+	    </span></dt><dd><p> collection of OCaml libraries to deal with
+		application-level Internet protocols and conventions </p></dd><dt><span class="term">
+	      <span class="application"> <a class="ulink" href="http://www.cduce.org/download.html" target="_top">ulex</a>
+	      </span>
+	    </span></dt><dd><p> Unicode lexer generator for OCaml </p></dd><dt><span class="term">
+	      <span class="application"> <a class="ulink" href="http://cristal.inria.fr/~xleroy/software.html" target="_top">CamlZip</a>
+	      </span>
+	    </span></dt><dd><p> OCaml library to access <code class="filename">.gz</code> files
+	      </p></dd></dl></div><p> </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="build_instructions"></a>Compiling and installing</h3></div></div></div><p> Once you get the source code the installations steps should be
+	quite familiar.</p><p> First of all you need to configure the build process executing
+	<strong class="userinput"><code>./configure</code></strong>. This will check that all needed
+	tools and library are installed and prepare the sources for compilation
+	and installation. </p><p> Quite a few (optional) arguments may be passed to the
+	<span class="application">configure</span> command line to change build time
+	parameters. They are listed below, together with their
+	default values: </p><div class="variablelist"><p class="title"><strong> <span class="application">configure</span> command line
+	    arguments</strong></p><dl class="variablelist"><dt><span class="term">
+	      <strong class="userinput"><code>--with-runtime-dir=<em class="replaceable"><code>dir</code></em></code></strong>
+	    </span></dt><dd><p>
+		(<span class="emphasis"><em>Default:</em></span>
+		<code class="filename">/usr/local/matita</code>) Runtime base directory
+		where all Matita stuff (executables, configuration files,
+		standard library, ...) will be installed
+	      </p></dd><dt><span class="term">
+	      <strong class="userinput"><code>--enable-debug</code></strong>
+	    </span></dt><dd><p>
+		(<span class="emphasis"><em>Default:</em></span> disabled) Enable debugging code.
+		Not for the casual user.
+	      </p></dd></dl></div><p> Then you will manage the build and install process using
+	<span class="application"><a class="ulink" href="http://www.gnu.org/software/make/" target="_top">make</a></span>
+	as usual. Below are reported the targets you have to invoke in sequence
+	to build and install:
+      </p><div class="variablelist"><p class="title"><strong><span class="application">make</span> targets</strong></p><dl class="variablelist"><dt><span class="term"><strong class="userinput"><code>world</code></strong></span></dt><dd><p>builds components needed by Matita and Matita itself
+		(in bytecode or native code depending
+		on the availability of the OCaml native code compiler) </p></dd><dt><span class="term"><strong class="userinput"><code>install</code></strong></span></dt><dd><p>installs Matita related tools, standard library and the
+		needed runtime stuff in the proper places on the filesystem.
+	      </p></dd></dl></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="sec_install.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="sec_install.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="sec_gettingstarted.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 2. Installation </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 3. Getting started</td></tr></table></div></body></html>

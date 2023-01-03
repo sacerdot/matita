@@ -582,7 +582,7 @@
        </variablelist>
      </para>
    </sect1>
-  <sect1 id="tac_rewrite">
+  <sect1 id="tac_rewrite_step">
       <title>=</title>
       <titleabbrev>=</titleabbrev>
       <para><userinput>= t2 justification</userinput></para>
