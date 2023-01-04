@@ -29,6 +29,7 @@
  (synopsis "An experimental, interactive theorem prover")
  (description "Matita (that means pencil in italian) is an experimental, interactive theorem prover under development at the Computer Science Department of the University of Bologna.")
  (depends
+   (ocaml (>= "4.14.1"))
    (ocamlnet (>= 4.1.9.git))
    (ulex-camlp5 (>= 1.3))
    (ocaml-expat (>= 1.1.0))
