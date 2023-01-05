@@ -1,6 +1,6 @@
 (library
  (name helm_registry)
- (libraries str netstring helm_xml)
+ (libraries str helm_xml)
  (preprocess (action (system "camlp5o %{input-file}")))
  (wrapped false)
  (modules (:standard \ test)))
