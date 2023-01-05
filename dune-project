@@ -33,8 +33,9 @@
    (ulex-camlp5 (>= 1.3))
    (ocaml-expat (>= 1.1.0))
    (pcre (>= 7.5.0))
-   (ocamlnet (>= 4.1.9.git)) ; used only by ocaml-http
-   (ocaml-http (>= 0.1.6))
+   ;(ocamlnet (>= 4.1.9.git)) ; used only by ocaml-http
+   ;(ocaml-http (>= 0.1.6))   ; no longer really used, replaced by failing stubs
+                              ; in components/ocaml_http_stubs
    (camlzip (>= 1.11))
    (lablgtk3-sourceview3 (>= 3.1.3))
    dune-build-info

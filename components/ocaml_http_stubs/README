@@ -1,0 +1,7 @@
+This is a stub library for Zacchiroli's ocaml-http library.
+All the stubs, if called, just abort the program.
+The interface files are a minimal, proper subset of the ones of ocaml-http
+that only list the values used by matita.
+
+ocaml-http is copyrighted under the GNU Library General Public License as
+published by the Free Software Foundation, version 2.
