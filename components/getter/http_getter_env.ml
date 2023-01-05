@@ -97,17 +97,17 @@ let env_to_string () =
     | l -> "\n" ^ String.concat "\n" (List.map pp_prefix l)
   in
   sprintf
-"HTTP Getter %s
+{xxx|HTTP Getter %s
 
 prefixes:%s
-dtd_dir:\t%s
-host:\t\t%s
-port:\t\t%d
-my_own_url:\t%s
-dtd_base_urls:\t%s
-log_file:\t%s
-log_level:\t%d
-"
+dtd_dir:        %s
+host:           %s
+port:           %d
+my_own_url:     %s
+dtd_base_urls:  %s
+log_file:       %s
+log_level:      %d
+|xxx}
     version
     (pp_prefixes (Lazy.force prefixes))
     (match Lazy.force dtd_dir with Some dir -> dir | None -> "NONE")

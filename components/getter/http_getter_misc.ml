@@ -300,7 +300,7 @@ let temp_file_of_uri uri =
   let flat_string s s' c =
     let cs = Bytes.of_string s in
     for i = 0 to (String.length s) - 1 do
-      if String.contains s' s.[i] then cs.[i] <- c
+      if String.contains s' s.[i] then Bytes.set cs i c
     done;
     Bytes.to_string cs
   in

@@ -39,8 +39,8 @@ let helm_ns = "http://www.cs.unibo.it/helm"
   (* TODO provide a better usage string *)
 let usage_string configuration =
   sprintf
-"<?xml version=\"1.0\"?>
-<html xmlns=\"%s\" xmlns:helm=\"%s\">
+{xxx|<?xml version="1.0"?>
+<html xmlns="%s" xmlns:helm="%s">
   <head>
     <title>HTTP Getter's help message</title>
   </head>
@@ -54,7 +54,7 @@ let usage_string configuration =
     Available commands:
     </p>
     <p>
-      <b><kbd><a href=\"/help\">help</a></kbd></b><br />
+      <b><kbd><a href="/help">help</a></kbd></b><br />
       display this help message
     </p>
     <p>
@@ -70,33 +70,32 @@ let usage_string configuration =
       <b><kbd>getxslt?uri=URI[&amp;patch_dtd=(yes|no)]</kbd></b><br />
     </p>
     <p>
-      <b><kbd><a href=\"/update\">update</a></kbd></b><br />
+      <b><kbd><a href="/update">update</a></kbd></b><br />
     </p>
     <p>
-      <b><kbd><a href=\"clean_cache\">clean_cache</a></kbd></b><br />
+      <b><kbd><a href="clean_cache">clean_cache</a></kbd></b><br />
     </p>
     <p>
       <b><kbd>ls?baseuri=regexp&amp;format=(txt|xml)</kbd></b><br />
     </p>
     <p>
-      <b><kbd>getalluris?format=(<a href=\"/getalluris?format=txt\">txt</a>|<a href=\"/getalluris?format=xml\">xml</a>)</kbd></b><br />
+      <b><kbd>getalluris?format=(<a href="/getalluris?format=txt">txt</a>|<a href="/getalluris?format=xml">xml</a>)</kbd></b><br />
     </p>
     <p>
-      <b><kbd><a href=\"/getempty\">getempty</a></kbd></b><br />
+      <b><kbd><a href="/getempty">getempty</a></kbd></b><br />
     </p>
     <h2>Current configuration</h2>
     <pre>%s</pre>
   </body>
 </html>
-"
+|xxx}
   xhtml_ns helm_ns
   version configuration
 
 let empty_xml =
-"<?xml version=\"1.0\"?>
+{xxx|<?xml version="1.0"?>
 <!DOCTYPE empty [
   <!ELEMENT empty EMPTY>
 ]>
 <empty />
-"
-
+|xxx}
