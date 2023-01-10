@@ -1,7 +1,7 @@
 (library
  (name helm_extlib)
  (libraries str unix camlp-streams camlp5.gramlib) ; camlp-streams should be pulled in by camlp5...
- (modules (:standard \ componentsConf))
+ (modules (:standard))
  (wrapped false))
 (env
   (_
