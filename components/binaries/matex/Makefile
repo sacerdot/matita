@@ -1,9 +1,4 @@
 EXEC = matex
-VERSION=0.1.0
-
-REQUIRES = helm-ng_library
-
-include ../Makefile.common
 
 MATEX    = ./$(EXEC).native
 PROBE    = ../probe/probe.native

@@ -52,7 +52,7 @@ let mk_exists ooch noch c v =
    let pre_appl n = P.sprintf "%s %s" (pre n) ele_seq in
    let pre_type   = string_iter " → " pre_appl c in
 
-   let qm n       = "?" in
+   let qm _n      = "?" in
    let qm_set     = string_iter " " qm v in
    let qm_pre     = string_iter " " qm c in
 
@@ -99,7 +99,7 @@ let mk_or ooch noch c =
    let pre_list   = string_iter "," pre c in
    let pre_seq    = string_iter " " pre c in
 
-   let qm n       = "?" in
+   let qm _n      = "?" in
    let qm_pre     = string_iter " " qm c in
 
    let term n     = P.sprintf "term 29 P%u" (c - n) in
@@ -139,7 +139,7 @@ let mk_and ooch noch c =
    let pre_type   = string_iter " → " pre c in
    let pre_seq    = string_iter " " pre c in
 
-   let qm n       = "?" in
+   let qm _n      = "?" in
    let qm_pre     = string_iter " " qm c in
 
    let term n     = P.sprintf "term 34 P%u" (c - n) in

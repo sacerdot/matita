@@ -19,7 +19,7 @@ module L = Librarian
 module X = Ground
 module G = Options
 module E = Engine
-module O = TeXOutput
+(* module O = TeXOutput *)
 module K = Kernel
 
 let help_O = "<dir> Set this output directory"

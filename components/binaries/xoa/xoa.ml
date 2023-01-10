@@ -18,6 +18,9 @@ module E = Engine
 let incremental = ref true
 let separate = ref false
 
+let preamble =
+  L.get_preamble ()
+
 let clear () =
   incremental := true;
   separate := false;
@@ -33,7 +36,7 @@ let unm_and s =
   Scanf.sscanf s "%u" A.mk_and
 
 let process_centralized conf =
-  let preamble = L.get_preamble conf in
+  R.load_from conf;
   if R.has "xoa.objects" && R.has "xoa.notations" then begin
     let ooch = L.open_out true preamble (R.get_string "xoa.objects") in
     let noch = L.open_out false preamble (R.get_string "xoa.notations") in
@@ -71,7 +74,7 @@ let generate (p, o, n) d =
   end
 
 let process_distributed conf =
-  let preamble = L.get_preamble conf in
+  R.load_from conf;
   if R.has "xoa.objects" && R.has "xoa.notations" then begin
     let st = preamble, R.get_string "xoa.objects", R.get_string "xoa.notations" in
     List.iter (generate st) (R.get_list unm_ex "xoa.ex");

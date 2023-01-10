@@ -39,7 +39,7 @@ let add_attr n (_, xf, _) = O.add_xflavour n (xf:>O.def_xflavour)
 
 let add_ind n = O.add_xflavour n `Inductive
 
-let rec set_list c ts cts =
+let set_list c ts cts =
   let map cts t = (c, t) :: cts in
   L.fold_left map cts ts
 
@@ -84,7 +84,7 @@ let rec scan_term st = function
   | (_, C.Sort _)                :: tl -> scan_term (inc st) tl
   | (c, C.Rel i)                 :: tl -> scan_term (scan_lref st c i) tl
   | (_, C.Const p)               :: tl -> scan_term (scan_gref st p) tl
-  | (_, C.Appl [])               :: tl -> X.malformed ()
+  | (_, C.Appl [])               :: _  -> X.malformed ()
   | (c, C.Appl ts)               :: tl ->
     scan_term (add st (pred (L.length ts))) (set_list c ts tl)
   | (c, C.Match (_, t0, t1, ts)) :: tl ->

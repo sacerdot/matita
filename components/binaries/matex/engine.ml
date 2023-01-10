@@ -12,7 +12,7 @@
 module F = Filename
 module L = List
 module P = Printf
-module S = String
+(* module S = String *)
 
 module U = NUri
 module R = NReference
@@ -26,7 +26,7 @@ module K = Kernel
 module T = TeX
 module O = TeXOutput
 module A = Anticipate
-module M = Meta
+(* module M = Meta *)
 module N = Alpha
 
 type status = {
@@ -86,7 +86,7 @@ let get_head = function
       end 
    | _               -> None
 
-let proc_sort st is = function
+let proc_sort _st is = function
    | C.Prop             -> T.Macro "PROP" :: is
    | C.Type [`Type, u]  -> T.Macro "TYPE" :: T.arg (U.string_of_uri u) :: is
    | C.Type [`CProp, u] -> T.Macro "CROP" :: T.arg (U.string_of_uri u) :: is
@@ -214,7 +214,7 @@ let rec proc_proof st ris t = match t with
       let ris = T.Macro "STEP" :: mk_inferred st t ris in
       let tts = L.rev_map (proc_term st []) rts in
       mk_exit st (T.rev_mk_args tts ris)
-   | C.Match (w, u, v, ts) ->
+   | C.Match (_w, _u, v, ts) ->
       let rts = X.rev_neg_filter (K.not_prop2 st.c) [v] ts in
       let ris = T.Macro "DEST" :: mk_inferred st t ris in
       let tts = L.rev_map (proc_term st []) rts in
@@ -290,13 +290,13 @@ let proc_pair s ss u = function
          O.out_text och (text_t s name t);
       close_out och
 
-let proc_fun ss (r, s, i, u, t) =
+let proc_fun ss (_r, s, _i, u, t) =
    proc_pair s (s :: ss) u (Some t)
 
-let proc_constructor ss (r, s, u) =
+let proc_constructor ss (_r, s, u) =
    proc_pair s (s :: ss) u None
 
-let proc_type ss (r, s, u, cs) =
+let proc_type ss (_r, s, u, cs) =
    proc_pair s (s :: ss) u None;
    L.iter (proc_constructor ss) cs
 
