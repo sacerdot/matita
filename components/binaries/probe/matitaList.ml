@@ -11,7 +11,6 @@
 
 module A = Array
 module F = Filename
-module P = Printf
 module S = String
 module Y = Sys
 

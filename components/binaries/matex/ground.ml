@@ -9,7 +9,7 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-module L = List
+(* module L = List *)
 module P = Printf
 module S = String
 
@@ -48,7 +48,7 @@ let rec foldi_left mapi i a = function
    | []       -> a
    | hd :: tl -> foldi_left mapi (succ i) (mapi i a hd) tl
 
-let rec rev_mapi mapi i l =
+let rev_mapi mapi i l =
    let map i a hd = mapi i hd :: a in
    foldi_left map i [] l
 

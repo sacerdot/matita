@@ -9,7 +9,7 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-val get_preamble: string -> string
+val get_preamble: unit -> string
 
 val exists_out: string -> bool
 

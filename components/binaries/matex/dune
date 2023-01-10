@@ -1,0 +1,12 @@
+(executable
+  (name matex)
+  (public_name matex)
+  (promote (until-clean))
+  (libraries helm_ng_library)
+  (modules_without_implementation)
+  (modules alpha anticipate engine ground options TeXOutput kernel meta TeX matex)
+)
+
+(env
+  (_
+    (flags (:standard -thread -rectypes -w @A-52-4-34-37-45-9-44-48-6-32-20-58-7-57-3-68-69-70-50-29)))) ; -29 for non portable strings
