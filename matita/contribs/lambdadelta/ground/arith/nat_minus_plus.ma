@@ -38,7 +38,7 @@ qed.
 
 (*** minus_plus_plus_l *)
 lemma nminus_plus_dx_bi (m) (n) (o): m - n = (m + o) - (n + o).
-#m #n #o <nminus_plus_assoc <nminus_comm //
+#m #n #o <nminus_plus_assoc <nminus_comm_21 //
 qed.
 
 (* Helper constructions with nplus ******************************************)

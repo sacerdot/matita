@@ -47,3 +47,12 @@ lemma tr_inj_push (f): ⫯𝐭❨f❩ = 𝐭❨⫯f❩.
 lemma tr_inj_next (f): ↑𝐭❨f❩ = 𝐭❨↑f❩.
 * //
 qed.
+
+(* Basic eliminations *******************************************************)
+
+lemma tr_map_split (f:tr_map):
+      ∨∨ ∃g. ⫯g = f
+       | ∃g. ↑g = f.
+* *
+/3 width=2 by ex_intro, or_introl, or_intror/
+qed-.
