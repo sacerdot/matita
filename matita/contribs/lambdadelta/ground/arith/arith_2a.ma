@@ -24,7 +24,7 @@ lemma plus_n_2: ∀n. (n + 𝟐) = n + 𝟏 + 𝟏.
 // qed.
 
 lemma arith_b1: ∀a,b,c1. c1 ≤ b → a - c1 - (b - c1) = a - b.
-#a #b #c1 #H >nminus_comm <nminus_assoc_comm_23 //
+#a #b #c1 #H >nminus_comm_21 <nminus_assoc_comm_23 //
 qed-.
 
 lemma arith_b2: ∀a,b,c1,c2. c1 + c2 ≤ b → a - c1 - c2 - (b - c1 - c2) = a - b.

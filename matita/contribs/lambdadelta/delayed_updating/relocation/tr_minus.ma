@@ -12,47 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/arith/pnat_minus.ma".
+include "ground/arith/nat_minus.ma".
 include "ground/relocation/tr_map.ma".
 
-(* PUSH AND NEXT FOR TOTAL RELOCATION MAPS **********************************)
+(* RIGHT SUBTRACTION FOR TOTAL RELOCATION MAPS ******************************)
 
-definition tr_push: tr_map → tr_map ≝
-           λf. 𝟏⨮f.
-
-interpretation
-  "push (total relocation maps)"
-  'UpSpoon f = (tr_push f).
-
-definition tr_next: tr_map → tr_map.
-* #p #f @(↑p⨮f)
+corec definition tr_minus: nat → tr_map → tr_map.
+* [ #f @f ] #q * #p #f
+@((p-q)⨮(tr_minus (ninj (↑q)-ninj p) f))
 defined.
 
 interpretation
-  "next (total relocation maps)"
-  'UpArrow f = (tr_next f).
+  "right minus (total relocation maps)"
+  'minus f n = (tr_minus n f).
 
 (* Basic constructions ******************************************************)
 
-lemma tr_push_unfold (f): 𝟏⨮f = ⫯f.
-// qed.
-
-lemma tr_next_unfold (f): ∀p. (↑p)⨮f = ↑(p⨮f).
-// qed.
-
-(* Constructions with tr_inj ************************************************)
-
-lemma tr_inj_push (f): ⫯𝐭❨f❩ = 𝐭❨⫯f❩.
-// qed.
-
-lemma tr_inj_next (f): ↑𝐭❨f❩ = 𝐭❨↑f❩.
-* //
+lemma tr_minus_zero_dx (f):
+      f = f - 𝟎 .
+* #f #p <(stream_unfold … ((f⨮p)-𝟎)) //
 qed.
 
-(* Basic eliminations *******************************************************)
-
-lemma tr_map_split (f:tr_map):
-      ∨∨ ∃g. ⫯g = f
-       | ∃g. ↑g = f.
-* *
-/3 width=2 by ex_intro, or_introl, or_intror/
-qed-.
+lemma tr_minus_cons_inj (f) (p) (q):
+      (p-q)⨮(f-(ninj (↑q)-ninj p)) = (p⨮f)-(ninj q).
+#f #p #q <(stream_unfold … ((p⨮f)-(ninj q))) //
+qed.

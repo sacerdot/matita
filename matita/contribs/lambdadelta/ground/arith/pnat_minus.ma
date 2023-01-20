@@ -12,69 +12,56 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_succ_iter.ma".
-include "ground/arith/nat_pred_succ.ma".
+include "ground/arith/pnat_pred.ma".
+include "ground/arith/pnat_iter.ma".
 
 (* SUBTRACTION FOR NON-NEGATIVE INTEGERS ************************************)
 
-(*** minus *)
-definition nminus: nat → nat → nat ≝
-           λm,n. (npred^n) m.
+definition pminus: pnat → pnat → pnat ≝
+           λp,q. (ppred^q) p.
 
 interpretation
-  "minus (non-negative integers)"
-  'minus m n = (nminus m n).
+  "minus (positive integers)"
+  'minus p q = (pminus p q).
 
 (* Basic constructions ******************************************************)
 
-(*** minus_n_O *)
-lemma nminus_zero_dx (m): m = m - 𝟎.
+lemma pminus_unit_dx (p): ↓p = p - 𝟏.
 // qed.
 
-(*** minus_SO_dx *)
-lemma nminus_unit_dx (m): ↓m = m - 𝟏 .
-// qed.
-
-(*** eq_minus_S_pred *)
-lemma nminus_succ_dx (m) (n): ↓(m - n) = m - ↑n.
-#m #n @(niter_succ … npred)
+lemma pminus_succ_dx (p) (q): ↓(p - q) = p - ↑q.
+#p #q @(piter_succ … ppred)
 qed.
 
 (* Advanced constructions ***************************************************)
 
-lemma nminus_pred_sn (m) (n): ↓(m - n) = ↓m - n.
-#m #n @(niter_appl … npred)
+lemma pminus_pred_sn (p) (q): ↓(p - q) = ↓p - q.
+#p #q @(piter_appl … ppred)
 qed.
 
-(*** minus_O_n *)
-lemma nminus_zero_sn (n): 𝟎 = 𝟎 - n.
-#n @(nat_ind_succ … n) -n //
+lemma pminus_unit_sn (q): 𝟏 = 𝟏 - q.
+#q elim q -q //
 qed.
 
-(*** minus_S_S *)
-lemma nminus_succ_bi (m) (n): m - n = ↑m - ↑n.
-#m #n @(nat_ind_succ … n) -n //
+lemma pminus_succ_bi (p) (q): p - q = ↑p - ↑q.
+#p #q elim q -q //
 qed.
 
-lemma nminus_succ_dx_pred_sn (m) (n): ↓m - n = m - ↑n.
+lemma pminus_succ_dx_pred_sn (p) (q): ↓p - q = p - ↑q.
 // qed-.
 
-(*** minus_n_n *)
-lemma nminus_refl (m): 𝟎 = m - m.
-#m @(nat_ind_succ … m) -m //
+lemma pminus_refl (p): 𝟏 = p - p.
+#p elim p -p //
 qed.
 
-(*** minus_Sn_n *)
-lemma nminus_succ_sn_refl (m): ninj (𝟏) = ↑m - m.
-#m @(nat_ind_succ … m) -m //
+lemma pminus_succ_sn_refl (p): 𝟏 = ↑p - p.
+#p elim p -p //
 qed.
 
-(*** minus_minus_comm *)
-lemma nminus_comm_21 (m) (n1) (n2): m - n1 - n2 = m - n2 - n1.
-#m #n1 #n2 @(nat_ind_succ … n2) -n2 //
+lemma pminus_comm_21 (p) (q1) (q2): p - q1 - q2 = p - q2 - q1.
+#p #q1 #q2 elim q2 -q2 //
 qed.
 
-(*** minus_minus_comm3 *)
-lemma nminus_comm_231 (m) (n1) (n2) (n3):
-      m-n1-n2-n3 = m-n2-n3-n1.
+lemma pminus_comm_231 (p) (q1) (q2) (q3):
+      p-q1-q2-q3 = p-q2-q3-q1.
 // qed.
