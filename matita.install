@@ -4,9 +4,13 @@ lib: [
   "_build/install/default/lib/matita/opam"
 ]
 bin: [
+  "_build/install/default/bin/matex"
   "_build/install/default/bin/matita"
   "_build/install/default/bin/matitac"
   "_build/install/default/bin/matitaclean"
+  "_build/install/default/bin/matitadep"
+  "_build/install/default/bin/probe"
+  "_build/install/default/bin/xoa"
 ]
 share_root: [
   "_build/install/default/share/matita/myshare/AUTHORS" {"matita/myshare/AUTHORS"}
