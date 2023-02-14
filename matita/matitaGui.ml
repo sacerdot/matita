@@ -599,7 +599,6 @@ class gui () =
        let source_view = script#source_view in
        let thread_main =
         fun () -> 
-          ignore (Thread.sigmask Unix.SIG_UNBLOCK [Sys.sigint]);
           ignore (Thread.sigmask Unix.SIG_UNBLOCK [Sys.sigvtalrm]);
           lock_world ();
           let saved_use_library= !MultiPassDisambiguator.use_library in
@@ -640,13 +639,12 @@ class gui () =
        let force_interrupt n =
          (* This function is called every 1s (see Unix.setitimer call above) *)
          !old_callback n;
+         (* it may be a masked interrupt for the previous thread that arrives
+            late *)
          if Some(Thread.id(Thread.self())) = !interrupt then
           (interrupt := None; raise Sys.Break)
-         else if !interrupt <> None then
-           (* Code executed in the non-worker thread; delay it to let the
-              worker thread catch the signal *)
-           Thread.delay 3.;
        in
+       ignore (Thread.sigmask Unix.SIG_BLOCK [Sys.sigvtalrm]);
        ignore (Unix.setitimer Unix.ITIMER_VIRTUAL {Unix.it_interval = 1.; it_value = 1.});
        let _ =
         match Sys.signal Sys.sigvtalrm (Sys.Signal_handle force_interrupt) with
