@@ -36,6 +36,7 @@
  (files
   (glob_files_rec lib/*)
   (glob_files_rec help/C/*.xml)
+  (glob_files_rec help/C/version.txt)
   (glob_files_rec help/C/figures/*)
   (glob_files_rec icons/*)
   matita.gtkrc
