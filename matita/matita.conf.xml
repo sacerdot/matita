@@ -18,7 +18,7 @@
     <!-- remove the old objects before putting the new ones -->
     <key name="remove_old_objects">false</key>
     <!-- Where support files are installed -->
-    <key name="rt_base_dir">/home/claudio/ricerca/matita5/helm/matita/matita</key>
+    <key name="rt_base_dir">rt_base_dir_from_matita_conf_xml</key>
     <!-- Metadata owner. It will be used to create user-specific tables
     in the SQL database. -->
     <key name="owner">$(user.name)</key>
