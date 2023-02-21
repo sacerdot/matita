@@ -67,6 +67,7 @@ let main_compiler () =
         HLog.error (snd (MatitaExcPp.to_string exn)); false) && b
    ) true targets
   then 
+    let () = DeduktiExtraction.output_modules () in
     (HLog.message "Compilation successful"; 0)
   else
     (HLog.message "Compilation failed"; 1)

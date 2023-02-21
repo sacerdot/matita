@@ -1,6 +1,6 @@
 (library
  (name helm_ng_library)
- (libraries helm_ng_refiner helm_registry helm_library)
+ (libraries helm_ng_refiner helm_registry helm_library helm_ng_extraction)
  (wrapped false))
 (env
   (_

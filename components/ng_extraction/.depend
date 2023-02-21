@@ -30,3 +30,9 @@ ocamlExtraction.cmi : ocamlExtractionTable.cmi
 ocamlExtractionTable.cmo : miniml.cmo coq.cmi ocamlExtractionTable.cmi
 ocamlExtractionTable.cmx : miniml.cmx coq.cmx ocamlExtractionTable.cmi
 ocamlExtractionTable.cmi : miniml.cmo coq.cmi
+dedukti.cmo : dedukti.cmi
+dedukti.cmx : dedukti.cmi
+deduktiPrint.cmo : dedukti.cmi deduktiPrint.cmi
+deduktiPrint.cmx : dedukti.cmx deduktiPrint.cmi
+deduktiExtraction.cmo : deduktiPrint.cmi dedukti.cmi deduktiExtraction.cmi
+deduktiExtraction.cmx : deduktiPrint.cmx dedukti.cmx deduktiExtraction.cmi

@@ -370,6 +370,7 @@ let add_obj status ((u,_,_,_,_) as orig_obj) =
          ) il)
   in
   local_aliases := references @ !local_aliases;
+  DeduktiExtraction.extract_obj (status :> NCic.status) orig_obj;
   status#set_timestamp (!storage,!local_aliases)
 ;;
 
@@ -383,6 +384,7 @@ let add_constraint status ~acyclic u1 u2 =
    (prerr_endline "CANNOT ADD A CONSTRAINT TWICE"; assert false);
   NCicEnvironment.add_lt_constraint ~acyclic u1 u2;
   storage := (`Constr (u1,u2)) :: !storage;
+  DeduktiExtraction.extract_constraint (status :> NCic.status) u1 u2;
   status#set_timestamp (!storage,!local_aliases)
 ;;
 

@@ -202,6 +202,9 @@ let parse_cmdline init_status =
         "-extract_ocaml", 
           Arg.Unit (fun () -> Helm_registry.set_bool "extract_ocaml" true),
           "Extract ocaml code";
+       "-extract_dedukti",
+           Arg.Unit (fun () -> Helm_registry.set_bool "extract_dedukti" true),
+           "Extract dedukti code";
         "-force",
             Arg.Unit (fun () -> Helm_registry.set_bool "matita.force" true),
             ("Force actions that would not be executed per default");
