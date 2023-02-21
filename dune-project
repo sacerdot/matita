@@ -32,6 +32,8 @@
    (ocaml (and (>= "4.14.1") (< "5.0.0")))
    (ocaml-expat (>= 1.1.0))
    (pcre (>= 7.5.0))
+   (sedlex (>= 3.0))
+   (uuseg (>= 15.0.0))
    ;(ocamlnet (>= 4.1.9.git)) ; used only by ocaml-http
    ;(ocaml-http (>= 0.1.6))   ; no longer really used, replaced by failing stubs
                               ; in components/ocaml_http_stubs

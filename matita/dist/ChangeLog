@@ -1,3 +1,8 @@
+0.99.5 - 21/02/2022 - beta version for the 1.x series
+	* ported to ocaml 4.14.1
+	* uses sedlex in place of ulex-camlp5
+	* drop dependencies over ocamlnet
+
 0.99.4 - 26/12/2018 - beta version for the 1.x series
 	* ported to lablgkt3, ulex-camlp5 1.2, ocaml 4.07
 	* bug fix: aliases were no longer added automatically to the script

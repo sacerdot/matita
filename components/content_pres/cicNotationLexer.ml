@@ -226,9 +226,10 @@ let rec level2_pattern_token_group counter buffer lexbuf =
       Buffer.add_string buffer (Sedlexing.Utf8.lexeme lexbuf) ;
       ignore (level2_pattern_token_group (counter + 1) buffer lexbuf) ;
       level2_pattern_token_group counter buffer lexbuf
-  | _ -> 
+  | any -> 
       Buffer.add_string buffer (Sedlexing.Utf8.lexeme lexbuf) ;
       level2_pattern_token_group counter buffer lexbuf
+  | _ -> assert false
 
 let read_unparsed_group token_name lexbuf =
   let buffer = Buffer.create 16 in
@@ -260,7 +261,7 @@ let rec level2_meta_token lexbuf =
       return lexbuf ("UNPARSED_AST",
         remove_left_quote (Sedlexing.Utf8.lexeme lexbuf))
   | eof -> return_eoi lexbuf
-  | _ -> raise Sedlexing.MalFormed (*CSC: ???*)
+  | _ -> assert false (*raise Sedlexing.MalFormed (*CSC: ???*)*)
 
 let rec comment_token acc depth lexbuf =
   match%sedlex lexbuf with
@@ -272,9 +273,10 @@ let rec comment_token acc depth lexbuf =
       if depth = 0
       then acc
       else comment_token acc (depth - 1) lexbuf
-  | _ ->
+  | any ->
       let acc = acc ^ Sedlexing.Utf8.lexeme lexbuf in
       comment_token acc depth lexbuf
+  | _ -> assert false
 
   (** @param k continuation to be invoked when no ligature has been found *)
 let ligatures_token k lexbuf =
@@ -289,7 +291,7 @@ let ligatures_token k lexbuf =
           return_symbol lexbuf default_lig)
   | eof -> return_eoi lexbuf
   | _ ->  (* not a ligature, rollback and try default lexer *)
-      Sedlexing.rollback lexbuf;
+      Sedlexing.rollback lexbuf; (*CSC: is it necessary/correct? nothing has been matched... *)
       k lexbuf
 
 let rec level2_ast_token status lexbuf =
@@ -330,10 +332,12 @@ let rec level2_ast_token status lexbuf =
       in
       return lexbuf ("NOTE", comment) *)
       ligatures_token (level2_ast_token status) lexbuf
-  | begincomment -> return lexbuf ("BEGINCOMMENT","")
+  | begincomment ->
+      return lexbuf ("BEGINCOMMENT","")
   | endcomment -> return lexbuf ("ENDCOMMENT","")
   | eof -> return_eoi lexbuf
-  | _ -> return_symbol lexbuf (Sedlexing.Utf8.lexeme lexbuf)
+  | any -> return_symbol lexbuf (Sedlexing.Utf8.lexeme lexbuf)
+  | _ -> assert false
 
 and level1_pattern_token lexbuf =
   match%sedlex lexbuf with
@@ -353,7 +357,8 @@ and level1_pattern_token lexbuf =
   | '(' -> return lexbuf ("LPAREN", "")
   | ')' -> return lexbuf ("RPAREN", "")
   | eof -> return_eoi lexbuf
-  | _ -> return_symbol lexbuf (Sedlexing.Utf8.lexeme lexbuf)
+  | any -> return_symbol lexbuf (Sedlexing.Utf8.lexeme lexbuf)
+  | _ -> assert false
 
 let level1_pattern_token = ligatures_token level1_pattern_token
 let level2_ast_token status = ligatures_token (level2_ast_token status)
