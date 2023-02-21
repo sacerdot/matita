@@ -29,7 +29,8 @@ module Pres = Mpresentation
 
 (** {2 Pretty printing from BoxML to strings} *)
 
-let utf8_string_length s = Utf8.compute_len s 0 (String.length s)
+let utf8_string_length s =
+ Uuseg_string.fold_utf_8 `Grapheme_cluster (fun x _ -> x + 1) 0 s
 
 let string_space = " "
 let string_space_len = utf8_string_length string_space

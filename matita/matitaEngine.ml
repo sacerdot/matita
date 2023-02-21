@@ -371,7 +371,7 @@ and compile ~compiling ~asserted ~include_paths fname =
                                                              "foo.con")));
     let buf =
       GrafiteParser.parsable_statement status
-        (Ulexing.from_utf8_channel (open_in fname))
+        (Sedlexing.Utf8.from_channel (open_in fname))
     in
     let print_cb =
       if not (Helm_registry.get_bool "matita.verbose") then fun _ _ -> ()

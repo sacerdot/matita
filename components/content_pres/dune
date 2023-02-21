@@ -1,8 +1,10 @@
 (library
  (name helm_content_pres)
- (libraries helm_content helm_syntax_extensions camlp5.gramlib ulex-camlp5 helm_grafite)
- (preprocess (action (system "camlp5o -I components/syntax_extensions -I `ocamlfind query ulex-camlp5` pa_extend.cmo pa_ulex.cma helm_syntax_extensions.cma pa_unicode_macro.cma -loc loc %{input-file}")))
+ (libraries sedlex uuseg.string helm_content helm_syntax_extensions camlp5.gramlib helm_grafite)
  (preprocessor_deps ../syntax_extensions/pa_unicode_macro.cma ../syntax_extensions/helm_syntax_extensions.cma)
+ (preprocess (per_module
+   ((pps sedlex.ppx) cicNotationLexer)
+   ((action (system "camlp5o -I components/syntax_extensions pa_extend.cmo helm_syntax_extensions.cma pa_unicode_macro.cma -loc loc %{input-file}")) cicNotationParser box mpresentation)))
  (wrapped false))
 (env
   (_

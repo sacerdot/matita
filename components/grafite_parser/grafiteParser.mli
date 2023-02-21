@@ -48,6 +48,6 @@ val extend : (#status as 'status) ->
   * always raise NoInclusionPerformed *) 
 (** @raise End_of_file *)
 type parsable
-val parsable_statement: #status -> Ulexing.lexbuf -> parsable
+val parsable_statement: #status -> Sedlexing.lexbuf -> parsable
 val parse_statement: #status -> parsable -> GrafiteAst.statement
-val strm_of_parsable: parsable -> Ulexing.lexbuf
+val strm_of_parsable: parsable -> Sedlexing.lexbuf

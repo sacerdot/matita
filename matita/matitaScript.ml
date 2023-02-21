@@ -189,7 +189,7 @@ and eval_statement include_paths (buffer : GText.buffer) status script
         if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
         let strm =
          GrafiteParser.parsable_statement status
-          (Ulexing.from_utf8_string text) in
+          (Sedlexing.Utf8.from_string text) in
         let ast = MatitaEngine.get_ast status include_paths strm in
          ast, text
     | `Ast (st, text) -> st, text
@@ -964,7 +964,7 @@ object (self)
       if Pcre.pmatch ~rex:only_dust_RE s then raise Margin;
       let strm =
        GrafiteParser.parsable_statement status
-        (Ulexing.from_utf8_string s)in
+        (Sedlexing.Utf8.from_string s)in
       match GrafiteParser.parse_statement status strm with
       | GrafiteAst.Comment (loc,_) -> 
           let _,parsed_text_length = MatitaGtkMisc.utf8_parsed_text s loc in

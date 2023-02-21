@@ -1,7 +1,7 @@
 (library
  (name helm_grafite_parser)
- (libraries helm_grafite ulex-camlp5 helm_ng_disambiguation helm_ng_library helm_content_pres)
- (preprocess (action (system "camlp5o -I components/syntax_extensions -I `ocamlfind query ulex-camlp5` pa_extend.cmo pa_ulex.cma helm_syntax_extensions.cma pa_unicode_macro.cma -loc loc %{input-file}")))
+ (libraries helm_grafite helm_ng_disambiguation helm_ng_library helm_content_pres)
+ (preprocess (action (system "camlp5o -I components/syntax_extensions pa_extend.cmo helm_syntax_extensions.cma pa_unicode_macro.cma -loc loc %{input-file}")))
  (preprocessor_deps ../syntax_extensions/pa_unicode_macro.cma ../syntax_extensions/helm_syntax_extensions.cma)
  (wrapped false))
 (env

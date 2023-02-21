@@ -42,7 +42,7 @@ let exc_located_wrapper f =
       raise (HExtlib.Localized 
         (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
 
-type parsable = Grammar.parsable * Ulexing.lexbuf
+type parsable = Grammar.parsable * Sedlexing.lexbuf
 
 let parsable_statement status buf =
  let grammar = CicNotationParser.level2_ast_grammar status in
@@ -559,11 +559,11 @@ EXTEND
           [ blob = UNPARSED_AST ->
               add_raw_attribute ~text:(Printf.sprintf "@{%s}" blob)
                 (CicNotationParser.parse_level2_ast lstatus
-                  (Ulexing.from_utf8_string blob))
+                  (Sedlexing.Utf8.from_string blob))
           | blob = UNPARSED_META ->
               add_raw_attribute ~text:(Printf.sprintf "${%s}" blob)
                 (CicNotationParser.parse_level2_meta lstatus
-                  (Ulexing.from_utf8_string blob))
+                  (Sedlexing.Utf8.from_string blob))
           ] ->
             let assoc =
               match assoc with
@@ -573,7 +573,7 @@ EXTEND
             let p1 =
               add_raw_attribute ~text:s
                 (CicNotationParser.parse_level1_pattern lstatus prec
-                  (Ulexing.from_utf8_string s))
+                  (Sedlexing.Utf8.from_string s))
             in
             (dir, p1, assoc, prec, p2)
       ]

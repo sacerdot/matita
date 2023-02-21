@@ -553,7 +553,7 @@ EXTEND
     [ magic = l2_magic -> Ast.Magic magic
     | var = l2_variable -> Ast.Variable var
     | blob = UNPARSED_AST ->
-        parse_level2_ast grammars (Ulexing.from_utf8_string blob)
+        parse_level2_ast grammars (Sedlexing.Utf8.from_string blob)
     ]
   ];
 END
@@ -628,7 +628,7 @@ EXTEND
         List.map (fun n -> Ast.Ident (n, None)) names, Some ty
     | name = IDENT -> [Ast.Ident (name, None)], None
     | blob = UNPARSED_META ->
-        let meta = parse_level2_meta grammars (Ulexing.from_utf8_string blob) in
+        let meta = parse_level2_meta grammars (Sedlexing.Utf8.from_string blob) in
         match meta with
         | Ast.Variable (Ast.FreshVar _) -> [meta], None
         | Ast.Variable (Ast.TermVar ("_",_)) -> [Ast.Ident ("_", None)], None
@@ -638,7 +638,7 @@ EXTEND
   single_arg: [
     [ name = IDENT -> Ast.Ident (name, None)
     | blob = UNPARSED_META ->
-        let meta = parse_level2_meta grammars (Ulexing.from_utf8_string blob) in
+        let meta = parse_level2_meta grammars (Sedlexing.Utf8.from_string blob) in
         match meta with
         | Ast.Variable (Ast.FreshVar _)
         | Ast.Variable (Ast.IdentVar _) -> meta
@@ -649,7 +649,7 @@ EXTEND
   ident: [
     [ name = IDENT -> Env.Ident name
     | blob = UNPARSED_META ->
-        let meta = parse_level2_meta grammars (Ulexing.from_utf8_string blob) in
+        let meta = parse_level2_meta grammars (Sedlexing.Utf8.from_string blob) in
         match meta with
         | Ast.Variable (Ast.FreshVar _) ->
            (* it makes sense: extend Env.ident_or_var *)
@@ -797,7 +797,7 @@ EXTEND
           return_term loc (Ast.Cast (p1, p2))
       | LPAREN; p = term; RPAREN -> p
       | blob = UNPARSED_META ->
-          parse_level2_meta grammars (Ulexing.from_utf8_string blob)
+          parse_level2_meta grammars (Sedlexing.Utf8.from_string blob)
       ]
     ];
 END

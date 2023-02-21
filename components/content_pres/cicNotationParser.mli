@@ -52,11 +52,11 @@ val refresh_uri_in_checked_l1_pattern:
 
   (** concrete syntax pattern: notation level 1, the 
    *  integer is the precedence *)
-val parse_level1_pattern: #status -> int -> Ulexing.lexbuf -> NotationPt.term
+val parse_level1_pattern: #status -> int -> Sedlexing.lexbuf -> NotationPt.term
 
   (** AST pattern: notation level 2 *)
-val parse_level2_ast: #status -> Ulexing.lexbuf -> NotationPt.term
-val parse_level2_meta: #status -> Ulexing.lexbuf -> NotationPt.term
+val parse_level2_ast: #status -> Sedlexing.lexbuf -> NotationPt.term
+val parse_level2_meta: #status -> Sedlexing.lexbuf -> NotationPt.term
 
 (** {2 Grammar extension} *)
 

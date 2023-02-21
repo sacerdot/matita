@@ -42,6 +42,7 @@ share_root: [
   "_build/install/default/share/matita/myshare/help/C/sec_usernotation.xml" {"matita/myshare/help/C/sec_usernotation.xml"}
   "_build/install/default/share/matita/myshare/help/C/tactic_quickref.xml" {"matita/myshare/help/C/tactic_quickref.xml"}
   "_build/install/default/share/matita/myshare/help/C/tactics_quickref.xml" {"matita/myshare/help/C/tactics_quickref.xml"}
+  "_build/install/default/share/matita/myshare/help/C/version.txt" {"matita/myshare/help/C/version.txt"}
   "_build/install/default/share/matita/myshare/icons/matita-32.xpm" {"matita/myshare/icons/matita-32.xpm"}
   "_build/install/default/share/matita/myshare/icons/matita-bulb-high.png" {"matita/myshare/icons/matita-bulb-high.png"}
   "_build/install/default/share/matita/myshare/icons/matita-bulb-low.png" {"matita/myshare/icons/matita-bulb-low.png"}
