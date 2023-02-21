@@ -9,7 +9,7 @@
 (generate_opam_files true)
 
 (source
- (uri git://matita.cs.unibo.it/git/helm))
+ (github sacerdot/matita))
 
 (authors "HELM Team (Andrea Asperti, Ferruccio Guidi, Luca Padovani, Claudio Sacerdoti Coen, Enrico Tassi, Stefano Zacchiroli et alt.)")
 
@@ -33,6 +33,7 @@
    (ocaml-expat (>= 1.1.0))
    (pcre (>= 7.5.0))
    (sedlex (>= 3.0))
+   (uutf (>= "1.0.0"))
    (uuseg (>= 15.0.0))
    ;(ocamlnet (>= 4.1.9.git)) ; used only by ocaml-http
    ;(ocaml-http (>= 0.1.6))   ; no longer really used, replaced by failing stubs
