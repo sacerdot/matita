@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "projdat/basic_type.ma".
+include "basic_type.ma".
 
 
 theorem base_iff: ∀b,y:bool. if b then y else y = y.
