@@ -1,0 +1,11 @@
+matita/broken_contribs/lambdadelta/bin/*/_build
+matita/broken_contribs/lambdadelta/.depend
+matita/broken_contribs/lambdadelta/bin/recomm/srcs
+matita/broken_contribs/lambdadelta/bin/recomm/log.txt
+matita/broken_contribs/lambdadelta/bin/recomm/subst.txt
+matita/broken_contribs/lambdadelta/bin/recomm/subst_cn.txt
+matita/broken_contribs/lambdadelta/bin/nodes
+matita/broken_contribs/lambdadelta/bin/token
+matita/broken_contribs/lambdadelta/*/probe.txt
+matita/broken_contribs/lambdadelta/*/deps.txt
+matita/broken_contribs/lambdadelta/*/web/*_sum.tbl
