@@ -442,7 +442,7 @@ module Translation (I : INFO) = struct
 
   let are_convertible context term1 term2 =
     NCicReduction.are_convertible I.status ~metasenv:[] ~subst:[]
-      (*~test_eq_only:true*) context.cic term1 term2
+      ~test_eq_only:true context.cic term1 term2
 
 
   let whd context term = NCicReduction.whd I.status ~subst:[] context.cic term

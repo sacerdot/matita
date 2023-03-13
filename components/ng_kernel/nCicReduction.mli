@@ -25,7 +25,7 @@ val set_get_relevance :
 
 val are_convertible :
   #NCic.status -> metasenv:NCic.metasenv -> subst:NCic.substitution ->
-  NCic.context -> NCic.term -> NCic.term -> bool
+  ?test_eq_only:bool -> NCic.context -> NCic.term -> NCic.term -> bool
 
 
 (* performs head beta/(delta)/cast reduction; the default is to not perform

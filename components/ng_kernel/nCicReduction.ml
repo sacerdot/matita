@@ -337,7 +337,7 @@ let alpha_eq (status:#NCic.status) ~test_lambda_source aux test_eq_only metasenv
 ;;
 
 (* t1, t2 must be well-typed *)
-let are_convertible status ~metasenv ~subst =
+let are_convertible status ~metasenv ~subst ?(test_eq_only=false) =
  let rec aux test_eq_only context t1 t2 =
   let alpha_eq status test_eq_only =
    alpha_eq status ~test_lambda_source:false aux test_eq_only metasenv subst
@@ -393,7 +393,7 @@ let are_convertible status ~metasenv ~subst =
      in
      convert_machines test_eq_only (put_in_whd (0,[],t1,[]) (0,[],t2,[]))
  in
-  aux false 
+  aux test_eq_only
 ;;
 
 let alpha_eq status metasenv subst =
