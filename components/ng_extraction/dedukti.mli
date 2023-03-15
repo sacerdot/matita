@@ -64,3 +64,5 @@ type entry =
 (** Content of a dedukti file
     WARNING: Signatures are stored in reverse order. **)
 type signature = entry list
+
+val dk_keywords : string list

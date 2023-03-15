@@ -120,3 +120,5 @@ type entry =
   | Comment of string
 
 type signature = entry list
+
+let dk_keywords = [ "thm"; "def"; "injective" ]

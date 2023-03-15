@@ -89,8 +89,10 @@ let reference_table : (string * string, D.const) Hashtbl.t = Hashtbl.create 100
 (** Set of dedukti constants **)
 let constants_table : (D.const, unit) Hashtbl.t = Hashtbl.create 100
 
+let escape_keyword name = if List.mem name D.dk_keywords then (^) name "_" else name
+
 (** Escape illegal names. **)
-let escape_name name = if name = "_" then "__" else name
+let escape_name name = if name = "_" then "__" else (escape_keyword name)
 
 let fresh_const (baseuri, name) =
   let modname' = translate_baseuri baseuri in
