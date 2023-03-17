@@ -15,9 +15,7 @@
 include "delayed_updating/relocation/tr_minus_pn.ma".
 include "ground/relocation/tr_pap_pn.ma".
 include "ground/relocation/tr_pap_lt.ma".
-include "ground/arith/nat_rplus_succ.ma".
-include "ground/arith/nat_minus_pminus.ma".
-include "ground/arith/pnat_le.ma".
+include "ground/arith/pnat_le_nrminus_nrplus.ma".
 
 (* RIGHT SUBTRACTION FOR TOTAL RELOCATION MAPS ******************************)
 
@@ -44,7 +42,7 @@ lemma tr_pap_minus_le (n) (p) (f):
 ]
 qed-.
 
-lemma tr_pap_minus_ge (n:nat) (p:pnat) (f):
+lemma tr_pap_minus_ge (n) (p) (f):
       p + n ≤ f＠⧣❨p❩ →
       f＠⧣❨p❩-n = (f-n)＠⧣❨p❩.
 #n @(nat_ind_succ … n) -n [| #n #IHn ]
@@ -54,15 +52,16 @@ lemma tr_pap_minus_ge (n:nat) (p:pnat) (f):
   [ <tr_cons_pap_unit <nrplus_unit_sn #H0
     elim (ple_inv_succ_unit … H0)
   |2,4:
-    <tr_pap_next <nrplus_succ_dx #Hf
-    lapply (ple_inv_succ_bi … Hf) -Hf #Hf
-    <tr_minus_next_succ >nsucc_inj /2 width=1 by/
-  | <tr_minus_push_succ <tr_pap_push <tr_pap_push <nrplus_succ_sn #Hf
-    lapply (ple_inv_succ_bi … Hf) -Hf #Hf
-    >nsucc_inj >nsucc_inj <IHp -IHp //
-    <nminus_inj_bi
-    [ <nminus_inj_bi 
-      [ <nsucc_inj @eq_f
-(*
-    <nminus_succ_sn //
-*)
+    <tr_pap_next <nrplus_succ_dx #Hg
+    lapply (ple_inv_succ_bi … Hg) -Hg #Hg
+    <tr_minus_next_succ <nrminus_succ_bi /2 width=1 by/
+  | <tr_minus_push_succ <tr_pap_push <tr_pap_push <nrplus_succ_sn #Hg
+    lapply (ple_inv_succ_bi … Hg) -Hg #Hg
+    <IHp -IHp -IHn // <nrminus_succ_bi <nrminus_succ_dx
+    elim (pnat_split_unit_pos (g＠⧣❨p❩-n)) // #H0
+    <nrplus_succ_shift in Hg; #Hg
+    lapply (pnat_le_nrminus_dx … Hg) <H0 -n -g #H0
+    elim (ple_inv_succ_unit … H0)
+  ]
+]
+qed-.
