@@ -121,4 +121,15 @@ type entry =
 
 type signature = entry list
 
-let dk_keywords = [ "thm"; "def"; "injective" ]
+let dk_keywords = [ 
+  "Type";
+  "defac";
+  "defacu";
+  "private";
+  "require";
+  "assert";
+  "thm";
+  "def";
+  "injective"
+]
+
