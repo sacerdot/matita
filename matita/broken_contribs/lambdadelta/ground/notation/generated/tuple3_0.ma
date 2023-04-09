@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR DELAYED UPDATING ********************************************)
+(* NOTATION FOR GENERATED LIBRARY *******************************************)
 
-notation "hvbox( a ∗∗ break b )"
-  left associative with precedence 65
-  for @{ 'Power $a $b }.
+notation "hvbox( 〈 ·, break ·, break · 〉 )"
+  non associative with precedence 90
+  for @{ 'Tuple3 }.

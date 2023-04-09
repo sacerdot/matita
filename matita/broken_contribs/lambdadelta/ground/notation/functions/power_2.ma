@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "hvbox( 𝐌❨ term 46 n, break term 46 c ❩ )"
-  non associative with precedence 45
-  for @{ 'PredicateM $n $c }.
+notation "hvbox( a ∗∗ break b )"
+  left associative with precedence 65
+  for @{ 'Power $a $b }.

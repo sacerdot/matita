@@ -12,8 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/lib/list_singleton.ma".
+include "ground/lib/list_append.ma".
+include "ground/arith/nat_plus.ma".
 
-notation "hvbox( 𝐌❨ term 46 n, break term 46 c ❩ )"
-  non associative with precedence 45
-  for @{ 'PredicateM $n $c }.
+(* SINGLETON FOR LISTS ******************************************************)
+
+(* Constructions with list_append *******************************************)
+
+lemma list_singleton_append (A) (a) (m) (n):
+      a^(m+n) = a^n ⨁{A} a^m.
+#A #a #m #n @(nat_ind_succ … n) -n [ // | #n #IH ]
+<nplus_succ_dx <list_singleton_succ_lcons >IH -IH //
+qed.

@@ -12,8 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+(* NOTATION FOR GENERATED LIBRARY *******************************************)
 
-notation "hvbox( 𝐌❨ term 46 n, break term 46 c ❩ )"
-  non associative with precedence 45
-  for @{ 'PredicateM $n $c }.
+notation > "hvbox( 〈 term 19 a0 opt ( : term 19 A0 ), break term 19 a1 opt ( : term 19 A1 ), break term 19 a2 opt ( : term 19 A2 ) 〉 )"
+  non associative with precedence 90
+  for @{ 'Tuple ${default @{$A0}@{?}} ${default @{$A1}@{?}} ${default @{$A2}@{?}} $a0 $a1 $a2 }.
+
+notation < "hvbox( 〈 term 19 a0, break term 19 a1, break term 19 a2 〉 )"
+  non associative with precedence 90
+  for @{ 'Tuple $A0 $A1 $A2 $a0 $a1 $a2 }.

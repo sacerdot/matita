@@ -12,8 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/lib/list_singleton_append.ma".
+include "ground/lib/list_rcons.ma".
 
-notation "hvbox( 𝐌❨ term 46 n, break term 46 c ❩ )"
-  non associative with precedence 45
-  for @{ 'PredicateM $n $c }.
+(* SINGLETON FOR LISTS ******************************************************)
+
+(* Constructions with list_rcons ********************************************)
+
+lemma list_singleton_succ_rcons (A) (a) (n):
+      a^n ⨭ a = a^{A}↑n.
+#A #a #n
+>nplus_unit_sn >list_singleton_append //
+qed.
+
+lemma list_singleton_cons_shift (A) (a) (n):
+      a ⨮ a^n = a^n ⨭{A} a.
+#A #a #n //
+qed.

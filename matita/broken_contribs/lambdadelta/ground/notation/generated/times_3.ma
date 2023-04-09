@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+(* NOTATION FOR GENERATED LIBRARY *******************************************)
 
-notation "hvbox( 𝐌❨ term 46 n, break term 46 c ❩ )"
-  non associative with precedence 45
-  for @{ 'PredicateM $n $c }.
+notation "hvbox(⨉ term 34 P0 break & term 34 P1 break & term 34 P2)"
+  non associative with precedence 35
+  for @{ 'Times $P0 $P1 $P2 }.

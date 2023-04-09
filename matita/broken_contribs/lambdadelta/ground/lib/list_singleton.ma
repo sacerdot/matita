@@ -12,8 +12,38 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/arith/nat_succ_iter.ma".
+include "ground/lib/list.ma".
 
-notation "hvbox( 𝐌❨ term 46 n, break term 46 c ❩ )"
-  non associative with precedence 45
-  for @{ 'PredicateM $n $c }.
+(* SINGLETON FOR LISTS ******************************************************)
+
+definition list_singleton (n) (A) (a): list A ≝
+           ((list_lcons A a)^n) (ⓔ).
+
+interpretation
+  "singleton (lists)"
+  'Exp A a n = (list_singleton n A a).
+
+(* Basic constructions ******************************************************)
+
+lemma list_singleton_unfold (A) (a) (n):
+      ((list_lcons ? a)^n) (ⓔ) = a^{A}n.
+// qed.
+
+lemma list_singleton_zero (A) (a):
+      ⓔ = a^{A}𝟎.
+// qed.
+
+lemma list_singleton_succ_lcons (A) (a) (n):
+      a ⨮ (a^n) = a^{A}↑n.
+#A #a #n
+<list_singleton_unfold <list_singleton_unfold <niter_succ //
+qed.
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_list_empty_singleton (A) (a) (n):
+      ⓔ = a^{A}n → 𝟎 = n.
+#A #a #n @(nat_ind_succ … n) -n //
+#n #_ <list_singleton_succ_lcons #H0 destruct
+qed-.
