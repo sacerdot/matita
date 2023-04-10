@@ -12,27 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/logic.ma".
-include "ground/notation/generated/times_3.ma".
-include "ground/notation/generated/tuple_6.ma".
-include "ground/notation/generated/tuple3_0.ma".
+(* NOTATION FOR GROUND ******************************************************)
 
-(* GENERATED LIBRARY ********************************************************)
+notation > "hvbox( 〈 term 19 a0 opt ( : break term 19 A0 ), break term 19 a1 opt ( : break term 19 A1 ), break term 19 a2 opt ( : break term 19 A2 ), break term 19 a3 opt ( : break term 19 A3 ) 〉 )"
+  non associative with precedence 90
+  for @{ 'Tuple ${default @{$A0}@{?}} ${default @{$A1}@{?}} ${default @{$A2}@{?}} ${default @{$A3}@{?}} $a0 $a1 $a2 $a3 }.
 
-record prod_3 (A1,A2,A3:Type[0]): Type[0] ≝
-  { proj_3_1: A1
-  ; proj_3_2: A2
-  ; proj_3_3: A3
-  }.
-
-interpretation
-  "product 3"
-  'Times A1 A2 A3 = (prod_3 A1 A2 A3).
-
-interpretation
-  "tuple 3"
-  'Tuple A1 A2 A3 a1 a2 a3 = (mk_prod_3 A1 A2 A3 a1 a2 a3).
-
-interpretation
-  "abstract tuple 3"
-  'Tuple3 = (mk_prod_3 ? ? ?).
+notation < "hvbox( 〈 term 19 a0, break term 19 a1, break term 19 a2, break term 19 a3 〉 )"
+  non associative with precedence 90
+  for @{ 'Tuple $A0 $A1 $A2 $A3 $a0 $a1 $a2 $a3 }.

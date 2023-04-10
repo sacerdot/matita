@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GENERATED LIBRARY *******************************************)
+(* NOTATION FOR GROUND ******************************************************)
 
 notation "hvbox( 〈 ·, break ·, break · 〉 )"
   non associative with precedence 90

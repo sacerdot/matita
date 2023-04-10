@@ -20,9 +20,9 @@ include "ground/counters/rtc.ma".
 
 definition rtc_max (c1:rtc) (c2:rtc): rtc ≝
 match c1 with
-[ mk_rtc ri1 rs1 ti1 ts1 ⇒
+[ mk_prod_4 ri1 rs1 ti1 ts1 ⇒
   match c2 with
-  [ mk_rtc ri2 rs2 ti2 ts2 ⇒ 〈ri1∨ri2,rs1∨rs2,ti1∨ti2,ts1∨ts2〉
+  [ mk_prod_4 ri2 rs2 ti2 ts2 ⇒ 〈ri1∨ri2,rs1∨rs2,ti1∨ti2,ts1∨ts2〉
   ]
 ].
 

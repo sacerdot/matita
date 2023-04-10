@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GENERATED LIBRARY *******************************************)
+(* NOTATION FOR GROUND ******************************************************)
 
-notation "hvbox(⨉ term 34 P0 break & term 34 P1 break & term 34 P2)"
+notation "hvbox( ⨉ term 34 A0 & break term 34 A1 & break term 34 A2 )"
   non associative with precedence 35
-  for @{ 'Times $P0 $P1 $P2 }.
+  for @{ 'Times $A0 $A1 $A2 }.

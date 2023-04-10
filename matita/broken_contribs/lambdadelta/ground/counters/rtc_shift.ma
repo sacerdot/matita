@@ -21,7 +21,7 @@ include "ground/counters/rtc.ma".
 
 definition rtc_shift (c:rtc): rtc ≝
 match c with
-[ mk_rtc ri rs ti ts ⇒ 〈ri ∨ rs, 𝟎, ti ∨ ts, 𝟎〉 
+[ mk_prod_4 ri rs ti ts ⇒ 〈ri ∨ rs, 𝟎, ti ∨ ts, 𝟎〉 
 ].
 
 interpretation

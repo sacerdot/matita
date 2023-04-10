@@ -12,42 +12,46 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/xoa/ex_1_2.ma".
-include "ground/notation/functions/tuple_4.ma".
 include "ground/notation/functions/zerozero_0.ma".
 include "ground/notation/functions/zeroone_0.ma".
 include "ground/notation/functions/onezero_0.ma".
+include "ground/xoa/ex_1_2.ma".
+include "ground/generated/prod_4.ma".
 include "ground/generated/insert_eq_1.ma".
 include "ground/arith/nat.ma".
 
 (* RT-TRANSITION COUNTERS ***************************************************)
 
-record rtc: Type[0] ≝ {
-(* Note: inner r-steps *)
-   ri: nat;
-(* Note: spine r-steps *)
-   rs: nat;
-(* Note: inner t-steps *)
-   ti: nat;
-(* Note: spine t-steps *)
-   ts: nat
-}.
+definition rtc: Type[0] ≝
+           (⨉ nat & nat & nat & nat).
 
-interpretation
-  "construction (rt-transition counters)"
-  'Tuple ri rs ti ts = (mk_rtc ri rs ti ts).
+(* Note: inner r-steps *)
+definition ri: rtc → nat ≝
+           proj_4_1 ????.
+
+(* Note: spine r-steps *)
+definition rs: rtc → nat ≝
+           proj_4_2 ????.
+
+(* Note: inner t-steps *)
+definition ti: rtc → nat ≝
+           proj_4_3 ????.
+
+(* Note: spine t-steps *)
+definition ts: rtc → nat ≝
+           proj_4_4 ????.
 
 interpretation
   "one structural step (rt-transition counters)"
-  'ZeroZero = (mk_rtc nzero nzero nzero nzero).
+  'ZeroZero = (mk_prod_4 ???? nzero nzero nzero nzero).
 
 interpretation
   "one r-step (rt-transition counters)"
-  'OneZero = (mk_rtc nzero (ninj punit) nzero nzero).
+  'OneZero = (mk_prod_4 ???? nzero (ninj punit) nzero nzero).
 
 interpretation
   "one t-step (rt-transition counters)"
-  'ZeroOne = (mk_rtc nzero nzero nzero (ninj punit)).
+  'ZeroOne = (mk_prod_4 ???? nzero nzero nzero (ninj punit)).
 
 definition rtc_eq_f: relation rtc ≝ λc1,c2. ⊤.
 

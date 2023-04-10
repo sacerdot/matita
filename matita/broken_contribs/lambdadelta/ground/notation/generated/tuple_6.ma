@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GENERATED LIBRARY *******************************************)
+(* NOTATION FOR GROUND ******************************************************)
 
-notation > "hvbox( 〈 term 19 a0 opt ( : term 19 A0 ), break term 19 a1 opt ( : term 19 A1 ), break term 19 a2 opt ( : term 19 A2 ) 〉 )"
+notation > "hvbox( 〈 term 19 a0 opt ( : break term 19 A0 ), break term 19 a1 opt ( : break term 19 A1 ), break term 19 a2 opt ( : break term 19 A2 ) 〉 )"
   non associative with precedence 90
   for @{ 'Tuple ${default @{$A0}@{?}} ${default @{$A1}@{?}} ${default @{$A2}@{?}} $a0 $a1 $a2 }.
 
