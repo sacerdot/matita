@@ -1,0 +1,62 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "delayed_updating/syntax/path.ma".
+include "delayed_updating/notation/relations/white_righttriangle_6.ma".
+include "ground/relocation/tr_map.ma".
+include "ground/arith/nat_succ.ma".
+(* include "ground/notation/functions/element_e_0.ma". *)
+include "ground/notation/functions/black_halfcircleright_3.ma".
+
+(* TAILED NEDERPELT UNWIND FOR RELOCATION MAP *******************************)
+
+inductive stack: Type[0] :=
+| stack_empty: stack
+| stack_lcons: nat → nat → stack → stack
+.
+
+interpretation
+  "empty (stack)"
+  'ElementE = (stack_empty).
+
+interpretation
+  "left cons (stack)"
+  'BlackHalfCircleRight d h s = (stack_lcons d h s).
+
+inductive unwind_rmap (f): relation5 path nat nat stack tr_map ≝
+| ur_L_succ (q) (m) (n) (s) (g):
+  unwind_rmap f q m n s g → unwind_rmap f (q◖𝗟) (↑m) n s g
+| ur_A_succ (q) (m) (n) (s) (g):
+  unwind_rmap f q (↑m) n s g → unwind_rmap f (q◖𝗔) (↑m) n s g
+| ur_S_succ (q) (m) (n) (s) (g):
+  unwind_rmap f q (↑m) n s g → unwind_rmap f (q◖𝗦) (↑m) n s g
+| ur_d_succ (q) (m) (n) (s) (g) (k:pnat):
+  unwind_rmap f q k (𝟏) (❨↑m,n❩◗s) g → unwind_rmap f (q◖𝗱k) (↑m) n s g
+| ur_m (q) (m) (n) (s) (g):
+  unwind_rmap f q m n s g → unwind_rmap f (q◖𝗺) m n s g
+| ur_L_zero (q) (n) (s) (g):
+  unwind_rmap f q (𝟎) (↑↑n) s g → unwind_rmap f (q◖𝗟) (𝟎) (↑n) s g
+| ur_A_zero (q) (n) (s) (g):
+  unwind_rmap f q (𝟎) n s g → unwind_rmap f (q◖𝗔) (𝟎) (↑n) s g
+| ur_d_zero (q) (n) (s) (g) (k:pnat):
+  unwind_rmap f q (𝟎) (↑n) s g → unwind_rmap f (q◖𝗱k) (𝟎) (↑n) s g
+| ur_lcons (q) (m) (n) (s) (g):
+  unwind_rmap f q m n s g → unwind_rmap f q (𝟎) (𝟎) (❨m,n❩◗s) g
+| ur_empty (q):
+  unwind_rmap f q (𝟎) (𝟎) (𝐞) f
+.
+
+interpretation
+  "tailed nederpelt unwind (relocation map)"
+  'WhiteRightTriangle f m n s p g = (unwind_rmap f p m n s g).

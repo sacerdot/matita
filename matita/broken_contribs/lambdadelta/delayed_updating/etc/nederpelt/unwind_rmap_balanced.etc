@@ -1,0 +1,38 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "delayed_updating/nederpelt/unwind_rmap.ma".
+include "delayed_updating/syntax/path_balanced.ma".
+include "delayed_updating/syntax/path_structure.ma".
+include "delayed_updating/syntax/path_labels.ma".
+include "ground/arith/nat_pred_succ.ma".
+include "ground/lib/subset.ma".
+include "ground/xoa/ex_5_3.ma".
+
+(* TAILED NEDERPELT UNWIND FOR RELOCATION MAP *******************************)
+
+(**)
+
+lemma unwind_rmap_inv_gen (f) (r) (c) (m) (n):
+      ▷[f,m,n,c]r ≘ f →
+      ∨∨ ∃∃p,b,q. ⊗b ϵ 𝐁 &
+         p●(𝗔∗∗↓n)●𝗔◗b●𝗟◗q = r & m = ↑↓m & n = ↑↓n & 𝐞 = c
+       | ⊥.
+#f #r #c #m #n #H0 elim H0 -r -c -m -n
+[ #r #m #n #c #g #_ *
+  [ * #p #b #q #Hb #Hr #Hm #Hn #Hc
+    @or_introl @(ex5_3_intro … p b (q◖𝗟) Hb … Hn Hc) //
+  | *
+  ]
+| 
