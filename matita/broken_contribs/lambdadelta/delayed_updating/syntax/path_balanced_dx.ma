@@ -13,18 +13,20 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path_balanced.ma".
-include "delayed_updating/syntax/path_singleton.ma".
+include "delayed_updating/syntax/path_depth.ma".
+include "ground/arith/wf1_ind_nlt.ma".
+include "ground/arith/nat_lt_plus.ma".
 
 (* BALANCE CONDITION FOR PATH ***********************************************)
 
-(* Constructions with singleton for path ************************************)
+(* Advanced eliminators *****************************************************)
 
-lemma pbc_redexes (n) (b):
-      b ϵ 𝐁 → (𝗔∗∗n)●b● 𝗟∗∗n ϵ 𝐁.
-#n @(nat_ind_succ … n) -n [| #n #IH ] #b #Hb
-[ <list_singleton_zero //
-| <list_singleton_succ_rcons <list_singleton_succ_lcons
-  >path_append_lcons_append <path_append_append_lcons
-  /3 width=1 by pbc_redex/
-]
-qed.
+lemma pbc_ind_dx (Q:predicate …):
+      Q (𝐞) →
+      (∀b1,b2. b1 ϵ 𝐁 → b2 ϵ 𝐁 → Q b1 → Q b2 → Q (b1●𝗔◗b2◖𝗟)) →
+      ∀b. b ϵ 𝐁 → Q b.
+#Q #IH1 #IH2 @(wf1_ind_nlt ? depth)
+#n #IH #b #Hn #Hb destruct
+elim (pbc_inv_gen_dx … Hb) -Hb [ #H0 | * #b1 #b2 #Hb1 #Hb2 #H0 ] destruct
+/3 width=1 by/
+qed-.

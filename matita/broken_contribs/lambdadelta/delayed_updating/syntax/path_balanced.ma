@@ -14,6 +14,9 @@
 
 include "delayed_updating/syntax/path.ma".
 include "delayed_updating/notation/functions/class_b_0.ma".
+include "ground/lib/subset.ma".
+include "ground/generated/insert_eq_1.ma".
+include "ground/xoa/ex_3_2.ma".
 
 (* BALANCE CONDITION FOR PATH ***********************************************)
 
@@ -27,3 +30,84 @@ inductive pbc: predicate path ≝
 interpretation
   "balance condition (path)"
   'ClassB = (pbc).
+
+(* Advanced constructions ***************************************************)
+
+lemma pbc_dx (b1) (b2):
+      b1 ϵ 𝐁 → b2 ϵ 𝐁  → b1●𝗔◗b2◖𝗟  ϵ 𝐁.
+/3 width=1 by pbc_redex, pbc_after/
+qed.
+
+lemma pbc_after_redex (b):
+      b ϵ 𝐁 → b◖𝗔◖𝗟 ϵ 𝐁.
+/2 width=1 by pbc_dx, pbc_empty/
+qed.
+
+lemma pbc_insert_redex (p) (q):
+      p●q ϵ 𝐁 → p◖𝗔◖𝗟●q ϵ 𝐁.
+#p #q @(insert_eq_1 … (p●q))
+#b #Hb generalize in match q; generalize in match p; -p -q
+elim Hb -b
+[ #p #q #H0
+  elim (eq_inv_list_append_empty … H0) -H0 #H1 #H2 destruct
+  /2 width=1 by pbc_dx, pbc_empty/
+| #b #Hb #IH #p #q #H0
+  elim (eq_inv_list_append_bi … H0) -H0 * #b0 #H1 #H2 destruct
+  elim (eq_inv_list_lcons_append ????? H2) -H2 *
+  [ -IH #H1 #H2 destruct <list_append_empty_dx
+    /4 width=1 by pbc_empty, pbc_redex, pbc_after/
+  | -IH #r #H1 #H2 destruct
+    elim (eq_inv_list_empty_append ??? H2) -H2 #H1 #H2 destruct
+    /3 width=1 by pbc_dx, pbc_empty/
+  | -IH #H1 #H2 destruct <list_append_empty_sn
+    /3 width=1 by pbc_after_redex, pbc_redex, pbc_empty/
+  | -Hb #r #H1 #H2 destruct
+    lapply (IH ???) -IH [ // | skip | skip ] #Hb
+    /2 width=1 by pbc_dx, pbc_empty/
+  ]
+| #b1 #b2 #Hb1 #Hb2 #IH1 #IH2 #p #q #H0
+  elim (eq_inv_list_append_bi … H0) -H0 * #b #H1 #H2 destruct
+  [ >list_append_assoc -IH2 -Hb1
+    /3 width=4 by pbc_after/
+  | >list_append_lcons_sn >list_append_lcons_sn
+    <list_append_assoc -IH1 -Hb2
+    /3 width=4 by pbc_after/
+  ]
+]
+qed.
+
+lemma pbc_insert_pbc (b):
+      b ϵ 𝐁 → ∀q,p. p●q ϵ 𝐁 → p●b●q ϵ 𝐁.
+#b #H0 elim H0 -b
+[ #q #p //
+| #b #_ #IH #q #p #Hb
+  >path_append_append_lcons <path_append_lcons_append
+  /3 width=1 by pbc_insert_redex/
+| #b1 #b2 #_ #_ #IH1 #IH2 #q #p #Hb
+  /3 width=1 by/
+]
+qed.
+
+(* Advanced inversions ******************************************************)
+
+lemma pbc_inv_gen_dx (b):
+      b ϵ 𝐁 →
+      ∨∨ 𝐞 = b
+       | ∃∃b1,b2. b1 ϵ 𝐁 & b2 ϵ 𝐁 & b1●𝗔◗b2◖𝗟 = b.
+#b #H elim H -b
+[ /2 width=1 by or_introl/
+| #b #_ *
+  [ #H0 destruct
+    /3 width=5 by pbc_empty, ex3_2_intro, or_intror/
+  | * #b1 #b2 #Hb1 #Hb2 #H0 destruct
+    /5 width=5 by pbc_redex, pbc_after, ex3_2_intro, or_intror/
+  ]
+| #b1 #b2 #_ #_
+  * [ #H1 | * #c1 #c2 #Hc1 #Hc2 #H1 ]
+  * [1,3: #H2 |*: * #d1 #d2 #Hd1 #Hd2 #H2 ] destruct
+  [ /2 width=1 by or_introl/
+  | /3 width=5 by ex3_2_intro, or_intror/
+  | /3 width=5 by ex3_2_intro, or_intror/
+  | /6 width=5 by pbc_redex, pbc_after, ex3_2_intro, or_intror/
+]
+qed-.

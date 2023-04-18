@@ -40,3 +40,13 @@ interpretation
 interpretation
   "left cons (paths)"
   'BlackHalfCircleRight l p = (list_append label p (list_lcons label l (list_empty label))).
+
+(* Helper constructions *****************************************************)
+
+lemma path_append_append_lcons (p) (q) (r) (l):
+      p●(r◖l)●q = p●r●(l◗q).
+// qed-.
+
+lemma path_append_lcons_append (p) (q) (r) (l):
+      (p◖l)●r●q = p●(l◗r)●q.
+// qed-.
