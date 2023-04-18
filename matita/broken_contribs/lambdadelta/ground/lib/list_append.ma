@@ -79,6 +79,34 @@ qed-.
 
 (* Advanced inversions ******************************************************)
 
+lemma eq_inv_list_lcons_append (A) (l2) (l1) (l) (a):
+      a⨮l = l1 ⨁{A} l2 →
+      ∨∨ ∧∧ ⓔ = l1 & a⨮l = l2
+       | ∃∃ m. a⨮m = l1 & l = m ⨁ l2.
+#A #l2 #l1 #l #a cases l1 -l1
+[ <list_append_empty_sn #H0 destruct
+  /3 width=1 by or_introl, conj/
+| #b #n <list_append_lcons_sn #H0 destruct
+  /3 width=3 by ex2_intro, or_intror/
+]
+qed-.
+
+lemma eq_inv_list_append_bi (A) (l1) (l2) (n1) (n2):
+      l1 ⨁ l2 = n1 ⨁{A} n2 →
+      ∨∨ ∃∃m. l1 = n1 ⨁ m & n2 = m ⨁ l2
+       | ∃∃m. l2 = m ⨁ n2 & n1 = l1 ⨁ m.
+#A #l1 elim l1 -l1
+[ #l2 #n1 #n2 <list_append_empty_sn #H destruct
+  /3 width=3 by ex2_intro, or_intror/
+| #a1 #l1 #IH #l2 #n1 #n2 #H0
+  elim (eq_inv_list_lcons_append ????? H0) -H0 * [| #c ] #H1 #H2 destruct
+  [ -IH /3 width=3 by ex2_intro, or_introl/
+  | elim (IH … H2) -IH -H2 * #m #H1 #H2 destruct
+    /3 width=3 by ex2_intro, or_introl, or_intror/
+  ]
+]
+qed-.
+
 lemma eq_inv_list_append_dx_sn_refl (A) (l1) (l2):
       l1 = l1⨁{A}l2 → ⓔ = l2.
 #A #l1 elim l1 -l1 [ // ]
