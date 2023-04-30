@@ -369,16 +369,22 @@ and compile ~compiling ~asserted ~include_paths fname =
         (Filename.dirname
            (Http_getter.filename ~local:true ~writable:true (baseuri ^
                                                              "foo.con")));
-    let buf =
-      GrafiteParser.parsable_statement status
-        (Ulexing.from_utf8_channel (open_in fname))
-    in
-    let print_cb =
-      if not (Helm_registry.get_bool "matita.verbose") then fun _ _ -> ()
-      else pp_ast_statement ~fname
-    in
-    let asserted, status =
-      eval_from_stream ~compiling ~asserted ~include_paths status buf print_cb in
+    let asserted,status =
+     let rex = Str.regexp ".*\\.dk$" in
+     if Str.string_match rex fname 0 then
+       (* DEDUKTI CODE HERE! *)
+       let buf = Parsers.Parser.from (Parsers.Parser.input_from_file fname) in
+       DeduktiImport.eval_from_dedukti_stream ~asserted ~baseuri status buf 
+     else 
+      let buf =
+        GrafiteParser.parsable_statement status
+          (Ulexing.from_utf8_channel (open_in fname))
+      in
+      let print_cb =
+        if not (Helm_registry.get_bool "matita.verbose") then fun _ _ -> ()
+        else pp_ast_statement ~fname
+      in
+       eval_from_stream ~compiling ~asserted ~include_paths status buf print_cb in
     let status = OcamlExtraction.close_file status in
     let elapsed = Unix.time () -. time in
     (if Helm_registry.get_bool "matita.moo" then begin

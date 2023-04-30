@@ -24,6 +24,7 @@ depends: [
   "dune-build-info"
   "dune-site"
   "camlp5" {>= "8.00.04"}
+  "dedukti"
   "odoc" {with-doc}
 ]
 build: [

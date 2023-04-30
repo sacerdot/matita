@@ -40,9 +40,12 @@
    (lablgtk3-sourceview3 (>= 3.1.3))
    dune-build-info
    dune-site
-   (camlp5 (>= 8.00.04)))
+   (camlp5 (>= 8.00.04))
+   dedukti)
  (tags
   ("interactive theorem proving" "calculus of constructions"))
  (sites (share myshare)))
+
+(using menhir 2.1)
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project

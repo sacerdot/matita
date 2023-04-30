@@ -1,7 +1,7 @@
 (library
  (name matita_cli)
  (wrapped false)
- (libraries helm_grafite_engine lablgtk3-sourceview3 dune-build-info dune-site)
+ (libraries helm_grafite_engine lablgtk3-sourceview3 dune-build-info dune-site helm_dedukti)
  (modules 
    mysites buildTimeConf matitaTypes matitaMiscCli applyTransformation matitaEngine matitaExcPp matitaInit))
 
