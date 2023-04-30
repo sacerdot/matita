@@ -1,12 +1,12 @@
  (*
-    ||M||  This file is part of HELM, an Hypertextual, Electronic        
-    ||A||  Library of Mathematics, developed at the Computer Science     
-    ||T||  Department of the University of Bologna, Italy.                     
-    ||I||                                                                 
-    ||T||  
-    ||A||  
-    \   /  This file is distributed under the terms of the       
-     \ /   GNU General Public License Version 2   
+    ||M||  This file is part of HELM, an Hypertextual, Electronic
+    ||A||  Library of Mathematics, developed at the Computer Science
+    ||T||  Department of the University of Bologna, Italy.
+    ||I||
+    ||T||
+    ||A||
+    \   /  This file is distributed under the terms of the
+     \ /   GNU General Public License Version 2
       V_______________________________________________________________ *)
 
 include "basics/pts.ma".
@@ -15,8 +15,8 @@ include "hints_declaration.ma".
 (* propositional equality *)
 
 inductive eq (A:Type[2]) (x:A) : A → Prop ≝
-    refl: eq A x x. 
-    
+    refl: eq A x x.
+
 interpretation "leibnitz's equality" 'eq t x y = (eq t x y).
 interpretation "leibniz reflexivity" 'refl = refl.
 
@@ -69,13 +69,14 @@ theorem eq_f: ∀A,B.∀f:A→B.∀x,y:A. x=y → f x = f y.
 (* deleterio per auto? *)
 theorem eq_f2: ∀A,B,C.∀f:A→B→C.
 ∀x1,x2:A.∀y1,y2:B. x1=x2 → y1=y2 → f x1 y1 = f x2 y2.
-#A #B #C #f #x1 #x2 #y1 #y2 #E1 #E2 >E1; >E2; //; qed. 
+#A #B #C #f #x1 #x2 #y1 #y2 #E1 #E2 >E1; >E2; //; qed.
 
+(* // producing an unnecessarily complicated term, replaced by % *)
 lemma eq_f3: ∀A,B,C,D.∀f:A→B→C->D.
 ∀x1,x2:A.∀y1,y2:B. ∀z1,z2:C. x1=x2 → y1=y2 → z1=z2 → f x1 y1 z1 = f x2 y2 z2.
-#A #B #C #D #f #x1 #x2 #y1 #y2 #z1 #z2 #E1 #E2 #E3 >E1; >E2; >E3 //; qed.
+#A #B #C #D #f #x1 #x2 #y1 #y2 #z1 #z2 #E1 #E2 #E3 >E1; >E2; >E3 % qed.
 
-(* hint to genereric equality 
+(* hint to genereric equality
 definition eq_equality: equality ≝
  mk_equality eq refl rewrite_l rewrite_r.
 
@@ -85,10 +86,10 @@ unification hint 0 ≔ T,a,b;
 (*------------------------------------*) ⊢
     equal X T a b ≡ eq T a b.
 *)
-  
+
 (********** connectives ********)
 
-inductive True: Prop ≝  
+inductive True: Prop ≝
 I : True.
 
 inductive False: Prop ≝ .
@@ -137,13 +138,13 @@ inductive Or (A,B:Prop) : Prop ≝
 
 interpretation "logical or" 'or x y = (Or x y).
 
-definition decidable : Prop → Prop ≝ 
+definition decidable : Prop → Prop ≝
 λ A:Prop. A ∨ ¬ A.
 
 (* exists *)
 inductive ex (A:Type[0]) (P:A → Prop) : Prop ≝
     ex_intro: ∀ x:A. P x →  ex A P.
-    
+
 interpretation "exists" 'exists x = (ex ? x).
 
 inductive ex2 (A:Type[0]) (P,Q:A →Prop) : Prop ≝
@@ -171,21 +172,21 @@ lemma iff_not: ∀A,B. A ↔ B → ¬A ↔ ¬B.
 #A #B * #H1 #H2 % /3/ qed.
 
 lemma iff_and_l: ∀A,B,C. A ↔ B → C ∧ A ↔ C ∧ B.
-#A #B #C * #H1 #H2 % * /3/ qed.  
+#A #B #C * #H1 #H2 % * /3/ qed.
 
 lemma iff_and_r: ∀A,B,C. A ↔ B → A ∧ C ↔ B ∧ C.
-#A #B #C * #H1 #H2 % * /3/ qed.  
+#A #B #C * #H1 #H2 % * /3/ qed.
 
 lemma iff_or_l: ∀A,B,C. A ↔ B → C ∨ A ↔ C ∨ B.
-#A #B #C * #H1 #H2 % * /3/ qed.  
+#A #B #C * #H1 #H2 % * /3/ qed.
 
 lemma iff_or_r: ∀A,B,C. A ↔ B → A ∨ C ↔ B ∨ C.
-#A #B #C * #H1 #H2 % * /3/ qed.  
+#A #B #C * #H1 #H2 % * /3/ qed.
 
-(* cose per destruct: da rivedere *) 
+(* cose per destruct: da rivedere *)
 
 definition R0 ≝ λT:Type[0].λt:T.t.
-  
+
 definition R1 ≝ eq_rect_Type0.
 
 (* used for lambda-delta *)
@@ -201,10 +202,10 @@ definition R2 :
   ∀b1: T1 b0 e0.
   ∀e1:R1 ?? T1 a1 ? e0 = b1.
   T2 b0 e0 b1 e1.
-#T0 #a0 #T1 #a1 #T2 #a2 #b0 #e0 #b1 #e1 
-@(eq_rect_Type0 ????? e1) 
-@(R1 ?? ? ?? e0) 
-@a2 
+#T0 #a0 #T1 #a1 #T2 #a2 #b0 #e0 #b1 #e1
+@(eq_rect_Type0 ????? e1)
+@(R1 ?? ? ?? e0)
+@a2
 qed.
 
 definition R3 :
@@ -224,10 +225,10 @@ definition R3 :
   ∀b2: T2 b0 e0 b1 e1.
   ∀e2:R2 ???? T2 a2 b0 e0 ? e1 = b2.
   T3 b0 e0 b1 e1 b2 e2.
-#T0 #a0 #T1 #a1 #T2 #a2 #T3 #a3 #b0 #e0 #b1 #e1 #b2 #e2 
-@(eq_rect_Type0 ????? e2) 
-@(R2 ?? ? ???? e0 ? e1) 
-@a3 
+#T0 #a0 #T1 #a1 #T2 #a2 #T3 #a3 #b0 #e0 #b1 #e1 #b2 #e2
+@(eq_rect_Type0 ????? e2)
+@(R2 ?? ? ???? e0 ? e1)
+@a3
 qed.
 
 definition R4 :
@@ -239,15 +240,15 @@ definition R4 :
   ∀a2:T2 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1).
   ∀T3:∀x0:T0. ∀p0:eq (T0 …) a0 x0. ∀x1:T1 x0 p0.∀p1:eq (T1 …) (R1 T0 a0 T1 a1 x0 p0) x1.
       ∀x2:T2 x0 p0 x1 p1.eq (T2 …) (R2 T0 a0 T1 a1 T2 a2 x0 p0 x1 p1) x2 → Type[0].
-  ∀a3:T3 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1) 
-      a2 (refl (T2 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1)) a2). 
+  ∀a3:T3 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1)
+      a2 (refl (T2 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1)) a2).
   ∀T4:∀x0:T0. ∀p0:eq (T0 …) a0 x0. ∀x1:T1 x0 p0.∀p1:eq (T1 …) (R1 T0 a0 T1 a1 x0 p0) x1.
       ∀x2:T2 x0 p0 x1 p1.∀p2:eq (T2 …) (R2 T0 a0 T1 a1 T2 a2 x0 p0 x1 p1) x2.
-      ∀x3:T3 x0 p0 x1 p1 x2 p2.∀p3:eq (T3 …) (R3 T0 a0 T1 a1 T2 a2 T3 a3 x0 p0 x1 p1 x2 p2) x3. 
+      ∀x3:T3 x0 p0 x1 p1 x2 p2.∀p3:eq (T3 …) (R3 T0 a0 T1 a1 T2 a2 T3 a3 x0 p0 x1 p1 x2 p2) x3.
       Type[0].
-  ∀a4:T4 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1) 
-      a2 (refl (T2 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1)) a2) 
-      a3 (refl (T3 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1) 
+  ∀a4:T4 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1)
+      a2 (refl (T2 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1)) a2)
+      a3 (refl (T3 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1)
                    a2 (refl (T2 a0 (refl T0 a0) a1 (refl (T1 a0 (refl T0 a0)) a1)) a2))
                    a3).
   ∀b0:T0.
@@ -259,19 +260,19 @@ definition R4 :
   ∀b3: T3 b0 e0 b1 e1 b2 e2.
   ∀e3:eq (T3 …) (R3 T0 a0 T1 a1 T2 a2 T3 a3 b0 e0 b1 e1 b2 e2) b3.
   T4 b0 e0 b1 e1 b2 e2 b3 e3.
-#T0 #a0 #T1 #a1 #T2 #a2 #T3 #a3 #T4 #a4 #b0 #e0 #b1 #e1 #b2 #e2 #b3 #e3 
-@(eq_rect_Type0 ????? e3) 
-@(R3 ????????? e0 ? e1 ? e2) 
-@a4 
+#T0 #a0 #T1 #a1 #T2 #a2 #T3 #a3 #T4 #a4 #b0 #e0 #b1 #e1 #b2 #e2 #b3 #e3
+@(eq_rect_Type0 ????? e3)
+@(R3 ????????? e0 ? e1 ? e2)
+@a4
 qed.
 
 definition eqProp ≝ λA:Prop.eq A.
 
 (* Example to avoid indexing and the consequential creation of ill typed
    terms during paramodulation *)
-lemma lemmaK : ∀A.∀x:A.∀h:x=x. eqProp ? h (refl A x).
-#A #x #h @(refl ? h: eqProp ? ? ?).
-qed-.
+axiom lemmaK : ∀A.∀x:A.∀h:x=x. eqProp ? h (refl A x).
+(* #A #x #h @(refl ? h: eqProp ? ? ?).
+qed-. *)
 
 theorem streicherK : ∀T:Type[2].∀t:T.∀P:t = t → Type[3].P (refl ? t) → ∀p.P p.
  #T #t #P #H #p >(lemmaK T t p) @H

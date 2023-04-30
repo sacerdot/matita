@@ -11,7 +11,6 @@
 
 include "basics/types.ma".
 include "arithmetics/nat.ma".
-include "basics/core_notation/card_1.ma".
 
 inductive list (A:Type[0]) : Type[0] :=
   | nil: list A

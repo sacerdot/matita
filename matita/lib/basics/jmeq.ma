@@ -1,12 +1,12 @@
 (*
-    ||M||  This file is part of HELM, an Hypertextual, Electronic        
-    ||A||  Library of Mathematics, developed at the Computer Science     
-    ||T||  Department of the University of Bologna, Italy.                     
-    ||I||                                                                 
-    ||T||  
-    ||A||  This file is distributed under the terms of the 
-    \   /  GNU General Public License Version 2        
-     \ /      
+    ||M||  This file is part of HELM, an Hypertextual, Electronic
+    ||A||  Library of Mathematics, developed at the Computer Science
+    ||T||  Department of the University of Bologna, Italy.
+    ||I||
+    ||T||
+    ||A||  This file is distributed under the terms of the
+    \   /  GNU General Public License Version 2
+     \ /
       V_______________________________________________________________ *)
 
 include "basics/logic.ma".
@@ -38,9 +38,9 @@ interpretation "john major's reflexivity" 'refl = refl_jmeq.
 
 definition eqProp ≝ λA:Prop.eq A.
 
-lemma K : ∀A.∀x:A.∀h:x=x. eqProp ? h (refl A x).
+axiom K : ∀A.∀x:A.∀h:x=x. eqProp ? h (refl A x). (*
 #A #x #h @(refl ? h: eqProp ? ? ?).
-qed.
+qed. *)
 
 definition cast:
  ∀A,B:Type[1].∀E:A=B. A → B.
@@ -53,7 +53,7 @@ lemma tech1:
  [2: >E %
  | #Aa #Bb #E >E cases Bb #B #b normalize % ]
 qed.
- 
+
 lemma gral: ∀A.∀x,y:A.
  mk_Sigma A x = mk_Sigma A y → x=y.
  #A #x #y #E lapply (tech1 ?? E)
@@ -89,13 +89,13 @@ definition PP: ∀A:Prop.∀P:A → Type[0]. A → Type[0].
  #A #P #a @(P a)
 qed.
 
-lemma E : ∀A.∀x:A.∀P:∀y:A.jmeq A x A y→Type[0].
- PP ? (P x) (refl_jmeq A x) → ∀y.∀h:jmeq A x A y.PP ? (P y) h.
+axiom E : ∀A.∀x:A.∀P:∀y:A.jmeq A x A y→Type[0].
+ PP ? (P x) (refl_jmeq A x) → ∀y.∀h:jmeq A x A y.PP ? (P y) h. (*
  #A #a #P #H #b #E letin F ≝ (jm_to_eq_sigma ??? E)
  lapply (G ?? (curry ?? P) ?? F)
   [ normalize //
   | #H whd in H; @(H : PP ? (P b) ?) ]
-qed.
+qed. *)
 
 lemma jmeq_elim : ∀A.∀x:A.∀P:∀y:A.jmeq A x A y→Type[0].
  P x (refl_jmeq A x) → ∀y.∀h:jmeq A x A y.P y h ≝ E.
