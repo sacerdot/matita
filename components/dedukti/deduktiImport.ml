@@ -1,3 +1,5 @@
+let const_tbl = Hashtbl.create 0
+
 let name_and_uri_from_term ~baseuri = function
     Kernel.Term.Const(_, name) -> let str_ident = Kernel.Basic.string_of_ident (Kernel.Basic.id name) in
       let uri = NUri.uri_of_string (baseuri ^ "/" ^ str_ident ^ ".con") in
@@ -5,9 +7,17 @@ let name_and_uri_from_term ~baseuri = function
     | Kernel.Term.App(_, _, _) -> assert false (*TODO what should we return if the term is an App?*)
     | _ -> assert false (* TODO *) 
 
-let rec construct_debrujin index = NCic.Rel(index + 1) (* TODO check if it is 0based*)
+let gen_const_name name = name (* TODO do something like "filename/constname" *)
 
-and construct_const =  NCic.Sort NCic.Prop  (* TODO *)
+let rec construct_debrujin index = NCic.Rel(index + 1) (* TODO check if it is really 0based*)
+
+and construct_const name =  
+  let cname = gen_const_name name in
+  let reference = (cname, 0) in
+  (* If not already present, register the new constant into the const table *)
+  if !Hashtbl.mem const_tbl cname then
+    Hashtbl.add const_tbl cname reference;
+  NCic.Const reference (*TODO*)
 
 and construct_appl ~baseuri f a1 args =
   let translator = construct_term_and_attrs ~baseuri:baseuri in
@@ -28,7 +38,7 @@ and construct_prod ~baseuri binder typ body =
 
 and construct_term_and_attrs ~baseuri = function
   | Kernel.Term.DB(_, _, i) -> construct_debrujin i
-  | Kernel.Term.Const(_,_) -> construct_const
+  | Kernel.Term.Const(_,name) -> construct_const name
   | Kernel.Term.App(f, a, args) -> construct_appl ~baseuri:baseuri f a args
   | Kernel.Term.Lam(_, ident, typ, body) -> (match typ with
                                               | Some a -> construct_lambda ~baseuri:baseuri (Kernel.Basic.string_of_ident ident) a body
