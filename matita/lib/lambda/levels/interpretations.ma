@@ -22,9 +22,9 @@ include "lambda/levels/iterated_abstraction.ma".
 (* INTERPRETATIONS **********************************************************)
 
 let rec bylevel h d M on M ≝ match M with
-[ VRef i   ⇒ {h}§(tri … i d (d-i-1) i i)
+[ VRef i   ⇒ ❴h❵§(tri … i d (d-i-1) i i)
 | Abst A   ⇒ bylevel (h+1) (d+1) A
-| Appl C A ⇒ {h}@(bylevel 0 d C).(bylevel 0 d A)
+| Appl C A ⇒ ❴h❵@(bylevel 0 d C).(bylevel 0 d A)
 ].
 
 interpretation "forward interpretation (term by depth) general"

@@ -27,10 +27,10 @@ include "lambda/xoa/ex_3_4.ma".
          left residuals are unmarked in the reductum
 *)
 inductive pl_st: path → relation subterms ≝
-| pl_st_beta   : ∀V,T. pl_st (◊) ({⊤}@V.{⊤}𝛌.T) ([↙V]T)
-| pl_st_abst   : ∀b,p,T1,T2. pl_st p T1 T2 → pl_st (rc::p) ({b}𝛌.T1) ({⊥}𝛌.T2) 
-| pl_st_appl_sn: ∀b,p,V1,V2,T. pl_st p V1 V2 → pl_st (sn::p) ({b}@V1.T) ({⊥}@V2.{⊥}⇕T)
-| pl_st_appl_dx: ∀b,p,V,T1,T2. pl_st p T1 T2 → pl_st (dx::p) ({b}@V.T1) ({b}@V.T2)
+| pl_st_beta   : ∀V,T. pl_st (◊) (❴⊤❵@V.❴⊤❵𝛌.T) ([↙V]T)
+| pl_st_abst   : ∀b,p,T1,T2. pl_st p T1 T2 → pl_st (rc::p) (❴b❵𝛌.T1) (❴⊥❵𝛌.T2) 
+| pl_st_appl_sn: ∀b,p,V1,V2,T. pl_st p V1 V2 → pl_st (sn::p) (❴b❵@V1.T) (❴⊥❵@V2.❴⊥❵⇕T)
+| pl_st_appl_dx: ∀b,p,V,T1,T2. pl_st p T1 T2 → pl_st (dx::p) (❴b❵@V.T1) (❴b❵@V.T2)
 .
 
 interpretation "path-labeled standard reduction"
@@ -40,15 +40,15 @@ lemma pl_st_fwd_pl_sred: ∀p,F1,F2. F1 Ⓡ↦[p] F2 → ⇓F1 ↦[p] ⇓F2.
 #p #F1 #F2 #H elim H -p -F1 -F2 normalize /2 width=1/
 qed-.
 
-lemma pl_st_inv_vref: ∀p,F,G. F Ⓡ↦[p] G → ∀b,i. {b}#i = F → ⊥.
+lemma pl_st_inv_vref: ∀p,F,G. F Ⓡ↦[p] G → ∀b,i. ❴b❵#i = F → ⊥.
 #p #F #G #HFG #b #i #H
 lapply (pl_st_fwd_pl_sred … HFG) -HFG #HFG
 lapply (eq_f … carrier … H) -H normalize #H
 /2 width=6 by pl_sred_inv_vref/
 qed-.
 
-lemma pl_st_inv_abst: ∀p,F,G. F Ⓡ↦[p] G → ∀c,U1. {c}𝛌.U1 = F →
-                      ∃∃q,U2. U1 Ⓡ↦[q] U2 & rc::q = p & {⊥}𝛌.U2 = G.
+lemma pl_st_inv_abst: ∀p,F,G. F Ⓡ↦[p] G → ∀c,U1. ❴c❵𝛌.U1 = F →
+                      ∃∃q,U2. U1 Ⓡ↦[q] U2 & rc::q = p & ❴⊥❵𝛌.U2 = G.
 #p #F #G * -p -F -G
 [ #V #T #c #U1 #H destruct
 | #b #p #T1 #T2 #HT12 #c #U1 #H destruct /2 width=5/
@@ -57,10 +57,10 @@ lemma pl_st_inv_abst: ∀p,F,G. F Ⓡ↦[p] G → ∀c,U1. {c}𝛌.U1 = F →
 ]
 qed-.
 
-lemma pl_st_inv_appl: ∀p,F,G. F Ⓡ↦[p] G → ∀c,W,U. {c}@W.U = F →
-                      ∨∨ (∃∃U0. ⊤ = c & ◊ = p & {⊤}𝛌.U0 = U & [↙W] U0 = G)
-                       | (∃∃q,W0. sn::q = p & W Ⓡ↦[q] W0 & {⊥}@W0.{⊥}⇕U = G)
-                       | (∃∃q,U0. dx::q = p & U Ⓡ↦[q] U0 & {c}@W.U0 = G).
+lemma pl_st_inv_appl: ∀p,F,G. F Ⓡ↦[p] G → ∀c,W,U. ❴c❵@W.U = F →
+                      ∨∨ (∃∃U0. ⊤ = c & ◊ = p & ❴⊤❵𝛌.U0 = U & [↙W] U0 = G)
+                       | (∃∃q,W0. sn::q = p & W Ⓡ↦[q] W0 & ❴⊥❵@W0.❴⊥❵⇕U = G)
+                       | (∃∃q,U0. dx::q = p & U Ⓡ↦[q] U0 & ❴c❵@W.U0 = G).
 #p #F #G * -p -F -G
 [ #V #T #c #W #U #H destruct /3 width=3/
 | #b #p #T1 #T2 #_ #c #W #U #H destruct
@@ -69,7 +69,7 @@ lemma pl_st_inv_appl: ∀p,F,G. F Ⓡ↦[p] G → ∀c,W,U. {c}@W.U = F →
 ]
 qed-.
 
-lemma pl_st_fwd_abst: ∀p,F,G. F Ⓡ↦[p] G → ∀c,U2. {c}𝛌.U2 = G →
+lemma pl_st_fwd_abst: ∀p,F,G. F Ⓡ↦[p] G → ∀c,U2. ❴c❵𝛌.U2 = G →
                       ◊ = p ∨ ∃q. rc::q = p.
 #p #F #G * -p -F -G
 [ /2 width=1/
@@ -80,7 +80,7 @@ lemma pl_st_fwd_abst: ∀p,F,G. F Ⓡ↦[p] G → ∀c,U2. {c}𝛌.U2 = G →
 qed-.
 
 lemma pl_st_inv_nil: ∀p,F,G. F Ⓡ↦[p] G → ◊ = p →
-                     ∃∃V,T. {⊤}@V.{⊤} 𝛌.T = F & [↙V] T = G.
+                     ∃∃V,T. ❴⊤❵@V.❴⊤❵ 𝛌.T = F & [↙V] T = G.
 #p #F #G * -p -F -G
 [ #V #T #_ destruct /2 width=4/
 | #b #p #T1 #T2 #_ #H destruct
@@ -90,7 +90,7 @@ lemma pl_st_inv_nil: ∀p,F,G. F Ⓡ↦[p] G → ◊ = p →
 qed-.
 
 lemma pl_st_inv_rc: ∀p,F,G. F Ⓡ↦[p] G → ∀q. rc::q = p →
-                    ∃∃b,T1,T2. T1 Ⓡ↦[q] T2 & {b}𝛌.T1 = F & {⊥}𝛌.T2 = G.
+                    ∃∃b,T1,T2. T1 Ⓡ↦[q] T2 & ❴b❵𝛌.T1 = F & ❴⊥❵𝛌.T2 = G.
 #p #F #G * -p -F -G
 [ #V #T #q #H destruct
 | #b #p #T1 #T2 #HT12 #q #H destruct /2 width=6/
@@ -100,7 +100,7 @@ lemma pl_st_inv_rc: ∀p,F,G. F Ⓡ↦[p] G → ∀q. rc::q = p →
 qed-.
 
 lemma pl_st_inv_sn: ∀p,F,G. F Ⓡ↦[p] G → ∀q. sn::q = p →
-                    ∃∃b,V1,V2,T. V1 Ⓡ↦[q] V2 & {b}@V1.T = F & {⊥}@V2.{⊥}⇕T = G.
+                    ∃∃b,V1,V2,T. V1 Ⓡ↦[q] V2 & ❴b❵@V1.T = F & ❴⊥❵@V2.❴⊥❵⇕T = G.
 #p #F #G * -p -F -G
 [ #V #T #q #H destruct
 | #b #p #T1 #T2 #_ #q #H destruct
@@ -110,7 +110,7 @@ lemma pl_st_inv_sn: ∀p,F,G. F Ⓡ↦[p] G → ∀q. sn::q = p →
 qed-.
 
 lemma pl_st_inv_dx: ∀p,F,G. F Ⓡ↦[p] G → ∀q. dx::q = p →
-                    ∃∃b,V,T1,T2. T1 Ⓡ↦[q] T2 & {b}@V.T1 = F & {b}@V.T2 = G.
+                    ∃∃b,V,T1,T2. T1 Ⓡ↦[q] T2 & ❴b❵@V.T1 = F & ❴b❵@V.T2 = G.
 #p #F #G * -p -F -G
 [ #V #T #q #H destruct
 | #b #p #T1 #T2 #_ #q #H destruct
@@ -119,8 +119,8 @@ lemma pl_st_inv_dx: ∀p,F,G. F Ⓡ↦[p] G → ∀q. dx::q = p →
 ]
 qed-.
 
-lemma pl_st_inv_pl_sred: ∀p. in_whd p → ∀M1,F2. {⊤}⇑M1 Ⓡ↦[p] F2 →
-                         ∃∃M2. M1 ↦[p] M2 & {⊤}⇑M2 = F2.
+lemma pl_st_inv_pl_sred: ∀p. in_whd p → ∀M1,F2. ❴⊤❵⇑M1 Ⓡ↦[p] F2 →
+                         ∃∃M2. M1 ↦[p] M2 & ❴⊤❵⇑M2 = F2.
 #p @(in_whd_ind … p) -p
 [ #M1 #F2 #H
   elim (pl_st_inv_nil … H …) -H // #V #T #HM1 #H
@@ -150,16 +150,16 @@ lemma pl_st_inv_lift: ∀p. sdeliftable_sn (pl_st p).
 | #b #p #U1 #U2 #_ #IHU12 #d #F1 #H
   elim (slift_inv_abst … H) -H #T1 #HTU1 #H
   elim (IHU12 … HTU1) -U1 #T2 #HT12 #HTU2 destruct
-  @(ex2_intro … ({⊥}𝛌.T2)) // /2 width=1/
+  @(ex2_intro … (❴⊥❵𝛌.T2)) // /2 width=1/
 | #b #p #W1 #W2 #U1 #_ #IHW12 #d #F1 #H
   elim (slift_inv_appl … H) -H #V1 #T #HVW1 #H1 #H2
   elim (IHW12 … HVW1) -W1 #V2 #HV12 #HVW2 destruct
-  @(ex2_intro … ({⊥}@V2.{⊥}⇕T)) [ /2 width=1/ ]
+  @(ex2_intro … (❴⊥❵@V2.❴⊥❵⇕T)) [ /2 width=1/ ]
   whd in ⊢ (??%%); // (**) (* auto needs some help here *)
 | #b #p #W1 #U1 #U2 #_ #IHU12 #d #F1 #H
   elim (slift_inv_appl … H) -H #V #T1 #H1 #HTU1 #H2
   elim (IHU12 … HTU1) -U1 #T2 #HT12 #HTU2 destruct
-  @(ex2_intro … ({b}@V.T2)) // /2 width=1/
+  @(ex2_intro … (❴b❵@V.T2)) // /2 width=1/
 ]
 qed-.
 
@@ -171,7 +171,7 @@ lemma pl_st_dsubst: ∀p. sdsubstable_f_dx … (booleanized ⊥) (pl_st p).
 ]
 qed.
 
-lemma pl_st_inv_empty: ∀p,F1,F2. F1 Ⓡ↦[p] F2 → ∀M1. {⊥}⇑M1 = F1 → ⊥.
+lemma pl_st_inv_empty: ∀p,F1,F2. F1 Ⓡ↦[p] F2 → ∀M1. ❴⊥❵⇑M1 = F1 → ⊥.
 #p #F1 #F2 #H elim H -p -F1 -F2
 [ #V #T #M1 #H
   elim (boolean_inv_appl … H) -H #B #A #H destruct

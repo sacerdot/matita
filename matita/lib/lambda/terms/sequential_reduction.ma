@@ -63,17 +63,17 @@ lemma sred_inv_appl: ∀M,N. M ↦ N → ∀D,C. @D.C = M →
 ]
 qed-.
 
-lemma sred_fwd_mult: ∀M,N. M ↦ N → ♯{N} < ♯{M} * ♯{M}.
+lemma sred_fwd_mult: ∀M,N. M ↦ N → ♯❴N❵ < ♯❴M❵ * ♯❴M❵.
 #M #N #H elim H -M -N
-[ #B #A @(le_to_lt_to_lt … (♯{A}*♯{B})) //
+[ #B #A @(le_to_lt_to_lt … (♯❴A❵*♯❴B❵)) //
   normalize /3 width=1 by lt_minus_to_plus_r, lt_times/ (**) (* auto: too slow without trace *) 
 | //
 | #B #D #A #_ #IHBD
-  @(lt_to_le_to_lt … (♯{B}*♯{B}+♯{A})) [ /2 width=1/ ] -D
+  @(lt_to_le_to_lt … (♯❴B❵*♯❴B❵+♯❴A❵)) [ /2 width=1/ ] -D
 | #B #A #C #_ #IHAC
-  @(lt_to_le_to_lt … (♯{B}+♯{A}*♯{A})) [ /2 width=1/ ] -C
+  @(lt_to_le_to_lt … (♯❴B❵+♯❴A❵*♯❴A❵)) [ /2 width=1/ ] -C
 ]
-@(transitive_le … (♯{B}*♯{B}+♯{A}*♯{A})) [ /2 width=1/ ]
+@(transitive_le … (♯❴B❵*♯❴B❵+♯❴A❵*♯❴A❵)) [ /2 width=1/ ]
 >distributive_times_plus normalize /2 width=1/
 qed-.
 

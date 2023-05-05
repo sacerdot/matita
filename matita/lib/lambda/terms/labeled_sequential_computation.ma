@@ -36,7 +36,7 @@ qed-.
 (* Note: "|s|" should be unparetesized *)
 lemma l_sreds_fwd_mult: ∀S,R. (∀a,M,N. R a M N → M ↦ N) →
                         ∀l,M1,M2. l_sreds S R l M1 M2 →
-                        ♯{M2} ≤ ♯{M1} ^ (2 ^ (|l|)).
+                        ♯❴M2❵ ≤ ♯❴M1❵ ^ (2 ^ (|l|)).
 #S #R #HR #l #M1 #M2 #H @(lstar_ind_l … l M1 H) -l -M1 normalize //
 #a #l #M1 #M #HM1 #_ #IHM2
 lapply (HR … HM1) -HR -a #HM1

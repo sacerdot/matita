@@ -19,8 +19,8 @@ include "lambda/notation/functions/annotatedabstraction_2.ma".
 (* ITERATED ABSTRACTION *****************************************************)
 
 definition labst: nat → lterm → lterm ≝ λh,M. match M with
-[ LVRef i e   ⇒ {i+h}§e
-| LAppl i C A ⇒ {i+h}@C.A
+[ LVRef i e   ⇒ ❴i+h❵§e
+| LAppl i C A ⇒ ❴i+h❵@C.A
 ].
 
 interpretation "iterated abstraction (term by level)"

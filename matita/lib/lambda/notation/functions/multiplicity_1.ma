@@ -12,6 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-notation "hvbox( ♯{ term 46 M } )"
+notation "hvbox( ♯❴ term 46 M ❵ )"
   non associative with precedence 90
   for @{ 'Multiplicity $M }.

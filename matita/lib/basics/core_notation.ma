@@ -91,15 +91,7 @@ notation > "𝚺 list1 ident x sep , opt (: T). term 19 Px"
 notation "hvbox(❬ term 19 a, break term 19 b❭)" 
 with precedence 90 for @{ 'mk_DPair $a $b }.
 
-(* equality, conguence ******************************************************)
-
-notation > "hvbox(a break = b)" 
-  non associative with precedence 45
-for @{ 'eq ? $a $b }.
-
-notation < "hvbox(term 46 a break maction (=) (=\sub t) term 46 b)" 
-  non associative with precedence 45
-for @{ 'eq $t $a $b }.
+(* conguence ****************************************************************)
 
 notation > "hvbox(n break (≅ \sub term 90 p) m)"
   non associative with precedence 45

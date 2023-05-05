@@ -20,23 +20,23 @@ include "lambda/notation/functions/dsubst_3.ma".
 
 (* Policy: depth (level) metavariables: d, e (as for lift) *)
 let rec sdsubst G d F on F ≝ match F with
-[ SVRef b i   ⇒ tri … i d ({b}#i) (↑[i] G) ({b}#(i-1))
-| SAbst b T   ⇒ {b}𝛌. (sdsubst G (d+1) T)
-| SAppl b V T ⇒ {b}@ (sdsubst G d V). (sdsubst G d T)
+[ SVRef b i   ⇒ tri … i d (❴b❵#i) (↑[i] G) (❴b❵#(i-1))
+| SAbst b T   ⇒ ❴b❵𝛌. (sdsubst G (d+1) T)
+| SAppl b V T ⇒ ❴b❵@ (sdsubst G d V). (sdsubst G d T)
 ].
 
 interpretation "relocating substitution for subterms"
    'DSubst G d F = (sdsubst G d F).
 
-lemma sdsubst_vref_lt: ∀b,i,d,G. i < d → [d ↙ G] {b}#i = {b}#i.
+lemma sdsubst_vref_lt: ∀b,i,d,G. i < d → [d ↙ G] ❴b❵#i = ❴b❵#i.
 normalize /2 width=1/
 qed.
 
-lemma sdsubst_vref_eq: ∀b,i,G. [i ↙ G] {b}#i = ↑[i]G.
+lemma sdsubst_vref_eq: ∀b,i,G. [i ↙ G] ❴b❵#i = ↑[i]G.
 normalize //
 qed.
 
-lemma sdsubst_vref_gt: ∀b,i,d,G. d < i → [d ↙ G] {b}#i = {b}#(i-1).
+lemma sdsubst_vref_gt: ∀b,i,d,G. d < i → [d ↙ G] ❴b❵#i = ❴b❵#(i-1).
 normalize /2 width=1/
 qed.
 

@@ -11,6 +11,7 @@
 
 include "basics/pts.ma".
 include "hints_declaration.ma".
+include "basics/core_notation/eq_3.ma".
 
 (* propositional equality *)
 

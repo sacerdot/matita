@@ -12,6 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-notation "hvbox( { term 46 b } # break term 90 i )"
+notation "hvbox( ❴ term 46 b ❵ # break term 90 i )"
   non associative with precedence 46
   for @{ 'VariableReferenceByIndex $b $i }.

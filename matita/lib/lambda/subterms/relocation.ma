@@ -19,18 +19,18 @@ include "lambda/notation/functions/lift_3.ma".
 (* RELOCATION FOR SUBTERMS **************************************************)
 
 let rec slift h d E on E ≝ match E with
-[ SVRef b i   ⇒ {b}#(tri … i d i (i + h) (i + h))
-| SAbst b T   ⇒ {b}𝛌.(slift h (d+1) T)
-| SAppl b V T ⇒ {b}@(slift h d V).(slift h d T)
+[ SVRef b i   ⇒ ❴b❵#(tri … i d i (i + h) (i + h))
+| SAbst b T   ⇒ ❴b❵𝛌.(slift h (d+1) T)
+| SAppl b V T ⇒ ❴b❵@(slift h d V).(slift h d T)
 ].
 
 interpretation "relocation for subterms" 'Lift h d E = (slift h d E).
 
-lemma slift_vref_lt: ∀b,d,h,i. i < d → ↑[d, h] {b}#i = {b}#i.
+lemma slift_vref_lt: ∀b,d,h,i. i < d → ↑[d, h] ❴b❵#i = ❴b❵#i.
 normalize /3 width=1/
 qed.
 
-lemma slift_vref_ge: ∀b,d,h,i. d ≤ i → ↑[d, h] {b}#i = {b}#(i+h).
+lemma slift_vref_ge: ∀b,d,h,i. d ≤ i → ↑[d, h] ❴b❵#i = ❴b❵#(i+h).
 #b #d #h #i #H elim (le_to_or_lt_eq … H) -H
 normalize // /3 width=1/
 qed.
@@ -43,7 +43,7 @@ lemma slift_id: ∀E,d. ↑[d, 0] E = E.
 ]
 qed.
 
-lemma slift_inv_vref_lt: ∀c,j,d. j < d → ∀h,E. ↑[d, h] E = {c}#j → E = {c}#j.
+lemma slift_inv_vref_lt: ∀c,j,d. j < d → ∀h,E. ↑[d, h] E = ❴c❵#j → E = ❴c❵#j.
 #c #j #d #Hjd #h * normalize
 [ #b #i elim (lt_or_eq_or_gt i d) #Hid
   [ >(tri_lt ???? … Hid) -Hid -Hjd //
@@ -58,8 +58,8 @@ lemma slift_inv_vref_lt: ∀c,j,d. j < d → ∀h,E. ↑[d, h] E = {c}#j → E =
 ]
 qed.
 
-lemma slift_inv_vref_ge: ∀c,j,d. d ≤ j → ∀h,E. ↑[d, h] E = {c}#j →
-                         d + h ≤ j ∧ E = {c}#(j-h).
+lemma slift_inv_vref_ge: ∀c,j,d. d ≤ j → ∀h,E. ↑[d, h] E = ❴c❵#j →
+                         d + h ≤ j ∧ E = ❴c❵#(j-h).
 #c #j #d #Hdj #h * normalize
 [ #b #i elim (lt_or_eq_or_gt i d) #Hid
   [ >(tri_lt ???? … Hid) #H destruct
@@ -73,19 +73,19 @@ lemma slift_inv_vref_ge: ∀c,j,d. d ≤ j → ∀h,E. ↑[d, h] E = {c}#j →
 ]
 qed-.
 
-lemma slift_inv_vref_be: ∀c,j,d,h. d ≤ j → j < d + h → ∀E. ↑[d, h] E = {c}#j → ⊥.
+lemma slift_inv_vref_be: ∀c,j,d,h. d ≤ j → j < d + h → ∀E. ↑[d, h] E = ❴c❵#j → ⊥.
 #c #j #d #h #Hdj #Hjdh #E #H elim (slift_inv_vref_ge … H) -H // -Hdj #Hdhj #_ -E
 lapply (lt_to_le_to_lt … Hjdh Hdhj) -d -h #H
 elim (lt_refl_false … H)
 qed-.
 
 lemma slift_inv_vref_ge_plus: ∀c,j,d,h. d + h ≤ j →
-                              ∀E. ↑[d, h] E = {c}#j → E = {c}#(j-h).
+                              ∀E. ↑[d, h] E = ❴c❵#j → E = ❴c❵#(j-h).
 #c #j #d #h #Hdhj #E #H elim (slift_inv_vref_ge … H) -H // -E /2 width=2/
 qed.
 
-lemma slift_inv_abst: ∀c,U,d,h,E. ↑[d, h] E = {c}𝛌.U →
-                      ∃∃T. ↑[d+1, h] T = U & E = {c}𝛌.T.
+lemma slift_inv_abst: ∀c,U,d,h,E. ↑[d, h] E = ❴c❵𝛌.U →
+                      ∃∃T. ↑[d+1, h] T = U & E = ❴c❵𝛌.T.
 #c #U #d #h * normalize
 [ #b #i #H destruct
 | #b #T #H destruct /2 width=3/
@@ -93,8 +93,8 @@ lemma slift_inv_abst: ∀c,U,d,h,E. ↑[d, h] E = {c}𝛌.U →
 ]
 qed-.
 
-lemma slift_inv_appl: ∀c,W,U,d,h,E. ↑[d, h] E = {c}@W.U →
-                      ∃∃V,T. ↑[d, h] V = W & ↑[d, h] T = U & E = {c}@V.T.
+lemma slift_inv_appl: ∀c,W,U,d,h,E. ↑[d, h] E = ❴c❵@W.U →
+                      ∃∃V,T. ↑[d, h] V = W & ↑[d, h] T = U & E = ❴c❵@V.T.
 #c #W #U #d #h * normalize
 [ #b #i #H destruct
 | #b #T #H destruct
@@ -169,7 +169,7 @@ theorem slift_inv_slift_le: ∀h1,h2,E1,E2,d1,d2. d2 ≤ d1 →
       >(slift_inv_vref_lt … Hid2 … H) -E2 /3 width=3/
     | elim (slift_inv_vref_ge … H) -H -Hd21 // -Hid2 #Hdh2i #H destruct
       elim (le_inv_plus_l … Hdh2i) -Hdh2i #Hd2i #Hh2i
-      @(ex2_intro … ({b}#(i-h2))) [ /4 width=1/ ] -Hid1
+      @(ex2_intro … (❴b❵#(i-h2))) [ /4 width=1/ ] -Hid1
       >slift_vref_ge // -Hd2i /3 width=1/ (**) (* auto: needs some help here *)
     ]
   | elim (le_inv_plus_l … Hid1) #Hd1i #Hh2i
@@ -177,7 +177,7 @@ theorem slift_inv_slift_le: ∀h1,h2,E1,E2,d1,d2. d2 ≤ d1 →
     elim (le_inv_plus_l … Hdh2i) #Hd2i #_
     >(slift_vref_ge … Hid1) #H -Hid1
     >(slift_inv_vref_ge_plus … H) -H /2 width=3/ -Hdh2i
-    @(ex2_intro … ({b}#(i-h2))) (**) (* auto: needs some help here *)
+    @(ex2_intro … (❴b❵#(i-h2))) (**) (* auto: needs some help here *)
     [ >slift_vref_ge // -Hd1i /3 width=1/
     | >slift_vref_ge // -Hd2i -Hd1i /3 width=1/
     ]
@@ -185,12 +185,12 @@ theorem slift_inv_slift_le: ∀h1,h2,E1,E2,d1,d2. d2 ≤ d1 →
 | normalize #b #T1 #IHT1 #E2 #d1 #d2 #Hd21 #H
   elim (slift_inv_abst … H) -H >plus_plus_comm_23 #T2 #HT12 #H destruct
   elim (IHT1 … HT12) -IHT1 -HT12 /2 width=1/ -Hd21 #T #HT2 #HT1
-  @(ex2_intro … ({b}𝛌.T)) normalize //
+  @(ex2_intro … (❴b❵𝛌.T)) normalize //
 | normalize #b #V1 #T1 #IHV1 #IHT1 #E2 #d1 #d2 #Hd21 #H
   elim (slift_inv_appl … H) -H #V2 #T2 #HV12 #HT12 #H destruct
   elim (IHV1 … HV12) -IHV1 -HV12 // #V #HV2 #HV1
   elim (IHT1 … HT12) -IHT1 -HT12 // -Hd21 #T #HT2 #HT1
-  @(ex2_intro … ({b}@V.T)) normalize //
+  @(ex2_intro … (❴b❵@V.T)) normalize //
 ]
 qed-.
 

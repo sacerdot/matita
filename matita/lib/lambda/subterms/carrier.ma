@@ -30,7 +30,7 @@ let rec carrier F on F ≝ match F with
 interpretation "carrier (subterms)"
    'ProjectDown F = (carrier F).
 
-lemma carrier_inv_vref: ∀j,F. ⇓F = #j → ∃b. F = {b}#j.
+lemma carrier_inv_vref: ∀j,F. ⇓F = #j → ∃b. F = ❴b❵#j.
 #j * normalize
 [ #b #i #H destruct /2 width=2/
 | #b #T #H destruct
@@ -38,7 +38,7 @@ lemma carrier_inv_vref: ∀j,F. ⇓F = #j → ∃b. F = {b}#j.
 ]
 qed-.
 
-lemma carrier_inv_abst: ∀C,F. ⇓F = 𝛌.C → ∃∃b,U. ⇓U = C & F = {b}𝛌.U.
+lemma carrier_inv_abst: ∀C,F. ⇓F = 𝛌.C → ∃∃b,U. ⇓U = C & F = ❴b❵𝛌.U.
 #C * normalize
 [ #b #i #H destruct
 | #b #T #H destruct /2 width=4/
@@ -47,7 +47,7 @@ lemma carrier_inv_abst: ∀C,F. ⇓F = 𝛌.C → ∃∃b,U. ⇓U = C & F = {b}�
 qed-.
 
 lemma carrier_inv_appl: ∀D,C,F. ⇓F = @D.C →
-                        ∃∃b,W,U. ⇓W = D & ⇓U = C & F = {b}@W.U.
+                        ∃∃b,W,U. ⇓W = D & ⇓U = C & F = ❴b❵@W.U.
 #D #C * normalize
 [ #b #i #H destruct
 | #b #T #H destruct

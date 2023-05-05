@@ -12,6 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-notation "hvbox( { term 46 b } 𝛌 . break term 46 T)"
+notation "hvbox( ❴ term 46 b ❵ 𝛌 . break term 46 T)"
   non associative with precedence 46
   for @{ 'Abstraction $b $T }.

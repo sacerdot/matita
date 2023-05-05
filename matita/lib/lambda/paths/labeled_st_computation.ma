@@ -34,8 +34,8 @@ lemma pl_sts_fwd_pl_sreds: ∀s,F1,F2. F1 Ⓡ↦*[s] F2 → ⇓F1 ↦*[s] ⇓F2.
 lapply (pl_st_fwd_pl_sred … HF2) -HF2 /2 width=3/
 qed-.
 
-lemma pl_sts_inv_pl_sreds: ∀s,M1,F2. {⊤}⇑M1 Ⓡ↦*[s] F2 → is_whd s →
-                           ∃∃M2. M1 ↦*[s] M2 & {⊤}⇑M2 = F2.
+lemma pl_sts_inv_pl_sreds: ∀s,M1,F2. ❴⊤❵⇑M1 Ⓡ↦*[s] F2 → is_whd s →
+                           ∃∃M2. M1 ↦*[s] M2 & ❴⊤❵⇑M2 = F2.
 #s #M1 #F2 #H @(lstar_ind_r … s F2 H) -s -F2 /2 width=3/
 #p #s #F #F2 #_ #HF2 #IHF #H
 elim (is_whd_inv_append … H) -H #Hs * #Hp #_
@@ -44,7 +44,7 @@ elim (pl_st_inv_pl_sred … HF2) -HF2 // -Hp #M2 #HM2 #H
 lapply (pl_sreds_step_dx … HM … HM2) -M /2 width=3/
 qed-.
 
-lemma pl_sts_inv_empty: ∀s,M1,F2. {⊥}⇑M1 Ⓡ↦*[s] F2 → ◊ = s ∧ {⊥}⇑M1 = F2.
+lemma pl_sts_inv_empty: ∀s,M1,F2. ❴⊥❵⇑M1 Ⓡ↦*[s] F2 → ◊ = s ∧ ❴⊥❵⇑M1 = F2.
 #s #M1 #F2 #H @(lstar_ind_r … s F2 H) -s -F2 /2 width=1/ #p #s #F #F2 #_ #HF2 * #_ #H
 elim (pl_st_inv_empty … HF2 … H)
 qed-.
@@ -83,8 +83,8 @@ lemma pl_sts_inv_pos: ∀s,F1,F2. F1 Ⓡ↦*[s] F2 → 0 < |s| →
 /2 width=1 by lstar_inv_pos/
 qed-.
 
-lemma pl_sts_inv_rc_abst_dx: ∀b2,s,F1,T2. F1 Ⓡ↦*[s] {b2}𝛌.T2 → ∀r. rc:::r = s →
-                             ∃∃b1,T1. T1 Ⓡ↦*[r] T2 & {b1}𝛌.T1 = F1.
+lemma pl_sts_inv_rc_abst_dx: ∀b2,s,F1,T2. F1 Ⓡ↦*[s] ❴b2❵𝛌.T2 → ∀r. rc:::r = s →
+                             ∃∃b1,T1. T1 Ⓡ↦*[r] T2 & ❴b1❵𝛌.T1 = F1.
 #b2 #s #F1 #T2 #H @(lstar_ind_l … s F1 H) -s -F1
 [ #r #H lapply (map_cons_inv_nil … r H) -H #H destruct /2 width=4/
 | #p #s #F1 #F #HF1 #_ #IHF2 #r #H -b2
@@ -96,8 +96,8 @@ lemma pl_sts_inv_rc_abst_dx: ∀b2,s,F1,T2. F1 Ⓡ↦*[s] {b2}𝛌.T2 → ∀r. 
 ]
 qed-.
 
-lemma pl_sts_inv_sn_appl_dx: ∀b2,s,F1,V2,T2. F1 Ⓡ↦*[s] {b2}@V2.T2 → ∀r. sn:::r = s →
-                             ∃∃b1,V1,T1. V1 Ⓡ↦*[r] V2 & {b1}@V1.T1 = F1.
+lemma pl_sts_inv_sn_appl_dx: ∀b2,s,F1,V2,T2. F1 Ⓡ↦*[s] ❴b2❵@V2.T2 → ∀r. sn:::r = s →
+                             ∃∃b1,V1,T1. V1 Ⓡ↦*[r] V2 & ❴b1❵@V1.T1 = F1.
 #b2 #s #F1 #V2 #T2 #H @(lstar_ind_l … s F1 H) -s -F1
 [ #r #H lapply (map_cons_inv_nil … r H) -H #H destruct /2 width=5/
 | #p #s #F1 #F #HF1 #_ #IHF2 #r #H -b2
@@ -109,8 +109,8 @@ lemma pl_sts_inv_sn_appl_dx: ∀b2,s,F1,V2,T2. F1 Ⓡ↦*[s] {b2}@V2.T2 → ∀r
 ]
 qed-.
 
-lemma pl_sts_inv_dx_appl_dx: ∀b,s,F1,V,T2. F1 Ⓡ↦*[s] {b}@V.T2 → ∀r. dx:::r = s →
-                             ∃∃T1. T1 Ⓡ↦*[r] T2 & {b}@V.T1 = F1.
+lemma pl_sts_inv_dx_appl_dx: ∀b,s,F1,V,T2. F1 Ⓡ↦*[s] ❴b❵@V.T2 → ∀r. dx:::r = s →
+                             ∃∃T1. T1 Ⓡ↦*[r] T2 & ❴b❵@V.T1 = F1.
 #b #s #F1 #V #T2 #H @(lstar_ind_l … s F1 H) -s -F1
 [ #r #H lapply (map_cons_inv_nil … r H) -H #H destruct /2 width=3/
 | #p #s #F1 #F #HF1 #_ #IHF2 #r #H
@@ -146,8 +146,8 @@ lemma pl_sts_inv_trans: inv_ltransitive … pl_sts.
 /2 width=3 by lstar_inv_ltransitive/
 qed-.
 
-lemma pl_sts_fwd_dx_sn_appl_dx: ∀b2,s,r,F1,V2,T2. F1 Ⓡ↦*[(dx:::s)@(sn:::r)] {b2}@V2.T2 →
-                                ∃∃b1,V1,T1,T0. V1 Ⓡ↦*[r] V2 & T1 Ⓡ↦*[s] T0 & {b1}@V1.T1 = F1.
+lemma pl_sts_fwd_dx_sn_appl_dx: ∀b2,s,r,F1,V2,T2. F1 Ⓡ↦*[(dx:::s)@(sn:::r)] ❴b2❵@V2.T2 →
+                                ∃∃b1,V1,T1,T0. V1 Ⓡ↦*[r] V2 & T1 Ⓡ↦*[s] T0 & ❴b1❵@V1.T1 = F1.
 #b2 #s #r #F1 #V2 #T2 #H
 elim (pl_sts_inv_trans … H) -H #F #HF1 #H
 elim (pl_sts_inv_sn_appl_dx … H …) -H [3: // |2: skip ] (**) (* simplify line *)
@@ -164,7 +164,7 @@ elim (pl_sts_inv_cons … H …) [2: // |3,4: skip ] #F4 #HF34 #_ (**) (* simpli
 lapply (pl_st_fwd_sle … HF13 … HF34) -F1 -F4 /3 width=3/
 qed-.
 
-lemma pl_sts_fwd_abst_dx: ∀b2,s,F1,T2. F1 Ⓡ↦*[s] {b2}𝛌.T2 →
+lemma pl_sts_fwd_abst_dx: ∀b2,s,F1,T2. F1 Ⓡ↦*[s] ❴b2❵𝛌.T2 →
                           ∃∃r1,r2. is_whd r1 & r1@rc:::r2 = s.
 #b2 #s #F1 #T2 #H
 lapply (pl_sts_fwd_is_standard … H)
@@ -199,7 +199,7 @@ lapply (pl_sts_fwd_is_standard … H)
 ]
 qed-.
 
-lemma pl_sts_fwd_appl_dx: ∀b2,s,F1,V2,T2. F1 Ⓡ↦*[s] {b2}@V2.T2 →
+lemma pl_sts_fwd_appl_dx: ∀b2,s,F1,V2,T2. F1 Ⓡ↦*[s] ❴b2❵@V2.T2 →
                           ∃∃r1,r2,r3. is_whd r1 & is_inner r2 &
                                       r1@(dx:::r2)@sn:::r3 = s.
 #b2 #s #F1 #V2 #T2 #H
@@ -235,7 +235,7 @@ lapply (pl_sts_fwd_is_standard … H)
 qed-.
 
 lemma pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
-                                 ∀s,M1.{⊤}⇑ M1 Ⓡ↦*[s] F →
+                                 ∀s,M1.❴⊤❵⇑ M1 Ⓡ↦*[s] F →
                                  is_standard (s@(p::◊)) →
                                  ∃∃F2. F Ⓡ↦[p] F2 & ⇓F2 = M2.
 #p #M #M2 #H elim H -p -M -M2
@@ -255,7 +255,7 @@ lemma pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
   elim (pl_sts_inv_rc_abst_dx … HT …) -HT [3: // |2: skip ] #b0 #T0 #HT02 #H (**) (* simplify line *)
   elim (boolean_inv_abst … (sym_eq … H)) -H #A0 #_ #H #_ -b0 -M0 destruct
   elim (IHA12 … HT02 …) // -r2 -A0 -IHA12 #F2 #HF2 #H
-  @(ex2_intro … ({⊥}𝛌.F2)) normalize // /2 width=1/ (**) (* auto needs some help here *)
+  @(ex2_intro … (❴⊥❵𝛌.F2)) normalize // /2 width=1/ (**) (* auto needs some help here *)
 | #p #B1 #B2 #A #_ #IHB12 #F #HF #s #M1 #HM1 #Hs
   elim (carrier_inv_appl … HF) -HF #b #V #T #HV #HT #HF destruct
   elim (pl_sts_fwd_appl_dx … HM1) #r1 #r2 #r3 #Hr1 #_ #H destruct
@@ -270,7 +270,7 @@ lemma pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
   elim (pl_sts_fwd_dx_sn_appl_dx … HT) -HT #b0 #V0 #T0 #T1 #HV0 #_ #H -T1 -r2
   elim (boolean_inv_appl … (sym_eq … H)) -H #B0 #A0 #_ #H #_ #_ -b0 -M0 -T0 destruct
   elim (IHB12 … HV0 …) // -r3 -B0 -IHB12 #G2 #HG2 #H
-  @(ex2_intro … ({⊥}@G2.{⊥}⇕T)) normalize // /2 width=1/ (**) (* auto needs some help here *)
+  @(ex2_intro … (❴⊥❵@G2.❴⊥❵⇕T)) normalize // /2 width=1/ (**) (* auto needs some help here *)
 | #p #B #A1 #A2 #_ #IHA12 #F #HF #s #M1 #HM1 #Hs
   elim (carrier_inv_appl … HF) -HF #b #V #T #HV #HT #HF destruct
   elim (pl_sts_fwd_appl_dx … HM1) #r1 #r2 #r3 #Hr1 #Hr2 #H destruct
@@ -289,7 +289,7 @@ lemma pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
       elim (boolean_inv_appl … H) -H #B0 #A0 #_ #_ #H #_ -M0 -B0 destruct
       elim (IHA12 … A0 …) -IHA12 [3,5,6: // |2,4: skip ] (* simplify line *)
       #F2 #HF2 #H
-      @(ex2_intro … ({b}@V.F2)) normalize // /2 width=1/ (**) (* auto needs some help here *)
+      @(ex2_intro … (❴b❵@V.F2)) normalize // /2 width=1/ (**) (* auto needs some help here *)
     | <(map_cons_append … r2 (p::◊)) in Hs; #H
       lapply (is_standard_inv_compatible_dx … H ?) -H /3 width=1/ -Hp #Hp
       >append_nil in HT; #HT
@@ -297,7 +297,7 @@ lemma pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
       #T0 #HT0 #H
       elim (boolean_inv_appl … (sym_eq … H)) -H #B0 #A0 #_ #_ #H #_ -M0 -B0 destruct
       elim (IHA12 … HT0 …) // -r2 -A0 -IHA12 #F2 #HF2 #H
-      @(ex2_intro … ({b}@V.F2)) normalize // /2 width=1/ (**) (* auto needs some help here *)
+      @(ex2_intro … (❴b❵@V.F2)) normalize // /2 width=1/ (**) (* auto needs some help here *)
     ]
   | -IHA12 -Hr2 -M0 * #q #r #H destruct
     lapply (is_standard_fwd_append_dx … Hs) -r2 #Hs
@@ -309,7 +309,7 @@ lemma pl_sred_is_standard_pl_st: ∀p,M,M2. M ↦[p] M2 → ∀F. ⇓F = M →
 qed-.
 
 theorem pl_sreds_is_standard_pl_sts: ∀s,M1,M2. M1 ↦*[s] M2 → is_standard s →
-                                     ∃∃F2. {⊤}⇑ M1 Ⓡ↦*[s] F2 & ⇓F2 = M2.
+                                     ∃∃F2. ❴⊤❵⇑ M1 Ⓡ↦*[s] F2 & ⇓F2 = M2.
 #s #M1 #M2 #H @(lstar_ind_r … s M2 H) -s -M2 /2 width=3/
 #p #s #M #M2 #_ #HM2 #IHM1 #Hsp
 lapply (is_standard_fwd_append_sn … Hsp) #Hs

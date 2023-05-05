@@ -12,6 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-notation "hvbox( { term 46 b } ⇕ break term 46 F)"
+notation "hvbox( ❴ term 46 b ❵ ⇕ break term 46 F)"
   non associative with precedence 46
   for @{ 'ProjectSame $b $F }.

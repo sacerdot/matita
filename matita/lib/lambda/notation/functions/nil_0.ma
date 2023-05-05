@@ -13,6 +13,6 @@
 (**************************************************************************)
 
 (* Note: notation for nil not involving brackets *)
-notation > "◊"
+notation "◊"
   non associative with precedence 90
   for @{'nil}.
