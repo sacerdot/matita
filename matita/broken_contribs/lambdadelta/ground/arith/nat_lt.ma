@@ -18,7 +18,7 @@ include "ground/arith/nat_le.ma".
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
 
 (*** lt *)
-definition nlt: relation2 nat nat ≝
+definition nlt: relation2 (ℕ) (ℕ) ≝
            λm,n. ↑m ≤ n.
 
 interpretation
@@ -139,7 +139,7 @@ lemma nat_ind_lt (Q:predicate …):
 /4 width=2 by nat_ind_lt_le/ qed-.
 
 (*** lt_elim *)
-lemma nlt_ind_alt (Q: relation2 nat nat):
+lemma nlt_ind_alt (Q: relation2 … (ℕ)):
       (∀n. Q (𝟎) (↑n)) →
       (∀m,n. m < n → Q m n → Q (↑m) (↑n)) →
       ∀m,n. m < n → Q m n.
@@ -153,7 +153,7 @@ qed-.
 (* Advanced constructions (decidability) ************************************)
 
 (*** dec_lt *)
-lemma dec_nlt (R:predicate nat):
+lemma dec_nlt (R:predicate …):
       (∀n. Decidable … (R n)) →
       ∀n. Decidable … (∃∃m. m < n & R m).
 #R #HR #n @(nat_ind_succ … n) -n [| #n * ]

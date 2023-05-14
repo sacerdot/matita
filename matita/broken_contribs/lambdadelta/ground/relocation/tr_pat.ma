@@ -18,7 +18,7 @@ include "ground/relocation/tr_map.ma".
 
 (* TOTAL RELOCATION MAPS ****************************************************)
 
-(* Constructions with pr_pat ***********************************************)
+(* Constructions with pr_pat ************************************************)
 
 (*** at_O1 *)
 lemma tr_pat_unit_sn: ∀i2,f. ＠⧣❨𝟏,𝐭❨i2⨮f❩❩ ≘ i2.

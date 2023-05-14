@@ -23,22 +23,22 @@ include "ground/arith/nat.ma".
 (* RT-TRANSITION COUNTERS ***************************************************)
 
 definition rtc: Type[0] ≝
-           (⨉ nat & nat & nat & nat).
+           (⨉ ℕ & ℕ & ℕ & ℕ).
 
 (* Note: inner r-steps *)
-definition ri: rtc → nat ≝
+definition ri: rtc → ℕ ≝
            proj_4_1 ????.
 
 (* Note: spine r-steps *)
-definition rs: rtc → nat ≝
+definition rs: rtc → ℕ ≝
            proj_4_2 ????.
 
 (* Note: inner t-steps *)
-definition ti: rtc → nat ≝
+definition ti: rtc → ℕ ≝
            proj_4_3 ????.
 
 (* Note: spine t-steps *)
-definition ts: rtc → nat ≝
+definition ts: rtc → ℕ ≝
            proj_4_4 ????.
 
 interpretation

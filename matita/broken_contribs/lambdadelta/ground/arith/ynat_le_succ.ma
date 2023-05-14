@@ -20,25 +20,25 @@ include "ground/arith/ynat_le.ma".
 (* Constructions with ysucc *************************************************)
 
 (*** yle_succ *)
-lemma yle_succ_bi (x) (y): x ≤ y → ↑x ≤ ↑y.
+lemma yle_succ_bi (x) (y): x ≤ y → ⫯x ≤ ⫯y.
 #x #y * -x -y
 /3 width=1 by yle_inj, yle_inf, nle_succ_bi/
 qed.
 
 (*** yle_succ_dx *)
-lemma yle_succ_dx (x) (y): x ≤ y → x ≤ ↑y.
+lemma yle_succ_dx (x) (y): x ≤ y → x ≤ ⫯y.
 #x #y * -x -y
 /3 width=1 by yle_inj, yle_inf, nle_succ_dx/
 qed.
 
 (*** yle_refl_S_dx *)
-lemma yle_succ_dx_refl (x): x ≤ ↑x.
+lemma yle_succ_dx_refl (x): x ≤ ⫯x.
 /2 width=1 by yle_succ_dx/ qed.
 
 (* Inversions with ysucc ****************************************************)
 
 (*** yle_inv_succ *)
-lemma yle_inv_succ_bi (x) (y): ↑x ≤ ↑y → x ≤ y.
+lemma yle_inv_succ_bi (x) (y): ⫯x ≤ ⫯y → x ≤ y.
 #x #y @(ynat_split_nat_inf … y) -y //
 #n <ysucc_inj #H
 elim (yle_inv_inj_dx … H) -H #o #Hmn #H

@@ -12,8 +12,41 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/arith/nat_split.ma".
 
-notation "hvbox( 𝟘𝟙 )"
-  non associative with precedence 70
-  for @{ 'ZeroOne }.
+(* POSITIVE SUCCESSOR FOR NON-NEGATIVE INTEGERS *****************************)
+
+definition npsucc (m): ℤ⁺ ≝
+           nsplit … (𝟏) psucc m.
+
+interpretation
+  "positive successor (non-negative integers)"
+  'UpArrow m = (npsucc m).
+
+(* Basic constructions ******************************************************)
+
+lemma npsucc_zero: (𝟏) = ↑𝟎.
+// qed.
+
+lemma npsucc_inj (p): (↑p) = ↑(ninj p).
+// qed.
+
+lemma npsucc_succ (n): psucc (npsucc n) = npsucc (npsucc n).
+// qed.
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_npsucc_bi: injective … npsucc.
+* [| #p1 ] * [2,4: #p2 ]
+[ 1,4: <npsucc_zero <npsucc_inj #H destruct
+| <npsucc_inj <npsucc_inj #H destruct //
+| //
+]
+qed-.
+
+lemma npsucc_inv_refl (m:ℕ): m = ↑m → ⊥.
+*
+[ #H0 destruct
+| #p #H0 /3 width=2 by eq_inv_ninj_bi, psucc_inv_refl/
+]
+qed-.

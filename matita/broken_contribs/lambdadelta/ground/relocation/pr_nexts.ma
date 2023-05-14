@@ -19,7 +19,7 @@ include "ground/relocation/pr_map.ma".
 (* ITERATED NEXT FOR PARTIAL RELOCATION MAPS ********************************)
 
 (*** nexts *)
-definition pr_nexts (f:pr_map) (n:nat) ≝
+definition pr_nexts (f:pr_map) (n:ℕ) ≝
            (pr_next^n) f.
 
 interpretation

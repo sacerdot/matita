@@ -17,8 +17,8 @@ include "ground/arith/nat_succ_iter.ma".
 (* ADDITION FOR NON-NEGATIVE INTEGERS ***************************************)
 
 (*** plus *)
-definition nplus: nat → nat → nat ≝
-           λm,n. (nsucc^n) m.
+definition nplus: ℕ → ℕ → ℕ ≝
+           λm,n. (npsucc^n) m.
 
 interpretation
   "plus (non-negative integers)"
@@ -31,12 +31,12 @@ lemma nplus_zero_dx (m): m = m + 𝟎.
 // qed.
 
 (*** plus_SO_dx *)
-lemma nplus_unit_dx (n): ↑n = n + 𝟏.
+lemma nplus_unit_dx (n): ↑n ={ℕ} n + 𝟏.
 // qed.
 
 (*** plus_n_Sm *)
-lemma nplus_succ_dx (m) (n): ↑(m+n) = m + ↑n.
-#m #n @(niter_succ … nsucc)
+lemma nplus_succ_dx (m) (n): ↑(m+n) ={ℕ} m + ↑n.
+#m #n @(niter_succ … npsucc)
 qed.
 
 (* Constructions with niter *************************************************)
@@ -46,15 +46,17 @@ lemma niter_plus (A) (f) (n1) (n2):
       f^n2 ∘ f^n1 ⊜ f^{A}(n1+n2).
 #A #f #n1 #n2 @(nat_ind_succ … n2) -n2 //
 #n2 #IH <nplus_succ_dx
-@exteq_repl
-/3 width=5 by compose_repl_fwd_sn, compose_repl_fwd_dx/
+@(exteq_trans … (niter_succ …))
+@(exteq_canc_sn ?????? (compose_repl_fwd_dx … IH)) -IH
+@(exteq_trans … (compose_assoc …))
+/2 width=1 by compose_repl_fwd_sn/
 qed.
 
 (* Advanced constructions (semigroup properties) ****************************)
 
 (*** plus_S1 *)
-lemma nplus_succ_sn (m) (n): ↑(m+n) = ↑m + n.
-#m #n @(niter_appl … nsucc)
+lemma nplus_succ_sn (m) (n): ↑(m+n) ={ℕ} ↑m + n.
+#m #n @(niter_appl … npsucc)
 qed.
 
 (*** plus_O_n *)
@@ -70,13 +72,12 @@ qed-. (* * gets in the way with auto *)
 (*** associative_plus *)
 lemma nplus_assoc: associative … nplus.
 #m #n #o @(nat_ind_succ … o) -o //
-#o #IH <nplus_succ_dx <nplus_succ_dx <nplus_succ_dx <IH -IH //
 qed.
 
 (* Helper constructions *****************************************************)
 
 (*** plus_SO_sn *)
-lemma nplus_unit_sn (n): ↑n = 𝟏 + n.
+lemma nplus_unit_sn (n): ↑n ={ℕ} 𝟏 + n.
 #n <nplus_comm // qed.
 
 lemma nplus_succ_shift (m) (n): ↑m + n = m + ↑n.
@@ -98,7 +99,7 @@ lemma eq_inv_zero_nplus (m) (n): 𝟎 = m + n → ∧∧ 𝟎 = m & 𝟎 = n.
 #m #n @(nat_ind_succ … n) -n
 [ /2 width=1 by conj/
 | #n #_ <nplus_succ_dx #H
-  elim (eq_inv_zero_nsucc … H)
+  elim (eq_inv_zero_ninj … H)
 ]
 qed-.
 
@@ -121,7 +122,7 @@ qed-.
 (*** plus_xSy_x_false *)
 lemma succ_nplus_refl_sn (m) (n): m = ↑(m + n) → ⊥.
 #m @(nat_ind_succ … m) -m
-[ /2 width=2 by eq_inv_zero_nsucc/
+[ /2 width=2 by eq_inv_zero_ninj/
 | #m #IH #n #H
   @(IH n) /2 width=1 by eq_inv_nsucc_bi/
 ]

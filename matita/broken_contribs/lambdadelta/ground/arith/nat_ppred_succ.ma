@@ -12,8 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/arith/nat_succ.ma".
+include "ground/arith/nat_ppred_psucc.ma".
 
-notation "hvbox( 𝟘𝟙 )"
-  non associative with precedence 70
-  for @{ 'ZeroOne }.
+(* POSITIVE PREDECESSOR FOR NON-NEGATIVE INTEGERS ***************************)
+
+(* Constructions with nsucc *************************************************)
+
+lemma nsucc_pnpred (p): ↓↑p ={ℕ} ↑↓p.
+// qed.

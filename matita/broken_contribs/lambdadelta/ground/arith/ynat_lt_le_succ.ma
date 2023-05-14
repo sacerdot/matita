@@ -21,14 +21,14 @@ include "ground/arith/ynat_lt_le.ma".
 
 (*** yle_lt yle_succ1_inj *)
 lemma ylt_le_succ_sn (x) (y):
-      x < ∞ → ↑x ≤ y → x < y.
+      x < ∞ → ⫯x ≤ y → x < y.
 /3 width=3 by ylt_yle_trans, ylt_succ_dx_refl/ qed.
 
 (* Inversions with yle and ysucc ********************************************)
 
 (*** ylt_inv_le *)
 lemma ylt_inv_le_succ_sn (x) (y):
-      x < y → ∧∧ x < ∞ & ↑x ≤ y.
+      x < y → ∧∧ x < ∞ & ⫯x ≤ y.
 #x #y * -x -y
 /3 width=1 by yle_inj, conj/
 qed-.
@@ -36,13 +36,13 @@ qed-.
 (* Destructions with yle and ysucc ******************************************)
 
 (*** ylt_fwd_le_succ1 *)
-lemma ylt_des_le_succ_sn (x) (y): x < y → ↑x ≤ y.
+lemma ylt_des_le_succ_sn (x) (y): x < y → ⫯x ≤ y.
 #x #y #H
 elim (ylt_inv_le_succ_sn … H) -H #_ //
 qed-.
 
 (*** ylt_fwd_succ2 *)
-lemma ylt_des_succ_dx (x) (y): x < ↑y → x ≤ y.
+lemma ylt_des_succ_dx (x) (y): x < ⫯y → x ≤ y.
 #x #y @(ynat_split_nat_inf … y) -y //
 #n <ysucc_inj #H
 elim (ylt_inv_inj_dx … H) -H #m #Hm #H destruct

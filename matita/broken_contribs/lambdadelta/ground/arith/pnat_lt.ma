@@ -17,7 +17,7 @@ include "ground/arith/pnat_le.ma".
 
 (* STRICT ORDER FOR POSITIVE INTEGERS ***************************************)
 
-definition plt: relation2 pnat pnat ≝
+definition plt: relation2 (ℤ⁺) (ℤ⁺) ≝
            λp,q. ↑p ≤ q.
 
 interpretation
@@ -119,7 +119,7 @@ lemma pnat_ind_lt (Q:predicate …):
       (∀q. (∀p. p < q → Q p) → Q q) → ∀q. Q q.
 /4 width=2 by pnat_ind_lt_le/ qed-.
 
-lemma plt_ind_alt (Q: relation2 pnat pnat):
+lemma plt_ind_alt (Q: relation2 …):
       (∀q. Q (𝟏) (↑q)) →
       (∀p,q. p < q → Q p q → Q (↑p) (↑q)) →
       ∀p,q. p < q → Q p q.
@@ -132,7 +132,7 @@ qed-.
 
 (* Advanced constructions (decidability) ************************************)
 
-lemma dec_plt (R:predicate pnat):
+lemma dec_plt (R:predicate …):
       (∀q. Decidable … (R q)) →
       ∀q. Decidable … (∃∃p. p < q & R p).
 #R #HR #q elim q -q [| #q * ]

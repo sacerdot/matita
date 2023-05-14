@@ -20,7 +20,7 @@ include "ground/relocation/fr2_map.ma".
 (* NON-NEGATIVE APPLICATION FOR FINITE RELOCATION MAPS WITH PAIRS ***********)
 
 (*** at *)
-inductive fr2_nat: fr2_map → relation nat ≝
+inductive fr2_nat: fr2_map → relation2 (ℕ) (ℕ) ≝
 (*** at_nil *)
 | fr2_nat_empty (l):
   fr2_nat (𝐞) l l

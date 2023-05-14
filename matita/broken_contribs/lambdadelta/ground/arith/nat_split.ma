@@ -12,8 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/arith/nat.ma".
 
-notation "hvbox( 𝟘𝟙 )"
-  non associative with precedence 70
-  for @{ 'ZeroOne }.
+(* DISCRIMINATOR FOR NON-NEGATIVE INTEGERS **********************************)
+
+definition nsplit (A:Type[0]) (a) (f) (n): A ≝
+match n with
+[ nzero   ⇒ a
+| ninj  m ⇒ f m
+].

@@ -13,16 +13,13 @@
 (**************************************************************************)
 
 include "ground/arith/pnat_iter.ma".
-include "ground/arith/nat.ma".
+include "ground/arith/nat_split.ma".
 
 (* ITERATED FUNCTION FOR NON-NEGATIVE INTEGERS ******************************)
 
 (*** iter *)
-definition niter (n:nat) (A:Type[0]) (f:A→A) (a:A) ≝
-match n with
-[ nzero  ⇒ a
-| ninj p ⇒ (f^{A}p) a
-]
+definition niter (n:ℕ) (A:Type[0]) (f:A→A) (a:A): A ≝
+           nsplit … a (λp.(f^{A}p) a) n
 .
 
 interpretation

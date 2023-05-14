@@ -32,17 +32,17 @@ lemma ylminus_zero_dx (x:ynat): x = x - 𝟎 .
 // qed.
 
 (*** yminus_pred1 *)
-lemma yminus_pred_sn (x) (n): ↓(x-n) = ↓x - n.
+lemma yminus_pred_sn (x) (n): ⫰(x-n) = ⫰x - n.
 #x #n @(niter_appl … ypred)
 qed.
 
 (*** yminus_succ2 yminus_S2 *)
-lemma ylminus_succ_dx (x:ynat) (n): ↓(x-n) = x - ↑n.
+lemma ylminus_succ_dx (x:ynat) (n): ⫰(x-n) = x - ↑n.
 #x #n @(niter_succ … ypred)
 qed.
 
 (*** yminus_SO2 *)
-lemma ylminus_unit_dx (x): ↓x = x - (𝟏).
+lemma ylminus_unit_dx (x): ⫰x = x - 𝟏.
 // qed.
 
 (*** yminus_Y_inj *)

@@ -19,26 +19,26 @@ include "ground/arith/pnat_le.ma".
 
 (* Destructions with ppred **************************************************)
 
-lemma ple_inv_pred_sn (p) (q): ↓p ≤ q → p ≤ ↑q.
+lemma ple_inv_pred_sn (p) (q): ⫰p ≤ q → p ≤ ↑q.
 #p #q elim p -p
 /2 width=1 by ple_succ_bi/
 qed-.
 
 (* Constructions with ppred *************************************************)
 
-lemma ple_succ_pred_dx_refl (p): p ≤ ↑↓p.
+lemma ple_succ_pred_dx_refl (p): p ≤ ↑⫰p.
 #p @ple_inv_pred_sn // qed.
 
-lemma ple_pred_sn_refl (p): ↓p ≤ p.
+lemma ple_pred_sn_refl (p): ⫰p ≤ p.
 #p elim p -p //
 qed.
 
-lemma ple_pred_bi (p) (q): p ≤ q → ↓p ≤ ↓q.
+lemma ple_pred_bi (p) (q): p ≤ q → ⫰p ≤ ⫰q.
 #p #q #H elim H -q //
 /2 width=3 by ple_trans/
 qed.
 
-lemma ple_pred_sn (p) (q): p ≤ ↑q → ↓p ≤ q.
+lemma ple_pred_sn (p) (q): p ≤ ↑q → ⫰p ≤ q.
 #p #q elim p -p //
 /2 width=1 by ple_pred_bi/
 qed-.
@@ -46,7 +46,7 @@ qed-.
 (* Inversions with ppred ****************************************************)
 
 lemma ple_inv_succ_sn (p) (q):
-      ↑p ≤ q → ∧∧ p ≤ ↓q & q = ↑↓q.
+      ↑p ≤ q → ∧∧ p ≤ ⫰q & q = ↑⫰q.
 #p #q * -q
 [ /2 width=3 by ple_refl, conj/
 | #q #Hq /3 width=1 by ple_des_succ_sn, conj/

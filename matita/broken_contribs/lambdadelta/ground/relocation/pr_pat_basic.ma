@@ -21,14 +21,14 @@ include "ground/relocation/pr_nat_basic.ma".
 (*** at_basic_lt *)
 lemma pr_pat_basic_lt (m) (n) (i):
       ninj i ≤ m → ＠⧣❨i, 𝐛❨m,n❩❩ ≘ i.
-#m #n #i >(npsucc_pred i) #Hmi
+#m #n #i >(npsucc_pnpred i) #Hmi
 /2 width=1 by pr_nat_basic_lt/
 qed.
 
 (*** at_basic_ge *)
 lemma pr_pat_basic_ge (m) (n) (i):
       m < ninj i → ＠⧣❨i, 𝐛❨m,n❩❩ ≘ i+n.
-#m #n #i >(npsucc_pred i) #Hmi <nrplus_npsucc_sn
+#m #n #i >(npsucc_pnpred i) #Hmi <nrplus_npsucc_sn
 /3 width=1 by pr_nat_basic_ge, nlt_inv_succ_dx/
 qed.
 

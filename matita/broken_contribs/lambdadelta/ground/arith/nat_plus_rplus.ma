@@ -22,13 +22,12 @@ include "ground/arith/nat_plus.ma".
 lemma nrplus_inj_sn (p) (n):
       ninj (p + n) = ninj p + n.
 #p #n @(nat_ind_succ … n) -n //
-#n #IH <nplus_succ_dx <IH //
+#n #IH <nrplus_succ_dx <nplus_succ_dx //
 qed.
 
 (* Constructions with nrplus and npsucc *************************************)
 
-lemma nrplus_npsucc_sn (m) (n):
-      npsucc (m + n) = npsucc m + n.
+lemma nrplus_npsucc_sn (m:ℕ) (n:ℕ):
+      ↑(m + n) ={ℤ⁺} ↑m + n.
 #m @(nat_ind_succ … m) -m //
-#m #IH #n <npsucc_succ <nrplus_succ_sn //
 qed.

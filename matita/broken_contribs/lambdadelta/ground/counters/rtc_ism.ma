@@ -17,7 +17,7 @@ include "ground/counters/rtc.ma".
 
 (* T-BOUND RT-TRANSITION COUNTERS *******************************************)
 
-definition rtc_ism: relation2 nat rtc ≝ λts,c.
+definition rtc_ism: relation2 (ℕ) rtc ≝ λts,c.
            ∃∃ri,rs. 〈ri,rs,𝟎,ts〉 = c.
 
 interpretation

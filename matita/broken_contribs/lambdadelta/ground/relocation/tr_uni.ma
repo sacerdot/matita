@@ -18,7 +18,7 @@ include "ground/relocation/tr_id.ma".
 
 (* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS *******************************)
 
-definition tr_uni (n:nat): tr_map ≝ ↑n ⨮ 𝐢.
+definition tr_uni (n:ℕ): tr_map ≝ ↑n ⨮ 𝐢.
 
 interpretation
   "uniform elements (total relocation maps)"

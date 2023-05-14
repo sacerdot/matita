@@ -19,7 +19,7 @@ include "ground/relocation/pr_map.ma".
 (* ITERATED PUSH FOR PARTIAL RELOCATION MAPS ********************************)
 
 (*** pushs *)
-definition pr_pushs (f:pr_map) (n:nat) ≝
+definition pr_pushs (f:pr_map) (n:ℕ) ≝
            (pr_push^n) f.
 
 interpretation

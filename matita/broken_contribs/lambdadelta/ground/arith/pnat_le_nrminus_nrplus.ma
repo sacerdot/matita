@@ -20,7 +20,7 @@ include "ground/arith/pnat_le_pred.ma".
 
 (* Constructions with nrminus and nrplus ************************************)
 
-lemma pnat_le_nrminus_dx (n) (p) (q):
+lemma ple_nrminus_dx (n) (p) (q):
       p + n ≤ q → p ≤ q - n.
 #n @(nat_ind_succ … n) -n //
 #n #IH #p #q

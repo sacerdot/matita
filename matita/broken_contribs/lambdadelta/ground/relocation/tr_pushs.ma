@@ -18,7 +18,7 @@ include "ground/relocation/tr_pn.ma".
 
 (* ITERATED PUSH FOR TOTAL RELOCATION MAPS **********************************)
 
-definition tr_pushs (f:tr_map) (n:nat) ≝
+definition tr_pushs (f:tr_map) (n:ℕ) ≝
            (tr_push^n) f.
 
 interpretation

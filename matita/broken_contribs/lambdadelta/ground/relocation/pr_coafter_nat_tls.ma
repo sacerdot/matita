@@ -29,8 +29,9 @@ lemma pr_coafter_tls_bi_tls (n2) (n1):
 | elim (pr_nat_inv_zero_succ … Hf1) -Hf1 [ |*: // ] #g1 #Hg1 #H1
   elim (pr_coafter_inv_next_sn … Hf … H1) -Hf #g #Hg #H0 destruct
   lapply (IH … Hg1 Hg) -IH -Hg1 -Hg //
-| elim (pr_nat_inv_succ_dx … Hf1) -Hf1 [1,3: * |*: // ] #g1 [ #n1 ] #Hg1 [ #H ] #H1
-  [ elim (pr_coafter_inv_push_sn … Hf … H1) -Hf * #g2 #g #Hg #H2 #H0 destruct
+| elim (pr_nat_inv_succ_dx … Hf1) -Hf1 [1,3: * |*: // ] #g1 [ #m1 ] #Hg1 [ #H ] #H1
+  [ elim (pr_coafter_inv_push_sn … Hf … H1) -Hf * #g2 #g #Hg #H2 #H0
+    lapply (eq_inv_ninj_bi … H) -H #H destruct (**) (* destruct lemma needed *)
     lapply (IH … Hg1 Hg) -IH -Hg1 -Hg #H //
   | elim (pr_coafter_inv_next_sn … Hf … H1) -Hf #g #Hg #H0 destruct
     lapply (IH … Hg1 Hg) -IH -Hg1 -Hg #H //

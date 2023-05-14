@@ -18,9 +18,9 @@ include "ground/arith/nat_succ.ma".
 
 (* LENGTH FOR LISTS *********************************************************)
 
-rec definition list_length A (l:list A) on l ≝ match l with
+rec definition list_length A (l:list A) on l : ℕ ≝ match l with
 [ list_empty     ⇒ 𝟎
-| list_lcons _ l ⇒ ↑(list_length A l)
+| list_lcons _ l ⇒ (↑(list_length A l):ℕ)
 ].
 
 interpretation
@@ -42,7 +42,7 @@ lemma list_length_lcons (A:Type[0]) (l:list A) (a:A):
 lemma list_length_inv_zero_dx (A:Type[0]) (l:list A):
       ❘l❘ = 𝟎 → l = ⓔ.
 #A * // #a #l >list_length_lcons #H
-elim (eq_inv_nsucc_zero … H)
+elim (eq_inv_ninj_zero … H)
 qed-.
 
 lemma list_length_inv_zero_sn (A:Type[0]) (l:list A):
@@ -54,13 +54,13 @@ lemma list_length_inv_succ_dx (A:Type[0]) (l:list A) (x):
       ∃∃tl,a. x = ❘tl❘ & l = a ⨮ tl.
 #A *
 [ #x >list_length_empty #H
-  elim (eq_inv_zero_nsucc … H)
+  elim (eq_inv_zero_ninj … H)
 | #a #l #x >list_length_lcons #H
   /3 width=4 by eq_inv_nsucc_bi, ex2_2_intro/
 ]
 qed-.
 
 lemma list_length_inv_succ_sn (A:Type[0]) (l:list A) (x):
-      ↑x = ❘l❘ →
+      ↑x ={ℕ} ❘l❘ →
       ∃∃tl,a. x = ❘tl❘ & l = a ⨮ tl.
 /2 width=1 by list_length_inv_succ_dx/ qed-.

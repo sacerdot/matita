@@ -16,7 +16,7 @@ include "ground/arith/nat_iter.ma".
 
 (* RIGHT ADDITION FOR NON-NEGATIVE INTEGERS *********************************)
 
-definition nrplus: pnat → nat → pnat ≝
+definition nrplus: ℤ⁺ → ℕ → ℤ⁺ ≝
            λp,n. (psucc^n) p.
 
 interpretation

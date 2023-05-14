@@ -15,7 +15,7 @@
 include "ground/arith/nat_lt_pred.ma".
 include "ground/relocation/pr_nat.ma".
 
-(* NON-NEGATIVE APPLICATION FOR PARTIAL RELOCATION MAPS *****************************)
+(* NON-NEGATIVE APPLICATION FOR PARTIAL RELOCATION MAPS *********************)
 
 (* Main destructions ********************************************************)
 
@@ -27,7 +27,7 @@ theorem pr_nat_monotonic (k2) (l2) (f):
   elim (nlt_inv_zero_dx … Hi)
 | #k2 #IH #l2 #f #H2f #k1 @(nat_ind_succ … k1) -k1 //
   #k1 #_ #l1 #H1f #Hl elim (nlt_inv_gen … Hl)
-  #_ #Hl2 elim (pr_nat_inv_succ_bi … H2f (↓l2)) -H2f [1,3: * |*: // ]
+  #_ #Hl2 elim (pr_nat_inv_succ_bi … H2f (⫰l2)) -H2f [1,3: * |*: // ]
   #g #H2g #H
   [ elim (pr_nat_inv_push_succ … H1f … H) -f
     /4 width=8 by nlt_inv_succ_bi, nlt_succ_bi/
@@ -42,7 +42,7 @@ theorem pr_nat_inv_monotonic (k1) (l1) (f):
 [ #l1 #f #H1f elim (pr_nat_inv_zero_dx … H1f) -H1f //
   #g * -l1 #H #k2 #l2 #H2f #Hk
   lapply (nlt_des_gen … Hk) -Hk #H22
-  elim (pr_nat_inv_push_succ … H2f … (↓k2) H) -f //
+  elim (pr_nat_inv_push_succ … H2f … (⫰k2) H) -f //
 | #k1 #IH #l1 @(nat_ind_succ … l1) -l1
   [ #f #H1f elim (pr_nat_inv_zero_succ … H1f) -H1f [ |*: // ]
     #g #H1g #H #k2 #l2 #H2f #Hj elim (nlt_inv_succ_sn … Hj) -Hj
@@ -50,7 +50,7 @@ theorem pr_nat_inv_monotonic (k1) (l1) (f):
   | #l1 #_ #f #H1f #k2 #l2 #H2f #Hj elim (nlt_inv_succ_sn … Hj) -Hj
     #Hj #H22 elim (pr_nat_inv_succ_bi … H1f) -H1f [1,4: * |*: // ]
     #g #Hg #H
-    [ elim (pr_nat_inv_push_succ … H2f … (↓k2) H) -f
+    [ elim (pr_nat_inv_push_succ … H2f … (⫰k2) H) -f
       /3 width=7 by nlt_succ_bi/
     | /3 width=7 by pr_nat_inv_next_succ/
     ]

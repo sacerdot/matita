@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "hvbox( 𝟘𝟙 )"
+notation "hvbox( ℤ⁺ )"
   non associative with precedence 70
-  for @{ 'ZeroOne }.
+  for @{'IntegersPlus}.

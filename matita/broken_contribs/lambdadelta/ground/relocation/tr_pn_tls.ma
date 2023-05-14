@@ -22,7 +22,7 @@ include "ground/relocation/tr_pn_hdtl.ma".
 
 (*** tls_next *)
 lemma tr_tls_next (f):
-      ∀p:pnat. ⇂*[p]f = ⇂*[p]↑f.
+      ∀p:ℤ⁺. ⇂*[p]f = ⇂*[p]↑f.
 #f #p
->(npsucc_pred p) <stream_tls_swap <stream_tls_swap //
+>(npsucc_pnpred p) <stream_tls_swap <stream_tls_swap //
 qed.

@@ -22,7 +22,7 @@ include "ground/relocation/fr2_map.ma".
 (* RELATIONAL SUBTRACTION FOR FINITE RELOCATION MAPS WITH PAIRS *************)
 
 (*** minuss *)
-inductive fr2_minus: nat → relation fr2_map ≝
+inductive fr2_minus: ℕ → relation2 fr2_map fr2_map ≝
 (*** minuss_nil *)
 | fr2_minus_empty (i):
   fr2_minus i (𝐞) (𝐞)

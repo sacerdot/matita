@@ -4,7 +4,7 @@ include "ground/relocation/tr_compose_pn.ma".
 include "ground/relocation/nap.ma".
 include "ground/notation/functions/at_2.ma".
 
-definition tr_xap (f) (l:nat): nat ≝
+definition tr_xap (f) (l:ℕ): ℕ ≝
            (⫯f)＠§❨l❩.
 
 interpretation
@@ -24,7 +24,7 @@ lemma tr_xap_ninj (f) (p):
 // qed.
 
 lemma tr_xap_succ_nap (f) (n):
-      ↑(f＠§❨n❩) = f＠❨↑n❩.
+      ↑(f＠§❨n❩) ={ℕ} f＠❨↑n❩.
 #f #n
 <tr_xap_ninj //
 qed.
@@ -36,7 +36,7 @@ lemma tr_compose_xap (f2) (f1) (l):
 >tr_compose_nap >tr_compose_push_bi //
 qed.
 
-lemma tr_uni_xap_succ (n) (m):
+lemma tr_uni_xap_succ (n) (m:ℕ):
       ↑m + n = 𝐮❨n❩＠❨↑m❩.
 #n #m
 <tr_xap_unfold
@@ -49,7 +49,7 @@ lemma tr_uni_xap (n) (m):
 qed.
 
 lemma tr_xap_push (f) (l):
-      ↑(f＠❨l❩) = (⫯f)＠❨↑l❩.
+      ↑(f＠❨l❩) ={ℕ} (⫯f)＠❨↑l❩.
 #f #l
 <tr_xap_unfold <tr_xap_unfold
 <tr_nap_push //
@@ -77,7 +77,7 @@ theorem tr_xap_eq_repl (i):
 /3 width=1 by tr_push_eq_repl, tr_nap_eq_repl/
 qed.
 
-lemma tr_nap_plus_dx_xap (f) (m) (n):
+lemma tr_nap_plus_dx_xap (f) (m) (n:ℕ):
       ⇂*[↑n]f＠❨m❩+f＠§❨n❩ = f＠§❨m+n❩.
 /2 width=1 by tr_nap_eq_repl/
 qed.
@@ -87,7 +87,7 @@ lemma tr_nap_plus_sn_xap (f) (m) (n):
 // qed.
 
 lemma tr_xap_pos (f) (n):
-      n = ↑↓n → f＠❨n❩=↑↓(f＠❨n❩).
+      n = ↑⫰n → f＠❨n❩=↑⫰(f＠❨n❩).
 #f #n #H0 >H0 -H0
 <tr_xap_ninj <nsucc_pnpred //
 qed.

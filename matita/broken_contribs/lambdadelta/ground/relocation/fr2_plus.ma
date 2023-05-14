@@ -19,7 +19,7 @@ include "ground/relocation/fr2_map.ma".
 
 (* Note: this is pushs *)
 (*** pluss *)
-rec definition fr2_plus (f:fr2_map) (n:nat) on f ≝ match f with
+rec definition fr2_plus (f:fr2_map) (n:ℕ) on f ≝ match f with
 [ fr2_empty       ⇒ 𝐞
 | fr2_lcons d h f ⇒ ❨d+n,h❩◗fr2_plus f n
 ].

@@ -17,7 +17,7 @@ include "ground/arith/pnat.ma".
 
 (* ORDER FOR POSITIVE INTEGERS **********************************************)
 
-inductive ple (p:pnat): predicate pnat ≝
+inductive ple (p:ℤ⁺): predicate (ℤ⁺) ≝
 | ple_refl   : ple p p
 | ple_succ_dx: ∀q. ple p q → ple p (↑q)
 .
@@ -96,7 +96,7 @@ qed-.
 
 (* Advanced eliminations ****************************************************)
 
-lemma ple_ind_alt (Q: relation2 pnat pnat):
+lemma ple_ind_alt (Q: relation2 …):
       (∀q. Q (𝟏) (q)) →
       (∀p,q. p ≤ q → Q p q → Q (↑p) (↑q)) →
       ∀p,q. p ≤ q → Q p q.

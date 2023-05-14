@@ -22,5 +22,4 @@ include "ground/relocation/tr_id_hdtl.ma".
 lemma tr_tls_id (n):
       (𝐢) = ⇂*[n]𝐢.
 #n @(nat_ind_succ … n) -n //
-#n #IH <stream_tls_swap //
 qed.

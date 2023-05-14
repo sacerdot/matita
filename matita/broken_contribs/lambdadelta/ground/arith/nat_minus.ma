@@ -18,7 +18,7 @@ include "ground/arith/nat_pred_succ.ma".
 (* SUBTRACTION FOR NON-NEGATIVE INTEGERS ************************************)
 
 (*** minus *)
-definition nminus: nat → nat → nat ≝
+definition nminus: ℕ → ℕ → ℕ ≝
            λm,n. (npred^n) m.
 
 interpretation
@@ -36,13 +36,13 @@ lemma nminus_unit_dx (m): ↓m = m - 𝟏 .
 // qed.
 
 (*** eq_minus_S_pred *)
-lemma nminus_succ_dx (m) (n): ↓(m - n) = m - ↑n.
+lemma nminus_succ_dx (m) (n): ⫰(m - n) = m - ↑n.
 #m #n @(niter_succ … npred)
 qed.
 
 (* Advanced constructions ***************************************************)
 
-lemma nminus_pred_sn (m) (n): ↓(m - n) = ↓m - n.
+lemma nminus_pred_sn (m) (n): ⫰(m - n) = ⫰m - n.
 #m #n @(niter_appl … npred)
 qed.
 
@@ -56,7 +56,7 @@ lemma nminus_succ_bi (m) (n): m - n = ↑m - ↑n.
 #m #n @(nat_ind_succ … n) -n //
 qed.
 
-lemma nminus_succ_dx_pred_sn (m) (n): ↓m - n = m - ↑n.
+lemma nminus_succ_dx_pred_sn (m) (n): ⫰m - n = m - ↑n.
 // qed-.
 
 (*** minus_n_n *)

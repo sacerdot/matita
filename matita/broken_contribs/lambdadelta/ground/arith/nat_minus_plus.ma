@@ -67,7 +67,7 @@ lemma eq_inv_plus_nminus_refl_sn (m) (n) (o):
 | #m #n #IH #o
   <nminus_succ_bi >nplus_succ_shift #Ho
   elim (IH … Ho) -IH -Ho * #_ #H
-  elim (eq_inv_zero_nsucc … H)
+  elim (eq_inv_zero_ninj … H)
 ]
 qed-.
 

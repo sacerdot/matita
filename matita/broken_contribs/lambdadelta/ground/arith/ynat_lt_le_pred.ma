@@ -20,7 +20,7 @@ include "ground/arith/ynat_lt_pred.ma".
 (* Destructions with yle and ypred ******************************************)
 
 (*** ylt_fwd_le_pred2 *)
-lemma ylt_des_le_pred_dx (x) (y): x < y → x ≤ ↓y.
+lemma ylt_des_le_pred_dx (x) (y): x < y → x ≤ ⫰y.
 #x #y * -x -y //
 #m #n #H
 elim (nlt_inv_gen … H) -H #Hm #_

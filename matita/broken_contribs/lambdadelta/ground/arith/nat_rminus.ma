@@ -17,7 +17,7 @@ include "ground/arith/nat_succ_iter.ma".
 
 (* RIGHT SUBTRACTION FOR NON-NEGATIVE INTEGERS ******************************)
 
-definition nrminus: pnat → nat → pnat ≝
+definition nrminus: ℤ⁺ → ℕ → ℤ⁺ ≝
            λp,n. (ppred^n) p.
 
 interpretation
@@ -29,16 +29,16 @@ interpretation
 lemma nrminus_zero_dx (p): p = p - 𝟎.
 // qed.
 
-lemma nrminus_unit_dx (p): ↓p = p - 𝟏.
+lemma nrminus_unit_dx (p): ⫰p = p - 𝟏.
 // qed.
 
-lemma nrminus_succ_dx (p) (n): ↓(p - n) = p - ↑n.
+lemma nrminus_succ_dx (p) (n): ⫰(p - n) = p - ↑n.
 #p #n @(niter_succ … ppred)
 qed.
 
 (* Advanced constructions ***************************************************)
 
-lemma nrminus_pred_sn (p) (n): ↓(p-n) = ↓p - n.
+lemma nrminus_pred_sn (p) (n): ⫰(p-n) = ⫰p - n.
 #p #n @(niter_appl … ppred)
 qed.
 
@@ -48,5 +48,4 @@ qed.
 
 lemma nrminus_succ_bi (p) (n): p - n = ↑p - ↑n.
 #p #n @(nat_ind_succ … n) -n //
-#n #IH <nrminus_succ_dx <nrminus_succ_dx //
 qed.

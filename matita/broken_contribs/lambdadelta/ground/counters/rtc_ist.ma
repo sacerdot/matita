@@ -17,7 +17,7 @@ include "ground/counters/rtc.ma".
 
 (* T-TRANSITION COUNTERS ****************************************************)
 
-definition rtc_ist: relation2 nat rtc ≝
+definition rtc_ist: relation2 (ℕ) rtc ≝
            λts,c. 〈𝟎,𝟎,𝟎,ts〉 = c.
 
 interpretation

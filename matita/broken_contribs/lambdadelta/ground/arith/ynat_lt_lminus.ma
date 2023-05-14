@@ -42,7 +42,7 @@ qed-.
 
 (*** yminus_pred *)
 lemma ylminus_pred_bi (x:ynat) (n):
-      (𝟎) < x → 𝟎 < n → x - n = ↓x - ↓n.
+      (𝟎) < x → 𝟎 < n → x - n = ⫰x - ⫰n.
 #x @(ynat_split_nat_inf … x) -x //
 #m #n >yinj_nat_zero
 #Hm #Hn <ylminus_inj_sn <ypred_inj <ylminus_inj_sn

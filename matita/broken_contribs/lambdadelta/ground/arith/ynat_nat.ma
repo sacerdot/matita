@@ -18,12 +18,12 @@ include "ground/arith/ynat.ma".
 (* NAT-INJECTION FOR NON-NEGATIVE INTEGERS WITH INFINITY ********************)
 
 (*** yinj *)
-definition yinj_nat (n) ≝ match n with
+definition yinj_nat (n): ynat ≝ match n with
 [ nzero  ⇒ 𝟎
 | ninj p ⇒ yinj p
 ].
 
-definition ynat_bind_nat: (nat → ynat) → ynat → (ynat → ynat).
+definition ynat_bind_nat: (ℕ → ynat) → ynat → (ynat → ynat).
 #f #y *
 [ @f @(𝟎)
 | #p @f @p

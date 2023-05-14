@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "𝟘𝟘"
+notation "hvbox( 𝟘𝟘 )"
   non associative with precedence 70
   for @{ 'ZeroZero }.

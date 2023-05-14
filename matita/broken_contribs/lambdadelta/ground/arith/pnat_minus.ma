@@ -17,7 +17,7 @@ include "ground/arith/pnat_iter.ma".
 
 (* SUBTRACTION FOR NON-NEGATIVE INTEGERS ************************************)
 
-definition pminus: pnat → pnat → pnat ≝
+definition pminus: ℤ⁺ → ℤ⁺ → ℤ⁺ ≝
            λp,q. (ppred^q) p.
 
 interpretation
@@ -26,16 +26,16 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma pminus_unit_dx (p): ↓p = p - 𝟏.
+lemma pminus_unit_dx (p): ⫰p = p - 𝟏.
 // qed.
 
-lemma pminus_succ_dx (p) (q): ↓(p - q) = p - ↑q.
+lemma pminus_succ_dx (p) (q): ⫰(p - q) = p - ↑q.
 #p #q @(piter_succ … ppred)
 qed.
 
 (* Advanced constructions ***************************************************)
 
-lemma pminus_pred_sn (p) (q): ↓(p - q) = ↓p - q.
+lemma pminus_pred_sn (p) (q): ⫰(p - q) = ⫰p - q.
 #p #q @(piter_appl … ppred)
 qed.
 
@@ -47,7 +47,7 @@ lemma pminus_succ_bi (p) (q): p - q = ↑p - ↑q.
 #p #q elim q -q //
 qed.
 
-lemma pminus_succ_dx_pred_sn (p) (q): ↓p - q = p - ↑q.
+lemma pminus_succ_dx_pred_sn (p) (q): ⫰p - q = p - ↑q.
 // qed-.
 
 lemma pminus_refl (p): 𝟏 = p - p.

@@ -47,25 +47,25 @@ lemma yplus_zero_dx (x): x = x + 𝟎.
 (* Constructions with ysucc *************************************************)
 
 (*** yplus_SO2 *)
-lemma yplus_unit_dx (x): ↑x = x + 𝟏.
+lemma yplus_unit_dx (x): ⫯x = x + 𝟏.
 // qed.
 
 (*** yplus_S2 yplus_succ2 *)
-lemma yplus_succ_dx (x1) (x2): ↑(x1 + x2) = x1 + ↑x2.
+lemma yplus_succ_dx (x1) (x2): ⫯(x1 + x2) = x1 + ⫯x2.
 #x1 #x2 @(ynat_split_nat_inf … x2) -x2 //
 #n2 <ysucc_inj <yplus_inj_dx <yplus_inj_dx
 @niter_succ
 qed.
 
 (*** yplus_succ1 *)
-lemma yplus_succ_sn (x1) (x2): ↑(x1 + x2) = ↑x1 + x2.
+lemma yplus_succ_sn (x1) (x2): ⫯(x1 + x2) = ⫯x1 + x2.
 #x1 #x2 @(ynat_split_nat_inf … x2) -x2 //
 #n2 <yplus_inj_dx <yplus_inj_dx
 @niter_appl
 qed.
 
 (*** yplus_succ_swap *)
-lemma yplus_succ_shift (x1) (x2): ↑x1 + x2 = x1 + ↑x2.
+lemma yplus_succ_shift (x1) (x2): ⫯x1 + x2 = x1 + ⫯x2.
 // qed-.
 
 (* Constructions with nplus *************************************************)
@@ -83,7 +83,6 @@ qed.
 (*** ysucc_iter_Y yplus_Y1 *)
 lemma yplus_inf_sn (x): ∞ = ∞ + x.
 #x @(ynat_ind_succ … x) -x //
-#n #IH <yplus_succ_dx //
 qed.
 
 (*** yplus_O1 *)

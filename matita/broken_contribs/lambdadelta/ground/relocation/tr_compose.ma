@@ -53,6 +53,6 @@ lemma tr_compose_inv_succ_dx (f2) (f1):
       ∧∧ f2＠⧣❨p1❩+p2 = p & f2∘(p1⨮f1) = f2＠⧣❨p1❩⨮f.
 #f2 #f1 #f #p2 #p1 #p
 <tr_compose_unfold #H destruct
->nsucc_inj <stream_tls_swap
+>npsucc_inj <stream_tls_swap
 /2 width=1 by conj/
 qed-.

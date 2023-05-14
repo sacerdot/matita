@@ -30,7 +30,7 @@ lapply (pr_coafter_tls_bi_tls … Hg2 … Hg) -Hg #Hg
 lapply (pr_pat_unit_succ_tls … Hg2) -Hg2 #H
 elim (pr_pat_inv_unit_bi … H) -H [ |*: // ] #f2 #H2
 elim (pr_coafter_inv_push_sn … Hg … H2) -Hg * #f1 #f #Hf #H1 #H0
->(npsucc_pred j) <pr_tls_succ <pr_tls_succ //
+>(npsucc_pnpred j) <pr_tls_succ <pr_tls_succ //
 qed.
 
 (* Note: parked for now

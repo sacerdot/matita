@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "𝐞"
+notation "hvbox( 𝐞 )"
   non associative with precedence 70
   for @{ 'ElementE }.

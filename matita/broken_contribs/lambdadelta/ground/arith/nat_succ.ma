@@ -12,46 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat.ma".
+include "ground/arith/nat_psucc.ma".
 
 (* SUCCESSOR FOR NON-NEGATIVE INTEGERS **************************************)
 
-definition npsucc (m): pnat ≝
-match m with
-[ nzero  ⇒ 𝟏
-| ninj p ⇒ ↑p
-].
-
-interpretation
-  "positive successor (non-negative integers)"
-  'UpArrow m = (npsucc m).
-
-definition nsucc (m): nat ≝
-           ninj (↑m).
-
-interpretation
-  "successor (non-negative integers)"
-  'UpArrow m = (nsucc m).
-
 (* Basic constructions ******************************************************)
 
-lemma npsucc_zero: (𝟏) = ↑𝟎.
-// qed.
-
-lemma npsucc_inj (p): (↑p) = ↑(ninj p).
-// qed.
-
-lemma nsucc_unfold (n): ninj (↑n) = ↑n.
+lemma nsucc_inj (p): (↑p) ={ℕ} ↑(ninj p).
 // qed-.
-
-lemma nsucc_zero: ninj (𝟏) = ↑𝟎.
-// qed.
-
-lemma nsucc_inj (p): ninj (↑p) = ↑(ninj p).
-// qed.
-
-lemma npsucc_succ (n): psucc (npsucc n) = npsucc (nsucc n).
-// qed.
 
 (* Basic eliminations *******************************************************)
 
@@ -74,32 +42,16 @@ qed-.
 
 (* Basic inversions *********************************************************)
 
-lemma eq_inv_npsucc_bi: injective … npsucc.
-* [| #p1 ] * [2,4: #p2 ]
-[ 1,4: <npsucc_zero <npsucc_inj #H destruct
-| <npsucc_inj <npsucc_inj #H destruct //
-| //
-]
-qed-.
-
 (*** injective_S *)
-lemma eq_inv_nsucc_bi: injective … nsucc.
-#n1 #n2 #H
-@eq_inv_npsucc_bi @eq_inv_ninj_bi @H
-qed-.
-
-lemma eq_inv_nsucc_zero (m): ↑m = 𝟎 → ⊥.
-* [ <nsucc_zero | #p <nsucc_inj ] #H destruct
-qed-.
-
-lemma eq_inv_zero_nsucc (m): 𝟎 = ↑m → ⊥.
-* [ <nsucc_zero | #p <nsucc_inj ] #H destruct
+lemma eq_inv_nsucc_bi (n1) (n2):
+      ↑n1 ={ℕ} ↑n2 → n1 = n2.
+/3 width=1 by eq_inv_npsucc_bi, eq_inv_ninj_bi/
 qed-.
 
 (*** succ_inv_refl_sn *)
-lemma nsucc_inv_refl (n): n = ↑n → ⊥.
-#n @(nat_ind_succ … n) -n
-[ /2 width=2 by eq_inv_zero_nsucc/
-| #n #IH #H /3 width=1 by eq_inv_nsucc_bi/
+lemma nsucc_inv_refl (n:ℕ): n = ↑n → ⊥.
+*
+[ #H0 destruct
+| #p #H0 /3 width=2 by eq_inv_ninj_bi, psucc_inv_refl/
 ]
 qed-.

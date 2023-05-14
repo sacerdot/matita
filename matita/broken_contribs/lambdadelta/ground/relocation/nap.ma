@@ -13,7 +13,7 @@ lemma nlt_npsucc_bi (n1) (n2):
 #n2 #_ #IH /2 width=1 by plt_succ_dx_trans/
 qed.
 
-definition tr_nap (f) (l:nat): nat ≝
+definition tr_nap (f) (l:ℕ): ℕ ≝
            ↓(f＠⧣❨↑l❩).
 
 interpretation
@@ -32,7 +32,7 @@ lemma tr_compose_nap (f2) (f1) (l):
       f2＠§❨f1＠§❨l❩❩ = (f2∘f1)＠§❨l❩.
 #f2 #f1 #l
 <tr_nap_unfold <tr_nap_unfold <tr_nap_unfold
-<tr_compose_pap <npsucc_pred //
+<tr_compose_pap <npsucc_pnpred //
 qed.
 
 lemma tr_uni_nap (n) (m):
@@ -43,10 +43,10 @@ lemma tr_uni_nap (n) (m):
 qed.
 
 lemma tr_nap_push (f):
-      ∀l. ↑(f＠§❨l❩) = (⫯f)＠§❨↑l❩.
+      ∀l. ↑(f＠§❨l❩) ={ℕ} (⫯f)＠§❨↑l❩.
 #f #l
 <tr_nap_unfold <tr_nap_unfold
-<tr_pap_push <pnpred_psucc //
+<tr_pap_push //
 qed.
 
 lemma tr_nap_pushs_lt (f) (n) (m):
@@ -70,7 +70,7 @@ lemma tr_eq_inv_nap_zero_tl_bi (f1) (f2):
 /3 width=1 by tr_eq_inv_pap_unit_tl_bi, eq_inv_pnpred_bi/
 qed-.
 
-lemma tr_nap_plus_sn (f) (m) (n):
+lemma tr_nap_plus_sn (f) (m) (n:ℕ):
       (⫯⇂*[↑n]f)＠§❨m❩+f＠§❨n❩ = f＠§❨m+n❩.
 #f #m @(nat_ind_succ … m) -m [| #m #_ ] #n
 [ <nplus_zero_sn <nplus_zero_sn //

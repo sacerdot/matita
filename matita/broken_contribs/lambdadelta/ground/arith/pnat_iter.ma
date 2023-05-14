@@ -19,7 +19,7 @@ include "ground/arith/pnat.ma".
 (* ITERATED FUNCTION FOR POSITIVE INTEGERS **********************************)
 
 (* Note: see also: lib/arithemetics/bigops.ma *)
-rec definition piter (p:pnat) (A:Type[0]) (f:A→A) (a:A) ≝
+rec definition piter (p:ℤ⁺) (A:Type[0]) (f:A→A) (a:A): A ≝
 match p with
 [ punit   ⇒ f a
 | psucc q ⇒ f (piter q A f a)

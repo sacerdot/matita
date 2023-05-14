@@ -28,7 +28,7 @@ theorem pr_pat_monotonic:
   #g #H21 #_ #j1 #i1 #_ #Hi elim (plt_ge_false … Hi) -Hi //
 | #j2 #IH #i2 #f #H2f * //
   #j1 #i1 #H1f #Hi elim (plt_inv_gen … Hi)
-  #_ #Hi2 elim (pr_pat_inv_succ_bi … H2f (↓i2)) -H2f [1,3: * |*: // ]
+  #_ #Hi2 elim (pr_pat_inv_succ_bi … H2f (⫰i2)) -H2f [1,3: * |*: // ]
   #g #H2g #H
   [ elim (pr_pat_inv_push_succ … H1f … H) -f
     /4 width=8 by plt_inv_succ_bi, plt_succ_bi/
@@ -44,7 +44,7 @@ theorem pr_pat_inv_monotonic:
 #j1 elim j1 -j1
 [ #i1 #f #H1f elim (pr_pat_inv_unit_dx … H1f) -H1f //
   #g * -i1 #H #j2 #i2 #H2f #Hj lapply (plt_des_gen … Hj) -Hj
-  #H22 elim (pr_pat_inv_push_succ … H2f … (↓j2) H) -f //
+  #H22 elim (pr_pat_inv_push_succ … H2f … (⫰j2) H) -f //
 | #j1 #IH *
   [ #f #H1f elim (pr_pat_inv_unit_succ … H1f) -H1f [ |*: // ]
     #g #H1g #H #j2 #i2 #H2f #Hj elim (plt_inv_succ_sn … Hj) -Hj
@@ -52,7 +52,7 @@ theorem pr_pat_inv_monotonic:
   | #i1 #f #H1f #j2 #i2 #H2f #Hj elim (plt_inv_succ_sn … Hj) -Hj
     #Hj #H22 elim (pr_pat_inv_succ_bi … H1f) -H1f [1,4: * |*: // ]
     #g #Hg #H
-    [ elim (pr_pat_inv_push_succ … H2f … (↓j2) H) -f
+    [ elim (pr_pat_inv_push_succ … H2f … (⫰j2) H) -f
       /3 width=7 by plt_succ_bi/
     | /3 width=7 by pr_pat_inv_next_succ/
     ]

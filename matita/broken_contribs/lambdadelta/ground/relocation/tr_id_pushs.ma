@@ -21,5 +21,4 @@ include "ground/relocation/tr_id.ma".
 
 lemma tr_pushs_id (n): 𝐢 = ⫯*[n]𝐢.
 #n @(nat_ind_succ … n) -n //
-#n #IH <tr_pushs_swap //
 qed.

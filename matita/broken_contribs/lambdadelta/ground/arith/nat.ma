@@ -20,16 +20,30 @@ include "ground/arith/pnat.ma".
 (*** nat *)
 inductive nat: Type[0] ≝
 | nzero: nat
-| ninj : pnat → nat
+| ninj : ℤ⁺ → nat
 .
 
 coercion ninj.
 
 interpretation
+  "non-negative integers"
+  'N = (nat).
+
+interpretation
   "zero (non-negative integers)"
-  'Zero = nzero.
+  'Zero = (nzero).
 
 (* Basic inversions *********************************************************)
+
+(* Note: destruct *)
+lemma eq_inv_ninj_zero (n): ninj n = 𝟎 → ⊥.
+#n #H0 destruct
+qed-.
+
+(* Note: destruct *)
+lemma eq_inv_zero_ninj (n): 𝟎 = ninj n → ⊥.
+#n #H0 destruct
+qed-.
 
 (* Note: destruct *)
 lemma eq_inv_ninj_bi: injective … ninj.
@@ -39,7 +53,7 @@ qed-.
 (* Basic constructions ******************************************************)
 
 (*** eq_nat_dec *)
-lemma eq_nat_dec (n1,n2:nat): Decidable (n1 = n2).
+lemma eq_nat_dec (n1,n2:ℕ): Decidable (n1 = n2).
 * [| #p1 ] * [2,4: #p2 ]
 [1,4: @or_intror #H destruct
 | elim (eq_pnat_dec p1 p2)

@@ -26,7 +26,8 @@ lemma nle_minus_sn_refl_sn (m) (n): m - n ≤ m.
 qed.
 
 lemma nle_minus_succ_sn (m) (n): ↑n - m ≤ ↑(n - m).
-// qed.
+/2 width=1 by nle_inv_pred_sn/
+qed.
 
 (*** inv_eq_minus_O *)
 lemma nle_eq_zero_minus (m) (n): 𝟎 = m - n → m ≤ n.
@@ -60,7 +61,7 @@ qed-.
 (* Destructions with nminus *************************************************)
 
 (*** minus_Sn_m *)
-lemma nminus_succ_sn (m) (n): m ≤ n → ↑(n-m) = ↑n - m.
+lemma nminus_succ_sn (m) (n): m ≤ n → ↑(n-m) ={ℕ} ↑n - m.
 #m #n #H @(nle_ind_alt … H) -m -n //
 qed-.
 

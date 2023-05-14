@@ -12,33 +12,34 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downarrow_1.ma".
+include "ground/notation/functions/downspoon_1.ma".
 include "ground/arith/pnat_split.ma".
 
 (* PREDECESSOR FOR POSITIVE INTEGERS ****************************************)
 
-definition ppred (p): pnat ≝ psplit … (𝟏) (λp.p) p.
+definition ppred (p): ℤ⁺ ≝
+           psplit … (𝟏) (λp.p) p.
 
 interpretation
   "predecessor (positive integers)"
-  'DownArrow p = (ppred p).
+  'DownSpoon p = (ppred p).
 
 (* Basic constructions ******************************************************)
 
-lemma ppred_unit: 𝟏 = ↓𝟏.
+lemma ppred_unit: 𝟏 = ⫰𝟏.
 // qed.
 
-lemma ppred_succ (p): p = ↓↑p.
+lemma ppred_succ (p): p = ⫰↑p.
 // qed.
 
 (* Basic inversions *********************************************************)
 
-lemma ppred_inv_refl (p): p = ↓p → 𝟏 = p.
+lemma ppred_inv_refl (p): p = ⫰p → 𝟏 = p.
 #p elim p -p //
 #p #IH #H /2 width=1 by/
 qed-.
 
-lemma pnat_split_unit_pos (p): ∨∨ 𝟏 = p | p = ↑↓p.
+lemma pnat_split_unit_pos (p): ∨∨ 𝟏 = p | p = ↑⫰p.
 #p elim p -p
 /2 width=1 by or_introl, or_intror/
 qed-.

@@ -32,7 +32,7 @@ qed.
 
 (* Note: this requires ↑ on third n2 *)
 (*** at_tls *)
-lemma pr_pat_tls (n2) (f): ⫯⫰*[↑n2]f ≐ ⫰*[n2]f → ∃i1. ＠⧣❨i1,f❩ ≘ ↑n2.
+lemma pr_pat_tls (n2:ℕ) (f): ⫯⫰*[↑n2]f ≐ ⫰*[n2]f → ∃i1. ＠⧣❨i1,f❩ ≘ ↑n2.
 #n2 @(nat_ind_succ … n2) -n2
 [ /4 width=4 by pr_pat_eq_repl_back, pr_pat_refl, ex_intro/
 | #n2 #IH #f <pr_tls_swap <pr_tls_swap in ⊢ (??%→?); #H
@@ -58,13 +58,13 @@ lemma pr_pat_inv_succ_sn (p) (g) (i1) (j2):
   elim (pr_pat_inv_unit_succ … H) -H [|*: // ] #f #Hf2 #H0
   elim (pr_pat_inv_next … Hg … H0) -Hg #x2 #Hf1 #H2 destruct
   elim (IH … Hf1 Hf2) -IH -Hf1 -Hf2 #i2 #Hf #H2 destruct
-  /2 width=3 by ex2_intro/
+  >npsucc_inj /2 width=3 by ex2_intro/
 ]
 qed-.
 
 (* Note: this requires ↑ on first n2 *)
 (*** at_inv_tls *)
-lemma pr_pat_inv_succ_dx_tls (n2) (i1) (f):
+lemma pr_pat_inv_succ_dx_tls (n2:ℕ) (i1) (f):
       ＠⧣❨i1,f❩ ≘ ↑n2 → ⫯⫰*[↑n2]f ≐ ⫰*[n2]f.
 #n2 @(nat_ind_succ … n2) -n2
 [ #i1 #f #Hf elim (pr_pat_inv_unit_dx … Hf) -Hf // #g #H1 #H destruct

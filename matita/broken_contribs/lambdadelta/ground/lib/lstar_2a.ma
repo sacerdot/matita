@@ -20,8 +20,8 @@ include "ground/arith/nat_plus.ma".
 definition lstar_aux (B) (R:relation B) (l): relation B ≝
            λb1,b2. ∨∨ (∧∧ l = 𝟎 & b1 = b2) | (∧∧ l = 𝟏  & R b1 b2).
 
-definition lstar (B) (R:relation B): nat → relation B ≝
+definition lstar (B) (R:relation B): ℕ → relation B ≝
            ltc … nplus … (lstar_aux … R).
 
-definition llstar (A) (B) (R:relation3 A B B) (l:nat): relation3 A B B ≝
+definition llstar (A) (B) (R:relation3 A B B) (l:ℕ): relation3 A B B ≝
            λa. lstar … (R a) l.

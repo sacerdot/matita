@@ -34,7 +34,7 @@ qed-.
 (*** at_increasing_strict *)
 lemma pr_pat_increasing_strict (g) (i1) (i2):
       ＠⧣❨i1,g❩ ≘ i2 → ∀f. ↑f = g →
-      ∧∧ i1 < i2 & ＠⧣❨i1,f❩ ≘ ↓i2.
+      ∧∧ i1 < i2 & ＠⧣❨i1,f❩ ≘ ⫰i2.
 #g #i1 #i2 #Hg #f #H elim (pr_pat_inv_next … Hg … H) -Hg -H
 /4 width=2 by conj, pr_pat_increasing, ple_succ_bi/
 qed-.

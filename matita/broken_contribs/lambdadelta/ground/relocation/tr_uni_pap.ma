@@ -28,4 +28,5 @@ lemma tr_uni_pap (n) (p):
       p + n = 𝐮❨n❩＠⧣❨p❩.
 #n @(nat_ind_succ … n) -n //
 #n #IH * [| #p ] //
+<nrplus_succ_dx //
 qed.

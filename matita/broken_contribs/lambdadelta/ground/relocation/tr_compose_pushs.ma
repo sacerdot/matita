@@ -22,7 +22,4 @@ include "ground/relocation/tr_compose_pn.ma".
 lemma tr_compose_pushs_bi (n) (f2) (f1):
       (⫯*[n](f2∘f1)) = (⫯*[n]f2)∘(⫯*[n]f1).
 #n @(nat_ind_succ … n) -n //
-#n #IH #f1 #f2
-<tr_pushs_succ <tr_pushs_succ <tr_pushs_succ
-<tr_compose_push_bi //
 qed.

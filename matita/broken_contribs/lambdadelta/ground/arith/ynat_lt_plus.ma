@@ -34,7 +34,7 @@ lemma ylt_plus_dx_sn (z) (x) (y):
       z < x → z < x + y.
 #z #x #y * -z -x //
 #o #m #Hom @(ynat_split_nat_inf … y) - y //
-/3 width=1 by ylt_inj, nle_plus_bi/
+/3 width=1 by ylt_inj, nlt_plus_dx_dx/ 
 qed.
 
 (*** ylt_plus_dx2_trans *)

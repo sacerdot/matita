@@ -18,7 +18,7 @@ include "ground/arith/ynat_nat.ma".
 (* PREDECESSOR FOR NON-NEGATIVE INTEGERS WITH INFINITY **********************)
 
 definition ypred_aux (n): ynat ≝
-           yinj_nat (↓n).
+           yinj_nat (⫰n).
 
 (*** ypred *)
 definition ypred: ynat → ynat ≝
@@ -26,24 +26,24 @@ definition ypred: ynat → ynat ≝
 
 interpretation
   "successor (non-negative integers with infinity)"
-  'DownArrow x = (ypred x).
+  'DownSpoon x = (ypred x).
 
 (* Constructions ************************************************************)
 
 (*** ypred_O *)
-lemma ypred_inj (n): yinj_nat (↓n) = ↓(yinj_nat n).
+lemma ypred_inj (n): yinj_nat (⫰n) = ⫰(yinj_nat n).
 @(ynat_bind_nat_inj ypred_aux)
 qed.
 
 (*** ypred_Y *)
-lemma ypred_inf: ∞ = ↓∞.
+lemma ypred_inf: ∞ = ⫰∞.
 // qed.
 
 (* Inversions ***************************************************************)
 
 lemma eq_inv_ypred_inj (x) (n):
-      ↓x = yinj_nat n →
-      ∃∃m. x = yinj_nat m & n = ↓m.
+      (⫰x) = yinj_nat n →
+      ∃∃m. x = yinj_nat m & n = ⫰m.
 #x #n @(ynat_split_nat_inf … x) -x
 [ #m <ypred_inj #H <(eq_inv_yinj_nat_bi … H) -n
   /2 width=3 by ex2_intro/
@@ -52,7 +52,7 @@ lemma eq_inv_ypred_inj (x) (n):
 qed-.
 
 (*** ypred_inv_refl *)
-lemma ypred_inv_refl (x): x = ↓x → ∨∨ 𝟎 = x | ∞ = x.
+lemma ypred_inv_refl (x): x = ⫰x → ∨∨ 𝟎 = x | ∞ = x.
 #x @(ynat_split_nat_inf … x) -x //
 #n <ypred_inj #H
 lapply (eq_inv_yinj_nat_bi … H) -H #H

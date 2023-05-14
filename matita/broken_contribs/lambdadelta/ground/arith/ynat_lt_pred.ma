@@ -22,7 +22,7 @@ include "ground/arith/ynat_lt.ma".
 
 (*** ylt_pred *)
 lemma ylt_pred_bi (x) (y):
-      x < y → 𝟎 < x → ↓x < ↓y.
+      x < y → 𝟎 < x → ⫰x < ⫰y.
 #x #y * -x -y
 /4 width=1 by ylt_inv_inj_bi, ylt_inj, nlt_pred_bi/
 qed.

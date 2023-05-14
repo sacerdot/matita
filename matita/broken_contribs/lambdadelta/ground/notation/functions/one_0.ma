@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "𝟏"
+notation "hvbox( 𝟏 )"
   non associative with precedence 70
   for @{ 'One }.

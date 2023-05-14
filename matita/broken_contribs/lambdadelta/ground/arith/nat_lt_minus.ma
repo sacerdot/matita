@@ -47,7 +47,7 @@ qed-.
 (* Destructions with nminus *************************************************)
 
 (*** minus_pred_pred *)
-lemma nminus_pred_bi (m) (n): 𝟎 < m → 𝟎 < n → n - m = ↓n - ↓m.
+lemma nminus_pred_bi (m) (n): 𝟎 < m → 𝟎 < n → n - m = ⫰n - ⫰m.
 #m #n #Hm #Hn
 >(nlt_des_gen … Hm) in ⊢ (??%?); -Hm
 >(nlt_des_gen … Hn) in ⊢ (??%?); -Hn

@@ -33,7 +33,7 @@ lemma pr_eq_inv_push_uni (n) (g): ⫯g ≐ 𝐮❨n❩ → ∧∧ 𝟎 = n & �
 /3 width=1 by pr_eq_inv_uni_push, pr_eq_sym/ qed-.
 
 (*** uni_inv_next_dx *)
-lemma pr_eq_inv_uni_next (n) (g): 𝐮❨n❩ ≐ ↑g → ∧∧ 𝐮❨↓n❩ ≐ g & ↑↓n = n.
+lemma pr_eq_inv_uni_next (n) (g): 𝐮❨n❩ ≐ ↑g → ∧∧ 𝐮❨⫰n❩ ≐ g & ↑⫰n ={ℕ} n.
 #n @(nat_ind_succ … n) -n
 [ #g <pr_uni_zero <pr_id_unfold #H elim (pr_eq_inv_push_next … H) -H //
 | #n #_ #g <pr_uni_succ /3 width=5 by pr_eq_inv_next_bi, conj/
@@ -41,7 +41,7 @@ lemma pr_eq_inv_uni_next (n) (g): 𝐮❨n❩ ≐ ↑g → ∧∧ 𝐮❨↓n❩
 qed-.
 
 (*** uni_inv_next_sn *)
-lemma pr_eq_inv_next_uni (n) (g): ↑g ≐ 𝐮❨n❩ → ∧∧ 𝐮❨↓n❩ ≐ g & ↑↓n = n.
+lemma pr_eq_inv_next_uni (n) (g): ↑g ≐ 𝐮❨n❩ → ∧∧ 𝐮❨⫰n❩ ≐ g & ↑⫰n ={ℕ} n.
 /3 width=1 by pr_eq_inv_uni_next, pr_eq_sym/ qed-.
 
 (* Inversions with pr_id and pr_eq ******************************************)

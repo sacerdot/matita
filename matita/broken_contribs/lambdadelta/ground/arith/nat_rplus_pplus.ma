@@ -29,9 +29,9 @@ lemma nrplus_pnpred_dx (p) (q):
 #p * //
 qed.
 
-lemma nrplus_pplus_assoc (p,q:pnat) (n:nat):
+lemma nrplus_pplus_assoc (p,q:ℤ⁺) (n:ℕ):
       (p+q)+n = p+(q+n).
 #p #q #n
 @(nat_ind_succ … n) -n // #n #IH
-<nrplus_succ_dx <nrplus_succ_dx <pplus_succ_dx //
+<nrplus_succ_dx <nrplus_succ_dx <pplus_succ_dx <IH //
 qed.

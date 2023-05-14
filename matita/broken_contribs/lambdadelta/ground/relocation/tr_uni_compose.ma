@@ -23,7 +23,7 @@ include "ground/lib/stream_hdtl_eq.ma".
 
 lemma tr_compose_uni_unit_sn (f):
       ↑f ≗ 𝐮❨𝟏❩∘f.
-#f >nsucc_zero <tr_uni_succ //
+#f >npsucc_zero <tr_uni_succ //
 qed.
 
 (* Constructions with tr_compose and tr_tl **********************************)
@@ -36,13 +36,13 @@ qed.
 
 (* Constructions with tr_compose and tr_tls *********************************)
 
-lemma tr_tls_compose_uni_sn (f) (n) (p:pnat):
+lemma tr_tls_compose_uni_sn (f) (n) (p:ℤ⁺):
       ⇂*[p]f ≗ ⇂*[p](𝐮❨n❩∘f).
 #f #n #p elim p -p //
 #p #IH /2 width=1 by stream_tl_eq_repl/
 qed.
 
-lemma tr_tl_compose_uni_dx (f) (n):
+lemma tr_tl_compose_uni_dx (f) (n:ℕ):
       ⇂*[↑n]f ≗ ⇂(f∘𝐮❨n❩).
 // qed.
 

@@ -19,6 +19,6 @@ include "ground/relocation/tr_uni_hdtl.ma".
 
 (* Constructions with stream_tls ********************************************)
 
-lemma tr_tls_succ_uni (m) (n):
+lemma tr_tls_succ_uni (m:ℕ) (n):
       (𝐢) = ⇂*[↑m]𝐮❨n❩.
 // qed.

@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "⊤"
+notation "hvbox( ⊤ )"
   non associative with precedence 19
   for @{'true}.

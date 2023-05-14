@@ -21,14 +21,15 @@ include "ground/arith/ynat_pred.ma".
 (* Constructions with ysucc *************************************************)
 
 (*** ypred_succ ypred_S *)
-lemma ypred_succ (x): x = ↓↑x.
+lemma ypred_succ (x): x = ⫰⫯x.
 #x @(ynat_split_nat_inf … x) -x //
+#n <ysucc_inj <ypred_inj //
 qed.
 
 (* Inversions with ysucc ****************************************************)
 
 (*** ynat_cases *)
-lemma ynat_split_zero_pos (x): ∨∨ 𝟎 = x | x = ↑↓x.
+lemma ynat_split_zero_pos (x): ∨∨ 𝟎 = x | x = ⫯⫰x.
 #x @(ynat_split_nat_inf … x) -x //
 #n elim (nat_split_zero_pos n)
 /2 width=1 by or_introl, or_intror/

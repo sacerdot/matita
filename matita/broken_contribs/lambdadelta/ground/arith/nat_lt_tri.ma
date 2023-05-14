@@ -23,10 +23,12 @@ include "ground/arith/nat_lt.ma".
 lemma ntri_lt (A) (a1) (a2) (a3) (n1) (n2):
       n1 < n2 → a1 = ntri A n1 n2 a1 a2 a3.
 #A #a1 #a2 #a3 #n1 #n2 #H @(nlt_ind_alt … H) -H //
+#m #n #_ #IH >IH in ⊢ (??%?); -IH //
 qed-.
 
 (*** tri_gt *)
 lemma ntri_gt (A) (a1) (a2) (a3) (n1) (n2):
       n2 < n1 → a3 = ntri A n1 n2 a1 a2 a3.
 #A #a1 #a2 #a3 #n1 #n2 #H @(nlt_ind_alt … H) -H //
+#m #n #_ #IH >IH in ⊢ (??%?); -IH //
 qed-.

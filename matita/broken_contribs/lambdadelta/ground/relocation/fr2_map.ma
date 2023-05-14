@@ -23,7 +23,7 @@ inductive fr2_map: Type[0] :=
 (*** nil2 *)
 | fr2_empty: fr2_map
 (*** cons2 *)
-| fr2_lcons: nat → nat → fr2_map → fr2_map
+| fr2_lcons: ℕ → ℕ → fr2_map → fr2_map
 .
 
 interpretation
