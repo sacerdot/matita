@@ -34,7 +34,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma prelift_rmap_d (f) (k:pnat):
+lemma prelift_rmap_d (f) (k:ℤ⁺):
       ⇂*[k]f = 🠢[f]𝗱k.
 // qed.
 

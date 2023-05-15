@@ -34,7 +34,7 @@ theorem dbfr_lift_bi (f) (t1) (t2) (r):
 | -Hm -Hn -Ht1 -Ht2 //
 | -Hb -Hn -Ht1 -Ht2
   /2 width=1 by lift_path_closed/
-| -Hb -Hm -Ht1 -Ht2
+| -Hb -Hm -Ht1 -Ht2 <path_append_pL <path_append_pLq
   /2 width=1 by lift_path_rmap_closed_L/
 | lapply (in_comp_lift_path_term f … Ht1) -Ht2 -Ht1 -Hn
   <lift_path_d_dx #Ht1 //
@@ -48,7 +48,6 @@ theorem dbfr_lift_bi (f) (t1) (t2) (r):
   @iref_eq_repl
   @(subset_eq_canc_sn … (lift_term_grafted_S …))
   @lift_term_eq_repl_sn
-(* 🠢[f]p ≗ ⇂*[↑(m+n)]🠢[f](((p◖𝗔)●b)●𝗟◗q) *)
 (* Note: crux of the proof begins *)
   >lift_rmap_A_dx
   /2 width=2 by tls_succ_plus_lift_rmap_append_closed_bLq_dx/

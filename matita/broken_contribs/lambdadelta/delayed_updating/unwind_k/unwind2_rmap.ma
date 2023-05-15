@@ -37,7 +37,7 @@ lemma unwind2_rmap_rcons (f) (p) (l):
       ▶[▶[f]p]l = ▶[f](p◖l).
 // qed.
 
-lemma unwind2_rmap_d_dx (f) (p) (k:pnat):
+lemma unwind2_rmap_d_dx (f) (p) (k:ℤ⁺):
       ▶[f]p∘𝐮❨k❩ = ▶[f](p◖𝗱k).
 // qed.
 
@@ -71,7 +71,7 @@ lemma unwind2_rmap_lcons (f) (p) (l):
       ▶[▶[f]l]p = ▶[f](l◗p).
 // qed.
 
-lemma unwind2_rmap_d_sn (f) (p) (k:pnat):
+lemma unwind2_rmap_d_sn (f) (p) (k:ℤ⁺):
       ▶[f∘𝐮❨k❩]p = ▶[f](𝗱k◗p).
 // qed.
 

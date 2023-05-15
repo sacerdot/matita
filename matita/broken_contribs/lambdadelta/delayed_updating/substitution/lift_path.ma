@@ -75,7 +75,7 @@ lemma lift_path_lcons (f) (p) (l):
 <lift_path_append //
 qed.
 
-lemma lift_path_d_sn (f) (p) (k:pnat):
+lemma lift_path_d_sn (f) (p) (k:ℤ⁺):
       (𝗱(f＠⧣❨k❩)◗🠡[⇂*[k]f]p) = 🠡[f](𝗱k◗p).
 // qed.
 

@@ -22,11 +22,11 @@ include "ground/xoa/ex_3_2.ma".
 
 (* CLOSED CONDITION FOR PATH ************************************************)
 
-inductive pcc (o) (e): relation2 nat path ≝
+inductive pcc (o) (e): relation2 (ℕ) path ≝
 | pcc_empty:
   pcc o e e (𝐞)
 | pcc_d_dx (p) (n) (k):
-  (Ⓣ = o → n = ↑↓n) →
+  (Ⓣ = o → n = ↑⫰n) →
   pcc o e (n+ninj k) p → pcc o e n (p◖𝗱k)
 | pcc_m_dx (p) (n):
   pcc o e n p → pcc o e n (p◖𝗺)
@@ -44,14 +44,14 @@ interpretation
 
 (* Advanced constructions ***************************************************)
 
-lemma pcc_false_d_dx (e) (p) (n) (k:pnat):
+lemma pcc_false_d_dx (e) (p) (n) (k:ℤ⁺):
       p ϵ 𝐂❨Ⓕ,n+k,e❩ → p◖𝗱k ϵ 𝐂❨Ⓕ,n,e❩.
 #e #p #n #k #H0
 @pcc_d_dx [| // ]
 #H0 destruct
 qed.
 
-lemma pcc_true_d_dx (e) (p) (n:pnat) (k:pnat):
+lemma pcc_true_d_dx (e) (p) (n:ℤ⁺) (k:ℤ⁺):
       p ϵ 𝐂❨Ⓣ,n+k,e❩ → p◖𝗱k ϵ 𝐂❨Ⓣ,n,e❩.
 /2 width=1 by pcc_d_dx/
 qed.
@@ -63,7 +63,7 @@ lemma pcc_plus_bi_dx (o) (e) (p) (n):
 #p #n [ #k #Ho ] #_ #IH #m
 [|*: /2 width=1 by pcc_m_dx, pcc_L_dx, pcc_A_dx, pcc_S_dx/ ]
 @pcc_d_dx // -IH #H0
->Ho -Ho // <nplus_succ_sn //
+>Ho -Ho // <nplus_succ_sn <npred_succ //
 qed.
 
 (* Basic inversions ********************************************************)
@@ -75,14 +75,9 @@ lemma pcc_inv_empty (o) (e) (n):
 #p #n [ #k #_ ] #_ #H0 destruct
 qed-.
 
-(**) (* alias *)
-alias symbol "DownArrow" (instance 4) = "predecessor (non-negative integers)".
-alias symbol "UpArrow" (instance 3) = "successor (non-negative integers)".
-alias symbol "and" (instance 1) = "logical and".
-
 lemma pcc_inv_d_dx (o) (e) (p) (n) (k):
       p◖𝗱k ϵ 𝐂❨o,n,e❩ →
-      ∧∧ (Ⓣ = o → n = ↑↓n)
+      ∧∧ (Ⓣ = o → n = ↑⫰n)
        & p ϵ 𝐂❨o,n+k,e❩.
 #o #e #p #n #h @(insert_eq_1 … (p◖𝗱h))
 #x * -x -n
@@ -99,7 +94,7 @@ qed-.
 
 lemma pcc_inv_L_dx (o) (e) (p) (n):
       p◖𝗟 ϵ 𝐂❨o,n,e❩ →
-      ∧∧ p ϵ 𝐂❨o,↓n,e❩ & n = ↑↓n.
+      ∧∧ p ϵ 𝐂❨o,⫰n,e❩ & n = ↑⫰n.
 #o #e #p #n @(insert_eq_1 … (p◖𝗟))
 #x * -x -n
 [|*: #x #n [ #k #_ ] #Hx ] #H0 destruct
@@ -141,21 +136,21 @@ lemma pcc_inv_empty_succ_zero (o) (n):
       (𝐞) ϵ 𝐂❨o,↑n,𝟎❩ → ⊥.
 #o #n #H0
 lapply (pcc_inv_empty … H0) -H0 #H0
-/2 width=7 by eq_inv_zero_nsucc/
+/2 width=7 by eq_inv_zero_ninj/
 qed-.
 
 lemma pcc_true_inv_d_dx_zero_sn (e) (p) (k):
       p◖𝗱k ϵ 𝐂❨Ⓣ,𝟎, e❩ → ⊥.
 #e #p #k #H0
 elim (pcc_inv_d_dx … H0) -H0 #H0 #_
-elim (eq_inv_zero_nsucc … (H0 ?)) -H0 //
+elim (eq_inv_zero_ninj … (H0 ?)) -H0 //
 qed-.
 
 lemma pcc_inv_L_dx_zero_sn (o) (e) (p):
       p◖𝗟 ϵ 𝐂❨o,𝟎,e❩ → ⊥.
 #o #e #p #H0
 elim (pcc_inv_L_dx … H0) -H0 #_ #H0
-/2 width=7 by eq_inv_zero_nsucc/
+/2 width=7 by eq_inv_zero_ninj/
 qed-.
 
 lemma pcc_inv_L_dx_succ (o) (e) (p) (n):
@@ -209,7 +204,7 @@ elim Hy -x -y [|*: #x #y [ #k #_ ] #Hx #IH ] #m #n #Hy destruct
 | elim (eq_inv_succ_nplus_dx … (sym_eq … Hy)) -Hy * #H1 #H2 (**) (* sym_eq *)
   [ destruct -IH
     /3 width=5 by pcc_empty, pcc_L_dx, ex3_2_intro/
-  | elim (IH m (↓n)) -IH // #p #q #Hp #Hq #H0 destruct -Hx
+  | elim (IH m (⫰n)) -IH // #p #q #Hp #Hq #H0 destruct -Hx
     /3 width=5 by pcc_L_dx, ex3_2_intro/
   ]
 | elim (IH m n) -IH // #p #q #Hp #Hq #H0 destruct -Hx
@@ -296,9 +291,9 @@ qed-.
 
 theorem pcc_inv_L_sn (o) (e) (q) (n) (m):
         (𝗟◗q) ϵ 𝐂❨o,n,e❩ → q ϵ 𝐂❨o,m,e❩ →
-        ∧∧ ↓n = m & n = ↑↓n.
+        ∧∧ ⫰n = m & n = ↑⫰n.
 #o #e #q #n #m #H1q #H2q
 lapply (pcc_L_sn … H2q) -H2q #H2q
-<(pcc_mono … H2q … H1q) -q -n
+<(pcc_mono … H2q … H1q) -q -n <npred_succ
 /2 width=1 by conj/
 qed-.

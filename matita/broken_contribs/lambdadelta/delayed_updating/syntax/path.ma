@@ -43,6 +43,19 @@ interpretation
 
 (* Helper constructions *****************************************************)
 
+lemma path_append_pbLq (p) (b) (q):
+      (p◖𝗔)●b●𝗟◗q = p●𝗔◗b●𝗟◗q.
+//
+qed-.
+
+lemma path_append_pLq (p) (b) (q):
+      (p●𝗔◗b)●𝗟◗q = p●𝗔◗b●𝗟◗q.
+// qed-.
+
+lemma path_append_pL (p) (b):
+      (p●𝗔◗b)◖ 𝗟= (p◖𝗔)●b◖𝗟.
+// qed-.
+
 lemma path_append_append_lcons (p) (q) (r) (l):
       p●(r◖l)●q = p●r●(l◗q).
 // qed-.

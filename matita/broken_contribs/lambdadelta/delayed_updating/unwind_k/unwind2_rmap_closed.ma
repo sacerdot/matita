@@ -34,7 +34,7 @@ lemma nap_plus_unwind2_rmap_closed (o) (e) (f) (q) (m) (n):
 [ <depth_d_dx <unwind2_rmap_d_dx
   <tr_compose_nap <tr_uni_nap //
 | <depth_L_dx <unwind2_rmap_L_dx
-  <tr_nap_push <nplus_succ_dx //
+  <nplus_succ_dx <nplus_succ_dx <tr_nap_push //
 ]
 qed-.
 
@@ -49,7 +49,8 @@ lemma nap_plus_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (m) (n):
       q ϵ 𝐂❨o,n,𝟎❩ →
       (⫯▶[f]p)＠§❨m❩+♭q = ▶[f](p●𝗟◗q)＠§❨m+n❩.
 #o #f #p #q #m #n #Hn
-/2 width=2 by nap_plus_unwind2_rmap_closed/
+<unwind2_rmap_append <unwind2_rmap_L_sn
+<(nap_plus_unwind2_rmap_closed … Hn) -Hn //
 qed-.
 
 lemma nap_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (n):
@@ -67,7 +68,7 @@ lemma tls_succ_plus_unwind2_rmap_push_closed (o) (f) (q) (n):
 #o #f #q #n #Hn elim Hn -q -n //
 #q #n #k #_ #_ #IH #m
 @(stream_eq_trans … (tls_unwind2_rmap_d_dx …))
->nrplus_inj_dx >nrplus_inj_sn >nsucc_unfold //
+>nrplus_inj_dx >nrplus_inj_sn <nplus_succ_sn //
 qed-.
 
 lemma tls_succ_unwind2_rmap_push_closed (o) (f) (q) (n):
@@ -81,6 +82,7 @@ lemma tls_succ_plus_unwind2_rmap_append_closed_Lq_dx (o) (f) (p) (q) (n):
       q ϵ 𝐂❨o,n,𝟎❩ →
       ∀m. ⇂*[m]▶[f]p ≗ ⇂*[↑(m+n)]▶[f](p●𝗟◗q).
 #o #f #p #q #n #Hn #m
+<unwind2_rmap_append <unwind2_rmap_L_sn
 /2 width=2 by tls_succ_plus_unwind2_rmap_push_closed/
 qed-.
 

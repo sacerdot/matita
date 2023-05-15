@@ -26,7 +26,7 @@ include "delayed_updating/notation/functions/edgelabel_s_0.ma".
 (* LABEL ********************************************************************)
 
 inductive label: Type[0] ≝
-| label_d: pnat → label
+| label_d: ℤ⁺ → label
 | label_m: label
 | label_L: label
 | label_A: label

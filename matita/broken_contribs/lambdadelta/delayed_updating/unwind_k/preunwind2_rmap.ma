@@ -34,7 +34,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma preunwind2_rmap_d (f) (k:pnat):
+lemma preunwind2_rmap_d (f) (k:ℤ⁺):
       f∘𝐮❨k❩ = ▶[f]𝗱k.
 // qed.
 

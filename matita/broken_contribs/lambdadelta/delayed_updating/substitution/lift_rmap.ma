@@ -37,7 +37,7 @@ lemma lift_rmap_rcons (f) (p) (l):
       🠢[🠢[f]p]l = 🠢[f](p◖l).
 // qed.
 
-lemma lift_rmap_d_dx (f) (p) (k:pnat):
+lemma lift_rmap_d_dx (f) (p) (k:ℤ⁺):
       ⇂*[k](🠢[f]p) = 🠢[f](p◖𝗱k).
 // qed.
 
@@ -70,7 +70,7 @@ lemma lift_rmap_lcons (f) (p) (l):
       🠢[🠢[f]l]p = 🠢[f](l◗p).
 // qed.
 
-lemma lift_rmap_d_sn (f) (p) (k:pnat):
+lemma lift_rmap_d_sn (f) (p) (k:ℤ⁺):
       🠢[⇂*[k]f]p = 🠢[f](𝗱k◗p).
 // qed.
 

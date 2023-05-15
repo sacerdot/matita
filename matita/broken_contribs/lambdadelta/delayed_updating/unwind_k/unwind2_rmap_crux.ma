@@ -32,7 +32,7 @@ lemma unwind2_rmap_uni_crux (f) (p) (b) (q) (m) (n):
 ] -Hn
 @tr_eq_inv_nap_zero_tl_bi
 [ <tr_compose_nap <tr_compose_nap <tr_uni_nap <tr_uni_nap
-  >nsucc_unfold >nplus_succ_dx >nplus_succ_dx <nplus_assoc <nplus_assoc
+  >nplus_succ_dx >nplus_succ_dx <nplus_assoc <nplus_assoc
   >tr_nap_plus_dx <unwind2_rmap_append <nap_plus_unwind2_rmap_closed
   /2 width=4 by pcc_A_sn/
 | @(stream_eq_canc_sn … (tr_tl_compose_uni_sn …))

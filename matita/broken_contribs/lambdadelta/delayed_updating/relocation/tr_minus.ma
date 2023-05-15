@@ -18,7 +18,7 @@ include "ground/relocation/tr_map.ma".
 
 (* RIGHT SUBTRACTION FOR TOTAL RELOCATION MAPS ******************************)
 
-corec definition tr_minus: nat → tr_map → tr_map.
+corec definition tr_minus: ℕ → tr_map → tr_map.
 * [ #f @f ] #q * #p #f
 @((p-q)⨮(tr_minus (ninj (↑q)-ninj p) f))
 defined.

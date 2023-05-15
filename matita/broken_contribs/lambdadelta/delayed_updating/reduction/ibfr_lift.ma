@@ -50,13 +50,12 @@ theorem ibfr_lift_bi (f) (t1) (t2) (r):
   @(subset_eq_trans … (lift_term_after …))
   @(subset_eq_canc_dx … (lift_term_after …))
   @lift_term_eq_repl_sn
-(* 𝐮❨ ↑(🠢[f](p●𝗔◗b)＠❨m❩ + 🠢[f](p●𝗔◗b●𝗟◗q)＠§❨n❩) ❩ ∘ 🠢[f]p ≗ 🠢[f](p●𝗔◗b●𝗟◗q) ∘ 𝐮❨↑(m+n)❩ *)
 (* Note: crux of the proof begins *)
   @(stream_eq_trans … (tr_compose_uni_dx_pap …)) <tr_pap_succ_nap
   @tr_compose_eq_repl
   [ <list_append_rcons_sn <list_append_rcons_sn >list_append_assoc
     >(nap_plus_lift_rmap_append_closed_Lq_dx … Hn) -Hn //
-  | >lift_rmap_A_dx >nsucc_unfold
+  | >lift_rmap_A_dx <path_append_pbLq
     /2 width=2 by tls_succ_plus_lift_rmap_append_closed_bLq_dx/
   ]
 (* Note: crux of the proof ends *)

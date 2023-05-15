@@ -18,7 +18,7 @@ include "ground/arith/nat_plus.ma".
 
 (* DEPTH FOR PATH ***********************************************************)
 
-rec definition depth (p) on p: nat ≝
+rec definition depth (p) on p: ℕ ≝
 match p with
 [ list_empty     ⇒ 𝟎
 | list_lcons l q ⇒
@@ -49,7 +49,7 @@ lemma depth_m_dx (p):
 // qed.
 
 lemma depth_L_dx (p):
-      ↑♭p = ♭(p◖𝗟).
+      ↑♭p ={ℕ} ♭(p◖𝗟).
 // qed.
 
 lemma depth_A_dx (p):
@@ -85,7 +85,7 @@ lemma depth_m_sn (p):
 // qed.
 
 lemma depth_L_sn (p):
-      ↑♭p = ♭(𝗟◗p).
+      ↑♭p ={ℕ} ♭(𝗟◗p).
 // qed.
 
 lemma depth_A_sn (p):

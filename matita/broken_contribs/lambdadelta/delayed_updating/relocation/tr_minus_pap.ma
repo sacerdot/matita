@@ -60,7 +60,7 @@ lemma tr_pap_minus_ge (n) (p) (f):
     <IHp -IHp -IHn // <nrminus_succ_bi <nrminus_succ_dx
     elim (pnat_split_unit_pos (g＠⧣❨p❩-n)) // #H0
     <nrplus_succ_shift in Hg; #Hg
-    lapply (pnat_le_nrminus_dx … Hg) <H0 -n -g #H0
+    lapply (ple_nrminus_dx … Hg) <H0 -n -g #H0
     elim (ple_inv_succ_unit … H0)
   ]
 ]

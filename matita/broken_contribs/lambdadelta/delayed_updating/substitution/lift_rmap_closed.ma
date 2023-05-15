@@ -25,6 +25,8 @@ lemma tls_plus_lift_rmap_closed (o) (f) (q) (n):
       q ϵ 𝐂❨o,n,𝟎❩ →
       ∀m. ⇂*[m]f ≗ ⇂*[m+n]🠢[f]q.
 #o #f #q #n #Hq elim Hq -q -n //
+#p #n #_ #IH #m
+<lift_rmap_L_dx <nplus_succ_dx //
 qed-.
 
 lemma tls_lift_rmap_closed (o) (f) (q) (n):

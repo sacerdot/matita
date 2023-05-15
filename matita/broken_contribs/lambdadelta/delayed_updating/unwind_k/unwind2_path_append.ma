@@ -61,7 +61,7 @@ lemma unwind2_path_d_empty (f) (k):
       (𝗱(f＠⧣❨k❩)◗𝐞) = ▼[f](𝗱k◗𝐞).
 // qed.
 
-lemma unwind2_path_d_lcons (f) (p) (l) (k:pnat):
+lemma unwind2_path_d_lcons (f) (p) (l) (k:ℤ⁺):
       ▼[f∘𝐮❨k❩](l◗p) = ▼[f](𝗱k◗l◗p).
 #f #p #l #k <unwind2_path_append_ppc_dx in ⊢ (???%); //
 qed.

@@ -18,7 +18,7 @@ include "delayed_updating/notation/functions/sharp_1.ma".
 
 (* HEIGHT FOR PATH **********************************************************)
 
-rec definition height (p) on p: nat ≝
+rec definition height (p) on p: ℕ ≝
 match p with
 [ list_empty     ⇒ 𝟎
 | list_lcons l q ⇒
@@ -40,7 +40,7 @@ interpretation
 lemma height_empty: 𝟎 = ♯𝐞.
 // qed.
 
-lemma height_d_dx (p) (k:pnat):
+lemma height_d_dx (p) (k:ℤ⁺):
       (♯p)+k = ♯(p◖𝗱k).
 // qed.
 
@@ -76,7 +76,7 @@ qed.
 
 (* Constructions with path_lcons ********************************************)
 
-lemma height_d_sn (p) (k:pnat):
+lemma height_d_sn (p) (k:ℤ⁺):
       k+♯p = ♯(𝗱k◗p).
 // qed.
 
