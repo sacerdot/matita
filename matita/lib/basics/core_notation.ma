@@ -266,12 +266,6 @@ for @{ 'union $a $b }. (* \cup *)
 
 (* other notations **********************************************************)
 
-notation "\naturals" non associative with precedence 90 for @{'N}.
-notation "\rationals" non associative with precedence 90 for @{'Q}.
-notation "\reals" non associative with precedence 90 for @{'R}.
-notation "\integers" non associative with precedence 90 for @{'Z}.
-notation "\complexes" non associative with precedence 90 for @{'C}.
-
 notation "\ee" with precedence 90 for @{ 'neutral }. (* ⅇ *)
 
 notation > "x ⊩ y" with precedence 45 for @{'Vdash2 $x $y ?}.

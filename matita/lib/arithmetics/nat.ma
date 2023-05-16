@@ -10,6 +10,7 @@
       V_______________________________________________________________ *)
 
 include "basics/relations.ma".
+include "basics/core_notation/naturals_0.ma".
 
 (* Definitions **************************************************************)
 
