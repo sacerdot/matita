@@ -14,6 +14,7 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "hvbox( Ⓣ )"
+notation "hvbox( ℕ )"
   non associative with precedence 70
-  for @{ 'yes }.
+  for @{ 'Naturals }.
+

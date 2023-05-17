@@ -16,4 +16,4 @@
 
 notation "hvbox( ℤ⁺ )"
   non associative with precedence 70
-  for @{'IntegersPlus}.
+  for @{ 'IntegersPlus }.

@@ -21,8 +21,8 @@ include "ground/arith/nat.ma".
 (*** tri *)
 definition ntri (A:Type[0]) (n1) (n2) (a1) (a2) (a3): A ≝
   match n1 with
-  [ nzero    ⇒ match n2 with [ nzero ⇒ a2 | ninj p2 ⇒ a1 ]
-  | ninj  p1 ⇒ match n2 with [ nzero ⇒ a3 | ninj p2 ⇒ ptri A p1 p2 a1 a2 a3 ]
+  [ nzero    ⇒ match n2 with [ nzero ⇒ a2 | npos p2 ⇒ a1 ]
+  | npos  p1 ⇒ match n2 with [ nzero ⇒ a3 | npos p2 ⇒ ptri A p1 p2 a1 a2 a3 ]
   ].
 
 (* Basic constructions ******************************************************)
@@ -32,11 +32,11 @@ lemma ntri_zero_bi (A) (a1) (a2) (a3):
 // qed.
 
 lemma ntri_zero_inj (A) (a1) (a2) (a3) (p):
-      a1 = ntri A (𝟎) (ninj p) a1 a2 a3.
+      a1 = ntri A (𝟎) (npos p) a1 a2 a3.
 // qed.
 
 lemma ntri_inj_zero (A) (a1) (a2) (a3) (p):
-      a3 = ntri A (ninj p) (𝟎) a1 a2 a3.
+      a3 = ntri A (npos p) (𝟎) a1 a2 a3.
 // qed.
 
 lemma ntri_inj_bi (A) (a1) (a2) (a3) (p1) (p2):

@@ -18,7 +18,7 @@ include "ground/arith/nat_psucc.ma".
 
 (* Basic constructions ******************************************************)
 
-lemma nsucc_inj (p): (↑p) ={ℕ} ↑(ninj p).
+lemma nsucc_inj (p): (↑p) ={ℕ} ↑(npos p).
 // qed-.
 
 (* Basic eliminations *******************************************************)
@@ -45,13 +45,13 @@ qed-.
 (*** injective_S *)
 lemma eq_inv_nsucc_bi (n1) (n2):
       ↑n1 ={ℕ} ↑n2 → n1 = n2.
-/3 width=1 by eq_inv_npsucc_bi, eq_inv_ninj_bi/
+/3 width=1 by eq_inv_npsucc_bi, eq_inv_npos_bi/
 qed-.
 
 (*** succ_inv_refl_sn *)
 lemma nsucc_inv_refl (n:ℕ): n = ↑n → ⊥.
 *
 [ #H0 destruct
-| #p #H0 /3 width=2 by eq_inv_ninj_bi, psucc_inv_refl/
+| #p #H0 /3 width=2 by eq_inv_npos_bi, psucc_inv_refl/
 ]
 qed-.

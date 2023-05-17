@@ -20,6 +20,6 @@ include "ground/relocation/tr_compose_pn.ma".
 (* Constructions with tr_pushs **********************************************)
 
 lemma tr_compose_pushs_bi (n) (f2) (f1):
-      (⫯*[n](f2∘f1)) = (⫯*[n]f2)∘(⫯*[n]f1).
+      (⫯*[n](f2•f1)) = (⫯*[n]f2)•(⫯*[n]f1).
 #n @(nat_ind_succ … n) -n //
 qed.

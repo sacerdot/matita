@@ -21,7 +21,7 @@ include "ground/relocation/tr_eq.ma".
 (* Main constructions *******************************************************)
 
 corec theorem tr_compose_assoc (f3) (f2) (f1):
-              (f3 ∘ f2) ∘ f1 ≗ f3 ∘ (f2 ∘ f1).
+              (f3 • f2) • f1 ≗ f3 • (f2 • f1).
 cases f1 -f1 #p1 #f1
 cases tr_compose_unfold cases tr_compose_unfold cases tr_compose_unfold
 cases tr_compose_tls

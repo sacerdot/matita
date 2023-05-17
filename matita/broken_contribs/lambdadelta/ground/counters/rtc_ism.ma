@@ -50,7 +50,7 @@ lemma rtc_ism_des_uz (n): 𝐌❨n,𝟙𝟘❩ → 𝟎 = n.
 #n * #ri #rs #H destruct //
 qed-.
 
-lemma rtc_ism_des_01 (n): 𝐌❨n,𝟘𝟙❩ → ninj (𝟏) = n.
+lemma rtc_ism_des_01 (n): 𝐌❨n,𝟘𝟙❩ → npos (𝟏) = n.
 #n * #ri #rs #H destruct //
 qed-.
 

@@ -47,11 +47,11 @@ interpretation
 
 interpretation
   "one r-step (rt-transition counters)"
-  'OneZero = (mk_prod_4 ???? nzero (ninj punit) nzero nzero).
+  'OneZero = (mk_prod_4 ???? nzero (npos punit) nzero nzero).
 
 interpretation
   "one t-step (rt-transition counters)"
-  'ZeroOne = (mk_prod_4 ???? nzero nzero nzero (ninj punit)).
+  'ZeroOne = (mk_prod_4 ???? nzero nzero nzero (npos punit)).
 
 definition rtc_eq_f: relation rtc ≝ λc1,c2. ⊤.
 

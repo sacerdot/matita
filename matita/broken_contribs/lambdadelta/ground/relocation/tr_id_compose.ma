@@ -21,11 +21,11 @@ include "ground/relocation/tr_pap_eq.ma".
 (* Coonstructions with tr_compose *******************************************)
 
 lemma tr_compose_id_sn (f):
-      f ≗ 𝐢∘f.
+      f ≗ 𝐢•f.
 #f @nstream_eq_inv_ext #q //
 qed.
 
 lemma tr_compose_id_dx (f):
-      f ≗ f∘𝐢.
+      f ≗ f•𝐢.
 #f @nstream_eq_inv_ext #q //
 qed.

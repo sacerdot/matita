@@ -20,7 +20,7 @@ include "ground/arith/nat_plus.ma".
 (* Constructions with nrplus ************************************************)
 
 lemma nrplus_inj_sn (p) (n):
-      ninj (p + n) = ninj p + n.
+      npos (p + n) = npos p + n.
 #p #n @(nat_ind_succ … n) -n //
 #n #IH <nrplus_succ_dx <nplus_succ_dx //
 qed.

@@ -29,7 +29,7 @@ lemma tr_pap_succ_nap (f) (l):
 // qed.
 
 lemma tr_compose_nap (f2) (f1) (l):
-      f2＠§❨f1＠§❨l❩❩ = (f2∘f1)＠§❨l❩.
+      f2＠§❨f1＠§❨l❩❩ = (f2•f1)＠§❨l❩.
 #f2 #f1 #l
 <tr_nap_unfold <tr_nap_unfold <tr_nap_unfold
 <tr_compose_pap <npsucc_pnpred //

@@ -90,7 +90,7 @@ qed-.
 lemma eq_inv_zero_ysucc (x): 𝟎 = ⫯x → ⊥.
 #x #H
 elim (eq_inv_inj_ysucc (𝟎) ? H) -H #n #_ #H
-/2 width=2 by eq_inv_zero_ninj/
+/2 width=2 by eq_inv_zero_npos/
 qed-.
 
 (*** ysucc_inv_O_dx *)

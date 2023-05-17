@@ -19,7 +19,7 @@ include "ground/arith/nat.ma".
 (* POSITIVE PREDECESSOR FOR NON-NEGATIVE INTEGERS ***************************)
 
 definition pnpred (p): ℕ ≝
-           psplit … (𝟎) ninj p.
+           psplit … (𝟎) npos p.
 
 interpretation
   "positive predecessor (non-negative integers)"
@@ -46,6 +46,6 @@ qed-.
 lemma pnpred_inv_refl (p:ℤ⁺): p ={ℕ} ↓p → ⊥.
 *
 [ <pnpred_unit #H0 destruct
-| #p /3 width=2 by psucc_inv_refl, eq_inv_ninj_bi/
+| #p /3 width=2 by psucc_inv_refl, eq_inv_npos_bi/
 ]
 qed-.

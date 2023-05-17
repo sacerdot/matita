@@ -85,7 +85,7 @@ qed-.
 
 (*** le_plus_xSy_O_false *)
 lemma nle_inv_succ_zero (m): ↑m ≤ 𝟎 → ⊥.
-/3 width=2 by nle_inv_zero_dx, eq_inv_zero_ninj/
+/3 width=2 by nle_inv_zero_dx, eq_inv_zero_npos/
 qed-.
 
 lemma nle_inv_succ_sn_refl (m): ↑m ≤ m → ⊥.

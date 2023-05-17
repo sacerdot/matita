@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "hvbox( Ⓣ )"
-  non associative with precedence 70
-  for @{ 'yes }.
+notation "hvbox( f2 • break f1 )"
+  left associative with precedence 60
+  for @{ 'Compose $f2 $f1 }.

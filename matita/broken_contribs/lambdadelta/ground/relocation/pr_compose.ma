@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/relocation/pr_after_after.ma".
+include "ground/notation/functions/compose_2.ma".
 
 (* FUNCTIONAL COMPOSITION FOR PARTIAL RELOCATION MAPS ***********************)
 
@@ -26,32 +27,32 @@ defined.
 
 interpretation
   "functional composition (partial relocation maps)"
-  'compose f2 f1 = (pr_compose f2 f1).
+  'Compose f2 f1 = (pr_compose f2 f1).
 
 (* Basic constructions ******************************************************)
 
-lemma pr_compose_unfold_refl (f2) (f1): ⫯(f2∘f1) = (⫯f2)∘(⫯f1).
+lemma pr_compose_unfold_refl (f2) (f1): ⫯(f2•f1) = (⫯f2)•(⫯f1).
 #f2 #f1
-<(stream_unfold … ((⫯f2)∘(⫯f1))) in ⊢ (???%); //
+<(stream_unfold … ((⫯f2)•(⫯f1))) in ⊢ (???%); //
 qed.
 
-lemma pr_compose_unfold_push (f2) (f1): ↑(f2∘f1) = (⫯f2)∘(↑f1).
+lemma pr_compose_unfold_push (f2) (f1): ↑(f2•f1) = (⫯f2)•(↑f1).
 #f2 #f1
-<(stream_unfold … ((⫯f2)∘(↑f1))) in ⊢ (???%); //
+<(stream_unfold … ((⫯f2)•(↑f1))) in ⊢ (???%); //
 qed.
 
 (*** compose_next *)
 lemma pr_compose_unfold_next (f2) (f1):
-      ↑(f2∘f1) = (↑f2)∘f1.
+      ↑(f2•f1) = (↑f2)•f1.
 #f2 #f1
-<(stream_unfold … ((↑f2)∘f1)) in ⊢ (???%); //
+<(stream_unfold … ((↑f2)•f1)) in ⊢ (???%); //
 qed.
 
 (* Main constructions *******************************************************)
 
 (*** after_total *)
 corec theorem pr_after_total (f2) (f1):
-              f2 ⊚ f1 ≘ f2∘f1.
+              f2 ⊚ f1 ≘ f2•f1.
 cases (pr_map_split_tl f2)*
 [ cases (pr_map_split_tl f1) * ]
 [ @pr_after_refl /2 width=7 by/
@@ -63,5 +64,5 @@ qed.
 (* Main inversions **********************************************************)
 
 (*** after_inv_total *)
-lemma pr_after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 ∘ f1 ≐ f.
+lemma pr_after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 • f1 ≐ f.
 /2 width=4 by pr_after_mono/ qed-.

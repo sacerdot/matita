@@ -12,53 +12,79 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/naturals_0.ma".
+include "ground/notation/functions/integers_0.ma".
 include "ground/notation/functions/zero_0.ma".
 include "ground/arith/pnat.ma".
 
-(* NON-NEGATIVE INTEGERS ****************************************************)
+(* INTEGERS *****************************************************************)
 
-(*** nat *)
-inductive nat: Type[0] ≝
-| nzero: nat
-| npos : ℤ⁺ → nat
+inductive int: Type[0] ≝
+| zneg : ℤ⁺ → int
+| zzero: int
+| zpos : ℤ⁺ → int
 .
 
-coercion npos.
+coercion zpos.
 
 interpretation
-  "non-negative integers"
-  'Naturals = (nat).
+  "integers"
+  'Integers = (int).
 
 interpretation
-  "zero (non-negative integers)"
-  'Zero = (nzero).
+  "zero (integers)"
+  'Zero = (zzero).
 
 (* Basic inversions *********************************************************)
 
 (* Note: destruct *)
-lemma eq_inv_npos_zero (p): npos p = 𝟎 → ⊥.
+lemma eq_inv_zneg_zero (p): zneg p = 𝟎 → ⊥.
 #p #H0 destruct
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_zero_npos (p): 𝟎 = npos p → ⊥.
+lemma eq_inv_zero_zneg (p): 𝟎 = zneg p → ⊥.
 #p #H0 destruct
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_npos_bi: injective … npos.
+lemma eq_inv_zneg_bi: injective … zneg.
 #p1 #p2 #H destruct //
+qed-.
+
+(* Note: destruct *)
+lemma eq_inv_zpos_zero (p): zpos p = 𝟎 → ⊥.
+#p #H0 destruct
+qed-.
+
+(* Note: destruct *)
+lemma eq_inv_zero_zpos (p): 𝟎 = zpos p → ⊥.
+#p #H0 destruct
+qed-.
+
+(* Note: destruct *)
+lemma eq_inv_zpos_bi: injective … zpos.
+#p1 #p2 #H destruct //
+qed-.
+
+(* Note: destruct *)
+lemma eq_inv_zneg_pos (p1) (p2): zneg p1 = zpos p2 → ⊥.
+#p1 #p2 #H0 destruct
+qed-.
+
+(* Note: destruct *)
+lemma eq_inv_zpos_neg (p1) (p2): zpos p1 = zneg p2 → ⊥.
+#p1 #p2 #H0 destruct
 qed-.
 
 (* Basic constructions ******************************************************)
 
-(*** eq_nat_dec *)
-lemma eq_nat_dec (n1,n2:ℕ): Decidable (n1 = n2).
-* [| #p1 ] * [2,4: #p2 ]
-[1,4: @or_intror #H destruct
-| elim (eq_pnat_dec p1 p2)
-  /4 width=1 by eq_inv_npos_bi, or_intror, or_introl/
-| /2 width=1 by or_introl/
+lemma eq_int_dec (z1,z2:ℤ): Decidable (z1 = z2).
+* [2: |*: #p1 ] * [2,5,8: |*: #p2 ]
+[1: /2 width=1 by or_introl/
+|6: elim (eq_pnat_dec p1 p2)
+    /4 width=1 by eq_inv_zneg_bi, or_intror, or_introl/
+|9: elim (eq_pnat_dec p1 p2)
+    /4 width=1 by eq_inv_zpos_bi, or_intror, or_introl/
+|*: @or_intror #H destruct
 ]
 qed-.

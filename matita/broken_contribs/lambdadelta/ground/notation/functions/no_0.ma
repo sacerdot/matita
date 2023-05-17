@@ -16,4 +16,4 @@
 
 notation "hvbox( Ⓕ )"
   non associative with precedence 70
-  for @{'no}.
+  for @{ 'no }.

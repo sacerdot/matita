@@ -99,7 +99,7 @@ lemma eq_inv_zero_nplus (m) (n): 𝟎 = m + n → ∧∧ 𝟎 = m & 𝟎 = n.
 #m #n @(nat_ind_succ … n) -n
 [ /2 width=1 by conj/
 | #n #_ <nplus_succ_dx #H
-  elim (eq_inv_zero_ninj … H)
+  elim (eq_inv_zero_npos … H)
 ]
 qed-.
 
@@ -122,7 +122,7 @@ qed-.
 (*** plus_xSy_x_false *)
 lemma succ_nplus_refl_sn (m) (n): m = ↑(m + n) → ⊥.
 #m @(nat_ind_succ … m) -m
-[ /2 width=2 by eq_inv_zero_ninj/
+[ /2 width=2 by eq_inv_zero_npos/
 | #m #IH #n #H
   @(IH n) /2 width=1 by eq_inv_nsucc_bi/
 ]

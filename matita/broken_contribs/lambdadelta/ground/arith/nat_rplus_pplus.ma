@@ -21,7 +21,7 @@ include "ground/arith/nat_rplus_succ.ma".
 (* Constructions with pplus *************************************************)
 
 lemma nrplus_inj_dx (p) (q):
-      p + q = p + ninj q.
+      p + q = p + npos q.
 // qed.
 
 lemma nrplus_pnpred_dx (p) (q):

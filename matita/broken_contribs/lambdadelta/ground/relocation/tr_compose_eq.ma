@@ -21,7 +21,7 @@ include "ground/lib/stream_tls_eq.ma".
 (* Constructions with stream_eq *********************************************)
 
 corec lemma tr_compose_eq_repl (f2) (g2):
-            f2 ≗ g2 → stream_eq_repl … (λf1,g1. f2∘f1 ≗ g2∘g1).
+            f2 ≗ g2 → stream_eq_repl … (λf1,g1. f2•f1 ≗ g2•g1).
 #Hfg2 * #p1 #f1 * #q1 #g1 #H
 cases (stream_eq_inv_cons_bi … H) -H [|*: // ] * #Hfg1 -q1
 cases tr_compose_unfold cases tr_compose_unfold

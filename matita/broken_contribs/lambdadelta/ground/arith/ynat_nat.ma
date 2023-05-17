@@ -20,7 +20,7 @@ include "ground/arith/ynat.ma".
 (*** yinj *)
 definition yinj_nat (n): ynat ≝ match n with
 [ nzero  ⇒ 𝟎
-| ninj p ⇒ yinj p
+| npos p ⇒ yinj p
 ].
 
 definition ynat_bind_nat: (ℕ → ynat) → ynat → (ynat → ynat).
@@ -36,7 +36,7 @@ qed-.
 lemma yinj_nat_zero: 𝟎 = yinj_nat (𝟎).
 // qed.
 
-lemma yinj_nat_inj (p): yinj p = yinj_nat (ninj p).
+lemma yinj_nat_inj (p): yinj p = yinj_nat (npos p).
 // qed.
 
 lemma ynat_bind_nat_inj (f) (y) (n):

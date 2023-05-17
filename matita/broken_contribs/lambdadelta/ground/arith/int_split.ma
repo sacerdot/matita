@@ -12,8 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/arith/int.ma".
 
-notation "hvbox( Ⓣ )"
-  non associative with precedence 70
-  for @{ 'yes }.
+(* DISCRIMINATOR FOR INTEGERS ***********************************************)
+
+definition zsplit (A:Type[0]) (f1) (a) (f2) (z): A ≝
+match z with
+[ zneg  p ⇒ f1 p
+| zzero   ⇒ a
+| zpos  p ⇒ f2 p
+].

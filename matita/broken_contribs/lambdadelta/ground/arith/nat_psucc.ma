@@ -28,7 +28,7 @@ interpretation
 lemma npsucc_zero: (𝟏) = ↑𝟎.
 // qed.
 
-lemma npsucc_inj (p): (↑p) = ↑(ninj p).
+lemma npsucc_inj (p): (↑p) = ↑(npos p).
 // qed.
 
 lemma npsucc_succ (n): psucc (npsucc n) = npsucc (npsucc n).
@@ -47,6 +47,6 @@ qed-.
 lemma npsucc_inv_refl (m:ℕ): m = ↑m → ⊥.
 *
 [ #H0 destruct
-| #p #H0 /3 width=2 by eq_inv_ninj_bi, psucc_inv_refl/
+| #p #H0 /3 width=2 by eq_inv_npos_bi, psucc_inv_refl/
 ]
 qed-.

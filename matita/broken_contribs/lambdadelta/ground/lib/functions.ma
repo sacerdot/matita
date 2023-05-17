@@ -38,3 +38,9 @@ definition annulment_2 (A) (f):
            predicate A ≝
            λi:A.
            ∀a1,a2. i = f a1 a2 → ∧∧ i = a1 & i = a2.
+
+(* Constructions with compose ***********************************************)
+
+lemma compose_unfold (A) (B) (C:Type[0]) (g) (f) (a):
+      g (f a) = (g∘{A,B,C}f) a.
+// qed.

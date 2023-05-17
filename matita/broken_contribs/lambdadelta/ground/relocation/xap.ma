@@ -19,18 +19,18 @@ lemma tr_xap_zero (f):
       (𝟎) = f＠❨𝟎❩.
 // qed.
 
-lemma tr_xap_ninj (f) (p):
-      ninj (f＠⧣❨p❩) = f＠❨ninj p❩.
+lemma tr_xap_npos (f) (p):
+      npos (f＠⧣❨p❩) = f＠❨npos p❩.
 // qed.
 
 lemma tr_xap_succ_nap (f) (n):
       ↑(f＠§❨n❩) ={ℕ} f＠❨↑n❩.
 #f #n
-<tr_xap_ninj //
+<tr_xap_npos //
 qed.
 
 lemma tr_compose_xap (f2) (f1) (l):
-      f2＠❨f1＠❨l❩❩ = (f2∘f1)＠❨l❩.
+      f2＠❨f1＠❨l❩❩ = (f2•f1)＠❨l❩.
 #f2 #f1 #l
 <tr_xap_unfold <tr_xap_unfold <tr_xap_unfold
 >tr_compose_nap >tr_compose_push_bi //
@@ -89,5 +89,5 @@ lemma tr_nap_plus_sn_xap (f) (m) (n):
 lemma tr_xap_pos (f) (n):
       n = ↑⫰n → f＠❨n❩=↑⫰(f＠❨n❩).
 #f #n #H0 >H0 -H0
-<tr_xap_ninj <nsucc_pnpred //
+<tr_xap_npos <nsucc_pnpred //
 qed.

@@ -69,7 +69,7 @@ qed.
 lemma eq_inv_zero_nmax (n1) (n2): 𝟎 = (n1 ∨ n2) → ∧∧ 𝟎 = n1 & 𝟎 = n2.
 #n1 #n2 @(nat_ind_2_succ … n1 n2) -n1 -n2 /2 width=1 by conj/
 #n1 #n2 #_ <nmax_succ_bi #H
-elim (eq_inv_zero_ninj … H)
+elim (eq_inv_zero_npos … H)
 qed-.
 
 (*** max_inv_O3 *)

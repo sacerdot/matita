@@ -43,7 +43,7 @@ include "ground/relocation/tr_pap.ma".
 
 (*** after_apply *)
 lemma tr_after_pap:
-      ∀p1,f2,f1,f. 𝐭❨⇂*[ninj p1]f2❩ ⊚ 𝐭❨f1❩ ≘ 𝐭❨f❩ →
+      ∀p1,f2,f1,f. 𝐭❨⇂*[npos p1]f2❩ ⊚ 𝐭❨f1❩ ≘ 𝐭❨f❩ →
       (𝐭❨f2❩) ⊚ 𝐭❨p1⨮f1❩ ≘ 𝐭❨f2＠⧣❨p1❩⨮f❩.
 #p1 elim p1 -p1
 [ * /2 width=1 by tr_after_push_dx/
@@ -56,7 +56,7 @@ include "ground/relocation/tr_compose_pn.ma".
 
 (*** after_total_aux *)
 corec fact tr_after_total_aux:
-      ∀f2,f1,f. f2 ∘ f1 = f → 𝐭❨f2❩ ⊚ 𝐭❨f1❩ ≘ 𝐭❨f❩.
+      ∀f2,f1,f. f2 • f1 = f → 𝐭❨f2❩ ⊚ 𝐭❨f1❩ ≘ 𝐭❨f❩.
 * #p2 #f2 * #p1 #f1 * #p #f cases p2 -p2
 [ cases p1 -p1
   [ #H cases (tr_compose_inv_push_dx … H) -H /3 width=7 by pr_after_refl, eq_f2/
@@ -69,7 +69,7 @@ qed-.
 
 (*** after_total *)
 theorem tr_after_total:
-        ∀f1,f2. 𝐭❨f2❩ ⊚ 𝐭❨f1❩ ≘ 𝐭❨f2 ∘ f1❩.
+        ∀f1,f2. 𝐭❨f2❩ ⊚ 𝐭❨f1❩ ≘ 𝐭❨f2 • f1❩.
 /2 width=1 by tr_after_total_aux/ qed.
 
 (* Inversion lemmas on after (specific) ***************************************)
@@ -108,7 +108,7 @@ lemma after_inv_const: ∀f2,f1,f,p1,p.
 ]
 qed-.
 
-lemma after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 ∘ f1 ≐ f.
+lemma after_inv_total: ∀f2,f1,f. f2 ⊚ f1 ≘ f → f2 • f1 ≐ f.
 /2 width=4 by gr_after_mono/ qed-.
 
 (* Forward lemmas on after (specific) *****************************************)

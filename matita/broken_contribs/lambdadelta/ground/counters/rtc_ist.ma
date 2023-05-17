@@ -38,7 +38,7 @@ lemma rtc_ist_inv_zz (n): 𝐓❨n,𝟘𝟘❩ → 𝟎 = n.
 #n #H destruct //
 qed-.
 
-lemma rtc_ist_inv_zu (n): 𝐓❨n,𝟘𝟙❩ → ninj (𝟏) = n.
+lemma rtc_ist_inv_zu (n): 𝐓❨n,𝟘𝟙❩ → npos (𝟏) = n.
 #n #H destruct //
 qed-.
 

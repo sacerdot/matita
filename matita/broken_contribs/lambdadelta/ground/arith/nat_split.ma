@@ -19,5 +19,5 @@ include "ground/arith/nat.ma".
 definition nsplit (A:Type[0]) (a) (f) (n): A ≝
 match n with
 [ nzero   ⇒ a
-| ninj  m ⇒ f m
+| npos  p ⇒ f p
 ].

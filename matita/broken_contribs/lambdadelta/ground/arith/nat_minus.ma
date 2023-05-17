@@ -65,7 +65,7 @@ lemma nminus_refl (m): 𝟎 = m - m.
 qed.
 
 (*** minus_Sn_n *)
-lemma nminus_succ_sn_refl (m): ninj (𝟏) = ↑m - m.
+lemma nminus_succ_sn_refl (m): npos (𝟏) = ↑m - m.
 #m @(nat_ind_succ … m) -m //
 qed.
 

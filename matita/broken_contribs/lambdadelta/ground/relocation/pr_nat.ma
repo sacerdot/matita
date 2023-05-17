@@ -87,14 +87,14 @@ qed-.
 lemma pr_nat_inv_zero_push_succ (f) (l1) (l2):
       ＠§❨l1,f❩ ≘ l2 → ∀g. ∀k2:ℕ.  𝟎 = l1 → ⫯g = f → ↑k2 ={ℕ} l2 → ⊥.
 #f #l1 #l2 #Hf #g #k2 #H1 #H <(pr_nat_inv_zero_push … Hf … H1 H) -f -g -l1 -l2
-/2 width=3 by eq_inv_ninj_zero/
+/2 width=3 by eq_inv_npos_zero/
 qed-.
 
 (*** pr_nat_inv_npp *)
 lemma pr_nat_inv_succ_push_zero (f) (l1) (l2):
       ＠§❨l1,f❩ ≘ l2 → ∀g. ∀k1:ℕ. ↑k1 ={ℕ} l1 → ⫯g = f → 𝟎 = l2 → ⊥.
 #f #l1 #l2 #Hf #g #k1 #H1 #H elim (pr_nat_inv_succ_push … Hf … H1 H) -f -l1
-#x2 #Hg * -l2 /2 width=3 by eq_inv_zero_ninj/
+#x2 #Hg * -l2 /2 width=3 by eq_inv_zero_npos/
 qed-.
 
 (*** pr_nat_inv_npn *)
@@ -108,7 +108,7 @@ qed-.
 lemma pr_nat_inv_next_zero (f) (l1) (l2):
       ＠§❨l1,f❩ ≘ l2 → ∀g. ↑g = f → 𝟎 = l2 → ⊥.
 #f #l1 #l2 #Hf #g #H elim (pr_nat_inv_next … Hf … H) -f
-#x2 #Hg * -l2 /2 width=3 by eq_inv_zero_ninj/
+#x2 #Hg * -l2 /2 width=3 by eq_inv_zero_npos/
 qed-.
 
 (*** pr_nat_inv_xnn *)
@@ -171,7 +171,7 @@ qed-.
 lemma pr_nat_inv_push_zero (f) (l1) (l2):
       ＠§❨l1,f❩ ≘ l2 → ∀g. ⫯g = f → 𝟎 = l2 → 𝟎 = l1.
 #f #l1 #l2 #Hf #g #H elim (pr_nat_inv_push … Hf … H) -f * //
-#k1 #k2 #_ #_ * -l2 #H elim (eq_inv_zero_ninj … H)
+#k1 #k2 #_ #_ * -l2 #H elim (eq_inv_zero_npos … H)
 qed-.
 
 (*** pr_nat_inv_xpn *)
@@ -179,7 +179,7 @@ lemma pr_nat_inv_push_succ (f) (l1) (l2):
       ＠§❨l1,f❩ ≘ l2 → ∀g. ∀k2:ℕ. ⫯g = f → ↑k2 ={ℕ} l2 →
       ∃∃k1. ＠§❨k1,g❩ ≘ k2 & ↑k1 ={ℕ} l1.
 #f #l1 #l2 #Hf #g #k2 #H elim (pr_nat_inv_push … Hf … H) -f *
-[ #_ * -l2 #H elim (eq_inv_ninj_zero … H)
+[ #_ * -l2 #H elim (eq_inv_npos_zero … H)
 | #x1 #x2 #Hg #H1 * -l2 #H
   lapply (eq_inv_nsucc_bi … H) -H #H destruct
   /2 width=3 by ex2_intro/
