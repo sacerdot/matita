@@ -34,7 +34,7 @@ lemma ppred_succ (p): p = ⫰↑p.
 
 (* Basic inversions *********************************************************)
 
-lemma ppred_inv_refl (p): p = ⫰p → 𝟏 = p.
+lemma eq_inv_fix_ppred (p): p = ⫰p → 𝟏 = p.
 #p elim p -p //
 #p #IH #H /2 width=1 by/
 qed-.

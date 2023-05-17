@@ -43,7 +43,7 @@ lemma eq_inv_psucc_bi: injective … psucc.
 #p #q #H destruct //
 qed.
 
-lemma psucc_inv_refl (p): p = ↑p → ⊥.
+lemma eq_inv_fix_psucc (p): p = ↑p → ⊥.
 #p elim p -p
 [ #H destruct
 | #p #IH #H /3 width=1 by eq_inv_psucc_bi/
