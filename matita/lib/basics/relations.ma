@@ -10,7 +10,7 @@
       V_______________________________________________________________ *)
 
 include "basics/logic.ma".
-include "basics/core_notation/compose_2.ma".
+include "basics/core_notation/compose_5.ma".
 include "basics/core_notation/subseteq_2.ma".
 
 (********** predicates *********)
@@ -76,9 +76,9 @@ lemma RC_reflexive: ∀A,R. reflexive A (RC … R).
 /2 width=1/ qed.
 
 (********** operations **********)
-definition Rcomp ≝ λA.λR1,R2:relation A.λa1,a2.
-  ∃am.R1 a1 am ∧ R2 am a2.
-interpretation "relation composition" 'compose R1 R2 = (Rcomp ? R1 R2).
+definition Rcomp (A) (B) (C) (R1:relation2 A B) (R2:relation2 B C) : relation2 A C ≝
+           λa,c. ∃b. R1 a b ∧ R2 b c.
+interpretation "relation composition" 'compose A B C R1 R2 = (Rcomp A B C R1 R2).
 
 definition Runion ≝ λA.λR1,R2:relation A.λa,b. R1 a b ∨ R2 a b.
 interpretation "union of relations" 'union R1 R2 = (Runion ? R1 R2).
@@ -98,7 +98,7 @@ lemma sub_reflexive :
 qed.
 
 lemma sub_comp_l:  ∀A.∀R,R1,R2:relation A.
-  R1 ⊆ R2 → R1 ∘ R ⊆ R2 ∘ R.
+  R1 ⊆ R2 → R1 ∘{A,A,A} R ⊆ R2 ∘ R.
 #A #R #R1 #R2 #Hsub #a #b * #c * /4/
 qed.
 
@@ -122,7 +122,7 @@ qed.
 definition compose ≝
   λA,B,C:Type[0].λf:B→C.λg:A→B.λx:A.f (g x).
 
-interpretation "function composition" 'compose f g = (compose ? ? ? f g).
+interpretation "function composition" 'compose A B C f g = (compose A B C f g).
 
 definition injective: ∀A,B:Type[0].∀ f:A→B.Prop
 ≝ λA,B.λf.∀x,y:A.f x = f y → x=y.

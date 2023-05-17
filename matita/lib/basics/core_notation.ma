@@ -101,10 +101,7 @@ notation < "hvbox(term 46 n break ≅ \sub p term 46 m)"
   non associative with precedence 45
 for @{ 'congruent $n $m $p }.
 
-(* pairs, projections *******************************************************)
-
-notation "hvbox(x break \times y)" with precedence 70
-for @{ 'product $x $y}.
+(* projections **************************************************************)
 
 notation < "\fst \nbsp term 90 x" with precedence 69 for @{'pi1a $x}.
 notation < "\snd \nbsp term 90 x" with precedence 69 for @{'pi2a $x}.

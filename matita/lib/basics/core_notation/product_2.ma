@@ -11,6 +11,5 @@
 
 (* Core notation *******************************************************)
 
-notation "hvbox(a break \circ b)" 
-  left associative with precedence 60
-for @{ 'compose $a $b }.
+notation "hvbox(x break \times y)" with precedence 70
+for @{ 'product $x $y}.
