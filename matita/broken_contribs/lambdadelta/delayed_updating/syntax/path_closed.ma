@@ -27,7 +27,7 @@ inductive pcc (o) (e): relation2 (ℕ) path ≝
   pcc o e e (𝐞)
 | pcc_d_dx (p) (n) (k):
   (Ⓣ = o → n = ↑⫰n) →
-  pcc o e (n+ninj k) p → pcc o e n (p◖𝗱k)
+  pcc o e (n+npos k) p → pcc o e n (p◖𝗱k)
 | pcc_m_dx (p) (n):
   pcc o e n p → pcc o e n (p◖𝗺)
 | pcc_L_dx (p) (n):
@@ -136,21 +136,21 @@ lemma pcc_inv_empty_succ_zero (o) (n):
       (𝐞) ϵ 𝐂❨o,↑n,𝟎❩ → ⊥.
 #o #n #H0
 lapply (pcc_inv_empty … H0) -H0 #H0
-/2 width=7 by eq_inv_zero_ninj/
+/2 width=7 by eq_inv_zero_npos/
 qed-.
 
 lemma pcc_true_inv_d_dx_zero_sn (e) (p) (k):
       p◖𝗱k ϵ 𝐂❨Ⓣ,𝟎, e❩ → ⊥.
 #e #p #k #H0
 elim (pcc_inv_d_dx … H0) -H0 #H0 #_
-elim (eq_inv_zero_ninj … (H0 ?)) -H0 //
+elim (eq_inv_zero_npos … (H0 ?)) -H0 //
 qed-.
 
 lemma pcc_inv_L_dx_zero_sn (o) (e) (p):
       p◖𝗟 ϵ 𝐂❨o,𝟎,e❩ → ⊥.
 #o #e #p #H0
 elim (pcc_inv_L_dx … H0) -H0 #_ #H0
-/2 width=7 by eq_inv_zero_ninj/
+/2 width=7 by eq_inv_zero_npos/
 qed-.
 
 lemma pcc_inv_L_dx_succ (o) (e) (p) (n):

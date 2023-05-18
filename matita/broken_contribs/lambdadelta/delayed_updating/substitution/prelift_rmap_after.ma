@@ -22,7 +22,7 @@ include "ground/relocation/tr_compose_tls.ma".
 (* Constructions with tr_after **********************************************)
 
 lemma prelift_rmap_after (g) (f) (l):
-      🠢[g]🠡[f]l∘🠢[f]l = 🠢[g∘f]l.
+      🠢[g]🠡[f]l•🠢[f]l = 🠢[g•f]l.
 #g #f * [ #k ] //
 <prelift_rmap_d //
 qed.

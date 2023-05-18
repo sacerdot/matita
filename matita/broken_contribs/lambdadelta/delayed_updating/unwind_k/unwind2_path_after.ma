@@ -20,7 +20,7 @@ include "delayed_updating/unwind_k/unwind2_rmap_after.ma".
 (* Properties with tr_after *************************************************)
 
 lemma unwind2_path_after (g) (f) (p):
-      ▼[g]▼[f]p = ▼[g∘f]p.
+      ▼[g]▼[f]p = ▼[g•f]p.
 #g #f * // * [ #k ] #p //
 <unwind2_path_d_dx <unwind2_path_d_dx
 @eq_f2 // @eq_f >tr_compose_pap

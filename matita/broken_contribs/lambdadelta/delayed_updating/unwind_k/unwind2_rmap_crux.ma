@@ -21,7 +21,7 @@ include "delayed_updating/unwind_k/unwind2_rmap_closed.ma".
 (* Note: crux of the commutation between unwind and balanced focused reduction *)
 lemma unwind2_rmap_uni_crux (f) (p) (b) (q) (m) (n):
       b ϵ 𝐂❨Ⓕ,m,𝟎❩ → q ϵ 𝐂❨Ⓕ,n,𝟎❩ →
-      (𝐮❨↑(♭b+♭q)❩ ∘ ▶[f]p ≗ ▶[f](p●𝗔◗b●𝗟◗q) ∘ 𝐮❨↑(m+n)❩).
+      (𝐮❨↑(♭b+♭q)❩ • ▶[f]p ≗ ▶[f](p●𝗔◗b●𝗟◗q) • 𝐮❨↑(m+n)❩).
 #f #p #b #q #m #n #Hm #Hn
 <list_append_rcons_sn <list_append_rcons_sn >list_append_assoc
 >list_append_rcons_sn >(list_append_rcons_sn … b)

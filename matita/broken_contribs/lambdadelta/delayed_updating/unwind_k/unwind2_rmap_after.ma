@@ -25,7 +25,7 @@ include "ground/lib/stream_eq_eq.ma".
 (* Constructions with tr_after **********************************************)
 
 lemma unwind2_rmap_after (g) (f) (p:path):
-      ▶[g]⊗p∘▶[f]p ≗ ▶[g∘f]p.
+      ▶[g]⊗p•▶[f]p ≗ ▶[g•f]p.
 #g #f #p elim p -p // * [ #k ] #p #IH //
 [ <structure_d_dx <unwind2_rmap_d_dx <unwind2_rmap_d_dx
   @(stream_eq_canc_sn … (tr_compose_assoc …))

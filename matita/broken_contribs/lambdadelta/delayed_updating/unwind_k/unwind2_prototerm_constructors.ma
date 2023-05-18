@@ -29,7 +29,7 @@ lemma unwind2_term_oref_pap (f) (k):
 qed.
 
 lemma unwind2_term_iref (f) (t) (k:ℤ⁺):
-      ▼[f∘𝐮❨k❩]t ⇔ ▼[f](𝛕k.t).
+      ▼[f•𝐮❨k❩]t ⇔ ▼[f](𝛕k.t).
 #f #t #k @conj
 #p * #q #Hq #H0 destruct
 [ @(ex2_intro … (𝗱k◗𝗺◗q))

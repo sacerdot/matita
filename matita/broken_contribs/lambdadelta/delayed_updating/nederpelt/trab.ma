@@ -31,7 +31,7 @@ match p with
   | label_A   ⇒
     match n with
     [ nzero  ⇒ K p n q
-    | ninj y ⇒ trab S K x (pnpred y) (𝗔◗q)
+    | npos y ⇒ trab S K x (pnpred y) (𝗔◗q)
     ]
   | label_S   ⇒ K p n q
   ]

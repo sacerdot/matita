@@ -23,7 +23,7 @@ include "delayed_updating/unwind_k/unwind2_prototerm.ma".
 (* Constructions with lift_prototerm ****************************************)
 
 lemma lift_unwind2_term_after (f1) (f2) (t):
-      🠡[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
+      🠡[f2]▼[f1]t ⇔ ▼[f2•f1]t.
 #f1 #f2 #t @subset_eq_trans
 [| @subset_inclusion_ext_f1_compose ]
 @subset_equivalence_ext_f1_exteq #p
@@ -31,7 +31,7 @@ lemma lift_unwind2_term_after (f1) (f2) (t):
 qed.
 
 lemma unwind2_lift_term_after (f1) (f2) (t):
-      ▼[f2]🠡[f1]t ⇔ ▼[f2∘f1]t.
+      ▼[f2]🠡[f1]t ⇔ ▼[f2•f1]t.
 #f1 #f2 #t @subset_eq_trans
 [| @subset_inclusion_ext_f1_compose ]
 @subset_equivalence_ext_f1_exteq #p

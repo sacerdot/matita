@@ -20,7 +20,7 @@ include "ground/relocation/tr_map.ma".
 
 corec definition tr_minus: ℕ → tr_map → tr_map.
 * [ #f @f ] #q * #p #f
-@((p-q)⨮(tr_minus (ninj (↑q)-ninj p) f))
+@((p-q)⨮(tr_minus (npos (↑q)-npos p) f))
 defined.
 
 interpretation
@@ -35,6 +35,6 @@ lemma tr_minus_zero_dx (f):
 qed.
 
 lemma tr_minus_cons_inj (f) (p) (q):
-      (p-q)⨮(f-(ninj (↑q)-ninj p)) = (p⨮f)-(ninj q).
-#f #p #q <(stream_unfold … ((p⨮f)-(ninj q))) //
+      (p-q)⨮(f-(npos (↑q)-npos p)) = (p⨮f)-(npos q).
+#f #p #q <(stream_unfold … ((p⨮f)-(npos q))) //
 qed.

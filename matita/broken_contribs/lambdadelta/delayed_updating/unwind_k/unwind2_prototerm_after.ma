@@ -20,7 +20,7 @@ include "delayed_updating/unwind_k/unwind2_path_after.ma".
 (* Constructions with tr_after **********************************************)
 
 lemma unwind2_term_after (f1) (f2) (t):
-      ▼[f2]▼[f1]t ⇔ ▼[f2∘f1]t.
+      ▼[f2]▼[f1]t ⇔ ▼[f2•f1]t.
 #f1 #f2 #t @subset_eq_trans
 [
 | @subset_inclusion_ext_f1_compose

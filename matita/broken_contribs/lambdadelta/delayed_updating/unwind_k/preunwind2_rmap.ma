@@ -21,7 +21,7 @@ include "ground/relocation/tr_compose.ma".
 
 definition preunwind2_rmap (f) (l): tr_map ≝
 match l with
-[ label_d k ⇒ f∘𝐮❨k❩
+[ label_d k ⇒ f•𝐮❨k❩
 | label_m   ⇒ f
 | label_L   ⇒ ⫯f
 | label_A   ⇒ f
@@ -35,7 +35,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma preunwind2_rmap_d (f) (k:ℤ⁺):
-      f∘𝐮❨k❩ = ▶[f]𝗱k.
+      f•𝐮❨k❩ = ▶[f]𝗱k.
 // qed.
 
 lemma preunwind2_rmap_m (f):

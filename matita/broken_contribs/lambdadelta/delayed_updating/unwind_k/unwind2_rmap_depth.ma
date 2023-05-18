@@ -25,7 +25,7 @@ include "ground/lib/stream_eq_eq.ma".
 (* Constructions with depth *************************************************)
 
 lemma unwind2_rmap_decompose (p) (f):
-      ▶[f]p ≗ (⫯*[♭p]f)∘(▶[𝐢]p).
+      ▶[f]p ≗ (⫯*[♭p]f)•(▶[𝐢]p).
 #p elim p -p
 [ #f <unwind2_rmap_empty <unwind2_rmap_empty <tr_pushs_zero //
 | * [ #k ] #p #IH #f //
@@ -49,7 +49,7 @@ qed.
 lemma unwind2_rmap_xap_le (f) (p) (n):
       ▶[𝐢]p＠❨n❩ ≤ ♭p → ▶[𝐢]p＠❨n❩ = ▶[f]p＠❨n❩.
 (*
-#f #p * // #h <tr_xap_ninj #Hh
+#f #p * // #h <tr_xap_npos #Hh
 >unwind2_rmap_pap_le
 *)
 #f #p #n #Hn

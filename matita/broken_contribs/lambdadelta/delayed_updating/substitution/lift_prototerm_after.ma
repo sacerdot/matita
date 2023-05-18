@@ -20,7 +20,7 @@ include "delayed_updating/substitution/lift_path_after.ma".
 (* Constructions with tr_after **********************************************)
 
 lemma lift_term_after (f) (g) (t):
-      🠡[g]🠡[f]t ⇔ 🠡[g∘f]t.
+      🠡[g]🠡[f]t ⇔ 🠡[g•f]t.
 #f #g #t @subset_eq_trans
 [
 | @subset_inclusion_ext_f1_compose
