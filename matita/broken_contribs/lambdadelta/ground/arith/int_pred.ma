@@ -27,7 +27,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma zpred_neg (p): zneg (↑p) = ↓(zneg p).
+lemma zpred_neg (p): −↑p = ↓−p.
 // qed.
 
 lemma zpred_zero: zneg (𝟏) = ↓𝟎.

@@ -26,10 +26,10 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma zsucc_neg_succ (p): zneg p = ↑(zneg (↑p)).
+lemma zsucc_neg_succ (p): −p = ↑−↑p.
 // qed.
 
-lemma zsucc_neg_unit: (𝟎) = ↑(zneg (𝟏)).
+lemma zsucc_neg_unit: (𝟎) = ↑−𝟏.
 // qed.
 
 lemma zsucc_zero: (𝟏) ={ℤ} ↑𝟎.
