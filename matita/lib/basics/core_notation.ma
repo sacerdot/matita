@@ -212,13 +212,6 @@ notation "hvbox(a break / b)"
   left associative with precedence 60
 for @{ 'divide $a $b }.
 
-notation "- term 65 a" with precedence 65 
-for @{ 'uminus $a }.
-
-notation "\sqrt a" 
-  non associative with precedence 65
-for @{ 'sqrt $a }.
-
 (* logical connectives ******************************************************)
 
 notation "hvbox(a break \lor b)" 
@@ -260,16 +253,3 @@ for @{ 'intersects $a $b }. (* \cap *)
 
 notation "hvbox(a break ∪ b)" left associative with precedence 55
 for @{ 'union $a $b }. (* \cup *)
-
-(* other notations **********************************************************)
-
-notation "\ee" with precedence 90 for @{ 'neutral }. (* ⅇ *)
-
-notation > "x ⊩ y" with precedence 45 for @{'Vdash2 $x $y ?}.
-notation > "x ⊩⎽ term 90 c y" with precedence 45 for @{'Vdash2 $x $y $c}.
-notation "x (⊩ \sub term 90 c) y" with precedence 45 for @{'Vdash2 $x $y $c}.
-notation > "⊩ " with precedence 65 for @{'Vdash ?}.
-notation "(⊩ \sub term 90 c) " with precedence 65 for @{'Vdash $c}.
-
-notation < "maction (mstyle color #ff0000 (­…­)) (t)" 
-non associative with precedence 90 for @{'hide $t}.

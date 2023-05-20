@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "formal_topology/cprop_connectives.ma".
-include "basics/core_notation/compose_2.ma".
+include "basics/core_notation/compose_5.ma".
 include "basics/core_notation/invert_1.ma".
 include "basics/core_notation/eq_3.ma".
 
@@ -332,11 +332,11 @@ record category3 : Type[4] ≝
 
 notation "'ASSOC'" with precedence 90 for @{'assoc}.
 
-interpretation "category2 composition" 'compose x y = (fun22 ??? (comp2 ????) y x).
+interpretation "category2 composition" 'compose o1 o2 o3 x y = (fun22 ??? (comp2 ? o1 o2 o3) y x).
 interpretation "category2 assoc" 'assoc = (comp_assoc2 ????????).
-interpretation "category1 composition" 'compose x y = (fun21 ??? (comp1 ????) y x).
+interpretation "category1 composition" 'compose o1 o2 o3 x y = (fun21 ??? (comp1 ? o1 o2 o3) y x).
 interpretation "category1 assoc" 'assoc = (comp_assoc1 ????????).
-interpretation "category composition" 'compose x y = (fun2 ??? (comp ????) y x).
+interpretation "category composition" 'compose o1 o2 o3 x y = (fun2 ??? (comp ? o1 o2 o3) y x).
 interpretation "category assoc" 'assoc = (comp_assoc ????????).
 
 definition category2_of_category1: category1 → category2.

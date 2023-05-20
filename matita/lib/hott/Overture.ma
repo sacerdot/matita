@@ -1,5 +1,5 @@
 include "hott/types.ma".
-include "basics/core_notation/compose_2.ma".
+include "basics/core_notation/compose_5.ma".
 
 (* * * Basic definitions of homotopy type theory, particularly the groupoid structure of identity types. *)
 
@@ -42,7 +42,7 @@ definition idmap : ∀A:Type[0]. A → A ≝ λA,x.x.
 definition compose ≝ λA,B,C: Type[0]. λg : B → C. λf : A → B.
  λx. g (f x).
 
-interpretation "compose" 'compose g f = (compose ??? g f).
+interpretation "compose" 'compose A B C g f = (compose A B C g f).
 
 (* * ** The groupoid structure of identity types. *)
 

@@ -11,7 +11,7 @@
 
 include "basics/vectors.ma".
 include "basics/finset.ma".
-include "basics/core_notation/compose_2.ma".
+include "basics/core_notation/compose_5.ma".
 (* include "basics/relations.ma". *)
 
 record tape (sig:FinSet): Type[0] ≝ 
@@ -175,8 +175,8 @@ definition seq ≝ λsig. λM1,M2 : TM sig.
     (λs.match s with
       [ inl _ ⇒ false | inr s2 ⇒ halt sig M2 s2]). 
 
-definition Rcomp ≝ λA.λR1,R2:relation A.λa1,a2.
-  ∃am.R1 a1 am ∧ R2 am a2.
+definition Rcomp (A) (B) (C) (R1: relation2 A B) (R2:relation2 B C) ≝
+  λa1,a2. ∃am.R1 a1 am ∧ R2 am a2.
 
 (*
 definition injectRl ≝ λsig.λM1.λM2.λR.
@@ -200,7 +200,7 @@ definition Rlink ≝ λsig.λM1,M2.λc1,c2.
   cstate sig (seq sig M1 M2) c1 = inl … (halt sig M1) ∧
   cstate sig (seq sig M1 M2) c2 = inr … (start sig M2). *)
   
-interpretation "relation composition" 'compose R1 R2 = (Rcomp ? R1 R2).
+interpretation "relation composition" 'compose A B C R1 R2 = (Rcomp A B C R1 R2).
 
 definition lift_confL ≝ 
   λsig,S1,S2,c.match c with 
