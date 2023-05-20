@@ -5,8 +5,22 @@ let mkuri ~baseuri name =
 
 let cic_term = Kernel.Basic.mk_name (Kernel.Basic.mk_mident "cic") (Kernel.Basic.mk_ident "Term")
 let cic_prod = Kernel.Basic.mk_name (Kernel.Basic.mk_mident "cic") (Kernel.Basic.mk_ident "prod")
+let cic_univ = Kernel.Basic.mk_name (Kernel.Basic.mk_mident "cic") (Kernel.Basic.mk_ident "Univ")
+let cic_type = Kernel.Basic.mk_name (Kernel.Basic.mk_mident "cic") (Kernel.Basic.mk_ident "type")
+let cic_z = Kernel.Basic.mk_name (Kernel.Basic.mk_mident "cic") (Kernel.Basic.mk_ident "z")
+let cic_succ = Kernel.Basic.mk_name (Kernel.Basic.mk_mident "cic") (Kernel.Basic.mk_ident "s")
+
+let rec calc_univ_dept  = function
+  | Kernel.Term.Const(_, name) when Kernel.Basic.name_eq name cic_z -> 0
+  | Kernel.Term.App(Kernel.Term.Const(_, f_name), a, []) when Kernel.Basic.name_eq f_name cic_succ -> 1 + (calc_univ_dept a)
+  | _ -> HLog.message("Error loading universe dept");
+    assert false
+
+let make_type_n_uri term = NUri.uri_of_string(Printf.sprintf "cic:/matita/pts/Type%d.univ" (calc_univ_dept term)) 
 
 let rec construct_debrujin index = NCic.Rel(index + 1) (* TODO check if it is really 0based*)
+
+and construct_sort term = NCic.Sort(NCic.Type [`Type,make_type_n_uri(term)])
 
 and construct_const ~baseuri name =  
   let ident = Kernel.Basic.id name in
@@ -26,6 +40,10 @@ and construct_appl ~baseuri f a1 args =
   | Kernel.Term.Const(_, name), [_; _; Kernel.Term.Lam(_, _, None, _) ] 
     when Kernel.Basic.name_eq name cic_prod -> 
     assert false
+  | Kernel.Term.Const(_, name), _ when Kernel.Basic.name_eq name cic_type ->
+    construct_sort a1
+  | Kernel.Term.Const(_, name), [] when Kernel.Basic.name_eq name cic_univ ->
+    construct_term ~baseuri a1
   | _ -> 
     let translator = construct_term ~baseuri in
     let t = List.map translator (f :: a1 :: args) in
