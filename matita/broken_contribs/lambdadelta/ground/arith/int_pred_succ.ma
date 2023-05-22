@@ -29,6 +29,14 @@ lemma zsucc_pred (z):
 * [ #p || * [| #p ] ] //
 qed.
 
+(* Inversions with zsucc ****************************************************)
+
+lemma eq_inv_zneg_succ (p) (z):
+      −p = ↑z → −↑p = z.
+#p #z #H0
+>(zpred_succ z) <H0 -z //
+qed-.
+
 (* Eliminations with zsucc **************************************************)
 
 lemma int_ind_steps (Q:predicate …):

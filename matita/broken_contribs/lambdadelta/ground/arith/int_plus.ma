@@ -27,7 +27,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma zplus_neg_succ_dx (z) (p:ℤ⁺):
+lemma zplus_neg_succ_dx (z) (p):
       ↓(z + −p) = z + −↑p.
 // qed.
 
@@ -40,11 +40,11 @@ lemma zplus_zero_dx (z):
 // qed.
 
 lemma zplus_pos_unit_dx (z):
-      ↑z = z + 𝟏.
+      ↑z = z + ⁤𝟏.
 // qed.
 
-lemma zplus_pos_succ_dx (z) (p:ℤ⁺):
-      ↑(z + p) = z + ↑p.
+lemma zplus_pos_succ_dx (z) (p):
+      ↑(z + ⁤p) = z + ⁤↑p.
 // qed.
 
 (* Advanced constructions ***************************************************)

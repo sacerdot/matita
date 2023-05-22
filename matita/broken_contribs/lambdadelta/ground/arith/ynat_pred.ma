@@ -52,10 +52,10 @@ lemma eq_inv_ypred_inj (x) (n):
 qed-.
 
 (*** ypred_inv_refl *)
-lemma eq_inv_fix_ypred (x): x = ⫰x → ∨∨ 𝟎 = x | ∞ = x.
+lemma eq_inv_refl_ypred (x): x = ⫰x → ∨∨ 𝟎 = x | ∞ = x.
 #x @(ynat_split_nat_inf … x) -x //
 #n <ypred_inj #H
 lapply (eq_inv_yinj_nat_bi … H) -H #H
-lapply (eq_inv_fix_npred … H) -H #H
+lapply (eq_inv_refl_npred … H) -H #H
 /2 width=1 by or_introl/
 qed-.

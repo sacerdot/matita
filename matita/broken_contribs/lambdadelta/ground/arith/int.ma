@@ -15,6 +15,7 @@
 include "ground/notation/functions/integers_0.ma".
 include "ground/notation/functions/minus_1.ma".
 include "ground/notation/functions/zero_0.ma".
+include "ground/notation/functions/invisibleplus_1.ma".
 include "ground/arith/pnat.ma".
 
 (* INTEGERS *****************************************************************)
@@ -37,7 +38,9 @@ interpretation
   "zero (integers)"
   'Zero = (zzero).
 
-coercion zpos.
+interpretation
+  "positive projection (integers)"
+  'InvisiblePlus p = (zpos p).
 
 (* Basic inversions *********************************************************)
 
@@ -57,12 +60,12 @@ lemma eq_inv_zneg_bi: injective … zneg.
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_zpos_zero (p:ℤ⁺): p ={ℤ} 𝟎 → ⊥.
+lemma eq_inv_zpos_zero (p): ⁤p ={ℤ} 𝟎 → ⊥.
 #p #H0 destruct
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_zero_zpos (p:ℤ⁺): 𝟎 ={ℤ} p → ⊥.
+lemma eq_inv_zero_zpos (p): 𝟎 ={ℤ} ⁤p → ⊥.
 #p #H0 destruct
 qed-.
 
@@ -72,12 +75,12 @@ lemma eq_inv_zpos_bi: injective … zpos.
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_zneg_pos (p1) (p2:ℤ⁺): −p1 = p2 → ⊥.
+lemma eq_inv_zneg_pos (p1) (p2): −p1 = ⁤p2 → ⊥.
 #p1 #p2 #H0 destruct
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_zpos_neg (p1:ℤ⁺) (p2): p1 ={ℤ} −p2 → ⊥.
+lemma eq_inv_zpos_neg (p1) (p2): ⁤p1 = −p2 → ⊥.
 #p1 #p2 #H0 destruct
 qed-.
 
@@ -87,8 +90,8 @@ lemma int_ind_psucc (Q:predicate …):
       (∀p. Q (−p) → Q (−↑p)) →
       Q (−𝟏) →
       Q (𝟎) →
-      Q (𝟏) →
-      (∀p:ℤ⁺. Q p → Q (↑p)) →
+      Q (⁤𝟏) →
+      (∀p. Q (⁤p) → Q (⁤↑p)) →
       ∀z. Q z.
 #Q #IH1 #IH2 #IH3 #IH4 #IH5
 * // #p elim p -p // #p #IH

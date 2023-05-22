@@ -44,9 +44,9 @@ lemma eq_inv_npsucc_bi: injective … npsucc.
 ]
 qed-.
 
-lemma eq_inv_fix_npsucc (m:ℕ): m = ↑m → ⊥.
+lemma eq_inv_refl_npsucc (m:ℕ): m = ↑m → ⊥.
 *
 [ #H0 destruct
-| #p #H0 /3 width=2 by eq_inv_npos_bi, eq_inv_fix_psucc/
+| #p #H0 /3 width=2 by eq_inv_npos_bi, eq_inv_refl_psucc/
 ]
 qed-.

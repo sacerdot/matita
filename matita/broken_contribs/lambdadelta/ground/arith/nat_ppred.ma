@@ -43,9 +43,9 @@ lemma eq_inv_pnpred_bi: injective … pnpred.
 ]
 qed-.
 
-lemma eq_inv_fix_pnpred (p:ℤ⁺): p ={ℕ} ↓p → ⊥.
+lemma eq_inv_refl_pnpred (p:ℤ⁺): p ={ℕ} ↓p → ⊥.
 *
 [ <pnpred_unit #H0 destruct
-| #p /3 width=2 by eq_inv_fix_psucc, eq_inv_npos_bi/
+| #p /3 width=2 by eq_inv_refl_psucc, eq_inv_npos_bi/
 ]
 qed-.

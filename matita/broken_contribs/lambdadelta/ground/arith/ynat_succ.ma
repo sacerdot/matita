@@ -79,11 +79,11 @@ lemma eq_inv_ysucc_bi: injective … ysucc.
 qed-.
 
 (*** ysucc_inv_refl *)
-lemma eq_inv_fix_ysucc (x): x = ⫯x → ∞ = x.
+lemma eq_inv_refl_ysucc (x): x = ⫯x → ∞ = x.
 #x @(ynat_split_nat_inf … x) -x //
 #n <ysucc_inj #H
 lapply (eq_inv_yinj_nat_bi … H) -H #H
-elim (eq_inv_fix_nsucc … H)
+elim (eq_inv_refl_nsucc … H)
 qed-.
 
 (*** ysucc_inv_O_sn *)

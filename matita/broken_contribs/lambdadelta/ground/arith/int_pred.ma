@@ -30,13 +30,13 @@ interpretation
 lemma zpred_neg (p): −↑p = ↓−p.
 // qed.
 
-lemma zpred_zero: zneg (𝟏) = ↓𝟎.
+lemma zpred_zero: −𝟏 = ↓𝟎.
 // qed.
 
-lemma zpred_pos_unit: (𝟎) = ↓𝟏.
+lemma zpred_pos_unit: (𝟎) = ↓⁤𝟏.
 // qed.
 
-lemma zpred_pos_succ (p:ℤ⁺): p ={ℤ} ↓↑p.
+lemma zpred_pos_succ (p): (⁤p) = ↓⁤↑p.
 // qed.
 
 (* Basic inversions *********************************************************)
@@ -57,13 +57,13 @@ lemma eq_inv_zpred_bi: injective … zpred.
 ]
 qed-.
 
-lemma eq_inv_fix_zpred (z:ℤ): z = ↓z → ⊥.
+lemma eq_inv_self_zpred (z): z = ↓z → ⊥.
 * [ #p || * [| #p ]]
 [ <zpred_neg #H0
-  /3 width=2 by eq_inv_zneg_bi, eq_inv_fix_psucc/
+  /3 width=2 by eq_inv_zneg_bi, eq_inv_refl_psucc/
 | <zpred_zero #H0 destruct
 | <zpred_pos_unit #H0 destruct
 | <zpred_pos_succ #H0
-  /3 width=2 by eq_inv_zpos_bi, eq_inv_fix_psucc/
+  /3 width=2 by eq_inv_zpos_bi, eq_inv_refl_psucc/
 ]
 qed-.

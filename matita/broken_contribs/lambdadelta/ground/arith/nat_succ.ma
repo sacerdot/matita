@@ -49,9 +49,9 @@ lemma eq_inv_nsucc_bi (n1) (n2):
 qed-.
 
 (*** succ_inv_refl_sn *)
-lemma eq_inv_fix_nsucc (n:ℕ): n = ↑n → ⊥.
+lemma eq_inv_refl_nsucc (n:ℕ): n = ↑n → ⊥.
 *
 [ #H0 destruct
-| #p #H0 /3 width=2 by eq_inv_npos_bi, eq_inv_fix_psucc/
+| #p #H0 /3 width=2 by eq_inv_npos_bi, eq_inv_refl_psucc/
 ]
 qed-.

@@ -18,7 +18,7 @@ include "ground/arith/pnat_split.ma".
 (* SUCCESSOR FOR INTEGERS ***************************************************)
 
 definition zsucc (z): ℤ ≝
-           zsplit ? (psplit … (𝟎) zneg) (𝟏) psucc z.
+           zsplit ? (psplit … (𝟎) zneg) (⁤𝟏) (zpos∘psucc) z.
 
 interpretation
   "successor (integers)"
@@ -32,10 +32,10 @@ lemma zsucc_neg_succ (p): −p = ↑−↑p.
 lemma zsucc_neg_unit: (𝟎) = ↑−𝟏.
 // qed.
 
-lemma zsucc_zero: (𝟏) ={ℤ} ↑𝟎.
+lemma zsucc_zero: (⁤𝟏) = ↑𝟎.
 // qed.
 
-lemma zsucc_pos (p): ↑p ={ℤ} ↑(zpos p).
+lemma zsucc_pos (p): ⁤↑p = ↑⁤p.
 // qed.
 
 (* Basic inversions *********************************************************)
@@ -56,13 +56,13 @@ lemma eq_inv_zsucc_bi: injective … zsucc.
 ]
 qed-.
 
-lemma eq_inv_fix_zsucc (z:ℤ): z = ↑z → ⊥.
+lemma eq_inv_self_zsucc (z:ℤ): z = ↑z → ⊥.
 * [ * [| #p ] || #p ]
 [ <zsucc_neg_unit #H0 destruct
 | <zsucc_neg_succ #H0
-  /3 width=2 by eq_inv_zneg_bi, eq_inv_fix_psucc/
+  /3 width=2 by eq_inv_zneg_bi, eq_inv_refl_psucc/
 | <zsucc_zero #H0 destruct
 | <zsucc_pos #H0
-  /3 width=2 by eq_inv_zpos_bi, eq_inv_fix_psucc/
+  /3 width=2 by eq_inv_zpos_bi, eq_inv_refl_psucc/
 ]
 qed-.
