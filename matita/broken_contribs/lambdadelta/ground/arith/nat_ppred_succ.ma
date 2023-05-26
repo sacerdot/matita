@@ -19,7 +19,7 @@ include "ground/arith/nat_ppred_psucc.ma".
 
 (* Constructions with nsucc *************************************************)
 
-lemma nsucc_pnpred (p:ℤ⁺): p ={ℕ} ↑↓p.
+lemma nsucc_pnpred (p:ℕ⁺): p ={ℕ} ↑↓p.
 //
 qed-.
 

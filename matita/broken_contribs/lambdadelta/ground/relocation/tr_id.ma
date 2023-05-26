@@ -20,7 +20,7 @@ include "ground/relocation/tr_pn.ma".
 corec definition tr_id: tr_map ≝ ⫯tr_id.
 
 interpretation
-  "identity element (total relocation streams)"
+  "identity element (total relocation maps)"
   'ElementI = (tr_id).
 
 (* Basic constructions ******************************************************)

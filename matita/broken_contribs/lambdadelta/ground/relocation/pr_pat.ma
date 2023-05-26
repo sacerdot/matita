@@ -20,7 +20,7 @@ include "ground/relocation/pr_tl.ma".
 (* POSITIVE APPLICATION FOR PARTIAL RELOCATION MAPS *************************)
 
 (*** at *)
-coinductive pr_pat: relation3 pr_map (ℤ⁺) (ℤ⁺) ≝
+coinductive pr_pat: relation3 pr_map (ℕ⁺) (ℕ⁺) ≝
 (*** at_refl *)
 | pr_pat_refl (f) (g) (j1) (j2):
   ⫯f = g → 𝟏 = j1 → 𝟏 = j2 → pr_pat g j1 j2

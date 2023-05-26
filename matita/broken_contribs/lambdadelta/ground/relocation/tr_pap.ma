@@ -19,7 +19,7 @@ include "ground/relocation/tr_map.ma".
 (* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
 
 (*** apply *)
-rec definition tr_pap (i:ℤ⁺) on i: tr_map → ℤ⁺.
+rec definition tr_pap (i:ℕ⁺) on i: tr_map → ℕ⁺.
 * #p #f cases i -i
 [ @p
 | #i lapply (tr_pap i f) -tr_pap -i -f

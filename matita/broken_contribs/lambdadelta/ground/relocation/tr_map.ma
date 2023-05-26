@@ -18,7 +18,7 @@ include "ground/arith/pnat.ma".
 
 (* TOTAL RELOCATION MAPS ****************************************************)
 
-definition tr_map: Type[0] ≝ stream (ℤ⁺).
+definition tr_map: Type[0] ≝ stream (ℕ⁺).
 
 corec definition tr_inj: tr_map → pr_map.
 * *

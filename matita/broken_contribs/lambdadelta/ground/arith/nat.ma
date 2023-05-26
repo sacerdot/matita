@@ -21,7 +21,7 @@ include "ground/arith/pnat.ma".
 (*** nat *)
 inductive nat: Type[0] ≝
 | nzero: nat
-| npos : ℤ⁺ → nat
+| npos : ℕ⁺ → nat
 .
 
 coercion npos.

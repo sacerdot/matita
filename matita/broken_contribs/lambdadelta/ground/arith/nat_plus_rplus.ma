@@ -28,6 +28,6 @@ qed.
 (* Constructions with nrplus and npsucc *************************************)
 
 lemma nrplus_npsucc_sn (m:ℕ) (n:ℕ):
-      ↑(m + n) ={ℤ⁺} ↑m + n.
+      ↑(m + n) ={ℕ⁺} ↑m + n.
 #m @(nat_ind_succ … m) -m //
 qed.

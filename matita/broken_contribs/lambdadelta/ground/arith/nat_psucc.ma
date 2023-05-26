@@ -16,7 +16,7 @@ include "ground/arith/nat_split.ma".
 
 (* POSITIVE SUCCESSOR FOR NON-NEGATIVE INTEGERS *****************************)
 
-definition npsucc (m): ℤ⁺ ≝
+definition npsucc (m): ℕ⁺ ≝
            nsplit … (𝟏) psucc m.
 
 interpretation

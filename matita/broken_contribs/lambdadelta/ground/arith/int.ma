@@ -21,9 +21,9 @@ include "ground/arith/pnat.ma".
 (* INTEGERS *****************************************************************)
 
 inductive int: Type[0] ≝
-| zneg : ℤ⁺ → int
+| zneg : ℕ⁺ → int
 | zzero: int
-| zpos : ℤ⁺ → int
+| zpos : ℕ⁺ → int
 .
 
 interpretation
@@ -50,7 +50,7 @@ lemma eq_inv_zneg_zero (p): −p = 𝟎 → ⊥.
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_zero_zneg (p): 𝟎 = −p → ⊥.
+lemma eq_inv_zzero_neg (p): 𝟎 = −p → ⊥.
 #p #H0 destruct
 qed-.
 
@@ -65,7 +65,7 @@ lemma eq_inv_zpos_zero (p): ⁤p ={ℤ} 𝟎 → ⊥.
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_zero_zpos (p): 𝟎 ={ℤ} ⁤p → ⊥.
+lemma eq_inv_zzero_pos (p): 𝟎 ={ℤ} ⁤p → ⊥.
 #p #H0 destruct
 qed-.
 

@@ -17,7 +17,7 @@ include "ground/arith/pnat.ma".
 
 (* ORDER FOR POSITIVE INTEGERS **********************************************)
 
-inductive ple (p:ℤ⁺): predicate (ℤ⁺) ≝
+inductive ple (p:ℕ⁺): predicate (ℕ⁺) ≝
 | ple_refl   : ple p p
 | ple_succ_dx: ∀q. ple p q → ple p (↑q)
 .

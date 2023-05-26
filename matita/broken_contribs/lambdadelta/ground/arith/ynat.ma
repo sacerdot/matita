@@ -21,7 +21,7 @@ include "ground/notation/functions/infinity_0.ma".
 (*** ynat *)
 inductive ynat: Type[0] ≝
 | yzero: ynat
-| yinj : ℤ⁺ → ynat
+| yinj : ℕ⁺ → ynat
 | yinf : ynat
 .
 

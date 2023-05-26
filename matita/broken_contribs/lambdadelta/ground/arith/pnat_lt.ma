@@ -17,7 +17,7 @@ include "ground/arith/pnat_le.ma".
 
 (* STRICT ORDER FOR POSITIVE INTEGERS ***************************************)
 
-definition plt: relation2 (ℤ⁺) (ℤ⁺) ≝
+definition plt: relation2 (ℕ⁺) (ℕ⁺) ≝
            λp,q. ↑p ≤ q.
 
 interpretation

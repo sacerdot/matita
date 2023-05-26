@@ -17,7 +17,7 @@ include "ground/arith/int_le_pred.ma".
 
 (* ORDER FOR INTEGERS *******************************************************)
 
-(* Constructions ith zplus **************************************************)
+(* Constructions with zplus *************************************************)
 
 lemma zle_plus_dx_bi (z) (z1) (z2):
       z1 ≤ z2 → z1 + z ≤ z2 + z.
@@ -25,6 +25,19 @@ lemma zle_plus_dx_bi (z) (z1) (z2):
 #z #IH #z1 #z2 #Hz
 /3 width=1 by zle_succ_bi, zle_pred_bi/
 qed.
+
+lemma zle_minus_zero (z1) (z2):
+      z1 ≤ z2 → z1-z2 ≤ 𝟎.
+/2 width=1 by zle_plus_dx_bi/
+qed.
+
+lemma zle_zero_minus (z1) (z2):
+      z1 ≤ z2 → 𝟎 ≤ z2-z1.
+#z1 #z2 #Hz
+lapply (zle_plus_dx_bi (-z1) … Hz) -Hz //
+qed.
+
+(* Inversions with zplus ****************************************************)
 
 lemma zle_inv_minus_zero (z1) (z2):
       z1-z2 ≤ 𝟎 → z1 ≤ z2.
@@ -37,6 +50,8 @@ lemma zle_inv_zero_minus (z1) (z2):
 #z1 #z2 #H0
 lapply (zle_plus_dx_bi z1 … H0) -H0 //
 qed-.
+
+(* Advanced constructions with zplus ****************************************)
 
 lemma int_split_le_ge (z1) (z2):
       ∨∨ z1 ≤ z2 | z2 ≤ z1.

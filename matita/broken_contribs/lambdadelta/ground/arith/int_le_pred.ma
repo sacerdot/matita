@@ -74,6 +74,26 @@ lemma zle_inv_pred_bi (z1) (z2):
 /2 width=1 by zle_succ_bi/
 qed-.
 
+lemma zle_inv_pred_sn (z1) (z2):
+      ↓z1 ≤ z2 → z1 ≤ ↑z2.
+/2 width=1 by zle_succ_bi/
+qed-.
+
+lemma zle_inv_pred_dx (z1) (z2):
+      z1 ≤ ↓z2 → ↑z1 ≤ z2.
+/2 width=1 by zle_succ_bi/
+qed-.
+
+lemma zle_inv_succ_sn (z1) (z2):
+      ↑z1 ≤ z2 → z1 ≤ ↓z2.
+/2 width=1 by zle_pred_bi/
+qed-.
+
+lemma zle_inv_succ_dx (z1) (z2):
+      z1 ≤ ↑z2 → ↓z1 ≤ z2.
+/2 width=1 by zle_pred_bi/
+qed-.
+
 (* Inversions with zsucc ****************************************************)
 
 lemma zle_inv_succ_bi (z1) (z2):
@@ -102,26 +122,18 @@ qed-.
 
 (* Advanced eliminations ****************************************************)
 
-lemma zle_des_succ_sn (z1) (z2):
-      ↑z1 ≤ z2 → z1 ≤ z2.
-/2 width=3 by zle_trans/
-qed-.
-
-lemma zle_inv_pred_sn (z1) (z2):
-      ↓z1 ≤ z2 → z1 ≤ ↑z2.
-/2 width=1 by zle_succ_bi/
-qed-.
-
 lemma zle_ind_steps (Q: relation2 …):
       (∀z1,z2. z1 ≤ z2 → Q z1 z2 → Q (↓z1) (↓z2)) →
-      (∀z2. Q (𝟎) z2) →
+      Q (𝟎) (𝟎) →
+      (∀p. Q (𝟎) (⁤p)) →
       (∀z1,z2. z1 ≤ z2 → Q z1 z2 → Q (↑z1) (↑z2)) →
       ∀z1,z2. z1 ≤ z2 → Q z1 z2.
-#Q #IH1 #IH2 #IH3
+#Q #IH1 #IH2 #IH3 #IH4
 @int_ind_steps
 [ #z1 #IH4 #z2 #Hz elim Hz -z2
   /5 width=1 by zle_inv_pred_sn, zle_succ_dx/
-| /2 width=1 by/
+| * /2 width=1 by/
+  #p #H0 elim (zle_inv_zero_neg … H0)
 | #z1 #IH4 #z2 #Hz elim Hz -z2
   /4 width=1 by zle_des_succ_sn/
 ]

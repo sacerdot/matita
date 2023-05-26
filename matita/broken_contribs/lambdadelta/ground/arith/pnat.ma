@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/integersplus_0.ma".
+include "ground/notation/functions/naturalsplus_0.ma".
 include "ground/notation/functions/one_0.ma".
 include "ground/notation/functions/uparrow_1.ma".
 include "ground/lib/relations.ma".
@@ -26,7 +26,7 @@ inductive pnat: Type[0] ≝
 
 interpretation
   "positive integers"
-  'IntegersPlus = (pnat).
+  'NaturalsPlus = (pnat).
 
 interpretation
   "unit (positive integers)"
@@ -52,7 +52,7 @@ qed-.
 
 (* Basic constructions ******************************************************)
 
-lemma eq_pnat_dec (p1,p2:ℤ⁺): Decidable (p1 = p2).
+lemma eq_pnat_dec (p1,p2:ℕ⁺): Decidable (p1 = p2).
 #p1 elim p1 -p1 [| #p1 #IH ] * [2,4: #p2 ]
 [1,4: @or_intror #H destruct
 | elim (IH p2) -IH #H destruct

@@ -12,34 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downspoon_1.ma".
-include "ground/arith/pnat_split.ma".
+include "ground/arith/int_lt.ma".
+include "ground/arith/int_le_plus.ma".
 
-(* PREDECESSOR FOR POSITIVE INTEGERS ****************************************)
+(* STRICT ORDER FOR INTEGERS ************************************************)
 
-definition ppred (p): ℕ⁺ ≝
-           psplit … (𝟏) (λp.p) p.
+(* Constructions with zplus *************************************************)
 
-interpretation
-  "predecessor (positive integers)"
-  'DownSpoon p = (ppred p).
+lemma zlt_plus_dx_bi (z) (z1) (z2):
+      z1 < z2 → z1 + z < z2 + z.
+/3 width=1 by zle_plus_dx_bi/
+qed.
 
-(* Basic constructions ******************************************************)
+lemma zlt_minus_zero (z1) (z2):
+      z1 < z2 → z1-z2 < 𝟎.
+/2 width=1 by zlt_plus_dx_bi/
+qed.
 
-lemma ppred_unit: 𝟏 = ⫰𝟏.
-// qed.
-
-lemma ppred_succ (p): p = ⫰↑p.
-// qed.
-
-(* Basic inversions *********************************************************)
-
-lemma eq_inv_refl_ppred (p): p = ⫰p → 𝟏 = p.
-#p elim p -p //
-#p #IH #H /2 width=1 by/
-qed-.
-
-lemma pnat_split_unit_pos (p): ∨∨ 𝟏 = p | p = ↑⫰p.
-#p elim p -p
-/2 width=1 by or_introl, or_intror/
-qed-.
+lemma zlt_zero_minus (z1) (z2):
+      z1 < z2 → 𝟎 < z2-z1.
+#z1 #z2 #Hz
+lapply (zlt_plus_dx_bi (-z1) … Hz) -Hz //
+qed.

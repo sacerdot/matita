@@ -17,7 +17,7 @@ include "ground/arith/nat_succ_iter.ma".
 
 (* RIGHT SUBTRACTION FOR NON-NEGATIVE INTEGERS ******************************)
 
-definition nrminus: ℤ⁺ → ℕ → ℤ⁺ ≝
+definition nrminus: ℕ⁺ → ℕ → ℕ⁺ ≝
            λp,n. (ppred^n) p.
 
 interpretation

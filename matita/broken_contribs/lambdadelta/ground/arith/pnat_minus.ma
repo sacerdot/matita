@@ -17,7 +17,7 @@ include "ground/arith/pnat_iter.ma".
 
 (* SUBTRACTION FOR NON-NEGATIVE INTEGERS ************************************)
 
-definition pminus: ℤ⁺ → ℤ⁺ → ℤ⁺ ≝
+definition pminus: ℕ⁺ → ℕ⁺ → ℕ⁺ ≝
            λp,q. (ppred^q) p.
 
 interpretation

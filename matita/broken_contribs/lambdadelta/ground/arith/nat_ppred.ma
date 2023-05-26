@@ -30,7 +30,7 @@ interpretation
 lemma pnpred_unit: 𝟎 = ↓𝟏.
 // qed.
 
-lemma pnpred_succ (p:ℤ⁺): p ={ℕ} ↓↑p.
+lemma pnpred_succ (p:ℕ⁺): p ={ℕ} ↓↑p.
 // qed.
 
 (* Basic inversions *********************************************************)
@@ -43,7 +43,7 @@ lemma eq_inv_pnpred_bi: injective … pnpred.
 ]
 qed-.
 
-lemma eq_inv_refl_pnpred (p:ℤ⁺): p ={ℕ} ↓p → ⊥.
+lemma eq_inv_refl_pnpred (p:ℕ⁺): p ={ℕ} ↓p → ⊥.
 *
 [ <pnpred_unit #H0 destruct
 | #p /3 width=2 by eq_inv_refl_psucc, eq_inv_npos_bi/

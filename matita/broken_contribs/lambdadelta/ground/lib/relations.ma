@@ -25,8 +25,14 @@ definition relation5: Type[0] → Type[0] → Type[0] → Type[0] → Type[0] �
 definition relation6: Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] → Type[0] ≝
            λA,B,C,D,E,F.A→B→C→D→E→F→Prop.
 
-definition replace_2 (A) (B): relation3 (relation2 A B) (relation A) (relation B) ≝
-           λR,Sa,Sb. ∀a1,b1. R a1 b1 → ∀a2. Sa a1 a2 → ∀b2. Sb b1 b2 → R a2 b2.
+definition replace_1_fwd (A): relation2 (relation A) (predicate A) ≝
+           λSa,R. ∀a1. R a1 → ∀a2. Sa a1 a2 → R a2.
+
+definition replace_1_back (A): relation2 (relation A) (predicate A) ≝
+           λSa,R. ∀a1. R a1 → ∀a2. Sa a2 a1 → R a2.
+
+definition replace_2 (A) (B): relation3 (relation A) (relation B) (relation2 A B) ≝
+           λSa,Sb,R. ∀a1,b1. R a1 b1 → ∀a2. Sa a1 a2 → ∀b2. Sb b1 b2 → R a2 b2.
 
 (* * we don't use "∀a. reflexive … (R a)" since auto seems to dislike repeatd δ-expansion *)
 definition c_reflexive (A) (B): predicate (relation3 A B B) ≝
