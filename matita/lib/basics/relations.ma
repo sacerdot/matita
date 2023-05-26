@@ -177,7 +177,7 @@ interpretation "functional extentional equality"
 notation "x \eqR y" non associative with precedence 45 
 for @{'eqR ? ? x y}.
 
-interpretation "functional extentional equality" 
+interpretation "relational extentional equality" 
 'eqR A B R S = (exteqR A B R S).
 
 notation " f \eqF g " non associative with precedence 45
