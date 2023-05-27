@@ -13,26 +13,31 @@
 (**************************************************************************)
 
 include "ground/relocation/trz_eq.ma".
-include "ground/notation/functions/compose_2.ma".
+include "ground/arith/int_plus_opp.ma".
+include "ground/notation/functions/downspoonstar_2.ma".
 
-(* COMPOSITION FOR TOTAL RELOCATION MAPS WITH INTEGERS **********************)
+(* ITERATED TAIL FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
-definition trz_after (f2:trz_map) (f1:trz_map): trz_map ≝ mk_trz_map ….
-[ @(trz_staff f2 ∘ trz_staff f1)
-| @compose_injective_2_fwd //
+definition trz_tls (z:int) (f:trz_map): trz_map ≝ mk_trz_map ….
+[ @(λz0.f＠⧣❨z0+z❩-f＠⧣❨z❩)
+| #z1 #z2 #Hz
+  lapply (eq_inv_zplus_dx_bi … Hz) -Hz #Hz
+  /3 width=3 by trz_injective, eq_inv_zplus_dx_bi/
 ]
 defined.
 
 interpretation
-  "composition (total relocation maps with integers)"
-  'Compose f2 f1 = (trz_after f2 f1).
+  "iterated tail (total relocation maps with integers)"
+  'DownSpoonStar z f = (trz_tls z f).
 
-(* Basic constructions ******************************************************)
+(* Basic cnbstructions ******************************************************)
 
-lemma trz_after_unfold (f1) (f2) (z):
-      f2＠⧣❨f1＠⧣❨z❩❩ = (f2•f1)＠⧣❨z❩.
+lemma trz_tls_unfold (f) (z) (z0):
+      f＠⧣❨z0+z❩-f＠⧣❨z❩ = (⫰*[z]f)＠⧣❨z0❩.
 // qed.
 
-lemma trz_after_eq_repl:
-      compatible_3 … trz_eq trz_eq trz_eq trz_after.
-// qed.
+lemma trz_tls_eq_repl_fwd (z):
+      compatible_2_fwd … trz_eq trz_eq (trz_tls z).
+#z #f1 #f2 #Hf #z0
+<trz_tls_unfold <trz_tls_unfold //
+qed-.

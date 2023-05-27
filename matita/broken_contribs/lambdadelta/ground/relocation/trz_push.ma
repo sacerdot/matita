@@ -118,15 +118,15 @@ lemma trz_after_push_pnext (f2) (f1):
       ↑⁺(f2•f1) ≐ ⫯f2•↑⁺f1.
 #f2 #f1 #z
 >trz_after_pnext_sn
-<trz_after_dapp <trz_after_dapp <trz_after_dapp <trz_after_dapp
+<trz_after_unfold <trz_after_unfold <trz_after_unfold <trz_after_unfold
 generalize in match (f1＠⧣❨z❩); -f1 -z
 * [2:|*: #p ] //
 qed.
 
-lemma trz_after_push_bi (f2) (f1):
-      (⫯(f2•f1)) ≐ (⫯f2)•(⫯f1).
+theorem trz_after_push_bi (f2) (f1):
+        (⫯(f2•f1)) ≐ (⫯f2)•(⫯f1).
 #f2 #f1 * [ #p || * [| #p ]]
-<trz_after_dapp
+<trz_after_unfold
 [ <trz_push_neg <trz_push_neg //
 | <trz_push_zero <trz_push_zero //
 | //

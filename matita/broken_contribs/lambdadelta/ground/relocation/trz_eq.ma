@@ -16,7 +16,7 @@ include "ground/relocation/trz_map.ma".
 include "ground/lib/exteq.ma".
 include "ground/notation/relations/doteq_2.ma".
 
-(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
+(* EXTENSIONAL EQUIVALENCE FOR TOTAL RELOCATION MAPS WITH INTEGERS **********)
 
 definition trz_eq: relation2 trz_map trz_map ≝
            λf1,f2. trz_staff f1 ⊜ trz_staff f2.

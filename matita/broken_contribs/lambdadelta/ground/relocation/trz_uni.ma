@@ -32,3 +32,9 @@ interpretation
 interpretation
   "identity element (total relocation maps with integers)"
   'ElementI = (trz_uni zzero).
+
+(* Basic constructions ******************************************************)
+
+lemma trz_uni_unfold (z) (z0):
+      z0+z = 𝐮❨z❩＠⧣❨z0❩.
+// qed.

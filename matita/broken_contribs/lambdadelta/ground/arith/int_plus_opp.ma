@@ -34,6 +34,10 @@ lemma zplus_self_opp (z):
 #z <zplus_comm //
 qed.
 
+lemma zminus_plus_simpl (z1) (z2):
+      z1 = z1 - z2 + z2.
+// qed.
+
 (* Inversions with zopp *****************************************************)
 
 lemma eq_inv_zplus_sn_sn (z) (z1) (z2):

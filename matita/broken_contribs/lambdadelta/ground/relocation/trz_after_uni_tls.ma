@@ -12,27 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_eq.ma".
-include "ground/notation/functions/compose_2.ma".
+include "ground/relocation/trz_after.ma".
+include "ground/relocation/trz_tls.ma".
+include "ground/relocation/trz_uni.ma".
 
 (* COMPOSITION FOR TOTAL RELOCATION MAPS WITH INTEGERS **********************)
 
-definition trz_after (f2:trz_map) (f1:trz_map): trz_map ≝ mk_trz_map ….
-[ @(trz_staff f2 ∘ trz_staff f1)
-| @compose_injective_2_fwd //
-]
-defined.
+(* constructions with trz_uni and trz_tls ***********************************)
 
-interpretation
-  "composition (total relocation maps with integers)"
-  'Compose f2 f1 = (trz_after f2 f1).
-
-(* Basic constructions ******************************************************)
-
-lemma trz_after_unfold (f1) (f2) (z):
-      f2＠⧣❨f1＠⧣❨z❩❩ = (f2•f1)＠⧣❨z❩.
-// qed.
-
-lemma trz_after_eq_repl:
-      compatible_3 … trz_eq trz_eq trz_eq trz_after.
-// qed.
+theorem trz_after_uni_dx_dapp (f) (z):
+        (𝐮❨f＠⧣❨z❩❩•⫰*[z]f) ≐ f•𝐮❨z❩.
+#f #z #z0
+<trz_after_unfold <trz_after_unfold
+<trz_tls_unfold <trz_uni_unfold <trz_uni_unfold
+<zminus_plus_simpl //
+qed.
