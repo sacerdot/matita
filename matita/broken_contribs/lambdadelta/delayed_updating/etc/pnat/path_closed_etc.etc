@@ -1,0 +1,38 @@
+(*
+include "delayed_updating/syntax/path_closed.ma".
+include "delayed_updating/syntax/path_depth.ma".
+include "ground/arith/nat_le.ma".
+
+lemma pcc_des_le_sn (e) (q) (n):
+      q ϵ 𝐂❨Ⓕ,n,e❩ →
+      ∃∃e0,n0. q ϵ 𝐂❨Ⓕ,n0,e0❩ & n0 ≤ ♭q.
+#e #q #n #Hq elim Hq -q -n
+[|*: #q #n [ #k #_ ] #_ * #e0 #n0 #Hq #Hnq ]
+[ /2 width=4 by ex2_2_intro/
+| /4 width=4 by pcc_plus_bi_dx, pcc_false_d_dx, ex2_2_intro/
+| /3 width=4 by pcc_m_dx, ex2_2_intro/
+| /4 width=4 by pcc_L_dx, nle_succ_bi, ex2_2_intro/
+| /3 width=4 by pcc_A_dx, ex2_2_intro/
+| /3 width=4 by pcc_S_dx, ex2_2_intro/
+]
+qed.
+
+lemma pippo (o1) (o2) (e1) (e2) (q):
+      ∀n1. q ϵ 𝐂❨o1,n1,e1❩ → ∀n2. q ϵ 𝐂❨o2,n2,e2❩ →
+      n1 ≤ ♭q → n2 ≤ ♭q → n1 = n2.
+#o1 #o2 #e1 #e2 #q elim q -q
+[| * [ #k ] #q #IH #n1 #H1 #n2 #H2 ]
+[  
+| #_ #_
+  elim (pcc_inv_d_dx … H1) -H1 #_ #H1
+  elim (pcc_inv_d_dx … H2) -H2 #_ #H2
+  lapply (IH … H1 … H2 ??) -IH -H1 -H2
+
+ #n1 #H1 elim H1 -q -n1
+[ #n2 #H2 <(pcc_inv_empty … H2) -n2
+  #H1 #H2 <(nle_inv_zero_dx … H1) -e1
+  /2 width=1 by nle_inv_zero_dx/
+| #q #n1 #k #_ #H1 #IH #n2 #H2
+  elim (pcc_inv_d_dx … H2) -H2 #_ #H2
+  lapply (IH … H2 ??) -IH -H2
+*)
