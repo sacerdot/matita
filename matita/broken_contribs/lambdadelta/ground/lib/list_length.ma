@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/verticalbars_1.ma". 
+include "ground/notation/functions/verticalbars_2.ma".
 include "ground/lib/list.ma".
 include "ground/arith/nat_succ.ma".
 
@@ -25,42 +25,42 @@ rec definition list_length A (l:list A) on l : ℕ ≝ match l with
 
 interpretation
   "length (lists)"
-  'VerticalBars l = (list_length ? l).
+  'VerticalBars A l = (list_length A l).
 
 (* Basic constructions ******************************************************)
 
-lemma list_length_empty (A:Type[0]):
-      ❘list_empty A❘ = 𝟎.
+lemma list_length_empty (A):
+      (𝟎) = ❘ⓔ{A}❘.
 // qed.
 
-lemma list_length_lcons (A:Type[0]) (l:list A) (a:A):
-      ❘a⨮l❘ = ↑❘l❘.
+lemma list_length_lcons (A) (l) (a):
+      ↑❘l❘ ={ℕ} ❘a⨮{A}l❘.
 // qed.
 
 (* Basic inversions *********************************************************)
 
-lemma list_length_inv_zero_dx (A:Type[0]) (l:list A):
-      ❘l❘ = 𝟎 → l = ⓔ.
-#A * // #a #l >list_length_lcons #H
+lemma list_length_inv_zero_dx (A) (l):
+      ❘l❘ = 𝟎 → ⓔ{A} = l.
+#A * // #a #l <list_length_lcons #H
 elim (eq_inv_npos_zero … H)
 qed-.
 
-lemma list_length_inv_zero_sn (A:Type[0]) (l:list A):
-      (𝟎) = ❘l❘ → l = ⓔ.
+lemma list_length_inv_zero_sn (A) (l):
+      (𝟎) = ❘l❘ → ⓔ{A} = l.
 /2 width=1 by list_length_inv_zero_dx/ qed-.
 
-lemma list_length_inv_succ_dx (A:Type[0]) (l:list A) (x):
-      ❘l❘ = ↑x →
-      ∃∃tl,a. x = ❘tl❘ & l = a ⨮ tl.
+lemma list_length_inv_succ_dx (A) (l) (x):
+      ❘l❘{A} = ↑x →
+      ∃∃tl,a. ❘tl❘ = x & a⨮tl = l.
 #A *
-[ #x >list_length_empty #H
+[ #x <list_length_empty #H
   elim (eq_inv_zero_npos … H)
-| #a #l #x >list_length_lcons #H
+| #a #l #x <list_length_lcons #H
   /3 width=4 by eq_inv_nsucc_bi, ex2_2_intro/
 ]
 qed-.
 
-lemma list_length_inv_succ_sn (A:Type[0]) (l:list A) (x):
-      ↑x ={ℕ} ❘l❘ →
-      ∃∃tl,a. x = ❘tl❘ & l = a ⨮ tl.
+lemma list_length_inv_succ_sn (A) (l) (x):
+      ↑x ={ℕ} ❘l❘{A} →
+      ∃∃tl,a. ❘tl❘ = x & a⨮tl = l.
 /2 width=1 by list_length_inv_succ_dx/ qed-.

@@ -12,8 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/lib/list_length_append.ma".
+include "ground/lib/list_rcons.ma".
 
-notation "hvbox( ❘ term 46 C ❘ )"
-  non associative with precedence 70
-  for @{ 'VerticalBars $C }.
+(* LENGTH FOR LISTS *********************************************************)
+
+(* Constructions with list_rcons ********************************************)
+
+lemma list_length_rcons (A) (l) (a):
+      ↑❘l❘ ={ℕ} ❘l⨭{A}a❘.
+// qed.
