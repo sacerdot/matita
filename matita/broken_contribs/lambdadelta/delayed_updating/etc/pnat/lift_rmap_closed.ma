@@ -23,7 +23,7 @@ include "ground/lib/stream_eq_eq.ma".
 
 lemma tls_plus_lift_rmap_closed (o) (f) (q) (n):
       q ϵ 𝐂❨o,n,𝟎❩ →
-      ∀m. ⇂*[m]f ≗ ⇂*[m+n]🠢[f]q.
+      ∀m. ⫰*[m]f ≗ ⫰*[m+n]🠢[f]q.
 #o #f #q #n #Hq elim Hq -q -n //
 #p #n #_ #IH #m
 <lift_rmap_L_dx <nplus_succ_dx //
@@ -31,28 +31,28 @@ qed-.
 
 lemma tls_lift_rmap_closed (o) (f) (q) (n):
       q ϵ 𝐂❨o,n,𝟎❩ →
-      f ≗ ⇂*[n]🠢[f]q.
+      f ≗ ⫰*[n]🠢[f]q.
 #o #f #q #n #H0
 /2 width=2 by tls_plus_lift_rmap_closed/
 qed-.
 
 lemma tls_lift_rmap_append_closed_dx (o) (f) (p) (q) (n):
       q ϵ 𝐂❨o,n,𝟎❩ →
-      (🠢[f]p) ≗ ⇂*[n]🠢[f](p●q).
+      (🠢[f]p) ≗ ⫰*[n]🠢[f](p●q).
 #o #f #p #q #n #Hq
 /2 width=2 by tls_lift_rmap_closed/
 qed-.
 
 lemma tls_succ_lift_rmap_append_closed_Lq_dx (o) (f) (p) (q) (n):
       q ϵ 𝐂❨o,n,𝟎❩ →
-      (🠢[f]p) ≗ ⇂*[↑n]🠢[f](p●𝗟◗q).
+      (🠢[f]p) ≗ ⫰*[↑n]🠢[f](p●𝗟◗q).
 #o #f #p #q #n #Hq
 /3 width=2 by tls_lift_rmap_append_closed_dx, pcc_L_sn/
 qed-.
 
 lemma tls_succ_plus_lift_rmap_append_closed_bLq_dx (o1) (o2) (f) (p) (b) (q) (m) (n):
       b ϵ 𝐂❨o1,m,𝟎❩ → q ϵ 𝐂❨o2,n,𝟎❩ →
-      (🠢[f]p) ≗ ⇂*[↑(m+n)]🠢[f](p●b●𝗟◗q).
+      (🠢[f]p) ≗ ⫰*[↑(m+n)]🠢[f](p●b●𝗟◗q).
 #o1 #o2 #f #p #b #q #m #n #Hm #Hn
 >nplus_succ_dx <stream_tls_plus
 @(stream_eq_trans … (tls_lift_rmap_append_closed_dx … Hm))

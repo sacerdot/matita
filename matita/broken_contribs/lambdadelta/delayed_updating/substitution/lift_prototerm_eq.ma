@@ -22,7 +22,7 @@ include "delayed_updating/substitution/lift_prototerm.ma".
 (* Constructions with subset_equivalence ************************************)
 
 lemma lift_term_eq_repl_sn (f1) (f2) (t):
-      f1 ≗ f2 → 🠡[f1]t ⇔ 🠡[f2]t.
+      f1 ≐ f2 → 🠡[f1]t ⇔ 🠡[f2]t.
 /3 width=1 by subset_equivalence_ext_f1_exteq, lift_path_eq_repl/
 qed.
 

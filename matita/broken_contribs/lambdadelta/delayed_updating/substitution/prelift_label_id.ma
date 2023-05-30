@@ -13,11 +13,11 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/prelift_label.ma".
-include "ground/relocation/tr_id_pap.ma".
+include "ground/relocation/trz_id.ma".
 
 (* PRELIFT FOR LABEL ********************************************************)
 
-(* Constructions with tr_id *************************************************)
+(* Constructions with trz_id ************************************************)
 
 lemma prelift_label_id (l):
       l = 🠡[𝐢]l.

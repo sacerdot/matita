@@ -28,5 +28,5 @@ lemma lift_path_length (f) (p):
 | <lift_path_A_dx
 | <lift_path_S_dx
 ]
->list_length_lcons >list_length_lcons //
+<list_length_lcons <list_length_lcons //
 qed.

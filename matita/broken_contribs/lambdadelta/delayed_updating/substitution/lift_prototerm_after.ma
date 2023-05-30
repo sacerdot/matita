@@ -24,6 +24,7 @@ lemma lift_term_after (f) (g) (t):
 #f #g #t @subset_eq_trans
 [
 | @subset_inclusion_ext_f1_compose
-| @subset_equivalence_ext_f1_exteq /2 width=5/
+| @subset_equivalence_ext_f1_exteq
+  #p <lift_path_after //
 ]
 qed.

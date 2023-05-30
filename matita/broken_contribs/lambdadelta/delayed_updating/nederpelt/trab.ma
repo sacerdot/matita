@@ -63,7 +63,7 @@ lemma trab_unfold_A_zero (S) (K) (p) (q):
       K (p◖𝗔) (𝟎) q = ▷𝐛{S}[K]❨p◖𝗔,𝟎,q❩.
 // qed.
 
-lemma trab_unfold_A_inj (S) (K) (p) (q) (k:ℤ⁺):
+lemma trab_unfold_A_inj (S) (K) (p) (q) (k:ℕ⁺):
       ▷𝐛{S}[K]❨p,↓k,𝗔◗q❩ = ▷𝐛{S}[K]❨p◖𝗔,k,q❩.
 // qed.
 

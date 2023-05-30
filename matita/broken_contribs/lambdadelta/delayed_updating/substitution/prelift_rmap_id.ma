@@ -13,13 +13,14 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/prelift_rmap.ma".
-include "ground/relocation/tr_id_tls.ma".
+include "ground/relocation/trz_id_tls.ma".
+include "ground/relocation/trz_id_push.ma".
 
 (* PRELIFT FOR RELOCATION MAP ***********************************************)
 
-(* Constructions with tr_id *************************************************)
+(* Constructions with trz_id ************************************************)
 
 lemma prelift_rmap_id (l):
-      (𝐢) = 🠢[𝐢]l.
+      (𝐢) ≐ 🠢[𝐢]l.
 * [ #k ] //
 qed.
