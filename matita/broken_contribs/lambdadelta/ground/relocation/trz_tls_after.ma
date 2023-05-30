@@ -12,24 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_map.ma".
-include "ground/arith/int_plus_opp.ma".
-include "ground/notation/functions/element_u_1.ma".
+include "ground/relocation/trz_tls.ma".
+include "ground/relocation/trz_after.ma".
 
-(* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
+(* ITERATED TAIL FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
-definition trz_uni (z:ℤ): trz_map ≝ mk_trz_map ….
-[ @(λz0.z0+z)
-| /2 width=2 by eq_inv_zplus_dx_bi/
-]
-defined.
+(* Constructions with trz_after *********************************************)
 
-interpretation
-  "uniform elements (total relocation maps with integers)"
-  'ElementU z = (trz_uni z).
-
-(* Basic constructions ******************************************************)
-
-lemma trz_uni_unfold (z) (z0):
-      z0+z = 𝐮❨z❩＠⧣❨z0❩.
-// qed.
+theorem tr_tls_after (z) (f2) (f1):
+        (⫰*[f1＠⧣❨z❩]f2)•(⫰*[z]f1) ≐ ⫰*[z](f2•f1).
+#z #f2 #f1 #z0
+<trz_after_unfold <trz_tls_unfold <trz_tls_unfold
+<zminus_plus_simpl //
+qed.

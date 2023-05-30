@@ -12,18 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_after.ma".
-include "ground/relocation/trz_tls.ma".
-include "ground/relocation/trz_uni.ma".
+include "ground/relocation/trz_push.ma".
+include "ground/arith/nat_succ_iter.ma".
+include "ground/notation/functions/upspoonstar_2.ma".
 
-(* COMPOSITION FOR TOTAL RELOCATION MAPS WITH INTEGERS **********************)
+(* ITERATED PUSH FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
-(* constructions with trz_uni and trz_tls ***********************************)
+definition tr_pushs (n:ℕ): trz_map → trz_map ≝
+           trz_push^n.
 
-theorem trz_after_uni_dx_dapp (f) (z):
-        (𝐮❨f＠⧣❨z❩❩•⫰*[z]f) ≐ f•𝐮❨z❩.
-#f #z #z0
-<trz_after_unfold <trz_after_unfold
-<trz_tls_unfold <trz_uni_unfold <trz_uni_unfold
-<zminus_plus_simpl //
+interpretation
+  "iterated push (total relocation maps with integers)"
+  'UpSpoonStar n f = (tr_pushs n f).
+
+(* Basic constructions ******************************************************)
+
+lemma trz_pushs_zero (f):
+      f = ⫯*[𝟎] f.
+// qed.
+
+lemma trz_pushs_push (n) (f):
+      (⫯⫯*[n]f) = ⫯*[n]⫯f.
+#n #f @(niter_appl … trz_push)
 qed.
+
+lemma trz_pushs_succ (n) (f):
+      (⫯⫯*[n]f) = ⫯*[↑n]f.
+#n #f @(niter_succ … trz_push)
+qed.
+
+lemma trz_pushs_swap (n) (f):
+      (⫯*[n]⫯f) = ⫯*[↑n]f.
+// qed.

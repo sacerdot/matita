@@ -30,7 +30,7 @@ interpretation
   "iterated tail (total relocation maps with integers)"
   'DownSpoonStar z f = (trz_tls z f).
 
-(* Basic cnbstructions ******************************************************)
+(* Basic cnnstructions ******************************************************)
 
 lemma trz_tls_unfold (f) (z) (z0):
       f＠⧣❨z0+z❩-f＠⧣❨z❩ = (⫰*[z]f)＠⧣❨z0❩.
@@ -41,3 +41,12 @@ lemma trz_tls_eq_repl_fwd (z):
 #z #f1 #f2 #Hf #z0
 <trz_tls_unfold <trz_tls_unfold //
 qed-.
+
+(* Main constructions *******************************************************)
+
+theorem trz_tls_plus (f) (z1) (z2):
+        (⫰*[z1]⫰*[z2]f) ≐ ⫰*[z1+z2]f.
+#f #z1 #z2 #z0
+<trz_tls_unfold <trz_tls_unfold <trz_tls_unfold
+>zplus_opp_bi <zplus_assoc //
+qed.
