@@ -17,7 +17,7 @@ include "delayed_updating/unwind_k/unwind2_path_after.ma".
 
 (* TAILED UNWIND FOR PROTOTERM **********************************************)
 
-(* Constructions with tr_after **********************************************)
+(* Constructions with trz_after *********************************************)
 
 lemma unwind2_term_after (f1) (f2) (t):
       ▼[f2]▼[f1]t ⇔ ▼[f2•f1]t.

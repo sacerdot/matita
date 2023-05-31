@@ -1,0 +1,12 @@
+include "ground/relocation/xap.ma".
+
+lemma unwind2_rmap_xap_le (f) (p) (n):
+      ▶[𝐢]p＠❨n❩ ≤ ♭p → ▶[𝐢]p＠❨n❩ = ▶[f]p＠❨n❩.
+(*
+#f #p * // #h <tr_xap_npos #Hh
+>unwind2_rmap_pap_le
+*)
+#f #p #n #Hn
+>(tr_xap_eq_repl … (▶[f]p) … (unwind2_rmap_decompose …))
+<tr_compose_xap <tr_xap_pushs_le //
+qed-.

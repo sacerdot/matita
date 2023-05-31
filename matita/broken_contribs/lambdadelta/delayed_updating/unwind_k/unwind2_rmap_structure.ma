@@ -15,7 +15,7 @@
 include "delayed_updating/unwind_k/unwind2_rmap.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/syntax/path_depth.ma".
-include "ground/relocation/tr_pushs.ma".
+include "ground/relocation/trz_pushs.ma".
 
 (* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 

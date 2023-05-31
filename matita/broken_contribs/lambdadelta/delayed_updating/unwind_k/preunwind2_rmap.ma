@@ -14,12 +14,13 @@
 
 include "delayed_updating/syntax/label.ma".
 include "delayed_updating/notation/functions/black_righttriangle_2.ma".
-include "ground/relocation/tr_uni.ma".
-include "ground/relocation/tr_compose.ma".
+include "ground/relocation/trz_uni.ma".
+include "ground/relocation/trz_push.ma".
+include "ground/relocation/trz_after.ma".
 
 (* TAILED PREUNWIND FOR RELOCATION MAP **************************************)
 
-definition preunwind2_rmap (f) (l): tr_map ≝
+definition preunwind2_rmap (l) (f): trz_map ≝
 match l with
 [ label_d k ⇒ f•𝐮❨k❩
 | label_m   ⇒ f
@@ -30,11 +31,11 @@ match l with
 
 interpretation
   "tailed preunwind (relocation map)"
-  'BlackRightTriangle f l = (preunwind2_rmap f l).
+  'BlackRightTriangle f l = (preunwind2_rmap l f).
 
 (* Basic constructions ******************************************************)
 
-lemma preunwind2_rmap_d (f) (k:ℤ⁺):
+lemma preunwind2_rmap_d (f) (k):
       f•𝐮❨k❩ = ▶[f]𝗱k.
 // qed.
 
