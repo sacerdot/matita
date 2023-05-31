@@ -12,33 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_eq.ma".
-include "ground/notation/functions/compose_2.ma".
+include "ground/arith/int_nat.ma".
+include "ground/arith/int_succ.ma".
+include "ground/arith/nat_succ.ma".
 
-(* COMPOSITION FOR TOTAL RELOCATION MAPS WITH INTEGERS **********************)
+(* NATURAL INTEGERS *********************************************************)
 
-definition trz_after (f2:trz_map) (f1:trz_map): trz_map ≝ mk_trz_map ….
-[ @(trz_staff f2 ∘ trz_staff f1)
-| @compose_injective_2_fwd //
-]
-defined.
+(* Constractions with nsucc *************************************************)
 
-interpretation
-  "composition (total relocation maps with integers)"
-  'Compose f2 f1 = (trz_after f2 f1).
-
-(* Basic constructions ******************************************************)
-
-lemma trz_after_unfold (f1) (f2) (z):
-      f2＠⧣❨f1＠⧣❨z❩❩ = (f2•f1)＠⧣❨z❩.
-// qed.
-
-lemma trz_after_eq_repl:
-      compatible_3 … trz_eq trz_eq trz_eq trz_after.
-// qed.
-
-(* Main constructions *******************************************************)
-
-theorem trz_after_assoc (f3) (f2) (f1):
-        (f3•f2)•f1 ≐ f3•(f2•f1).
-// qed.
+lemma znat_succ (n):
+      ↑⊕n = ⊕↑n.
+* //
+qed.

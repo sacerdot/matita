@@ -19,7 +19,7 @@ include "ground/relocation/trz_after.ma".
 
 (* Constructions with trz_after *********************************************)
 
-theorem tr_tls_after (z) (f2) (f1):
+theorem trz_tls_after (z) (f2) (f1):
         (⫰*[f1＠⧣❨z❩]f2)•(⫰*[z]f1) ≐ ⫰*[z](f2•f1).
 #z #f2 #f1 #z0
 <trz_after_unfold <trz_tls_unfold <trz_tls_unfold

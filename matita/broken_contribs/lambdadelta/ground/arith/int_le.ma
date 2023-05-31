@@ -28,21 +28,27 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma zle_self_succ (z):
-      z ≤ ↑z.
-/2 width=1 by zle_refl, zle_succ_dx/
-qed.
-
-lemma zle_succ_bi (z1) (z2):
-      z1 ≤ z2 → ↑z1 ≤ ↑z2.
-#z1 #z2 #H elim H -z2
-/2 width=1 by zle_refl, zle_succ_dx/
+lemma zle_pos_unit_pos (p):
+      (⁤𝟏) ≤ ⁤p.
+#p elim p -p
+/2 width=1 by zle_succ_dx/
 qed.
 
 lemma zle_zero_pos (p):
       (𝟎) ≤ ⁤p.
 #p elim p -p
 /2 width=1 by zle_succ_dx/
+qed.
+
+lemma zle_self_succ (z):
+      z ≤ ↑z.
+/2 width=1 by zle_succ_dx/
+qed.
+
+lemma zle_succ_bi (z1) (z2):
+      z1 ≤ z2 → ↑z1 ≤ ↑z2.
+#z1 #z2 #H elim H -z2
+/2 width=1 by zle_refl, zle_succ_dx/
 qed.
 
 (* Basic destructions *******************************************************)

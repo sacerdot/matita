@@ -12,33 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_eq.ma".
-include "ground/notation/functions/compose_2.ma".
+include "ground/relocation/trz_pushs.ma".
+include "ground/arith/int_nat_succ.ma".
+include "ground/arith/int_lt_pred.ma".
 
-(* COMPOSITION FOR TOTAL RELOCATION MAPS WITH INTEGERS **********************)
+(* ITERATED PUSH FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
-definition trz_after (f2:trz_map) (f1:trz_map): trz_map ≝ mk_trz_map ….
-[ @(trz_staff f2 ∘ trz_staff f1)
-| @compose_injective_2_fwd //
+(* Constructions with order for integers ************************************)
+
+lemma trz_pushs_unfold_be (n) (z) (f):
+      (⁤𝟏) ≤ z → z ≤ ⊕n →
+      z = (⫯*[n]f)＠⧣❨z❩.
+#n @(nat_ind_succ … n) -n
+[ #z #f #H1z #H2z
+  elim zle_inv_pos_zero
+  /2 width=4 by zle_trans/
+| #n #IH #z #f #H1z <znat_succ #H2z
+  elim (zle_split_lt_eq … H2z) -H2z #H2z
+  [ /3 width=1 by zlt_inv_succ_dx_le/
+  | destruct <trz_pushs_succ -H1z
+    generalize in match IH; -IH
+    cases n -n // #p #IH
+    <trz_push_pos_succ <trz_after_unfold
+    <IH -IH //
+  ]
 ]
-defined.
-
-interpretation
-  "composition (total relocation maps with integers)"
-  'Compose f2 f1 = (trz_after f2 f1).
-
-(* Basic constructions ******************************************************)
-
-lemma trz_after_unfold (f1) (f2) (z):
-      f2＠⧣❨f1＠⧣❨z❩❩ = (f2•f1)＠⧣❨z❩.
-// qed.
-
-lemma trz_after_eq_repl:
-      compatible_3 … trz_eq trz_eq trz_eq trz_after.
-// qed.
-
-(* Main constructions *******************************************************)
-
-theorem trz_after_assoc (f3) (f2) (f1):
-        (f3•f2)•f1 ≐ f3•(f2•f1).
-// qed.
+qed.

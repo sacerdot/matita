@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/relocation/trz_uni_tls.ma".
+include "ground/relocation/trz_tls_after.ma".
 include "ground/relocation/trz_id_after.ma".
 
 (* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS *******************)
@@ -30,3 +31,11 @@ qed.
 theorem trz_after_uni_bi (z2) (z1):
         (𝐮❨z1+z2❩) ≐ 𝐮❨z2❩•𝐮❨z1❩.
 // qed.
+
+lemma trz_tls_after_uni_dx (f) (p) (n):
+      (⫰*[p+n]f) ≐ ⫰*[p](f•𝐮❨n❩).
+#f #p #n
+@(trz_eq_trans … (trz_tls_after …))
+@(trz_eq_trans … (trz_after_eq_repl …))
+/1 width=5 by/
+qed.
