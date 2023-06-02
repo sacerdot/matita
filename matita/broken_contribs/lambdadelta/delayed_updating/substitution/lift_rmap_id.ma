@@ -12,14 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_rmap.ma".
+include "delayed_updating/substitution/lift_rmap_eq.ma".
 include "delayed_updating/substitution/prelift_rmap_id.ma".
 
 (* LIFT FOR RELOCATION MAP **************************************************)
 
-(* Constructions with tr_id *************************************************)
+(* Constructions with trz_id ************************************************)
 
 lemma lift_rmap_id (p):
-      (𝐢) = 🠢[𝐢]p.
-#p elim p -p //
+      (𝐢) ≐ 🠢[𝐢]p.
+#p elim p -p
+/2 width=1 by prelift_rmap_eq_repl/
 qed.

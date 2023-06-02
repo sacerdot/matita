@@ -12,17 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path_id.ma".
-include "delayed_updating/substitution/lift_path_eq.ma".
-include "ground/relocation/trz_uni_tls.ma".
+include "ground/relocation/trz_id.ma".
+include "ground/relocation/trz_after.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
 
-(* Constructions with trz_uni ***********************************************)
+(* Constructions with trz_after *********************************************)
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = 🠡[𝐮❨n❩](𝗱k◗p).
-#p #n #k
-<lift_path_d_sn <trz_uni_unfold
-<(lift_path_eq_repl … (trz_tls_uni …)) //
-qed.
+lemma trz_after_id_dx (f):
+      f ≐ f•𝐢.
+// qed.
+
+lemma trz_after_id_sn (f):
+      f ≐ 𝐢•f.
+// qed.

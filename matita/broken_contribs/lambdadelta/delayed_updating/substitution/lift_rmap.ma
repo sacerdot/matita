@@ -17,15 +17,15 @@ include "delayed_updating/syntax/path.ma".
 
 (* LIFT FOR RELOCATION MAP **************************************************)
 
-rec definition lift_rmap (f) (p) on p: tr_map ≝
+rec definition lift_rmap (p) (f) on p: trz_map ≝
 match p with
 [ list_empty     ⇒ f
-| list_lcons l q ⇒ 🠢[lift_rmap f q]l
+| list_lcons l q ⇒ 🠢[lift_rmap q f]l
 ].
 
 interpretation
   "lift (relocation map)"
-  'RightTriangleArrow f p = (lift_rmap f p).
+  'RightTriangleArrow f p = (lift_rmap p f).
 
 (* Basic constructions ******************************************************)
 
@@ -37,12 +37,12 @@ lemma lift_rmap_rcons (f) (p) (l):
       🠢[🠢[f]p]l = 🠢[f](p◖l).
 // qed.
 
-lemma lift_rmap_d_dx (f) (p) (k:ℤ⁺):
-      ⇂*[k](🠢[f]p) = 🠢[f](p◖𝗱k).
+lemma lift_rmap_d_dx (f) (p) (k):
+      (⫰*[k](🠢[f]p)) = 🠢[f](p◖𝗱k).
 // qed.
 
 lemma lift_rmap_m_dx (f) (p):
-      🠢[f]p = 🠢[f](p◖𝗺).
+      (🠢[f]p) = 🠢[f](p◖𝗺).
 // qed.
 
 lemma lift_rmap_L_dx (f) (p):
@@ -50,42 +50,48 @@ lemma lift_rmap_L_dx (f) (p):
 // qed.
 
 lemma lift_rmap_A_dx (f) (p):
-      🠢[f]p = 🠢[f](p◖𝗔).
+      (🠢[f]p) = 🠢[f](p◖𝗔).
 // qed.
 
 lemma lift_rmap_S_dx (f) (p):
-      🠢[f]p = 🠢[f](p◖𝗦).
+      (🠢[f]p) = 🠢[f](p◖𝗦).
 // qed.
 
 (* Constructions with path_append *******************************************)
 
 lemma lift_rmap_append (p) (q) (f):
-      🠢[🠢[f]p]q = 🠢[f](p●q).
+      (🠢[🠢[f]p]q) = 🠢[f](p●q).
 #p #q elim q -q //
 qed.
 
 (* Constructions with path_lcons ********************************************)
 
 lemma lift_rmap_lcons (f) (p) (l):
-      🠢[🠢[f]l]p = 🠢[f](l◗p).
+      (🠢[🠢[f]l]p) = 🠢[f](l◗p).
 // qed.
 
-lemma lift_rmap_d_sn (f) (p) (k:ℤ⁺):
-      🠢[⇂*[k]f]p = 🠢[f](𝗱k◗p).
+lemma lift_rmap_d_sn (f) (p) (k):
+      (🠢[⫰*[k]f]p) = 🠢[f](𝗱k◗p).
 // qed.
 
 lemma lift_rmap_m_sn (f) (p):
-      🠢[f]p = 🠢[f](𝗺◗p).
+      (🠢[f]p) = 🠢[f](𝗺◗p).
 // qed.
 
 lemma lift_rmap_L_sn (f) (p):
-      🠢[⫯f]p = 🠢[f](𝗟◗p).
+      (🠢[⫯f]p) = 🠢[f](𝗟◗p).
 // qed.
 
 lemma lift_rmap_A_sn (f) (p):
-      🠢[f]p = 🠢[f](𝗔◗p).
+      (🠢[f]p) = 🠢[f](𝗔◗p).
 // qed.
 
 lemma lift_rmap_S_sn (f) (p):
-      🠢[f]p = 🠢[f](𝗦◗p).
+      (🠢[f]p) = 🠢[f](𝗦◗p).
+// qed.
+
+(* Advanced constructions ***************************************************)
+
+lemma lift_rmap_unfold_d_dx (f) (p) (k) (h):
+      (🠢[f]p)＠⧣❨h+k❩-(🠢[f]p)＠⧣❨k❩ = (🠢[f](p◖𝗱k))＠⧣❨h❩.
 // qed.

@@ -21,7 +21,7 @@ include "delayed_updating/substitution/prelift_label_eq.ma".
 (* Constructions with path_eq ***********************************************)
 
 lemma lift_path_eq_repl (p):
-      stream_eq_repl … (λf1,f2. 🠡[f1]p = 🠡[f2]p).
+      compatible_2_fwd … trz_eq (eq …) (λf.🠡[f]p).
 #p elim p -p //
 #l #p #IH #f1 #f2 #Hf
 <lift_path_rcons <lift_path_rcons

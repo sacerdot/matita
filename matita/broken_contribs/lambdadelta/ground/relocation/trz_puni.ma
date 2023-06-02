@@ -15,7 +15,6 @@
 include "ground/relocation/trz_map.ma".
 include "ground/arith/int_pred.ma".
 include "ground/notation/functions/element_u_plus_0.ma".
-include "ground/notation/functions/uparrowplus_1.ma".
 
 (* POSITIVE UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS ********)
 

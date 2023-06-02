@@ -12,17 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path_id.ma".
-include "delayed_updating/substitution/lift_path_eq.ma".
-include "ground/relocation/trz_uni_tls.ma".
+include "ground/arith/int_nat.ma".
+include "ground/arith/int_succ.ma".
+include "ground/arith/nat_succ.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* NATURAL INTEGERS *********************************************************)
 
-(* Constructions with trz_uni ***********************************************)
+(* Constractions with nsucc *************************************************)
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = 🠡[𝐮❨n❩](𝗱k◗p).
-#p #n #k
-<lift_path_d_sn <trz_uni_unfold
-<(lift_path_eq_repl … (trz_tls_uni …)) //
+lemma znat_succ (n):
+      ↑⊕n = ⊕↑n.
+* //
 qed.

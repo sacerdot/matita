@@ -17,12 +17,13 @@ include "delayed_updating/unwind_k/unwind2_rmap_after.ma".
 
 (* TAILED UNWIND FOR PATH ***************************************************)
 
-(* Properties with tr_after *************************************************)
+(* Properties with trz_after ************************************************)
 
 lemma unwind2_path_after (g) (f) (p):
       ▼[g]▼[f]p = ▼[g•f]p.
 #g #f * // * [ #k ] #p //
-<unwind2_path_d_dx <unwind2_path_d_dx
-@eq_f2 // @eq_f >tr_compose_pap
-/2 width=3 by tr_pap_eq_repl/
+[ <unwind2_path_L_dx <unwind2_path_L_dx //
+| <unwind2_path_A_dx <unwind2_path_A_dx //
+| <unwind2_path_S_dx <unwind2_path_S_dx //
+]
 qed.

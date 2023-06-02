@@ -15,7 +15,7 @@
 include "delayed_updating/substitution/lift_rmap.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/syntax/path_depth.ma".
-include "ground/relocation/tr_pushs.ma".
+include "ground/relocation/trz_pushs.ma".
 
 (* LIFT FOR RELOCATION MAP **************************************************)
 
@@ -25,7 +25,7 @@ lemma lift_rmap_structure (f) (q):
       (⫯*[♭q]f) = 🠢[f]⊗q.
 #f #q elim q -q //
 * [ #k ] #q #IH //
-[ <depth_L_dx <tr_pushs_succ <structure_L_dx <lift_rmap_L_dx //
+[ <depth_L_dx <trz_pushs_succ <structure_L_dx <lift_rmap_L_dx //
 | <depth_A_dx <structure_A_dx <lift_rmap_A_dx //
 | <depth_S_dx <structure_S_dx <lift_rmap_S_dx //
 ]

@@ -12,17 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path_id.ma".
-include "delayed_updating/substitution/lift_path_eq.ma".
-include "ground/relocation/trz_uni_tls.ma".
+include "ground/relocation/trz_map.ma".
+include "ground/notation/functions/element_i_0.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
 
-(* Constructions with trz_uni ***********************************************)
+definition trz_id: trz_map ≝ mk_trz_map ….
+[ @(λz0.z0)
+| //
+]
+defined.
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = 🠡[𝐮❨n❩](𝗱k◗p).
-#p #n #k
-<lift_path_d_sn <trz_uni_unfold
-<(lift_path_eq_repl … (trz_tls_uni …)) //
-qed.
+interpretation
+  "identity element (total relocation maps with integers)"
+  'ElementI = (trz_id).
+
+(* basic constructions ******************************************************)
+
+lemma trz_id_unfold (z0):
+      z0 = 𝐢＠⧣❨z0❩.
+// qed.

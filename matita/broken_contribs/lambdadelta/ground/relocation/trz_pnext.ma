@@ -32,4 +32,3 @@ qed.
 lemma trz_after_pnext_sn (f2) (f1):
       ↑⁺(f2•f1) ≐ (↑⁺f2)•f1.
 // qed.
-

@@ -21,19 +21,22 @@ include "delayed_updating/substitution/lift_path_structure.ma".
 (* Constructions with lift_path *********************************************)
 
 lemma lift_unwind2_path_after (g) (f) (p):
-      🠡[g]▼[f]p = ▼[g•f]p.
+      (🠡[g]▼[f]p) = ▼[g•f]p.
 #g #f * // * [ #k ] #p //
-<unwind2_path_d_dx <unwind2_path_d_dx <lift_path_d_dx
-<lift_path_structure >tr_compose_pap
-/4 width=1 by tr_pap_eq_repl, eq_f2, eq_f/
+[ <unwind2_path_d_dx <unwind2_path_d_dx <lift_path_d_dx
+  <lift_path_structure >trz_after_unfold
+  /4 width=1 by trz_dapp_eq_repl_fwd, eq_f2, eq_f/
+| <unwind2_path_L_dx <unwind2_path_L_dx //
+| <unwind2_path_A_dx <unwind2_path_A_dx //
+| <unwind2_path_S_dx <unwind2_path_S_dx //
 qed.
 
 lemma unwind2_lift_path_after (g) (f) (p):
       ▼[g]🠡[f]p = ▼[g•f]p.
 #g #f * // * [ #k ] #p
 [ <unwind2_path_d_dx <unwind2_path_d_dx
-  <structure_lift_path >tr_compose_pap
-  /4 width=1 by tr_pap_eq_repl, eq_f2, eq_f/
+  <structure_lift_path >trz_after_unfold
+  /4 width=1 by trz_dapp_eq_repl_fwd, eq_f2, eq_f/
 | <unwind2_path_m_dx <unwind2_path_m_dx //
 | <unwind2_path_L_dx <unwind2_path_L_dx //
 | <unwind2_path_A_dx <unwind2_path_A_dx //

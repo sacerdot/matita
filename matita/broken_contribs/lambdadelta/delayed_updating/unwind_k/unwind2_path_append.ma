@@ -61,7 +61,7 @@ lemma unwind2_path_d_empty (f) (k):
       (𝗱(f＠⧣❨k❩)◗𝐞) = ▼[f](𝗱k◗𝐞).
 // qed.
 
-lemma unwind2_path_d_lcons (f) (p) (l) (k:ℤ⁺):
+lemma unwind2_path_d_lcons (f) (p) (l) (k):
       ▼[f•𝐮❨k❩](l◗p) = ▼[f](𝗱k◗l◗p).
 #f #p #l #k <unwind2_path_append_ppc_dx in ⊢ (???%); //
 qed.
@@ -161,7 +161,7 @@ qed-.
 
 lemma eq_inv_d_sn_unwind2_path (f) (q) (p) (k):
       (𝗱k◗q) = ▼[f]p →
-      ∃∃r,h. 𝐞 = ⊗r & ▶[f]r＠⧣❨h❩ = k & 𝐞 = q & r◖𝗱h = p.
+      ∃∃r,h. 𝐞 = ⊗r & (▶[f]r)＠⧣❨h❩ = k & 𝐞 = q & r◖𝗱h = p.
 #f * [| #l #q ] #p #k
 [ <list_cons_comm #H0
   elim (eq_inv_d_dx_unwind2_path … H0) -H0 #r1 #r2 #Hr1 #H1 #H2 destruct

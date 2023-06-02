@@ -12,17 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path_id.ma".
-include "delayed_updating/substitution/lift_path_eq.ma".
-include "ground/relocation/trz_uni_tls.ma".
+include "ground/relocation/trz_pushs.ma".
+include "ground/arith/int_nat_succ.ma".
+include "ground/arith/int_lt_pred.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* ITERATED PUSH FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
-(* Constructions with trz_uni ***********************************************)
+(* Constructions with order for integers ************************************)
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = 🠡[𝐮❨n❩](𝗱k◗p).
-#p #n #k
-<lift_path_d_sn <trz_uni_unfold
-<(lift_path_eq_repl … (trz_tls_uni …)) //
+lemma trz_pushs_unfold_be (n) (z) (f):
+      (⁤𝟏) ≤ z → z ≤ ⊕n →
+      z = (⫯*[n]f)＠⧣❨z❩.
+#n @(nat_ind_succ … n) -n
+[ #z #f #H1z #H2z
+  elim zle_inv_pos_zero
+  /2 width=4 by zle_trans/
+| #n #IH #z #f #H1z <znat_succ #H2z
+  elim (zle_split_lt_eq … H2z) -H2z #H2z
+  [ /3 width=1 by zlt_inv_succ_dx_le/
+  | destruct <trz_pushs_succ -H1z
+    generalize in match IH; -IH
+    cases n -n // #p #IH
+    <trz_push_pos_succ <trz_after_unfold
+    <IH -IH //
+  ]
+]
 qed.

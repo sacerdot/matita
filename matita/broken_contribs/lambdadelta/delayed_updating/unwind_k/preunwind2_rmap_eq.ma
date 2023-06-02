@@ -13,15 +13,13 @@
 (**************************************************************************)
 
 include "delayed_updating/unwind_k/preunwind2_rmap.ma".
-include "ground/relocation/tr_compose_eq.ma".
-include "ground/relocation/tr_pn_eq.ma".
 
 (* TAILED PREUNWIND FOR RELOCATION MAP **************************************)
 
-(* Constructions with tr_map_eq *********************************************)
+(* Constructions with trz_eq ************************************************)
 
 lemma preunwind2_rmap_eq_repl (l):
-      stream_eq_repl … (λf1,f2. ▶[f1]l ≗ ▶[f2]l).
-* // #k #f1 #f2 #Hf
-/2 width=1 by tr_compose_eq_repl/
+      compatible_2_fwd … trz_eq trz_eq (preunwind2_rmap l).
+* // #f1 #f2 #Hf
+/2 width=1 by trz_push_eq_repl_fwd/
 qed-.

@@ -12,17 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path_id.ma".
-include "delayed_updating/substitution/lift_path_eq.ma".
-include "ground/relocation/trz_uni_tls.ma".
+include "ground/arith/int_lt.ma".
+include "ground/arith/int_le_pred.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* STRICT ORDER FOR INTEGERS ************************************************)
 
-(* Constructions with trz_uni ***********************************************)
+(* Advanced inversions with zle *********************************************)
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = 🠡[𝐮❨n❩](𝗱k◗p).
-#p #n #k
-<lift_path_d_sn <trz_uni_unfold
-<(lift_path_eq_repl … (trz_tls_uni …)) //
-qed.
+lemma zlt_inv_succ_dx_le (z1) (z2):
+      z1 < ↑z2 → z1 ≤ z2.
+/2 width=1 by zle_inv_succ_bi/
+qed-.

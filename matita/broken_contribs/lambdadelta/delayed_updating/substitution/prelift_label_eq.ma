@@ -13,16 +13,13 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/prelift_label.ma".
-include "ground/relocation/tr_pap_eq.ma".
+include "ground/relocation/trz_eq.ma".
 
 (* PRELIFT FOR LABEL ********************************************************)
 
-(* constructions with tr_map_eq *********************************************)
+(* constructions with path_eq ***********************************************)
 
 lemma prelift_label_eq_repl (l):
-      stream_eq_repl … (λf1,f2. 🠡[f1]l = 🠡[f2]l).
+      compatible_2_fwd … trz_eq (eq …) (λf.🠡[f]l).
 * //
-#k #f1 #f2 #Hf
-<prelift_label_d <prelift_label_d
-/3 width=1 by tr_pap_eq_repl, eq_f/
 qed.

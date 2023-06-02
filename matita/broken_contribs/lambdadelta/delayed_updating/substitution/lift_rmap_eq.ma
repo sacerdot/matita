@@ -14,23 +14,18 @@
 
 include "delayed_updating/substitution/lift_rmap.ma".
 include "delayed_updating/substitution/prelift_rmap_eq.ma".
-include "ground/lib/stream_tls_plus.ma".
-include "ground/arith/nat_plus_rplus.ma".
-include "ground/arith/nat_rplus_pplus.ma".
 
 (* LIFT FOR RELOCATION MAP **************************************************)
 
-(* Constructions with lift_eq ***********************************************)
+(* Constructions with trz_eq ************************************************)
 
 lemma lift_rmap_eq_repl (p):
-      stream_eq_repl … (λf1,f2. 🠢[f1]p ≗ 🠢[f2]p).
+      compatible_2_fwd … trz_eq trz_eq (lift_rmap p).
 #p elim p -p //
 #l #p #IH #f1 #f2 #Hf
 /3 width=1 by prelift_rmap_eq_repl/
 qed.
 
 lemma tls_lift_rmap_d_dx (f) (p) (n) (k):
-      ⇂*[n+k]🠢[f]p ≗ ⇂*[n]🠢[f](p◖𝗱k).
-#f #p #n #k
-<lift_rmap_d_dx >nrplus_inj_dx >nrplus_inj_sn //
-qed.
+      (⫰*[n+k]🠢[f]p) ≐ ⫰*[n]🠢[f](p◖𝗱k).
+// qed.

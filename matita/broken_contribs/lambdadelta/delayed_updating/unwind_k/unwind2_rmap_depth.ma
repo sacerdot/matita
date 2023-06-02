@@ -14,45 +14,29 @@
 
 include "delayed_updating/unwind_k/unwind2_path_append.ma".
 include "delayed_updating/syntax/path_depth.ma".
-include "ground/relocation/tr_id_compose.ma".
-include "ground/relocation/tr_compose_compose.ma".
-include "ground/relocation/tr_compose_eq.ma".
-include "ground/relocation/xap.ma".
-include "ground/lib/stream_eq_eq.ma".
+include "ground/relocation/trz_id_after.ma".
+include "ground/relocation/trz_pushs_le.ma".
 
 (* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
 (* Constructions with depth *************************************************)
 
 lemma unwind2_rmap_decompose (p) (f):
-      ▶[f]p ≗ (⫯*[♭p]f)•(▶[𝐢]p).
+      ▶[f]p ≐ (⫯*[♭p]f)•(▶[𝐢]p).
 #p elim p -p
-[ #f <unwind2_rmap_empty <unwind2_rmap_empty <tr_pushs_zero //
+[ #f <unwind2_rmap_empty <unwind2_rmap_empty <trz_pushs_zero //
 | * [ #k ] #p #IH #f //
-  [ <unwind2_rmap_d_dx <unwind2_rmap_d_dx <depth_d_dx
-    @(stream_eq_trans … (tr_compose_assoc …))
-    /2 width=1 by tr_compose_eq_repl/
-  | <unwind2_rmap_L_dx <unwind2_rmap_L_dx <depth_L_dx
-    <tr_pushs_succ <tr_compose_push_bi
-    /2 width=1 by tr_push_eq_repl/
-  ]
+  <unwind2_rmap_L_dx <unwind2_rmap_L_dx <depth_L_dx
+  <trz_pushs_succ
+  @(trz_eq_trans … (trz_after_push_bi …))
+  /2 width=1 by trz_push_eq_repl_fwd/
 ]
 qed.
 
-lemma unwind2_rmap_pap_le (f) (p) (h):
-      ▶[𝐢]p＠⧣❨h❩ < ↑♭p → ▶[𝐢]p＠⧣❨h❩ = ▶[f]p＠⧣❨h❩.
-#f #p #h #Hh
->(tr_pap_eq_repl … (▶[f]p) … (unwind2_rmap_decompose …))
-<tr_compose_pap <tr_pap_pushs_le //
-qed.
-
-lemma unwind2_rmap_xap_le (f) (p) (n):
-      ▶[𝐢]p＠❨n❩ ≤ ♭p → ▶[𝐢]p＠❨n❩ = ▶[f]p＠❨n❩.
-(*
-#f #p * // #h <tr_xap_npos #Hh
->unwind2_rmap_pap_le
-*)
-#f #p #n #Hn
->(tr_xap_eq_repl … (▶[f]p) … (unwind2_rmap_decompose …))
-<tr_compose_xap <tr_xap_pushs_le //
+lemma unwind2_rmap_unfold_be (f) (p) (h):
+      (⁤𝟏) ≤ (▶[𝐢]p)＠⧣❨h❩ → (▶[𝐢]p)＠⧣❨h❩ ≤ ⊕♭p →
+      (▶[𝐢]p)＠⧣❨h❩ = (▶[f]p)＠⧣❨h❩.
+#f #p #h #H1h #H2h
+>(trz_dapp_eq_repl_fwd … (▶[f]p) … (unwind2_rmap_decompose …))
+<trz_after_unfold <trz_pushs_unfold_be //
 qed-.

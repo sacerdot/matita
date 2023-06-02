@@ -14,7 +14,7 @@
 
 include "delayed_updating/notation/functions/uptrianglearrow_2.ma".
 include "delayed_updating/syntax/label.ma".
-include "ground/relocation/tr_pap_pap.ma".
+include "ground/relocation/trz_map.ma".
 
 (* PRELIFT FOR LABEL ********************************************************)
 
@@ -118,7 +118,7 @@ theorem prelift_label_inj (f) (l1) (l2):
         🠡[f]l1 = 🠡[f]l2 → l1 = l2.
 #f * [ #k1 ] #l2 #Hl
 [ elim (prelift_label_inv_d_sn … Hl) -Hl #k2 #Hk #H0 destruct
-  >(tr_pap_inj ???? Hk) -Hk //
+  <(trz_injective … Hk) -Hk //
 | <(prelift_label_inv_m_sn … Hl) -l2 //
 | <(prelift_label_inv_L_sn … Hl) -l2 //
 | <(prelift_label_inv_A_sn … Hl) -l2 //

@@ -15,14 +15,14 @@
 include "delayed_updating/substitution/lift_path.ma".
 include "delayed_updating/substitution/lift_rmap_id.ma".
 include "delayed_updating/substitution/prelift_label_id.ma".
+include "delayed_updating/substitution/prelift_label_eq.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
-(* Constructions with tr_id *************************************************)
+(* Constructions with trz_id ************************************************)
 
 lemma lift_path_id (p):
       p = 🠡[𝐢]p.
-#p elim p -p //
-#l #p #IH
-<lift_path_rcons //
+#p elim p -p
+/3 width=3 by prelift_label_eq_repl, eq_f2/
 qed.

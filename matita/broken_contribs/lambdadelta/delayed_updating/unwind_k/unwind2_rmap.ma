@@ -17,15 +17,15 @@ include "delayed_updating/syntax/path.ma".
 
 (* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
-rec definition unwind2_rmap (f) (p) on p: tr_map ≝
+rec definition unwind2_rmap (p) (f) on p: trz_map ≝
 match p with
 [ list_empty     ⇒ f
-| list_lcons l q ⇒ ▶[unwind2_rmap f q]l
+| list_lcons l q ⇒ ▶[unwind2_rmap q f]l
 ].
 
 interpretation
   "tailed unwind (relocation map)"
-  'BlackRightTriangle f p = (unwind2_rmap f p).
+  'BlackRightTriangle f p = (unwind2_rmap p f).
 
 (* Basic constructions ******************************************************)
 
@@ -37,7 +37,7 @@ lemma unwind2_rmap_rcons (f) (p) (l):
       ▶[▶[f]p]l = ▶[f](p◖l).
 // qed.
 
-lemma unwind2_rmap_d_dx (f) (p) (k:ℤ⁺):
+lemma unwind2_rmap_d_dx (f) (p) (k):
       ▶[f]p•𝐮❨k❩ = ▶[f](p◖𝗱k).
 // qed.
 
@@ -71,7 +71,7 @@ lemma unwind2_rmap_lcons (f) (p) (l):
       ▶[▶[f]l]p = ▶[f](l◗p).
 // qed.
 
-lemma unwind2_rmap_d_sn (f) (p) (k:ℤ⁺):
+lemma unwind2_rmap_d_sn (f) (p) (k):
       ▶[f•𝐮❨k❩]p = ▶[f](𝗱k◗p).
 // qed.
 

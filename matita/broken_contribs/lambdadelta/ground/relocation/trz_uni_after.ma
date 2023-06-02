@@ -12,17 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path_id.ma".
-include "delayed_updating/substitution/lift_path_eq.ma".
 include "ground/relocation/trz_uni_tls.ma".
+include "ground/relocation/trz_tls_after.ma".
+include "ground/relocation/trz_id_after.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS *******************)
 
-(* Constructions with trz_uni ***********************************************)
+(* constructions with trz_after and trz_tls ***********************************)
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = 🠡[𝐮❨n❩](𝗱k◗p).
-#p #n #k
-<lift_path_d_sn <trz_uni_unfold
-<(lift_path_eq_repl … (trz_tls_uni …)) //
+theorem trz_after_uni_dx_dapp (f) (z):
+        (𝐮❨f＠⧣❨z❩❩•⫰*[z]f) ≐ f•𝐮❨z❩.
+#f #z #z0
+<trz_after_unfold <trz_after_unfold
+<trz_tls_unfold <trz_uni_unfold <trz_uni_unfold
+<zminus_plus_simpl //
+qed.
+
+theorem trz_after_uni_bi (z2) (z1):
+        (𝐮❨z1+z2❩) ≐ 𝐮❨z2❩•𝐮❨z1❩.
+// qed.
+
+lemma trz_tls_after_uni_dx (f) (p) (n):
+      (⫰*[p+n]f) ≐ ⫰*[p](f•𝐮❨n❩).
+#f #p #n
+@(trz_eq_trans … (trz_tls_after …))
+@(trz_eq_trans … (trz_after_eq_repl …))
+/1 width=5 by/
 qed.

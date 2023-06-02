@@ -14,6 +14,7 @@
 
 include "delayed_updating/substitution/prelift_label.ma".
 include "delayed_updating/substitution/lift_rmap.ma".
+include "ground/xoa/ex_3_2.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
@@ -38,7 +39,7 @@ lemma lift_path_rcons (f) (p) (l):
 // qed.
 
 lemma lift_path_d_dx (f) (p) (k):
-      (🠡[f]p)◖𝗱(🠢[f]p＠⧣❨k❩) = 🠡[f](p◖𝗱k).
+      (🠡[f]p)◖𝗱((🠢[f]p)＠⧣❨k❩) = 🠡[f](p◖𝗱k).
 // qed.
 
 lemma lift_path_m_dx (f) (p):
@@ -75,8 +76,8 @@ lemma lift_path_lcons (f) (p) (l):
 <lift_path_append //
 qed.
 
-lemma lift_path_d_sn (f) (p) (k:ℤ⁺):
-      (𝗱(f＠⧣❨k❩)◗🠡[⇂*[k]f]p) = 🠡[f](𝗱k◗p).
+lemma lift_path_d_sn (f) (p) (k):
+      (𝗱(f＠⧣❨k❩)◗🠡[⫰*[k]f]p) = 🠡[f](𝗱k◗p).
 // qed.
 
 lemma lift_path_m_sn (f) (p):
@@ -132,7 +133,7 @@ qed-.
 (* Main inversions **********************************************************)
 
 theorem lift_path_inj (f) (p1) (p2):
-        🠡[f]p1 = 🠡[f]p2 → p1 = p2.
+        (🠡[f]p1) = 🠡[f]p2 → p1 = p2.
 #f #p1 elim p1 -p1 [| #l1 #q1 #IH ] #p2
 [ <lift_path_empty #H0
   <(lift_path_inv_empty … H0) -H0 //

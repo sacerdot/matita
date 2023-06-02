@@ -12,13 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_rmap.ma".
-include "ground/relocation/tr_pap_tls.ma".
+include "ground/relocation/trz_push.ma".
+include "ground/arith/nat_succ_iter.ma".
+include "ground/notation/functions/upspoonstar_2.ma".
 
-(* LIFT FOR RELOCATION MAP **************************************************)
+(* ITERATED PUSH FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
-(* Constructions with tr_pap ************************************************)
+definition tr_pushs (n:ℕ): trz_map → trz_map ≝
+           trz_push^n.
 
-lemma lift_rmap_pap_d_dx (f) (p) (k) (h):
-      🠢[f]p＠⧣❨h+k❩ = 🠢[f](p◖𝗱k)＠⧣❨h❩+🠢[f]p＠⧣❨k❩.
+interpretation
+  "iterated push (total relocation maps with integers)"
+  'UpSpoonStar n f = (tr_pushs n f).
+
+(* Basic constructions ******************************************************)
+
+lemma trz_pushs_zero (f):
+      f = ⫯*[𝟎] f.
+// qed.
+
+lemma trz_pushs_push (n) (f):
+      (⫯⫯*[n]f) = ⫯*[n]⫯f.
+#n #f @(niter_appl … trz_push)
+qed.
+
+lemma trz_pushs_succ (n) (f):
+      (⫯⫯*[n]f) = ⫯*[↑n]f.
+#n #f @(niter_succ … trz_push)
+qed.
+
+lemma trz_pushs_swap (n) (f):
+      (⫯*[n]⫯f) = ⫯*[↑n]f.
 // qed.

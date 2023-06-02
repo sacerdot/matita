@@ -23,7 +23,7 @@ match p with
 [ list_empty     ⇒ (𝐞)
 | list_lcons l q ⇒
   match l with
-  [ label_d k ⇒ (⊗q)◖𝗱(▶[f]q＠⧣❨k❩)
+  [ label_d k ⇒ (⊗q)◖𝗱((▶[f]q)＠⧣❨k❩)
   | label_m   ⇒ ⊗p
   | label_L   ⇒ ⊗p
   | label_A   ⇒ ⊗p
@@ -95,7 +95,7 @@ lemma unwind2_path_des_structure (f) (q) (p):
 
 lemma eq_inv_d_dx_unwind2_path (f) (q) (p) (h):
       q◖𝗱h = ▼[f]p →
-      ∃∃r,k. q = ⊗r & h = ▶[f]r＠⧣❨k❩ & r◖𝗱k = p.
+      ∃∃r,k. q = ⊗r & h = (▶[f]r)＠⧣❨k❩ & r◖𝗱k = p.
 #f #q * [| * [ #k ] #p ] #h
 [ <unwind2_path_empty #H0 destruct
 | <unwind2_path_d_dx #H0 destruct

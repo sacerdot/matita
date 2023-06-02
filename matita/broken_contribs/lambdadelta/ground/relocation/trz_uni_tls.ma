@@ -12,18 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_after.ma".
-include "ground/relocation/trz_tls.ma".
 include "ground/relocation/trz_uni.ma".
+include "ground/relocation/trz_id.ma".
+include "ground/relocation/trz_tls.ma".
 
-(* COMPOSITION FOR TOTAL RELOCATION MAPS WITH INTEGERS **********************)
+(* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
 
-(* constructions with trz_uni and trz_tls ***********************************)
+(* Constructions with trz_tls ***********************************************)
 
-theorem trz_after_uni_dx_dapp (f) (z):
-        (𝐮❨f＠⧣❨z❩❩•⫰*[z]f) ≐ f•𝐮❨z❩.
-#f #z #z0
-<trz_after_unfold <trz_after_unfold
-<trz_tls_unfold <trz_uni_unfold <trz_uni_unfold
-<zminus_plus_simpl //
+lemma trz_tls_uni (z2) (z1):
+      (𝐢) ≐ ⫰*[z2]𝐮❨z1❩.
+#z2 #z1 #z0
+<trz_id_unfold <trz_tls_unfold <trz_uni_unfold <trz_uni_unfold
+>zplus_assoc in ⊢ (???(?%?)); //
 qed.

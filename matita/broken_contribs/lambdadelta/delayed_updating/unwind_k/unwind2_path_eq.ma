@@ -17,13 +17,12 @@ include "delayed_updating/unwind_k/unwind2_rmap_eq.ma".
 
 (* TAILED UNWIND FOR PATH ***************************************************)
 
-(* Constructions with tr_map_eq *********************************************)
+(* Constructions with trz_eq ************************************************)
 
 lemma unwind2_path_eq_repl (p):
-      stream_eq_repl … (λf1,f2. ▼[f1]p = ▼[f2]p).
+      compatible_2_fwd … trz_eq (eq …) (λf.▼[f]p).
 * // * [ #k ] #p #f1 #f2 #Hf //
 <unwind2_path_d_dx <unwind2_path_d_dx
 lapply (unwind2_rmap_eq_repl … Hf) -Hf
-[| #Hf <(tr_pap_eq_repl … Hf) -f2 ] //
+[| #Hf <(trz_dapp_eq_repl_fwd … Hf) -f2 ] //
 qed-.
-

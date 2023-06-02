@@ -36,3 +36,9 @@ lemma trz_after_unfold (f1) (f2) (z):
 lemma trz_after_eq_repl:
       compatible_3 … trz_eq trz_eq trz_eq trz_after.
 // qed.
+
+(* Main constructions *******************************************************)
+
+theorem trz_after_assoc (f3) (f2) (f1):
+        (f3•f2)•f1 ≐ f3•(f2•f1).
+// qed.

@@ -15,7 +15,6 @@
 include "ground/relocation/trz_map.ma".
 include "ground/arith/int_plus_opp.ma".
 include "ground/notation/functions/element_u_1.ma".
-include "ground/notation/functions/element_i_0.ma".
 
 (* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
 
@@ -28,10 +27,6 @@ defined.
 interpretation
   "uniform elements (total relocation maps with integers)"
   'ElementU z = (trz_uni z).
-
-interpretation
-  "identity element (total relocation maps with integers)"
-  'ElementI = (trz_uni zzero).
 
 (* Basic constructions ******************************************************)
 
