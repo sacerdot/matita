@@ -1,0 +1,67 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "delayed_updating/syntax/path_width.ma".
+include "delayed_updating/notation/functions/class_w_back_0.ma".
+include "ground/lib/subset.ma".
+include "ground/arith/int_le.ma".
+include "ground/generated/insert_eq_1.ma".
+
+(* UNWIBDABLE CONDITION FOR PATH ********************************************)
+
+inductive puwc: predicate path ≝
+| puwc_empty: (𝐞) ϵ puwc
+| puwc_d_dx (p) (k): p ϵ puwc → p◖𝗱k ϵ puwc
+| puwc_m_dx (p): p ϵ puwc → p◖𝗺 ϵ puwc
+| puwc_L_dx (p): p ϵ puwc → 𝟎 ≤ ♮p → p◖𝗟 ϵ puwc
+| puwc_A_dx (p): p ϵ puwc → p◖𝗔 ϵ puwc
+| puwc_S_dx (p): p ϵ puwc → p◖𝗦 ϵ puwc
+.
+
+interpretation
+  "unwindable condition (path)"
+  'ClassWBack = (puwc).
+
+(* Basic inversions ********************************************************)
+
+lemma puwc_inv_d_dx (p) (k):
+      p◖𝗱k ϵ 𝐖 ⃖ → p ϵ 𝐖 ⃖.
+#p #h @(insert_eq_1 … (p◖𝗱h))
+#q * -q [|*: #q [ #k ] #H1q [|| #H2q ]] #H0 destruct //
+qed-.
+
+lemma puwc_inv_m_dx (p):
+      p◖𝗺 ϵ 𝐖 ⃖ → p ϵ 𝐖 ⃖.
+#p @(insert_eq_1 … (p◖𝗺))
+#q * -q [|*: #q [ #k ] #H1q [|| #H2q ]] #H0 destruct //
+qed-.
+
+lemma puwc_inv_L_dx (p):
+      p◖𝗟 ϵ 𝐖 ⃖ → ∧∧ p ϵ 𝐖 ⃖ & 𝟎 ≤ ♮p.
+#p @(insert_eq_1 … (p◖𝗟))
+#q * -q [|*: #q [ #k ] #H1q [|| #H2q ]] #H0 destruct
+/2 width=1 by conj/
+qed-.
+
+lemma puwc_inv_A_dx (p):
+      p◖𝗔 ϵ 𝐖 ⃖ → p ϵ 𝐖 ⃖.
+#p @(insert_eq_1 … (p◖𝗔))
+#q * -q [|*: #q [ #k ] #H1q [|| #H2q ]] #H0 destruct //
+qed-.
+
+lemma puwc_inv_S_dx (p):
+      p◖𝗦 ϵ 𝐖 ⃖ → p ϵ 𝐖 ⃖.
+#p @(insert_eq_1 … (p◖𝗦))
+#q * -q [|*: #q [ #k ] #H1q [|| #H2q ]] #H0 destruct //
+qed-.
