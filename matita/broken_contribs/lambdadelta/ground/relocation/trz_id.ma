@@ -29,6 +29,6 @@ interpretation
 
 (* basic constructions ******************************************************)
 
-lemma trz_id_unfold (z0):
+lemma trz_id_dapp (z0):
       z0 = 𝐢＠⧣❨z0❩.
 // qed.

@@ -24,7 +24,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma trz_pnext_eq_repl_fwd:
+lemma trz_pnext_eq_repl:
       compatible_2_fwd … trz_eq trz_eq (λf.↑⁺f).
 /2 width=1 by trz_after_eq_repl/
 qed.

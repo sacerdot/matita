@@ -19,14 +19,14 @@ include "ground/arith/int_lt_pred.ma".
 
 (* Constuctions with zle ****************************************************)
 
-lemma trz_puni_gt (z):
+lemma trz_puni_dapp_gt (z):
       (𝟎) < z →
       ↑z = 𝐮⁺＠⧣❨z❩.
 #z #Hz
 elim (zle_des_pos_sn … Hz) -Hz //
 qed.
 
-lemma trz_puni_le (z):
+lemma trz_puni_dapp_le (z):
       z ≤ 𝟎 →
       z = 𝐮⁺＠⧣❨z❩.
 #z #Hz

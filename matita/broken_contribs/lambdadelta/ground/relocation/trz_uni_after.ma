@@ -23,8 +23,8 @@ include "ground/relocation/trz_id_after.ma".
 theorem trz_after_uni_dx_dapp (f) (z):
         (𝐮❨f＠⧣❨z❩❩•⫰*[z]f) ≐ f•𝐮❨z❩.
 #f #z #z0
-<trz_after_unfold <trz_after_unfold
-<trz_tls_unfold <trz_uni_unfold <trz_uni_unfold
+<trz_after_dapp <trz_after_dapp
+<trz_tls_dapp <trz_uni_dapp <trz_uni_dapp
 <zminus_plus_simpl //
 qed.
 
@@ -35,7 +35,7 @@ theorem trz_after_uni_bi (z2) (z1):
 lemma trz_tls_after_uni_dx (f) (p) (n):
       (⫰*[p+n]f) ≐ ⫰*[p](f•𝐮❨n❩).
 #f #p #n
-@(trz_eq_trans … (trz_tls_after …))
+@(trz_eq_trans … (trz_tls_after_dapp …))
 @(trz_eq_trans … (trz_after_eq_repl …))
 /1 width=5 by/
 qed.

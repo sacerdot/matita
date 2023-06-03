@@ -19,10 +19,10 @@ include "ground/relocation/trz_pnext_le.ma".
 
 (* Constuctions with zle ****************************************************)
 
-lemma trz_push_gt_gt (f) (z):
+lemma trz_push_dapp_gt_gt (f) (z):
       (𝟎) < z → (𝟎) < f＠⧣❨z❩ →
       ↑f＠⧣❨z❩ = (⫯f)＠⧣❨↑z❩.
 #f #z #Hz #Hf
 elim (zle_des_pos_sn … Hz) -Hz #p #H0 destruct
-/2 width=1 by trz_puni_gt/
+/2 width=1 by trz_puni_dapp_gt/
 qed.

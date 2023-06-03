@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_eq.ma".
+include "ground/relocation/trz_map.ma".
 include "ground/notation/functions/compose_2.ma".
 
 (* COMPOSITION FOR TOTAL RELOCATION MAPS WITH INTEGERS **********************)
@@ -29,12 +29,12 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma trz_after_unfold (f1) (f2) (z):
+lemma trz_after_dapp (f1) (f2) (z):
       f2＠⧣❨f1＠⧣❨z❩❩ = (f2•f1)＠⧣❨z❩.
 // qed.
 
 lemma trz_after_eq_repl:
-      compatible_3 … trz_eq trz_eq trz_eq trz_after.
+      compatible_3 … trz_eq trz_eq trz_eq (λf2,f1.f2•f1).
 // qed.
 
 (* Main constructions *******************************************************)

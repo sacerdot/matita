@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_eq.ma".
+include "ground/relocation/trz_map.ma".
 include "ground/arith/int_plus_opp.ma".
 include "ground/notation/functions/downspoonstar_2.ma".
 
@@ -32,20 +32,20 @@ interpretation
 
 (* Basic cnnstructions ******************************************************)
 
-lemma trz_tls_unfold (f) (z) (z0):
+lemma trz_tls_dapp (f) (z) (z0):
       f＠⧣❨z0+z❩-f＠⧣❨z❩ = (⫰*[z]f)＠⧣❨z0❩.
 // qed.
 
 lemma trz_dapp_plus (f) (z1) (z2):
       (⫰*[z2]f)＠⧣❨z1❩+f＠⧣❨z2❩ = f＠⧣❨z1+z2❩.
 #f #z1 #z2
-<trz_tls_unfold <zminus_plus_simpl //
+<trz_tls_dapp <zminus_plus_simpl //
 qed.
 
-lemma trz_tls_eq_repl_fwd (z):
-      compatible_2_fwd … trz_eq trz_eq (trz_tls z).
+lemma trz_tls_eq_repl (z):
+      compatible_2_fwd … trz_eq trz_eq (λf.⫰*[z]f).
 #z #f1 #f2 #Hf #z0
-<trz_tls_unfold <trz_tls_unfold //
+<trz_tls_dapp <trz_tls_dapp //
 qed-.
 
 (* Main constructions *******************************************************)
@@ -53,6 +53,6 @@ qed-.
 theorem trz_tls_plus (f) (z1) (z2):
         (⫰*[z1]⫰*[z2]f) ≐ ⫰*[z1+z2]f.
 #f #z1 #z2 #z0
-<trz_tls_unfold <trz_tls_unfold <trz_tls_unfold
+<trz_tls_dapp <trz_tls_dapp <trz_tls_dapp
 >zplus_opp_bi <zplus_assoc //
 qed.

@@ -19,14 +19,14 @@ include "ground/relocation/trz_puni_le.ma".
 
 (* Constuctions with zle ****************************************************)
 
-lemma trz_pnext_gt (f) (z):
+lemma trz_pnext_dapp_gt (f) (z):
       (𝟎) < f＠⧣❨z❩ →
       ↑f＠⧣❨z❩ = (↑⁺f)＠⧣❨z❩.
-/2 width=1 by trz_puni_gt/
+/2 width=1 by trz_puni_dapp_gt/
 qed.
 
-lemma trz_pnext_le (f) (z):
+lemma trz_pnext_dapp_le (f) (z):
       f＠⧣❨z❩ ≤ 𝟎 →
       f＠⧣❨z❩ = (↑⁺f)＠⧣❨z❩.
-/2 width=1 by trz_puni_le/
+/2 width=1 by trz_puni_dapp_le/
 qed.

@@ -30,6 +30,6 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma trz_uni_unfold (z) (z0):
+lemma trz_uni_dapp (z) (z0):
       z0+z = 𝐮❨z❩＠⧣❨z0❩.
 // qed.

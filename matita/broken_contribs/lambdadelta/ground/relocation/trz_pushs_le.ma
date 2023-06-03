@@ -20,7 +20,7 @@ include "ground/arith/int_lt_pred.ma".
 
 (* Constructions with order for integers ************************************)
 
-lemma trz_pushs_unfold_be (n) (z) (f):
+lemma trz_pushs_dapp_be (n) (z) (f):
       (⁤𝟏) ≤ z → z ≤ ⊕n →
       z = (⫯*[n]f)＠⧣❨z❩.
 #n @(nat_ind_succ … n) -n
@@ -33,7 +33,7 @@ lemma trz_pushs_unfold_be (n) (z) (f):
   | destruct <trz_pushs_succ -H1z
     generalize in match IH; -IH
     cases n -n // #p #IH
-    <trz_push_pos_succ <trz_after_unfold
+    <trz_push_dapp_pos_succ <trz_after_dapp
     <IH -IH //
   ]
 ]

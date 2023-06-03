@@ -76,26 +76,26 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma trz_puni_neg (p):
+lemma trz_puni_dapp_neg (p):
       −p = 𝐮⁺＠⧣❨−p❩.
 // qed.
 
-lemma trz_puni_zero:
+lemma trz_puni_dapp_zero:
       (𝟎) = 𝐮⁺＠⧣❨𝟎❩.
 // qed.
 
-lemma trz_puni_pos (p):
+lemma trz_puni_dap_pos (p):
       (⁤↑p) = 𝐮⁺＠⧣❨⁤p❩.
 // qed.
 
 (* Basic inversions *********************************************************)
 
-lemma eq_inv_pos_unit_trz_puni (z):
+lemma eq_inv_pos_unit_trz_puni_dapp (z):
       (⁤𝟏) = 𝐮⁺＠⧣❨z❩ → ⊥.
 @eq_inv_pos_unit_trz_puni_staff
 qed-.
 
-lemma eq_inv_trz_puni_pos_unit (z):
+lemma eq_inv_trz_puni_dapp_pos_unit (z):
       (𝐮⁺)＠⧣❨z❩ = (⁤𝟏) → ⊥.
 @eq_inv_trz_puni_staff_pos_unit
 qed-.

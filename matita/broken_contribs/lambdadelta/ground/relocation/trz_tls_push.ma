@@ -13,14 +13,15 @@
 (**************************************************************************)
 
 include "ground/relocation/trz_tls.ma".
-include "ground/relocation/trz_push.ma".
+include "ground/relocation/trz_push_le.ma".
 
 (* ITERATED TAIL FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
 (* Constructions with trz_push **********************************************)
 
-lemma trz_tls_pos_unit_push (f):
-      f ≐ ⫰*[⁤𝟏]⫯f.
-#f #z0 <trz_tls_unfold <trz_push_pos_unit
-cases z0 -z0 [ * [| #p ]|| #p ]
-[ 
+lemma trz_tls_pos_unit_push_dapp_gt_gt (f) (z):
+      (𝟎) < z → (𝟎) < f＠⧣❨z❩ →
+      f＠⧣❨z❩ = (⫰*[⁤𝟏]⫯f)＠⧣❨z❩.
+#f #z #H1z #H2z
+<trz_tls_dapp <trz_push_dapp_pos_unit <trz_push_dapp_gt_gt //
+qed.

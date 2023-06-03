@@ -23,6 +23,6 @@ include "ground/relocation/trz_tls.ma".
 lemma trz_tls_uni (z2) (z1):
       (𝐢) ≐ ⫰*[z2]𝐮❨z1❩.
 #z2 #z1 #z0
-<trz_id_unfold <trz_tls_unfold <trz_uni_unfold <trz_uni_unfold
+<trz_id_dapp <trz_tls_dapp <trz_uni_dapp <trz_uni_dapp
 >zplus_assoc in ⊢ (???(?%?)); //
 qed.
