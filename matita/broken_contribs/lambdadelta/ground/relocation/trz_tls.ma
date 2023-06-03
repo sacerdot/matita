@@ -36,6 +36,12 @@ lemma trz_tls_unfold (f) (z) (z0):
       f＠⧣❨z0+z❩-f＠⧣❨z❩ = (⫰*[z]f)＠⧣❨z0❩.
 // qed.
 
+lemma trz_dapp_plus (f) (z1) (z2):
+      (⫰*[z2]f)＠⧣❨z1❩+f＠⧣❨z2❩ = f＠⧣❨z1+z2❩.
+#f #z1 #z2
+<trz_tls_unfold <zminus_plus_simpl //
+qed.
+
 lemma trz_tls_eq_repl_fwd (z):
       compatible_2_fwd … trz_eq trz_eq (trz_tls z).
 #z #f1 #f2 #Hf #z0

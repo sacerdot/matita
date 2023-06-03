@@ -83,7 +83,7 @@ lemma tr_nap_plus_sn (f) (m) (n:ℕ):
 qed.
 
 lemma tr_nap_plus_dx (f) (m) (n):
-      ⇂*[n]f＠§❨m❩+(⫯f)＠§❨n❩ = f＠§❨m+n❩.
+      (⇂*[n]f)＠§❨m❩+(⫯f)＠§❨n❩ = f＠§❨m+n❩.
 #f #m #n @(nat_ind_succ … n) -n [| #n #_ ]
 [ //
 | <tr_nap_push

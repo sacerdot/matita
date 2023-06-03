@@ -12,27 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/int_lt.ma".
-include "ground/arith/int_le_pred.ma".
+include "ground/relocation/trz_eq.ma".
+include "ground/arith/int_pred_succ.ma".
+include "ground/notation/functions/atsection_2.ma".
 
-(* STRICT ORDER FOR INTEGERS ************************************************)
+(* LEVEL APPLICATION FOR TOTAL RELOCATION MAPS WITH INTEGERS ****************)
 
-(* Advanced inversions with zle *********************************************)
+interpretation
+  "level application (total relocation maps with integers)"
+  'AtSection f z = (zpred (trz_staff f (zsucc z))).
 
-lemma zlt_inv_succ_dx_le (z1) (z2):
-      z1 < ↑z2 → z1 ≤ z2.
-/2 width=1 by zle_inv_succ_bi/
-qed-.
+(* Basic constructions ******************************************************)
 
-lemma zlt_inv_gen_le_pred_dx (z1) (z2):
-      z1 < z2 → z1 ≤ ↓z2.
-/2 width=1 by zle_pred_bi/
-qed-.
+lemma trz_lapp_eq_repl (z):
+      compatible_2_fwd … trz_eq (eq …) (λf.f＠§❨z❩).
+/2 width=1 by trz_dapp_eq_repl_fwd/
+qed.
 
-(* Advanced destructions ****************************************************)
+lemma trz_dapp_succ_lapp (f) (z):
+      ↑f＠§❨z❩ = f＠⧣❨↑z❩.
+// qed.
 
-lemma zlt_des_zero_dx (z):
-      z < 𝟎 →
-      ∃p. −p = z.
-/3 width=2 by zlt_inv_gen_le_pred_dx, zle_des_neg_dx/
-qed-.
+lemma trz_dapp_lapp (f) (z):
+      ↑f＠§❨↓z❩ = f＠⧣❨z❩.
+// qed.
+
+lemma trz_lapp_pred_dapp (f) (z):
+      ↓f＠⧣❨z❩ = f＠§❨↓z❩.
+// qed.

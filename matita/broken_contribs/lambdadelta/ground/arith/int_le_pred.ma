@@ -39,8 +39,8 @@ qed.
 (* Advanced destructions ****************************************************)
 
 lemma zle_des_neg_dx (z) (q):
-     z ≤ −q →
-     ∃p. −p = z.
+      z ≤ −q →
+      ∃p. −p = z.
 #z1 #q @insert_eq_1
 #z2 #Hz generalize in match q; -q elim Hz -z2
 [ /2 width=2 by ex_intro/

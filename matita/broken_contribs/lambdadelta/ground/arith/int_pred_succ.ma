@@ -29,6 +29,10 @@ lemma zsucc_pred (z):
 * [ #p || * [| #p ] ] //
 qed.
 
+lemma zpred_succ_swap (z):
+      ↑↓z = ↓↑z.
+// qed.
+
 (* Inversions with zsucc ****************************************************)
 
 lemma eq_inv_zneg_succ (p) (z):

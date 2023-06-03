@@ -82,6 +82,14 @@ lemma zplus_pred_sn (z1) (z2):
 <IH -IH <zpred_succ <zsucc_pred //
 qed.
 
+lemma zplus_succ_shift (z1) (z2):
+      ↑z1 + z2 = z1 + ↑z2.
+// qed.
+
+lemma zplus_pred_shift (z1) (z2):
+      ↓z1 + z2 = z1 + ↓z2.
+// qed.
+
 (* Main constructions *******************************************************)
 
 lemma zplus_comm: commutative … zplus.

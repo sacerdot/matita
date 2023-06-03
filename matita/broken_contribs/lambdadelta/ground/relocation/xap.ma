@@ -78,12 +78,12 @@ theorem tr_xap_eq_repl (i):
 qed.
 
 lemma tr_nap_plus_dx_xap (f) (m) (n:ℕ):
-      ⇂*[↑n]f＠❨m❩+f＠§❨n❩ = f＠§❨m+n❩.
+      (⇂*[↑n]f)＠❨m❩+f＠§❨n❩ = f＠§❨m+n❩.
 /2 width=1 by tr_nap_eq_repl/
 qed.
 
 lemma tr_nap_plus_sn_xap (f) (m) (n):
-      ⇂*[n]f＠§❨m❩+f＠❨n❩ = f＠§❨m+n❩.
+      (⇂*[n]f)＠§❨m❩+f＠❨n❩ = f＠§❨m+n❩.
 // qed.
 
 lemma tr_xap_pos (f) (n):

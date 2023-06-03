@@ -12,27 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/int_lt.ma".
-include "ground/arith/int_le_pred.ma".
+include "ground/relocation/trz_puni.ma".
+include "ground/arith/int_lt_pred.ma".
 
-(* STRICT ORDER FOR INTEGERS ************************************************)
+(* POSITIVE UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS ********)
 
-(* Advanced inversions with zle *********************************************)
+(* Constuctions with zle ****************************************************)
 
-lemma zlt_inv_succ_dx_le (z1) (z2):
-      z1 < ↑z2 → z1 ≤ z2.
-/2 width=1 by zle_inv_succ_bi/
-qed-.
+lemma trz_puni_gt (z):
+      (𝟎) < z →
+      ↑z = 𝐮⁺＠⧣❨z❩.
+#z #Hz
+elim (zle_des_pos_sn … Hz) -Hz //
+qed.
 
-lemma zlt_inv_gen_le_pred_dx (z1) (z2):
-      z1 < z2 → z1 ≤ ↓z2.
-/2 width=1 by zle_pred_bi/
-qed-.
-
-(* Advanced destructions ****************************************************)
-
-lemma zlt_des_zero_dx (z):
-      z < 𝟎 →
-      ∃p. −p = z.
-/3 width=2 by zlt_inv_gen_le_pred_dx, zle_des_neg_dx/
-qed-.
+lemma trz_puni_le (z):
+      z ≤ 𝟎 →
+      z = 𝐮⁺＠⧣❨z❩.
+#z #Hz
+elim (zle_split_lt_eq … Hz) -Hz #Hz
+[ elim (zlt_des_zero_dx … Hz) -Hz //
+| destruct //
+]
+qed.

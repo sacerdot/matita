@@ -13,26 +13,24 @@
 (**************************************************************************)
 
 include "ground/arith/int_lt.ma".
-include "ground/arith/int_le_pred.ma".
 
 (* STRICT ORDER FOR INTEGERS ************************************************)
 
-(* Advanced inversions with zle *********************************************)
+definition int_increasing_2: predicate (ℤ→ℤ) ≝
+           λf. ∀z1,z2. z1 < z2 → f z1 < f z2.
 
-lemma zlt_inv_succ_dx_le (z1) (z2):
-      z1 < ↑z2 → z1 ≤ z2.
-/2 width=1 by zle_inv_succ_bi/
-qed-.
+definition int_increasing_1: predicate (ℤ→ℤ) ≝
+           λf. ∀z. f z < f (↑z).
 
-lemma zlt_inv_gen_le_pred_dx (z1) (z2):
-      z1 < z2 → z1 ≤ ↓z2.
-/2 width=1 by zle_pred_bi/
-qed-.
+(* Constructions with increasing functions **********************************)
 
-(* Advanced destructions ****************************************************)
+lemma int_increasing_2_1 (f):
+      int_increasing_2 f → int_increasing_1 f.
+/2 width=1 by/
+qed.
 
-lemma zlt_des_zero_dx (z):
-      z < 𝟎 →
-      ∃p. −p = z.
-/3 width=2 by zlt_inv_gen_le_pred_dx, zle_des_neg_dx/
+lemma int_increasing_1_2 (f):
+      int_increasing_1 f → int_increasing_2 f.
+#f #Hf #z1 #z2 #Hz elim Hz -z2
+/2 width=3 by zlt_trans/
 qed-.

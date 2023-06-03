@@ -21,12 +21,6 @@ interpretation
   "less (integers)"
   'lt z1 z2 = (zle (zsucc z1) z2).
 
-definition int_increasing_2: predicate (ℤ→ℤ) ≝
-           λf. ∀z1,z2. z1 < z2 → f z1 < f z2.
-
-definition int_increasing_1: predicate (ℤ→ℤ) ≝
-           λf. ∀z. f z < f (↑z).
-
 (* Basic constructions ******************************************************)
 
 lemma zlt_succ_bi (z1) (z2):
@@ -40,19 +34,6 @@ theorem zlt_trans:
         Transitive … (λz1,z2. z1 < z2).
 /3 width=3 by zlt_succ_bi, zle_trans/
 qed.
-
-(* Constructions with int_increasing ****************************************)
-
-lemma int_increasing_2_1 (f):
-      int_increasing_2 f → int_increasing_1 f.
-/2 width=1 by/
-qed.
-
-lemma int_increasing_1_2 (f):
-      int_increasing_1 f → int_increasing_2 f.
-#f #Hf #z1 #z2 #Hz elim Hz -z2
-/2 width=3 by zlt_trans/
-qed-.
 
 (* Inversions with zle ******************************************************)
 

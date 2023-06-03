@@ -12,27 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/int_lt.ma".
-include "ground/arith/int_le_pred.ma".
+include "ground/relocation/trz_tls.ma".
+include "ground/relocation/trz_lapp.ma".
 
-(* STRICT ORDER FOR INTEGERS ************************************************)
+(* ITERATED TAIL FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
-(* Advanced inversions with zle *********************************************)
+(* Constructions with trz_lapp **********************************************)
 
-lemma zlt_inv_succ_dx_le (z1) (z2):
-      z1 < ↑z2 → z1 ≤ z2.
-/2 width=1 by zle_inv_succ_bi/
-qed-.
+lemma trz_lapp_plus_dx (f) (z1) (z2):
+      (⫰*[z2]f)＠§❨z1❩+f＠⧣❨z2❩ = f＠§❨z1+z2❩.
+// qed.
 
-lemma zlt_inv_gen_le_pred_dx (z1) (z2):
-      z1 < z2 → z1 ≤ ↓z2.
-/2 width=1 by zle_pred_bi/
-qed-.
-
-(* Advanced destructions ****************************************************)
-
-lemma zlt_des_zero_dx (z):
-      z < 𝟎 →
-      ∃p. −p = z.
-/3 width=2 by zlt_inv_gen_le_pred_dx, zle_des_neg_dx/
-qed-.
+lemma trz_lapp_plus_sn (f) (z1) (z2):
+      (⫰*[↑z2]f)＠⧣❨z1❩+f＠§❨z2❩ = f＠§❨z1+z2❩.
+#f #z1 #z2
+>zplus_succ_dx <trz_dapp_plus >zplus_pred_dx //
+qed.
