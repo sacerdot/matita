@@ -4,6 +4,8 @@ type var = string
 
 type constname = string
 
+type pragma = string
+
 type modname = string
 
 type const = modname * constname
@@ -115,6 +117,7 @@ type entry =
   | RewriteRule of context * pattern * term
   | Command of command
   | Comment of string
+  | Pragma of pragma
 
 type signature = entry list
 

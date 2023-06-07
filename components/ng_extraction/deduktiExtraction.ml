@@ -717,14 +717,12 @@ module Translation (I : INFO) = struct
     let ty' = translate_type empty_context ty in
     add_entry (fst const') (D.StcDeclaration (snd const', ty'))
 
-
   let translate_definition name ty body =
     Format.eprintf "%s@." name ;
     let ty' = translate_type empty_context ty in
     let body' = translate_term empty_context body in
     let const' = translate_const (I.baseuri, name) in
     add_entry (fst const') (D.Definition (snd const', Some ty', body'))
-
 
   let translate_constructor _ (_, name, ty) =
     translate_declaration name ty
@@ -1179,19 +1177,23 @@ module Translation (I : INFO) = struct
         - Fixpoints definitions (i.e. top-level recursive functions)
         - Inductive type definitions **)
   let translate_obj_kind obj_kind =
+    let modname = translate_baseuri I.baseuri in
     match obj_kind with
+    | C.Constant (_, name, None, ty, (att, _, _)) when att = `Generated-> 
+      add_entry modname (D.Pragma "begin generated");
+      translate_declaration name ty;
+      add_entry modname (D.Pragma "end generated")
     | C.Constant (_, name, None, ty, _) ->
-        HLog.debug
-          (Format.sprintf "Dedukti: Translating constant declaration %s" name) ;
-        (* The relevance argument is irrelevant for our purposes (no pun intended).
-           The [c_attr] argument is not needed by the kernel. *)
-        translate_declaration name ty
+      HLog.debug 
+        (Format.sprintf "Dedukti: Translating constant declaration %s" name) ;
+        (* The relevance argument is irrelevant for our purposes (no pun intended). *)
+      translate_declaration name ty
     | C.Constant (_, name, Some body, ty, _) ->
-        HLog.debug
-          (Format.sprintf "Dedukti: Translating constant definition %s" name) ;
-        (* Hack for prop irrelevance *)
-        let problematic =
-          []
+      HLog.debug
+        (Format.sprintf "Dedukti: Translating constant definition %s" name) ;
+      (* Hack for prop irrelevance *)
+      let problematic =
+        []
           (* "lemmaK"; "eq_sigma_true"; "Vector_eq"; "vec_expand"; "vector_nil";
             "change_vec_cons_tail"; "pmap_vec_cons"; "pmap_change";
             "while_trans_false"; "sem_obj_to_cfg"; "sem_cfg_to_obj"; *)
@@ -1199,22 +1201,33 @@ module Translation (I : INFO) = struct
         in
         if List.mem name problematic then translate_declaration name ty
         else translate_definition name ty body
+    | C.Fixpoint (is_recursive, funs, (attr, _, _)) when attr = `Generated ->
+      HLog.debug (Format.sprintf "Dedukti: Translating fixpoint definitions") ;
+      if not is_recursive then not_implemented "co-recursive fixpoint" ;
+      add_entry modname (D.Pragma "begin generated");
+      translate_fixpoints funs;
+      add_entry modname (D.Pragma "end generated")
     | C.Fixpoint (is_recursive, funs, _) ->
-        HLog.debug (Format.sprintf "Dedukti: Translating fixpoint definitions") ;
-        (* The boolean [is_recursive] indicates if the functions are recursive
-           (when true) or co-recursive (when false).
-           The [f_attr] argument is not needed by the kernel. *)
-        if not is_recursive then not_implemented "co-recursive fixpoint" ;
-        translate_fixpoints funs
+      HLog.debug (Format.sprintf "Dedukti: Translating fixpoint definitions") ;
+      (* The boolean [is_recursive] indicates if the functions are recursive
+          (when true) or co-recursive (when false).
+          The [f_attr] argument is not needed by the kernel. *)
+      if not is_recursive then not_implemented "co-recursive fixpoint" ;
+      translate_fixpoints funs
+    | C.Inductive (is_inductive, leftno, types, (attr, _)) when attr = `Generated ->
+      if not is_inductive then not_implemented "co-inductive type" ;
+      add_entry modname (D.Pragma "begin generated");
+      translate_inductives leftno types;
+      add_entry modname (D.Pragma "end generated");
     | C.Inductive (is_inductive, leftno, types, _) ->
-        HLog.debug
-          (Format.sprintf "Dedukti: Translating inductive definitions") ;
-        (* The boolean [is_inductive] indicates if the types are inductive
-           (when true) or co-inductive (when false).
-           The [leftno] indicates the number of left parameters.
-           The [i_attr] argument is not needed by the kernel. *)
-        if not is_inductive then not_implemented "co-inductive type" ;
-        translate_inductives leftno types
+      HLog.debug
+        (Format.sprintf "Dedukti: Translating inductive definitions") ;
+      (* The boolean [is_inductive] indicates if the types are inductive
+         (when true) or co-inductive (when false).
+         The [leftno] indicates the number of left parameters.
+         The [i_attr] argument is not needed by the kernel. *)
+      if not is_inductive then not_implemented "co-inductive type" ;
+      translate_inductives leftno types
 end
 
 (** Extraction entry-points **)

@@ -6,6 +6,8 @@ type var = string
 
 type constname = string
 
+type pragma = string
+
 (** Names of modules **)
 type modname = string
 
@@ -60,6 +62,7 @@ type entry =
 | RewriteRule of context * pattern * term
 | Command of command
 | Comment of comment
+| Pragma of pragma
 
 (** Content of a dedukti file
     WARNING: Signatures are stored in reverse order. **)

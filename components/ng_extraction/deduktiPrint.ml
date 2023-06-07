@@ -112,6 +112,9 @@ let print_command out = function
 let print_comment out comment =
   F.fprintf out "(; %s ;)" comment
 
+let print_pragma out pragma =
+  F.fprintf out "#PRAGMA %s" pragma
+
 let print_entry out entry =
   match entry with
   | D.StcDeclaration (name, ty) ->
@@ -140,6 +143,8 @@ let print_entry out entry =
     F.fprintf out "%a." print_command command
   | D.Comment comment ->
     F.fprintf out "%a" print_comment comment
+  | D.Pragma pragma ->
+    F.fprintf out "%a" print_pragma pragma
 
 let print_signature out signature =
   (* Signatures are stored in reverse order. *)
