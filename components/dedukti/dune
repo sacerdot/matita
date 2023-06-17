@@ -1,6 +1,6 @@
 (library
  (name helm_dedukti)
- (libraries helm_ng_library dedukti.parsers)
+ (libraries helm_ng_library dedukti.parsers helm_ng_disambiguation helm_grafite_engine)
  (wrapped false))
 (env
   (_

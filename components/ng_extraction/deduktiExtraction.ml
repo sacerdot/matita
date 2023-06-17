@@ -9,6 +9,12 @@ let pp ?(ctx= []) fmt term =
   Format.fprintf fmt "%s@." (new P.status#ppterm ctx [] [] term)
 
 
+let begin_gen = (D.Pragma "BEGIN GENERATED.")
+let end_gen = (D.Pragma "END GENERATED.")
+let begin_fixpoint = (D.Pragma "BEGIN FIXPOINT.")
+let end_fixpoint = (D.Pragma "END FIXPOINT.")
+
+
 (**** Utilities ****)
 
 exception NotImplemented of string
@@ -1128,6 +1134,7 @@ module Translation (I : INFO) = struct
     let fun_const_type'' =
       to_cic_prods (List.rev (params' @ [rec_param'])) return_type''
     in
+    let _ = add_entry (fst fun_const') begin_fixpoint in
     let () =
       add_entry (fst fun_const')
         (D.DefDeclaration (snd fun_const', fun_const_type''))
@@ -1166,6 +1173,7 @@ module Translation (I : INFO) = struct
       add_entry (fst fun_body')
         (D.RewriteRule (context.dk, left_body_pattern', right_body_term'))
     in
+    let _ = add_entry (fst fun_const') end_fixpoint in 
     ()
 
 
@@ -1180,9 +1188,9 @@ module Translation (I : INFO) = struct
     let modname = translate_baseuri I.baseuri in
     match obj_kind with
     | C.Constant (_, name, None, ty, (att, _, _)) when att = `Generated-> 
-      add_entry modname (D.Pragma "begin generated");
+      add_entry modname begin_gen;
       translate_declaration name ty;
-      add_entry modname (D.Pragma "end generated")
+      add_entry modname end_gen 
     | C.Constant (_, name, None, ty, _) ->
       HLog.debug 
         (Format.sprintf "Dedukti: Translating constant declaration %s" name) ;
@@ -1204,9 +1212,9 @@ module Translation (I : INFO) = struct
     | C.Fixpoint (is_recursive, funs, (attr, _, _)) when attr = `Generated ->
       HLog.debug (Format.sprintf "Dedukti: Translating fixpoint definitions") ;
       if not is_recursive then not_implemented "co-recursive fixpoint" ;
-      add_entry modname (D.Pragma "begin generated");
+      add_entry modname begin_gen;
       translate_fixpoints funs;
-      add_entry modname (D.Pragma "end generated")
+      add_entry modname end_gen
     | C.Fixpoint (is_recursive, funs, _) ->
       HLog.debug (Format.sprintf "Dedukti: Translating fixpoint definitions") ;
       (* The boolean [is_recursive] indicates if the functions are recursive
@@ -1216,14 +1224,14 @@ module Translation (I : INFO) = struct
       translate_fixpoints funs
     | C.Inductive (is_inductive, leftno, types, (attr, _)) when attr = `Generated ->
       if not is_inductive then not_implemented "co-inductive type" ;
-      add_entry modname (D.Pragma "begin generated");
+      add_entry modname begin_gen;
       translate_inductives leftno types;
-      add_entry modname (D.Pragma "end generated");
+      add_entry modname end_gen;
     | C.Inductive (is_inductive, leftno, types, _) ->
       HLog.debug
         (Format.sprintf "Dedukti: Translating inductive definitions") ;
       (* The boolean [is_inductive] indicates if the types are inductive
-         (when true) or co-inductive (when false).
+         (when true) or co-inductive (when false).dedukti
          The [leftno] indicates the number of left parameters.
          The [i_attr] argument is not needed by the kernel. *)
       if not is_inductive then not_implemented "co-inductive type" ;
