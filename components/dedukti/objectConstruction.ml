@@ -110,7 +110,7 @@ let rec parse_rules rules =
   | [] -> HLog.message "fine rule printing "
   | h :: t -> Kernel.Rule.pp_part_typed_rule Format.err_formatter h; parse_rules t
 
-let construct_fixpoint ~baseuri typ_entry body_entry = 
+let construct_fixpoint ~baseuri typ_entry body_entry recno = 
   match typ_entry, body_entry with
   | Parsers.Entry.Decl(_, t_ident, _, _, typ), Parsers.Entry.Rules(_, _) ->
     let str_ident = Kernel.Basic.string_of_ident t_ident in 
@@ -118,7 +118,8 @@ let construct_fixpoint ~baseuri typ_entry body_entry =
     let typ' = construct_term ~baseuri typ in
     let body' = typ' in (*TODO translate body*)
     (* let rhs_list = List.map (fun rule -> rule.rhs) rule_list in *)
-    let ind_fun = ([], str_ident, 0, typ', body') in (* TODO recno *)
+    let ind_fun = ([], str_ident, recno, typ', body') in
+    HLog.error("FOUND RECNO" ^ (string_of_int recno ));
     let f_attr = (`Implied, `Axiom, `Regular) in 
     let obj_kind = NCic.Fixpoint(true, [ind_fun], f_attr) in 
     (uri, 0, [], [], obj_kind)
@@ -126,8 +127,8 @@ let construct_fixpoint ~baseuri typ_entry body_entry =
 
 let handle_pragma ~baseuri = function
   | PragmaParsing.GeneratedPragma(_) -> None
-  | PragmaParsing.FixpointPragma(_, type_entry, body_entry) ->
-    Some (construct_fixpoint ~baseuri type_entry body_entry)
+  | PragmaParsing.FixpointPragma(_, type_entry, body_entry, recno) ->
+    Some (construct_fixpoint ~baseuri type_entry body_entry recno)
 
 let obj_of_entry status ~baseuri buf = function
    Parsers.Entry.Def (_,ident,_,_,Some typ,body) -> 
@@ -141,9 +142,8 @@ let obj_of_entry status ~baseuri buf = function
     (match parsed_pragma with
     | Some pragma -> handle_pragma ~baseuri pragma
     | None -> None(* TODO *))
-  | Parsers.Entry.Rules(_, rules) ->
-    Printf.printf "prinin rule";
-    parse_rules rules;
+  | Parsers.Entry.Rules(_, _) ->
+    HLog.warn("Ignoring found rewriting rule");
     None
   | _ ->
     HLog.message("NOT IMPLEMENTED (other)");

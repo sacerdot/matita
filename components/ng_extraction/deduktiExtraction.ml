@@ -9,10 +9,11 @@ let pp ?(ctx= []) fmt term =
   Format.fprintf fmt "%s@." (new P.status#ppterm ctx [] [] term)
 
 
-let begin_gen = (D.Pragma "BEGIN GENERATED.")
-let end_gen = (D.Pragma "END GENERATED.")
-let begin_fixpoint = (D.Pragma "BEGIN FIXPOINT.")
-let end_fixpoint = (D.Pragma "END FIXPOINT.")
+let begin_gen = D.Pragma "BEGIN GENERATED."
+let end_gen = D.Pragma "END GENERATED."
+let end_fixpoint = D.Pragma "END FIXPOINT."
+
+let create_bfixpoint_pragma recno = D.Pragma ("BEGIN FIXPOINT RECNO=" ^ string_of_int(recno) ^ ".")
 
 
 (**** Utilities ****)
@@ -1134,7 +1135,7 @@ module Translation (I : INFO) = struct
     let fun_const_type'' =
       to_cic_prods (List.rev (params' @ [rec_param'])) return_type''
     in
-    let _ = add_entry (fst fun_const') begin_fixpoint in
+    let _ = add_entry (fst fun_const') (create_bfixpoint_pragma recno) in
     let () =
       add_entry (fst fun_const')
         (D.DefDeclaration (snd fun_const', fun_const_type''))
