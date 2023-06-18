@@ -104,28 +104,30 @@ let constuct_obj status ~baseuri ident typ body =
   Hashtbl.add const_tbl uri reference;
   (uri, 0, [], [], obj_kind)
 
-let construct_fixpoint status ~baseuri typ_entry body_entry = 
+(* TODO remove *)
+let rec parse_rules rules = 
+  match rules with
+  | [] -> HLog.message "fine rule printing "
+  | h :: t -> Kernel.Rule.pp_part_typed_rule Format.err_formatter h; parse_rules t
+
+let construct_fixpoint ~baseuri typ_entry body_entry = 
   match typ_entry, body_entry with
   | Parsers.Entry.Decl(_, t_ident, _, _, typ), Parsers.Entry.Rules(_, _) ->
     let str_ident = Kernel.Basic.string_of_ident t_ident in 
     let uri = mkuri ~baseuri str_ident in
-    let typ' = constuct_obj status ~baseuri t_ident typ None  in
+    let typ' = construct_term ~baseuri typ in
     let body' = typ' in (*TODO translate body*)
+    (* let rhs_list = List.map (fun rule -> rule.rhs) rule_list in *)
     let ind_fun = ([], str_ident, 0, typ', body') in (* TODO recno *)
     let f_attr = (`Implied, `Axiom, `Regular) in 
-    let obj_kind = (true, [ind_fun], f_attr) in 
+    let obj_kind = NCic.Fixpoint(true, [ind_fun], f_attr) in 
     (uri, 0, [], [], obj_kind)
   | _ -> assert false (* TODO *)
 
-let handle_pragma status ~baseuri = function
+let handle_pragma ~baseuri = function
   | PragmaParsing.GeneratedPragma(_) -> None
   | PragmaParsing.FixpointPragma(_, type_entry, body_entry) ->
-    Some (construct_fixpoint status ~baseuri type_entry body_entry)
-
-(* TODO remove *)
-let rec parse_rule = function
-  [] -> HLog.message("-------") 
-  | (h :: t) -> Kernel.Rule.pp_part_typed_rule Format.err_formatter h; parse_rule t
+    Some (construct_fixpoint ~baseuri type_entry body_entry)
 
 let obj_of_entry status ~baseuri buf = function
    Parsers.Entry.Def (_,ident,_,_,Some typ,body) -> 
@@ -137,11 +139,11 @@ let obj_of_entry status ~baseuri buf = function
   | Parsers.Entry.Pragma(_, str) -> 
     let parsed_pragma = PragmaParsing.parse_pragma str buf in
     (match parsed_pragma with
-    | Some pragma -> handle_pragma status ~baseuri pragma
+    | Some pragma -> handle_pragma ~baseuri pragma
     | None -> None(* TODO *))
   | Parsers.Entry.Rules(_, rules) ->
     Printf.printf "prinin rule";
-    parse_rule rules;
+    parse_rules rules;
     None
   | _ ->
     HLog.message("NOT IMPLEMENTED (other)");
