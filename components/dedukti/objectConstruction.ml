@@ -104,6 +104,8 @@ let constuct_obj status ~baseuri ident typ body =
   Hashtbl.add const_tbl uri reference;
   (uri, 0, [], [], obj_kind)
 
+let rule_to_term ~baseuri (rule: 'a Kernel.Rule.rule) = construct_term ~baseuri rule.Kernel.Rule.rhs 
+
 (* TODO remove *)
 let rec parse_rules rules = 
   match rules with
@@ -112,12 +114,12 @@ let rec parse_rules rules =
 
 let construct_fixpoint ~baseuri typ_entry body_entry recno = 
   match typ_entry, body_entry with
-  | Parsers.Entry.Decl(_, t_ident, _, _, typ), Parsers.Entry.Rules(_, _) ->
+  | Parsers.Entry.Decl(_, t_ident, _, _, typ), Parsers.Entry.Rules(_, rule_list) ->
     let str_ident = Kernel.Basic.string_of_ident t_ident in 
     let uri = mkuri ~baseuri str_ident in
     let typ' = construct_term ~baseuri typ in
-    let body' = typ' in (*TODO translate body*)
-    (* let rhs_list = List.map (fun rule -> rule.rhs) rule_list in *)
+    let r2t = rule_to_term ~baseuri in
+    let body' = List.hd (List.map r2t rule_list) in
     let ind_fun = ([], str_ident, recno, typ', body') in
     HLog.error("FOUND RECNO" ^ (string_of_int recno ));
     let f_attr = (`Implied, `Axiom, `Regular) in 
