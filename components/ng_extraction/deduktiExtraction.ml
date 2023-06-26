@@ -12,9 +12,10 @@ let pp ?(ctx= []) fmt term =
 let begin_gen = D.Pragma "BEGIN GENERATED."
 let end_gen = D.Pragma "END GENERATED."
 let end_fixpoint = D.Pragma "END FIXPOINT."
+let end_inductive = D.Pragma "END INDUCTIVE"
 
+let create_binductive_pragma leftno = D.Pragma ("BEGIN INDUCTIVE LEFTNO=" ^ string_of_int(leftno) ^ ".")
 let create_bfixpoint_pragma recno = D.Pragma ("BEGIN FIXPOINT RECNO=" ^ string_of_int(recno) ^ ".")
-
 
 (**** Utilities ****)
 
@@ -884,6 +885,7 @@ module Translation (I : INFO) = struct
     in
     (* Declare the match function *)
     let match_type' = to_cic_prods common_context.dk conclusion in
+    add_entry (fst match_const') (create_binductive_pragma leftno);
     add_entry (fst match_const')
       (D.DefDeclaration (snd match_const', match_type')) ;
     (* Rewrite rules of the match function *)
@@ -909,7 +911,8 @@ module Translation (I : INFO) = struct
       add_entry (fst match_const')
         (D.RewriteRule (context.dk, left_pattern', right_term'))
     in
-    List.iteri translate_rule cons_infos
+    let _ = List.iteri translate_rule cons_infos in
+    add_entry (fst match_const') end_inductive
 
 
   (** A filter is similar to a match in that it blocks the application of

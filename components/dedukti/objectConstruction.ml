@@ -106,12 +106,6 @@ let constuct_obj status ~baseuri ident typ body =
 
 let rule_to_term ~baseuri (rule: 'a Kernel.Rule.rule) = construct_term ~baseuri rule.Kernel.Rule.rhs 
 
-(* TODO remove *)
-let rec parse_rules rules = 
-  match rules with
-  | [] -> HLog.message "fine rule printing "
-  | h :: t -> Kernel.Rule.pp_part_typed_rule Format.err_formatter h; parse_rules t
-
 let construct_fixpoint ~baseuri typ_entry body_entry recno = 
   match typ_entry, body_entry with
   | Parsers.Entry.Decl(_, t_ident, _, _, typ), Parsers.Entry.Rules(_, rule_list) ->
@@ -121,11 +115,12 @@ let construct_fixpoint ~baseuri typ_entry body_entry recno =
     let r2t = rule_to_term ~baseuri in
     let body' = List.hd (List.map r2t rule_list) in
     let ind_fun = ([], str_ident, recno, typ', body') in
-    HLog.error("FOUND RECNO" ^ (string_of_int recno ));
     let f_attr = (`Implied, `Axiom, `Regular) in 
     let obj_kind = NCic.Fixpoint(true, [ind_fun], f_attr) in 
     (uri, 0, [], [], obj_kind)
-  | _ -> assert false (* TODO *)
+  | _ -> 
+    HLog.error("Malformed error reconstructing fixpoint ");
+    assert false 
 
 let handle_pragma ~baseuri = function
   | PragmaParsing.GeneratedPragma(_) -> None
