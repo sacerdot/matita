@@ -8,14 +8,11 @@ module F = Format
 let pp ?(ctx= []) fmt term =
   Format.fprintf fmt "%s@." (new P.status#ppterm ctx [] [] term)
 
-
 let begin_gen = D.Pragma "BEGIN GENERATED."
 let end_gen = D.Pragma "END GENERATED."
-let end_fixpoint = D.Pragma "END FIXPOINT."
-let end_inductive = D.Pragma "END INDUCTIVE"
+let end_inductive = D.Pragma "END INDUCTIVE."
 
 let create_binductive_pragma leftno = D.Pragma ("BEGIN INDUCTIVE LEFTNO=" ^ string_of_int(leftno) ^ ".")
-let create_bfixpoint_pragma recno = D.Pragma ("BEGIN FIXPOINT RECNO=" ^ string_of_int(recno) ^ ".")
 
 (**** Utilities ****)
 
@@ -116,10 +113,21 @@ let translate_const (baseuri, name) =
     let () = Hashtbl.add reference_table (baseuri, name) const' in
     const'
 
+let generate_body_const_name name = Format.sprintf "%s_body" name
 
 (** Return the name of the body function associated to the fixpoint. **)
 let translate_body_const (baseuri, name) =
-  translate_const (baseuri, Format.sprintf "%s_body" name)
+  translate_const (baseuri, generate_body_const_name name)
+
+let gen_fixpoint_attrs (_, name, recno, _, _) = 
+  Format.sprintf "RECNO:%s=%d BODY:%s=%s" name recno name (generate_body_const_name name)
+
+let create_fixpoint_pragmas functions = 
+  let attrs_str = List.map gen_fixpoint_attrs functions in
+  let attrs = String.concat " " attrs_str in
+  let names_str = List.map (fun (_, name, _, _, _) -> "NAME=" ^ name) functions in 
+  let names = String.concat " " names_str in
+  (D.Pragma (Format.sprintf "BEGIN FIXPOINT %s %s" names attrs), D.Pragma "END FIXPOINT")
 
 
 (* A global Matita universe is mapped to a Dedukti constant.
@@ -1138,7 +1146,6 @@ module Translation (I : INFO) = struct
     let fun_const_type'' =
       to_cic_prods (List.rev (params' @ [rec_param'])) return_type''
     in
-    let _ = add_entry (fst fun_const') (create_bfixpoint_pragma recno) in
     let () =
       add_entry (fst fun_const')
         (D.DefDeclaration (snd fun_const', fun_const_type''))
@@ -1177,7 +1184,6 @@ module Translation (I : INFO) = struct
       add_entry (fst fun_body')
         (D.RewriteRule (context.dk, left_body_pattern', right_body_term'))
     in
-    let _ = add_entry (fst fun_const') end_fixpoint in 
     ()
 
 
@@ -1225,7 +1231,10 @@ module Translation (I : INFO) = struct
           (when true) or co-recursive (when false).
           The [f_attr] argument is not needed by the kernel. *)
       if not is_recursive then not_implemented "co-recursive fixpoint" ;
-      translate_fixpoints funs
+      let begin_pragma, end_pragma = create_fixpoint_pragmas funs in
+      add_entry modname begin_pragma;
+      translate_fixpoints funs;
+      add_entry modname end_pragma 
     | C.Inductive (is_inductive, leftno, types, (attr, _)) when attr = `Generated ->
       if not is_inductive then not_implemented "co-inductive type" ;
       add_entry modname begin_gen;
