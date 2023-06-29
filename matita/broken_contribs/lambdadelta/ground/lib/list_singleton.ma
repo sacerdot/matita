@@ -35,7 +35,7 @@ lemma list_singleton_zero (A) (a):
 // qed.
 
 lemma list_singleton_succ_lcons (A) (a) (n):
-      a ⨮ (a^n) = a^{A}↑n.
+      a ⨮ (a^n) = a^{A}(⁤↑n).
 #A #a #n
 <list_singleton_unfold <list_singleton_unfold <niter_succ //
 qed.

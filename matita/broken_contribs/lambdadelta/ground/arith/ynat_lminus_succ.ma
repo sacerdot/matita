@@ -20,5 +20,5 @@ include "ground/arith/ynat_lminus.ma".
 (* Constructions with ysucc *************************************************)
 
 (*** yminus_succ *)
-lemma ylminus_succ_bi (x) (n): x - n = ⫯x - ↑n.
+lemma ylminus_succ_bi (x) (n): x - n = ⫯x - (⁤↑n).
 // qed.

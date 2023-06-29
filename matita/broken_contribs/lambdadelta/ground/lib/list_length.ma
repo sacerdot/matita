@@ -20,7 +20,7 @@ include "ground/arith/nat_succ.ma".
 
 rec definition list_length A (l:list A) on l : ℕ ≝ match l with
 [ list_empty     ⇒ 𝟎
-| list_lcons _ l ⇒ (↑(list_length A l):ℕ)
+| list_lcons _ l ⇒ (⁤↑(list_length A l):ℕ)
 ].
 
 interpretation
@@ -34,7 +34,7 @@ lemma list_length_empty (A):
 // qed.
 
 lemma list_length_lcons (A) (l) (a):
-      ↑❘l❘ ={ℕ} ❘a⨮{A}l❘.
+      (⁤↑❘l❘) ={ℕ} ❘a⨮{A}l❘.
 // qed.
 
 (* Basic inversions *********************************************************)
@@ -50,7 +50,7 @@ lemma list_length_inv_zero_sn (A) (l):
 /2 width=1 by list_length_inv_zero_dx/ qed-.
 
 lemma list_length_inv_succ_dx (A) (l) (x):
-      ❘l❘{A} = ↑x →
+      ❘l❘{A} = (⁤↑x) →
       ∃∃tl,a. ❘tl❘ = x & a⨮tl = l.
 #A *
 [ #x <list_length_empty #H
@@ -61,6 +61,6 @@ lemma list_length_inv_succ_dx (A) (l) (x):
 qed-.
 
 lemma list_length_inv_succ_sn (A) (l) (x):
-      ↑x ={ℕ} ❘l❘{A} →
+      (⁤↑x) ={ℕ} ❘l❘{A} →
       ∃∃tl,a. ❘tl❘ = x & a⨮tl = l.
 /2 width=1 by list_length_inv_succ_dx/ qed-.

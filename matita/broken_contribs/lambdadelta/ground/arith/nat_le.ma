@@ -22,7 +22,7 @@ inductive nle (m:ℕ): predicate (ℕ) ≝
 (*** le_n *)
 | nle_refl   : nle m m
 (*** le_S *)
-| nle_succ_dx: ∀n. nle m n → nle m (↑n)
+| nle_succ_dx: ∀n. nle m n → nle m (⁤↑n)
 .
 
 interpretation
@@ -32,7 +32,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 (*** le_n_Sn *)
-lemma nle_succ_dx_refl (m): m ≤ ↑m.
+lemma nle_succ_dx_refl (m): m ≤ (⁤↑m).
 /2 width=1 by nle_refl, nle_succ_dx/ qed.
 
 (*** le_O_n *)
@@ -41,7 +41,7 @@ lemma nle_zero_sx (m): 𝟎 ≤ m.
 qed.
 
 (*** le_S_S *)
-lemma nle_succ_bi (m) (n): m ≤ n → ↑m ≤ ↑n.
+lemma nle_succ_bi (m) (n): m ≤ n → (⁤↑m) ≤ (⁤↑n).
 #m #n #H elim H -n /2 width=1 by nle_refl, nle_succ_dx/
 qed.
 
@@ -56,14 +56,14 @@ qed-.
 
 (* Basic destructions *******************************************************)
 
-lemma nle_des_succ_sn (m) (n): ↑m ≤ n → m ≤ n.
+lemma nle_des_succ_sn (m) (n): (⁤↑m) ≤ n → m ≤ n.
 #m #n #H elim H -n /2 width=1 by nle_succ_dx/
 qed-.
 
 (* Basic inversions *********************************************************)
 
 (*** le_S_S_to_le *)
-lemma nle_inv_succ_bi (m) (n): ↑m ≤ ↑n → m ≤ n.
+lemma nle_inv_succ_bi (m) (n): (⁤↑m) ≤ (⁤↑n) → m ≤ n.
 #m #n @insert_eq_1
 #x * -x
 [ #H >(eq_inv_nsucc_bi … H) -n //
@@ -84,11 +84,11 @@ qed-.
 (* Advanced inversions ******************************************************)
 
 (*** le_plus_xSy_O_false *)
-lemma nle_inv_succ_zero (m): ↑m ≤ 𝟎 → ⊥.
+lemma nle_inv_succ_zero (m): (⁤↑m) ≤ 𝟎 → ⊥.
 /3 width=2 by nle_inv_zero_dx, eq_inv_zero_npos/
 qed-.
 
-lemma nle_inv_succ_sn_refl (m): ↑m ≤ m → ⊥.
+lemma nle_inv_succ_sn_refl (m): (⁤↑m) ≤ m → ⊥.
 #m @(nat_ind_succ … m) -m [| #m #IH ] #H
 [ /2 width=2 by nle_inv_succ_zero/
 | /3 width=1 by nle_inv_succ_bi/
@@ -109,7 +109,7 @@ qed-.
 (*** le_elim *)
 lemma nle_ind_alt (Q: relation2 nat nat):
       (∀n. Q (𝟎) (n)) →
-      (∀m,n. m ≤ n → Q m n → Q (↑m) (↑n)) →
+      (∀m,n. m ≤ n → Q m n → Q (⁤↑m) (⁤↑n)) →
       ∀m,n. m ≤ n → Q m n.
 #Q #IH1 #IH2 #m #n @(nat_ind_2_succ … m n) -m -n //
 [ #m #_ #H elim (nle_inv_succ_zero … H)

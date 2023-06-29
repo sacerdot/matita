@@ -32,7 +32,7 @@ qed.
 lemma rtc_ism_plus_zero_dx (n) (c1) (c2): 𝐌❨n,c1❩ → 𝐌❨𝟎,c2❩ → 𝐌❨n,c1+c2❩.
 /2 width=1 by rtc_ism_plus/ qed.
 
-lemma rtc_ism_succ (n) (c): 𝐌❨n,c❩ → 𝐌❨↑n,c+𝟘𝟙❩.
+lemma rtc_ism_succ (n) (c): 𝐌❨n,c❩ → 𝐌❨⁤↑n,c+𝟘𝟙❩.
 #n #c #H >nplus_unit_dx
 /2 width=1 by rtc_ism_plus/
 qed.
@@ -52,8 +52,8 @@ elim (rtc_ism_inv_plus … H) -H #n1 #n2 #Hn1 #Hn2 #H destruct
 lapply (rtc_ism_inj … Hn2 H2) -c2 #H destruct //
 qed-.
 
-lemma rtc_ism_inv_plus_unit_dx (n) (c1) (c2): 𝐌❨n,c1 + c2❩ → 𝐌❨𝟏,c2❩ →
-      ∃∃m. 𝐌❨m,c1❩ & n = ↑m.
+lemma rtc_ism_inv_plus_unit_dx (n) (c1) (c2): 𝐌❨n,c1 + c2❩ → 𝐌❨⁤𝟏,c2❩ →
+      ∃∃m. 𝐌❨m,c1❩ & n = (⁤↑m).
 #n #c1 #c2 #H #H2
 elim (rtc_ism_inv_plus … H) -H #n1 #n2 #Hn1 #Hn2 #H destruct
 lapply (rtc_ism_inj … Hn2 H2) -c2 #H destruct

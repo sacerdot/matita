@@ -20,6 +20,6 @@ include "ground/arith/nat_succ.ma".
 (* Constructions with niter *************************************************)
 
 (*** iter_S *)
-lemma niter_succ (A) (f) (n:ℕ): f ∘ f^n ⊜ f^{A}(↑n:ℕ).
+lemma niter_succ (A) (f) (n:ℕ): f ∘ f^n ⊜ f^{A}(⁤↑n).
 #A #f * //
 qed.

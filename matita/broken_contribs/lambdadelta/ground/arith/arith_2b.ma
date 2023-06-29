@@ -36,10 +36,10 @@ qed.
 lemma arith_l3 (m) (n1) (n2): n1+n2-m = n1-m+(n2-(m-n1)).
 // qed.
 
-lemma arith_l2 (n1) (n2): ↑n2-n1 = 𝟏-n1+(n2-(n1-𝟏)).
+lemma arith_l2 (n1) (n2): (⁤↑n2)-n1 = (⁤𝟏)-n1+(n2-(n1-(⁤𝟏))).
 #n1 #n2 <arith_l3 //
 qed.
 
-lemma arith_l1 (n): npos (𝟏) = 𝟏-n+(n-(n-𝟏)).
+lemma arith_l1 (n): (⁤𝟏) = (⁤𝟏)-n+(n-(n-(⁤𝟏))).
 #n <arith_l2 //
 qed.

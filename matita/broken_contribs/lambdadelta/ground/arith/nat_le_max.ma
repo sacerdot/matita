@@ -50,9 +50,9 @@ lemma nle_des_max_sn_dx (m1) (m2) (n): (m1 ∨ m2) ≤ n → m2 ≤ n.
 (* Advanced constructions with nmax *****************************************)
 
 (*** max_S1_le_S *)
-lemma nle_max_sn_succ_sn (m1) (m2) (n): (m1 ∨ m2) ≤ n → (↑m1 ∨ m2) ≤ ↑n.
+lemma nle_max_sn_succ_sn (m1) (m2) (n): (m1 ∨ m2) ≤ n → ((⁤↑m1) ∨ m2) ≤ (⁤↑n).
 /4 width=2 by nle_des_max_sn_sn, nle_des_max_sn_dx, nle_max_sn, nle_succ_bi, nle_succ_dx/ qed.
 
 (*** max_S2_le_S *)
-lemma nle_max_sn_succ_dx (m1) (m2) (n): (m1 ∨ m2) ≤ n → (m1 ∨ ↑m2) ≤ ↑n.
+lemma nle_max_sn_succ_dx (m1) (m2) (n): (m1 ∨ m2) ≤ n → (m1 ∨ (⁤↑m2)) ≤ (⁤↑n).
 /4 width=2 by nle_des_max_sn_sn, nle_des_max_sn_dx, nle_max_sn, nle_succ_bi, nle_succ_dx/ qed.

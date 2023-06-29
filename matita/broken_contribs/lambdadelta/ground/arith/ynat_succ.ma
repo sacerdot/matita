@@ -19,7 +19,7 @@ include "ground/arith/ynat_nat.ma".
 (* SUCCESSOR FOR NON-NEGATIVE INTEGERS WITH INFINITY ************************)
 
 definition ysucc_aux (n): ynat ≝
-           yinj_nat (↑n).
+           yinj_nat (⁤↑n).
 
 (*** ysucc *)
 definition ysucc: ynat → ynat ≝
@@ -32,7 +32,7 @@ interpretation
 (* Constructions ************************************************************)
 
 (*** ysucc_inj *)
-lemma ysucc_inj (n): yinj_nat (↑n) = ⫯(yinj_nat n).
+lemma ysucc_inj (n): yinj_nat (⁤↑n) = ⫯(yinj_nat n).
 @(ynat_bind_nat_inj ysucc_aux)
 qed.
 
@@ -45,7 +45,7 @@ lemma ysucc_inf: ∞ = ⫯∞.
 (*** ysucc_inv_inj_sn *)
 lemma eq_inv_inj_ysucc (n1) (x2:ynat):
       yinj_nat n1 = ⫯x2 →
-      ∃∃n2. yinj_nat n2 = x2 & ↑n2 ={ℕ} n1.
+      ∃∃n2. yinj_nat n2 = x2 & (⁤↑n2) = n1.
 #n1 #x2 @(ynat_split_nat_inf … x2) -x2
 [ /3 width=3 by eq_inv_yinj_nat_bi, ex2_intro/
 | #H elim (eq_inv_yinj_nat_inf … H)
@@ -55,7 +55,7 @@ qed-.
 (*** ysucc_inv_inj_dx *)
 lemma eq_inv_ysucc_inj (x1) (n2):
       (⫯x1) = yinj_nat n2  →
-      ∃∃n1. yinj_nat n1 = x1 & ↑n1 ={ℕ} n2.
+      ∃∃n1. yinj_nat n1 = x1 & (⁤↑n1) = n2.
 /2 width=1 by eq_inv_inj_ysucc/ qed-.
 
 (*** ysucc_inv_Y_sn *)
@@ -101,7 +101,7 @@ lemma eq_inv_ysucc_zero (x): ⫯x = 𝟎 → ⊥.
 
 (*** ynat_ind *)
 lemma ynat_ind_succ (Q:predicate …):
-      Q (𝟎) → (∀n:ℕ. Q (yinj_nat n) → Q (⫯(yinj_nat n))) → Q (∞) → ∀x. Q x.
+      Q (𝟎) → (∀n. Q (yinj_nat n) → Q (⫯(yinj_nat n))) → Q (∞) → ∀x. Q x.
 #Q #IH1 #IH2 #IH3 #x @(ynat_split_nat_inf … x) -x //
 #n @(nat_ind_succ … n) -n /2 width=1 by/
 qed-.

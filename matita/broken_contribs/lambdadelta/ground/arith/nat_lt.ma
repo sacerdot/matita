@@ -19,7 +19,7 @@ include "ground/arith/nat_le.ma".
 
 (*** lt *)
 definition nlt: relation2 (ℕ) (ℕ) ≝
-           λm,n. ↑m ≤ n.
+           λm,n. (⁤↑m) ≤ n.
 
 interpretation
   "less (non-negative integers)"
@@ -27,25 +27,25 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma nlt_i (m) (n): ↑m ≤ n → m < n.
+lemma nlt_i (m) (n): (⁤↑m) ≤ n → m < n.
 // qed.
 
-lemma nlt_refl_succ (n): n < ↑n.
+lemma nlt_refl_succ (n): n < (⁤↑n).
 // qed.
 
-lemma nlt_succ_dx (m) (n): m ≤ n → m < ↑n.
+lemma nlt_succ_dx (m) (n): m ≤ n → m < (⁤↑n).
 /2 width=1 by nle_succ_bi/ qed.
 
 (*** lt_S *)
-lemma nlt_succ_dx_trans (m) (n): m < n → m < ↑n.
+lemma nlt_succ_dx_trans (m) (n): m < n → m < (⁤↑n).
 /2 width=1 by nle_succ_dx/ qed.
 
 (*** lt_O_S *)
-lemma nlt_zero_succ (m): 𝟎 < ↑m.
+lemma nlt_zero_succ (m): 𝟎 < (⁤↑m).
 /2 width=1 by nle_succ_bi/ qed.
 
 (*** lt_S_S *)
-lemma nlt_succ_bi (m) (n): m < n → ↑m < ↑n.
+lemma nlt_succ_bi (m) (n): m < n → (⁤↑m) < (⁤↑n).
 /2 width=1 by nle_succ_bi/ qed.
 
 (*** le_to_or_lt_eq *)
@@ -87,11 +87,11 @@ lemma nle_nlt_trans (o) (m) (n): m ≤ o → o < n → m < n.
 
 (* Basic inversions *********************************************************)
 
-lemma nlt_inv_succ_dx (m) (n): m < ↑n → m ≤ n.
+lemma nlt_inv_succ_dx (m) (n): m < (⁤↑n) → m ≤ n.
 /2 width=1 by nle_inv_succ_bi/ qed-.
 
 (*** lt_S_S_to_lt *)
-lemma nlt_inv_succ_bi (m) (n): ↑m < ↑n → m < n.
+lemma nlt_inv_succ_bi (m) (n): (⁤↑m) < (⁤↑n) → m < n.
 /2 width=1 by nle_inv_succ_bi/ qed-.
 
 (*** lt_to_not_le lt_le_false *)
@@ -140,8 +140,8 @@ lemma nat_ind_lt (Q:predicate …):
 
 (*** lt_elim *)
 lemma nlt_ind_alt (Q: relation2 … (ℕ)):
-      (∀n. Q (𝟎) (↑n)) →
-      (∀m,n. m < n → Q m n → Q (↑m) (↑n)) →
+      (∀n. Q (𝟎) (⁤↑n)) →
+      (∀m,n. m < n → Q m n → Q (⁤↑m) (⁤↑n)) →
       ∀m,n. m < n → Q m n.
 #Q #IH1 #IH2 #m #n @(nat_ind_2_succ … n m) -m -n //
 [ #m #H

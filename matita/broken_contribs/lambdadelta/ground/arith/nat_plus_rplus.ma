@@ -17,17 +17,23 @@ include "ground/arith/nat_plus.ma".
 
 (* ADDITION FOR NON-NEGATIVE INTEGERS ***************************************)
 
-(* Constructions with nrplus ************************************************)
-
-lemma nrplus_inj_sn (p) (n):
-      npos (p + n) = npos p + n.
-#p #n @(nat_ind_succ … n) -n //
-#n #IH <nrplus_succ_dx <nplus_succ_dx //
-qed.
-
 (* Constructions with nrplus and npsucc *************************************)
 
-lemma nrplus_npsucc_sn (m:ℕ) (n:ℕ):
-      ↑(m + n) ={ℕ⁺} ↑m + n.
+lemma nrplus_npsucc_sn (m:ℕ) (n):
+      ↑(m + n) = (↑m) + n.
 #m @(nat_ind_succ … m) -m //
+qed.
+
+(* Constructions with nrplus ************************************************)
+
+lemma nplus_pos_sn (p) (n):
+      (⁤(p + n)) = (⁤p) + n.
+#p #n @(nat_ind_succ … n) -n //
+qed.
+
+lemma nrplus_plus_assoc (p:ℕ⁺) (n) (m):
+      p+m+n = p+(m+n).
+#p #n @(nat_ind_succ … n) -n //
+#n #IH #m
+<nrplus_succ_dx <nplus_succ_dx >IH -IH //
 qed.

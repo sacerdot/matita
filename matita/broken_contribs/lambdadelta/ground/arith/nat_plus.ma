@@ -18,7 +18,7 @@ include "ground/arith/nat_succ_iter.ma".
 
 (*** plus *)
 definition nplus: ℕ → ℕ → ℕ ≝
-           λm,n. (npsucc^n) m.
+           λm,n. ((npos∘npsucc)^n) m.
 
 interpretation
   "plus (non-negative integers)"
@@ -31,12 +31,12 @@ lemma nplus_zero_dx (m): m = m + 𝟎.
 // qed.
 
 (*** plus_SO_dx *)
-lemma nplus_unit_dx (n): ↑n ={ℕ} n + 𝟏.
+lemma nplus_unit_dx (n): (⁤↑n) = n + (⁤𝟏).
 // qed.
 
 (*** plus_n_Sm *)
-lemma nplus_succ_dx (m) (n): ↑(m+n) ={ℕ} m + ↑n.
-#m #n @(niter_succ … npsucc)
+lemma nplus_succ_dx (m) (n): (⁤↑(m+n)) = m + (⁤↑n).
+#m #n @(niter_succ … (npos∘npsucc))
 qed.
 
 (* Constructions with niter *************************************************)
@@ -55,8 +55,8 @@ qed.
 (* Advanced constructions (semigroup properties) ****************************)
 
 (*** plus_S1 *)
-lemma nplus_succ_sn (m) (n): ↑(m+n) ={ℕ} ↑m + n.
-#m #n @(niter_appl … npsucc)
+lemma nplus_succ_sn (m) (n): (⁤↑(m+n)) = (⁤↑m) + n.
+#m #n @(niter_appl … (npos∘npsucc))
 qed.
 
 (*** plus_O_n *)
@@ -77,10 +77,10 @@ qed.
 (* Helper constructions *****************************************************)
 
 (*** plus_SO_sn *)
-lemma nplus_unit_sn (n): ↑n ={ℕ} 𝟏 + n.
+lemma nplus_unit_sn (n): (⁤↑n) = (⁤𝟏) + n.
 #n <nplus_comm // qed.
 
-lemma nplus_succ_shift (m) (n): ↑m + n = m + ↑n.
+lemma nplus_succ_shift (m) (n): (⁤↑m) + n = m + (⁤↑n).
 // qed.
 
 (*** assoc_plus1 *)
@@ -120,7 +120,7 @@ lemma eq_inv_nplus_bi_sn (o) (m) (n): o + m = o + n → m = n.
 qed-.
 
 (*** plus_xSy_x_false *)
-lemma succ_nplus_refl_sn (m) (n): m = ↑(m + n) → ⊥.
+lemma succ_nplus_refl_sn (m) (n): m = (⁤↑(m + n)) → ⊥.
 #m @(nat_ind_succ … m) -m
 [ /2 width=2 by eq_inv_zero_npos/
 | #m #IH #n #H
@@ -144,6 +144,6 @@ qed-.
 
 (*** nat_ind_plus *)
 lemma nat_ind_plus (Q:predicate …):
-      Q (𝟎) → (∀n. Q n → Q (𝟏+n)) → ∀n. Q n.
+      Q (𝟎) → (∀n. Q n → Q ((⁤𝟏)+n)) → ∀n. Q n.
 #Q #IH1 #IH2 #n @(nat_ind_succ … n) -n /2 width=1 by/
 qed-.

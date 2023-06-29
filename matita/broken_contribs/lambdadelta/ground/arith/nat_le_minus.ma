@@ -25,13 +25,15 @@ lemma nle_minus_sn_refl_sn (m) (n): m - n ≤ m.
 #n #IH /2 width=3 by nle_trans/
 qed.
 
-lemma nle_minus_succ_sn (m) (n): ↑n - m ≤ ↑(n - m).
-/2 width=1 by nle_inv_pred_sn/
+lemma nle_minus_succ_sn (m) (n): (⁤↑n) - m ≤ (⁤↑(n - m)).
+#m #n
+@nle_inv_pred_sn >nminus_pred_sn //
 qed.
 
 (*** inv_eq_minus_O *)
 lemma nle_eq_zero_minus (m) (n): 𝟎 = m - n → m ≤ n.
 #m #n @(nat_ind_2_succ … m n) //
+#m #n #IH <nminus_succ_bi
 /3 width=1 by nle_succ_bi/
 qed.
 
@@ -61,12 +63,13 @@ qed-.
 (* Destructions with nminus *************************************************)
 
 (*** minus_Sn_m *)
-lemma nminus_succ_sn (m) (n): m ≤ n → ↑(n-m) ={ℕ} ↑n - m.
+lemma nminus_succ_sn (m) (n): m ≤ n → (⁤↑(n-m)) = (⁤↑n) - m.
 #m #n #H @(nle_ind_alt … H) -m -n //
 qed-.
 
 (*** minus_minus_m_m *)
 lemma nminus_minus_dx_refl_sn (m) (n): m ≤ n → m = n - (n - m).
 #m #n #H elim H -n //
-#n #Hmn #IH <(nminus_succ_sn … Hmn) -Hmn //
+#n #Hmn #IH <(nminus_succ_sn … Hmn) -Hmn
+<nminus_succ_bi //
 qed-.

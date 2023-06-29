@@ -37,12 +37,12 @@ lemma yminus_pred_sn (x) (n): ⫰(x-n) = ⫰x - n.
 qed.
 
 (*** yminus_succ2 yminus_S2 *)
-lemma ylminus_succ_dx (x:ynat) (n): ⫰(x-n) = x - ↑n.
+lemma ylminus_succ_dx (x:ynat) (n): ⫰(x-n) = x - (⁤↑n).
 #x #n @(niter_succ … ypred)
 qed.
 
 (*** yminus_SO2 *)
-lemma ylminus_unit_dx (x): ⫰x = x - 𝟏.
+lemma ylminus_unit_dx (x): ⫰x = x - (⁤𝟏).
 // qed.
 
 (*** yminus_Y_inj *)

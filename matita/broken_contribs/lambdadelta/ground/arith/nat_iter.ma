@@ -32,7 +32,7 @@ interpretation
 lemma niter_zero (A) (f) (a): a = (f^{A}𝟎) a.
 // qed.
 
-lemma niter_inj (A) (f) (p): f^p ⊜ f^{A}(npos p).
+lemma niter_pos (A) (f) (p): f^p ⊜ f^{A}(npos p).
 // qed.
 
 (* Advanced constructions ***************************************************)

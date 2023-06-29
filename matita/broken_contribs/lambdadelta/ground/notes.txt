@@ -1,0 +1,2 @@
+nsucc_inj npsucc_succ replaced by npsucc_pos
+nsucc_pnpred          replaced by npsucc_pnpred

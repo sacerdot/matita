@@ -31,16 +31,16 @@ lemma ntri_zero_bi (A) (a1) (a2) (a3):
       a2 = ntri A (𝟎) (𝟎) a1 a2 a3.
 // qed.
 
-lemma ntri_zero_inj (A) (a1) (a2) (a3) (p):
-      a1 = ntri A (𝟎) (npos p) a1 a2 a3.
+lemma ntri_zero_pos (A) (a1) (a2) (a3) (p):
+      a1 = ntri A (𝟎) (⁤p) a1 a2 a3.
 // qed.
 
-lemma ntri_inj_zero (A) (a1) (a2) (a3) (p):
-      a3 = ntri A (npos p) (𝟎) a1 a2 a3.
+lemma ntri_pos_zero (A) (a1) (a2) (a3) (p):
+      a3 = ntri A (⁤p) (𝟎) a1 a2 a3.
 // qed.
 
-lemma ntri_inj_bi (A) (a1) (a2) (a3) (p1) (p2):
-      ptri A (p1) (p2) a1 a2 a3 = ntri A (p1) (p2) a1 a2 a3.
+lemma ntri_pos_bi (A) (a1) (a2) (a3) (p1) (p2):
+      ptri A (p1) (p2) a1 a2 a3 = ntri A (⁤p1) (⁤p2) a1 a2 a3.
 // qed.
 
 (* Advanced constructions ***************************************************)
@@ -54,5 +54,5 @@ lemma ntri_f_tri (A) (B) (f) (a1) (a2) (a3) (n1) (n2):
       f (ntri A n1 n2 a1 a2 a3) = ntri B n1 n2 (f a1) (f a2) (f a3).
 #A #B #f #a1 #a2 #a3
 * [| #p1 ] * // #p2
-<ntri_inj_bi <ntri_inj_bi //
+<ntri_pos_bi <ntri_pos_bi //
 qed.

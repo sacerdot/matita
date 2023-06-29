@@ -12,40 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/downarrow_1.ma".
-include "ground/arith/pnat_split.ma".
-include "ground/arith/nat.ma".
+include "ground/arith/pnat_le.ma".
+include "ground/arith/nat_rplus_succ.ma".
 
-(* POSITIVE PREDECESSOR FOR NON-NEGATIVE INTEGERS ***************************)
+(* ORDER FOR POSITIVE INTEGERS **********************************************)
 
-definition pnpred (p): ℕ ≝
-           psplit … (𝟎) npos p.
+(* Constructions with nrplus ************************************************)
 
-interpretation
-  "positive predecessor (non-negative integers)"
-  'DownArrow p = (pnpred p).
-
-(* Basic constructions ******************************************************)
-
-lemma pnpred_unit: 𝟎 = ↓𝟏.
-// qed.
-
-lemma pnpred_succ (p): (⁤p) = ↓↑p.
-// qed.
-
-(* Basic inversions *********************************************************)
-
-lemma eq_inv_pnpred_bi: injective … pnpred.
-* [| #p1 ] * [2,4: #p2 ]
-[ 1,4: <pnpred_unit <pnpred_succ #H0 destruct
-| <pnpred_succ <pnpred_succ #H0 destruct //
-| //
-]
-qed-.
-
-lemma eq_inv_refl_pnpred (p): (⁤p) = ↓p → ⊥.
-*
-[ <pnpred_unit #H0 destruct
-| #p /3 width=2 by eq_inv_refl_psucc, eq_inv_npos_bi/
-]
-qed-.
+lemma ple_nrplus_dx (n) (p1) (p2):
+      p1 ≤ p2 → p1+n ≤ p2+n.
+#n @(nat_ind_succ … n) -n
+/3 width=1 by ple_succ_bi/
+qed.

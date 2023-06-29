@@ -32,7 +32,7 @@ lemma rtc_ism_zz: 𝐌❨𝟎,𝟘𝟘❩.
 lemma rtc_ism_zu: 𝐌❨𝟎,𝟙𝟘❩.
 /2 width=3 by ex1_2_intro/ qed.
 
-lemma rtc_ism_uz: 𝐌❨𝟏,𝟘𝟙❩.
+lemma rtc_ism_uz: 𝐌❨⁤𝟏,𝟘𝟙❩.
 /2 width=3 by ex1_2_intro/ qed.
 
 lemma rtc_ism_eq_t_trans (n) (c1) (c2): 𝐌❨n,c1❩ → rtc_eq_t c1 c2 → 𝐌❨n,c2❩.

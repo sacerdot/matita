@@ -29,10 +29,10 @@ interpretation
 lemma nrminus_zero_dx (p): p = p - 𝟎.
 // qed.
 
-lemma nrminus_unit_dx (p): ⫰p = p - 𝟏.
+lemma nrminus_unit_dx (p): ⫰p = p - (⁤𝟏).
 // qed.
 
-lemma nrminus_succ_dx (p) (n): ⫰(p - n) = p - ↑n.
+lemma nrminus_succ_dx (p) (n): ⫰(p - n) = p - (⁤↑n).
 #p #n @(niter_succ … ppred)
 qed.
 
@@ -46,6 +46,6 @@ lemma nrminus_unit_sn (n): 𝟏 = 𝟏 - n.
 #n @(nat_ind_succ … n) -n //
 qed.
 
-lemma nrminus_succ_bi (p) (n): p - n = ↑p - ↑n.
+lemma nrminus_succ_bi (p) (n): p - n = ↑p - (⁤↑n).
 #p #n @(nat_ind_succ … n) -n //
 qed.

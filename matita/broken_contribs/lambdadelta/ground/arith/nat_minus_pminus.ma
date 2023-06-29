@@ -20,7 +20,7 @@ include "ground/arith/nat_minus.ma".
 
 (* Constructions with pminus ************************************************)
 
-lemma nminus_inj_bi (p1) (p2):
+lemma nminus_pos_bi (p1) (p2):
       p2 < p1 →
       npos (p1 - p2) = npos p1 - npos p2.
 #p2 #p1 #H0 @(plt_ind_alt … H0) -p1 -p2 //

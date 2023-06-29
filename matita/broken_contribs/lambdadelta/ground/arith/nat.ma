@@ -12,9 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/arith/pnat.ma".
 include "ground/notation/functions/naturals_0.ma".
 include "ground/notation/functions/zero_0.ma".
-include "ground/arith/pnat.ma".
+include "ground/notation/functions/invisibleplus_1.ma".
 
 (* NON-NEGATIVE INTEGERS ****************************************************)
 
@@ -24,8 +25,6 @@ inductive nat: Type[0] ≝
 | npos : ℕ⁺ → nat
 .
 
-coercion npos.
-
 interpretation
   "non-negative integers"
   'Naturals = (nat).
@@ -34,27 +33,35 @@ interpretation
   "zero (non-negative integers)"
   'Zero = (nzero).
 
+interpretation
+  "positive projection (non-negative integers)"
+  'InvisiblePlus p = (npos p).
+
 (* Basic inversions *********************************************************)
 
 (* Note: destruct *)
-lemma eq_inv_npos_zero (p): npos p = 𝟎 → ⊥.
+lemma eq_inv_npos_zero (p):
+      (⁤p) = 𝟎 → ⊥.
 #p #H0 destruct
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_zero_npos (p): 𝟎 = npos p → ⊥.
+lemma eq_inv_zero_npos (p):
+      (𝟎) = ⁤p → ⊥.
 #p #H0 destruct
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_npos_bi: injective … npos.
+lemma eq_inv_npos_bi:
+      injective … npos.
 #p1 #p2 #H destruct //
 qed-.
 
 (* Basic constructions ******************************************************)
 
 (*** eq_nat_dec *)
-lemma eq_nat_dec (n1,n2:ℕ): Decidable (n1 = n2).
+lemma eq_nat_dec (n1,n2:ℕ):
+      Decidable (n1 = n2).
 * [| #p1 ] * [2,4: #p2 ]
 [1,4: @or_intror #H destruct
 | elim (eq_pnat_dec p1 p2)

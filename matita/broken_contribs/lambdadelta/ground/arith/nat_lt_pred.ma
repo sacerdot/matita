@@ -20,7 +20,7 @@ include "ground/arith/nat_lt.ma".
 (* Destructions with npred **************************************************)
 
 (*** S_pred lt_succ_pred lt_inv_O1 *)
-lemma nlt_des_gen (m) (n): m < n → n = ↑⫰n.
+lemma nlt_des_gen (m) (n): m < n → n = (⁤↑⫰n).
 #m #n @(nat_ind_succ … n) -n //
 #H elim (nlt_inv_zero_dx … H)
 qed-.
@@ -28,14 +28,14 @@ qed-.
 (* Inversions with npred ****************************************************)
 
 (*** lt_inv_gen *)
-lemma nlt_inv_gen (m) (n): m < n → ∧∧ m ≤ ⫰n & n = ↑⫰n.
+lemma nlt_inv_gen (m) (n): m < n → ∧∧ m ≤ ⫰n & n = (⁤↑⫰n).
 /2 width=1 by nle_inv_succ_sn/ qed-.
 
 (*** lt_inv_S1 *)
-lemma nlt_inv_succ_sn (m) (n): ↑m < n → ∧∧ m < ⫰n & n = ↑⫰n.
+lemma nlt_inv_succ_sn (m) (n): (⁤↑m) < n → ∧∧ m < ⫰n & n = (⁤↑⫰n).
 /2 width=1 by nle_inv_succ_sn/ qed-.
 
-lemma nlt_inv_pred_dx (m) (n): m < ⫰n → ↑m < n.
+lemma nlt_inv_pred_dx (m) (n): m < ⫰n → (⁤↑m) < n.
 #m #n #H >(nlt_des_gen (𝟎) n)
 [ /2 width=1 by nlt_succ_bi/
 | /3 width=3 by nle_nlt_trans, nlt_nle_trans/
@@ -49,7 +49,7 @@ qed-.
 
 (* Constructions with npred *************************************************)
 
-lemma nlt_zero_sn (n): n = ↑⫰n → 𝟎 < n.
+lemma nlt_zero_sn (n): n = (⁤↑⫰n) → 𝟎 < n.
 // qed.
 
 (*** monotonic_lt_pred *)

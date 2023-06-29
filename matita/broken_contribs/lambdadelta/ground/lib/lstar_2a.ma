@@ -18,7 +18,7 @@ include "ground/arith/nat_plus.ma".
 (* NAT-LABELED REFLEXIVE AND TRANSITIVE CLOSURE FOR λδ-2A *******************)
 
 definition lstar_aux (B) (R:relation B) (l): relation B ≝
-           λb1,b2. ∨∨ (∧∧ l = 𝟎 & b1 = b2) | (∧∧ l = 𝟏  & R b1 b2).
+           λb1,b2. ∨∨ (∧∧ l = 𝟎 & b1 = b2) | (∧∧ l = (⁤𝟏) & R b1 b2).
 
 definition lstar (B) (R:relation B): ℕ → relation B ≝
            ltc … nplus … (lstar_aux … R).

@@ -21,6 +21,6 @@ include "ground/arith/nat_succ.ma".
 (* Constractions with nsucc *************************************************)
 
 lemma znat_succ (n):
-      ↑⊕n = ⊕↑n.
+      ↑⊕n = ⊕(⁤↑n).
 * //
 qed.

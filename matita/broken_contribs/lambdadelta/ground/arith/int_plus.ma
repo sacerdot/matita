@@ -103,3 +103,9 @@ lemma zplus_assoc: associative … zplus.
 | <zplus_succ_dx <zplus_succ_dx <zplus_succ_dx //
 ]
 qed.
+
+lemma zplus_plus_comm_23 (z1) (z2) (z3):
+      z1 + z2 + z3 = z1 + z3 + z2.
+#z1 #z2 #z3
+>zplus_assoc <zplus_comm in ⊢ (??(??%)?); //
+qed.

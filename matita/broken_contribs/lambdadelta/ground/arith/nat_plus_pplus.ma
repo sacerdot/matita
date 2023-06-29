@@ -17,12 +17,14 @@ include "ground/arith/nat_plus_rplus.ma".
 
 (* ADDITION FOR NON-NEGATIVE INTEGERS ***************************************)
 
-lemma nplus_inj_bi (p) (q):
-      npos (pplus p q) = nplus (npos p) (npos q).
-// qed.
+lemma nplus_pos_bi (p) (q):
+      (⁤(p+q)) = (⁤p)+(⁤q).
+#p #q
+>nrplus_pos_dx <nplus_pos_sn //
+qed.
 
 lemma nplus_pnpred_sn (p) (q):
-      pnpred (p + q) = nplus (pnpred p) (npos q).
+      ↓(p+q) = (↓p) + (⁤q).
 #p #q
 <pplus_comm >nplus_comm >nrplus_pnpred_dx //
 qed.

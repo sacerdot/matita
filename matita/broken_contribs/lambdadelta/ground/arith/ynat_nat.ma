@@ -26,7 +26,7 @@ definition yinj_nat (n): ynat ≝ match n with
 definition ynat_bind_nat: (ℕ → ynat) → ynat → (ynat → ynat).
 #f #y *
 [ @f @(𝟎)
-| #p @f @p
+| #p @f @(⁤p)
 | @y
 ]
 qed-.

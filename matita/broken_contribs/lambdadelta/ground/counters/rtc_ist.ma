@@ -29,7 +29,7 @@ interpretation
 lemma rtc_ist_zz: 𝐓❨𝟎,𝟘𝟘❩.
 // qed.
 
-lemma rtc_ist_zu: 𝐓❨𝟏,𝟘𝟙❩.
+lemma rtc_ist_zu: 𝐓❨⁤𝟏,𝟘𝟙❩.
 // qed.
 
 (* Basic inversions *********************************************************)

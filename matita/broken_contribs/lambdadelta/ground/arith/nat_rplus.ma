@@ -28,7 +28,7 @@ interpretation
 lemma nrplus_zero_dx (p): p = p + 𝟎.
 // qed.
 
-lemma nrplus_unit_dx (p): ↑p = p + 𝟏.
+lemma nrplus_unit_dx (p): ↑p = p + ⁤𝟏.
 // qed.
 
 lemma nrplus_succ_sn (p) (n): ↑(p+n) = ↑p + n.

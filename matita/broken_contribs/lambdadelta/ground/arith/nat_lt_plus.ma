@@ -37,7 +37,7 @@ lemma nlt_plus_dx_dx (o) (m) (n): m < n → m < n + o.
 lemma nlt_plus_dx_sn (o) (m) (n) : m < n → m < o + n.
 /2 width=1 by nle_plus_dx_sn/ qed.
 
-lemma nlt_succ_plus_dx_refl_sn (m) (n): m < ↑(m + n).
+lemma nlt_succ_plus_dx_refl_sn (m) (n): m < (⁤↑(m + n)).
 /2 width=1/ qed.
 
 (* Inversions with nplus ****************************************************)

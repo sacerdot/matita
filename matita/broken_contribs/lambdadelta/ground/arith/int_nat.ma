@@ -21,7 +21,7 @@ include "ground/notation/functions/zeroplus_1.ma".
 definition znat (n): ℤ ≝
 match n with
 [ nzero   ⇒ 𝟎
-| npos  p ⇒ ⁤p
+| npos  p ⇒ (⁤p)
 ].
 
 interpretation
@@ -35,5 +35,5 @@ lemma znat_zero:
 // qed.
 
 lemma znat_pos (p):
-      (⁤p) = ⊕p.
+      (⁤p) = ⊕(⁤p).
 // qed.

@@ -20,7 +20,7 @@ include "ground/lib/list_rcons.ma".
 (* Constructions with list_rcons ********************************************)
 
 lemma list_singleton_succ_rcons (A) (a) (n):
-      a^n ⨭ a = a^{A}↑n.
+      a^n ⨭ a = a^{A}(⁤↑n).
 #A #a #n
 >nplus_unit_sn >list_singleton_append //
 qed.

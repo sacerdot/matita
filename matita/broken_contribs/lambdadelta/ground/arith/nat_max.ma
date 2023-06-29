@@ -37,7 +37,7 @@ lemma nmax_zero_dx (n1): n1 = (n1 ∨ 𝟎).
 qed.
 
 (*** max_SS *)
-lemma nmax_succ_bi (n1) (n2): ↑(n1 ∨ n2) ={ℕ} (↑n1 ∨ ↑n2).
+lemma nmax_succ_bi (n1) (n2): (⁤↑(n1 ∨ n2)) = ((⁤↑n1) ∨ (⁤↑n2)).
 #n1 #n2
 @trans_eq [3: @ntri_succ_bi | skip ] (* * rewrite fails because δ-expansion gets in the way *)
 <ntri_f_tri <ntri_f_tri //
