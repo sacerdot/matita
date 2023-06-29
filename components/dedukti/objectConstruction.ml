@@ -104,7 +104,61 @@ let constuct_obj status ~baseuri ident typ body =
   Hashtbl.add const_tbl uri reference;
   (uri, 0, [], [], obj_kind)
 
-let rule_to_term ~baseuri (rule: 'a Kernel.Rule.rule) = construct_term ~baseuri rule.Kernel.Rule.rhs 
+(* let rule_to_term ~baseuri (rule: 'a Kernel.Rule.rule) = *)
+(*   dove  *)
+(*    - n = recno + 1 *)
+(*    - i nomi li prendi dal lhs che e' della forma  *)
+(*       (nome_costante x1 ... xn) *)
+(*    - i tipi li prendi dal typ_entry gia' tradotto che e' della forma  *)
+(*      Prod(_,Some tipo1, ..., (Prod (_,Some tipon,_)))) *)
+(*   let body_monco = *)
+(*   construct_term ~baseuri rule.Kernel.Rule.rhs in  *)
+(*  (* | Lambda   of string * term * term           (* binder, source, target     *) *) *)
+(*     Lambda (x1, tipo1, ... (Lambda xn, tipon, body_monco)) *)
+
+(* TODO remove *)
+let print_list l =
+  let rec aux = function
+    | [] -> "]"
+    | (h::t) -> h ^ ", " ^ aux t
+  in
+  let s = aux l in
+  HLog.debug ("[" ^ s)
+
+let rec extract_idents_from_pattern =
+  function
+    | Kernel.Rule.Var(_, ident, _,  []) ->
+      [Kernel.Basic.string_of_ident ident]
+    | Kernel.Rule.Var(_, ident, _, pat_list) ->
+      let str_ident = Kernel.Basic.string_of_ident ident in 
+      let others = List.flatten (List.map (fun pat -> extract_idents_from_pattern pat) pat_list) in
+      (str_ident :: others)
+    | Kernel.Rule.Pattern(_, _, []) -> []
+    | Kernel.Rule.Pattern(_, _, pat_list) ->
+      List.flatten (List.map (fun pat -> extract_idents_from_pattern pat) pat_list)
+    | Kernel.Rule.Lambda(_, ident, pattern) -> 
+      let str_ident = Kernel.Basic.string_of_ident ident in 
+      (str_ident :: extract_idents_from_pattern pattern) 
+    | Kernel.Rule.Brackets(_) -> []
+
+let idk ~baseuri (rule: 'a Kernel.Rule.rule) typ recno = 
+  let rec aux ~baseuri (rule: 'a Kernel.Rule.rule) idents typ recno recindex =
+    match typ, idents with
+    | NCic.Prod(_, source, target), (h::t) when recindex < recno -> 
+      NCic.Lambda(h, source, (aux ~baseuri rule t target recno (recindex + 1)))
+    | NCic.Prod(_, source, _), [h] when recindex >= recno ->
+      let body = construct_term ~baseuri rule.Kernel.Rule.rhs in 
+      NCic.Lambda(h, source, body)
+    | _, []->
+      HLog.error("Not enough names when parsing fixpoint"); 
+      assert false; (* TODO *)
+    | _ -> assert false
+  in 
+  let idents = extract_idents_from_pattern rule.Kernel.Rule.pat in
+  print_list idents;
+  Kernel.Rule.pp_pattern Format.err_formatter rule.Kernel.Rule.pat; 
+  Kernel.Rule.pp_part_typed_rule Format.err_formatter rule;
+  aux ~baseuri rule idents typ recno 0
 
 let construct_fixpoint ~baseuri typ_entry body_entry recno = 
   match typ_entry, body_entry with
@@ -112,8 +166,7 @@ let construct_fixpoint ~baseuri typ_entry body_entry recno =
     let str_ident = Kernel.Basic.string_of_ident t_ident in 
     let uri = mkuri ~baseuri str_ident in
     let typ' = construct_term ~baseuri typ in
-    let r2t = rule_to_term ~baseuri in
-    let body' = List.hd (List.map r2t rule_list) in
+    let body' = idk ~baseuri (List.hd rule_list) typ' recno in
     let ind_fun = ([], str_ident, recno, typ', body') in
     let f_attr = (`Implied, `Axiom, `Regular) in 
     let obj_kind = NCic.Fixpoint(true, [ind_fun], f_attr) in 
@@ -123,9 +176,10 @@ let construct_fixpoint ~baseuri typ_entry body_entry recno =
     assert false 
 
 let handle_pragma ~baseuri = function
-  | PragmaParsing.GeneratedPragma(_) -> None
-  | PragmaParsing.FixpointPragma(_, type_entry, body_entry, recno) ->
+  | PragmaParsing.GeneratedPragma -> None
+  | PragmaParsing.FixpointPragma(type_entry, body_entry, recno) ->
     Some (construct_fixpoint ~baseuri type_entry body_entry recno)
+  | _ -> assert false (*TODO*)
 
 let obj_of_entry status ~baseuri buf = function
    Parsers.Entry.Def (_,ident,_,_,Some typ,body) -> 
@@ -135,6 +189,7 @@ let obj_of_entry status ~baseuri buf = function
   | Parsers.Entry.Decl (_,ident,_,_,typ) -> 
     Some(constuct_obj status ~baseuri ident typ None) 
   | Parsers.Entry.Pragma(_, str) -> 
+(* TODO change to parse_block *)    
     let parsed_pragma = PragmaParsing.parse_pragma str buf in
     (match parsed_pragma with
     | Some pragma -> handle_pragma ~baseuri pragma

@@ -1,19 +1,28 @@
-(* Pragmas *)
-type export_pragma_values = string * string
-let mk_pragma_val b e = (b, e)
-let pragma_begin (b, _) = b
-let pragma_end (_, e) = e
-
 type export_pragma = 
-  | GeneratedPragma of export_pragma_values 
-  (*                  begin/end values       type                  body                  recno *)
-  | FixpointPragma of export_pragma_values * Parsers.Entry.entry * Parsers.Entry.entry * int
+  | GeneratedPragma
+  (*                  type                  body                  recno *)
+  | FixpointPragma of Parsers.Entry.entry * Parsers.Entry.entry * int
+  (*                  leftno *)
+  | InductivePragma of int
 
-let generated_pragma = mk_pragma_val "PRAGMA BEGIN GENERATED" "PRAGMA END GENERATED"
-let fixpoint_pragma = mk_pragma_val "PRAGMA BEGIN FIXPOINT" "PRAGMA END FIXPOINT"
+let generated_pragma = "GENERATED"
+let fixpoint_pragma = "FIXPOINT"
+let inductive_pragma = "INDUCTIVE"
 let recno_attr = "RECNO"
+let leftno_attr = "LEFTNO"
 
-(* UTILS *)
+(* Given a string of type 'PRAGMA <BEGIN/GENERATED> <NAME> [ATTR=...]' returns the `NAME` part *)
+let pragma_name pragma_str = 
+  try 
+    let splitted = String.split_on_char ' ' pragma_str in 
+    Some (List.nth splitted 2)
+  with _ -> None
+
+let missing_attr pragma_str attr pragma_type =
+  HLog.error ("Malformed " ^ pragma_type ^ " pragma: missing '" ^ attr ^ "' attribute in pragma '" ^ pragma_str ^ "' ");
+  None
+
+
 let find_index_opt str substr =
   try
     let regex = Str.regexp substr in
@@ -21,68 +30,73 @@ let find_index_opt str substr =
     Some match_start
   with Not_found -> None
 
+(* TODO fix for multiple args *)
 let get_attr pragma_str attr =
   let pattern = attr ^ "=" in
   let attr_index = find_index_opt pragma_str pattern in
   match attr_index with
   | Some index ->
     let start_index = index + String.length pattern in
-    let attr_str = String.sub pragma_str start_index (String.length pragma_str - start_index) in
-    Some attr_str
+    let splitted = String.split_on_char ' ' (String.sub pragma_str start_index (String.length pragma_str - start_index)) in
+    Some (List.nth splitted 0)
   | None -> None
 
-let bounded_equal l1 l2 b =
-  let rec aux l1 l2 b index =
-    if index < b then
-      try 
-        List.nth l1 index = List.nth l2 index && aux l1 l2 b (index + 1)
-      with _ -> false
-    else 
-      true
-  in
-aux l1 l2 b 0
+let bound_equal l1 l2 b =
+  let rec aux l1 l2 b =
+   match l1,l2 with
+   | _,_ when b=0 -> true
+   | hd1::tl1,hd2::tl2 -> hd1=hd2 && aux tl1 tl2 (b-1)
+   | _,_ -> false in
+   aux l1 l2 b
 
 let same_type pragma_1 pragma_2 =
   let p1 = String.split_on_char ' ' pragma_1 in
   let p2 = String.split_on_char ' ' pragma_2 in
   (* Just check the first three words: eg PRAGMA BEGIN NAME*)
-  bounded_equal p1 p2 3
-
+  bound_equal p1 p2 3
 
 let rec skip_until_end_of_pragma pragma buf = 
   let entry = Parsers.Parser.read buf in
   match entry with 
-  | Parsers.Entry.Pragma(_, str) when str = (pragma_end pragma) -> None
+  | Parsers.Entry.Pragma(_, str) when str = pragma -> ()
   | _ -> skip_until_end_of_pragma pragma buf
 
-let parse_generate_pragma buf = 
+let parse_generated_pragma buf = 
   let _ = skip_until_end_of_pragma generated_pragma buf in 
-  Some (GeneratedPragma generated_pragma)
+  GeneratedPragma
 
 let parse_fixpoint_pragma buf pragma_str =
   let type_def = Parsers.Parser.read buf in
   let _ = Parsers.Parser.read buf in 
   let _ = Parsers.Parser.read buf in 
   let rule_body = Parsers.Parser.read buf in
-  let pragmaend = Parsers.Parser.read buf in
-  match type_def, rule_body, pragmaend with
-  | Parsers.Entry.Decl (_,_,_,_,_), Parsers.Entry.Rules(_,_), Parsers.Entry.Pragma(_, _) -> (
+  let pragma_end = Parsers.Parser.read buf in
+  match type_def, rule_body, pragma_end with
+  | Parsers.Entry.Decl (_,_,_,_,_), Parsers.Entry.Rules(_,_), Parsers.Entry.Pragma(_, _) ->
     let recno_opt = get_attr pragma_str recno_attr in
-    match recno_opt with
-    | Some str -> Some (FixpointPragma (fixpoint_pragma, type_def, rule_body, (int_of_string str)))
-    | None -> 
-      HLog.error ("Malformed fixpoint pragma: missing 'recno' attribute in pragma '" ^ pragma_str ^ "' ");
-      None
+    (match recno_opt with
+    | Some str -> 
+        Some (FixpointPragma (type_def, rule_body, int_of_string str))
+    | None -> missing_attr pragma_str recno_attr fixpoint_pragma
     )
   | _ ->  
     HLog.error ("Malformed fixpoint pragma: error in parsing content of pragma '" ^ pragma_str ^ "'"); 
     None
 
+let parse_inductive_pragma _ _ = None (*TODO*)
 
 let parse_pragma pragma_str buf = 
-  match pragma_str with   
-  | s when same_type s (pragma_begin generated_pragma) -> parse_generate_pragma buf
-  | s when same_type s  (pragma_begin fixpoint_pragma) -> parse_fixpoint_pragma buf pragma_str
-  | _ -> HLog.message("Found uknown pragma '" ^ pragma_str ^ "'");
-    None
-
+  match pragma_name pragma_str with
+  | None -> None
+  | Some name -> (
+      if name = generated_pragma then
+        Some (parse_generated_pragma buf)
+      else if name = fixpoint_pragma then
+        parse_fixpoint_pragma buf pragma_str
+      else if name = inductive_pragma  then
+        parse_inductive_pragma buf pragma_str 
+      else ( 
+        HLog.message("Found uknown pragma '" ^ pragma_str ^ "'");
+        None
+    )
+  )
