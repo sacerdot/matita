@@ -1,5 +1,9 @@
 let const_tbl = Hashtbl.create 0
 
+let failwith_log mex =
+  HLog.error mex;
+  failwith mex
+
 let mkuri ~baseuri name = 
   NUri.uri_of_string (baseuri ^ "/" ^ name ^ ".con")
 
@@ -17,8 +21,7 @@ let cic_succ = Kernel.Basic.mk_name (Kernel.Basic.mk_mident "cic") (Kernel.Basic
 let rec calc_univ_dept  = function
   | Kernel.Term.Const(_, name) when Kernel.Basic.name_eq name cic_z -> 0
   | Kernel.Term.App(Kernel.Term.Const(_, f_name), a, []) when Kernel.Basic.name_eq f_name cic_succ -> 1 + (calc_univ_dept a)
-  | _ -> HLog.message("Error loading universe dept");
-    assert false
+  | _ -> failwith_log "Error loading universe dept"
 
     (* TODO check 0 4*)
 let make_type_n_uri term = NUri.uri_of_string(Printf.sprintf "cic:/matita/pts/Type%d.univ" (calc_univ_dept term)) 
@@ -160,25 +163,26 @@ let idk ~baseuri (rule: 'a Kernel.Rule.rule) typ recno =
   Kernel.Rule.pp_part_typed_rule Format.err_formatter rule;
   aux ~baseuri rule idents typ recno 0
 
-let construct_fixpoint ~baseuri typ_entry body_entry recno = 
+let construct_fixpoint_function ~baseuri (typ_entry, body_entry, attrs) = 
+  let name, recno, _ = attrs in
   match typ_entry, body_entry with
-  | Parsers.Entry.Decl(_, t_ident, _, _, typ), Parsers.Entry.Rules(_, rule_list) ->
-    let str_ident = Kernel.Basic.string_of_ident t_ident in 
-    let uri = mkuri ~baseuri str_ident in
+  | Parsers.Entry.Decl(_, _, _, _, typ), Parsers.Entry.Rules(_, rule_list) ->
     let typ' = construct_term ~baseuri typ in
     let body' = idk ~baseuri (List.hd rule_list) typ' recno in
-    let ind_fun = ([], str_ident, recno, typ', body') in
+    ([], name, recno, typ', body')
+  | _ -> failwith_log "Malformed error reconstructing fixpoint "
+
+let construct_fixpoint ~baseuri fixpoint_list =
+    let str_ident = "Kernel.Basic.string_of_ident t_ident" in 
+    let uri = mkuri ~baseuri str_ident in
+    let functions = List.map (fun fp -> construct_fixpoint_function ~baseuri fp) fixpoint_list in
     let f_attr = (`Implied, `Axiom, `Regular) in 
-    let obj_kind = NCic.Fixpoint(true, [ind_fun], f_attr) in 
+    let obj_kind = NCic.Fixpoint(true, functions, f_attr) in 
     (uri, 0, [], [], obj_kind)
-  | _ -> 
-    HLog.error("Malformed error reconstructing fixpoint ");
-    assert false 
 
 let handle_pragma ~baseuri = function
   | PragmaParsing.GeneratedPragma -> None
-  | PragmaParsing.FixpointPragma(type_entry, body_entry, recno) ->
-    Some (construct_fixpoint ~baseuri type_entry body_entry recno)
+  | PragmaParsing.FixpointPragma(fixpoint_list) -> Some (construct_fixpoint ~baseuri fixpoint_list)
   | _ -> assert false (*TODO*)
 
 let obj_of_entry status ~baseuri buf = function
@@ -189,8 +193,7 @@ let obj_of_entry status ~baseuri buf = function
   | Parsers.Entry.Decl (_,ident,_,_,typ) -> 
     Some(constuct_obj status ~baseuri ident typ None) 
   | Parsers.Entry.Pragma(_, str) -> 
-(* TODO change to parse_block *)    
-    let parsed_pragma = PragmaParsing.parse_pragma str buf in
+    let parsed_pragma = PragmaParsing.parse_block str buf in
     (match parsed_pragma with
     | Some pragma -> handle_pragma ~baseuri pragma
     | None -> None(* TODO *))

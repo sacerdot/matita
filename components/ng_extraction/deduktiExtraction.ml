@@ -127,9 +127,10 @@ let create_fixpoint_pragmas functions =
   let attrs = String.concat " " attrs_str in
   let names_str = List.map (fun (_, name, _, _, _) -> "NAME=" ^ name) functions in 
   let names = String.concat " " names_str in
-  (D.Pragma (Format.sprintf "BEGIN FIXPOINT %s %s" names attrs), D.Pragma "END FIXPOINT")
+  (D.Pragma (Format.sprintf "BEGIN FIXPOINT %s %s." names attrs), D.Pragma "END FIXPOINT.")
 
-
+let create_fixpoint_body_pragma name = D.Pragma (Format.sprintf "FIXPOINT_BODY REF=%s." name )
+  
 (* A global Matita universe is mapped to a Dedukti constant.
     Since the universe constraints can change during the translation, universes
     are translated to a separate module. *)
@@ -1180,6 +1181,7 @@ module Translation (I : INFO) = struct
       D.papp_bindings (D.PConst fun_body') (params' @ [rec_param'])
     in
     let right_body_term' = return' in
+    let () = add_entry (fst fun_body') (create_fixpoint_body_pragma (snd fun_body')) in
     let () =
       add_entry (fst fun_body')
         (D.RewriteRule (context.dk, left_body_pattern', right_body_term'))

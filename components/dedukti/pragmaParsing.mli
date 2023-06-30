@@ -1,11 +1,12 @@
+(*                     name     recno body-name*)
+type fp_pragma_attrs = string * int * string
 
 type export_pragma = 
-  (*                  begin/end values *)
-  | GeneratedPragma 
-  (*                  begin/end values       type                  body                  recno *)
-  | FixpointPragma of  Parsers.Entry.entry * Parsers.Entry.entry * int
-  (*                  begin/end values      leftno *)
-      | InductivePragma of  int
+  | GeneratedPragma
+  (*                  type                   body                    attrs *)
+  | FixpointPragma of (Parsers.Entry.entry * Parsers.Entry.entry * fp_pragma_attrs) list
+  (*                  leftno *)
+  | InductivePragma of int
 
-val parse_pragma: string -> Parsers.Parser.stream -> export_pragma option
+val parse_block: string -> Parsers.Parser.stream -> export_pragma option
 
