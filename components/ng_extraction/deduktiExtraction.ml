@@ -10,9 +10,6 @@ let pp ?(ctx= []) fmt term =
 
 let begin_gen = D.Pragma "BEGIN GENERATED."
 let end_gen = D.Pragma "END GENERATED."
-let end_inductive = D.Pragma "END INDUCTIVE."
-
-let create_binductive_pragma leftno = D.Pragma ("BEGIN INDUCTIVE LEFTNO=" ^ string_of_int(leftno) ^ ".")
 
 (**** Utilities ****)
 
@@ -894,7 +891,6 @@ module Translation (I : INFO) = struct
     in
     (* Declare the match function *)
     let match_type' = to_cic_prods common_context.dk conclusion in
-    add_entry (fst match_const') (create_binductive_pragma leftno);
     add_entry (fst match_const')
       (D.DefDeclaration (snd match_const', match_type')) ;
     (* Rewrite rules of the match function *)
@@ -920,9 +916,7 @@ module Translation (I : INFO) = struct
       add_entry (fst match_const')
         (D.RewriteRule (context.dk, left_pattern', right_term'))
     in
-    let _ = List.iteri translate_rule cons_infos in
-    add_entry (fst match_const') end_inductive
-
+    List.iteri translate_rule cons_infos
 
   (** A filter is similar to a match in that it blocks the application of
         a function until a constructor is passed as an argument. It does not
@@ -1063,6 +1057,17 @@ module Translation (I : INFO) = struct
         (D.RewriteRule (context.dk, left_pattern', right_term'))
     in
     List.iteri (fun i x -> translate_rule i x sort) cons_infos
+
+let gen_inductive_attrs (_, name, _, constructors) = 
+  let constr_names = List.map (fun (_, cname, _) -> Format.sprintf "CONS:%s=%s" name cname) constructors in
+  let constr = String.concat " " constr_names in
+  Format.sprintf "NAME=%s %s" name constr 
+
+let create_inductive_pragmas leftno types = 
+  let leftno = Format.sprintf "LEFTNO=%d" leftno in
+  let attrs = List.map gen_inductive_attrs types in
+  let attrs' = String.concat " " attrs in
+  (D.Pragma (Format.sprintf "BEGIN INDUCTIVE %s %s." leftno attrs'), D.Pragma "END INDUCTIVE.")
 
 
   let translate_inductive leftno ((_, name, ty, constructors) as ind) =
@@ -1250,7 +1255,10 @@ module Translation (I : INFO) = struct
          The [leftno] indicates the number of left parameters.
          The [i_attr] argument is not needed by the kernel. *)
       if not is_inductive then not_implemented "co-inductive type" ;
-      translate_inductives leftno types
+      let begin_pragma, end_pragma = create_inductive_pragmas leftno types in
+      add_entry modname begin_pragma;
+      translate_inductives leftno types;
+      add_entry modname end_pragma
 end
 
 (** Extraction entry-points **)

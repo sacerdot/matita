@@ -128,6 +128,8 @@ let rec construct_fp_attr recnos bodies =
         failwith_log "fixpoint pragma without body attr"
     )
 
+(** [parse_fp_attrs pragma_str] return a [fp_pragma_attrs] with the attributes
+    found parsing [pragma_str] *)
 let parse_fp_attrs pragma_str =
   let splitted = String.split_on_char ' ' pragma_str in 
   let names_opt = List.map (fun s -> parse_name_only_attr s name_regex) splitted in
