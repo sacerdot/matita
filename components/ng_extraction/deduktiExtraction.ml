@@ -1069,7 +1069,6 @@ let create_inductive_pragmas leftno types =
   let attrs' = String.concat " " attrs in
   (D.Pragma (Format.sprintf "BEGIN INDUCTIVE %s %s." leftno attrs'), D.Pragma "END INDUCTIVE.")
 
-
   let translate_inductive leftno ((_, name, ty, constructors) as ind) =
     (*      Format.printf "translate inductive: %s@." name; *)
     Hashtbl.add inductive_registry name (leftno, ind) ;
