@@ -12,24 +12,45 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_map.ma".
-include "ground/arith/int_plus_opp.ma".
-include "ground/notation/functions/element_u_1.ma".
+include "ground/arith/nat_minus_plus.ma".
+include "ground/relocation/f2/fr2_map.ma".
 
-(* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
+(* ADDITION FOR FINITE RELOCATION MAPS WITH PAIRS ***************************)
 
-definition trz_uni (z:ℤ): trz_map ≝ mk_trz_map ….
-[ @(λz0.z0+z)
-| /2 width=2 by eq_inv_zplus_dx_bi/
-]
-defined.
+(* Note: this is pushs *)
+(*** pluss *)
+rec definition fr2_plus (f:fr2_map) (n:ℕ) on f ≝ match f with
+[ fr2_empty       ⇒ 𝐞
+| fr2_lcons d h f ⇒ ❨d+n,h❩◗fr2_plus f n
+].
 
 interpretation
-  "uniform elements (total relocation maps with integers)"
-  'ElementU z = (trz_uni z).
+  "plus (finite relocation maps with pairs)"
+  'plus f n = (fr2_plus f n).
 
 (* Basic constructions ******************************************************)
 
-lemma trz_uni_dapp (z) (z0):
-      z0+z = 𝐮❨z❩＠⧣❨z0❩.
-// qed.
+(*** pluss_SO2 *)
+lemma fr2_plus_lcons_unit (d) (h) (f):
+      (❨d,h❩◗f)+(⁤𝟏) = ❨⁤↑d,h❩◗(f+(⁤𝟏)).
+normalize // qed.
+
+(* Basic inversions *********************************************************)
+
+(*** pluss_inv_nil2 *)
+lemma fr2_plus_inv_empty_dx (n) (f):
+      f+n = 𝐞 → f = 𝐞.
+#n * // normalize
+#d #h #f #H destruct
+qed.
+
+(*** pluss_inv_cons2 *)
+lemma fr2_plus_inv_lcons_dx (n) (d) (h) (f2) (f):
+      f + n = ❨d,h❩◗f2 →
+      ∃∃f1. f1+n = f2 & f = ❨d-n,h❩◗f1.
+#n #d #h #f2 *
+[ normalize #H destruct
+| #d1 #h1 #f1 whd in ⊢ (??%?→?); #H destruct
+  <nminus_plus_sn_refl_sn /2 width=3 by ex2_intro/
+]
+qed-.

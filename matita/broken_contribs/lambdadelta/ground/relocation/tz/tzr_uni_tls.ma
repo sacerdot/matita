@@ -12,13 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_id.ma".
-include "ground/relocation/trz_tls.ma".
+include "ground/relocation/tz/tzr_uni.ma".
+include "ground/relocation/tz/tzr_id.ma".
+include "ground/relocation/tz/tzr_tls.ma".
 
-(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
+(* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
 
-(* Constructions with trz_tls ***********************************************)
+(* Constructions with tzr_tls ***********************************************)
 
-lemma trz_tls_id (z):
-      (𝐢) ≐ ⫰*[z]𝐢.
-// qed.
+lemma tzr_tls_uni (z2) (z1):
+      (𝐢) ≐ ⫰*[z2]𝐮❨z1❩.
+#z2 #z1 #z0
+<tzr_id_dapp <tzr_tls_dapp <tzr_uni_dapp <tzr_uni_dapp
+>zplus_assoc in ⊢ (???(?%?)); //
+qed.

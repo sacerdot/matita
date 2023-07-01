@@ -17,7 +17,7 @@ include "ground/notation/relations/rminus_3.ma".
 include "ground/arith/nat_plus.ma".
 include "ground/arith/nat_minus.ma".
 include "ground/arith/nat_lt.ma".
-include "ground/relocation/fr2_map.ma".
+include "ground/relocation/f2/fr2_map.ma".
 
 (* RELATIONAL SUBTRACTION FOR FINITE RELOCATION MAPS WITH PAIRS *************)
 

@@ -12,35 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_push.ma".
-include "ground/arith/nat_succ_iter.ma".
-include "ground/notation/functions/upspoonstar_2.ma".
+include "ground/relocation/tz/tzr_id.ma".
+include "ground/relocation/tz/tzr_after.ma".
 
-(* ITERATED PUSH FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
+(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
 
-definition tr_pushs (n:ℕ): trz_map → trz_map ≝
-           trz_push^n.
+(* Constructions with tzr_after *********************************************)
 
-interpretation
-  "iterated push (total relocation maps with integers)"
-  'UpSpoonStar n f = (tr_pushs n f).
-
-(* Basic constructions ******************************************************)
-
-lemma trz_pushs_zero (f):
-      f = ⫯*[𝟎] f.
+lemma tzr_after_id_dx (f):
+      f ≐ f•𝐢.
 // qed.
 
-lemma trz_pushs_push (n) (f):
-      (⫯⫯*[n]f) = ⫯*[n]⫯f.
-#n #f @(niter_appl … trz_push)
-qed.
-
-lemma trz_pushs_succ (n) (f):
-      (⫯⫯*[n]f) = ⫯*[↑n]f.
-#n #f @(niter_succ … trz_push)
-qed.
-
-lemma trz_pushs_swap (n) (f):
-      (⫯*[n]⫯f) = ⫯*[↑n]f.
+lemma tzr_after_id_sn (f):
+      f ≐ 𝐢•f.
 // qed.

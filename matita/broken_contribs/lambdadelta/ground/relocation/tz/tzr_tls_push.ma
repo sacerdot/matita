@@ -12,21 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_pnext.ma".
-include "ground/relocation/trz_puni_le.ma".
+include "ground/relocation/tz/tzr_tls.ma".
+include "ground/relocation/tz/tzr_push_le.ma".
 
-(* POSITIVE NEXT FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
+(* ITERATED TAIL FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
-(* Constuctions with zle ****************************************************)
+(* Constructions with tzr_push **********************************************)
 
-lemma trz_pnext_dapp_gt (f) (z):
-      (𝟎) < f＠⧣❨z❩ →
-      ↑f＠⧣❨z❩ = (↑⁺f)＠⧣❨z❩.
-/2 width=1 by trz_puni_dapp_gt/
-qed.
-
-lemma trz_pnext_dapp_le (f) (z):
-      f＠⧣❨z❩ ≤ 𝟎 →
-      f＠⧣❨z❩ = (↑⁺f)＠⧣❨z❩.
-/2 width=1 by trz_puni_dapp_le/
+lemma tzr_tls_pos_unit_push_dapp_gt_gt (f) (z):
+      (𝟎) < z → (𝟎) < f＠⧣❨z❩ →
+      f＠⧣❨z❩ = (⫰*[⁤𝟏]⫯f)＠⧣❨z❩.
+#f #z #H1z #H2z
+<tzr_tls_dapp <tzr_push_dapp_pos_unit <tzr_push_dapp_gt_gt //
 qed.

@@ -12,17 +12,33 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_id.ma".
-include "ground/relocation/trz_after.ma".
+include "ground/relocation/tz/tzr_map.ma".
+include "ground/notation/functions/compose_2.ma".
 
-(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
+(* COMPOSITION FOR TOTAL RELOCATION MAPS WITH INTEGERS **********************)
 
-(* Constructions with trz_after *********************************************)
+definition tzr_after (f2:tzr_map) (f1:tzr_map): tzr_map ≝ mk_tzr_map ….
+[ @(tzr_staff f2 ∘ tzr_staff f1)
+| @compose_injective_2_fwd //
+]
+defined.
 
-lemma trz_after_id_dx (f):
-      f ≐ f•𝐢.
+interpretation
+  "composition (total relocation maps with integers)"
+  'Compose f2 f1 = (tzr_after f2 f1).
+
+(* Basic constructions ******************************************************)
+
+lemma tzr_after_dapp (f1) (f2) (z):
+      f2＠⧣❨f1＠⧣❨z❩❩ = (f2•f1)＠⧣❨z❩.
 // qed.
 
-lemma trz_after_id_sn (f):
-      f ≐ 𝐢•f.
+lemma tzr_after_eq_repl:
+      compatible_3 … tzr_eq tzr_eq tzr_eq (λf2,f1.f2•f1).
+// qed.
+
+(* Main constructions *******************************************************)
+
+theorem tzr_after_assoc (f3) (f2) (f1):
+        (f3•f2)•f1 ≐ f3•(f2•f1).
 // qed.

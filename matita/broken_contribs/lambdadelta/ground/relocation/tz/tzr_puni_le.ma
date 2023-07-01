@@ -12,37 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_map.ma".
-include "ground/arith/int_pred_succ.ma".
-include "ground/notation/functions/atsection_2.ma".
+include "ground/relocation/tz/tzr_puni.ma".
+include "ground/arith/int_lt_pred.ma".
 
-(* LEVEL APPLICATION FOR TOTAL RELOCATION MAPS WITH INTEGERS ****************)
+(* POSITIVE UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS ********)
 
-interpretation
-  "level application (total relocation maps with integers)"
-  'AtSection f z = (zpred (trz_staff f (zsucc z))).
+(* Constuctions with zle ****************************************************)
 
-(* Basic constructions ******************************************************)
+lemma tzr_puni_dapp_gt (z):
+      (𝟎) < z →
+      ↑z = 𝐮⁺＠⧣❨z❩.
+#z #Hz
+elim (zle_des_pos_sn … Hz) -Hz //
+qed.
 
-lemma trz_dapp_succ_lapp (f) (z):
-      ↑f＠§❨z❩ = f＠⧣❨↑z❩.
-// qed.
-
-lemma trz_dapp_lapp (f) (z):
-      ↑f＠§❨↓z❩ = f＠⧣❨z❩.
-// qed.
-
-lemma trz_lapp_pred_dapp (f) (z):
-      ↓f＠⧣❨z❩ = f＠§❨↓z❩.
-// qed.
-
-lemma trz_eq_ext_lapp (f1) (f2):
-      (∀z. f1＠§❨z❩ = f2＠§❨z❩) → f1 ≐ f2.
-#f1 #f2 #Hf #z0
-<trz_dapp_lapp <trz_dapp_lapp in ⊢ (???%); //
-qed-.
-
-lemma trz_lapp_eq_repl (z):
-      compatible_2_fwd … trz_eq (eq …) (λf.f＠§❨z❩).
-/2 width=1 by trz_dapp_eq_repl/
+lemma tzr_puni_dapp_le (z):
+      z ≤ 𝟎 →
+      z = 𝐮⁺＠⧣❨z❩.
+#z #Hz
+elim (zle_split_lt_eq … Hz) -Hz #Hz
+[ elim (zlt_des_zero_dx … Hz) -Hz //
+| destruct //
+]
 qed.

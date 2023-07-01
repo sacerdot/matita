@@ -12,17 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_push.ma".
-include "ground/relocation/trz_pnext_le.ma".
+include "ground/relocation/tz/tzr_map.ma".
+include "ground/notation/functions/element_i_0.ma".
 
-(* PUSH FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************************)
+(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
 
-(* Constuctions with zle ****************************************************)
+definition tzr_id: tzr_map ≝ mk_tzr_map ….
+[ @(λz0.z0)
+| //
+]
+defined.
 
-lemma trz_push_dapp_gt_gt (f) (z):
-      (𝟎) < z → (𝟎) < f＠⧣❨z❩ →
-      ↑f＠⧣❨z❩ = (⫯f)＠⧣❨↑z❩.
-#f #z #Hz #Hf
-elim (zle_des_pos_sn … Hz) -Hz #p #H0 destruct
-/2 width=1 by trz_puni_dapp_gt/
-qed.
+interpretation
+  "identity element (total relocation maps with integers)"
+  'ElementI = (tzr_id).
+
+(* basic constructions ******************************************************)
+
+lemma tzr_id_dapp (z0):
+      z0 = 𝐢＠⧣❨z0❩.
+// qed.

@@ -12,29 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_pushs.ma".
-include "ground/arith/int_nat_succ.ma".
-include "ground/arith/int_lt_pred.ma".
+include "ground/relocation/tz/tzr_push.ma".
+include "ground/relocation/tz/tzr_pnext_le.ma".
 
-(* ITERATED PUSH FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
+(* PUSH FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************************)
 
-(* Constructions with order for integers ************************************)
+(* Constuctions with zle ****************************************************)
 
-lemma trz_pushs_dapp_be (n) (z) (f):
-      (⁤𝟏) ≤ z → z ≤ ⊕n →
-      z = (⫯*[n]f)＠⧣❨z❩.
-#n @(nat_ind_succ … n) -n
-[ #z #f #H1z #H2z
-  elim zle_inv_pos_zero
-  /2 width=4 by zle_trans/
-| #n #IH #z #f #H1z <znat_succ #H2z
-  elim (zle_split_lt_eq … H2z) -H2z #H2z
-  [ /3 width=1 by zlt_inv_succ_dx_le/
-  | destruct <trz_pushs_succ -H1z
-    generalize in match IH; -IH
-    cases n -n // #p #IH
-    <trz_push_dapp_pos_succ <trz_after_dapp
-    <IH -IH //
-  ]
-]
+lemma tzr_push_dapp_gt_gt (f) (z):
+      (𝟎) < z → (𝟎) < f＠⧣❨z❩ →
+      ↑f＠⧣❨z❩ = (⫯f)＠⧣❨↑z❩.
+#f #z #Hz #Hf
+elim (zle_des_pos_sn … Hz) -Hz #p #H0 destruct
+/2 width=1 by tzr_puni_dapp_gt/
 qed.

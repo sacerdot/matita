@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fr2_nat.ma".
+include "ground/relocation/f2/fr2_nat.ma".
 
 (* NON-NEGATIVE APPLICATION FOR FINITE RELOCATION MAPS WITH PAIRS ***********)
 

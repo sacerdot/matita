@@ -12,16 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_tls.ma".
-include "ground/relocation/trz_after.ma".
+include "ground/relocation/tz/tzr_id.ma".
+include "ground/relocation/tz/tzr_tls.ma".
 
-(* ITERATED TAIL FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
+(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
 
-(* Constructions with trz_after *********************************************)
+(* Constructions with tzr_tls ***********************************************)
 
-theorem trz_tls_after_dapp (z) (f2) (f1):
-        (⫰*[f1＠⧣❨z❩]f2)•(⫰*[z]f1) ≐ ⫰*[z](f2•f1).
-#z #f2 #f1 #z0
-<trz_after_dapp <trz_tls_dapp <trz_tls_dapp
-<zminus_plus_simpl //
-qed.
+lemma tzr_tls_id (z):
+      (𝐢) ≐ ⫰*[z]𝐢.
+// qed.

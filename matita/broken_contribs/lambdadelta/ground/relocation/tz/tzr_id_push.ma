@@ -12,16 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_tls.ma".
-include "ground/relocation/trz_push_le.ma".
+include "ground/relocation/tz/tzr_id.ma".
+include "ground/relocation/tz/tzr_push.ma".
 
-(* ITERATED TAIL FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
+(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
 
-(* Constructions with trz_push **********************************************)
+(* Constructions with tzr_push **********************************************)
 
-lemma trz_tls_pos_unit_push_dapp_gt_gt (f) (z):
-      (𝟎) < z → (𝟎) < f＠⧣❨z❩ →
-      f＠⧣❨z❩ = (⫰*[⁤𝟏]⫯f)＠⧣❨z❩.
-#f #z #H1z #H2z
-<trz_tls_dapp <trz_push_dapp_pos_unit <trz_push_dapp_gt_gt //
+lemma tzr_push_id:
+      (𝐢) ≐ ⫯𝐢.
+* [ #p || * [| #p ]] //
 qed.

@@ -12,23 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_map.ma".
-include "ground/notation/functions/element_i_0.ma".
+include "ground/notation/functions/black_circle_2.ma".
+include "ground/relocation/f2/fr2_map.ma".
 
-(* IDENTITY ELEMENT FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
+(* CONCATENATION FOR FINITE RELOCATION MAPS WITH PAIRS **********************)
 
-definition trz_id: trz_map ≝ mk_trz_map ….
-[ @(λz0.z0)
-| //
-]
-defined.
+(* Note: this is reverse compose *)
+(*** fr2_append *)
+rec definition fr2_append f1 f2 on f1 ≝ match f1 with
+[ fr2_empty        ⇒ f2
+| fr2_lcons d h f1 ⇒ ❨d, h❩◗ fr2_append f1 f2
+].
 
 interpretation
-  "identity element (total relocation maps with integers)"
-  'ElementI = (trz_id).
+  "append (finite relocation maps with pairs)" 
+  'BlackCircle f1 f2 = (fr2_append f1 f2).
 
-(* basic constructions ******************************************************)
+(* Basic constructions ******************************************************)
 
-lemma trz_id_dapp (z0):
-      z0 = 𝐢＠⧣❨z0❩.
+(*** mr2_append_nil *)
+lemma fr2_append_empty (f2):
+      f2 = 𝐞 ● f2.
+// qed.
+
+(*** mr2_append_cons *)
+lemma fr2_append_lcons (d) (h) (f1) (f2):
+      ❨d, h❩◗ (f1 ● f2) = (❨d, h❩◗ f1) ● f2.
 // qed.

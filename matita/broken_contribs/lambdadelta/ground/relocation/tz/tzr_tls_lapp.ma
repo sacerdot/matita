@@ -12,17 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_uni.ma".
-include "ground/relocation/trz_id.ma".
-include "ground/relocation/trz_tls.ma".
+include "ground/relocation/tz/tzr_tls.ma".
+include "ground/relocation/tz/tzr_lapp.ma".
 
-(* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
+(* ITERATED TAIL FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
-(* Constructions with trz_tls ***********************************************)
+(* Constructions with tzr_lapp **********************************************)
 
-lemma trz_tls_uni (z2) (z1):
-      (𝐢) ≐ ⫰*[z2]𝐮❨z1❩.
-#z2 #z1 #z0
-<trz_id_dapp <trz_tls_dapp <trz_uni_dapp <trz_uni_dapp
->zplus_assoc in ⊢ (???(?%?)); //
+lemma tzr_lapp_plus_dx (f) (z1) (z2):
+      (⫰*[z2]f)＠§❨z1❩+f＠⧣❨z2❩ = f＠§❨z1+z2❩.
+// qed.
+
+lemma tzr_lapp_plus_sn (f) (z1) (z2):
+      (⫰*[↑z2]f)＠⧣❨z1❩+f＠§❨z2❩ = f＠§❨z1+z2❩.
+#f #z1 #z2
+>zplus_succ_dx <tzr_dapp_plus >zplus_pred_dx //
 qed.

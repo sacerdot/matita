@@ -12,33 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_map.ma".
-include "ground/notation/functions/compose_2.ma".
+include "ground/relocation/tz/tzr_puni.ma".
+include "ground/relocation/tz/tzr_after.ma".
+include "ground/notation/functions/uparrowplus_1.ma".
 
-(* COMPOSITION FOR TOTAL RELOCATION MAPS WITH INTEGERS **********************)
-
-definition trz_after (f2:trz_map) (f1:trz_map): trz_map ≝ mk_trz_map ….
-[ @(trz_staff f2 ∘ trz_staff f1)
-| @compose_injective_2_fwd //
-]
-defined.
+(* POSITIVE NEXT FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
 interpretation
-  "composition (total relocation maps with integers)"
-  'Compose f2 f1 = (trz_after f2 f1).
+  "positive next (total relocation maps with integer)"
+  'UpArrowPlus f = (tzr_after tzr_puni f).
 
 (* Basic constructions ******************************************************)
 
-lemma trz_after_dapp (f1) (f2) (z):
-      f2＠⧣❨f1＠⧣❨z❩❩ = (f2•f1)＠⧣❨z❩.
-// qed.
+lemma tzr_pnext_eq_repl:
+      compatible_2_fwd … tzr_eq tzr_eq (λf.↑⁺f).
+/2 width=1 by tzr_after_eq_repl/
+qed.
 
-lemma trz_after_eq_repl:
-      compatible_3 … trz_eq trz_eq trz_eq (λf2,f1.f2•f1).
-// qed.
-
-(* Main constructions *******************************************************)
-
-theorem trz_after_assoc (f3) (f2) (f1):
-        (f3•f2)•f1 ≐ f3•(f2•f1).
+lemma tzr_after_pnext_sn (f2) (f1):
+      ↑⁺(f2•f1) ≐ (↑⁺f2)•f1.
 // qed.

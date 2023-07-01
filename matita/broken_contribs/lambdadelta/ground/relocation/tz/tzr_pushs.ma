@@ -12,30 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/black_circle_2.ma".
-include "ground/relocation/fr2_map.ma".
+include "ground/relocation/tz/tzr_push.ma".
+include "ground/arith/nat_succ_iter.ma".
+include "ground/notation/functions/upspoonstar_2.ma".
 
-(* CONCATENATION FOR FINITE RELOCATION MAPS WITH PAIRS **********************)
+(* ITERATED PUSH FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
 
-(* Note: this is reverse compose *)
-(*** fr2_append *)
-rec definition fr2_append f1 f2 on f1 ≝ match f1 with
-[ fr2_empty        ⇒ f2
-| fr2_lcons d h f1 ⇒ ❨d, h❩◗ fr2_append f1 f2
-].
+definition tr_pushs (n:ℕ): tzr_map → tzr_map ≝
+           tzr_push^n.
 
 interpretation
-  "append (finite relocation maps with pairs)" 
-  'BlackCircle f1 f2 = (fr2_append f1 f2).
+  "iterated push (total relocation maps with integers)"
+  'UpSpoonStar n f = (tr_pushs n f).
 
 (* Basic constructions ******************************************************)
 
-(*** mr2_append_nil *)
-lemma fr2_append_empty (f2):
-      f2 = 𝐞 ● f2.
+lemma tzr_pushs_zero (f):
+      f = ⫯*[𝟎] f.
 // qed.
 
-(*** mr2_append_cons *)
-lemma fr2_append_lcons (d) (h) (f1) (f2):
-      ❨d, h❩◗ (f1 ● f2) = (❨d, h❩◗ f1) ● f2.
+lemma tzr_pushs_push (n) (f):
+      (⫯⫯*[n]f) = ⫯*[n]⫯f.
+#n #f @(niter_appl … tzr_push)
+qed.
+
+lemma tzr_pushs_succ (n) (f):
+      (⫯⫯*[n]f) = ⫯*[⁤↑n]f.
+#n #f @(niter_succ … tzr_push)
+qed.
+
+lemma tzr_pushs_swap (n) (f):
+      (⫯*[n]⫯f) = ⫯*[⁤↑n]f.
 // qed.

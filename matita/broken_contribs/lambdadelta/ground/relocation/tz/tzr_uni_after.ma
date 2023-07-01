@@ -12,26 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_puni.ma".
-include "ground/arith/int_lt_pred.ma".
+include "ground/relocation/tz/tzr_uni_tls.ma".
+include "ground/relocation/tz/tzr_tls_after.ma".
+include "ground/relocation/tz/tzr_id_after.ma".
 
-(* POSITIVE UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS ********)
+(* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS *******************)
 
-(* Constuctions with zle ****************************************************)
+(* constructions with tzr_after and tzr_tls ***********************************)
 
-lemma trz_puni_dapp_gt (z):
-      (𝟎) < z →
-      ↑z = 𝐮⁺＠⧣❨z❩.
-#z #Hz
-elim (zle_des_pos_sn … Hz) -Hz //
+theorem tzr_after_uni_dx_dapp (f) (z):
+        (𝐮❨f＠⧣❨z❩❩•⫰*[z]f) ≐ f•𝐮❨z❩.
+#f #z #z0
+<tzr_after_dapp <tzr_after_dapp
+<tzr_tls_dapp <tzr_uni_dapp <tzr_uni_dapp
+<zminus_plus_simpl //
 qed.
 
-lemma trz_puni_dapp_le (z):
-      z ≤ 𝟎 →
-      z = 𝐮⁺＠⧣❨z❩.
-#z #Hz
-elim (zle_split_lt_eq … Hz) -Hz #Hz
-[ elim (zlt_des_zero_dx … Hz) -Hz //
-| destruct //
-]
+theorem tzr_after_uni_bi (z2) (z1):
+        (𝐮❨z1+z2❩) ≐ 𝐮❨z2❩•𝐮❨z1❩.
+// qed.
+
+lemma tzr_tls_after_uni_dx (f) (p) (n):
+      (⫰*[p+n]f) ≐ ⫰*[p](f•𝐮❨n❩).
+#f #p #n
+@(tzr_eq_trans … (tzr_tls_after_dapp …))
+@(tzr_eq_trans … (tzr_after_eq_repl …))
+/1 width=5 by/
 qed.

@@ -15,7 +15,7 @@
 include "ground/notation/relations/ratsection_3.ma".
 include "ground/arith/nat_plus.ma".
 include "ground/arith/nat_lt.ma".
-include "ground/relocation/fr2_map.ma".
+include "ground/relocation/f2/fr2_map.ma".
 
 (* NON-NEGATIVE APPLICATION FOR FINITE RELOCATION MAPS WITH PAIRS ***********)
 

@@ -12,19 +12,37 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_tls.ma".
-include "ground/relocation/trz_lapp.ma".
+include "ground/relocation/tz/tzr_map.ma".
+include "ground/arith/int_pred_succ.ma".
+include "ground/notation/functions/atsection_2.ma".
 
-(* ITERATED TAIL FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
+(* LEVEL APPLICATION FOR TOTAL RELOCATION MAPS WITH INTEGERS ****************)
 
-(* Constructions with trz_lapp **********************************************)
+interpretation
+  "level application (total relocation maps with integers)"
+  'AtSection f z = (zpred (tzr_staff f (zsucc z))).
 
-lemma trz_lapp_plus_dx (f) (z1) (z2):
-      (⫰*[z2]f)＠§❨z1❩+f＠⧣❨z2❩ = f＠§❨z1+z2❩.
+(* Basic constructions ******************************************************)
+
+lemma tzr_dapp_succ_lapp (f) (z):
+      ↑f＠§❨z❩ = f＠⧣❨↑z❩.
 // qed.
 
-lemma trz_lapp_plus_sn (f) (z1) (z2):
-      (⫰*[↑z2]f)＠⧣❨z1❩+f＠§❨z2❩ = f＠§❨z1+z2❩.
-#f #z1 #z2
->zplus_succ_dx <trz_dapp_plus >zplus_pred_dx //
+lemma tzr_dapp_lapp (f) (z):
+      ↑f＠§❨↓z❩ = f＠⧣❨z❩.
+// qed.
+
+lemma tzr_lapp_pred_dapp (f) (z):
+      ↓f＠⧣❨z❩ = f＠§❨↓z❩.
+// qed.
+
+lemma tzr_eq_ext_lapp (f1) (f2):
+      (∀z. f1＠§❨z❩ = f2＠§❨z❩) → f1 ≐ f2.
+#f1 #f2 #Hf #z0
+<tzr_dapp_lapp <tzr_dapp_lapp in ⊢ (???%); //
+qed-.
+
+lemma tzr_lapp_eq_repl (z):
+      compatible_2_fwd … tzr_eq (eq …) (λf.f＠§❨z❩).
+/2 width=1 by tzr_dapp_eq_repl/
 qed.

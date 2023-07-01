@@ -12,23 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/trz_puni.ma".
-include "ground/relocation/trz_after.ma".
-include "ground/notation/functions/uparrowplus_1.ma".
+include "ground/relocation/tz/tzr_map.ma".
+include "ground/arith/int_plus_opp.ma".
+include "ground/notation/functions/element_u_1.ma".
 
-(* POSITIVE NEXT FOR TOTAL RELOCATION MAPS WITH INTEGERS ********************)
+(* UNIFORM ELEMENTS FOR TOTAL RELOCATION MAPS WITH INTEGERS *****************)
+
+definition tzr_uni (z:ℤ): tzr_map ≝ mk_tzr_map ….
+[ @(λz0.z0+z)
+| /2 width=2 by eq_inv_zplus_dx_bi/
+]
+defined.
 
 interpretation
-  "positive next (total relocation maps with integer)"
-  'UpArrowPlus f = (trz_after trz_puni f).
+  "uniform elements (total relocation maps with integers)"
+  'ElementU z = (tzr_uni z).
 
 (* Basic constructions ******************************************************)
 
-lemma trz_pnext_eq_repl:
-      compatible_2_fwd … trz_eq trz_eq (λf.↑⁺f).
-/2 width=1 by trz_after_eq_repl/
-qed.
-
-lemma trz_after_pnext_sn (f2) (f1):
-      ↑⁺(f2•f1) ≐ (↑⁺f2)•f1.
+lemma tzr_uni_dapp (z) (z0):
+      z0+z = 𝐮❨z❩＠⧣❨z0❩.
 // qed.
