@@ -204,9 +204,11 @@ let construct_inductive ~baseuri leftno types =
   Some (uri, 0, [], [], obj_kind)
 
 let rec read_until_end_pragma pragma_name buf =
-  match Parsers.Parser.read buf with
-  | Parsers.Entry.Pragma(_, str) when (PragmaParsing.pragma_name str) = pragma_name -> []
-  | _ as entry -> entry :: (read_until_end_pragma pragma_name buf)
+  try
+    match Parsers.Parser.read buf with
+    | Parsers.Entry.Pragma(_, str) when (PragmaParsing.pragma_name str) = pragma_name -> []
+    | _ as entry -> entry :: (read_until_end_pragma pragma_name buf)
+  with End_of_file -> failwith_log ("PRAGMA '" ^ pragma_name ^"'not closed")
 
 let handle_pragma_block ~baseuri buf pragma_string = 
   let pragma_name = PragmaParsing.pragma_name pragma_string in

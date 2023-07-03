@@ -16,15 +16,16 @@ let fixpoint_body_pragma = "FIXPOINT_BODY"
 let inductive_pragma = "INDUCTIVE"
 let match_pragma = "MATCH"
 
-let name_regex = Str.regexp {|.*NAME=\([a-zA-Z0-9_]+\)|}
-let ref_regex = Str.regexp {|.*REF=\([a-zA-Z0-9_]+\)|}
-let leftno_regex = Str.regexp {|.*LEFTNO=\([0-9]+\)|}
+let name_attr = "NAME"
+let ref_attr = "REF"
+let leftno_attr = "LEFTNO"
+
 let recno_regex = Str.regexp {|.*RECNO:[a-zA-Z0-9]+=[0-9]+|}
 let body_regex = Str.regexp {|.*BODY:[a-zA-Z0-9]+=[a-zA-Z0-9]+|}
 let cons_regex = Str.regexp {|.*CONS:[a-zA-Z0-9]+=[a-zA-Z0-9]+|}
 let sort_prop_regex = Str.regexp {|.* SORT=Prop.*|}
 
-let pragma_name_regex = Str.regexp {|PRAGMA (BEGIN|END)? \([A-Z]+\)([ A-Z]+:([A-Za-z0-9]+)=([a-zA-Z0-9]+))**|}
+let pragma_name_regex = Str.regexp {|PRAGMA\( BEGIN\| END\)? \([A-Za-z_]+\)\(( \|[A-Z])+(:[A-Za-z0-9]+)*=([a-zA-Z0-9_]+)( )*\)*|}
 
 let failwith_log mex = 
   HLog.error mex;
@@ -33,72 +34,49 @@ let failwith_log mex =
 (* Given a string of type 'PRAGMA <BEGIN/END> <NAME> [ATTR=...]' returns the `NAME` part *)
 let pragma_name pragma_str = 
   if Str.string_match pragma_name_regex pragma_str 0 then
-    Str.matched_group 0 pragma_str
+    Str.matched_group 2 pragma_str
   else
     failwith "Unable to get name of pragma " ^ pragma_str
     
 let is_valid_export_pragma pragma_str = Str.string_match pragma_name_regex pragma_str 0
 
-let missing_attr pragma_str attr pragma_type =
-  HLog.error ("Malformed " ^ pragma_type ^ " pragma: missing '" ^ attr ^ "' attribute in pragma '" ^ pragma_str ^ "' ");
-  None
-
 let filter_matching list regex = List.filter (fun s -> Str.string_match regex s 0) list
- 
-let find_index_opt str substr =
-  try
-    let regex = Str.regexp substr in
-    let match_start = Str.search_forward regex str 0 in
-    Some match_start
-  with Not_found -> None
 
-(** [bound_equal l1 l2 b] checks wheter the first [b] elements of [l1] are 
-    equals to the first [b] elements of [l2] *)
-let bound_equal l1 l2 b =
-  let rec aux l1 l2 b =
-   match l1,l2 with
-   | _,_ when b=0 -> true
-   | hd1::tl1,hd2::tl2 -> hd1=hd2 && aux tl1 tl2 (b-1)
-   | _,_ -> false in
-   aux l1 l2 b
+(** [parse_attr_named str] when s is in the form `<KEY>:<NAME>=<VALUE>` returns 
+    [(KEY, NAME, VALUE)]
+    *)
+let parse_attr_named str =
+    let pattern = Str.regexp {|\([A-Z_]+\):\([a-zA-Z0-9_]+\)=\([a-zA-Z0-9_]+\)|} in
+    if Str.string_match pattern str 0 then (
+      let key = Str.matched_group 1 str in
+      let name = Str.matched_group 2 str in 
+      let value = Str.matched_group 3 str in 
+      (key, name, value)
+  ) else failwith_log ("Cannot extract attributes from " ^ str)
 
-(** [same_type p1 p2] check if the pragmas [p1] and [p2] are of the same type *)
-let same_type pragma_1 pragma_2 =
-  let p1 = String.split_on_char ' ' pragma_1 in
-  let p2 = String.split_on_char ' ' pragma_2 in
-  (* Just check the first three words: eg PRAGMA BEGIN NAME*)
-  bound_equal p1 p2 3
+(** [parse_attr str] when s is in the form `<KEY>=<VALUE>` returns [(KEY, VALUE)] *)
+let parse_attr str =
+    let pattern = Str.regexp {|\([A-Z_]+\)=\([a-zA-Z0-9_]+\)|} in
+    if Str.string_match pattern str 0 then (
+      let key = Str.matched_group 1 str in
+      let value = Str.matched_group 2 str in 
+      (key, value)
+  ) else failwith_log ("Cannot extract attributes from " ^ str)
 
-let is_fixpoint_body_pragma pragma_str =
-  let splitted = String.split_on_char ' ' pragma_str in
-  (fixpoint_body_pragma = (List.nth splitted 1)) 
-
-(** If [str] is in the form "KEY:name=VALUE" [get_name_and_value_from_attr str] returns [(name, value)] *)
-let get_name_and_value_from_attr str =
-  let pattern = Str.regexp  {|\([A-Z]+:\)\([a-zA-Z0-9_]+\)=\([a-zA-Z0-9_]+\)|} in 
-  if Str.string_match pattern str 0 then (
-    let name = Str.matched_group 2 str in
-    let value = Str.matched_group 3 str in
-    (name, value) 
-  ) else 
-    failwith_log ("Cannot extract name and value from the string '" ^ str ^ "'")
-
-(** [parse_name_only_attr att_regex str] given a string [str] representing a pragma 
-    attribute in the form 'NAME=value' apply the regex [att_regex] to extract
-    the value as a [string]*)
-let parse_name_only_attr attr_regex str =
-  if Str.string_match attr_regex str 0 then 
+let parse_attr_by_key key str =
+  let pattern = Str.regexp ({|.*|} ^ key ^ {|=\([a-zA-Z0-9_]+\)|}) in
+  if Str.string_match pattern str 0 then
     Some (Str.matched_group 1 str)
   else
     None
 
-(** [find_attrs_for_name name attr_list] find the attributes in [attr_list] which referes
-    to [name]. An attriubte is seen like a pair name-value [string * string] *)
-let rec find_attrs_for_name name =
+(** [find_snd_by_fst fst list] find all seconds members of a list of paris which have
+    the first member equal to [fst]*)
+let rec find_snd_by_fst fst =
   function
   | [] -> []
-  | (n, v) :: t when n = name -> v :: find_attrs_for_name name t
-  | _ :: t -> find_attrs_for_name name t
+  | (k, v) :: t when k = fst -> v :: find_snd_by_fst fst t
+  | _ :: t -> find_snd_by_fst fst t
 
 (* [find_decl_with_name name entries] finds the [Decl] entry inside the [entries] list which has 
    an ident that matches with [name]. *)
@@ -116,8 +94,8 @@ let rec construct_fp_attr recnos bodies =
   function
   | [] -> []
   | name :: tail -> 
-    let recno_list = find_attrs_for_name name recnos in
-    let body_list = find_attrs_for_name name bodies in
+    let recno_list = find_snd_by_fst name recnos in
+    let body_list = find_snd_by_fst name bodies in
     (match recno_list, body_list with
     | [recno], [body] -> (name, int_of_string(recno), body) :: (construct_fp_attr recnos bodies tail)
     | [], _ -> failwith_log ("fixpoint pragma without RECNO attr for name '" ^ name ^ "'")
@@ -129,12 +107,12 @@ let rec construct_fp_attr recnos bodies =
     found parsing [pragma_str] *)
 let parse_fp_attrs pragma_str =
   let splitted = String.split_on_char ' ' pragma_str in 
-  let names_opt = List.map (parse_name_only_attr name_regex) splitted in
+  let names_opt = List.map (parse_attr_by_key name_attr) splitted in
   let names = List.map Option.get (List.filter Option.is_some names_opt) in
   let recnos = filter_matching splitted recno_regex in 
-  let recnos'= List.map get_name_and_value_from_attr recnos in
+  let recnos'= List.map (fun r -> let _,n,v = parse_attr_named r in (n,v)) recnos in
   let bodies = filter_matching splitted body_regex in
-  let bodies' = List.map get_name_and_value_from_attr bodies in
+  let bodies' = List.map (fun b -> let _,n,v = parse_attr_named b in (n,v)) bodies in
   construct_fp_attr recnos' bodies' names
 
 let rec construct_fixpoint_pragma attributes entries =
@@ -143,7 +121,7 @@ let rec construct_fixpoint_pragma attributes entries =
     match list with 
     | [] -> None
     | h :: t ->
-      let ref_val_opt = parse_name_only_attr ref_regex h in
+      let ref_val_opt = parse_attr_by_key ref_attr h in
       if Option.is_some ref_val_opt then 
         ref_val_opt
       else 
@@ -153,7 +131,7 @@ let rec construct_fixpoint_pragma attributes entries =
   let rec find_body_entry body_name entries =
     match entries with 
       | [] -> None  
-      | Parsers.Entry.Pragma(_, str) :: e :: t when is_fixpoint_body_pragma str ->
+      | Parsers.Entry.Pragma(_, str) :: e :: t when pragma_name str = fixpoint_body_pragma ->
         let splitted = String.split_on_char ' ' str in
         let ref_opt = find_ref_attr splitted in 
         (match  ref_opt with
@@ -180,17 +158,17 @@ let parse_fixpoint_pragma pragma_str entries =
 let rec construct_ind_attr cons = function
   | [] -> []
   | name :: tail ->
-    let cons_values = find_attrs_for_name name cons in
+    let cons_values = find_snd_by_fst name cons in
     if List.length cons_values < 1 then
       failwith_log ("No constructor found for name '" ^ name ^ "'");
   (name, cons_values) :: construct_ind_attr cons tail
       
 let parse_ind_attrs pragma_str =
   let splitted = String.split_on_char ' ' pragma_str in
-  let names_opt = List.map (parse_name_only_attr name_regex) splitted in
+  let names_opt = List.map (parse_attr_by_key name_attr) splitted in
   let names = List.map Option.get (List.filter Option.is_some names_opt) in
   let cons = filter_matching splitted cons_regex in
-  let cons'= List.map get_name_and_value_from_attr cons in
+  let cons'= List.map (fun c -> let (_,n,v) = parse_attr_named c in (n,v)) cons in
   construct_ind_attr cons' names
 
 let construct_ind_pragma leftno attributes entries =
@@ -230,7 +208,7 @@ let rec construct_match_pragma entries =
       None
 
 let parse_inductive_pragma pragma_str entries =
-  match parse_name_only_attr leftno_regex pragma_str  with
+  match parse_attr_by_key leftno_attr pragma_str  with
   | None -> failwith_log ("Unable to find 'LEFTNO' attribute in inductive pragma with value: '" ^ pragma_str ^ "'")
   | Some value -> 
     let leftno = int_of_string value in
