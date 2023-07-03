@@ -7,13 +7,14 @@ type export_pragma =
   | GeneratedPragma
   (*                  type                   body                  attrs *)
   | FixpointPragma of (Parsers.Entry.entry * Parsers.Entry.entry * fp_pragma_attrs) list
-  (*                   leftno  type                  constructors               attrs *)
-  | InductivePragma of int * (Parsers.Entry.entry * Parsers.Entry.entry list * ind_pragma_attrs) list
+  (*                   leftno  type                  constructors               attrs                   match const entry *)
+  | InductivePragma of int * (Parsers.Entry.entry * Parsers.Entry.entry list * ind_pragma_attrs) list * Parsers.Entry.entry option(*TODO*)
 
 let generated_pragma = "GENERATED"
 let fixpoint_pragma = "FIXPOINT"
 let fixpoint_body_pragma = "FIXPOINT_BODY"
 let inductive_pragma = "INDUCTIVE"
+let match_pragma = "MATCH"
 
 let name_regex = Str.regexp {|.*NAME=\([a-zA-Z0-9_]+\)|}
 let ref_regex = Str.regexp {|.*REF=\([a-zA-Z0-9_]+\)|}
@@ -21,17 +22,22 @@ let leftno_regex = Str.regexp {|.*LEFTNO=\([0-9]+\)|}
 let recno_regex = Str.regexp {|.*RECNO:[a-zA-Z0-9]+=[0-9]+|}
 let body_regex = Str.regexp {|.*BODY:[a-zA-Z0-9]+=[a-zA-Z0-9]+|}
 let cons_regex = Str.regexp {|.*CONS:[a-zA-Z0-9]+=[a-zA-Z0-9]+|}
+let sort_prop_regex = Str.regexp {|.* SORT=Prop.*|}
+
+let pragma_name_regex = Str.regexp {|PRAGMA (BEGIN|END)? \([A-Z]+\)([ A-Z]+:([A-Za-z0-9]+)=([a-zA-Z0-9]+))**|}
 
 let failwith_log mex = 
   HLog.error mex;
   failwith mex
 
-(* Given a string of type 'PRAGMA <BEGIN/GENERATED> <NAME> [ATTR=...]' returns the `NAME` part *)
+(* Given a string of type 'PRAGMA <BEGIN/END> <NAME> [ATTR=...]' returns the `NAME` part *)
 let pragma_name pragma_str = 
-  try 
-    let splitted = String.split_on_char ' ' pragma_str in 
-    Some (List.nth splitted 2)
-  with _ -> None
+  if Str.string_match pragma_name_regex pragma_str 0 then
+    Str.matched_group 0 pragma_str
+  else
+    failwith "Unable to get name of pragma " ^ pragma_str
+    
+let is_valid_export_pragma pragma_str = Str.string_match pragma_name_regex pragma_str 0
 
 let missing_attr pragma_str attr pragma_type =
   HLog.error ("Malformed " ^ pragma_type ^ " pragma: missing '" ^ attr ^ "' attribute in pragma '" ^ pragma_str ^ "' ");
@@ -66,18 +72,6 @@ let same_type pragma_1 pragma_2 =
 let is_fixpoint_body_pragma pragma_str =
   let splitted = String.split_on_char ' ' pragma_str in
   (fixpoint_body_pragma = (List.nth splitted 1)) 
-
-(** [read_until_pragma pragma buf] consumes [buf] until it finds an entry of 
-    type 'Pragma' with string value equal to [pragma] and returns the entries *)
-let rec read_until_pragma pragma buf = 
-  let entry = Parsers.Parser.read buf in
-  match entry with 
-  | Parsers.Entry.Pragma(_, str) when str = pragma -> []
-  | _ -> entry :: read_until_pragma pragma buf
-
-let parse_generated_pragma buf = 
-  let _ = read_until_pragma ("PRAGMA END " ^ generated_pragma) buf in 
-  GeneratedPragma
 
 (** If [str] is in the form "KEY:name=VALUE" [get_name_and_value_from_attr str] returns [(name, value)] *)
 let get_name_and_value_from_attr str =
@@ -179,9 +173,8 @@ let rec construct_fixpoint_pragma attributes entries =
     | _ , None -> failwith_log "Missing body while constructing fixpoint"
     )
 
-let parse_fixpoint_pragma buf pragma_str =
+let parse_fixpoint_pragma pragma_str entries =
   let attributes = parse_fp_attrs pragma_str in
-  let entries = read_until_pragma ("PRAGMA END " ^ fixpoint_pragma) buf in
   FixpointPragma(construct_fixpoint_pragma attributes entries)
 
 let rec construct_ind_attr cons = function
@@ -220,32 +213,40 @@ let construct_ind_pragma leftno attributes entries =
       (type_entry, cons_entries, att) :: construct_ind_types t entries
   in
   let types = construct_ind_types attributes entries in
-  InductivePragma(leftno, types)
+  (* InductivePragma(leftno, types) *)
+  leftno, types
 
-let parse_inductive_pragma buf pragma_str =
+let rec construct_match_pragma entries = 
+  let is_match_prop str = 
+    HLog.debug str;
+    pragma_name str = match_pragma && Str.string_match sort_prop_regex str 0 
+  in 
+  match entries with
+  | Parsers.Entry.Pragma(_, str) :: (Parsers.Entry.Decl(_,_,_,_,_) as match_const) :: _ when is_match_prop str ->
+    Some match_const
+  | _ :: t -> construct_match_pragma t 
+  | [] ->
+      HLog.warn "Found indcutive defintion without match inside";
+      None
+
+let parse_inductive_pragma pragma_str entries =
   match parse_name_only_attr leftno_regex pragma_str  with
   | None -> failwith_log ("Unable to find 'LEFTNO' attribute in inductive pragma with value: '" ^ pragma_str ^ "'")
   | Some value -> 
     let leftno = int_of_string value in
     let attrs = parse_ind_attrs pragma_str in
-    let entries = read_until_pragma ("PRAGMA END " ^ inductive_pragma) buf in
     construct_ind_pragma leftno attrs entries
 
-let parse_block pragma_str buf = 
-  match pragma_name pragma_str with
-  | None -> None
-  | Some name -> (
-      if name = generated_pragma then
-        Some (parse_generated_pragma buf)
-      else if name = fixpoint_pragma then
-        Some (parse_fixpoint_pragma buf pragma_str)
-      else if name = inductive_pragma  then
-        Some (parse_inductive_pragma buf pragma_str)
-      else if name = fixpoint_body_pragma then (
-        HLog.warn("Found fixpoint body pragma outside of a fixpoint");
-        None
-      ) else ( 
-        HLog.message("Found uknown pragma '" ^ pragma_str ^ "'");
-        None
-      )
-  )
+let parse_block name pragma_str entries = 
+    if name = generated_pragma then
+      Some GeneratedPragma
+    else if name = fixpoint_pragma then
+      Some (parse_fixpoint_pragma pragma_str entries)
+    else if name = inductive_pragma then(
+      let match_const = construct_match_pragma entries in
+      let leftno, types = parse_inductive_pragma pragma_str entries in
+      Some (InductivePragma(leftno, types, match_const))
+    ) else ( 
+      HLog.message("Found uknown pragma block beginning with '" ^ pragma_str ^ "'");
+      None
+    )

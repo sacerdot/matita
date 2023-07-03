@@ -137,6 +137,7 @@ let rec extract_idents_from_pattern =
       (str_ident :: extract_idents_from_pattern pattern) 
     | Kernel.Rule.Brackets(_) -> []
 
+  (* TODO rename*)
 let idk ~baseuri (rule: 'a Kernel.Rule.rule) typ recno = 
   let rec aux ~baseuri (rule: 'a Kernel.Rule.rule) idents typ recno recindex =
     match typ, idents with
@@ -202,10 +203,22 @@ let construct_inductive ~baseuri leftno types =
   let obj_kind = NCic.Inductive(true, leftno, types', i_attr) in 
   Some (uri, 0, [], [], obj_kind)
 
-let handle_pragma ~baseuri = function
-  | PragmaParsing.GeneratedPragma -> None
-  | PragmaParsing.FixpointPragma(fixpoint_list) -> construct_fixpoint ~baseuri fixpoint_list
-  | PragmaParsing.InductivePragma(leftno, types) -> construct_inductive ~baseuri leftno types
+let rec read_until_end_pragma pragma_name buf =
+  match Parsers.Parser.read buf with
+  | Parsers.Entry.Pragma(_, str) when (PragmaParsing.pragma_name str) = pragma_name -> []
+  | _ as entry -> entry :: (read_until_end_pragma pragma_name buf)
+
+let handle_pragma_block ~baseuri buf pragma_string = 
+  let pragma_name = PragmaParsing.pragma_name pragma_string in
+  let entries = read_until_end_pragma pragma_name buf in
+  match PragmaParsing.parse_block pragma_name pragma_string entries with
+  | Some export_pragma -> (
+      match export_pragma with
+    | PragmaParsing.GeneratedPragma -> None
+    | PragmaParsing.FixpointPragma(fixpoint_list) -> construct_fixpoint ~baseuri fixpoint_list
+    | PragmaParsing.InductivePragma(leftno, types, _) -> construct_inductive ~baseuri leftno types
+    )
+  | _ -> failwith "Unable to parse pragma block" 
 
 let obj_of_entry status ~baseuri buf = function
    Parsers.Entry.Def (_,ident,_,_,Some typ,body) -> 
@@ -215,12 +228,11 @@ let obj_of_entry status ~baseuri buf = function
   | Parsers.Entry.Decl (_,ident,_,_,typ) -> 
     Some(constuct_obj status ~baseuri ident typ None) 
   | Parsers.Entry.Pragma(_, str) -> 
-    let parsed_pragma = PragmaParsing.parse_block str buf in
-    (match parsed_pragma with
-    | Some pragma -> handle_pragma ~baseuri pragma
-    | None ->
-        HLog.warn ("Unable to parse pragma '" ^ str ^ "'");
-        None
+    if PragmaParsing.is_valid_export_pragma str then
+      handle_pragma_block ~baseuri buf str
+    else (
+      HLog.warn("Found unknow pragma " ^ str);
+      None
     )
   | Parsers.Entry.Rules(_, _) ->
     HLog.warn("Ignoring found rewriting rule");

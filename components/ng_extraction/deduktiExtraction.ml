@@ -337,10 +337,13 @@ let translate_sort s =
 
 let inductive_registry = Hashtbl.create 81
 
+let string_of_univ univ =
+  string_of_pp pp_univ univ
+
 (** Return the name of the match function associated to the inductive type. **)
 let translate_match_const (baseuri, name) univ =
   let univ' = translate_sort' univ in
-  let univ_name = string_of_pp pp_univ univ' in
+  let univ_name = string_of_univ univ' in
   translate_const (baseuri, Format.sprintf "match_%s_%s" name univ_name)
 
 
@@ -783,6 +786,10 @@ module Translation (I : INFO) = struct
               case_m y_m_1 ... y_m_nm
      **)
 
+  let create_match_pragmas sort =
+    let univ_str = string_of_univ (translate_sort' sort) in
+    (D.Pragma ("BEGIN MATCH SORT=" ^ univ_str ^ "."), D.Pragma "END MATCH.")
+
   let translate_match_scheme leftno ind_name arity constructors sort =
     (*      Format.printf "size match set: %d@." (UMSet.cardinal !translated_match); *)
     (*      Format.printf "size match: %s %a@." ind_name pp_univ sort'; *)
@@ -891,6 +898,8 @@ module Translation (I : INFO) = struct
     in
     (* Declare the match function *)
     let match_type' = to_cic_prods common_context.dk conclusion in
+    let begin_pragma, end_pragma = create_match_pragmas sort in
+    add_entry (fst match_const') begin_pragma;
     add_entry (fst match_const')
       (D.DefDeclaration (snd match_const', match_type')) ;
     (* Rewrite rules of the match function *)
@@ -916,7 +925,8 @@ module Translation (I : INFO) = struct
       add_entry (fst match_const')
         (D.RewriteRule (context.dk, left_pattern', right_term'))
     in
-    List.iteri translate_rule cons_infos
+    List.iteri translate_rule cons_infos;
+    add_entry (fst match_const') end_pragma 
 
   (** A filter is similar to a match in that it blocks the application of
         a function until a constructor is passed as an argument. It does not
@@ -1058,16 +1068,16 @@ module Translation (I : INFO) = struct
     in
     List.iteri (fun i x -> translate_rule i x sort) cons_infos
 
-let gen_inductive_attrs (_, name, _, constructors) = 
-  let constr_names = List.map (fun (_, cname, _) -> Format.sprintf "CONS:%s=%s" name cname) constructors in
-  let constr = String.concat " " constr_names in
-  Format.sprintf "NAME=%s %s" name constr 
+  let gen_inductive_attrs (_, name, _, constructors) = 
+    let constr_names = List.map (fun (_, cname, _) -> Format.sprintf "CONS:%s=%s" name cname) constructors in
+    let constr = String.concat " " constr_names in
+    Format.sprintf "NAME=%s %s" name constr 
 
-let create_inductive_pragmas leftno types = 
-  let leftno = Format.sprintf "LEFTNO=%d" leftno in
-  let attrs = List.map gen_inductive_attrs types in
-  let attrs' = String.concat " " attrs in
-  (D.Pragma (Format.sprintf "BEGIN INDUCTIVE %s %s." leftno attrs'), D.Pragma "END INDUCTIVE.")
+  let create_inductive_pragmas leftno types = 
+    let leftno = Format.sprintf "LEFTNO=%d" leftno in
+    let attrs = List.map gen_inductive_attrs types in
+    let attrs' = String.concat " " attrs in
+    (D.Pragma (Format.sprintf "BEGIN INDUCTIVE %s %s." leftno attrs'), D.Pragma "END INDUCTIVE.")
 
   let translate_inductive leftno ((_, name, ty, constructors) as ind) =
     (*      Format.printf "translate inductive: %s@." name; *)
