@@ -107,7 +107,7 @@ let constuct_obj status ~baseuri ident typ body =
   let reference = NReference.reference_of_spec uri (if body <> None then NReference.Def(height) else NReference.Decl) in
   assert (not (Hashtbl.mem const_tbl uri));
   Hashtbl.add const_tbl uri reference;
-  (uri, 0, [], [], obj_kind)
+  (uri, height, [], [], obj_kind)
 
 (*TODO let rule_to_term ~baseuri (rule: 'a Kernel.Rule.rule) = *)
 (*   dove  *)
@@ -137,8 +137,7 @@ let rec extract_idents_from_pattern =
       (str_ident :: extract_idents_from_pattern pattern) 
     | Kernel.Rule.Brackets(_) -> []
 
-  (* TODO rename*)
-let idk ~baseuri (rule: 'a Kernel.Rule.rule) typ recno = 
+let construct_fixpoint_body ~baseuri (rule: 'a Kernel.Rule.rule) typ recno = 
   let rec aux ~baseuri (rule: 'a Kernel.Rule.rule) idents typ recno recindex =
     match typ, idents with
     | NCic.Prod(_, source, target), (h::t) when recindex < recno -> 
@@ -146,14 +145,10 @@ let idk ~baseuri (rule: 'a Kernel.Rule.rule) typ recno =
     | NCic.Prod(_, source, _), [h] when recindex >= recno ->
       let body = construct_term ~baseuri rule.Kernel.Rule.rhs in 
       NCic.Lambda(h, source, body)
-    | _, []->
-      HLog.error("Not enough names when parsing fixpoint"); 
-      assert false; (* TODO *)
+    | _, []-> failwith_log "Not enough names when parsing fixpoint"
     | _ -> assert false
   in 
   let idents = extract_idents_from_pattern rule.Kernel.Rule.pat in
-  Kernel.Rule.pp_pattern Format.err_formatter rule.Kernel.Rule.pat; 
-  Kernel.Rule.pp_part_typed_rule Format.err_formatter rule;
   aux ~baseuri rule idents typ recno 0
 
 let construct_fixpoint_function ~baseuri (typ_entry, body_entry, attrs) = 
@@ -161,7 +156,7 @@ let construct_fixpoint_function ~baseuri (typ_entry, body_entry, attrs) =
   match typ_entry, body_entry with
   | Parsers.Entry.Decl(_, _, _, _, typ), Parsers.Entry.Rules(_, rule_list) ->
     let typ' = construct_term ~baseuri typ in
-    let body' = idk ~baseuri (List.hd rule_list) typ' recno in
+    let body' = construct_fixpoint_body ~baseuri (List.hd rule_list) typ' recno in
     ([], name, recno, typ', body')
   | _ -> failwith_log "Malformed error reconstructing fixpoint "
 
@@ -172,13 +167,13 @@ let mkuri_from_decl ~baseuri decl =
     mkuri ~baseuri str_ident
   | _ -> failwith_log "Cant generate an uri from this type of entry"
 
-let construct_fixpoint ~baseuri fixpoint_list =
-  (* TODO *)
+let construct_fixpoint status ~baseuri fixpoint_list =
   let uri = mkuri_from_decl ~baseuri (first (List.nth fixpoint_list 0)) in
   let functions = List.map (fun fp -> construct_fixpoint_function ~baseuri fp) fixpoint_list in
   let f_attr = (`Implied, `Axiom, `Regular) in 
   let obj_kind = NCic.Fixpoint(true, functions, f_attr) in 
-  Some (uri, 0, [], [], obj_kind)
+  let height = NCicTypeChecker.height_of_obj_kind status uri ~subst:[] obj_kind in 
+  Some [(uri, height, [], [], obj_kind)]
 
 let construct_inductive_constructor ~baseuri = function
     | Parsers.Entry.Decl(_,ident,_,_,term) -> 
@@ -196,12 +191,44 @@ let construct_inductive_type ~baseuri (typ, conss, attrs) =
     ([], name, typ', conss')
   | _ -> assert false (*TODO*)
   
-let construct_inductive ~baseuri leftno types =
+let construct_inductive status ~baseuri leftno types =
   let uri = mkuri_from_decl ~baseuri (first(List.nth types 0)) in
   let i_attr = (`Implied, `Regular) in
   let types' = List.map (construct_inductive_type ~baseuri) types in
   let obj_kind = NCic.Inductive(true, leftno, types', i_attr) in 
-  Some (uri, 0, [], [], obj_kind)
+  let height = NCicTypeChecker.height_of_obj_kind status uri ~subst:[] obj_kind in 
+  (uri, height, [], [], obj_kind)
+
+let split_match_const match_const = 
+  let rec extract_cases entry leftno = (
+    match entry with
+    | NCic.Prod(_, typ, oth) when leftno > 0 -> 
+      let cases, ind = extract_cases oth (leftno - 1) in
+      (typ :: cases, ind)
+    | NCic.Prod(_, typ, _)  -> [], typ
+    | _ -> assert false
+  ) in
+  match match_const with
+  | NCic.Prod(_, rt, cases) -> 
+    let return_type = rt in
+    let leftno= 2 in (* TODO *)
+    let cases, ind = extract_cases cases leftno in
+    (return_type, cases, ind)
+  |  _ -> assert false
+
+let construct_match status ~baseuri = function
+  | Parsers.Entry.Decl (_,ident,_,_,typ) -> 
+    let ident' = Kernel.Basic.string_of_ident ident in
+    let uri = mkuri ~baseuri ident' in
+    let typ' = construct_term ~baseuri typ in
+    let ret_typ, cases, ind = split_match_const typ' in
+    let reference = NReference.reference_of_string ("cic:/" ^ ident' ^ "#dec") in
+    let match_term = NCic.Match(reference, ret_typ, ind, cases) in
+    let attrs = (`Implied, `Axiom, `Regular) in
+    let obj_kind = NCic.Constant([], ident', Some match_term, ret_typ, attrs) in
+    let height = NCicTypeChecker.height_of_obj_kind status uri ~subst:[] obj_kind in 
+    (uri, height, [], [], obj_kind)
+  | _ -> failwith_log "match const must be a declaration"
 
 let rec read_until_end_pragma pragma_name buf =
   try
@@ -210,28 +237,33 @@ let rec read_until_end_pragma pragma_name buf =
     | _ as entry -> entry :: (read_until_end_pragma pragma_name buf)
   with End_of_file -> failwith_log ("PRAGMA '" ^ pragma_name ^"'not closed")
 
-let handle_pragma_block ~baseuri buf pragma_string = 
+let handle_pragma_block status ~baseuri buf pragma_string = 
   let pragma_name = PragmaParsing.pragma_name pragma_string in
   let entries = read_until_end_pragma pragma_name buf in
   match PragmaParsing.parse_block pragma_name pragma_string entries with
   | Some export_pragma -> (
       match export_pragma with
     | PragmaParsing.GeneratedPragma -> None
-    | PragmaParsing.FixpointPragma(fixpoint_list) -> construct_fixpoint ~baseuri fixpoint_list
-    | PragmaParsing.InductivePragma(leftno, types, _) -> construct_inductive ~baseuri leftno types
+    | PragmaParsing.FixpointPragma(fixpoint_list) -> construct_fixpoint status ~baseuri fixpoint_list
+    | PragmaParsing.InductivePragma(leftno, types, Some (match_const)) -> Some [
+      construct_match status ~baseuri match_const;
+      construct_inductive status ~baseuri leftno types
+    ]
+    | PragmaParsing.InductivePragma(leftno, types, None) -> Some [
+      construct_inductive status ~baseuri leftno types]
     )
   | _ -> failwith "Unable to parse pragma block" 
 
 let obj_of_entry status ~baseuri buf = function
    Parsers.Entry.Def (_,ident,_,_,Some typ,body) -> 
-    Some(constuct_obj status ~baseuri ident typ (Some body)) 
+    Some[(constuct_obj status ~baseuri ident typ (Some body)) ]
   | Parsers.Entry.Def (_,_,_,_,None, _) ->
     assert false
   | Parsers.Entry.Decl (_,ident,_,_,typ) -> 
-    Some(constuct_obj status ~baseuri ident typ None) 
+    Some[(constuct_obj status ~baseuri ident typ None) ]
   | Parsers.Entry.Pragma(_, str) -> 
     if PragmaParsing.is_valid_export_pragma str then
-      handle_pragma_block ~baseuri buf str
+      handle_pragma_block status ~baseuri buf str
     else (
       HLog.warn("Found unknow pragma " ^ str);
       None
@@ -242,3 +274,12 @@ let obj_of_entry status ~baseuri buf = function
   | _ ->
     HLog.message("NOT IMPLEMENTED (other)");
     None (*TODO*)
+
+
+(*
+TODO
+----
+
+1. Reference in fixpoint/inductive
+2. Height in fixpoint/inductive
+*)

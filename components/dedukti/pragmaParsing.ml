@@ -196,7 +196,6 @@ let construct_ind_pragma leftno attributes entries =
 
 let rec construct_match_pragma entries = 
   let is_match_prop str = 
-    HLog.debug str;
     pragma_name str = match_pragma && Str.string_match sort_prop_regex str 0 
   in 
   match entries with
