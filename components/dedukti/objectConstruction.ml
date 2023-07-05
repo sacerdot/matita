@@ -146,7 +146,7 @@ let construct_fixpoint_body ~baseuri (rule: 'a Kernel.Rule.rule) typ recno =
   aux ~baseuri rule idents typ recno 0
 
 let construct_fixpoint_function ~baseuri (typ_entry, body_entry, attrs) = 
-  let name, recno, _ = attrs in
+  let name, recno = attrs in
   match typ_entry, body_entry with
   | Parsers.Entry.Decl(_, _, _, _, typ), Parsers.Entry.Rules(_, rule_list) ->
     let typ' = construct_term ~baseuri typ in
@@ -169,7 +169,7 @@ let mkuri_from_decl ~baseuri decl ext =
   | _ -> failwith_log "Cant generate an uri from this type of entry"
 
 let construct_fixpoint status ~baseuri fixpoint_list =
-  let _name,uri = mkuri_from_decl ~baseuri (first (List.nth fixpoint_list 0)) "FIXME" in
+  let _,uri = mkuri_from_decl ~baseuri (first (List.nth fixpoint_list 0)) "FIXME" in
   let functions = List.map (fun fp -> construct_fixpoint_function ~baseuri fp) fixpoint_list in
   let f_attr = (`Implied, `Axiom, `Regular) in 
   let obj_kind = NCic.Fixpoint(true, functions, f_attr) in 
@@ -194,7 +194,7 @@ let construct_inductive_type ~baseuri (typ, conss, attrs) =
   
 let construct_inductive status ~baseuri leftno types =
   let names = List.map (fun (typ,_,_) -> name_of_decl ~baseuri typ) types in 
-  let _name,uri = mkuri_from_decl ~baseuri (first(List.nth types 0)) "ind" in
+  let _,uri = mkuri_from_decl ~baseuri (first(List.nth types 0)) "ind" in
 
   List.iteri (fun i name -> 
     let reference = NReference.reference_of_spec uri (NReference.Ind(true,i,leftno)) in

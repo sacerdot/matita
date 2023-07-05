@@ -1,5 +1,5 @@
-(*                     name     recno body-name *)
-type fp_pragma_attrs = string * int * string
+(*                     name     recno *)
+type fp_pragma_attrs = string * int 
 (*                      name     cons name list *)
 type ind_pragma_attrs = string * string list
 
@@ -88,19 +88,17 @@ let rec find_decl_with_name name entries =
       Some e
   | _ :: t -> find_decl_with_name name t
 
-(** [construct_fp_attr recnos bodies names] construct a [fp_pragma_attrs list] by 
+(** [construct_fp_attr recnos names] construct a [fp_pragma_attrs list] by 
     coupling togheter names and attributes *)
-let rec construct_fp_attr recnos bodies =
+let rec construct_fp_attr recnos =
   function
   | [] -> []
   | name :: tail -> 
     let recno_list = find_snd_by_fst name recnos in
-    let body_list = find_snd_by_fst name bodies in
-    (match recno_list, body_list with
-    | [recno], [body] -> (name, int_of_string(recno), body) :: (construct_fp_attr recnos bodies tail)
-    | [], _ -> failwith_log ("fixpoint pragma without RECNO attr for name '" ^ name ^ "'")
-    | _, [] -> failwith_log ("fixpoint pragma without BODY attr for name '" ^ name ^ "'")
-    | _, _ -> failwith_log ("fixpoint pragma with too many RECNO and/or BODY attributes for name '" ^ name ^ "'")
+    (match recno_list with
+    | [recno] -> (name, int_of_string(recno)) :: (construct_fp_attr recnos tail)
+    | []  -> failwith_log ("fixpoint pragma without RECNO attr for name '" ^ name ^ "'")
+    | _ -> failwith_log ("fixpoint pragma with too many RECNO attributes for name '" ^ name ^ "'")
     )
 
 (** [parse_fp_attrs pragma_str] return a [fp_pragma_attrs] with the attributes
@@ -111,9 +109,7 @@ let parse_fp_attrs pragma_str =
   let names = List.map Option.get (List.filter Option.is_some names_opt) in
   let recnos = filter_matching splitted recno_regex in 
   let recnos'= List.map (fun r -> let _,n,v = parse_attr_named r in (n,v)) recnos in
-  let bodies = filter_matching splitted body_regex in
-  let bodies' = List.map (fun b -> let _,n,v = parse_attr_named b in (n,v)) bodies in
-  construct_fp_attr recnos' bodies' names
+  construct_fp_attr recnos' names
 
 let rec construct_fixpoint_pragma attributes entries =
   (* Given a list of strings find the one matching REF attribute regex and return the value*)
@@ -128,23 +124,23 @@ let rec construct_fixpoint_pragma attributes entries =
         find_ref_attr t
     ) in
   (* Find the entry of the list which holds the body of the fixpoint referenced by the name *)
-  let rec find_body_entry body_name entries =
+  let rec find_body_entry name entries =
     match entries with 
       | [] -> None  
       | Parsers.Entry.Pragma(_, str) :: e :: t when pragma_name str = fixpoint_body_pragma ->
         let splitted = String.split_on_char ' ' str in
         let ref_opt = find_ref_attr splitted in 
         (match  ref_opt with
-        | Some(ref_val) when ref_val = body_name -> Some e
-        | _ -> find_body_entry body_name (e::t)
+        | Some(ref_val) when ref_val = name -> Some e
+        | _ -> find_body_entry name (e::t)
         )
-      | _ :: t -> find_body_entry body_name t
+      | _ :: t -> find_body_entry name t
   in
   match attributes with
   | []  -> []
-  | (name, _, body_name) as attr :: tail -> 
+  | (name, _) as attr :: tail -> 
     let typ = find_decl_with_name name entries in
-    let body = find_body_entry body_name entries in
+    let body = find_body_entry name entries in
     (match typ, body with
     | Some t, Some b -> (t, b, attr) :: construct_fixpoint_pragma tail entries
     | None, _ -> failwith_log "Missing type while constructing fixpoint"
@@ -168,8 +164,8 @@ let parse_ind_attrs pragma_str =
   let names_opt = List.map (parse_attr_by_key name_attr) splitted in
   let names = List.map Option.get (List.filter Option.is_some names_opt) in
   let cons = filter_matching splitted cons_regex in
-  let cons'= List.map (fun c -> let (_,n,v) = parse_attr_named c in (n,v)) cons in
-  construct_ind_attr cons' names
+  let cons= List.map (fun c -> let (_,n,v) = parse_attr_named c in (n,v)) cons in
+  construct_ind_attr cons names
 
 let construct_ind_pragma leftno attributes entries =
   let find_type_entry name entries =
@@ -218,7 +214,7 @@ let parse_block name pragma_str entries =
     if name = generated_pragma then
       Some GeneratedPragma
     else if name = fixpoint_pragma then
-      Some (parse_fixpoint_pragma pragma_str entries)
+      Some(parse_fixpoint_pragma pragma_str entries)
     else if name = inductive_pragma then(
       let match_const = construct_match_pragma entries in
       let leftno, types = parse_inductive_pragma pragma_str entries in

@@ -1,5 +1,5 @@
-(*                     name     recno body-name*)
-type fp_pragma_attrs = string * int * string
+(*                     name     recno *)
+type fp_pragma_attrs = string * int
 
 (*                      name     cons name *)
 type ind_pragma_attrs = string * string list

@@ -117,7 +117,7 @@ let translate_body_const (baseuri, name) =
   translate_const (baseuri, generate_body_const_name name)
 
 let gen_fixpoint_attrs (_, name, recno, _, _) = 
-  Format.sprintf "RECNO:%s=%d BODY:%s=%s" name recno name (generate_body_const_name name)
+    Format.sprintf "RECNO:%s=%d" name recno
 
 let create_fixpoint_pragmas functions = 
   let attrs_str = List.map gen_fixpoint_attrs functions in
@@ -1195,7 +1195,7 @@ module Translation (I : INFO) = struct
       D.papp_bindings (D.PConst fun_body') (params' @ [rec_param'])
     in
     let right_body_term' = return' in
-    let () = add_entry (fst fun_body') (create_fixpoint_body_pragma (snd fun_body')) in
+    let () = add_entry (fst fun_body') (create_fixpoint_body_pragma (snd fun_const')) in
     let () =
       add_entry (fst fun_body')
         (D.RewriteRule (context.dk, left_body_pattern', right_body_term'))
