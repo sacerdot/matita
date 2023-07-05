@@ -39,12 +39,10 @@ and construct_type term = NCic.Sort(NCic.Type [`Type,make_type_n_uri(term)])
 and construct_prop = NCic.Sort(NCic.Prop)
 
 and construct_const ~baseuri:_ name =  
-  let ident = Kernel.Basic.id name in
-  let str_ident = Kernel.Basic.string_of_ident ident in 
   match Hashtbl.find_opt const_tbl name with
   | Some reference -> NCic.Const reference
   (* It should not happen; the reference is bogus *)
-  | None -> NCic.Const (NReference.reference_of_string ("cic:/" ^ str_ident  ^ "#dec"))
+  | None -> failwith_log "name not found in const table"
 
 and construct_sort = function
   | Kernel.Term.App(Kernel.Term.Const(_, name), a1, []) when Kernel.Basic.name_eq name cic_type -> 
@@ -164,13 +162,20 @@ let mkuri_from_decl ~baseuri decl ext =
   match decl with
   | Parsers.Entry.Decl(_, ident, _, _, _) -> 
     let str_ident = Kernel.Basic.string_of_ident ident in
-    let name = Kernel.Basic.mk_name (Kernel.Basic.mk_mident (Filename.basename baseuri)) ident in
-    name, mkuri ~baseuri str_ident ext
+    mkuri ~baseuri str_ident ext
   | _ -> failwith_log "Cant generate an uri from this type of entry"
 
 let construct_fixpoint status ~baseuri fixpoint_list =
-  let _,uri = mkuri_from_decl ~baseuri (first (List.nth fixpoint_list 0)) "FIXME" in
-  let functions = List.map (fun fp -> construct_fixpoint_function ~baseuri fp) fixpoint_list in
+  let names = List.map (fun (typ,_,(_, leftno)) -> (name_of_decl ~baseuri typ, leftno)) fixpoint_list in
+  let uri = mkuri_from_decl ~baseuri (first (List.nth fixpoint_list 0)) "fix" in
+  List.iteri (fun i (name, leftno) ->
+    let reference = NReference.reference_of_spec uri (NReference.Fix(i, leftno, 0)) in
+    if Hashtbl.mem const_tbl name then
+      failwith_log ("Fixpoint " ^ (Kernel.Basic.string_of Kernel.Basic.pp_name name) ^ "already registed in const table")
+    else
+      Hashtbl.add const_tbl name reference;
+  ) names;
+  let functions = List.map (construct_fixpoint_function ~baseuri) fixpoint_list in
   let f_attr = (`Implied, `Axiom, `Regular) in 
   let obj_kind = NCic.Fixpoint(true, functions, f_attr) in 
   let height = NCicTypeChecker.height_of_obj_kind status uri ~subst:[] obj_kind in 
@@ -194,12 +199,13 @@ let construct_inductive_type ~baseuri (typ, conss, attrs) =
   
 let construct_inductive status ~baseuri leftno types =
   let names = List.map (fun (typ,_,_) -> name_of_decl ~baseuri typ) types in 
-  let _,uri = mkuri_from_decl ~baseuri (first(List.nth types 0)) "ind" in
-
+  let uri = mkuri_from_decl ~baseuri (first(List.nth types 0)) "ind" in
   List.iteri (fun i name -> 
-    let reference = NReference.reference_of_spec uri (NReference.Ind(true,i,leftno)) in
-    assert (not (Hashtbl.mem const_tbl name));
-    Hashtbl.add const_tbl name reference;
+    let reference = NReference.reference_of_spec uri (NReference.Ind(true, i, leftno)) in
+    if Hashtbl.mem const_tbl name then
+      failwith_log ("Inductive constructor " ^ (Kernel.Basic.string_of Kernel.Basic.pp_name name) ^ "already registed in const table")
+    else
+      Hashtbl.add const_tbl name reference;
   ) names;
 
   let i_attr = (`Implied, `Regular) in
