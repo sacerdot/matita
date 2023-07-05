@@ -8,6 +8,7 @@ let rec eval_from_dedukti_stream ~asserted ~baseuri status buf =
   let check_and_add ((uri,_,_,_,_) as obj) =
     HLog.message("Tradotto!" ^ status#ppobj obj);
     let status = NCicLibrary.add_obj status obj in
+    HLog.message("E' ben tipato!" ^ status#ppobj obj);
     let xxaliases = GrafiteDisambiguate.aliases_for_objs status [uri] in
     let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
     let status = GrafiteEngine.eval_alias status (mode,xxaliases) in

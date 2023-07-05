@@ -4,8 +4,8 @@ let failwith_log mex =
   HLog.error mex;
   failwith mex
 
-let mkuri ~baseuri name = 
-  NUri.uri_of_string (baseuri ^ "/" ^ name ^ ".con")
+let mkuri ~baseuri name ext = 
+  NUri.uri_of_string (baseuri ^ "/" ^ name ^ "." ^ ext)
 
 let first (a,_,_) = a
 
@@ -25,20 +25,25 @@ let rec calc_univ_dept  = function
   | Kernel.Term.App(Kernel.Term.Const(_, f_name), a, []) when Kernel.Basic.name_eq f_name cic_succ -> 1 + (calc_univ_dept a)
   | _ -> failwith_log "Error loading universe dept"
 
-    (* TODO check 0 4*)
-let make_type_n_uri term = NUri.uri_of_string(Printf.sprintf "cic:/matita/pts/Type%d.univ" (calc_univ_dept term)) 
-let rec construct_debrujin index = NCic.Rel(index + 1) (* TODO check if it is really 0based*)
+let make_type_n_uri term =
+  let univ_dept = calc_univ_dept term in
+  if univ_dept >= 0 && univ_dept <= 4 then
+    NUri.uri_of_string(Printf.sprintf "cic:/matita/pts/Type%d.univ" univ_dept) 
+  else
+    failwith_log (Format.sprintf "Univers number must be between 0 and 4. Got %d" univ_dept)
+
+let rec construct_debrujin index = NCic.Rel(index + 1)
 
 and construct_type term = NCic.Sort(NCic.Type [`Type,make_type_n_uri(term)])
 
 and construct_prop = NCic.Sort(NCic.Prop)
 
-and construct_const ~baseuri name =  
+and construct_const ~baseuri:_ name =  
   let ident = Kernel.Basic.id name in
   let str_ident = Kernel.Basic.string_of_ident ident in 
-  let uri = mkuri ~baseuri str_ident in
-  match Hashtbl.find_opt const_tbl uri with
+  match Hashtbl.find_opt const_tbl name with
   | Some reference -> NCic.Const reference
+  (* It should not happen; the reference is bogus *)
   | None -> NCic.Const (NReference.reference_of_string ("cic:/" ^ str_ident  ^ "#dec"))
 
 and construct_sort = function
@@ -101,25 +106,14 @@ let construct_obj_kind ~baseuri typ body ident =
 
 let constuct_obj status ~baseuri ident typ body =
   let str_ident = Kernel.Basic.string_of_ident ident in 
-  let uri = mkuri ~baseuri str_ident in
+  let name = Kernel.Basic.mk_name (Kernel.Basic.mk_mident (Filename.basename baseuri)) ident in
+  let uri = mkuri ~baseuri str_ident "con" in
   let obj_kind = construct_obj_kind ~baseuri typ body str_ident in
   let height = NCicTypeChecker.height_of_obj_kind status uri ~subst:[] obj_kind in 
   let reference = NReference.reference_of_spec uri (if body <> None then NReference.Def(height) else NReference.Decl) in
-  assert (not (Hashtbl.mem const_tbl uri));
-  Hashtbl.add const_tbl uri reference;
+  assert (not (Hashtbl.mem const_tbl name));
+  Hashtbl.add const_tbl name reference;
   (uri, height, [], [], obj_kind)
-
-(*TODO let rule_to_term ~baseuri (rule: 'a Kernel.Rule.rule) = *)
-(*   dove  *)
-(*    - n = recno + 1 *)
-(*    - i nomi li prendi dal lhs che e' della forma  *)
-(*       (nome_costante x1 ... xn) *)
-(*    - i tipi li prendi dal typ_entry gia' tradotto che e' della forma  *)
-(*      Prod(_,Some tipo1, ..., (Prod (_,Some tipon,_)))) *)
-(*   let body_monco = *)
-(*   construct_term ~baseuri rule.Kernel.Rule.rhs in  *)
-(*  (* | Lambda   of string * term * term           (* binder, source, target     *) *) *)
-(*     Lambda (x1, tipo1, ... (Lambda xn, tipon, body_monco)) *)
 
 let rec extract_idents_from_pattern =
   function
@@ -160,15 +154,22 @@ let construct_fixpoint_function ~baseuri (typ_entry, body_entry, attrs) =
     ([], name, recno, typ', body')
   | _ -> failwith_log "Malformed error reconstructing fixpoint "
 
-let mkuri_from_decl ~baseuri decl =
+let name_of_decl ~baseuri decl =
+  match decl with
+  | Parsers.Entry.Decl(_, ident, _, _, _) -> 
+     Kernel.Basic.mk_name (Kernel.Basic.mk_mident (Filename.basename baseuri)) ident
+  | _ -> failwith_log "Cant generate a name from this type of entry"
+
+let mkuri_from_decl ~baseuri decl ext =
   match decl with
   | Parsers.Entry.Decl(_, ident, _, _, _) -> 
     let str_ident = Kernel.Basic.string_of_ident ident in
-    mkuri ~baseuri str_ident
+    let name = Kernel.Basic.mk_name (Kernel.Basic.mk_mident (Filename.basename baseuri)) ident in
+    name, mkuri ~baseuri str_ident ext
   | _ -> failwith_log "Cant generate an uri from this type of entry"
 
 let construct_fixpoint status ~baseuri fixpoint_list =
-  let uri = mkuri_from_decl ~baseuri (first (List.nth fixpoint_list 0)) in
+  let _name,uri = mkuri_from_decl ~baseuri (first (List.nth fixpoint_list 0)) "FIXME" in
   let functions = List.map (fun fp -> construct_fixpoint_function ~baseuri fp) fixpoint_list in
   let f_attr = (`Implied, `Axiom, `Regular) in 
   let obj_kind = NCic.Fixpoint(true, functions, f_attr) in 
@@ -189,10 +190,18 @@ let construct_inductive_type ~baseuri (typ, conss, attrs) =
     let typ' = construct_term ~baseuri typ_term in
     let conss' = List.map (construct_inductive_constructor ~baseuri) conss in
     ([], name, typ', conss')
-  | _ -> assert false (*TODO*)
+  | _ -> assert false
   
 let construct_inductive status ~baseuri leftno types =
-  let uri = mkuri_from_decl ~baseuri (first(List.nth types 0)) in
+  let names = List.map (fun (typ,_,_) -> name_of_decl ~baseuri typ) types in 
+  let _name,uri = mkuri_from_decl ~baseuri (first(List.nth types 0)) "ind" in
+
+  List.iteri (fun i name -> 
+    let reference = NReference.reference_of_spec uri (NReference.Ind(true,i,leftno)) in
+    assert (not (Hashtbl.mem const_tbl name));
+    Hashtbl.add const_tbl name reference;
+  ) names;
+
   let i_attr = (`Implied, `Regular) in
   let types' = List.map (construct_inductive_type ~baseuri) types in
   let obj_kind = NCic.Inductive(true, leftno, types', i_attr) in 
@@ -219,7 +228,7 @@ let split_match_const match_const =
 let construct_match status ~baseuri = function
   | Parsers.Entry.Decl (_,ident,_,_,typ) -> 
     let ident' = Kernel.Basic.string_of_ident ident in
-    let uri = mkuri ~baseuri ident' in
+    let uri = mkuri ~baseuri ident' "FIXMEMORE" in
     let typ' = construct_term ~baseuri typ in
     let ret_typ, cases, ind = split_match_const typ' in
     let reference = NReference.reference_of_string ("cic:/" ^ ident' ^ "#dec") in
@@ -245,8 +254,8 @@ let handle_pragma_block status ~baseuri buf pragma_string =
       match export_pragma with
     | PragmaParsing.GeneratedPragma -> None
     | PragmaParsing.FixpointPragma(fixpoint_list) -> construct_fixpoint status ~baseuri fixpoint_list
-    | PragmaParsing.InductivePragma(leftno, types, Some (match_const)) -> Some [
-      construct_match status ~baseuri match_const;
+    | PragmaParsing.InductivePragma(leftno, types, Some (_)) -> Some [
+      (* construct_match status ~baseuri match_const; *)
       construct_inductive status ~baseuri leftno types
     ]
     | PragmaParsing.InductivePragma(leftno, types, None) -> Some [
@@ -274,12 +283,3 @@ let obj_of_entry status ~baseuri buf = function
   | _ ->
     HLog.message("NOT IMPLEMENTED (other)");
     None (*TODO*)
-
-
-(*
-TODO
-----
-
-1. Reference in fixpoint/inductive
-2. Height in fixpoint/inductive
-*)

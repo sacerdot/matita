@@ -20,9 +20,9 @@ let name_attr = "NAME"
 let ref_attr = "REF"
 let leftno_attr = "LEFTNO"
 
-let recno_regex = Str.regexp {|.*RECNO:[a-zA-Z0-9]+=[0-9]+|}
-let body_regex = Str.regexp {|.*BODY:[a-zA-Z0-9]+=[a-zA-Z0-9]+|}
-let cons_regex = Str.regexp {|.*CONS:[a-zA-Z0-9]+=[a-zA-Z0-9]+|}
+let recno_regex = Str.regexp {|.*RECNO:[a-zA-Z0-9_]+=[0-9]+|}
+let body_regex = Str.regexp {|.*BODY:[a-zA-Z0-9_]+=[a-zA-Z0-9_]+|}
+let cons_regex = Str.regexp {|.*CONS:[a-zA-Z0-9_]+=[a-zA-Z0-9_]+|}
 let sort_prop_regex = Str.regexp {|.* SORT=Prop.*|}
 
 let pragma_name_regex = Str.regexp {|PRAGMA\( BEGIN\| END\)? \([A-Za-z_]+\)\(( \|[A-Z])+(:[A-Za-z0-9]+)*=([a-zA-Z0-9_]+)( )*\)*|}
@@ -31,7 +31,7 @@ let failwith_log mex =
   HLog.error mex;
   failwith mex
 
-(* Given a string of type 'PRAGMA <BEGIN/END> <NAME> [ATTR=...]' returns the `NAME` part *)
+(** Given a string of type 'PRAGMA <BEGIN/END> <NAME> [ATTR=...]' returns the `NAME` part *)
 let pragma_name pragma_str = 
   if Str.string_match pragma_name_regex pragma_str 0 then
     Str.matched_group 2 pragma_str
