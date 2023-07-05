@@ -73,8 +73,6 @@ lemma fur_length_total (f):
   ]
 ]
 
-*)
-
 include "ground/relocation/fu/fur_eq.ma".
 
 lemma pippo (q) (f1) (f2):
