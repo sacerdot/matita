@@ -1,0 +1,32 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "ground/relocation/t1/tr_pn.ma".
+include "ground/relocation/t1/tr_pap.ma".
+
+(* POSITIVE APPLICATION FOR TOTAL RELOCATION MAPS ***************************)
+
+(* Constructions with tr_push ***********************************************)
+
+lemma tr_pap_push (f):
+      ∀i. ↑(f＠⧣❨i❩) = (⫯f)＠⧣❨↑i❩.
+// qed.
+
+(* Constructions with tr_next ***********************************************)
+
+(*** apply_S2 *)
+lemma tr_pap_next (f):
+      ∀i. ↑(f＠⧣❨i❩) = (↑f)＠⧣❨i❩.
+* #p #f * //
+qed.
