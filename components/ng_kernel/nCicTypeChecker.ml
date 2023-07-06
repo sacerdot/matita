@@ -1244,6 +1244,8 @@ let height_of_obj_kind status uri ~subst =
        (List.fold_left
         (fun l (_,_,_,ty,bo) ->
           let bo = debruijn status uri iflno [] ~subst bo in
+          HLog.warn ("ZZZ " ^ status#ppterm ~context:[] ~subst:[] ~metasenv:[] ty);
+          HLog.warn ("YYY " ^ status#ppterm ~context:[] ~subst:[] ~metasenv:[] bo);
            ty::bo::l
        ) [] ifl)
   | NCic.Constant (_,_,Some bo,ty,_) -> height_of_term status [bo;ty]
@@ -1316,8 +1318,8 @@ let typecheck_obj status (uri,height,metasenv,subst,kind) =
           let rec enum_from k = 
             function [] -> [] | v::tl -> (k,v)::enum_from (k+1) tl 
           in
-          guarded_by_destructors status r_uri r_len 
-           ~subst ~metasenv context (enum_from (x+2) kl) m
+        let _fixme = guarded_by_destructors status r_uri r_len 
+           ~subst ~metasenv context (enum_from (x+2) kl) in ignore m
         end else
          match returns_a_coinductive status ~subst [] ty with
           | None ->

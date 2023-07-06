@@ -9,7 +9,7 @@ type export_pragma =
   (*                  type                   body                    attrs *)
   | FixpointPragma of (Parsers.Entry.entry * Parsers.Entry.entry * fp_pragma_attrs) list
   (*                   leftno  type                  constructors               attrs                   match const entry *)
-  | InductivePragma of int * (Parsers.Entry.entry * Parsers.Entry.entry list * ind_pragma_attrs) list * Parsers.Entry.entry option(*TODO*)
+  | InductivePragma of int * (Parsers.Entry.entry * Parsers.Entry.entry list * ind_pragma_attrs) list * Parsers.Entry.entry list
 
 
 val pragma_name: string -> string

@@ -8,7 +8,7 @@ type export_pragma =
   (*                  type                   body                  attrs *)
   | FixpointPragma of (Parsers.Entry.entry * Parsers.Entry.entry * fp_pragma_attrs) list
   (*                   leftno  type                  constructors               attrs                   match const entry *)
-  | InductivePragma of int * (Parsers.Entry.entry * Parsers.Entry.entry list * ind_pragma_attrs) list * Parsers.Entry.entry option(*TODO*)
+  | InductivePragma of int * (Parsers.Entry.entry * Parsers.Entry.entry list * ind_pragma_attrs) list * Parsers.Entry.entry list
 
 let generated_pragma = "GENERATED"
 let fixpoint_pragma = "FIXPOINT"
@@ -23,7 +23,6 @@ let leftno_attr = "LEFTNO"
 let recno_regex = Str.regexp {|.*RECNO:[a-zA-Z0-9_]+=[0-9]+|}
 let body_regex = Str.regexp {|.*BODY:[a-zA-Z0-9_]+=[a-zA-Z0-9_]+|}
 let cons_regex = Str.regexp {|.*CONS:[a-zA-Z0-9_]+=[a-zA-Z0-9_]+|}
-let sort_prop_regex = Str.regexp {|.* SORT=Prop.*|}
 
 let pragma_name_regex = Str.regexp {|PRAGMA\( BEGIN\| END\)? \([A-Za-z_]+\)\(( \|[A-Z])+(:[A-Za-z0-9]+)*=([a-zA-Z0-9_]+)( )*\)*|}
 
@@ -36,7 +35,7 @@ let pragma_name pragma_str =
   if Str.string_match pragma_name_regex pragma_str 0 then
     Str.matched_group 2 pragma_str
   else
-    failwith "Unable to get name of pragma " ^ pragma_str
+    failwith "Unable to get name of pragma '" ^ pragma_str ^ "'"
     
 let is_valid_export_pragma pragma_str = Str.string_match pragma_name_regex pragma_str 0
 
@@ -155,8 +154,6 @@ let rec construct_ind_attr cons = function
   | [] -> []
   | name :: tail ->
     let cons_values = find_snd_by_fst name cons in
-    if List.length cons_values < 1 then
-      failwith_log ("No constructor found for name '" ^ name ^ "'");
   (name, cons_values) :: construct_ind_attr cons tail
       
 let parse_ind_attrs pragma_str =
@@ -191,16 +188,11 @@ let construct_ind_pragma leftno attributes entries =
   leftno, types
 
 let rec construct_match_pragma entries = 
-  let is_match_prop str = 
-    pragma_name str = match_pragma && Str.string_match sort_prop_regex str 0 
-  in 
   match entries with
-  | Parsers.Entry.Pragma(_, str) :: (Parsers.Entry.Decl(_,_,_,_,_) as match_const) :: _ when is_match_prop str ->
-    Some match_const
+  | Parsers.Entry.Pragma(_, str) :: (Parsers.Entry.Decl(_,_,_,_,_) as match_const) :: t when pragma_name str = match_pragma ->
+    match_const :: construct_match_pragma t
   | _ :: t -> construct_match_pragma t 
-  | [] ->
-      HLog.warn "Found indcutive defintion without match inside";
-      None
+  | [] -> []
 
 let parse_inductive_pragma pragma_str entries =
   match parse_attr_by_key leftno_attr pragma_str  with

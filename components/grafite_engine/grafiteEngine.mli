@@ -31,3 +31,6 @@ val eval_ast :
   include_paths:string list -> ?do_heavy_checks:bool ->
    GrafiteTypes.status -> GrafiteAst.statement disambiguator_input ->
     GrafiteTypes.status
+
+val eval_alias : (#GrafiteTypes.status as 'a) -> 
+  GrafiteAst.inclusion_mode * (DisambiguateTypes.domain_item * GrafiteAst.alias_spec) list -> 'a

@@ -338,6 +338,7 @@ let aliases_of uri =
      if NUri.eq uri' uri then Some nref else None) !local_aliases
 ;;
 
+
 let add_obj status ((u,_,_,_,_) as orig_obj) =
  NCicEnvironment.check_and_add_obj status orig_obj;
  storage := (`Obj (u,orig_obj))::!storage;

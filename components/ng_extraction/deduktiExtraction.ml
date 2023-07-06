@@ -8,8 +8,11 @@ module F = Format
 let pp ?(ctx= []) fmt term =
   Format.fprintf fmt "%s@." (new P.status#ppterm ctx [] [] term)
 
-let begin_gen = D.Pragma "BEGIN GENERATED."
-let end_gen = D.Pragma "END GENERATED."
+(* let begin_gen = D.Pragma "BEGIN GENERATED." *)
+(* let end_gen = D.Pragma "END GENERATED." *)
+
+let begin_gen = D.Pragma "."(* "BEGIN GENERATED." *)
+let end_gen = D.Pragma "." (* "END GENERATED." *)
 
 (**** Utilities ****)
 
