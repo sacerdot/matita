@@ -42,7 +42,7 @@ and construct_const ~baseuri:_ name =
   match Hashtbl.find_opt const_tbl name with
   | Some reference -> NCic.Const reference
   (* It should not happen; the reference is bogus *)
-  | None -> failwith_log "name not found in const table"
+  | None -> failwith_log ("name " ^(Kernel.Basic.string_of Kernel.Basic.pp_name name)  ^  " not found in const table")
 
 and construct_sort = function
   | Kernel.Term.App(Kernel.Term.Const(_, name), a1, []) when Kernel.Basic.name_eq name cic_type -> 
@@ -181,19 +181,25 @@ let construct_fixpoint status ~baseuri fixpoint_list =
   let height = NCicTypeChecker.height_of_obj_kind status uri ~subst:[] obj_kind in 
   Some [(uri, height, [], [], obj_kind)]
 
-let construct_inductive_constructor ~baseuri = function
+let construct_inductive_constructor ~baseuri block_uri indtyno leftno consno  = function
     | Parsers.Entry.Decl(_,ident,_,_,term) -> 
       let t = construct_term ~baseuri term in 
-      let name = Kernel.Basic.string_of_ident ident in 
-      ([], name, t)
+      let name = Kernel.Basic.mk_name (Kernel.Basic.mk_mident (Filename.basename baseuri)) ident in
+      let ident = Kernel.Basic.string_of_ident ident in 
+      let reference = NReference.reference_of_spec block_uri (NReference.Con(indtyno, consno, leftno)) in
+      if Hashtbl.mem const_tbl name then
+        failwith_log ("Inductive constructor " ^ (Kernel.Basic.string_of Kernel.Basic.pp_name name) ^ "already registed in const table")
+      else
+        Hashtbl.add const_tbl name reference;
+      ([], ident, t)
     | _ -> failwith_log "Malformed inductive type constructor"
 
-let construct_inductive_type ~baseuri (typ, conss, attrs) =
+let construct_inductive_type ~baseuri block_uri leftno indtypno  (typ, conss, attrs) =
   match typ with
   | Parsers.Entry.Decl(_,_,_,_,typ_term) ->
     let name, _ = attrs in
     let typ' = construct_term ~baseuri typ_term in
-    let conss' = List.map (construct_inductive_constructor ~baseuri) conss in
+    let conss' = List.mapi (construct_inductive_constructor ~baseuri block_uri indtypno leftno) conss in
     ([], name, typ', conss')
   | _ -> assert false
   
@@ -203,13 +209,13 @@ let construct_inductive status ~baseuri leftno types =
   List.iteri (fun i name -> 
     let reference = NReference.reference_of_spec uri (NReference.Ind(true, i, leftno)) in
     if Hashtbl.mem const_tbl name then
-      failwith_log ("Inductive constructor " ^ (Kernel.Basic.string_of Kernel.Basic.pp_name name) ^ "already registed in const table")
+      failwith_log ("Inductive type " ^ (Kernel.Basic.string_of Kernel.Basic.pp_name name) ^ "already registed in const table")
     else
       Hashtbl.add const_tbl name reference;
   ) names;
 
   let i_attr = (`Implied, `Regular) in
-  let types' = List.map (construct_inductive_type ~baseuri) types in
+  let types' = List.mapi (construct_inductive_type ~baseuri uri leftno) types in
   let obj_kind = NCic.Inductive(true, leftno, types', i_attr) in 
   let height = NCicTypeChecker.height_of_obj_kind status uri ~subst:[] obj_kind in 
   (uri, height, [], [], obj_kind)
