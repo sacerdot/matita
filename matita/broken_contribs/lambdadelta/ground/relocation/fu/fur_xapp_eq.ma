@@ -12,22 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fu/fur_drops_lapp.ma".
-include "ground/relocation/fu/fur_nexts_dapp.ma".
-include "ground/relocation/fu/fur_lapp_eq.ma".
+include "ground/relocation/fu/fur_xapp.ma".
+include "ground/relocation/fu/fur_eq.ma".
 
-(* ITERATED DROP FOR FINITE RELOCATION MAPS FOR UNWIND **********************)
+(* Constructions with fur_eq ************************************************)
 
-(* Constructions with fur_nexts *********************************************)
-
-lemma fur_nexts_lapp_drops (f) (n):
-      (⮤*[n]f) ≐ ↑*[f＠§❨n❩]⇩*[n]f.
-// qed.
-
-lemma fur_map_unfold_drops_zero (f):
-      ↑*[f＠§❨𝟎❩]⇩*[𝟎]f ≐ f.
-/3 width=1 by fur_nexts_lapp_drops, fur_eq_canc_sn/
+lemma fur_eq_xapp (f1) (f2):
+      (∀n. f1＠❨n❩ = f2＠❨n❩) → f1 ≐ f2.
+#f1 #f2 #Hf #p
+lapply (Hf (⁤p)) -Hf
+<fur_xapp_pos <fur_xapp_pos #H0
+lapply (eq_inv_npos_bi … H0) -H0 //
 qed.
 
-lemma pippo (f):
-      ∃∃g. ↑*[f＠§❨𝟎❩]𝐢  ≐ g & (⇩*[𝟎]f)●g = f.
+(* Inversions with fur_eq ***************************************************)
+
+lemma fur_xapp_eq_repl (n):
+      compatible_2_fwd … fur_eq (eq …) (λf.f＠❨n❩).
+* // qed-.

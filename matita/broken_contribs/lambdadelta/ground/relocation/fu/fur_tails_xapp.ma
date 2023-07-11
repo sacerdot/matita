@@ -12,22 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fu/fur_drops_lapp.ma".
-include "ground/relocation/fu/fur_nexts_dapp.ma".
-include "ground/relocation/fu/fur_lapp_eq.ma".
+include "ground/relocation/fu/fur_tails.ma".
+include "ground/relocation/fu/fur_xapp.ma".
+include "ground/arith/nat_minus_plus.ma".
 
-(* ITERATED DROP FOR FINITE RELOCATION MAPS FOR UNWIND **********************)
+(* ITERATED TAIL FOR FINITE RELOCATION MAPS FOR UNWIND **********************)
 
-(* Constructions with fur_nexts *********************************************)
+(* Constructions with fur_xapp **********************************************)
 
-lemma fur_nexts_lapp_drops (f) (n):
-      (⮤*[n]f) ≐ ↑*[f＠§❨n❩]⇩*[n]f.
-// qed.
-
-lemma fur_map_unfold_drops_zero (f):
-      ↑*[f＠§❨𝟎❩]⇩*[𝟎]f ≐ f.
-/3 width=1 by fur_nexts_lapp_drops, fur_eq_canc_sn/
+lemma fur_dapp_plus_xapp_dx (f) (n) (p):
+      (⫰*[n]f)＠⧣❨p❩+f＠❨n❩ = f＠⧣❨p+n❩.
+#f * //
+elim f -f //
+* [| #k ] #f #IH #q #p
+[ <fur_tails_pos_p_dx
+  cases q -q [| #q ]
+  [ <fur_tails_zero //
+  | >npsucc_pos <nrplus_succ_dx
+    <fur_dapp_p_dx_succ <IH -IH //
+  ]
+| <fur_tails_pos_j_dx <fur_dapp_j_dx >nrplus_plus_assoc <nplus_pos_sn
+   <IH -IH <fur_xapp_j_dx_succ //
+]
 qed.
 
-lemma pippo (f):
-      ∃∃g. ↑*[f＠§❨𝟎❩]𝐢  ≐ g & (⇩*[𝟎]f)●g = f.
+lemma fur_xapp_plus (f) (m) (n):
+      (⫰*[n]f)＠❨m❩+f＠❨n❩ = f＠❨m+n❩.
+#f * //
+qed.
+
+lemma fur_xapp_tails (f) (m) (n):
+      f＠❨m+n❩-f＠❨n❩ = (⫰*[n]f)＠❨m❩.
+// qed.

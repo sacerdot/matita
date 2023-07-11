@@ -12,22 +12,37 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fu/fur_drops_lapp.ma".
-include "ground/relocation/fu/fur_nexts_dapp.ma".
-include "ground/relocation/fu/fur_lapp_eq.ma".
+include "ground/relocation/fu/fur_dapp.ma".
+include "ground/arith/nat_split.ma".
+include "ground/notation/functions/at_2.ma".
+include "ground/arith/nat_plus_rplus.ma".
 
-(* ITERATED DROP FOR FINITE RELOCATION MAPS FOR UNWIND **********************)
+(* EXTENDED DEPTH APPLICATION FOR FINITE RELOCATION MAPS FOR UNWIND *********)
 
-(* Constructions with fur_nexts *********************************************)
+definition fur_xapp (f) (n): ℕ ≝
+           nsplit … (𝟎) (λp.(⁤f＠⧣❨p❩)) n
+.
 
-lemma fur_nexts_lapp_drops (f) (n):
-      (⮤*[n]f) ≐ ↑*[f＠§❨n❩]⇩*[n]f.
+interpretation
+  "extended depth application (finite relocation maps for unwind)"
+  'At f n = (fur_xapp f n).
+
+(* Basic constructions ******************************************************)
+
+lemma fur_xapp_zero (f):
+      (𝟎) = f＠❨𝟎❩.
 // qed.
 
-lemma fur_map_unfold_drops_zero (f):
-      ↑*[f＠§❨𝟎❩]⇩*[𝟎]f ≐ f.
-/3 width=1 by fur_nexts_lapp_drops, fur_eq_canc_sn/
-qed.
+lemma fur_xapp_pos (f) (p):
+      (⁤f＠⧣❨p❩) = f＠❨⁤p❩.
+// qed.
 
-lemma pippo (f):
-      ∃∃g. ↑*[f＠§❨𝟎❩]𝐢  ≐ g & (⇩*[𝟎]f)●g = f.
+lemma fur_xapp_j_dx_pos (f) (k) (p):
+      f＠❨⁤(p+k)❩ = (⮤*[k]f)＠❨⁤p❩.
+// qed.
+
+lemma fur_xapp_j_dx_succ (f) (k) (n:ℕ):
+      f＠❨⁤↑(n+k)❩ = (⮤*[k]f)＠❨⁤↑n❩.
+#f #k #n
+<fur_xapp_j_dx_pos //
+qed.
