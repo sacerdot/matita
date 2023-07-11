@@ -1,0 +1,29 @@
+\section{Introduction}
+
+It is well known that practical implementations of $\lambda$-calculus
+turn $\alpha$-equivalence into syntactic equality
+by representing bound variable occurrences
+with depth indexes or level indexes \cite{Bru72}.
+Generally speaking, function application involves replacing the
+occurrences of the independent variables in the function's body
+with copies of the function's arguments
+and, in this scenario, the indexes occurring in such copies
+may need an update to prevent captures.
+Experience shows that this update,
+known as lift according to a well-established terminology,
+is a time consuming operation \cite[Appendix A2]{lambdadeltaR2a}
+that, precisely, computing machines strive to avoid \cite{Klu05}.
+
+In a family of systems originating from \cite{Bru78a}
+and $\lambda\sigma$ \cite{ACCL91}
+$\beta$-reductions insert information on updates in the copied terms
+instead of updating them.
+Thus a computation can delay updates at will
+or apply them whenever is the case.
+
+The system we present in this article for the first time
+lies in this family. Contrary to its predecessors,
+it is based just on $\beta$-reduction at a distance,
+an extension of $\beta$-reduction introduced in \cite{Ned73},
+and the information on updates stored in terms
+consists just of single positive integers.
