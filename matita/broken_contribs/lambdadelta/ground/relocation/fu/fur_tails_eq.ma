@@ -12,29 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_minus.ma".
-include "ground/arith/nat_minus.ma".
-include "ground/relocation/tr_map.ma".
+include "ground/relocation/fu/fur_tails_xapp.ma".
+include "ground/relocation/fu/fur_xapp_eq.ma".
 
-(* RIGHT SUBTRACTION FOR TOTAL RELOCATION MAPS ******************************)
+(* ITERATED TAIL FOR FINITE RELOCATION MAPS FOR UNWIND **********************)
 
-corec definition tr_minus: ℕ → tr_map → tr_map.
-* [ #f @f ] #q * #p #f
-@((p-q)⨮(tr_minus (npos (↑q)-npos p) f))
-defined.
+(* Constructions with fur_eq ************************************************)
 
-interpretation
-  "right minus (total relocation maps)"
-  'minus f n = (tr_minus n f).
-
-(* Basic constructions ******************************************************)
-
-lemma tr_minus_zero_dx (f):
-      f = f - 𝟎 .
-* #f #p <(stream_unfold … ((f⨮p)-𝟎)) //
-qed.
-
-lemma tr_minus_cons_inj (f) (p) (q):
-      (p-q)⨮(f-(npos (↑q)-npos p)) = (p⨮f)-(npos q).
-#f #p #q <(stream_unfold … ((p⨮f)-(npos q))) //
+lemma fur_tails_eq_repl (n):
+      compatible_2_fwd … fur_eq fur_eq (λf.⫰*[n]f).
+#n #f1 #f2 #Hf
+@fur_eq_xapp #n
+<fur_xapp_tails <fur_xapp_tails
+<(fur_xapp_eq_repl … Hf) <(fur_xapp_eq_repl … Hf) -Hf //
 qed.

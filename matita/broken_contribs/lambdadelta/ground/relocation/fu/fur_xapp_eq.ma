@@ -29,4 +29,7 @@ qed.
 
 lemma fur_xapp_eq_repl (n):
       compatible_2_fwd … fur_eq (eq …) (λf.f＠❨n❩).
-* // qed-.
+* // #p #f1 #f2 #Hf
+<fur_xapp_pos <fur_xapp_pos
+<(fur_dapp_eq_repl … Hf) -Hf //
+qed-.

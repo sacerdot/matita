@@ -24,3 +24,9 @@ lemma fur_pushs_eq_repl (n):
 #n @(nat_ind_succ … n) -n
 /3 width=1 by fur_push_eq_repl/
 qed.
+
+lemma fur_pushs_id (n):
+      (𝐢) ≐ ⫯*[n]𝐢.
+#n @(nat_ind_succ … n) -n
+/2 width=1 by fur_push_eq_repl/
+qed.

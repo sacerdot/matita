@@ -12,40 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fu/fur_map.ma".
-include "ground/arith/nat_succ_iter.ma".
-include "ground/notation/functions/upspoonstar_2.ma".
+include "delayed_updating/relocation/tr_minus_pap.ma".
+include "ground/relocation/tr_compose_pap.ma".
+include "ground/relocation/tr_pap_eq.ma".
 
-(* ITERATED PUSH FOR FINITE RELOCATION MAPS FOR UNWIND **********************)
+(* RIGHT SUBTRACTION FOR TOTAL RELOCATION MAPS ******************************)
 
-definition fur_pushs (n:ℕ): 𝔽𝕌 → 𝔽𝕌 ≝
-           (λf.⫯f)^n.
+(* Constructions with tr_compose ********************************************)
 
-interpretation
-  "iterated push (finite relocation maps for unwind)"
-  'UpSpoonStar n f = (fur_pushs n f).
-
-(* Basic constructions ******************************************************)
-
-lemma fur_pushs_zero (f):
-      f = ⫯*[𝟎] f.
-// qed.
-
-lemma fur_pushs_push (n) (f):
-      (⫯⫯*[n]f) = ⫯*[n]⫯f.
-#n #f @(niter_appl … (λf.⫯f))
-qed.
-
-lemma fur_pushs_pos (p) (f):
-      (⫯⫯*[↓p]f) = ⫯*[⁤p]f.
-#n #f @(niter_pos_ppred … (λf.⫯f))
-qed.
-
-lemma fur_pushs_succ (n) (f):
-      (⫯⫯*[n]f) = ⫯*[⁤↑n]f.
-#n #f @(niter_succ … (λf.⫯f))
-qed.
-
-lemma fur_pushs_swap (n) (f):
-      (⫯*[n]⫯f) = ⫯*[⁤↑n]f.
-// qed.
+lemma tr_compose_minus_dx (g) (f) (e):
+      (g•f)-e ≗ g•(f-e).
+#g #f #e
+@nstream_eq_inv_ext #i
+<tr_compose_pap
+elim (pnat_split_le_ge (f＠⧣❨i❩) (i+e)) #Hi
+[ <(tr_pap_minus_le … Hi)
+  <tr_pap_minus_ge
