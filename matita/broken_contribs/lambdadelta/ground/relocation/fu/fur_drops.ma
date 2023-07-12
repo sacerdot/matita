@@ -21,7 +21,7 @@ include "ground/notation/functions/white_downarrowstar_2.ma".
 
 rec definition fur_drops (n) (f) on f: 𝔽𝕌 ≝
 match f with
-[ list_empty     ⇒ (𝐢)
+[ list_empty     ⇒ f
 | list_lcons i g ⇒
   match i with
   [ ur_p   ⇒ 

@@ -41,8 +41,5 @@ qed.
 
 lemma eq_inv_refl_nrplus_dx (n) (p): p = p + n → 𝟎 = n.
 #n #p elim p -p
-[ cases n -n // #p
-  <nrplus_unit_sn <npsucc_pos #H0 destruct
-| /3 width=1 by eq_inv_psucc_bi/
-]
+/3 width=1 by eq_inv_psucc_bi/
 qed-.

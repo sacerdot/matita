@@ -32,7 +32,7 @@ interpretation
 lemma npred_zero: 𝟎 = ⫰𝟎.
 // qed.
 
-lemma npred_pos (p): ↓p = ⫰(npos p).
+lemma npred_pos (p): ↓p = ⫰(⁤p).
 // qed.
 
 (* Basic inversions *********************************************************)

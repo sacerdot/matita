@@ -36,7 +36,7 @@ qed-.
 lemma yinj_nat_zero: 𝟎 = yinj_nat (𝟎).
 // qed.
 
-lemma yinj_nat_inj (p): yinj p = yinj_nat (npos p).
+lemma yinj_nat_inj (p): yinj p = yinj_nat (⁤p).
 // qed.
 
 lemma ynat_bind_nat_inj (f) (y) (n):

@@ -12,41 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_iter.ma".
-include "ground/arith/nat_split.ma".
+include "ground/arith/nat_ppred.ma".
+include "ground/arith/nat_iter.ma".
 
-(* ITERATED FUNCTION FOR NON-NEGATIVE INTEGERS ******************************)
+(* POSITIVE PREDECESSOR FOR NON-NEGATIVE INTEGERS ***************************)
 
-(*** iter *)
-definition niter (n:ℕ) (A:Type[0]) (f:A→A) (a:A): A ≝
-           nsplit … a (λp.(f^{A}p) a) n
-.
+(* Constructions with niter *************************************************)
 
-interpretation
-  "iterated function (non-negative integers)"
-  'Exp A f n = (niter n A f).
-
-(* Basic constructions ******************************************************)
-
-(*** iter_O *)
-lemma niter_zero (A) (f) (a): a = (f^{A}𝟎) a.
-// qed.
-
-lemma niter_pos (A) (f) (p): f^p ⊜ f^{A}(⁤p).
-// qed.
-
-(* Advanced constructions ***************************************************)
-
-(*** iter_n_Sm *)
-lemma niter_appl (A) (f) (n): f ∘ f^n ⊜ f^{A}n ∘ f.
+lemma niter_pos_ppred (A) (f) (p):
+      f∘f^(↓p) ⊜ f^{A}(⁤p).
 #A #f * //
-#p @exteq_repl
-/2 width=5 by piter_appl, compose_repl_fwd_dx/
-qed.
-
-lemma niter_compose (A) (B) (f) (g) (h) (n):
-      h ∘ f ⊜ g ∘ h → h ∘ (f^{A}n) ⊜ (g^{B}n) ∘ h.
-#A #B #f #g #h * //
-#p #H @exteq_repl
-/2 width=5 by piter_compose, compose_repl_fwd_dx/
 qed.
