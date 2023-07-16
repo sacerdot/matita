@@ -12,15 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_le.ma".
-include "ground/arith/nat_rplus_succ.ma".
+include "ground/notation/functions/three_0.ma".
+include "ground/arith/pnat.ma".
 
-(* ORDER FOR POSITIVE INTEGERS **********************************************)
+(* POSITIVE INTEGERS ********************************************************)
 
-(* Constructions with nrplus ************************************************)
-
-lemma ple_nrplus_bi_dx (n) (p1) (p2):
-      p1 ≤ p2 → p1+n ≤ p2+n.
-#n @(nat_ind_succ … n) -n
-/3 width=1 by ple_succ_bi/
-qed.
+interpretation
+  "three (positive integers)"
+  'Three = (psucc (psucc punit)).

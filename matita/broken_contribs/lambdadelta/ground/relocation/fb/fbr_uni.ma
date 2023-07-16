@@ -12,15 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_le.ma".
-include "ground/arith/nat_rplus_succ.ma".
+include "ground/relocation/fb/fbr_nexts.ma".
+include "ground/notation/functions/element_u_1.ma".
 
-(* ORDER FOR POSITIVE INTEGERS **********************************************)
+(* UNIFORM ELEMENTS FOR FINITE RELOCATION MAPS WITH BOOLEANS ****************)
 
-(* Constructions with nrplus ************************************************)
+definition fbr_uni (n): 𝔽𝔹 ≝
+           ↑*[n]𝐢
+.
 
-lemma ple_nrplus_bi_dx (n) (p1) (p2):
-      p1 ≤ p2 → p1+n ≤ p2+n.
-#n @(nat_ind_succ … n) -n
-/3 width=1 by ple_succ_bi/
-qed.
+interpretation
+  "uniform elements (finite relocation maps with booleans)"
+  'ElementU n = (fbr_uni n).
+
+(* Basic constructions ******************************************************)
+
+lemma fbr_uni_unfold (n):
+      ↑*[n]𝐢 = 𝐮❨n❩.
+// qed.

@@ -12,15 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_le.ma".
-include "ground/arith/nat_rplus_succ.ma".
+include "ground/lib/bool.ma".
+include "ground/notation/relations/category_bi_0.ma".
+include "ground/notation/functions/item_p_0.ma".
+include "ground/notation/functions/item_n_0.ma".
 
-(* ORDER FOR POSITIVE INTEGERS **********************************************)
+(* RELOCATION ITEMS WITH BOLEANS ********************************************)
 
-(* Constructions with nrplus ************************************************)
+definition br_item: Type[0] ≝ bool.
 
-lemma ple_nrplus_bi_dx (n) (p1) (p2):
-      p1 ≤ p2 → p1+n ≤ p2+n.
-#n @(nat_ind_succ … n) -n
-/3 width=1 by ple_succ_bi/
-qed.
+interpretation
+  "relocation items with booleans"
+  'CategoryBI = (br_item).
+
+interpretation
+  "push (relocation items with booleans)"
+  'ItemP = (false).
+
+interpretation
+  "next (relocation items with booleans)"
+  'ItemN = (true).

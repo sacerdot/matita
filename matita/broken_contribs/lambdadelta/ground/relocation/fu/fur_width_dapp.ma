@@ -12,15 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_le.ma".
-include "ground/arith/nat_rplus_succ.ma".
+include "ground/relocation/fu/fur_width.ma".
+include "ground/relocation/fu/fur_depth.ma".
+include "ground/relocation/fu/fur_dapp.ma".
+include "ground/arith/nat_le_rplus.ma".
+include "ground/arith/nat_plus_rplus.ma".
 
-(* ORDER FOR POSITIVE INTEGERS **********************************************)
+(* WIDTH FOR FINITE RELOCATION MAPS FOR UNWIND ******************************)
 
-(* Constructions with nrplus ************************************************)
+(* Constructions with fur_depth and fur_dapp ********************************)
 
-lemma ple_nrplus_bi_dx (n) (p1) (p2):
-      p1 ≤ p2 → p1+n ≤ p2+n.
-#n @(nat_ind_succ … n) -n
-/3 width=1 by ple_succ_bi/
-qed.
+lemma fur_dapp_depth_gt (f) (p):
+      ↑♭f ≤ p → p+↕f = f＠⧣❨p❩.
+#f elim f -f //
+* [| #k ] #f #IH
+[ * [ -IH #H0 | #p #Hp ]
+  [ elim (ple_inv_succ_unit … H0)
+  | lapply (ple_inv_succ_bi … Hp) -Hp #Hp
+    <nrplus_succ_sn <fur_dapp_p_dx_succ <IH -IH //
+  ]
+| #p #Hp
+  <fur_dapp_j_dx <IH -IH
+  /2 width=1 by ple_nrplus_dx_dx/
+]
+qed-.

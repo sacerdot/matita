@@ -12,60 +12,48 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fu/fur_map.ma".
 include "ground/relocation/fb/fbr_map.ma".
-include "ground/arith/nat_ppred_psucc.ma".
+include "ground/arith/nat_psucc.ma".
+include "ground/notation/functions/leftrightarrow_1.ma".
 
-(* RIGHT SUBTRACTION FOR FINITE RELOCATION MAPS FOR UNWIND ******************)
+(* ITERATED DROP FOR FINITE RELOCATION MAPS WITH BOOLEANS *******************)
 
-rec definition fur_minus (r) (f) on f: 𝔽𝕌 ≝
+rec definition fbr_length (f) on f: ℕ ≝
 match f with
-[ list_empty     ⇒ f
+[ list_empty     ⇒ (𝟎)
 | list_lcons i g ⇒
   match i with
-  [ ur_p   ⇒ ⫯(fur_minus r g)
-  | ur_j k ⇒ 
-    match r with
-    [ list_empty     ⇒ f
-    | list_lcons j s ⇒
-      match j with
-      [ false  ⇒ (fur_minus s g)◖i
-      | true  ⇒ ⮤*[𝟎](fur_minus s g)
-      ]
+  [ false ⇒
+    match fbr_length g with
+    [ nzero  ⇒ (𝟎)
+    | npos p ⇒ (⁤↑(fbr_length g))
     ]
+  | true  ⇒ (⁤↑(fbr_length g))
   ]
 ].
 
 interpretation
-  "right minus (finite relocation maps for unwind)"
-  'minus f r = (fur_minus r f).
+  "length (finite relocation maps with booleans)"
+  'LeftRightArrow f = (fbr_length f).
 
 (* Basic constructions ******************************************************)
 
-lemma fur_minus_id_sn (r):
-      (𝐢) = 𝐢-r.
+lemma fbr_length_id:
+      (𝟎) = ↔𝐢.
 // qed.
 
-lemma fur_minus_push_sn (f) (r):
-      (⫯(f-r)) = (⫯f)-r.
-// qed.
-
-lemma fur_minus_join_id (f) (k):
-      (⮤*[k]f) = (⮤*[k]f)-𝐢.
-// qed.
-
-lemma fur_minus_join_push (f) (k) (r):
-      (⮤*[k](f-r)) = (⮤*[k]f)-(⫯r).
-// qed.
-
-lemma fur_minus_join_next (f) (k) (r):
-      (⮤*[𝟎](f-r)) = (⮤*[k]f)-(↑r).
-// qed.
-
-(* Advanced constructions ***************************************************)
-
-lemma fur_minus_id_dx (f):
-      f = f-𝐢.
-#f elim f -f //
-* //
+lemma fbr_length_push_dx_zero (f):
+      (𝟎) = ↔f → (𝟎) = ↔⫯f.
+#f #H0 normalize
+<H0 -H0 //
 qed.
+
+lemma fbr_length_push_dx_pos (f) (p):
+      (⁤p) = ↔f → (⁤↑↔f) = ↔⫯f.
+#f #p #H0 normalize
+<H0 -H0 //
+qed.
+
+lemma fbr_length_next_dx (f):
+      (⁤↑↔f) = ↔↑f.
+// qed.

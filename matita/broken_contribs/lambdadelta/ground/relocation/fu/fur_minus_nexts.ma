@@ -12,15 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_le.ma".
-include "ground/arith/nat_rplus_succ.ma".
+include "ground/relocation/fu/fur_nexts.ma".
+include "ground/relocation/fu/fur_minus_pushs.ma".
 
-(* ORDER FOR POSITIVE INTEGERS **********************************************)
+(* RIGHT SUBTRACTION FOR FINITE RELOCATION MAPS FOR UNWIND ******************)
 
-(* Constructions with nrplus ************************************************)
+(* Constructions with fur_nexts *********************************************)
 
-lemma ple_nrplus_bi_dx (n) (p1) (p2):
-      p1 ≤ p2 → p1+n ≤ p2+n.
-#n @(nat_ind_succ … n) -n
-/3 width=1 by ple_succ_bi/
+lemma fur_minus_nexts_push (f) (k) (r):
+      ↑*[k](f-r) = (↑*[k]f)-⫯r.
+#f #k #r
+<fur_nexts_unfold <fur_nexts_unfold
+>fur_minus_pushs_sn //
 qed.
+
+lemma fur_minus_nexts_next (f) (k) (r):
+      ↑*[𝟎]⫯*[k](f-r) = (↑*[k]f)-↑r.
+#f #k #r
+>fur_minus_pushs_sn //
+qed.
+

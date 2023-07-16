@@ -12,60 +12,57 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fu/fur_map.ma".
 include "ground/relocation/fb/fbr_map.ma".
-include "ground/arith/nat_ppred_psucc.ma".
+include "ground/arith/nat_plus.ma".
+include "ground/notation/functions/updownarrow_1.ma".
 
-(* RIGHT SUBTRACTION FOR FINITE RELOCATION MAPS FOR UNWIND ******************)
+(* WIDTH FOR FINITE RELOCATION MAPS WITH BOOLEANS ***************************)
 
-rec definition fur_minus (r) (f) on f: 𝔽𝕌 ≝
+rec definition fbr_width (f) on f: ℕ ≝
 match f with
-[ list_empty     ⇒ f
+[ list_empty     ⇒ 𝟎
 | list_lcons i g ⇒
   match i with
-  [ ur_p   ⇒ ⫯(fur_minus r g)
-  | ur_j k ⇒ 
-    match r with
-    [ list_empty     ⇒ f
-    | list_lcons j s ⇒
-      match j with
-      [ false  ⇒ (fur_minus s g)◖i
-      | true  ⇒ ⮤*[𝟎](fur_minus s g)
-      ]
-    ]
+  [ false ⇒ fbr_width g
+  | true  ⇒ (⁤↑(fbr_width g))
   ]
 ].
 
 interpretation
-  "right minus (finite relocation maps for unwind)"
-  'minus f r = (fur_minus r f).
+  "width (finite relocation maps with booleans)"
+  'UpDownArrow f = (fbr_width f).
 
 (* Basic constructions ******************************************************)
 
-lemma fur_minus_id_sn (r):
-      (𝐢) = 𝐢-r.
+lemma fbr_width_empty:
+      (𝟎) = ↕𝐢.
 // qed.
 
-lemma fur_minus_push_sn (f) (r):
-      (⫯(f-r)) = (⫯f)-r.
+lemma fbr_width_push_dx (f):
+      ↕f = ↕⫯f.
 // qed.
 
-lemma fur_minus_join_id (f) (k):
-      (⮤*[k]f) = (⮤*[k]f)-𝐢.
+lemma fbr_width_next_dx (f):
+      (⁤↑↕f) = ↕↑f.
 // qed.
 
-lemma fur_minus_join_push (f) (k) (r):
-      (⮤*[k](f-r)) = (⮤*[k]f)-(⫯r).
-// qed.
+(* Main constructions *******************************************************)
 
-lemma fur_minus_join_next (f) (k) (r):
-      (⮤*[𝟎](f-r)) = (⮤*[k]f)-(↑r).
-// qed.
-
-(* Advanced constructions ***************************************************)
-
-lemma fur_minus_id_dx (f):
-      f = f-𝐢.
-#f elim f -f //
-* //
+theorem fbr_width_append (f) (g):
+        (↕f+↕g) = ↕(f●g).
+#f #g elim g -g //
+* #g #IH <list_append_lcons_sn
+[ <fbr_width_next_dx <fbr_width_next_dx //
+| <fbr_width_push_dx <fbr_width_push_dx //
+]
 qed.
+
+(* Constructions with fbr_lcons *********************************************)
+
+lemma fbr_width_push_sn (f):
+      ↕f = ↕(𝗽◗f).
+// qed.
+
+lemma fbr_width_j_sn (f):
+      (⁤↑↕f) = ↕(𝗻◗f).
+// qed.

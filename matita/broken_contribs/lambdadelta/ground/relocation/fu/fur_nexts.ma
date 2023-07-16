@@ -23,3 +23,9 @@ definition fur_nexts (n) (f): 𝔽𝕌 ≝
 interpretation
   "iterated next (finite relocation maps for unwind)"
   'UpArrowStar n f = (fur_nexts n f).
+
+(* Basic constructions ******************************************************)
+
+lemma fur_nexts_unfold (f) (n):
+      (⮤*[n](⫯*[n]f)) = ↑*[n]f.
+// qed.

@@ -12,15 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_le.ma".
-include "ground/arith/nat_rplus_succ.ma".
+include "ground/relocation/fu/fur_height_nexts.ma".
+include "ground/relocation/fu/fur_after.ma".
 
-(* ORDER FOR POSITIVE INTEGERS **********************************************)
+(* HEIGHT FOR FINITE RELOCATION MAPS FOR UNWIND *****************************)
 
-(* Constructions with nrplus ************************************************)
+(* Constructions with fur_after *********************************************)
 
-lemma ple_nrplus_bi_dx (n) (p1) (p2):
-      p1 ≤ p2 → p1+n ≤ p2+n.
-#n @(nat_ind_succ … n) -n
-/3 width=1 by ple_succ_bi/
+lemma fur_height_after_aux (h) (f) (g):
+      (∀f. ♯g+♯f = ♯(h g f)) →
+      ♯g+♯f = ♯(g•[h]f).
+#h #f elim f -f //
+* [| #k ] #f #IH #g #Hh
+[ <fur_after_aux_p_dx //
+| <fur_after_aux_j_dx <fur_height_j_dx <fur_height_j_dx
+  <nplus_succ_dx <IH -IH //
+]
+qed.
+
+lemma fur_height_after (g) (f):
+      ♯g+♯f = ♯(g•f).
+#g elim g -g //
+* [| #k ] #g #IH #f
+[ /2 width=1 by fur_height_after_aux/
+| <fur_after_j_sn <fur_height_j_dx <IH -IH
+  <fur_height_nexts //
+]
 qed.

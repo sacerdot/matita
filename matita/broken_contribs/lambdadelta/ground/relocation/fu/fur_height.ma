@@ -24,7 +24,7 @@ match f with
 | list_lcons i g ⇒
   match i with
   [ ur_p   ⇒ fur_height g
-  | ur_j k ⇒ fur_height g + k
+  | ur_j k ⇒ (⁤↑(fur_height g))
   ]
 ].
 
@@ -42,7 +42,7 @@ lemma fur_height_p_dx (f):
 // qed.
 
 lemma fur_height_j_dx (f) (k):
-      (♯f)+k = ♯(f◖𝗷k).
+      (⁤↑♯f) = ♯(f◖𝗷k).
 // qed.
 
 (* Main constructions *******************************************************)
@@ -63,5 +63,5 @@ lemma fur_height_p_sn (f):
 // qed.
 
 lemma fur_height_j_sn (f) (k):
-      k+♯f = ♯(𝗷k◗f).
+      (⁤↑♯f) = ♯(𝗷k◗f).
 // qed.
