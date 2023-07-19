@@ -18,7 +18,7 @@ include "delayed_updating/reduction/ibfr.ma".
 include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
-(* Constructions with subset_equivalence ************************************)
+(* Constructions with subset_eq *********************************************)
 
 lemma ibfr_eq_canc_sn (t) (t1) (t2) (r):
       t ⇔ t1 → t ➡𝐢𝐛𝐟[r] t2 → t1 ➡𝐢𝐛𝐟[r] t2.

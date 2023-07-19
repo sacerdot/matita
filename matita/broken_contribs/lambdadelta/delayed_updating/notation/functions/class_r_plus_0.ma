@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( ♭ break term 70 p )"
+notation "hvbox( 𝐑⁺ )"
   non associative with precedence 70
-  for @{ 'Flat $p }.
+  for @{ 'ClassRPlus }.

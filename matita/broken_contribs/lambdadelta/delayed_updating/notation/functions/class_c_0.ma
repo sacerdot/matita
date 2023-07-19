@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( ♯ break term 90 p )"
+notation "hvbox( 𝐂 )"
   non associative with precedence 70
-  for @{ 'Sharp $p }.
+  for @{ 'ClassC }.

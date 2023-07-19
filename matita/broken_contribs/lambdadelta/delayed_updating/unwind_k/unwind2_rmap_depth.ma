@@ -29,7 +29,7 @@ lemma unwind2_rmap_decompose (p) (f):
   <unwind2_rmap_L_dx <unwind2_rmap_L_dx <depth_L_dx
   <trz_pushs_succ
   @(trz_eq_trans … (trz_after_push_bi …))
-  /2 width=1 by trz_push_eq_repl_fwd/
+  /2 width=1 by trz_push_eq_repl/
 ]
 qed.
 
@@ -37,6 +37,6 @@ lemma unwind2_rmap_unfold_be (f) (p) (h):
       (⁤𝟏) ≤ (▶[𝐢]p)＠⧣❨h❩ → (▶[𝐢]p)＠⧣❨h❩ ≤ ⊕♭p →
       (▶[𝐢]p)＠⧣❨h❩ = (▶[f]p)＠⧣❨h❩.
 #f #p #h #H1h #H2h
->(trz_dapp_eq_repl_fwd … (▶[f]p) … (unwind2_rmap_decompose …))
-<trz_after_unfold <trz_pushs_unfold_be //
+>(trz_dapp_eq_repl … (▶[f]p) … (unwind2_rmap_decompose …))
+<trz_after_dapp <trz_pushs_dapp_be //
 qed-.

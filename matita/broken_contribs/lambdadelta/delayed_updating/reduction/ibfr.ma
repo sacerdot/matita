@@ -15,11 +15,11 @@
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/substitution/lift_prototerm.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
-include "delayed_updating/syntax/path_closed.ma".
+include "delayed_updating/syntax/path_width.ma".
 include "delayed_updating/syntax/path_balanced.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/notation/relations/black_rightarrow_ibf_3.ma".
-include "ground/relocation/tr_uni.ma".
+include "ground/relocation/trz_uni.ma".
 include "ground/xoa/ex_6_5.ma".
 
 (* IMMEDIATE BALANCED FOCUSED REDUCTION *************************************)
@@ -27,7 +27,7 @@ include "ground/xoa/ex_6_5.ma".
 definition ibfr (r): relation2 prototerm prototerm ≝
            λt1,t2.
            ∃∃p,b,q,m,n. p●𝗔◗b●𝗟◗q = r &
-           ⊗b ϵ 𝐁 & b ϵ 𝐂❨Ⓕ,m,𝟎❩ & q ϵ 𝐂❨Ⓕ,n,𝟎❩ & r◖𝗱↑n ϵ t1 &
+           ⊗b ϵ 𝐁 & m = ♮b & n = ♮q & r◖𝗱↑n ϵ t1 &
            t1[⋔r←🠡[𝐮❨↑(m+n)❩](t1⋔(p◖𝗦))] ⇔ t2
 .
 

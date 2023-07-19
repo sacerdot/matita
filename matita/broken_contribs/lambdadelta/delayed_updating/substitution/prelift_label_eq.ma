@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/prelift_label.ma".
-include "ground/relocation/trz_eq.ma".
 
 (* PRELIFT FOR LABEL ********************************************************)
 

@@ -20,7 +20,7 @@ include "delayed_updating/substitution/prelift_rmap_eq.ma".
 (* Constructions with trz_eq ************************************************)
 
 lemma lift_rmap_eq_repl (p):
-      compatible_2_fwd … trz_eq trz_eq (lift_rmap p).
+      compatible_2_fwd … trz_eq trz_eq (λf.🠢[f]p).
 #p elim p -p //
 #l #p #IH #f1 #f2 #Hf
 /3 width=1 by prelift_rmap_eq_repl/

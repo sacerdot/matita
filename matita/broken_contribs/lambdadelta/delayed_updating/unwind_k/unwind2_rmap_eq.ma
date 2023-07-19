@@ -20,8 +20,8 @@ include "ground/relocation/trz_uni_after.ma".
 
 (* Constructions with trz_eq ************************************************)
 
-lemma unwind2_rmap_eq_repl (p):
-      compatible_2_fwd … trz_eq trz_eq (unwind2_rmap p).
+lemma unwind2_rmap_eq_repl (p:path):
+      compatible_2_fwd … trz_eq trz_eq (λf.▶[f]p).
 #p elim p -p //
 #l #p #IH #f1 #f2 #Hf
 /3 width=1 by preunwind2_rmap_eq_repl/

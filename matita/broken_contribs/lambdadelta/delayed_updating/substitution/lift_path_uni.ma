@@ -23,6 +23,6 @@ include "ground/relocation/trz_uni_tls.ma".
 lemma lift_path_d_sn_uni (p) (n) (k):
       (𝗱(k+n)◗p) = 🠡[𝐮❨n❩](𝗱k◗p).
 #p #n #k
-<lift_path_d_sn <trz_uni_unfold
+<lift_path_d_sn <trz_uni_dapp
 <(lift_path_eq_repl … (trz_tls_uni …)) //
 qed.
