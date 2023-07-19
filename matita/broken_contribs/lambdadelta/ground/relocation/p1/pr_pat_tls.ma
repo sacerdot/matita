@@ -58,7 +58,7 @@ lemma pr_pat_inv_succ_sn (p) (g) (i1) (j2):
   elim (pr_pat_inv_unit_succ … H) -H [|*: // ] #f #Hf2 #H0
   elim (pr_pat_inv_next … Hg … H0) -Hg #x2 #Hf1 #H2 destruct
   elim (IH … Hf1 Hf2) -IH -Hf1 -Hf2 #i2 #Hf #H2 destruct
-  >npsucc_pos /2 width=3 by ex2_intro/
+  >npsucc_pos <pr_tls_swap /2 width=3 by ex2_intro/
 ]
 qed-.
 

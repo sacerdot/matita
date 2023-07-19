@@ -25,6 +25,6 @@ lemma tr_pap_plus (p1) (p2:ℕ⁺) (f):
 [ * #p #f //
 | #i #IH * #p #f
   <pplus_succ_dx <tr_cons_pap_succ <tr_cons_pap_succ
-  <IH -IH //
+  <IH -IH >npsucc_pos <stream_tls_swap //
 ]
 qed.

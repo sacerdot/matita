@@ -25,5 +25,5 @@ corec theorem tr_compose_assoc (f3) (f2) (f1):
 cases f1 -f1 #p1 #f1
 cases tr_compose_unfold cases tr_compose_unfold cases tr_compose_unfold
 cases tr_compose_tls
-/2 width=1 by stream_eq_cons/
+@stream_eq_cons //
 qed.

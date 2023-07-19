@@ -42,11 +42,11 @@ lemma tr_uni_nap (n) (m):
 <tr_uni_pap <nrplus_npsucc_sn //
 qed.
 
-lemma tr_nap_push (f):
-      ∀l. (⁤↑f＠§❨l❩) = (⫯f)＠§❨⁤↑l❩.
+lemma tr_nap_push (f) (l):
+      (⁤↑f＠§❨l❩) = (⫯f)＠§❨⁤↑l❩.
 #f #l
 <tr_nap_unfold <tr_nap_unfold
-<tr_pap_push //
+<tr_pap_push <npsucc_pnpred //
 qed.
 
 lemma tr_nap_pushs_lt (f) (n) (m):
