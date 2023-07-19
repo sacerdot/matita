@@ -25,7 +25,7 @@ lemma fur_dapp_increasing (f) (p1) (p2):
 [ //
 | @(plt_ind_alt … Hp) -p1 -p2
   /3 width=1 by plt_succ_bi/
-| /3 width=1 by plt_nrplus_dx/
+| /3 width=1 by plt_nrplus_bi_dx/
 ]
 qed.
 

@@ -14,7 +14,7 @@
 
 include "ground/relocation/fu/fur_dapp.ma".
 include "ground/relocation/fu/fur_depth.ma".
-include "ground/relocation/fu/fur_height.ma".
+include "ground/relocation/fu/fur_width.ma".
 include "ground/lib/list_length_append.ma".
 include "ground/arith/wf1_ind_nlt.ma".
 include "ground/arith/nat_lt_plus.ma".
@@ -23,11 +23,11 @@ include "ground/xoa/ex_3_2.ma".
 
 (* DEPTH APPLICATION FOR FINITE RELOCATION MAPS FOR UNWIND ******************)
 
-(* Constructions with fur_depth and fur_height ******************************)
+(* Constructions with fur_depth and fur_width *******************************)
 
 lemma fur_dapp_append_joins_dx (g) (f) (p):
       (𝟎) = ♭f →
-      g＠⧣❨p+♯f❩ = (g●f)＠⧣❨p❩.
+      g＠⧣❨p+↕f❩ = (g●f)＠⧣❨p❩.
 #g #f elim f -f //
 * [| #k ] #f #IH #p
 [ <fur_depth_p_dx #Hf destruct
