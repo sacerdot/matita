@@ -45,6 +45,10 @@ lemma unwind2_rmap_m_dx (f) (p):
       ▶[f]p = ▶[f](p◖𝗺).
 // qed.
 
+lemma unwind2_rmap_z_dx (f) (p) (e):
+      ▶[f]p-e = ▶[f](p◖𝘇e).
+// qed.
+
 lemma unwind2_rmap_L_dx (f) (p):
       (⫯▶[f]p) = ▶[f](p◖𝗟).
 // qed.
@@ -77,6 +81,10 @@ lemma unwind2_rmap_d_sn (f) (p) (k):
 
 lemma unwind2_rmap_m_sn (f) (p):
       ▶[f]p = ▶[f](𝗺◗p).
+// qed.
+
+lemma unwind2_rmap_z_sn (f) (p) (e):
+      ▶[f-e]p = ▶[f](𝘇e◗p).
 // qed.
 
 lemma unwind2_rmap_L_sn (f) (p):

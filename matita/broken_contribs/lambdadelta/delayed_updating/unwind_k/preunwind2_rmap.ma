@@ -14,9 +14,9 @@
 
 include "delayed_updating/syntax/label.ma".
 include "delayed_updating/notation/functions/black_righttriangle_2.ma".
-include "ground/relocation/trz_uni.ma".
-include "ground/relocation/trz_push.ma".
-include "ground/relocation/trz_after.ma".
+include "delayed_updating/relocation/tr_minus.ma".
+include "ground/relocation/tr_uni.ma".
+include "ground/relocation/tr_compose.ma".
 
 (* TAILED PREUNWIND FOR RELOCATION MAP **************************************)
 
@@ -24,6 +24,7 @@ definition preunwind2_rmap (l) (f): trz_map ≝
 match l with
 [ label_d k ⇒ f•𝐮❨k❩
 | label_m   ⇒ f
+| label_z e ⇒ f-e
 | label_L   ⇒ ⫯f
 | label_A   ⇒ f
 | label_S   ⇒ f
@@ -41,6 +42,10 @@ lemma preunwind2_rmap_d (f) (k):
 
 lemma preunwind2_rmap_m (f):
       f = ▶[f]𝗺.
+// qed.
+
+lemma preunwind2_rmap_z (f) (e):
+      f-e = ▶[f]𝘇e.
 // qed.
 
 lemma preunwind2_rmap_L (f):
