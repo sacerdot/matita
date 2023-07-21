@@ -241,6 +241,7 @@ let split_match_const match_const =
 let construct_match status ~baseuri = function
   | Parsers.Entry.Decl (_,ident,_,_,typ) -> 
     construct_constant status ~baseuri ident typ None 
+    (* TODO *)
     (* let ident' = Kernel.Basic.string_of_ident ident in *)
     (* let uri = mkuri ~baseuri ident' "FIXMEMORE" in *)
     (* let typ' = construct_term ~baseuri typ in *)

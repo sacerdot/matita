@@ -13,7 +13,7 @@ let rec eval_from_dedukti_stream ~asserted ~baseuri status buf =
     let mode = GrafiteAst.WithPreferences in (* MATITA 1.0: fixme *)
     let status = GrafiteEngine.eval_alias status (mode,xxaliases) in
     status in
-    (* matitaengine.ml da righe circa 230 235 *)
+    (* TODO per fixare gli alias guardare matitaengine.ml da righe circa 230 235 *)
   let status = Option.fold ~none:status ~some:(fun list -> List.fold_left (fun _ obj-> check_and_add obj) status list) objs in
 
    eval_from_dedukti_stream ~asserted ~baseuri status buf

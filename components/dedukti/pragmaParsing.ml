@@ -184,7 +184,6 @@ let construct_ind_pragma leftno attributes entries =
       (type_entry, cons_entries, att) :: construct_ind_types t entries
   in
   let types = construct_ind_types attributes entries in
-  (* InductivePragma(leftno, types) *)
   leftno, types
 
 let rec construct_match_pragma entries = 
