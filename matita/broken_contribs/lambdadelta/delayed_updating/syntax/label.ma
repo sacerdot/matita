@@ -16,18 +16,21 @@
  * Initial invocation: - Patience on me to gain peace and perfection! -
  *)
 
-include "ground/arith/int.ma".
 include "delayed_updating/notation/functions/nodelabel_d_1.ma".
 include "delayed_updating/notation/functions/nodelabel_m_0.ma".
+include "delayed_updating/notation/functions/nodelabel_z_1.ma".
 include "delayed_updating/notation/functions/edgelabel_l_0.ma".
 include "delayed_updating/notation/functions/edgelabel_a_0.ma".
 include "delayed_updating/notation/functions/edgelabel_s_0.ma".
+include "ground/relocation/fb/fbr_map.ma".
+include "ground/arith/nat.ma".
 
 (* LABEL ********************************************************************)
 
 inductive label: Type[0] ≝
-| label_d: ℤ → label
+| label_d: ℕ → label
 | label_m: label
+| label_z: 𝔽𝔹 → label
 | label_L: label
 | label_A: label
 | label_S: label
@@ -40,6 +43,10 @@ interpretation
 interpretation
   "mark (label)"
   'NodeLabelM = (label_m).
+
+interpretation
+  "variable references to be erased (label)"
+  'NodeLabelZ F = (label_z F).
 
 interpretation
   "name-free functional abstruction (label)"

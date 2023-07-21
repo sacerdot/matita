@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/flat_1.ma".
 include "ground/arith/nat_plus.ma".
+include "ground/notation/functions/flat_1.ma".
 
 (* DEPTH FOR PATH ***********************************************************)
 
@@ -25,7 +25,8 @@ match p with
   match l with
   [ label_d k ⇒ depth q
   | label_m   ⇒ depth q
-  | label_L   ⇒ ↑(depth q)
+  | label_z F ⇒ depth q
+  | label_L   ⇒ (⁤↑(depth q))
   | label_A   ⇒ depth q
   | label_S   ⇒ depth q
   ]
@@ -48,8 +49,12 @@ lemma depth_m_dx (p):
       ♭p = ♭(p◖𝗺).
 // qed.
 
+lemma depth_z_dx (p) (F):
+      ♭p = ♭(p◖𝘇F).
+// qed.
+
 lemma depth_L_dx (p):
-      ↑♭p ={ℕ} ♭(p◖𝗟).
+      (⁤↑♭p) = ♭(p◖𝗟).
 // qed.
 
 lemma depth_A_dx (p):
@@ -65,9 +70,10 @@ lemma depth_S_dx (p):
 theorem depth_append (p) (q):
         (♭p)+(♭q) = ♭(p●q).
 #p #q elim q -q //
-* [ #k ] #q #IH <list_append_lcons_sn
+* [ #k || #F ] #q #IH <list_append_lcons_sn
 [ <depth_d_dx <depth_d_dx //
 | <depth_m_dx <depth_m_dx //
+| <depth_z_dx <depth_z_dx //
 | <depth_L_dx <depth_L_dx //
 | <depth_A_dx <depth_A_dx //
 | <depth_S_dx <depth_S_dx //
@@ -84,8 +90,12 @@ lemma depth_m_sn (p):
       ♭p = ♭(𝗺◗p).
 // qed.
 
+lemma depth_z_sn (p) (F):
+      ♭p = ♭(𝘇F◗p).
+// qed.
+
 lemma depth_L_sn (p):
-      ↑♭p ={ℕ} ♭(𝗟◗p).
+      (⁤↑♭p) = ♭(𝗟◗p).
 // qed.
 
 lemma depth_A_sn (p):

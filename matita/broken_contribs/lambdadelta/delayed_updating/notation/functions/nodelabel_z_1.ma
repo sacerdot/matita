@@ -12,24 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path_structure.ma".
-include "delayed_updating/syntax/path_inner.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* STRUCTURE FOR PATH *******************************************************)
-
-(* Constructions with pic ***************************************************)
-
-lemma structure_pic (p):
-      ⊗p ϵ 𝐈.
-#p elim p -p
-[ <structure_empty //
-| * [ #k || #F ] #p #IH
-  [ <structure_d_dx //
-  | <structure_m_dx //
-  | <structure_z_dx //
-  | <structure_L_dx //
-  | <structure_A_dx //
-  | <structure_S_dx //
-  ]
-]
-qed.
+notation "hvbox( 𝘇 break term 70 x )"
+  non associative with precedence 70
+  for @{ 'NodeLabelZ $x }.
