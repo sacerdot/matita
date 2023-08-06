@@ -12,8 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/relocation/fb/fbr_rconss.ma".
+include "ground/arith/nat_plus.ma".
 
-notation "hvbox( f ＠§❨ break term 46 a ❩ )"
-  non associative with precedence 69
-  for @{ 'AtSection $f $a }.
+(* ITERATED RCONS FOR FINITE RELOCATION MAPS WITH BOOLEANS ******************)
+
+(* Constructions with nplus *************************************************)
+
+lemma fbr_rconss_plus (b) (f) (m) (n):
+      (f◖*[m]b)◖*[n]b = f◖*[m+n]b.
+#b #f #m #n @(niter_plus … (λf.f◖b))
+qed.

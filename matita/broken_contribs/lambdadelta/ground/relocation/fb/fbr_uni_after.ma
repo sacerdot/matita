@@ -12,8 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/relocation/fb/fbr_uni.ma".
+include "ground/relocation/fb/fbr_rconss_after.ma".
 
-notation "hvbox( f ＠§❨ break term 46 a ❩ )"
-  non associative with precedence 69
-  for @{ 'AtSection $f $a }.
+(* UNIFORM ELEMENTS FOR FINITE RELOCATION MAPS WITH BOOLEANS ****************)
+
+(* Constructions with fbr_after *********************************************)
+
+lemma fbr_after_pushs_uni (g) (n):
+      ↑*[n]g = ⫯*[n]g•𝐮❨n❩.
+// qed.
+
+lemma fbr_after_uni_sn (f) (n):
+      ↑*[n]f = 𝐮❨n❩•f.
+// qed.

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_nexts.ma".
+include "ground/relocation/fb/fbr_rconss.ma".
 include "ground/notation/functions/element_u_1.ma".
 
 (* UNIFORM ELEMENTS FOR FINITE RELOCATION MAPS WITH BOOLEANS ****************)

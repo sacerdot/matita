@@ -41,7 +41,7 @@ interpretation
 (* Note: destruct *)
 lemma eq_inv_psucc_bi: injective … psucc.
 #p #q #H destruct //
-qed.
+qed-.
 
 lemma eq_inv_refl_psucc (p): p = ↑p → ⊥.
 #p elim p -p

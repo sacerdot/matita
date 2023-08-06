@@ -13,56 +13,34 @@
 (**************************************************************************)
 
 include "ground/relocation/fb/fbr_map.ma".
-include "ground/arith/nat_plus.ma".
-include "ground/notation/functions/updownarrow_1.ma".
+include "ground/relocation/fb/br_dapp.ma".
 
-(* WIDTH FOR FINITE RELOCATION MAPS WITH BOOLEANS ***************************)
+(* DEPTH APPLICATION FOR FINITE RELOCATION MAPS WITH BOOLEANS ***************)
 
-rec definition fbr_width (f) on f: ℕ ≝
+rec definition fbr_dapp (f) on f: ℕ⁺ → ℕ⁺ ≝
 match f with
-[ list_empty     ⇒ 𝟎
-| list_lcons i g ⇒
-  match i with
-  [ false ⇒ fbr_width g
-  | true  ⇒ (⁤↑(fbr_width g))
-  ]
+[ list_empty     ⇒ λp.p
+| list_lcons b g ⇒ b＠⧣❨fbr_dapp g❩
 ].
 
 interpretation
-  "width (finite relocation maps with booleans)"
-  'UpDownArrow f = (fbr_width f).
+  "depth application (finite relocation maps with booleans)"
+  'AtSharp f p = (fbr_dapp f p).
 
 (* Basic constructions ******************************************************)
 
-lemma fbr_width_empty:
-      (𝟎) = ↕𝐢.
+lemma fbr_dapp_id (p):
+      p = 𝐢＠⧣❨p❩.
 // qed.
 
-lemma fbr_width_push_dx (f):
-      ↕f = ↕⫯f.
+lemma fbr_dapp_push_dx_unit (f):
+      (𝟏) = (⫯f)＠⧣❨𝟏❩.
 // qed.
 
-lemma fbr_width_next_dx (f):
-      (⁤↑↕f) = ↕↑f.
+lemma fbr_dapp_push_dx_succ (f) (p):
+      ↑(f＠⧣❨p❩) = (⫯f)＠⧣❨↑p❩.
 // qed.
 
-(* Main constructions *******************************************************)
-
-theorem fbr_width_append (f) (g):
-        (↕f+↕g) = ↕(f●g).
-#f #g elim g -g //
-* #g #IH <list_append_lcons_sn
-[ <fbr_width_next_dx <fbr_width_next_dx //
-| <fbr_width_push_dx <fbr_width_push_dx //
-]
-qed.
-
-(* Constructions with fbr_lcons *********************************************)
-
-lemma fbr_width_push_sn (f):
-      ↕f = ↕(𝗽◗f).
-// qed.
-
-lemma fbr_width_next_sn (f):
-      (⁤↑↕f) = ↕(𝗻◗f).
+lemma fbr_dapp_next_dx (f) (p):
+      ↑(f＠⧣❨p❩) = (↑f)＠⧣❨p❩.
 // qed.

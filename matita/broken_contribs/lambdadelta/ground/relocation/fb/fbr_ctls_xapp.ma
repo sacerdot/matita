@@ -12,8 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/relocation/fb/fbr_ctls_dapp.ma".
+include "ground/relocation/fb/fbr_xapp.ma".
+include "ground/arith/nat_plus_rplus.ma".
+include "ground/arith/nat_rplus_pplus.ma".
 
-notation "hvbox( f ＠§❨ break term 46 a ❩ )"
-  non associative with precedence 69
-  for @{ 'AtSection $f $a }.
+(* ITERATED COARSE TAIL FOR FINITE RELOCATION MAPS WITH BOOLEANS ************)
+
+(* Constructions with fbr_xapp **********************************************)
+
+lemma fbr_xapp_plus (f) (m) (n):
+      (⫰*[n]f)＠❨m❩+f＠❨n❩ = f＠❨m+n❩.
+#f * // #p * // #q
+<nplus_pos_sn <nplus_pos_sn <nrplus_pos_dx
+>fbr_dapp_plus //
+qed. 

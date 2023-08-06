@@ -13,9 +13,9 @@
 (**************************************************************************)
 
 include "ground/relocation/fu/fur_dapp.ma".
+include "ground/arith/nat_plus_rplus.ma".
 include "ground/arith/nat_split.ma".
 include "ground/notation/functions/at_2.ma".
-include "ground/arith/nat_plus_rplus.ma".
 
 (* EXTENDED DEPTH APPLICATION FOR FINITE RELOCATION MAPS FOR UNWIND *********)
 

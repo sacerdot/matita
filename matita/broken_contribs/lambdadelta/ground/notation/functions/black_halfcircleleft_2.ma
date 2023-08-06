@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "hvbox( hd ◖ break tl )"
+notation "hvbox( tl ◖ break hd )"
   left associative with precedence 47
-  for @{ 'BlackHalfCircleLeft $hd $tl }.
+  for @{ 'BlackHalfCircleLeft $tl $hd }.

@@ -12,8 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/relocation/fb/fbr_rconss.ma".
+include "ground/relocation/fb/fbr_ctl.ma".
+include "ground/relocation/fb/fbr_after.ma".
+include "ground/relocation/fb/fbr_dapp.ma".
 
-notation "hvbox( f ＠§❨ break term 46 a ❩ )"
-  non associative with precedence 69
-  for @{ 'AtSection $f $a }.
+(* ITERATED RCONS FOR FINITE RELOCATION MAPS WITH BOOLEANS ******************)
+
+(* Constructions with fbr_ctl ***********************************************)
+
+lemma fbr_after_next_dx (g) (f):
+      ↑*[⁤(g＠⧣❨𝟏❩)]((⫰g)•f) = g•↑f.
+#g elim g -g //
+* #g #IH #f //
+<fbr_after_next_sn <fbr_dapp_next_dx <fbr_rconss_pos <IH -IH //
+qed. 

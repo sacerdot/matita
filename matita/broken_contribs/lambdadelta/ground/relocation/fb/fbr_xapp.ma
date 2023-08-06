@@ -12,48 +12,40 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_map.ma".
+include "ground/relocation/fb/fbr_dapp.ma".
 include "ground/arith/nat_psucc.ma".
-include "ground/notation/functions/leftrightarrow_1.ma".
+include "ground/arith/nat_split.ma".
+include "ground/notation/functions/at_2.ma".
 
-(* LENGTH FOR FINITE RELOCATION MAPS WITH BOOLEANS **************************)
+(* EXTENDED DEPTH APPLICATION FOR FINITE RELOCATION MAPS WITH BOOLEANS ******)
 
-rec definition fbr_length (f) on f: ℕ ≝
-match f with
-[ list_empty     ⇒ (𝟎)
-| list_lcons i g ⇒
-  match i with
-  [ false ⇒
-    match fbr_length g with
-    [ nzero  ⇒ (𝟎)
-    | npos p ⇒ (⁤↑(fbr_length g))
-    ]
-  | true  ⇒ (⁤↑(fbr_length g))
-  ]
-].
+definition fbr_xapp (f) (n): ℕ ≝
+           nsplit … (𝟎) (λp.(⁤(f＠⧣❨p❩))) n.
 
 interpretation
-  "length (finite relocation maps with booleans)"
-  'LeftRightArrow f = (fbr_length f).
+  "extended depth application (finite relocation maps for unwind)"
+  'At f n = (fbr_xapp f n).
 
 (* Basic constructions ******************************************************)
 
-lemma fbr_length_id:
-      (𝟎) = ↔𝐢.
+lemma fbr_xapp_zero (f):
+      (𝟎) = f＠❨𝟎❩.
 // qed.
 
-lemma fbr_length_push_dx_zero (f):
-      (𝟎) = ↔f → (𝟎) = ↔⫯f.
-#f #H0 normalize
-<H0 -H0 //
-qed.
+lemma fbr_xapp_pos (f) (p):
+      (⁤(f＠⧣❨p❩)) = f＠❨⁤p❩.
+// qed.
 
-lemma fbr_length_push_dx_pos (f) (p):
-      (⁤p) = ↔f → (⁤↑↔f) = ↔⫯f.
-#f #p #H0 normalize
-<H0 -H0 //
-qed.
+(* Advanced constructions ***************************************************)
 
-lemma fbr_length_next_dx (f):
-      (⁤↑↔f) = ↔↑f.
+lemma fbr_xapp_push_unit (f):
+      (⁤𝟏) = (⫯f)＠❨⁤𝟏❩.
+// qed.
+
+lemma fbr_xapp_push_succ (f) (p):
+      (⁤↑(f＠❨⁤p❩)) = (⫯f)＠❨⁤↑p❩.
+// qed.
+
+lemma fbr_next_pos (f) (p):
+      (⁤↑(f＠❨⁤p❩)) = (↑f)＠❨⁤p❩.
 // qed.

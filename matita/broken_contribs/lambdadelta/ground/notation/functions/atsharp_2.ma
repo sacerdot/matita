@@ -15,5 +15,5 @@
 (* NOTATION FOR GROUND ******************************************************)
 
 notation "hvbox( f ＠⧣❨ break term 46 a ❩ )"
-  non associative with precedence 70
+  non associative with precedence 69
   for @{ 'AtSharp $f $a }.

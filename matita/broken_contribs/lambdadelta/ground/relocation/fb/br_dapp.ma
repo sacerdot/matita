@@ -12,8 +12,34 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/relocation/fb/br_item.ma".
+include "ground/arith/pnat_split.ma".
+include "ground/notation/functions/uparrow_1.ma".
+include "ground/notation/functions/upspoon_1.ma".
+include "ground/notation/functions/atsharp_2.ma".
 
-notation "hvbox( f ＠§❨ break term 46 a ❩ )"
-  non associative with precedence 69
-  for @{ 'AtSection $f $a }.
+(* DEPTH APPLICATION FOR RELOCATION ITEMS WITH BOOLOEANS ********************)
+
+definition br_next (f): ℕ⁺ → ℕ⁺ ≝
+           λp.↑(f p).
+
+interpretation
+  "next (relocation items with booleans)"
+  'UpArrow f = (br_next f).
+
+definition br_push (f): ℕ⁺ → ℕ⁺ ≝
+  psplit … (𝟏) (↑f).
+
+interpretation
+  "push (relocation items with booleans)"
+  'UpSpoon f = (br_push f).
+
+definition br_dapp (b) (f): ℕ⁺ → ℕ⁺ ≝
+match b with
+[ true  ⇒ ↑f
+| false ⇒ (⫯f)
+].
+
+interpretation
+  "depth application (relocation items with booleans)"
+  'AtSharp b f = (br_dapp b f).

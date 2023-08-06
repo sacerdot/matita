@@ -12,8 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/relocation/fb/fbr_after_dapp.ma".
+include "ground/relocation/fb/fbr_xapp.ma".
 
-notation "hvbox( f ＠§❨ break term 46 a ❩ )"
-  non associative with precedence 69
-  for @{ 'AtSection $f $a }.
+(* COMPOSITION FOR FINITE RELOCATION MAPS WITH BOOLEANS *********************)
+
+(* Constructions with fbr_xapp **********************************************)
+
+lemma fbr_dapp_after (g) (f) (n):
+      g＠❨f＠❨n❩❩ = (g•f)＠❨n❩.
+#g #f * //
+qed.

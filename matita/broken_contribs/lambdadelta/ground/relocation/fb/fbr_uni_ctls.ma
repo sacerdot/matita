@@ -12,40 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_map.ma".
-include "ground/arith/nat_succ_iter.ma".
-include "ground/notation/functions/upspoonstar_2.ma".
+include "ground/relocation/fb/fbr_uni_after.ma".
+include "ground/relocation/fb/fbr_rconss_ctls.ma".
 
-(* ITERATED PUSH FOR FINITE RELOCATION MAPS WITH BOOLEANS *******************)
+(* UNIFORM ELEMENTS FOR FINITE RELOCATION MAPS WITH BOOLEANS ****************)
 
-definition fbr_pushs (n:ℕ): 𝔽𝔹 → 𝔽𝔹 ≝
-           (λf.⫯f)^n.
+(* Constructions with fbr_ctls **********************************************)
 
-interpretation
-  "iterated push (finite relocation maps with booleans)"
-  'UpSpoonStar n f = (fbr_pushs n f).
-
-(* Basic constructions ******************************************************)
-
-lemma fbr_pushs_zero (f):
-      f = ⫯*[𝟎] f.
-// qed.
-
-lemma fbr_pushs_push (n) (f):
-      (⫯⫯*[n]f) = ⫯*[n]⫯f.
-#n #f @(niter_appl … (λf.⫯f))
-qed.
-
-lemma fbr_pushs_pos (p) (f):
-      (⫯⫯*[↓p]f) = ⫯*[⁤p]f.
-#n #f @(niter_pos_ppred … (λf.⫯f))
-qed.
-
-lemma fbr_pushs_succ (n) (f):
-      (⫯⫯*[n]f) = ⫯*[⁤↑n]f.
-#n #f @(niter_succ … (λf.⫯f))
-qed.
-
-lemma fbr_pushs_swap (n) (f):
-      (⫯*[n]⫯f) = ⫯*[⁤↑n]f.
+theorem fbr_after_uni_dx (g) (n):
+        (𝐮❨g＠❨n❩❩)•⫰*[n]g = g•𝐮❨n❩.
 // qed.

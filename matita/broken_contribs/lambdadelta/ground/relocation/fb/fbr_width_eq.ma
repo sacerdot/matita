@@ -12,8 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/relocation/fb/fbr_width.ma".
+include "ground/relocation/fb/fbr_eq.ma".
 
-notation "hvbox( f ＠§❨ break term 46 a ❩ )"
-  non associative with precedence 69
-  for @{ 'AtSection $f $a }.
+(* WIDTH FOR FINITE RELOCATION MAPS WITH BOOLEANS ***************************)
+
+(* Constructions with fbr_eq ************************************************)
+
+lemma fbr_width_eq_repl:
+      compatible_2_fwd … fbr_eq (eq …) (λf.↕f).
+#f1 #f2 #Hf elim Hf -f1 -f2 // * //
+qed.

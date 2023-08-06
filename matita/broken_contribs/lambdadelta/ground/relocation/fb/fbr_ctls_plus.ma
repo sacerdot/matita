@@ -12,8 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/relocation/fb/fbr_ctls.ma".
+include "ground/arith/nat_plus.ma".
 
-notation "hvbox( f ＠§❨ break term 46 a ❩ )"
-  non associative with precedence 69
-  for @{ 'AtSection $f $a }.
+(* ITERATED COARSE TAIL FOR FINITE RELOCATION MAPS WITH BOOLEANS ************)
+
+(* Constructions with nplus *************************************************)
+
+lemma fbr_ctls_plus (f) (m) (n):
+      (⫰*[n]⫰*[m]f) = ⫰*[m+n]f.
+#f #m #n @(niter_plus … (λf.⫰f))
+qed.

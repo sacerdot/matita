@@ -12,43 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_map.ma".
-include "ground/arith/nat_succ_iter.ma".
-include "ground/notation/functions/uparrowstar_2.ma".
+include "ground/relocation/fb/fbr_rconss.ma".
+include "ground/relocation/fb/fbr_after.ma".
 
-(* ITERATED NEXT FOR FINITE RELOCATION MAPS WITH BOOLEANS *******************)
+(* ITERATED RCONS FOR FINITE RELOCATION MAPS WITH BOOLEANS ******************)
 
-definition fbr_nexts (n:ℕ): 𝔽𝔹 → 𝔽𝔹 ≝
-           (λf.↑f)^n.
+(* Constructions with fbr_after *********************************************)
 
-interpretation
-  "iterated next (finite relocation maps with booleans)"
-  'UpArrowStar n f = (fbr_nexts n f).
-
-(* Basic constructions ******************************************************)
-
-lemma fbr_nexts_zero (f):
-      f = ↑*[𝟎]f.
-// qed.
-
-lemma fbr_nexts_next (n) (f):
-      ↑↑*[n]f = ↑*[n]↑f.
-#n #f
-lapply (niter_appl … (λf:𝔽𝔹.↑f)) #H0 @H0
+lemma fbr_after_pushs_rconss (b) (g) (f) (n):
+      (g•f)◖*[n]b = (⫯*[n]g)•(f◖*[n]b).
+#b #g #f #n @(nat_ind_succ … n) -n //
+#n #IH
+<fbr_rconss_succ >IH -IH
+<fbr_rconss_succ <fbr_rconss_succ //
 qed.
 
-lemma fbr_nexts_pos (p) (f):
-      ↑↑*[↓p]f = ↑*[⁤p]f.
-#n #f
-lapply (niter_pos_ppred … (λf:𝔽𝔹.↑f)) #H0 @H0
+lemma fbr_after_nexts_sn (g) (f) (n):
+      ↑*[n](g•f) = (↑*[n]g)•f.
+#g #f #n @(nat_ind_succ … n) -n //
+#n #IH <fbr_rconss_succ //
 qed.
-
-lemma fbr_nexts_succ (n) (f):
-      ↑↑*[n]f = ↑*[⁤↑n]f.
-#n #f
-lapply (niter_succ … (λf:𝔽𝔹.↑f)) #H0 @H0
-qed.
-
-lemma fbr_nexts_swap (n) (f):
-      ↑*[n]↑f = ↑*[⁤↑n]f.
-// qed.
