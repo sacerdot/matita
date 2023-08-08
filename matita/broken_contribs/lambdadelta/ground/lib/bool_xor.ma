@@ -12,8 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/lib/bool.ma".
+include "ground/notation/functions/xor_2.ma".
 
-notation "hvbox( - break term 70 z )"
-  non associative with precedence 70
-  for @{ 'Hyphen $z }.
+(* EXCLUSIVE DISJUNCTION FOR BOOLEANS ***************************************)
+
+interpretation
+  "exclusive disjunction (booleans)"
+  'Xor b1 b2 = (xorb b1 b2).
+
+(* Advanced constructions ***************************************************)
+
+lemma commutative_xorb:
+      commutative … xorb.
+* * // qed.
+
+lemma xorb_false_dx (b):
+      b = b ⊻ Ⓕ.
+* // qed.
+
+lemma xorb_false_sn (b):
+      b = Ⓕ ⊻ b.
+// qed.
+
+lemma xorb_true_bi:
+      Ⓕ = Ⓣ ⊻ Ⓣ.
+// qed.

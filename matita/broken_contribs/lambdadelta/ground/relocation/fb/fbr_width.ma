@@ -22,10 +22,7 @@ rec definition fbr_width (f) on f: ℕ ≝
 match f with
 [ list_empty     ⇒ 𝟎
 | list_lcons i g ⇒
-  match i with
-  [ false ⇒ fbr_width g
-  | true  ⇒ (⁤↑(fbr_width g))
-  ]
+  if i then (⁤↑(fbr_width g)) else fbr_width g
 ].
 
 interpretation

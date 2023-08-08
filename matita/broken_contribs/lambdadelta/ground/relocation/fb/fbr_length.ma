@@ -22,14 +22,13 @@ rec definition fbr_length (f) on f: ℕ ≝
 match f with
 [ list_empty     ⇒ (𝟎)
 | list_lcons i g ⇒
-  match i with
-  [ false ⇒
+  if i then
+   (⁤↑(fbr_length g))
+  else
     match fbr_length g with
     [ nzero  ⇒ (𝟎)
     | npos p ⇒ (⁤↑(fbr_length g))
     ]
-  | true  ⇒ (⁤↑(fbr_length g))
-  ]
 ].
 
 interpretation

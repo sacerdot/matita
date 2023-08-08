@@ -35,10 +35,7 @@ interpretation
   'UpSpoon f = (br_push f).
 
 definition br_dapp (b) (f): ℕ⁺ → ℕ⁺ ≝
-match b with
-[ true  ⇒ ↑f
-| false ⇒ (⫯f)
-].
+if b then ↑f else (⫯f).
 
 interpretation
   "depth application (relocation items with booleans)"

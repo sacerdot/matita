@@ -12,8 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/lib/bool.ma".
+include "ground/notation/functions/negrightarrow_2.ma".
 
-notation "hvbox( - break term 70 z )"
-  non associative with precedence 70
-  for @{ 'Hyphen $z }.
+(* EXCLUSIVE DISJUNCTION FOR BOOLEANS ***************************************)
+
+definition bminus (b1) (b2): bool ≝
+  b1 ∧ ¬b2.
+
+interpretation
+  "negated implication (booleans)"
+  'NegRightArrow b1 b2 = (bminus b1 b2).
+
+(* Basic constructions ******************************************************)
+
+lemma bninus_false_sn (b):
+      Ⓕ = Ⓕ ↛ b.
+// qed.
+
+lemma bninus_true_false:
+      Ⓣ = Ⓣ ↛ Ⓕ.
+// qed.
+
+lemma bninus_true_bi:
+      Ⓕ = Ⓣ ↛ Ⓣ.
+// qed.

@@ -21,10 +21,7 @@ rec definition fbr_ctl (f) on f: 𝔽𝔹 ≝
 match f with
 [ list_empty     ⇒ f
 | list_lcons b g ⇒
-  match b with
-  [ false ⇒ g
-  | true  ⇒ fbr_ctl g
-  ]
+  if b then fbr_ctl g else g
 ].
 
 interpretation

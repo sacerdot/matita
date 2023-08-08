@@ -21,14 +21,13 @@ rec definition fbr_after (f2) (f1) on f2: 𝔽𝔹 ≝
 match f2 with
 [ list_empty       ⇒ f1
 | list_lcons b2 g2 ⇒
-  match b2 with
-  [ false ⇒
+  if b2 then
+    ↑(fbr_after g2 f1)
+  else
     match f1 with
     [ list_empty       ⇒ f2
     | list_lcons b1 g1 ⇒ (fbr_after g2 g1)◖b1
     ]
-  | true  ⇒ ↑(fbr_after g2 f1)
-  ]
 ].
 
 interpretation

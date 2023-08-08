@@ -12,8 +12,33 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/relocation/fb/fbr_coafter.ma".
+include "ground/relocation/fb/fbr_eq.ma".
 
-notation "hvbox( - break term 70 z )"
-  non associative with precedence 70
-  for @{ 'Hyphen $z }.
+(* CO-COMPOSITION FOR FINITE RELOCATION MAPS WITH BOOLEANS ******************)
+
+(* Advanced constructions ***************************************************)
+
+lemma fbr_coafter_id_dx (g):
+      (𝐢) ≐ g~•𝐢.
+#g elim g -g //
+* #g #IH
+/2 width=1 by fbr_eq_id_push/
+qed.
+
+(* Constructions with fbr_eq ************************************************)
+
+lemma fbr_coafter_eq_repl:
+      compatible_3 … fbr_eq fbr_eq fbr_eq (λg,f.g~•f).
+#g1 #g2 #Hg elim Hg -g1 -g2 //
+[ * #g1 #g2 #_ #IH #f1 #f2 [ #Hf | * ]
+  /3 width=1 by fbr_eq_rcons_bi/
+  [ /4 width=3 by fbr_eq_id_push, fbr_eq_trans/
+  | /4 width=3 by fbr_eq_push_id, fbr_eq_canc_dx/
+  ]
+| #g2 #_ #IH #f1 #f2 *
+  /3 width=1 by fbr_eq_rcons_bi, fbr_eq_id_push, fbr_eq_push_id/
+| #g1 #_ #IH #f1 #f2 *
+  /3 width=1 by fbr_eq_rcons_bi, fbr_eq_id_push, fbr_eq_push_id/
+]
+qed.

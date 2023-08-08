@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "hvbox( - break term 70 z )"
+notation "hvbox( 𝐛𝐱[ term 46 f ]❨ break term 46 b1, break term 46 b2 ❩ )"
   non associative with precedence 70
-  for @{ 'Hyphen $z }.
+  for @{ 'ElementBX $f $b1 $b2 }.

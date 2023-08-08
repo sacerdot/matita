@@ -15,5 +15,5 @@
 (* NOTATION FOR GROUND ******************************************************)
 
 notation "hvbox( − break term 70 p )"
-  non associative with precedence 70 
+  non associative with precedence 70
   for @{ 'Minus $p }.

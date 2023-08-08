@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "hvbox( - break term 70 z )"
-  non associative with precedence 70
-  for @{ 'Hyphen $z }.
+notation "hvbox( a ⊻ break b )"
+  left associative with precedence 55
+  for @{ 'Xor $a $b }.
