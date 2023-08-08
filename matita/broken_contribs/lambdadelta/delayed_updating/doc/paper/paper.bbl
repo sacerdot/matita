@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{ACCL91}
 Mart\'in {Abadi}, Luca {Cardelli}, Pierre-Louis {Curien}, and Jean-Jacques
@@ -6,12 +6,25 @@ Mart\'in {Abadi}, Luca {Cardelli}, Pierre-Louis {Curien}, and Jean-Jacques
 \newblock {Explicit Substitutions}.
 \newblock {\em J. of Functional Programming}, 1(4):375--416, 1991.
 
+\bibitem{CHL96}
+Pierre-Louis {Curien}, Th\'er\`ese {Hardin}, and Jean-Jacques {L\'evy}.
+\newblock {Confluence Properties of Weak and Strong Calculi of Explicit
+  Substitutions}.
+\newblock {\em J. of the ACM}, 43(2):362--397, March 1996.
+
 \bibitem{Bru72}
 Nicolaas~G. {de Bruijn}.
 \newblock {Lambda calculus notation with nameless dummies, a tool for automatic
   formula manipulation, with application to the Church-Rosser theorem}.
 \newblock {\em {Indagationes Mathematicae (Proceedings)}}, 75(5):381--392,
   1972.
+
+\bibitem{Bru78b}
+Nicolaas~G. {de Bruijn}.
+\newblock {A namefree lambda calculus with facilities for internal definition
+  of expressions and segments}.
+\newblock TH-Report 78-WSK-03, Department of Mathematics, Eindhoven University
+  of Technology, Eindhoven, The Netherlands, August 1978.
 
 \bibitem{Bru78a}
 Nicolaas~G. {de Bruijn}.
@@ -26,6 +39,12 @@ Ferruccio {Guidi}.
 \newblock Technical Report UBLCS 2009-16, University of Bologna, Bologna,
   Italy, September 2009.
 
+\bibitem{KN93}
+Fairouz~D. {Kamareddine} and Rob~P. {Nederpelt}.
+\newblock {On stepwise explicit substitution}.
+\newblock {\em Int. J. of Foundations of Computer Science}, 4(3):197--240,
+  1993.
+
 \bibitem{Klu05}
 Werner {Kluge}.
 \newblock {\em {Abstract Computing Machines --- A Lambda Calculus
@@ -39,5 +58,19 @@ Rob~P. {Nederpelt}.
   structured types.
 \newblock {Ph.D.} thesis, Eindhoven University of Technology, Eindhoven, The
   Netherlands, 1973.
+
+\bibitem{Ned79}
+Rob~P. {Nederpelt}.
+\newblock {A system of lambda calculus possessing facilities for typing and
+  abbreviating. Part I: Informal introduction}.
+\newblock Memorandum 1979-02, Department of Mathematics, Eindhoven University
+  of Technology, Eindhoven, The Netherlands, March 1979.
+
+\bibitem{Ned80}
+Rob~P. {Nederpelt}.
+\newblock {A system of lambda calculus possessing facilities for typing and
+  abbreviating. Part II: Formal description}.
+\newblock Memorandum 1980-11, Department of Mathematics, Eindhoven University
+  of Technology, Eindhoven, The Netherlands, June 1980.
 
 \end{thebibliography}

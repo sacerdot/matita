@@ -1,0 +1,53 @@
+\section{Updating}
+\label{sec:updating}
+
+In name-carrying systems of $\lambda$-calculus
+a binder of a term $M$, say $\lambda_x$, and the variable occurrences
+that refer to it carry the same name, say $x$.
+On the contrary, name-free systems use unnamed binders, say $\lambda$,
+and replace a bound variable occurrence $x$
+with an index that is a non-negative integer denoting the position of
+the corresponding $\lambda_x$ along the path connecting $x$ to the
+root of $M$ in the representation of $M$ as an abstract syntax tree.
+As we pointed out in the introduction,
+the $\beta$-reduction step of the latter systems  
+requires updating the indexes occurring in a copied
+argument, say $N$, to maintain the relationship between the bound variable
+instances in $M$ and the respective binders.
+Depending on the particular system,
+if immediate updating is in effect, the update occurs by 
+applying a so-called update function to the indexes in $N$. On the
+contrary, if delayed updating is in effect, the update function
+is just stored in the syntax of the copied $N$.
+
+The first name-free systems with immediate updating appear in \cite{Bru72}
+with the basic update functions $\tau_{d,h}$ of type $\naturals^+ \to \naturals^+$,
+where $d\in\naturals$ and $h\in\naturals$.
+\[
+\tau_{d,h} \defeq i \mapsto
+\left\{\begin{tabular}{ll}
+$i$&if $i \le d$\\
+$i+h$&if $i > d$\\
+\end{tabular}\right.
+\]
+The systems originating from \cite{Bru78a}
+(for instance those in \cite{Bru78b})
+are the first to allow delayed updating
+by featuring the term node $\phi(f)$
+where $f$ is an arbitray function of type $\naturals^+ \to \naturals^+$.
+Other systems of the same family like \cite{Ned79,Ned80,KN93}
+feature the term node $\mu(d,h)$ or $\phi^{(d,h)}$
+that holds the function $\tau_{d,h}$.
+Moreover, the systems originating from \cite{ACCL91}
+(for instance those in \cite{CHL96})
+feature the explicit substitution constructors $\mathit{id}$ and $\uparrow$
+that essentially hold the functions $\tau_{0,0}$ (the identity)
+and $\tau_{0,1}$ (the successor) respectively.
+
+The system we are going to introduce takes a simpler approach.
+Its syntax has a term node $p$ we call \emph{inner numeric label}
+where $p \in \naturals^+$.
+An active $p$ holds the function $\tau_{0,p}$
+while a passive, i.e. present but ignored, $p$ holds the function $\tau_{0,0}$.
+In some sense, we want to show that supporting the functions $\tau_{0,h}$
+suffices to implement delayed updating in basic name-free $\lambda$-calculus.
