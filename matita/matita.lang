@@ -17,6 +17,7 @@
     <style id="macros" _name="Macros" map-to="def:keyword"/>
     <style id="tinycals" _name="Tinycals" map-to="def:keyword"/>
     <style id="quantifiers" _name="Quantifiers" map-to="def:type"/>
+    <style id="function" _name="Function" map-to="def:function"/>
   </styles>
 
   <definitions>
@@ -222,6 +223,11 @@
         </context>
         <context id="tinycals" style-ref="tinycals">
 		<match>\[|\||\]|\{|\}|>|//|&lt;|@|\$|#|\\\\|;|\.|:>|:|-</match>
+        </context>
+        <context id="function" style-ref="function">
+          <keyword>if</keyword>
+          <keyword>then</keyword>
+          <keyword>else</keyword>
         </context>
       </include>
     </context>
