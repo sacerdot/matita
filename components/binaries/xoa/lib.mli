@@ -9,10 +9,10 @@
      \ /   This software is distributed as is, NO WARRANTY.     
       V_______________________________________________________________ *)
 
-val get_preamble: unit -> string
+val load_conf: string -> string -> unit
 
-val exists_out: string -> bool
+val exists_out: string -> string -> string -> bool
 
-val open_out: bool -> string -> string -> out_channel
+val open_out: bool -> string -> string -> string -> out_channel
 
 val out_include: out_channel -> string -> unit
