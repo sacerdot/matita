@@ -17,8 +17,8 @@
 (* Project taken over by "lambdadelta" and restarted Sun Sept 20, 2015 ****)
 
 include "basics/logic.ma".
-include "../../broken_contribs/lambdadelta/ground/notation/xoa/false_0.ma".
-include "../../broken_contribs/lambdadelta/ground/notation/xoa/true_0.ma".
+include "ground/notation/xoa/false_0.ma".
+include "ground/notation/xoa/true_0.ma".
 
 interpretation "logical false" 'false = False.
 
