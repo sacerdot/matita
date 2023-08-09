@@ -3,6 +3,7 @@
 *)
 
 include "basics/pts.ma".
+include "basics/core_notation/imply_2.ma".
 
 (* As we mentioned several times, very few notions are really primitive in 
 Matita: one of them is the notion of universal quantification (or dependent 

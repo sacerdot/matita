@@ -16,6 +16,7 @@
 
 include "basics/pts.ma".
 include "hints_declaration.ma".
+include "basics/core_notation/imply_2.ma".
 
 inductive Imply (A,B:Prop) : Prop ≝
 | Imply_intro: (A → B) → Imply A B.

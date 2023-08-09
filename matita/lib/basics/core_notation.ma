@@ -112,16 +112,6 @@ notation < "\snd \nbsp term 90 x \nbsp term 90 y" with precedence 69 for @{'pi2b
 notation > "\fst" with precedence 90 for @{'pi1}.
 notation > "\snd" with precedence 90 for @{'pi2}.
 
-(* implication **************************************************************)
-
-notation "hvbox(a break \to b)" 
-  right associative with precedence 20
-for @{ \forall $_:$a.$b }.
-
-notation < "hvbox(a break \to b)" 
-  right associative with precedence 20
-for @{ \Pi $_:$a.$b }.
-
 (* orders *******************************************************************)
 
 notation "hvbox(a break \leq b)" 

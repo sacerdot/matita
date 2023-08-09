@@ -16,6 +16,8 @@
 
 include "basics/pts.ma".
 
+include "basics/core_notation/imply_2.ma".
+
 include "lambda/notation/xoa/or_3.ma".
 
 (* multiple disjunction connective (3) *)

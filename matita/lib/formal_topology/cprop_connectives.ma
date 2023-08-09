@@ -13,6 +13,8 @@
 (**************************************************************************)
 
 include "basics/pts.ma".
+include "basics/core_notation.ma".
+include "basics/core_notation/imply_2.ma".
 
 inductive False: CProp[0] ≝.
 

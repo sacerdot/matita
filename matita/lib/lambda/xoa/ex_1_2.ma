@@ -16,6 +16,8 @@
 
 include "basics/pts.ma".
 
+include "basics/core_notation/imply_2.ma".
+
 include "lambda/notation/xoa/ex_1_2.ma".
 
 (* multiple existental quantifier (1, 2) *)
