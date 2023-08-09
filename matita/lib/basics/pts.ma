@@ -12,8 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "basics/core_notation.ma".
-
 universe constraint Type[0] < Type[1].
 universe constraint Type[1] < Type[2].
 universe constraint Type[2] < Type[3].
