@@ -20,7 +20,7 @@ include "ground/notation/functions/at_2.ma".
 (* EXTENDED DEPTH APPLICATION FOR FINITE RELOCATION MAPS FOR UNWIND *********)
 
 definition fur_xapp (f) (n): ℕ ≝
-           nsplit … (𝟎) (λp.(⁤f＠⧣❨p❩)) n
+           nsplit … (𝟎) (λp.(⁤(f＠⧣❨p❩))) n
 .
 
 interpretation
@@ -34,7 +34,7 @@ lemma fur_xapp_zero (f):
 // qed.
 
 lemma fur_xapp_pos (f) (p):
-      (⁤f＠⧣❨p❩) = f＠❨⁤p❩.
+      (⁤(f＠⧣❨p❩)) = f＠❨⁤p❩.
 // qed.
 
 lemma fur_xapp_j_dx_pos (f) (k) (p):

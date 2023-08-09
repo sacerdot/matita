@@ -43,7 +43,7 @@ lemma tr_uni_nap (n) (m):
 qed.
 
 lemma tr_nap_push (f) (l):
-      (⁤↑f＠§❨l❩) = (⫯f)＠§❨⁤↑l❩.
+      (⁤↑(f＠§❨l❩)) = (⫯f)＠§❨⁤↑l❩.
 #f #l
 <tr_nap_unfold <tr_nap_unfold
 <tr_pap_push <npsucc_pnpred //

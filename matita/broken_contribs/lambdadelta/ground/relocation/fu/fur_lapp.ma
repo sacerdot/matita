@@ -26,15 +26,15 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma fur_dapp_succ_lapp (f) (n):
-      ↑f＠§❨n❩ = f＠⧣❨↑n❩.
+      ↑(f＠§❨n❩) = f＠⧣❨↑n❩.
 // qed.
 
 lemma fur_dapp_lapp (f) (n):
-      ↑f＠§❨↓n❩ = f＠⧣❨n❩.
+      ↑(f＠§❨↓n❩) = f＠⧣❨n❩.
 // qed.
 
 lemma fur_lapp_pred_dapp (f) (n):
-      ↓f＠⧣❨n❩ = f＠§❨↓n❩.
+      ↓(f＠⧣❨n❩) = f＠§❨↓n❩.
 // qed.
 
 lemma fur_lapp_id (n):

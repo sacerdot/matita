@@ -25,15 +25,15 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma tzr_dapp_succ_lapp (f) (z):
-      ↑f＠§❨z❩ = f＠⧣❨↑z❩.
+      ↑(f＠§❨z❩) = f＠⧣❨↑z❩.
 // qed.
 
 lemma tzr_dapp_lapp (f) (z):
-      ↑f＠§❨↓z❩ = f＠⧣❨z❩.
+      ↑(f＠§❨↓z❩) = f＠⧣❨z❩.
 // qed.
 
 lemma tzr_lapp_pred_dapp (f) (z):
-      ↓f＠⧣❨z❩ = f＠§❨↓z❩.
+      ↓(f＠⧣❨z❩) = f＠§❨↓z❩.
 // qed.
 
 lemma tzr_eq_ext_lapp (f1) (f2):

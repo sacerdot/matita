@@ -24,7 +24,7 @@ lemma tr_xap_npos (f) (p):
 // qed.
 
 lemma tr_xap_succ_nap (f) (n):
-      (⁤↑f＠§❨n❩) = f＠❨⁤↑n❩.
+      (⁤↑(f＠§❨n❩)) = f＠❨⁤↑n❩.
 #f #n
 <tr_xap_npos //
 qed.
@@ -49,7 +49,7 @@ lemma tr_uni_xap (n) (m):
 qed.
 
 lemma tr_xap_push (f) (l):
-      (⁤↑f＠❨l❩) = (⫯f)＠❨⁤↑l❩.
+      (⁤↑(f＠❨l❩)) = (⫯f)＠❨⁤↑l❩.
 #f #l
 <tr_xap_unfold <tr_xap_unfold
 <tr_nap_push //

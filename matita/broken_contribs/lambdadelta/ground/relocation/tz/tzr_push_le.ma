@@ -21,7 +21,7 @@ include "ground/relocation/tz/tzr_pnext_le.ma".
 
 lemma tzr_push_dapp_gt_gt (f) (z):
       (𝟎) < z → (𝟎) < f＠⧣❨z❩ →
-      ↑f＠⧣❨z❩ = (⫯f)＠⧣❨↑z❩.
+      ↑(f＠⧣❨z❩) = (⫯f)＠⧣❨↑z❩.
 #f #z #Hz #Hf
 elim (zle_des_pos_sn … Hz) -Hz #p #H0 destruct
 /2 width=1 by tzr_puni_dapp_gt/

@@ -2,9 +2,11 @@
 <helm_registry>
   <section name="xoa">
     <key name="output_dir">.</key>
-    <key name="objects">ground/xoa</key>
-    <key name="notations">ground/notation/xoa</key>
+    <key name="objects">xoa</key>
+    <key name="notations">notation/xoa</key>
     <key name="include">basics/pts.ma</key>
+    <key name="include">basics/core_notation/imply_2.ma</key>
+    <key name="baseuri">ground</key>
     <key name="and">3</key>
     <key name="and">4</key>
     <key name="ex">1 2</key>

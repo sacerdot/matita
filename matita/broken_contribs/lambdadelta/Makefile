@@ -3,10 +3,10 @@ H    := @
 
 TRIM := sed "s/ \\+$$//"
 
-XOA_DIR      := ../../../components/binaries/xoa
-XOA          := xoa.native
-XOA_CONF     := ground/xoa.conf.xml
-XOA_OPTS     := ../../matita.conf.xml $(XOA_CONF)
+RT_BASE_DIR := $(HOME)/git/matita_csc/matita
+
+XOA_DIR := broken_contribs/lambdadelta/ground
+XOA_CONF := $(RT_BASE_DIR)/$(XOA_DIR)/xoa.conf.xml
 
 DEP_INPUT    := .depend
 DEP_DIR      := ../../../components/binaries/matitadep
@@ -66,8 +66,8 @@ names: $(NAMES:%=%/names.txt)
 # xoa ########################################################################
 
 xoa: $(XOA_CONF)
-	@echo "  EXEC $(XOA) $(XOA_CONF)"
-	$(H)MATITA_RT_BASE_DIR=../.. $(XOA_DIR)/$(XOA) -s $(XOA_OPTS)
+	@echo "  EXEC xoa $(XOA_DIR)"
+	$(H)xoa -u -s -b $(RT_BASE_DIR) $(XOA_DIR)
 
 # elim #######################################################################
 
