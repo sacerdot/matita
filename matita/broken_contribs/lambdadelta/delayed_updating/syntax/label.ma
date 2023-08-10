@@ -23,12 +23,12 @@ include "delayed_updating/notation/functions/edgelabel_l_0.ma".
 include "delayed_updating/notation/functions/edgelabel_a_0.ma".
 include "delayed_updating/notation/functions/edgelabel_s_0.ma".
 include "ground/relocation/fb/fbr_map.ma".
-include "ground/arith/nat.ma".
+include "ground/arith/pnat.ma".
 
 (* LABEL ********************************************************************)
 
 inductive label: Type[0] ≝
-| label_d: ℕ → label
+| label_d: ℕ⁺ → label
 | label_m: label
 | label_z: 𝔽𝔹 → label
 | label_L: label

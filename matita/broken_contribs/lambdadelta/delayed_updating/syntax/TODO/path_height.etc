@@ -13,18 +13,19 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/sharp_1.ma".
-include "ground/arith/int_plus.ma".
+include "ground/arith/nat_plus.ma".
+include "ground/notation/functions/sharp_1.ma".
 
 (* HEIGHT FOR PATH **********************************************************)
 
-rec definition height (p) on p: ℤ ≝
+rec definition height (p) on p: ℕ ≝
 match p with
 [ list_empty     ⇒ 𝟎
 | list_lcons l q ⇒
   match l with
-  [ label_d k ⇒ height q + k
+  [ label_d k ⇒ (⁤↑(height q))
   | label_m   ⇒ height q
+  | label_z F ⇒ height q
   | label_L   ⇒ height q
   | label_A   ⇒ height q
   | label_S   ⇒ height q
@@ -41,23 +42,27 @@ lemma height_empty: 𝟎 = ♯𝐞.
 // qed.
 
 lemma height_d_dx (p) (k):
-      (♯p)+k = ♯(p◖𝗱k).
+      (⁤↑♯p) = ♯(p◖𝗱k).
 // qed.
 
 lemma height_m_dx (p):
-      (♯p) = ♯(p◖𝗺).
+      ♯p = ♯(p◖𝗺).
+// qed.
+
+lemma height_z_dx (p) (F):
+      ♯p = ♯(p◖𝘇F).
 // qed.
 
 lemma height_L_dx (p):
-      (♯p) = ♯(p◖𝗟).
+      ♯p = ♯(p◖𝗟).
 // qed.
 
 lemma height_A_dx (p):
-      (♯p) = ♯(p◖𝗔).
+      ♯p = ♯(p◖𝗔).
 // qed.
 
 lemma height_S_dx (p):
-      (♯p) = ♯(p◖𝗦).
+      ♯p = ♯(p◖𝗦).
 // qed.
 
 (* Main constructions *******************************************************)
@@ -65,9 +70,10 @@ lemma height_S_dx (p):
 theorem height_append (p) (q):
         (♯p+♯q) = ♯(p●q).
 #p #q elim q -q //
-* [ #k ] #q #IH <list_append_lcons_sn
+* [ #k || #F ] #q #IH <list_append_lcons_sn
 [ <height_d_dx <height_d_dx //
 | <height_m_dx <height_m_dx //
+| <height_z_dx <height_z_dx //
 | <height_L_dx <height_L_dx //
 | <height_A_dx <height_A_dx //
 | <height_S_dx <height_S_dx //
@@ -77,11 +83,15 @@ qed.
 (* Constructions with path_lcons ********************************************)
 
 lemma height_d_sn (p) (k):
-      k+♯p = ♯(𝗱k◗p).
+      (⁤↑♯p) = ♯(𝗱k◗p).
 // qed.
 
 lemma height_m_sn (p):
       ♯p = ♯(𝗺◗p).
+// qed.
+
+lemma height_z_sn (p) (F):
+      ♯p = ♯(𝘇F◗p).
 // qed.
 
 lemma height_L_sn (p):

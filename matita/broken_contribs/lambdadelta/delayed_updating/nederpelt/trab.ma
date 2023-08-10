@@ -20,6 +20,7 @@ include "ground/arith/nat_pred_succ.ma".
 
 definition trab_k (S:Type[0]): Type[0] ≝ path → ℕ → path → S.
 
+(* Note: we add the case "label_S" to make the function total *)
 rec definition trab (S:Type[0]) (K:trab_k S) (p) (n) (q) on p : S ≝
 match p with
 [ list_empty     ⇒ K p n q
@@ -27,11 +28,12 @@ match p with
   match l with
   [ label_d k ⇒ trab S K x n (𝗱k◗q)
   | label_m   ⇒ trab S K x n (𝗺◗q)
-  | label_L   ⇒ trab S K x (↑n) (𝗟◗q)
+  | label_z F ⇒ trab S K x n (𝘇F◗q)
+  | label_L   ⇒ trab S K x (⁤↑n) (𝗟◗q)
   | label_A   ⇒
     match n with
     [ nzero  ⇒ K p n q
-    | npos y ⇒ trab S K x (pnpred y) (𝗔◗q)
+    | npos y ⇒ trab S K x (↓y) (𝗔◗q)
     ]
   | label_S   ⇒ K p n q
   ]
@@ -55,16 +57,20 @@ lemma trab_unfold_m (S) (K) (p) (q) (n):
       ▷𝐛{S}[K]❨p,n,𝗺◗q❩ = ▷𝐛{S}[K]❨p◖𝗺,n,q❩.
 // qed.
 
+lemma trab_unfold_z (S) (K) (p) (q) (n) (F):
+      ▷𝐛{S}[K]❨p,n,𝘇F◗q❩ = ▷𝐛{S}[K]❨p◖𝘇F,n,q❩.
+// qed.
+
 lemma trab_unfold_L (S) (K) (p) (q) (n):
-      ▷𝐛{S}[K]❨p,↑n,𝗟◗q❩ = ▷𝐛{S}[K]❨p◖𝗟,n,q❩.
+      ▷𝐛{S}[K]❨p,(⁤↑n),𝗟◗q❩ = ▷𝐛{S}[K]❨p◖𝗟,n,q❩.
 // qed.
 
 lemma trab_unfold_A_zero (S) (K) (p) (q):
       K (p◖𝗔) (𝟎) q = ▷𝐛{S}[K]❨p◖𝗔,𝟎,q❩.
 // qed.
 
-lemma trab_unfold_A_inj (S) (K) (p) (q) (k:ℕ⁺):
-      ▷𝐛{S}[K]❨p,↓k,𝗔◗q❩ = ▷𝐛{S}[K]❨p◖𝗔,k,q❩.
+lemma trab_unfold_A_pos (S) (K) (p) (q) (k:ℕ⁺):
+      ▷𝐛{S}[K]❨p,↓k,𝗔◗q❩ = ▷𝐛{S}[K]❨p◖𝗔,(⁤k),q❩.
 // qed.
 
 lemma trab_unfold_S (S) (K) (p) (q) (n):
@@ -74,5 +80,5 @@ lemma trab_unfold_S (S) (K) (p) (q) (n):
 (* Advanced destructions *******************************************)
 
 lemma trab_unfold_A_succ (S) (K) (p) (q) (n):
-      ▷𝐛{S}[K]❨p,n,𝗔◗q❩ = ▷𝐛{S}[K]❨p◖𝗔,↑n,q❩.
+      ▷𝐛{S}[K]❨p,n,𝗔◗q❩ = ▷𝐛{S}[K]❨p◖𝗔,(⁤↑n),q❩.
 // qed.
