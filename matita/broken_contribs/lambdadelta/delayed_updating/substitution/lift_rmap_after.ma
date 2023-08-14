@@ -13,15 +13,16 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/prelift_rmap_after.ma".
-include "delayed_updating/substitution/lift_rmap_eq.ma".
+include "delayed_updating/substitution/prelift_rmap_eq.ma".
+include "delayed_updating/substitution/lift_rmap.ma".
 include "delayed_updating/substitution/lift_path.ma".
 
 (* LIFT FOR RELOCATION MAP **************************************************)
 
-(* Constructions with trz_after *********************************************)
+(* Constructions with map_after *********************************************)
 
 lemma lift_rmap_after (g) (f) (p:path):
-      (🠢[g]🠡[f]p•🠢[f]p) ≐ 🠢[g•f]p.
+      (🠢[🠡[f]p]g•🠢[p]f) = 🠢[p](g•f).
 #g #f #p elim p -p //
 #l #p #IH <lift_rmap_rcons
 /2 width=5 by prelift_rmap_eq_repl/

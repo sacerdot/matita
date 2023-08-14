@@ -23,9 +23,10 @@ lemma lift_path_proper (f) (p):
       p ϵ 𝐏 → 🠡[f]p ϵ 𝐏.
 #f *
 [ #H0 elim (ppc_inv_empty … H0)
-| * [ #k ] #p #_
+| * [ #k || #F ] #p #_
   [ <lift_path_d_dx
   | <lift_path_m_dx
+  | <lift_path_z_dx
   | <lift_path_L_dx
   | <lift_path_A_dx
   | <lift_path_S_dx

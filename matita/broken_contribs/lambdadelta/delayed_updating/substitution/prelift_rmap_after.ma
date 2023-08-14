@@ -14,13 +14,15 @@
 
 include "delayed_updating/substitution/prelift_rmap.ma".
 include "delayed_updating/substitution/prelift_label.ma".
-include "ground/relocation/trz_tls_after.ma".
+include "ground/relocation/fb/fbr_ctls_after.ma".
 
 (* PRELIFT FOR RELOCATION MAP ***********************************************)
 
-(* Constructions with trz_after *********************************************)
+(* Constructions with map_after *********************************************)
 
 lemma prelift_rmap_after (g) (f) (l):
-      🠢[g]🠡[f]l•🠢[f]l ≐ 🠢[g•f]l.
-#g #f * [ #k ] //
+      (🠢[🠡[f]l]g)•(🠢[l]f) = 🠢[l](g•f).
+#g #f * [ #k || #F ] //
+<prelift_label_d <prelift_rmap_d <prelift_rmap_d <prelift_rmap_d
+<fbr_ctls_after //
 qed.

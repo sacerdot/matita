@@ -14,15 +14,15 @@
 
 include "delayed_updating/notation/functions/righttrianglearrow_2.ma".
 include "delayed_updating/syntax/label.ma".
-include "ground/relocation/trz_push.ma".
-include "ground/relocation/trz_tls.ma".
+include "ground/relocation/fb/fbr_ctls.ma".
 
 (* PRELIFT FOR RELOCATION MAP ***********************************************)
 
-definition prelift_rmap (l) (f): trz_map ≝
+definition prelift_rmap (l) (f): 𝔽𝔹 ≝
 match l with
-[ label_d k ⇒ ⫰*[k]f
+[ label_d k ⇒ ⫰*[⁤k]f
 | label_m   ⇒ f
+| label_z F ⇒ f
 | label_L   ⇒ ⫯f
 | label_A   ⇒ f
 | label_S   ⇒ f
@@ -30,26 +30,30 @@ match l with
 
 interpretation
   "prelift (relocation map)"
-  'RightTriangleArrow f l = (prelift_rmap l f).
+  'RightTriangleArrow l f = (prelift_rmap l f).
 
 (* Basic constructions ******************************************************)
 
 lemma prelift_rmap_d (f) (k):
-      (⫰*[k]f) = 🠢[f]𝗱k.
+      (⫰*[⁤k]f) = 🠢[𝗱k]f.
 // qed.
 
 lemma prelift_rmap_m (f):
-      f = 🠢[f]𝗺.
+      f = 🠢[𝗺]f.
+// qed.
+
+lemma prelift_rmap_z (f) (F):
+      f = 🠢[𝘇F]f.
 // qed.
 
 lemma prelift_rmap_L (f):
-      (⫯f) = 🠢[f]𝗟.
+      (⫯f) = 🠢[𝗟]f.
 // qed.
 
 lemma prelift_rmap_A (f):
-      f = 🠢[f]𝗔.
+      f = 🠢[𝗔]f.
 // qed.
 
 lemma prelift_rmap_S (f):
-      f = 🠢[f]𝗦.
+      f = 🠢[𝗦]f.
 // qed.

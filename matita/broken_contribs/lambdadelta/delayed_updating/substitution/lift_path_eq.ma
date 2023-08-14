@@ -18,15 +18,21 @@ include "delayed_updating/substitution/prelift_label_eq.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
-(* Constructions with path_eq ***********************************************)
+(* Constructions with map_eq ************************************************)
 
 lemma lift_path_eq_repl (p):
-      compatible_2_fwd … trz_eq (eq …) (λf.🠡[f]p).
+      compatible_2_fwd … fbr_eq (eq …) (λf.🠡[f]p).
 #p elim p -p //
 #l #p #IH #f1 #f2 #Hf
 <lift_path_rcons <lift_path_rcons
-@eq_f2 (**) (* auto fails *)
-[ /3 width=1 by lift_rmap_eq_repl, prelift_label_eq_repl/
-| @IH -IH //
-]
+<(IH … Hf) -IH
+/4 width=1 by prelift_label_eq_repl, lift_rmap_eq_repl, eq_f2/
+qed.
+
+(* Advanced constructions ***************************************************)
+
+lemma lift_path_id (p):
+      p = 🠡[𝐢]p.
+#p elim p -p
+/3 width=3 by prelift_label_eq_repl, eq_f2/
 qed.

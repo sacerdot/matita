@@ -17,7 +17,7 @@ include "delayed_updating/substitution/lift_path_after.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)
 
-(* Constructions with tr_after **********************************************)
+(* Constructions with map_after *********************************************)
 
 lemma lift_term_after (f) (g) (t):
       🠡[g]🠡[f]t ⇔ 🠡[g•f]t.

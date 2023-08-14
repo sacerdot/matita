@@ -20,7 +20,7 @@ include "delayed_updating/substitution/lift_prototerm_eq.ma".
 (* Constructions with lift for preterm **************************************)
 
 lemma lift_term_fsubst_sn (f) (t) (u) (p):
-      (🠡[f]t)[⋔(🠡[f]p)←🠡[🠢[f]p]u] ⊆ 🠡[f](t[⋔p←u]).
+      (🠡[f]t)[⋔(🠡[f]p)←🠡[🠢[p]f]u] ⊆ 🠡[f](t[⋔p←u]).
 #f #t #u #p #ql * *
 [ #rl * #r #Hr #H1 #H2 destruct
   >lift_path_append
@@ -32,7 +32,7 @@ lemma lift_term_fsubst_sn (f) (t) (u) (p):
 qed-.
 
 lemma lift_term_fsubst_dx (f) (t) (u) (p):
-      🠡[f](t[⋔p←u]) ⊆ (🠡[f]t)[⋔(🠡[f]p)←🠡[🠢[f]p]u].
+      (🠡[f](t[⋔p←u])) ⊆ (🠡[f]t)[⋔(🠡[f]p)←🠡[🠢[p]f]u].
 #f #t #u #p #ql * #q * *
 [ #r #Hu #H1 #H2 destruct
   @or_introl @ex2_intro
@@ -47,5 +47,5 @@ lemma lift_term_fsubst_dx (f) (t) (u) (p):
 qed-.
 
 lemma lift_term_fsubst (f) (t) (u) (p):
-      (🠡[f]t)[⋔(🠡[f]p)←🠡[🠢[f]p]u] ⇔ 🠡[f](t[⋔p←u]).
+      (🠡[f]t)[⋔(🠡[f]p)←🠡[🠢[p]f]u] ⇔ 🠡[f](t[⋔p←u]).
 /3 width=1 by lift_term_fsubst_sn, conj, lift_term_fsubst_dx/ qed.
