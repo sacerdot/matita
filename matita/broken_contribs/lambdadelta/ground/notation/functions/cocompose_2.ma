@@ -15,5 +15,5 @@
 (* NOTATION FOR GROUND ******************************************************)
 
 notation "hvbox( f2 ~• break f1 )"
-  right associative with precedence 60
+  left associative with precedence 60
   for @{ 'CoCompose $f2 $f1 }.

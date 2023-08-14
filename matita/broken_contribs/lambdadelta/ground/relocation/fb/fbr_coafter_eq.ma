@@ -28,7 +28,19 @@ qed.
 
 (* Constructions with fbr_eq ************************************************)
 
-lemma fbr_coafter_eq_repl:
+lemma fbr_coafter_eq_repl_sn (f):
+      compatible_2_fwd … fbr_eq (eq …) (λg.g~•f).
+#f #g1 #g2 #Hg
+generalize in match f; -f
+elim Hg -g1 -g2 //
+[ * #g1 #g2 #_ #IH [ #f | * ] //
+  <fbr_coafter_next_sn <fbr_coafter_next_sn <IH -IH //
+| #g2 #_ #IH * //
+| #g1 #_ #IH * //
+]
+qed.
+
+lemma fbr_coafter_eq_repl_bi:
       compatible_3 … fbr_eq fbr_eq fbr_eq (λg,f.g~•f).
 #g1 #g2 #Hg elim Hg -g1 -g2 //
 [ * #g1 #g2 #_ #IH #f1 #f2 [ #Hf | * ]

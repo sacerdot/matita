@@ -12,21 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_after.ma".
-include "ground/relocation/fb/fbr_eq.ma".
+include "ground/relocation/fb/fbr_ctl.ma".
+include "ground/relocation/fb/fbr_rconss.ma".
 
-(* COMPOSITION FOR FINITE RELOCATION MAPS WITH BOOLEANS *********************)
+(* COARSE TAIL FOR FINITE RELOCATION MAPS WITH BOOLEANS *********************)
 
-(* Constructions with fbr_eq ************************************************)
+(* Constructions with fbr_rconss ********************************************)
 
-lemma fbr_after_eq_repl_bi:
-      compatible_3 … fbr_eq fbr_eq fbr_eq (λg,f.g•f).
-#g1 #g2 #Hg elim Hg -g1 -g2 //
-[ * #g1 #g2 #_ #IH #f1 #f2 [ #Hf | * ]
-  /3 width=1 by fbr_eq_rcons_bi/
-| #g2 #_ #IH #f1 #f2 *
-  /3 width=1 by fbr_eq_rcons_bi, fbr_eq_id_push/
-| #g1 #_ #IH #f1 #f2 *
-  /3 width=1 by fbr_eq_rcons_bi, fbr_eq_push_id/
-]
+lemma fbr_ctl_nexts (f) (n):
+      (⫰f) = (⫰↑*[n]f).
+#f #n @(nat_ind_succ … n) -n //
+#n #IH
+<fbr_rconss_succ <fbr_ctl_next //
 qed.
