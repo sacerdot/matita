@@ -43,3 +43,10 @@ lemma fbr_minus_next_push (f1) (f2):
 lemma fbr_minus_next_bi (f1) (f2):
       (⫯(f1-f2)) = (↑f1)-(↑f2).
 // qed.
+
+(* Advanced constructions ***************************************************)
+
+lemma fbr_minus_rcons_push (f1) (f2) (b1):
+      (f1-f2)◖b1 = (f1◖b1)-(⫯f2).
+#f1 #f2 * //
+qed.
