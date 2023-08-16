@@ -26,5 +26,5 @@ qed.
 
 lemma prelift_rmap_id (l):
       (𝐢) ≐ 🠢[l]𝐢.
-* [ #k || #F ] //
+* [ #k ] //
 qed.

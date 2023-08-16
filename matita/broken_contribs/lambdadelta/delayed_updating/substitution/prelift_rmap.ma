@@ -20,9 +20,8 @@ include "ground/relocation/fb/fbr_ctls.ma".
 
 definition prelift_rmap (l) (f): 𝔽𝔹 ≝
 match l with
-[ label_d k ⇒ ⫰*[⁤k]f
+[ label_d k ⇒ ⫰*[k]f
 | label_m   ⇒ f
-| label_z F ⇒ f
 | label_L   ⇒ ⫯f
 | label_A   ⇒ f
 | label_S   ⇒ f
@@ -35,15 +34,11 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma prelift_rmap_d (f) (k):
-      (⫰*[⁤k]f) = 🠢[𝗱k]f.
+      (⫰*[k]f) = 🠢[𝗱k]f.
 // qed.
 
 lemma prelift_rmap_m (f):
       f = 🠢[𝗺]f.
-// qed.
-
-lemma prelift_rmap_z (f) (F):
-      f = 🠢[𝘇F]f.
 // qed.
 
 lemma prelift_rmap_L (f):

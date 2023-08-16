@@ -39,15 +39,11 @@ lemma lift_path_rcons (f) (p) (l):
 // qed.
 
 lemma lift_path_d_dx (f) (p) (k):
-      (🠡[f]p)◖𝗱((🠢[p]f)＠⧣❨k❩) = 🠡[f](p◖𝗱k).
+      (🠡[f]p)◖𝗱((🠢[p]f)＠❨k❩) = 🠡[f](p◖𝗱k).
 // qed.
 
 lemma lift_path_m_dx (f) (p):
       (🠡[f]p)◖𝗺 = 🠡[f](p◖𝗺).
-// qed.
-
-lemma lift_path_z_dx (f) (p) (F):
-      (🠡[f]p)◖𝘇((🠢[p]f)~•F) = 🠡[f](p◖𝘇F).
 // qed.
 
 lemma lift_path_L_dx (f) (p):
@@ -81,17 +77,11 @@ lemma lift_path_lcons (f) (p) (l):
 qed.
 
 lemma lift_path_d_sn (f) (p) (k):
-      (𝗱(f＠⧣❨k❩)◗🠡[⫰*[⁤k]f]p) = 🠡[f](𝗱k◗p).
-#f #p #k
-<lift_path_lcons //
-qed.
+      (𝗱(f＠❨k❩)◗🠡[⫰*[k]f]p) = 🠡[f](𝗱k◗p).
+// qed.
 
 lemma lift_path_m_sn (f) (p):
       (𝗺◗🠡[f]p) = 🠡[f](𝗺◗p).
-// qed.
-
-lemma lift_path_z_sn (f) (p) (F):
-      (𝘇(f~•F)◗🠡[f]p) = 🠡[f](𝘇F◗p).
 // qed.
 
 lemma lift_path_L_sn (f) (p):

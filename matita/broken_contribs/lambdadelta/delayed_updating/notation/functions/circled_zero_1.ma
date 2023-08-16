@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( 𝘇 break term 70 x )"
+notation "hvbox( ⓪ break term 70 p )"
   non associative with precedence 70
-  for @{ 'NodeLabelZ $x }.
+  for @{ 'CircledZero $p }.

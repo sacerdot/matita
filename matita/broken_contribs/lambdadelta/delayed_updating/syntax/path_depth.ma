@@ -25,7 +25,6 @@ match p with
   match l with
   [ label_d k ⇒ depth q
   | label_m   ⇒ depth q
-  | label_z F ⇒ depth q
   | label_L   ⇒ (⁤↑(depth q))
   | label_A   ⇒ depth q
   | label_S   ⇒ depth q
@@ -49,10 +48,6 @@ lemma depth_m_dx (p):
       ♭p = ♭(p◖𝗺).
 // qed.
 
-lemma depth_z_dx (p) (F):
-      ♭p = ♭(p◖𝘇F).
-// qed.
-
 lemma depth_L_dx (p):
       (⁤↑♭p) = ♭(p◖𝗟).
 // qed.
@@ -70,10 +65,9 @@ lemma depth_S_dx (p):
 theorem depth_append (p) (q):
         (♭p)+(♭q) = ♭(p●q).
 #p #q elim q -q //
-* [ #k || #F ] #q #IH <list_append_lcons_sn
+* [ #k ] #q #IH <list_append_lcons_sn
 [ <depth_d_dx <depth_d_dx //
 | <depth_m_dx <depth_m_dx //
-| <depth_z_dx <depth_z_dx //
 | <depth_L_dx <depth_L_dx //
 | <depth_A_dx <depth_A_dx //
 | <depth_S_dx <depth_S_dx //
@@ -88,10 +82,6 @@ lemma depth_d_sn (p) (k):
 
 lemma depth_m_sn (p):
       ♭p = ♭(𝗺◗p).
-// qed.
-
-lemma depth_z_sn (p) (F):
-      ♭p = ♭(𝘇F◗p).
 // qed.
 
 lemma depth_L_sn (p):

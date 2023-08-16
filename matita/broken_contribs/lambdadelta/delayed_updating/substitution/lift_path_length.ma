@@ -21,10 +21,9 @@ include "ground/lib/list_length.ma".
 
 lemma lift_path_length (f) (p):
       ❘p❘ = ❘🠡[f]p❘.
-#f #p elim p -p // * [ #k || #F ] #p #IH
+#f #p elim p -p // * [ #k ] #p #IH
 [ <lift_path_d_dx
 | <lift_path_m_dx
-| <lift_path_z_dx
 | <lift_path_L_dx
 | <lift_path_A_dx
 | <lift_path_S_dx

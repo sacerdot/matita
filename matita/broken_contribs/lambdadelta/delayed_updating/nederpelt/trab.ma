@@ -28,7 +28,6 @@ match p with
   match l with
   [ label_d k ⇒ trab S K x n (𝗱k◗q)
   | label_m   ⇒ trab S K x n (𝗺◗q)
-  | label_z F ⇒ trab S K x n (𝘇F◗q)
   | label_L   ⇒ trab S K x (⁤↑n) (𝗟◗q)
   | label_A   ⇒
     match n with
@@ -55,10 +54,6 @@ lemma trab_unfold_d (S) (K) (p) (q) (n) (k):
 
 lemma trab_unfold_m (S) (K) (p) (q) (n):
       ▷𝐛{S}[K]❨p,n,𝗺◗q❩ = ▷𝐛{S}[K]❨p◖𝗺,n,q❩.
-// qed.
-
-lemma trab_unfold_z (S) (K) (p) (q) (n) (F):
-      ▷𝐛{S}[K]❨p,n,𝘇F◗q❩ = ▷𝐛{S}[K]❨p◖𝘇F,n,q❩.
 // qed.
 
 lemma trab_unfold_L (S) (K) (p) (q) (n):

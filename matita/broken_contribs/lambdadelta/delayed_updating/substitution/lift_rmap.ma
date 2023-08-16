@@ -39,15 +39,11 @@ lemma lift_rmap_rcons (f) (p) (l):
 // qed.
 
 lemma lift_rmap_d_dx (f) (p) (k):
-      (⫰*[⁤k]🠢[p]f) = 🠢[p◖𝗱k]f.
+      (⫰*[k]🠢[p]f) = 🠢[p◖𝗱k]f.
 // qed.
 
 lemma lift_rmap_m_dx (f) (p):
       (🠢[p]f) = 🠢[p◖𝗺]f.
-// qed.
-
-lemma lift_rmap_z_dx (f) (p) (F):
-      (🠢[p]f) = 🠢[p◖𝘇F]f.
 // qed.
 
 lemma lift_rmap_L_dx (f) (p):
@@ -76,15 +72,11 @@ lemma lift_rmap_lcons (f) (p) (l):
 // qed.
 
 lemma lift_rmap_d_sn (f) (p) (k):
-      (🠢[p]⫰*[⁤k]f) = 🠢[𝗱k◗p]f.
+      (🠢[p]⫰*[k]f) = 🠢[𝗱k◗p]f.
 // qed.
 
 lemma lift_rmap_m_sn (f) (p):
       (🠢[p]f) = 🠢[𝗺◗p]f.
-// qed.
-
-lemma lift_rmap_z_sn (f) (p) (F):
-      (🠢[p]f) = 🠢[𝘇F◗p]f.
 // qed.
 
 lemma lift_rmap_L_sn (f) (p):
@@ -102,7 +94,7 @@ lemma lift_rmap_S_sn (f) (p):
 (* Advanced constructions ***************************************************)
 
 lemma ctls_lift_rmap_d_dx (f) (p) (n) (k):
-      (⫰*[n+(⁤k)]🠢[p]f) = ⫰*[n]🠢[p◖𝗱k]f.
+      (⫰*[n+k]🠢[p]f) = ⫰*[n]🠢[p◖𝗱k]f.
 #f #p #n #k
 <nplus_comm <fbr_ctls_plus //
 qed.

@@ -22,7 +22,6 @@ include "ground/generated/insert_eq_1.ma".
 inductive pic: predicate path ≝
 | pic_empty: (𝐞) ϵ pic
 | pic_m_dx (p): p◖𝗺 ϵ pic
-| pic_z_dx (p) (F): p◖𝘇F ϵ pic
 | pic_L_dx (p): p◖𝗟 ϵ pic
 | pic_A_dx (p): p◖𝗔 ϵ pic
 | pic_S_dx (p): p◖𝗦 ϵ pic
@@ -37,7 +36,7 @@ interpretation
 lemma pic_inv_d_dx (p) (k):
       p◖𝗱k ϵ 𝐈 → ⊥.
 #p #k @(insert_eq_1 … (p◖𝗱k))
-#q * -q [|*: #q [| #F ]] #H0 destruct
+#q * -q [|*: #q ] #H0 destruct
 qed-.
 
 (* Constructions with path_lcons ********************************************)
@@ -45,11 +44,6 @@ qed-.
 lemma pic_m_sn (p):
       p ϵ 𝐈 → 𝗺◗p ϵ 𝐈.
 #p * -p //
-qed.
-
-lemma pic_z_sn (p) (F):
-      p ϵ 𝐈 → 𝘇F◗p ϵ 𝐈.
-#p #F * -p //
 qed.
 
 lemma pic_L_sn (p):

@@ -25,7 +25,6 @@ match p with
    match l with
    [ label_d k ⇒ structure q
    | label_m   ⇒ structure q
-   | label_z F ⇒ structure q
    | label_L   ⇒ (structure q)◖𝗟
    | label_A   ⇒ (structure q)◖𝗔
    | label_S   ⇒ (structure q)◖𝗦
@@ -50,10 +49,6 @@ lemma structure_m_dx (p):
       ⊗p = ⊗(p◖𝗺).
 // qed.
 
-lemma structure_z_dx (p) (F):
-      ⊗p = ⊗(p◖𝘇F).
-// qed.
-
 lemma structure_L_dx (p):
       (⊗p)◖𝗟 = ⊗(p◖𝗟).
 // qed.
@@ -71,13 +66,13 @@ lemma structure_S_dx (p):
 theorem structure_idem (p):
         ⊗p = ⊗⊗p.
 #p elim p -p //
-* [ #k || #F ] #p #IH //
+* [ #k ] #p #IH //
 qed.
 
 theorem structure_append (p) (q):
         ⊗p●⊗q = ⊗(p●q).
 #p #q elim q -q //
-* [ #k || #F ] #q #IH //
+* [ #k ] #q #IH //
 <list_append_lcons_sn //
 qed.
 
@@ -112,11 +107,10 @@ qed.
 
 lemma eq_inv_d_dx_structure (h) (q) (p):
       q◖𝗱h = ⊗p → ⊥.
-#h #q #p elim p -p [| * [ #k || #F ] #p #IH ]
+#h #q #p elim p -p [| * [ #k ] #p #IH ]
 [ <structure_empty #H0 destruct
 | <structure_d_dx #H0 /2 width=1 by/
 | <structure_m_dx #H0 /2 width=1 by/
-| <structure_z_dx #H0 /2 width=1 by/
 | <structure_L_dx #H0 destruct
 | <structure_A_dx #H0 destruct
 | <structure_S_dx #H0 destruct
@@ -125,24 +119,10 @@ qed-.
 
 lemma eq_inv_m_dx_structure (q) (p):
       q◖𝗺 = ⊗p → ⊥.
-#q #p elim p -p [| * [ #k || #F ] #p #IH ]
+#q #p elim p -p [| * [ #k ] #p #IH ]
 [ <structure_empty #H0 destruct
 | <structure_d_dx #H0 /2 width=1 by/
 | <structure_m_dx #H0 /2 width=1 by/
-| <structure_z_dx #H0 /2 width=1 by/
-| <structure_L_dx #H0 destruct
-| <structure_A_dx #H0 destruct
-| <structure_S_dx #H0 destruct
-]
-qed-.
-
-lemma eq_inv_z_dx_structure (G) (q) (p):
-      q◖𝘇G = ⊗p → ⊥.
-#G #q #p elim p -p [| * [ #k || #F ] #p #IH ]
-[ <structure_empty #H0 destruct
-| <structure_d_dx #H0 /2 width=1 by/
-| <structure_m_dx #H0 /2 width=1 by/
-| <structure_z_dx #H0 /2 width=1 by/
 | <structure_L_dx #H0 destruct
 | <structure_A_dx #H0 destruct
 | <structure_S_dx #H0 destruct
@@ -152,15 +132,12 @@ qed-.
 lemma eq_inv_L_dx_structure (q) (p):
       q◖𝗟 = ⊗p →
       ∃∃r1,r2. q = ⊗r1 & 𝐞 = ⊗r2 & r1●𝗟◗r2 = p.
-#q #p elim p -p [| * [ #k || #F ] #p #IH ]
+#q #p elim p -p [| * [ #k ] #p #IH ]
 [ <structure_empty #H0 destruct
 | <structure_d_dx #H0
   elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
   /2 width=5 by ex3_2_intro/
 | <structure_m_dx #H0
-  elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
-  /2 width=5 by ex3_2_intro/
-| <structure_z_dx #H0
   elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
   /2 width=5 by ex3_2_intro/
 | <structure_L_dx #H0 destruct -IH
@@ -173,15 +150,12 @@ qed-.
 lemma eq_inv_A_dx_structure (q) (p):
       q◖𝗔 = ⊗p →
       ∃∃r1,r2. q = ⊗r1 & 𝐞 = ⊗r2 & r1●𝗔◗r2 = p.
-#q #p elim p -p [| * [ #k || #F ] #p #IH ]
+#q #p elim p -p [| * [ #k ] #p #IH ]
 [ <structure_empty #H0 destruct
 | <structure_d_dx #H0
   elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
   /2 width=5 by ex3_2_intro/
 | <structure_m_dx #H0
-  elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
-  /2 width=5 by ex3_2_intro/
-| <structure_z_dx #H0
   elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
   /2 width=5 by ex3_2_intro/
 | <structure_L_dx #H0 destruct
@@ -194,15 +168,12 @@ qed-.
 lemma eq_inv_S_dx_structure (q) (p):
       q◖𝗦 = ⊗p →
       ∃∃r1,r2. q = ⊗r1 & 𝐞 = ⊗r2 & r1●𝗦◗r2 = p.
-#q #p elim p -p [| * [ #k || #F ] #p #IH ]
+#q #p elim p -p [| * [ #k ] #p #IH ]
 [ <structure_empty #H0 destruct
 | <structure_d_dx #H0
   elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
   /2 width=5 by ex3_2_intro/
 | <structure_m_dx #H0
-  elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
-  /2 width=5 by ex3_2_intro/
-| <structure_z_dx #H0
   elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
   /2 width=5 by ex3_2_intro/
 | <structure_L_dx #H0 destruct
@@ -217,12 +188,11 @@ qed-.
 theorem eq_inv_append_structure (p) (q) (r):
         p●q = ⊗r →
         ∃∃r1,r2.p = ⊗r1 & q = ⊗r2 & r1●r2 = r.
-#p #q elim q -q [| * [ #k || #F ] #q #IH ] #r
+#p #q elim q -q [| * [ #k ] #q #IH ] #r
 [ <list_append_empty_sn #H0 destruct
   /2 width=5 by ex3_2_intro/
 | #H0 elim (eq_inv_d_dx_structure … H0)
 | #H0 elim (eq_inv_m_dx_structure … H0)
-| #H0 elim (eq_inv_z_dx_structure … H0)
 | #H0 elim (eq_inv_L_dx_structure … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
   elim (IH … Hr1) -IH -Hr1 #s1 #s2 #H1 #H2 #H3 destruct
   @(ex3_2_intro … s1 (s2●𝗟◗r2)) //
@@ -254,14 +224,6 @@ lemma eq_inv_m_sn_structure (q) (p):
 elim (eq_inv_append_structure … H0) -H0 #r1 #r2
 <list_cons_comm #H0 #H1 #H2 destruct
 elim (eq_inv_m_dx_structure … H0)
-qed-.
-
-lemma eq_inv_z_sn_structure (G) (q) (p):
-      (𝘇G◗q) = ⊗p → ⊥.
-#G #q #p >list_cons_comm #H0
-elim (eq_inv_append_structure … H0) -H0 #r1 #r2
-<list_cons_comm #H0 #H1 #H2 destruct
-elim (eq_inv_z_dx_structure … H0)
 qed-.
 
 lemma eq_inv_L_sn_structure (q) (p):

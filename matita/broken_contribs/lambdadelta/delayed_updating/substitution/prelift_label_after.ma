@@ -13,8 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/prelift_label.ma".
-include "ground/relocation/fb/fbr_coafter_after.ma".
-include "ground/relocation/fb/fbr_after_dapp.ma".
+include "ground/relocation/fb/fbr_after_xapp.ma".
 
 (* PRELIFT FOR LABEL ********************************************************)
 
@@ -22,5 +21,5 @@ include "ground/relocation/fb/fbr_after_dapp.ma".
 
 lemma prelift_label_after (g) (f) (l):
       (🠡[g]🠡[f]l) = 🠡[g•f]l.
-#g #f * [ #k || #F ] //
+#g #f * [ #k ] //
 qed.

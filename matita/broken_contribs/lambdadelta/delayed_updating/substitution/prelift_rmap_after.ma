@@ -20,9 +20,9 @@ include "ground/relocation/fb/fbr_ctls_after.ma".
 
 (* Constructions with map_after *********************************************)
 
+(* Note: general condition: *)
+(* Note: (K (H x f) g) • (K ⁤x f) = K x (g•f) *)
 lemma prelift_rmap_after (g) (f) (l):
       (🠢[🠡[f]l]g)•(🠢[l]f) = 🠢[l](g•f).
-#g #f * [ #k || #F ] //
-<prelift_label_d <prelift_rmap_d <prelift_rmap_d <prelift_rmap_d
-<fbr_ctls_after //
+#g #f * [ #k ] //
 qed.

@@ -24,7 +24,7 @@ include "ground/relocation/fb/fbr_rconss.ma".
 lemma lift_rmap_structure (f) (q):
       (⫯*[♭q]f) = 🠢[⊗q]f.
 #f #q elim q -q //
-* [ #k || #F ] #q #IH //
+* [ #k ] #q #IH //
 [ <depth_L_dx <fbr_rconss_succ <structure_L_dx <lift_rmap_L_dx //
 | <depth_A_dx <structure_A_dx <lift_rmap_A_dx //
 | <depth_S_dx <structure_S_dx <lift_rmap_S_dx //

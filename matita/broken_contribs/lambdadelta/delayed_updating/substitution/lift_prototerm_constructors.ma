@@ -20,16 +20,16 @@ include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 
 (* Constructions with constructors for prototerm ****************************)
 
-lemma lift_term_oref_dapp (f) (k):
-      (⧣(f＠⧣❨k❩)) ⇔ 🠡[f]⧣k.
+lemma lift_term_oref_xapp (f) (k):
+      (⧣(f＠❨k❩)) ⇔ 🠡[f]⧣k.
 #f #k @conj #p *
 [ /2 width=1 by in_comp_lift_path_term/
 | #q * #H0 destruct //
 ]
 qed.
 
-lemma lift_term_iref_pap_sn (f) (t:prototerm) (k):
-      (𝛕f＠⧣❨k❩.🠡[⫰*[⁤k]f]t) ⊆ 🠡[f](𝛕k.t).
+lemma lift_term_iref_xapp_sn (f) (t:prototerm) (k):
+      (𝛕f＠❨k❩.🠡[⫰*[k]f]t) ⊆ 🠡[f](𝛕k.t).
 #f #t #k #p * #q * #r #Hr #H1 #H2 destruct
 @(ex2_intro … (𝗱k◗𝗺◗r))
 [ /2 width=1 by in_comp_iref_hd/
@@ -37,24 +37,24 @@ lemma lift_term_iref_pap_sn (f) (t:prototerm) (k):
 ]
 qed-.
 
-lemma lift_term_iref_pap_dx (f) (t) (k):
-      🠡[f](𝛕k.t) ⊆ 𝛕f＠⧣❨k❩.🠡[⫰*[⁤k]f]t.
+lemma lift_term_iref_xapp_dx (f) (t) (k):
+      🠡[f](𝛕k.t) ⊆ 𝛕f＠❨k❩.🠡[⫰*[k]f]t.
 #f #t #k #p * #q #Hq #H0 destruct
 elim (in_comp_inv_iref … Hq) -Hq #p #H0 #Hp destruct
 <lift_path_d_sn <lift_path_m_sn
 /3 width=1 by in_comp_iref_hd, in_comp_lift_path_term/
 qed-.
 
-lemma lift_term_iref_pap (f) (t) (k):
-      (𝛕f＠⧣❨k❩.🠡[⫰*[⁤k]f]t) ⇔ 🠡[f](𝛕k.t).
-/3 width=1 by conj, lift_term_iref_pap_sn, lift_term_iref_pap_dx/
+lemma lift_term_iref_xapp (f) (t) (k):
+      (𝛕f＠❨k❩.🠡[⫰*[k]f]t) ⇔ 🠡[f](𝛕k.t).
+/3 width=1 by conj, lift_term_iref_xapp_sn, lift_term_iref_xapp_dx/
 qed.
 
-lemma lift_term_iref_uni (t) (n) (k):
-      (𝛕(k+n).t) ⇔ 🠡[𝐮❨n❩](𝛕k.t).
+lemma lift_term_iref_pos_uni (t) (n) (k):
+      (𝛕((⁤k)+n).t) ⇔ 🠡[𝐮❨n❩](𝛕(⁤k).t).
 #t #n #k
-@(subset_eq_trans … (lift_term_iref_pap …))
-<fbr_dapp_uni
+@(subset_eq_trans … (lift_term_iref_xapp …))
+<fbr_xapp_uni_pos
 @iref_eq_repl
 @(subset_eq_trans … (lift_term_id …))
 /2 width=1 by lift_term_eq_repl_sn/

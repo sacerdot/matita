@@ -14,12 +14,12 @@
 
 include "delayed_updating/substitution/lift_path_eq.ma".
 include "ground/relocation/fb/fbr_uni_ctls.ma".
-include "ground/relocation/fb/fbr_uni_dapp.ma".
+include "ground/relocation/fb/fbr_uni_xapp.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
 (* Constructions with map_uni ***********************************************)
 
-lemma lift_path_d_sn_uni (p) (n) (k):
-      (𝗱(k+n)◗p) = 🠡[𝐮❨n❩](𝗱k◗p).
+lemma lift_path_d_sn_pos_uni (p) (n) (k):
+      (𝗱((⁤k)+n)◗p) = 🠡[𝐮❨n❩](𝗱(⁤k)◗p).
 // qed.
