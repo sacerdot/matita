@@ -34,3 +34,15 @@ elim Hf -f1 -f2 //
   <fbr_minus_id_dx //
 ]
 qed.
+
+lemma fbr_minus_eq_repl_bi:
+      compatible_3 … fbr_eq fbr_eq fbr_eq (λg,f.g-f).
+#g1 #g2 #Hg elim Hg -g1 -g2 //
+[ #bg #g1 #g2 #_ #IH #f1 #f2 *
+  /3 width=1 by fbr_eq_rcons_bi/
+| #g2 #_ #IH #f1 #f2 *
+  /3 width=2 by fbr_eq_id_push, fbr_eq_id_bi/
+| #g1 #_ #IH #f1 #f2 *
+  /3 width=2 by fbr_eq_push_id, fbr_eq_id_bi/
+]
+qed.
