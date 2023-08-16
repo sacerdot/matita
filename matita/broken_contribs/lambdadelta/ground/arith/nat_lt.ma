@@ -106,6 +106,14 @@ lemma nlt_inv_refl (m): m < m → ⊥.
 lemma nlt_inv_zero_dx (m): m < 𝟎 → ⊥.
 /2 width=4 by nlt_ge_false/ qed-.
 
+lemma nlt_inv_zero_sn_pos (n):
+      (𝟎) < n → ∃p. (⁤p) = n.
+*
+[ #H0 elim (nlt_inv_refl … H0)
+| /2 width=2 by ex_intro/
+] 
+qed-.
+
 (* Basic destructions *******************************************************)
 
 (*** lt_to_le *)

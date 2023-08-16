@@ -12,45 +12,37 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp.ma".
-include "ground/arith/nat_psucc.ma".
-include "ground/arith/nat_split.ma".
-include "ground/notation/functions/at_2.ma".
+include "ground/relocation/fb/fbr_xapp.ma".
+include "ground/relocation/fb/fbr_dapp_lt.ma".
+include "ground/arith/nat_lt_psucc_plt.ma".
+include "ground/arith/nat_lt_plt.ma".
 
 (* EXTENDED DEPTH APPLICATION FOR FINITE RELOCATION MAPS WITH BOOLEANS ******)
 
-definition fbr_xapp (f) (n): ℕ ≝
-           nsplit … (𝟎) (λp.(⁤(f＠⧣❨p❩))) n.
+(* Constructions with nlt ***************************************************)
 
-interpretation
-  "extended depth application (finite relocation maps for unwind)"
-  'At f n = (fbr_xapp f n).
-
-(* Basic constructions ******************************************************)
-
-lemma fbr_xapp_zero (f):
-      (𝟎) = f＠❨𝟎❩.
-// qed.
-
-lemma fbr_xapp_pos (f) (p):
-      (⁤(f＠⧣❨p❩)) = f＠❨⁤p❩.
-// qed.
-
-(* Advanced constructions ***************************************************)
-
-lemma fbr_xapp_id (n):
-      n = 𝐢＠❨n❩.
-* //
+lemma fbr_xapp_increasing (f) (n1) (n2):
+      n1 < n2 → f＠❨n1❩ < f＠❨n2❩.
+#f #n1 #n2 #Hn
+@(nlt_ind_alt … Hn) -n1 -n2 //
+#n1 #n2 #Hn #_
+/4 width=1 by fbr_dapp_increasing, plt_npsucc_bi, nlt_pos_bi/
 qed.
 
-lemma fbr_xapp_push_unit (f):
-      (⁤𝟏) = (⫯f)＠❨⁤𝟏❩.
-// qed.
+(* Constructions with nle ***************************************************)
 
-lemma fbr_xapp_push_succ (f) (p):
-      (⁤↑(f＠❨⁤p❩)) = (⫯f)＠❨⁤↑p❩.
-// qed.
+lemma fbr_xapp_le (f) (n):
+      n ≤ f＠❨n❩.
+#f *
+/2 width=1 by nle_pos_bi/
+qed.
 
-lemma fbr_next_pos (f) (p):
-      (⁤↑(f＠❨⁤p❩)) = (↑f)＠❨⁤p❩.
-// qed.
+(* Advanced inversions ******************************************************)
+
+lemma eq_inv_fbr_xapp_bi (f):
+      injective_2_fwd … (eq …) (eq …) (λn.f＠❨n❩).
+#f #n1 #n2 #Hp
+elim (nat_split_lt_eq_gt n1 n2) // #H0
+lapply (fbr_xapp_increasing f … H0) -H0 #H0
+elim (nlt_ge_false … H0) -H0 //
+qed-.
