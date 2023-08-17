@@ -20,8 +20,8 @@ include "delayed_updating/syntax/prototerm_constructors.ma".
 
 (* Constructions with constructors for prototerm ****************************)
 
-lemma unwind2_term_oref_dapp (f) (k):
-      (⧣(f＠⧣❨k❩)) ⇔ ▼[f]⧣k.
+lemma unwind2_term_oref_xapp (f) (k):
+      (⧣(f＠❨k❩)) ⇔ ▼[f]⧣k.
 #f #k @conj #p *
 [ /2 width=1 by in_comp_unwind2_path_term/
 | #q * #H0 destruct //

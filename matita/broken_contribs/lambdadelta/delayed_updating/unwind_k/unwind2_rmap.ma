@@ -17,54 +17,50 @@ include "delayed_updating/syntax/path.ma".
 
 (* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
-rec definition unwind2_rmap (p) (f) on p: trz_map ≝
+rec definition unwind2_rmap (p) (f) on p: 𝔽𝔹 ≝
 match p with
 [ list_empty     ⇒ f
-| list_lcons l q ⇒ ▶[unwind2_rmap q f]l
+| list_lcons l q ⇒ ▶[l](unwind2_rmap q f)
 ].
 
 interpretation
   "tailed unwind (relocation map)"
-  'BlackRightTriangle f p = (unwind2_rmap p f).
+  'BlackRightTriangle p f = (unwind2_rmap p f).
 
 (* Basic constructions ******************************************************)
 
 lemma unwind2_rmap_empty (f):
-      f = ▶[f]𝐞.
+      f = ▶[𝐞]f.
 // qed.
 
 lemma unwind2_rmap_rcons (f) (p) (l):
-      ▶[▶[f]p]l = ▶[f](p◖l).
+      ▶[l]▶[p]f = ▶[p◖l]f.
 // qed.
 
 lemma unwind2_rmap_d_dx (f) (p) (k):
-      ▶[f]p•𝐮❨k❩ = ▶[f](p◖𝗱k).
+      (⮤*[k]▶[p]f) = ▶[p◖𝗱k]f.
 // qed.
 
 lemma unwind2_rmap_m_dx (f) (p):
-      ▶[f]p = ▶[f](p◖𝗺).
-// qed.
-
-lemma unwind2_rmap_z_dx (f) (p) (e):
-      ▶[f]p-e = ▶[f](p◖𝘇e).
+      ▶[p]f = ▶[p◖𝗺]f.
 // qed.
 
 lemma unwind2_rmap_L_dx (f) (p):
-      (⫯▶[f]p) = ▶[f](p◖𝗟).
+      (⫯▶[p]f) = ▶[p◖𝗟]f.
 // qed.
 
 lemma unwind2_rmap_A_dx (f) (p):
-      ▶[f]p = ▶[f](p◖𝗔).
+      ▶[p]f = ▶[p◖𝗔]f.
 // qed.
 
 lemma unwind2_rmap_S_dx (f) (p):
-      ▶[f]p = ▶[f](p◖𝗦).
+      ▶[p]f = ▶[p◖𝗦]f.
 // qed.
 
 (* Constructions with path_append *******************************************)
 
 lemma unwind2_rmap_append (f) (p) (q):
-      ▶[▶[f]p]q = ▶[f](p●q).
+      ▶[q]▶[p]f = ▶[p●q]f.
 #f #p #q elim q -q // #l #q #IH
 <unwind2_rmap_rcons <unwind2_rmap_rcons //
 qed.
@@ -72,29 +68,25 @@ qed.
 (* Constructions with path_lcons ********************************************)
 
 lemma unwind2_rmap_lcons (f) (p) (l):
-      ▶[▶[f]l]p = ▶[f](l◗p).
+      ▶[p]▶[l]f = ▶[l◗p]f.
 // qed.
 
 lemma unwind2_rmap_d_sn (f) (p) (k):
-      ▶[f•𝐮❨k❩]p = ▶[f](𝗱k◗p).
+      ▶[p]⮤*[k]f = ▶[𝗱k◗p]f.
 // qed.
 
 lemma unwind2_rmap_m_sn (f) (p):
-      ▶[f]p = ▶[f](𝗺◗p).
-// qed.
-
-lemma unwind2_rmap_z_sn (f) (p) (e):
-      ▶[f-e]p = ▶[f](𝘇e◗p).
+      ▶[p]f = ▶[𝗺◗p]f.
 // qed.
 
 lemma unwind2_rmap_L_sn (f) (p):
-      ▶[⫯f]p = ▶[f](𝗟◗p).
+      ▶[p]⫯f = ▶[𝗟◗p]f.
 // qed.
 
 lemma unwind2_rmap_A_sn (f) (p):
-      ▶[f]p = ▶[f](𝗔◗p).
+      ▶[p]f = ▶[𝗔◗p]f.
 // qed.
 
 lemma unwind2_rmap_S_sn (f) (p):
-      ▶[f]p = ▶[f](𝗦◗p).
+      ▶[p]f = ▶[𝗦◗p]f.
 // qed.

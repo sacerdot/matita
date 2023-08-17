@@ -12,18 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind_k/unwind2_prototerm_eq.ma".
-include "delayed_updating/unwind_k/unwind2_path_after.ma".
+include "delayed_updating/unwind_k/unwind2_rmap.ma".
+include "ground/relocation/fb/fbr_uni_ctls.ma".
 
-(* TAILED UNWIND FOR PROTOTERM **********************************************)
+(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
-(* Constructions with map_after *********************************************)
+(* Constructions with map_ctls **********************************************)
 
-lemma unwind2_term_after (f1) (f2) (t):
-      ▼[f2]▼[f1]t ⇔ ▼[f2•f1]t.
-#f1 #f2 #t @subset_eq_trans
-[
-| @subset_inclusion_ext_f1_compose
-| @subset_equivalence_ext_f1_exteq /2 width=5/
-]
-qed.
+lemma ctls_unwind2_rmap_d_dx (f) (p) (n) (k):
+      (⫰*[(⁤n)+k]▶[p]f) = ⫰*[⁤n]▶[p◖𝗱(k)]f.
+// qed.

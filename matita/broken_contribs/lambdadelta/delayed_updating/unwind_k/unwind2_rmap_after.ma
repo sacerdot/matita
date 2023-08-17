@@ -14,16 +14,18 @@
 
 include "delayed_updating/unwind_k/unwind2_rmap.ma".
 include "delayed_updating/syntax/path_structure.ma".
+include "ground/relocation/fb/fbr_after.ma".
 
 (* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
-(* Constructions with trz_after *********************************************)
+(* Constructions with map_after *********************************************)
 
 lemma unwind2_rmap_after (g) (f) (p:path):
-      ▶[g]⊗p•▶[f]p ≐ ▶[g•f]p.
-#g #f #p elim p -p // * [ #k ] #p #IH //
-[ <structure_L_dx <unwind2_rmap_L_dx <unwind2_rmap_L_dx <unwind2_rmap_L_dx
-  /2 width=1 by trz_push_eq_repl/
+      ▶[⊗p]g•▶[p]f = ▶[p](g•f).
+#g #f #p elim p -p //
+* [ #k ] #p #IH //
+[ <structure_L_dx <unwind2_rmap_L_dx
+  <unwind2_rmap_L_dx <unwind2_rmap_L_dx <IH -IH //
 | <structure_A_dx <unwind2_rmap_A_dx //
 | <structure_S_dx <unwind2_rmap_S_dx //
 ]

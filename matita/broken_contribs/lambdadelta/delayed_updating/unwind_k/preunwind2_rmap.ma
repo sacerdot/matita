@@ -14,48 +14,41 @@
 
 include "delayed_updating/syntax/label.ma".
 include "delayed_updating/notation/functions/black_righttriangle_2.ma".
-include "delayed_updating/relocation/tr_minus.ma".
-include "ground/relocation/tr_uni.ma".
-include "ground/relocation/tr_compose.ma".
+include "ground/relocation/fb/fbr_joins.ma".
 
 (* TAILED PREUNWIND FOR RELOCATION MAP **************************************)
 
-definition preunwind2_rmap (l) (f): trz_map ≝
+definition preunwind2_rmap (l) (f): 𝔽𝔹 ≝
 match l with
-[ label_d k ⇒ f•𝐮❨k❩
+[ label_d k ⇒ ⮤*[k]f
 | label_m   ⇒ f
-| label_z e ⇒ f-e
-| label_L   ⇒ ⫯f
+| label_L   ⇒ (⫯f)
 | label_A   ⇒ f
 | label_S   ⇒ f
 ].
 
 interpretation
   "tailed preunwind (relocation map)"
-  'BlackRightTriangle f l = (preunwind2_rmap l f).
+  'BlackRightTriangle l f = (preunwind2_rmap l f).
 
 (* Basic constructions ******************************************************)
 
 lemma preunwind2_rmap_d (f) (k):
-      f•𝐮❨k❩ = ▶[f]𝗱k.
+      (⮤*[k]f) = ▶[𝗱k]f.
 // qed.
 
 lemma preunwind2_rmap_m (f):
-      f = ▶[f]𝗺.
-// qed.
-
-lemma preunwind2_rmap_z (f) (e):
-      f-e = ▶[f]𝘇e.
+      f = ▶[𝗺]f.
 // qed.
 
 lemma preunwind2_rmap_L (f):
-      (⫯f) = ▶[f]𝗟.
+      (⫯f) = ▶[𝗟]f.
 // qed.
 
 lemma preunwind2_rmap_A (f):
-      f = ▶[f]𝗔.
+      f = ▶[𝗔]f.
 // qed.
 
 lemma preunwind2_rmap_S (f):
-      f = ▶[f]𝗦.
+      f = ▶[𝗦]f.
 // qed.

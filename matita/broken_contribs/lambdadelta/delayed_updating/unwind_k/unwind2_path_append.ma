@@ -30,8 +30,8 @@ qed-.
 (* Constructions with append and pic ****************************************)
 
 lemma unwind2_path_append_pic_sn (f) (p) (q): p ϵ 𝐈 →
-      (⊗p)●(▼[▶[f]p]q) = ▼[f](p●q).
-#f #p * [ #Hp | * [ #k || #e ] #q #_ ] //
+      (⊗p)●(▼[▶[p]f]q) = ▼[f](p●q).
+#f #p * [ #Hp | * [ #k ] #q #_ ] //
 [ <(unwind2_path_pic … Hp) -Hp //
 | <unwind2_path_d_dx <unwind2_path_d_dx
   /2 width=3 by trans_eq/
@@ -44,8 +44,8 @@ qed.
 (* Constructions with append and ppc ****************************************)
 
 lemma unwind2_path_append_ppc_dx (f) (p) (q): q ϵ 𝐏 →
-      (⊗p)●(▼[▶[f]p]q) = ▼[f](p●q).
-#f #p * [ #Hq | * [ #k || #e ] #q #_ ] //
+      (⊗p)●(▼[▶[p]f]q) = ▼[f](p●q).
+#f #p * [ #Hq | * [ #k ] #q #_ ] //
 [ elim (ppc_inv_empty … Hq)
 | <unwind2_path_d_dx <unwind2_path_d_dx
   /2 width=3 by trans_eq/
@@ -58,7 +58,7 @@ qed.
 (* Constructions with path_lcons ********************************************)
 
 lemma unwind2_path_d_empty (f) (k):
-      (𝗱(f＠⧣❨k❩)◗𝐞) = ▼[f](𝗱k◗𝐞).
+      (𝗱(f＠❨k❩)◗𝐞) = ▼[f](𝗱k◗𝐞).
 // qed.
 
 lemma unwind2_path_d_lcons (f) (p) (l) (k):
@@ -69,11 +69,6 @@ qed.
 lemma unwind2_path_m_sn (f) (p):
       ▼[f]p = ▼[f](𝗺◗p).
 #f #p <unwind2_path_append_pic_sn //
-qed.
-
-lemma unwind2_path_z_sn (f) (p) (e):
-      ▼[f-e]p = ▼[f](𝘇e◗p).
-#f #p #e <unwind2_path_append_pic_sn //
 qed.
 
 lemma unwind2_path_L_sn (f) (p):
@@ -95,7 +90,7 @@ qed.
 
 lemma unwind2_path_des_pic (f) (p):
       ▼[f]p ϵ 𝐈 → p ϵ 𝐈.
-#f * // * [ #k || #e ] #p //
+#f * // * [ #k ] #p //
 <unwind2_path_d_dx #H0
 elim (pic_inv_d_dx … H0)
 qed-.
@@ -104,8 +99,8 @@ qed-.
 
 lemma unwind2_path_des_append_pic_sn (f) (p) (q1) (q2):
       q1 ϵ 𝐈 → q1●q2 = ▼[f]p →
-      ∃∃p1,p2. q1 = ⊗p1 & q2 = ▼[▶[f]p1]p2 & p1●p2 = p.
-#f #p #q1 * [| * [ #k || #e ] #q2 ] #Hq1
+      ∃∃p1,p2. q1 = ⊗p1 & q2 = ▼[▶[p1]f]p2 & p1●p2 = p.
+#f #p #q1 * [| * [ #k ] #q2 ] #Hq1
 [ <list_append_empty_sn #H0 destruct
   lapply (unwind2_path_des_pic … Hq1) -Hq1 #Hp
   <(unwind2_path_pic … Hp) -Hp
@@ -114,7 +109,6 @@ lemma unwind2_path_des_append_pic_sn (f) (p) (q1) (q2):
   elim (eq_inv_append_structure … Hr) -Hr #s1 #s2 #H1 #H2 #H3 destruct
   /2 width=5 by ex3_2_intro/
 | #H0 elim (eq_inv_m_dx_unwind2_path … H0)
-| #H0 elim (eq_inv_z_dx_unwind2_path … H0)
 | #H0 elim (eq_inv_L_dx_unwind2_path … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
   elim (eq_inv_append_structure … Hr1) -Hr1 #s1 #s2 #H1 #H2 #H3 destruct
   @(ex3_2_intro … s1 (s2●𝗟◗r2)) //
@@ -137,15 +131,14 @@ qed-.
 
 lemma unwind2_path_inv_append_ppc_dx (f) (p) (q1) (q2):
       q2 ϵ 𝐏 → q1●q2 = ▼[f]p →
-      ∃∃p1,p2. q1 = ⊗p1 & q2 = ▼[▶[f]p1]p2 & p1●p2 = p.
-#f #p #q1 * [| * [ #k || #e ] #q2 ] #Hq1
+      ∃∃p1,p2. q1 = ⊗p1 & q2 = ▼[▶[p1]f]p2 & p1●p2 = p.
+#f #p #q1 * [| * [ #k ] #q2 ] #Hq1
 [ <list_append_empty_sn #H0 destruct
   elim (ppc_inv_empty … Hq1)
 | #H0 elim (eq_inv_d_dx_unwind2_path … H0) -H0 #r #h #Hr #H1 #H2 destruct
   elim (eq_inv_append_structure … Hr) -Hr #s1 #s2 #H1 #H2 #H3 destruct
   /2 width=5 by ex3_2_intro/
 | #H0 elim (eq_inv_m_dx_unwind2_path … H0)
-| #H0 elim (eq_inv_z_dx_unwind2_path … H0)
 | #H0 elim (eq_inv_L_dx_unwind2_path … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
   elim (eq_inv_append_structure … Hr1) -Hr1 #s1 #s2 #H1 #H2 #H3 destruct
   @(ex3_2_intro … s1 (s2●𝗟◗r2)) //
@@ -168,7 +161,7 @@ qed-.
 
 lemma eq_inv_d_sn_unwind2_path (f) (q) (p) (k):
       (𝗱k◗q) = ▼[f]p →
-      ∃∃r,h. 𝐞 = ⊗r & (▶[f]r)＠⧣❨h❩ = k & 𝐞 = q & r◖𝗱h = p.
+      ∃∃r,h. 𝐞 = ⊗r & (▶[r]f)＠❨h❩ = k & 𝐞 = q & r◖𝗱h = p.
 #f * [| #l #q ] #p #k
 [ <list_cons_comm #H0
   elim (eq_inv_d_dx_unwind2_path … H0) -H0 #r1 #r2 #Hr1 #H1 #H2 destruct
@@ -188,18 +181,9 @@ elim (unwind2_path_des_append_pic_sn … H0) <list_cons_comm in H0; //
 elim (eq_inv_m_dx_structure … Hr1)
 qed-.
 
-lemma eq_inv_z_sn_unwind2_path (f) (q) (p) (e):
-      (𝘇e◗q) = ▼[f]p → ⊥.
-#f #q #p #e
->list_cons_comm #H0
-elim (unwind2_path_des_append_pic_sn … H0) <list_cons_comm in H0; //
-#H0 #r1 #r2 #Hr1 #H1 #H2 destruct
-elim (eq_inv_z_dx_structure … Hr1)
-qed-.
-
 lemma eq_inv_L_sn_unwind2_path (f) (q) (p):
       (𝗟◗q) = ▼[f]p →
-      ∃∃r1,r2. 𝐞 = ⊗r1 & q = ▼[⫯▶[f]r1]r2 & r1●𝗟◗r2 = p.
+      ∃∃r1,r2. 𝐞 = ⊗r1 & q = ▼[⫯▶[r1]f]r2 & r1●𝗟◗r2 = p.
 #f #q #p
 >list_cons_comm #H0
 elim (unwind2_path_des_append_pic_sn … H0) <list_cons_comm in H0; //
@@ -214,7 +198,7 @@ qed-.
 
 lemma eq_inv_A_sn_unwind2_path (f) (q) (p):
       (𝗔◗q) = ▼[f]p →
-      ∃∃r1,r2. 𝐞 = ⊗r1 & q = ▼[▶[f]r1]r2 & r1●𝗔◗r2 = p.
+      ∃∃r1,r2. 𝐞 = ⊗r1 & q = ▼[▶[r1]f]r2 & r1●𝗔◗r2 = p.
 #f #q #p
 >list_cons_comm #H0
 elim (unwind2_path_des_append_pic_sn … H0) <list_cons_comm in H0; //
@@ -229,7 +213,7 @@ qed-.
 
 lemma eq_inv_S_sn_unwind2_path (f) (q) (p):
       (𝗦◗q) = ▼[f]p →
-      ∃∃r1,r2. 𝐞 = ⊗r1 & q = ▼[▶[f]r1]r2 & r1●𝗦◗r2 = p.
+      ∃∃r1,r2. 𝐞 = ⊗r1 & q = ▼[▶[r1]f]r2 & r1●𝗦◗r2 = p.
 #f #q #p
 >list_cons_comm #H0
 elim (unwind2_path_des_append_pic_sn … H0) <list_cons_comm in H0; //
@@ -249,13 +233,12 @@ lemma path_ind_unwind (Q:predicate …):
       (∀k. Q (𝐞) → Q (𝗱k◗𝐞)) →
       (∀k,l,p. Q (l◗p) → Q (𝗱k◗l◗p)) →
       (∀p. Q p → Q (𝗺◗p)) →
-      (∀e,p. Q p → Q (𝘇e◗p)) →
       (∀p. Q p → Q (𝗟◗p)) →
       (∀p. Q p → Q (𝗔◗p)) →
       (∀p. Q p → Q (𝗦◗p)) →
       ∀p. Q p.
-#Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #p
-@(list_ind_rcons … p) -p // #p * [ #k || #e ]
+#Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #p
+@(list_ind_rcons … p) -p // #p * [ #k ]
 [ @(list_ind_rcons … p) -p ]
 /2 width=1 by/
 qed-.

@@ -23,14 +23,14 @@ include "ground/lib/subset_equivalence.ma".
 (* Constructions with subset_equivalence ************************************)
 
 lemma unwind2_term_grafted_sn (f) (t) (p): p ϵ 𝐈 →
-      ▼[▶[f]p](t⋔p) ⊆ (▼[f]t)⋔(⊗p).
+      ▼[▶[p]f](t⋔p) ⊆ (▼[f]t)⋔(⊗p).
 #f #t #p #Hp #q * #r #Hr #H0 destruct
 @(ex2_intro … Hr) -Hr
 <unwind2_path_append_pic_sn //
 qed-.
 
 lemma unwind2_term_grafted_dx (f) (t) (p): p ϵ 𝐈 → p ϵ ▵t → t ϵ 𝐓 →
-      (▼[f]t)⋔(⊗p) ⊆ ▼[▶[f]p](t⋔p).
+      (▼[f]t)⋔(⊗p) ⊆ ▼[▶[p]f](t⋔p).
 #f #t #p #H1p #H2p #Ht #q * #r #Hr #H0
 elim (unwind2_path_des_append_pic_sn … (sym_eq … H0)) -H0 //
 #p0 #q0 #Hp0 #Hq0 #H0 destruct
@@ -39,11 +39,11 @@ elim (unwind2_path_des_append_pic_sn … (sym_eq … H0)) -H0 //
 qed-.
 
 lemma unwind2_term_grafted (f) (t) (p): p ϵ 𝐈 → p ϵ ▵t → t ϵ 𝐓 →
-      ▼[▶[f]p](t⋔p) ⇔ (▼[f]t)⋔(⊗p).
+      ▼[▶[p]f](t⋔p) ⇔ (▼[f]t)⋔(⊗p).
 /3 width=1 by unwind2_term_grafted_sn, unwind2_term_grafted_dx, conj/ qed.
 
 lemma unwind2_term_grafted_S_dx (f) (t) (p): p ϵ ▵t → t ϵ 𝐓 →
-      (▼[f]t)⋔((⊗p)◖𝗦) ⊆ ▼[▶[f]p](t⋔(p◖𝗦)).
+      (▼[f]t)⋔((⊗p)◖𝗦) ⊆ ▼[▶[p]f](t⋔(p◖𝗦)).
 #f #t #p #Hp #Ht #q * #r #Hr
 >list_append_rcons_sn #H0
 elim (unwind2_path_inv_append_ppc_dx … (sym_eq … H0)) -H0 //
@@ -57,7 +57,7 @@ lapply (preterm_in_root_append_inv_structure_empty_dx … p0 … Ht Hr1)
 qed-.
 
 lemma unwind2_term_grafted_S (f) (t) (p): p ϵ ▵t → t ϵ 𝐓 →
-      ▼[▶[f]p](t⋔(p◖𝗦)) ⇔ (▼[f]t)⋔((⊗p)◖𝗦).
+      ▼[▶[p]f](t⋔(p◖𝗦)) ⇔ (▼[f]t)⋔((⊗p)◖𝗦).
 #f #t #p #Hp #Ht
 @conj
 [ >unwind2_rmap_S_dx >structure_S_dx

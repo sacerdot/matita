@@ -15,6 +15,7 @@
 include "delayed_updating/unwind_k/unwind2_rmap.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/notation/functions/black_downtriangle_2.ma".
+include "ground/relocation/fb/fbr_xapp.ma".
 
 (* TAILED UNWIND FOR PATH ***************************************************)
 
@@ -23,9 +24,8 @@ match p with
 [ list_empty     ⇒ (𝐞)
 | list_lcons l q ⇒
   match l with
-  [ label_d k ⇒ (⊗q)◖𝗱((▶[f]q)＠⧣❨k❩)
+  [ label_d k ⇒ (⊗q)◖𝗱((▶[q]f)＠❨k❩)
   | label_m   ⇒ ⊗p
-  | label_z e ⇒ ⊗p
   | label_L   ⇒ ⊗p
   | label_A   ⇒ ⊗p
   | label_S   ⇒ ⊗p
@@ -43,15 +43,11 @@ lemma unwind2_path_empty (f):
 // qed.
 
 lemma unwind2_path_d_dx (f) (p) (k) :
-      (⊗p)◖𝗱((▶[f]p)＠⧣❨k❩) = ▼[f](p◖𝗱k).
+      (⊗p)◖𝗱((▶[p]f)＠❨k❩) = ▼[f](p◖𝗱k).
 // qed.
 
 lemma unwind2_path_m_dx (f) (p):
       ⊗p = ▼[f](p◖𝗺).
-// qed.
-
-lemma unwind2_path_z_dx (f) (p) (e):
-      ⊗p = ▼[f](p◖𝘇e).
 // qed.
 
 lemma unwind2_path_L_dx (f) (p):
@@ -70,12 +66,14 @@ lemma unwind2_path_S_dx (f) (p):
 
 lemma structure_unwind2_path (f) (p):
       ⊗p = ⊗▼[f]p.
-#f * // * [ #k || #e ] #p //
+#f * //
+* [ #k ] #p //
 qed.
 
 lemma unwind2_path_structure (f) (p):
       ⊗p = ▼[f]⊗p.
-#f #p elim p -p // * [ #k || #e ] #p #IH //
+#f #p elim p -p //
+* [ #k ] #p #IH //
 [ <structure_L_dx <unwind2_path_L_dx //
 | <structure_A_dx <unwind2_path_A_dx //
 | <structure_S_dx <unwind2_path_S_dx //
@@ -100,14 +98,12 @@ lemma unwind2_path_des_structure (f) (q) (p):
 
 lemma eq_inv_d_dx_unwind2_path (f) (q) (p) (h):
       q◖𝗱h = ▼[f]p →
-      ∃∃r,k. q = ⊗r & h = ▶[f]r＠⧣❨k❩ & r◖𝗱k = p.
-#f #q * [| * [ #k || #e ] #p ] #h
+      ∃∃r,k. q = ⊗r & h = (▶[r]f)＠❨k❩ & r◖𝗱k = p.
+#f #q * [| * [ #k ] #p ] #h
 [ <unwind2_path_empty #H0 destruct
 | <unwind2_path_d_dx #H0 destruct
   /2 width=5 by ex3_2_intro/
 | <unwind2_path_m_dx #H0
-  elim (eq_inv_d_dx_structure … H0)
-| <unwind2_path_z_dx #H0
   elim (eq_inv_d_dx_structure … H0)
 | <unwind2_path_L_dx #H0 destruct
 | <unwind2_path_A_dx #H0 destruct
@@ -117,29 +113,11 @@ qed-.
 
 lemma eq_inv_m_dx_unwind2_path (f) (q) (p):
       q◖𝗺 = ▼[f]p → ⊥.
-#f #q * [| * [ #k || #e ] #p ]
+#f #q * [| * [ #k ] #p ]
 [ <unwind2_path_empty #H0 destruct
 | <unwind2_path_d_dx #H0 destruct
 | <unwind2_path_m_dx #H0
   elim (eq_inv_m_dx_structure … H0)
-| <unwind2_path_z_dx #H0
-  elim (eq_inv_m_dx_structure … H0)
-| <unwind2_path_L_dx #H0 destruct
-| <unwind2_path_A_dx #H0 destruct
-| <unwind2_path_S_dx #H0 destruct
-]
-qed-.
-
-(**) (* rename n *)
-lemma eq_inv_z_dx_unwind2_path (f) (q) (p) (e):
-      q◖𝘇e = ▼[f]p → ⊥.
-#f #q * [| * [ #k || #e ] #p ] #n
-[ <unwind2_path_empty #H0 destruct
-| <unwind2_path_d_dx #H0 destruct
-| <unwind2_path_m_dx #H0
-  elim (eq_inv_z_dx_structure … H0)
-| <unwind2_path_z_dx #H0
-  elim (eq_inv_z_dx_structure … H0)
 | <unwind2_path_L_dx #H0 destruct
 | <unwind2_path_A_dx #H0 destruct
 | <unwind2_path_S_dx #H0 destruct
@@ -149,15 +127,12 @@ qed-.
 lemma eq_inv_L_dx_unwind2_path (f) (q) (p):
       q◖𝗟 = ▼[f]p →
       ∃∃r1,r2. q = ⊗r1 & ∀g. 𝐞 = ▼[g]r2 & r1●𝗟◗r2 = p.
-#f #q * [| * [ #k || #e ] #p ]
+#f #q * [| * [ #k ] #p ]
 [ <unwind2_path_empty #H0 destruct
 | <unwind2_path_d_dx #H0 destruct
 | <unwind2_path_m_dx #H0
   elim (eq_inv_L_dx_structure … H0) -H0 #r1 #r2 #H1 #H2 #H3 destruct
   /2 width=5 by ex3_2_intro/
-| <unwind2_path_z_dx #H0
-  elim (eq_inv_L_dx_structure … H0) -H0 #r1 #r2 #H1 #H2 #H3 destruct
-  /2 width=5 by ex3_2_intro/  
 | <unwind2_path_L_dx #H0 destruct
   /2 width=5 by ex3_2_intro/
 | <unwind2_path_A_dx #H0 destruct
@@ -168,13 +143,10 @@ qed-.
 lemma eq_inv_A_dx_unwind2_path (f) (q) (p):
       q◖𝗔 = ▼[f]p →
       ∃∃r1,r2. q = ⊗r1 & ∀g. 𝐞 = ▼[g]r2 & r1●𝗔◗r2 = p.
-#f #q * [| * [ #k || #e ] #p ]
+#f #q * [| * [ #k ] #p ]
 [ <unwind2_path_empty #H0 destruct
 | <unwind2_path_d_dx #H0 destruct
 | <unwind2_path_m_dx #H0
-  elim (eq_inv_A_dx_structure … H0) -H0 #r1 #r2 #H1 #H2 #H3 destruct
-  /2 width=5 by ex3_2_intro/
-| <unwind2_path_z_dx #H0
   elim (eq_inv_A_dx_structure … H0) -H0 #r1 #r2 #H1 #H2 #H3 destruct
   /2 width=5 by ex3_2_intro/
 | <unwind2_path_L_dx #H0 destruct
@@ -187,13 +159,10 @@ qed-.
 lemma eq_inv_S_dx_unwind2_path (f) (q) (p):
       q◖𝗦 = ▼[f]p →
       ∃∃r1,r2. q = ⊗r1 & ∀g. 𝐞 = ▼[g]r2 & r1●𝗦◗r2 = p.
-#f #q * [| * [ #k || #e ] #p ]
+#f #q * [| * [ #k ] #p ]
 [ <unwind2_path_empty #H0 destruct
 | <unwind2_path_d_dx #H0 destruct
 | <unwind2_path_m_dx #H0
-  elim (eq_inv_S_dx_structure … H0) -H0 #r1 #r2 #H1 #H2 #H3 destruct
-  /2 width=5 by ex3_2_intro/
-| <unwind2_path_z_dx #H0
   elim (eq_inv_S_dx_structure … H0) -H0 #r1 #r2 #H1 #H2 #H3 destruct
   /2 width=5 by ex3_2_intro/
 | <unwind2_path_L_dx #H0 destruct

@@ -23,7 +23,7 @@ include "delayed_updating/syntax/prototerm_proper.ma".
 (* Constructions with fsubst and pic ****************************************)
 
 lemma unwind2_term_fsubst_pic_sn (f) (t) (u) (p): p ϵ 𝐈 →
-      (▼[f]t)[⋔(⊗p)←▼[▶[f]p]u] ⊆ ▼[f](t[⋔p←u]).
+      (▼[f]t)[⋔(⊗p)←▼[▶[p]f]u] ⊆ ▼[f](t[⋔p←u]).
 #f #t #u #p #Hp #ql * *
 [ #rl * #r #Hr #H1 #H2 destruct
   >unwind2_path_append_pic_sn
@@ -39,7 +39,7 @@ lemma unwind2_term_fsubst_pic_sn (f) (t) (u) (p): p ϵ 𝐈 →
 qed-.
 
 lemma unwind2_term_fsubst_pic_dx (f) (t) (u) (p): p ϵ 𝐈 → p ϵ ▵t → t ϵ 𝐓 →
-      ▼[f](t[⋔p←u]) ⊆ (▼[f]t)[⋔(⊗p)←▼[▶[f]p]u].
+      ▼[f](t[⋔p←u]) ⊆ (▼[f]t)[⋔(⊗p)←▼[▶[p]f]u].
 #f #t #u #p #Hp #H1p #H2p #ql * #q * *
 [ #r #Hu #H1 #H2 destruct
   /5 width=3 by unwind2_path_append_pic_sn, ex2_intro, or_introl/
@@ -56,13 +56,13 @@ lemma unwind2_term_fsubst_pic_dx (f) (t) (u) (p): p ϵ 𝐈 → p ϵ ▵t → t 
 qed-.
 
 lemma unwind2_term_fsubst_pic (f) (t) (u) (p): p ϵ 𝐈 → p ϵ ▵t → t ϵ 𝐓 →
-      (▼[f]t)[⋔(⊗p)←▼[▶[f]p]u] ⇔ ▼[f](t[⋔p←u]).
+      (▼[f]t)[⋔(⊗p)←▼[▶[p]f]u] ⇔ ▼[f](t[⋔p←u]).
 /4 width=3 by unwind2_term_fsubst_pic_sn, conj, unwind2_term_fsubst_pic_dx/ qed.
 
 (* Constructions with fsubst and ppc ****************************************)
 
 lemma unwind2_term_fsubst_ppc_sn (f) (t) (u) (p): u ϵ 𝐏 →
-      (▼[f]t)[⋔(⊗p)←▼[▶[f]p]u] ⊆ ▼[f](t[⋔p←u]).
+      (▼[f]t)[⋔(⊗p)←▼[▶[p]f]u] ⊆ ▼[f](t[⋔p←u]).
 #f #t #u #p #Hu #ql * *
 [ #rl * #r #Hr #H1 #H2 destruct
   >unwind2_path_append_ppc_dx
@@ -78,7 +78,7 @@ lemma unwind2_term_fsubst_ppc_sn (f) (t) (u) (p): u ϵ 𝐏 →
 qed-.
 
 lemma unwind2_term_fsubst_ppc_dx (f) (t) (u) (p): u ϵ 𝐏 → p ϵ ▵t → t ϵ 𝐓 →
-      ▼[f](t[⋔p←u]) ⊆ (▼[f]t)[⋔(⊗p)←▼[▶[f]p]u].
+      ▼[f](t[⋔p←u]) ⊆ (▼[f]t)[⋔(⊗p)←▼[▶[p]f]u].
 #f #t #u #p #Hu #H1p #H2p #ql * #q * *
 [ #r #Hu #H1 #H2 destruct
   @or_introl @ex2_intro
@@ -97,5 +97,5 @@ lemma unwind2_term_fsubst_ppc_dx (f) (t) (u) (p): u ϵ 𝐏 → p ϵ ▵t → t 
 qed-.
 
 lemma unwind2_term_fsubst_ppc (f) (t) (u) (p): u ϵ 𝐏 → p ϵ ▵t → t ϵ 𝐓 →
-      (▼[f]t)[⋔(⊗p)←▼[▶[f]p]u] ⇔ ▼[f](t[⋔p←u]).
+      (▼[f]t)[⋔(⊗p)←▼[▶[p]f]u] ⇔ ▼[f](t[⋔p←u]).
 /4 width=3 by unwind2_term_fsubst_ppc_sn, conj, unwind2_term_fsubst_ppc_dx/ qed.
