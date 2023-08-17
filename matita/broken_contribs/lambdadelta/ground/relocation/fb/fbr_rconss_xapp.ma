@@ -12,14 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_after_dapp.ma".
 include "ground/relocation/fb/fbr_xapp.ma".
+include "ground/relocation/fb/fbr_rconss_dapp.ma".
 
-(* COMPOSITION FOR FINITE RELOCATION MAPS WITH BOOLEANS *********************)
+(* ITERATED RCONS FOR FINITE RELOCATION MAPS WITH BOOLEANS ******************)
 
 (* Constructions with fbr_xapp **********************************************)
 
-lemma fbr_xapp_after (g) (f) (n):
-      g＠❨f＠❨n❩❩ = (g•f)＠❨n❩.
-#g #f * //
-qed.
+lemma fbr_xapp_pushs_le (f) (k) (n):
+      k ≤ n → k = (⫯*[n]f)＠❨k❩.
+#f * // #p #n #H0
+<fbr_xapp_pos <(fbr_dapp_pushs_le … H0) -H0 //
+qed-.

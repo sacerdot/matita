@@ -14,7 +14,9 @@
 
 include "ground/relocation/fb/fbr_uni_ctl.ma".
 include "ground/relocation/fb/fbr_uni_after.ma".
+include "ground/relocation/fb/fbr_uni_xapp.ma".
 include "ground/relocation/fb/fbr_rconss_ctls.ma".
+include "ground/relocation/fb/fbr_ctls_after.ma".
 
 (* UNIFORM ELEMENTS FOR FINITE RELOCATION MAPS WITH BOOLEANS ****************)
 
@@ -27,3 +29,9 @@ lemma fbr_ctls_pos_uni (p) (n):
 theorem fbr_after_uni_dx (g) (n):
         (𝐮❨g＠❨n❩❩)•⫰*[n]g = g•𝐮❨n❩.
 // qed.
+
+lemma fbr_ctls_pos_after_uni_dx (g) (k) (n):
+      (⫰*[(⁤k)+n]g) = ⫰*[⁤k](g•𝐮❨n❩).
+#f #k #n
+<fbr_ctls_after <fbr_ctls_pos_uni //
+qed.
