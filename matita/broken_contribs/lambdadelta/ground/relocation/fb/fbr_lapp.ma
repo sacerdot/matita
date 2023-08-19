@@ -13,45 +13,49 @@
 (**************************************************************************)
 
 include "ground/relocation/fb/fbr_dapp.ma".
-include "ground/arith/nat_psucc.ma".
-include "ground/arith/nat_split.ma".
-include "ground/notation/functions/at_2.ma".
+include "ground/arith/nat_ppred_succ.ma".
+include "ground/notation/functions/atsection_2.ma".
 
-(* EXTENDED DEPTH APPLICATION FOR FINITE RELOCATION MAPS WITH BOOLEANS ******)
-
-definition fbr_xapp (f) (n): ℕ ≝
-           nsplit … (𝟎) (λp.(⁤(f＠⧣❨p❩))) n.
+(* LEVEL APPLICATION FOR FINITE RELOCATION MAPS WITH BOOLEANS ***************)
 
 interpretation
-  "extended depth application (finite relocation maps for unwind)"
-  'At f n = (fbr_xapp f n).
+  "level application (finite relocation maps with booleans)"
+  'AtSection f n = (pnpred (fbr_dapp f (npsucc n))).
 
 (* Basic constructions ******************************************************)
 
-lemma fbr_xapp_zero (f):
-      (𝟎) = f＠❨𝟎❩.
+lemma fbr_dapp_succ_lapp (f) (n):
+      ↑(f＠§❨n❩) = f＠⧣❨↑n❩.
 // qed.
 
-lemma fbr_xapp_pos (f) (p):
-      (⁤(f＠⧣❨p❩)) = f＠❨⁤p❩.
+lemma fbr_dapp_lapp (f) (n):
+      ↑(f＠§❨↓n❩) = f＠⧣❨n❩.
 // qed.
 
-(* Advanced constructions ***************************************************)
+lemma fbr_lapp_pred_dapp (f) (n):
+      ↓(f＠⧣❨n❩) = f＠§❨↓n❩.
+// qed.
 
-lemma fbr_xapp_id (n):
-      n = 𝐢＠❨n❩.
-* //
+lemma fbr_lapp_id (n):
+      n = 𝐢＠§❨n❩.
+// qed.
+
+lemma fbr_lapp_push_dx_zero (f):
+      (𝟎) = (⫯f)＠§❨𝟎❩.
+// qed.
+
+lemma fbr_lapp_push_dx_succ (f) (n):
+      (⁤↑(f＠§❨n❩)) = (⫯f)＠§❨⁤↑n❩.
+#f #n
+<fbr_dapp_push_dx_succ <nsucc_pnpred_swap //
 qed.
 
-lemma fbr_xapp_push_unit (f):
-      (⁤𝟏) = (⫯f)＠❨⁤𝟏❩.
-// qed.
-
-lemma fbr_xapp_push_succ (f) (n):
-      (⁤↑(f＠❨n❩)) = (⫯f)＠❨⁤↑n❩.
-#f * //
+lemma fbr_lapp_push_dx_pos (f) (p):
+      (⁤↑(f＠§❨↓p❩)) = (⫯f)＠§❨⁤p❩.
+#f #p
+<npsucc_pos <npsucc_pnpred <npsucc_pnpred //
 qed.
 
-lemma fbr_next_pos (f) (p):
-      (⁤↑(f＠❨⁤p❩)) = (↑f)＠❨⁤p❩.
+lemma fbr_lapp_next_dx (f) (n):
+      (⁤↑(f＠§❨n❩)) = (↑f)＠§❨n❩.
 // qed.

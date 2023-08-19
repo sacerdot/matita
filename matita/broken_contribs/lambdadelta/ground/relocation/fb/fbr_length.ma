@@ -14,7 +14,7 @@
 
 include "ground/relocation/fb/fbr_map.ma".
 include "ground/arith/nat_psucc.ma".
-include "ground/notation/functions/leftrightarrow_1.ma".
+include "ground/notation/functions/ss_updownarrow_1.ma".
 
 (* LENGTH FOR FINITE RELOCATION MAPS WITH BOOLEANS **************************)
 
@@ -33,26 +33,26 @@ match f with
 
 interpretation
   "length (finite relocation maps with booleans)"
-  'LeftRightArrow f = (fbr_length f).
+  'SSUpDownArrow f = (fbr_length f).
 
 (* Basic constructions ******************************************************)
 
 lemma fbr_length_id:
-      (𝟎) = ↔𝐢.
+      (𝟎) = 🡙𝐢.
 // qed.
 
 lemma fbr_length_push_dx_zero (f):
-      (𝟎) = ↔f → (𝟎) = ↔⫯f.
+      (𝟎) = 🡙f → (𝟎) = 🡙⫯f.
 #f #H0 normalize
 <H0 -H0 //
 qed.
 
 lemma fbr_length_push_dx_pos (f) (p):
-      (⁤p) = ↔f → (⁤↑↔f) = ↔⫯f.
+      (⁤p) = 🡙f → (⁤↑🡙f) = 🡙⫯f.
 #f #p #H0 normalize
 <H0 -H0 //
 qed.
 
 lemma fbr_length_next_dx (f):
-      (⁤↑↔f) = ↔↑f.
+      (⁤↑🡙f) = 🡙↑f.
 // qed.

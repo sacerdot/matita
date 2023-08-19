@@ -12,20 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_uni_dapp.ma".
-include "ground/relocation/fb/fbr_xapp.ma".
-include "ground/arith/nat_plus_rplus.ma".
+include "ground/relocation/fb/fbr_ctls_xapp.ma".
+include "ground/relocation/fb/fbr_xapp_lapp.ma".
+include "ground/arith/nat_pred_succ.ma".
 
-(* UNIFORM ELEMENTS FOR FINITE RELOCATION MAPS WITH BOOLEANS ****************)
+(* ITERATED COARSE TAIL FOR FINITE RELOCATION MAPS WITH BOOLEANS ************)
 
-(* Constructions with fbr_xapp **********************************************)
+(* Constructions with fbr_lapp **********************************************)
 
-(* Note: this dos not hold for p=𝟎 and n ≠ 𝟎 *)
-lemma fbr_xapp_uni_pos (n) (p):
-      (⁤p)+n = 𝐮❨n❩＠❨⁤p❩.
-// qed.
+lemma fbr_lapp_plus_dx_xapp (f) (m) (n):
+      (⫰*[⁤↑n]f)＠❨m❩+f＠§❨n❩ = f＠§❨m+n❩.
+#f #m #n
+<fbr_lapp_xapp in ⊢ (???%);
+>nplus_succ_dx <fbr_xapp_plus
+<fbr_xapp_succ_lapp <nplus_succ_dx //
+qed.
 
-lemma fbr_xapp_uni_le (n) (m):
-      (𝐮❨n❩)＠❨m❩ ≤ m+n.
-#n #m @(nat_ind_succ … m) -m //
+lemma fbr_lapp_plus_sn_xapp (f) (m) (n):
+      (⫰*[n]f)＠§❨m❩+f＠❨n❩ = f＠§❨m+n❩.
+#f #m #n
+<fbr_lapp_xapp in ⊢ (???%);
+>nplus_succ_sn <fbr_xapp_plus
+<fbr_xapp_succ_lapp <nplus_succ_sn //
 qed.

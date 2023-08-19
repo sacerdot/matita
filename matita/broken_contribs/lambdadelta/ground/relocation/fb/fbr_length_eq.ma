@@ -20,10 +20,10 @@ include "ground/relocation/fb/fbr_eq.ma".
 (* Constructions with fbr_eq ************************************************)
 
 lemma fbr_length_eq_repl:
-      compatible_2_fwd … fbr_eq (eq …) (λf.↔f).
+      compatible_2_fwd … fbr_eq (eq …) (λf.🡙f).
 #f1 #f2 #Hf elim Hf -f1 -f2 // [ * // ]
 [ #f1 #f2 #_
-  @(insert_eq_1 … (↔f2)) *
+  @(insert_eq_1 … (🡙f2)) *
   [ #H1 #H2
     <(fbr_length_push_dx_zero f1) //
     <(fbr_length_push_dx_zero f2) //

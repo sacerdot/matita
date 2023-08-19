@@ -12,20 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_uni_dapp.ma".
-include "ground/relocation/fb/fbr_xapp.ma".
-include "ground/arith/nat_plus_rplus.ma".
+include "ground/relocation/fb/fbr_lapp.ma".
+include "ground/relocation/fb/fbr_dapp_eq.ma".
 
-(* UNIFORM ELEMENTS FOR FINITE RELOCATION MAPS WITH BOOLEANS ****************)
+(* LEVEL APPLICATION FOR FINITE RELOCATION MAPS FOR UNWIND ******************)
 
-(* Constructions with fbr_xapp **********************************************)
+(* Constructions with fbr_eq ************************************************)
 
-(* Note: this dos not hold for p=𝟎 and n ≠ 𝟎 *)
-lemma fbr_xapp_uni_pos (n) (p):
-      (⁤p)+n = 𝐮❨n❩＠❨⁤p❩.
-// qed.
-
-lemma fbr_xapp_uni_le (n) (m):
-      (𝐮❨n❩)＠❨m❩ ≤ m+n.
-#n #m @(nat_ind_succ … m) -m //
+lemma fbr_lapp_eq_repl (n):
+      compatible_2_fwd … fbr_eq (eq …) (λf.f＠§❨n❩).
+#n #f1 #f2 #Hf
+<(fbr_dapp_eq_repl … Hf) -Hf //
 qed.
+
+(* Inversions with fbr_eq ***************************************************)
+
+lemma fbr_eq_ext_lapp (f1) (f2):
+      (∀n. f1＠§❨n❩ = f2＠§❨n❩) → f1 ≐ f2.
+#f1 #f2 #Hf
+@fbr_dxeq_inv_eq #p
+<fbr_dapp_lapp >(Hf (↓p)) -Hf //
+qed-.
