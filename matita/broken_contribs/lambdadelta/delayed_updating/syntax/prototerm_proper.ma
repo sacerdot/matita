@@ -24,7 +24,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma tpc_i (t):
+lemma tpc_in (t):
       (𝐞 ⧸ϵ t) → t ϵ 𝐏.
 #t #Ht * //
 #H elim (Ht H)
@@ -43,3 +43,21 @@ qed-.
 lemma tpc_inv_empty (t):
       (𝐞) ϵ t → t ϵ 𝐏 → ⊥.
 /2 width=5 by in_comp_tpc_trans/ qed-.
+
+(* Constructions with pt_append *********************************************)
+
+lemma tpc_pt_append_dx (p) (t:prototerm):
+      p ϵ 𝐏 → p●t ϵ 𝐏.
+#p #t #Hp
+@tpc_in * #q #_ #H0
+elim (eq_inv_list_append_empty … H0) -H0 #_ #H0 destruct -q
+/2 width=1 by ppc_inv_empty/
+qed.
+
+lemma tpc_pt_append_sn (p) (t:prototerm):
+      t ϵ 𝐏 → p●t ϵ 𝐏.
+#p #t #Hp
+@tpc_in * #q #Hq #H0
+elim (eq_inv_list_append_empty … H0) -H0 #H0 #_ destruct -p
+/2 width=3 by tpc_inv_empty/
+qed.

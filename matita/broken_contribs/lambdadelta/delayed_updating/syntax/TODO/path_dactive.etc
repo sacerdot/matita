@@ -1,0 +1,157 @@
+include "ground/xoa/ex_3_2.ma".
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_d_dx_pda (h) (q) (p):
+      q◖𝗱h = ⓪p → ⊥.
+#h #q #p elim p -p [| * [ #k ] #p #IH ]
+[ <pda_empty #H0 destruct
+| <pda_d_dx #H0 /2 width=1 by/
+| <pda_m_dx #H0 /2 width=1 by/
+| <pda_L_dx #H0 destruct
+| <pda_A_dx #H0 destruct
+| <pda_S_dx #H0 destruct
+]
+qed-.
+
+lemma eq_inv_m_dx_pda (q) (p):
+      q◖𝗺 = ⓪p → ⊥.
+#q #p elim p -p [| * [ #k ] #p #IH ]
+[ <pda_empty #H0 destruct
+| <pda_d_dx #H0 /2 width=1 by/
+| <pda_m_dx #H0 /2 width=1 by/
+| <pda_L_dx #H0 destruct
+| <pda_A_dx #H0 destruct
+| <pda_S_dx #H0 destruct
+]
+qed-.
+
+lemma eq_inv_L_dx_pda (q) (p):
+      q◖𝗟 = ⓪p →
+      ∃∃r1,r2. q = ⓪r1 & 𝐞 = ⓪r2 & r1●𝗟◗r2 = p.
+#q #p elim p -p [| * [ #k ] #p #IH ]
+[ <pda_empty #H0 destruct
+| <pda_d_dx #H0
+  elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
+  /2 width=5 by ex3_2_intro/
+| <pda_m_dx #H0
+  elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
+  /2 width=5 by ex3_2_intro/
+| <pda_L_dx #H0 destruct -IH
+  /2 width=5 by ex3_2_intro/
+| <pda_A_dx #H0 destruct
+| <pda_S_dx #H0 destruct
+]
+qed-.
+
+lemma eq_inv_A_dx_pda (q) (p):
+      q◖𝗔 = ⓪p →
+      ∃∃r1,r2. q = ⓪r1 & 𝐞 = ⓪r2 & r1●𝗔◗r2 = p.
+#q #p elim p -p [| * [ #k ] #p #IH ]
+[ <pda_empty #H0 destruct
+| <pda_d_dx #H0
+  elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
+  /2 width=5 by ex3_2_intro/
+| <pda_m_dx #H0
+  elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
+  /2 width=5 by ex3_2_intro/
+| <pda_L_dx #H0 destruct
+| <pda_A_dx #H0 destruct -IH
+  /2 width=5 by ex3_2_intro/
+| <pda_S_dx #H0 destruct
+]
+qed-.
+
+lemma eq_inv_S_dx_pda (q) (p):
+      q◖𝗦 = ⓪p →
+      ∃∃r1,r2. q = ⓪r1 & 𝐞 = ⓪r2 & r1●𝗦◗r2 = p.
+#q #p elim p -p [| * [ #k ] #p #IH ]
+[ <pda_empty #H0 destruct
+| <pda_d_dx #H0
+  elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
+  /2 width=5 by ex3_2_intro/
+| <pda_m_dx #H0
+  elim IH -IH // -H0 #r1 #r2 #H1 #H0 #H2 destruct
+  /2 width=5 by ex3_2_intro/
+| <pda_L_dx #H0 destruct
+| <pda_A_dx #H0 destruct
+| <pda_S_dx #H0 destruct -IH
+  /2 width=5 by ex3_2_intro/
+]
+qed-.
+
+(* Main inversions **********************************************************)
+
+theorem eq_inv_append_pda (p) (q) (r):
+        p●q = ⓪r →
+        ∃∃r1,r2.p = ⓪r1 & q = ⓪r2 & r1●r2 = r.
+#p #q elim q -q [| * [ #k ] #q #IH ] #r
+[ <list_append_empty_sn #H0 destruct
+  /2 width=5 by ex3_2_intro/
+| #H0 elim (eq_inv_d_dx_pda … H0)
+| #H0 elim (eq_inv_m_dx_pda … H0)
+| #H0 elim (eq_inv_L_dx_pda … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
+  elim (IH … Hr1) -IH -Hr1 #s1 #s2 #H1 #H2 #H3 destruct
+  @(ex3_2_intro … s1 (s2●𝗟◗r2)) //
+  <pda_append <pda_L_sn <Hr2 -Hr2 //
+| #H0 elim (eq_inv_A_dx_pda … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
+  elim (IH … Hr1) -IH -Hr1 #s1 #s2 #H1 #H2 #H3 destruct
+  @(ex3_2_intro … s1 (s2●𝗔◗r2)) //
+  <pda_append <pda_A_sn <Hr2 -Hr2 //
+| #H0 elim (eq_inv_S_dx_pda … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
+  elim (IH … Hr1) -IH -Hr1 #s1 #s2 #H1 #H2 #H3 destruct
+  @(ex3_2_intro … s1 (s2●𝗦◗r2)) //
+  <pda_append <pda_S_sn <Hr2 -Hr2 //
+]
+qed-.
+
+(* Inversions with path_lcons ***********************************************)
+
+lemma eq_inv_d_sn_pda (h) (q) (p):
+      (𝗱h◗q) = ⓪p → ⊥.
+#h #q #p >list_cons_comm #H0
+elim (eq_inv_append_pda … H0) -H0 #r1 #r2
+<list_cons_comm #H0 #H1 #H2 destruct
+elim (eq_inv_d_dx_pda … H0)
+qed-.
+
+lemma eq_inv_m_sn_pda (q) (p):
+      (𝗺◗q) = ⓪p → ⊥.
+#q #p >list_cons_comm #H0
+elim (eq_inv_append_pda … H0) -H0 #r1 #r2
+<list_cons_comm #H0 #H1 #H2 destruct
+elim (eq_inv_m_dx_pda … H0)
+qed-.
+
+lemma eq_inv_L_sn_pda (q) (p):
+      (𝗟◗q) = ⓪p →
+      ∃∃r1,r2. 𝐞 = ⓪r1 & q = ⓪r2 & r1●𝗟◗r2 = p.
+#q #p >list_cons_comm #H0
+elim (eq_inv_append_pda … H0) -H0 #r1 #r2
+<list_cons_comm #H0 #H1 #H2 destruct
+elim (eq_inv_L_dx_pda … H0) -H0 #s1 #s2 #H1 #H2 #H3 destruct
+@(ex3_2_intro … s1 (s2●r2)) // -s1
+<pda_append <H2 -s2 //
+qed-.
+
+lemma eq_inv_A_sn_pda (q) (p):
+      (𝗔◗q) = ⓪p →
+      ∃∃r1,r2. 𝐞 = ⓪r1 & q = ⓪r2 & r1●𝗔◗r2 = p.
+#q #p >list_cons_comm #H0
+elim (eq_inv_append_pda … H0) -H0 #r1 #r2
+<list_cons_comm #H0 #H1 #H2 destruct
+elim (eq_inv_A_dx_pda … H0) -H0 #s1 #s2 #H1 #H2 #H3 destruct
+@(ex3_2_intro … s1 (s2●r2)) // -s1
+<pda_append <H2 -s2 //
+qed-.
+
+lemma eq_inv_S_sn_pda (q) (p):
+      (𝗦◗q) = ⓪p →
+      ∃∃r1,r2. 𝐞 = ⓪r1 & q = ⓪r2 & r1●𝗦◗r2 = p.
+#q #p >list_cons_comm #H0
+elim (eq_inv_append_pda … H0) -H0 #r1 #r2
+<list_cons_comm #H0 #H1 #H2 destruct
+elim (eq_inv_S_dx_pda … H0) -H0 #s1 #s2 #H1 #H2 #H3 destruct
+@(ex3_2_intro … s1 (s2●r2)) // -s1
+<pda_append <H2 -s2 //
+qed-.

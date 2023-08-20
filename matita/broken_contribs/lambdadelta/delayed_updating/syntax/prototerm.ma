@@ -36,6 +36,13 @@ interpretation
   "root (prototerm)"
   'UpTriangle t = (prototerm_root t).
 
+definition pt_append (p) (t): prototerm ≝
+           λr. ∃∃q. q ϵ t & p●q = r.
+
+interpretation
+  "append (prototerm)"
+  'BlackCircle p t = (pt_append p t).
+
 (* Basic inversions *********************************************************)
 
 lemma prototerm_grafted_inv_gen (t) (p) (q):
@@ -47,6 +54,11 @@ lemma prototerm_grafted_inv_gen (t) (p) (q):
 lemma prototerm_in_comp_root (p) (t):
       p ϵ t → p ϵ ▵t.
 /2 width=2 by ex_intro/
+qed.
+
+lemma pt_append_in (p) (q) (t):
+      q ϵ t → p●q ϵ p●t.
+/2 width=3 by ex2_intro/
 qed.
 
 (* Basic destructions *******************************************************)

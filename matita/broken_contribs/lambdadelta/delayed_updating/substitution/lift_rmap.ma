@@ -98,9 +98,3 @@ lemma ctls_lift_rmap_d_dx (f) (p) (n) (k):
 #f #p #n #k
 <nplus_comm <fbr_ctls_plus //
 qed.
-
-(* TODO
-lemma lift_rmap_unfold_d_dx (f) (p) (k) (h):
-      (🠢[p]f)＠⧣❨h+k❩-(🠢[p]f)＠⧣❨k❩ = (🠢[p◖𝗱k]f)＠⧣❨h❩.
-// qed.
-*)

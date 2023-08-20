@@ -13,85 +13,92 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path.ma".
-include "ground/arith/nat_plus.ma".
-include "ground/notation/functions/sharp_1.ma".
+include "delayed_updating/notation/functions/circled_zero_1.ma".
 
-(* HEIGHT FOR PATH **********************************************************)
+(* DEACTIVATION FOR PATH ****************************************************)
 
-rec definition height (p) on p: ℕ ≝
+rec definition pda (p) on p ≝
 match p with
-[ list_empty     ⇒ 𝟎
+[ list_empty     ⇒ p
 | list_lcons l q ⇒
-  match l with
-  [ label_d k ⇒ (⁤↑(height q))
-  | label_m   ⇒ height q
-  | label_L   ⇒ height q
-  | label_A   ⇒ height q
-  | label_S   ⇒ height q
-  ]
+   match l with
+   [ label_d k ⇒ (pda q)◖𝗱(𝟎)
+   | label_m   ⇒ (pda q)◖𝗺
+   | label_L   ⇒ (pda q)◖𝗟
+   | label_A   ⇒ (pda q)◖𝗔
+   | label_S   ⇒ (pda q)◖𝗦
+   ]
 ].
 
 interpretation
-  "height (path)"
-  'Sharp p = (height p).
+  "deactivation (path)"
+  'CircledZero p = (pda p).
 
 (* Basic constructions ******************************************************)
 
-lemma height_empty: 𝟎 = ♯𝐞.
+lemma pda_empty:
+      𝐞 = ⓪𝐞.
 // qed.
 
-lemma height_d_dx (p) (k):
-      (⁤↑♯p) = ♯(p◖𝗱k).
+lemma pda_d_dx (p) (k):
+      (⓪p)◖𝗱(𝟎) = ⓪(p◖𝗱k).
 // qed.
 
-lemma height_m_dx (p):
-      ♯p = ♯(p◖𝗺).
+lemma pda_m_dx (p):
+      (⓪p)◖𝗺 = ⓪(p◖𝗺).
 // qed.
 
-lemma height_L_dx (p):
-      ♯p = ♯(p◖𝗟).
+lemma pda_L_dx (p):
+      (⓪p)◖𝗟 = ⓪(p◖𝗟).
 // qed.
 
-lemma height_A_dx (p):
-      ♯p = ♯(p◖𝗔).
+lemma pda_A_dx (p):
+      (⓪p)◖𝗔 = ⓪(p◖𝗔).
 // qed.
 
-lemma height_S_dx (p):
-      ♯p = ♯(p◖𝗦).
+lemma pda_S_dx (p):
+      (⓪p)◖𝗦 = ⓪(p◖𝗦).
 // qed.
 
 (* Main constructions *******************************************************)
 
-theorem height_append (p) (q):
-        (♯p+♯q) = ♯(p●q).
+theorem pda_idem (p):
+        ⓪p = ⓪⓪p.
+#p elim p -p //
+* [ #k ] #p #IH //
+<pda_d_dx <pda_d_dx //
+qed.
+
+theorem pda_append (p) (q):
+        ⓪p●⓪q = ⓪(p●q).
 #p #q elim q -q //
-* [ #k ] #q #IH <list_append_lcons_sn
-[ <height_d_dx <height_d_dx //
-| <height_m_dx <height_m_dx //
-| <height_L_dx <height_L_dx //
-| <height_A_dx <height_A_dx //
-| <height_S_dx <height_S_dx //
-]
+* [ #k ] #q #IH
+<list_append_lcons_sn //
 qed.
 
 (* Constructions with path_lcons ********************************************)
 
-lemma height_d_sn (p) (k):
-      (⁤↑♯p) = ♯(𝗱k◗p).
-// qed.
+lemma pda_d_sn (p) (k):
+      (𝗱(𝟎)◗⓪p) = ⓪(𝗱k◗p).
+#p #k <pda_append //
+qed.
 
-lemma height_m_sn (p):
-      ♯p = ♯(𝗺◗p).
-// qed.
+lemma pda_m_sn (p):
+      (𝗺◗⓪p) = ⓪(𝗺◗p).
+#p <pda_append //
+qed.
 
-lemma height_L_sn (p):
-      ♯p = ♯(𝗟◗p).
-// qed.
+lemma pda_L_sn (p):
+      (𝗟◗⓪p) = ⓪(𝗟◗p).
+#p <pda_append //
+qed.
 
-lemma height_A_sn (p):
-      ♯p = ♯(𝗔◗p).
-// qed.
+lemma pda_A_sn (p):
+      (𝗔◗⓪p) = ⓪(𝗔◗p).
+#p <pda_append //
+qed.
 
-lemma height_S_sn (p):
-      ♯p = ♯(𝗦◗p).
-// qed.
+lemma pda_S_sn (p):
+      (𝗦◗⓪p) = ⓪(𝗦◗p).
+#p <pda_append //
+qed.

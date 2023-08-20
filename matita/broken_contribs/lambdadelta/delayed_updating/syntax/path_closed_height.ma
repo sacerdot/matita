@@ -12,13 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/relocation/sbr_push.ma".
-include "ground/relocation/tr_eq.ma".
+include "delayed_updating/syntax/path_closed.ma".
+include "delayed_updating/syntax/path_height.ma".
+include "delayed_updating/syntax/path_depth.ma".
 
-(* PUSH FOR STACKS OF BASIC RELOCATION MAPS *********************************)
+(* CLOSED CONDITION FOR PATH ************************************************)
 
-(* Main constructions with stream_eq ****************************************)
+(* Constructions with height and depth **************************************)
 
-theorem sbr_push_eq_repl_dx (p):
-        stream_eq_repl … (λf1,f2. p⫯❘f1 ≗ p⫯❘f2).
-/2 width=1 by stream_eq_cons/ qed.
+lemma path_closed_depth (p) (n):
+      p ϵ 𝐂❨n❩ → ♯p + n = ♭p.
+#p #n #Hn elim Hn -Hn //
+qed.

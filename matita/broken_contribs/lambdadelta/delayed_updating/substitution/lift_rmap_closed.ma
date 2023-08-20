@@ -12,19 +12,37 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/relocation/sbr_pap.ma".
-include "ground/relocation/tr_eq.ma".
+include "delayed_updating/substitution/lift_rmap.ma".
+include "delayed_updating/syntax/path_closed.ma".
 
-(* POSITIVE APPLICATION FOR STACKS OF BASIC RELOCATION MAPS *****************)
+(* LIFT MAP FOR PATH ********************************************************)
 
-(* Main constructions with stream_eq ****************************************)
+(* Destructions with cpp ****************************************************)
 
-theorem sbr_pap_eq_repl_sn (i):
-        stream_eq_repl … (λf1,f2. f1❘@❨i❩ = f2❘@❨i❩).
-#i elim i -i [| #i #IH ]
-* [ #p1 | * [| #p1 ]] #f1
-* #p2 #f2 #H
-elim (stream_eq_inv_cons_bi … H) -H [1,8,15: |*: // ] #Hp #Hf destruct //
-<sbr_pap_unfold_unit_succ <sbr_pap_unfold_unit_succ
-/3 width=1 by eq_f/
+(* TODO
+lemma lift_rmap_unfold_d_dx (f) (p) (k) (h):
+      (🠢[p]f)＠⧣❨h+k❩-(🠢[p]f)＠⧣❨k❩ = (🠢[p◖𝗱k]f)＠⧣❨h❩.
+// qed.
+*)
+
+lemma ctls_plus_lift_rmap_closed (f) (q) (n):
+      q ϵ 𝐂❨n❩ →
+      ∀m. ⫰*[m]f = ⫰*[m+n]🠢[q]f.
+#f #q #n #Hq elim Hq -q -n //
+#q #n #k #_ #IH #m
+<lift_rmap_d_dx >fbr_ctls_plus //
 qed.
+
+lemma ctls_lift_rmap_closed (f) (q) (n):
+      q ϵ 𝐂❨n❩ →
+      f = ⫰*[n]🠢[q]f.
+#f #q #n #H0
+/2 width=1 by ctls_plus_lift_rmap_closed/
+qed-.
+
+lemma ctls_succ_lift_rmap_append_L_closed_dx (f) (p) (q) (n):
+      q ϵ 𝐂❨n❩ →
+      (🠢[p]f) = ⫰*[⁤↑n]🠢[p●𝗟◗q]f.
+#f #p #q #n #Hq
+/3 width=1 by ctls_lift_rmap_closed, pcc_L_sn/
+qed-.

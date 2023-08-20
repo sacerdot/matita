@@ -12,18 +12,18 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path.ma".
 include "ground/arith/nat_plus.ma".
+include "delayed_updating/syntax/path.ma".
 include "ground/notation/functions/sharp_1.ma".
 
 (* HEIGHT FOR PATH **********************************************************)
 
 rec definition height (p) on p: ℕ ≝
 match p with
-[ list_empty     ⇒ 𝟎
+[ list_empty     ⇒ (𝟎)
 | list_lcons l q ⇒
   match l with
-  [ label_d k ⇒ (⁤↑(height q))
+  [ label_d k ⇒ height q + k
   | label_m   ⇒ height q
   | label_L   ⇒ height q
   | label_A   ⇒ height q
@@ -41,7 +41,7 @@ lemma height_empty: 𝟎 = ♯𝐞.
 // qed.
 
 lemma height_d_dx (p) (k):
-      (⁤↑♯p) = ♯(p◖𝗱k).
+      ♯p+k = ♯(p◖𝗱k).
 // qed.
 
 lemma height_m_dx (p):
@@ -63,7 +63,7 @@ lemma height_S_dx (p):
 (* Main constructions *******************************************************)
 
 theorem height_append (p) (q):
-        (♯p+♯q) = ♯(p●q).
+        ♯p+♯q = ♯(p●q).
 #p #q elim q -q //
 * [ #k ] #q #IH <list_append_lcons_sn
 [ <height_d_dx <height_d_dx //
@@ -77,7 +77,7 @@ qed.
 (* Constructions with path_lcons ********************************************)
 
 lemma height_d_sn (p) (k):
-      (⁤↑♯p) = ♯(𝗱k◗p).
+      k+♯p = ♯(𝗱k◗p).
 // qed.
 
 lemma height_m_sn (p):

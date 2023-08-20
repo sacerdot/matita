@@ -49,3 +49,35 @@ lemma prototerm_root_eq_repl:
 #t1 #t2 * #H1 #H2
 /3 width=3 by conj, prototerm_root_incl_repl/
 qed.
+
+(* Constructions with pt_append *********************************************)
+
+lemma pt_append_incl_repl (p):
+      ∀t1,t2. t1 ⊆ t2 → p●t1 ⊆ p●t2.
+#p #t1 #t2 #Ht #r * #q #Hq #H0 destruct
+/3 width=1 by pt_append_in/
+qed.
+
+lemma pt_append_eq_repl (p):
+      ∀t1,t2. t1 ⇔ t2 → p●t1 ⇔ p●t2.
+#p #t1 #t2 * #H1 #H2
+/3 width=3 by conj, pt_append_incl_repl/
+qed.
+
+lemma pt_append_assoc_sn (p) (q) (t:prototerm):
+      p●(q●t) ⊆ (p●q)●t.
+#p #q #t #r * #s1 * #s2 #Hs2 #H2 #H1 destruct
+/3 width=1 by pt_append_in/
+qed.
+
+lemma pt_append_assoc_dx (p) (q) (t:prototerm):
+      (p●q)●t ⊆ p●(q●t).
+#p #q #t #r * #s #Hs #H0 destruct
+/3 width=1 by pt_append_in/
+qed.
+
+lemma pt_append_assoc (p) (q) (t:prototerm):
+      p●(q●t) ⇔ (p●q)●t.
+#p #q #t
+/3 width=1 by conj, pt_append_assoc_sn, pt_append_assoc_dx/
+qed.

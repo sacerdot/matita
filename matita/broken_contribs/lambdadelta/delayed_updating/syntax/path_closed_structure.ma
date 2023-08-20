@@ -12,8 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* GROUND NOTATION **********************************************************)
+include "delayed_updating/syntax/path_closed_height.ma".
+include "delayed_updating/syntax/path_structure.ma".
 
-notation "hvbox( hd ⫯❘ break tl )"
-  right associative with precedence 47
-  for @{ 'UpSpoonVerticalBar $hd $tl }.
+(* CLOSED CONDITION FOR PATH ************************************************)
+
+(* Constructions with structure *********************************************)
+
+lemma path_closed_structure_height (p) (n):
+      p ϵ 𝐂❨n❩ → ⊗p ϵ 𝐂❨♯p+n❩.
+#p #n #Hn elim Hn -Hn //
+#p #n #_ #IH [ <nplus_succ_dx ]
+/2 width=1 by pcc_L_dx, pcc_A_dx, pcc_S_dx/
+qed.
+
+lemma path_closed_structure_depth (p) (n):
+      p ϵ 𝐂❨n❩ → ⊗p ϵ 𝐂❨♭p❩.
+#p #n #Hp <path_closed_depth
+/2 width=3 by path_closed_structure_height/
+qed.
