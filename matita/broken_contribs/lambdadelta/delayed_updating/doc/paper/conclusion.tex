@@ -1,0 +1,25 @@
+\section{Concluding remarks}
+\label{sec:conclusion}
+
+In this article we proposed for the first time the system $\TPlus$ of
+$\lambda$-calculus featuring the simplest suppport for delaying
+$\alpha$-coversion of function arguments in $\beta$-reduction.
+To that aim our system needs an extension of $\beta$-reduction known
+as balanced or distant $\beta$-reduction.
+
+The system comes with two presentations as to variable references.
+The main presentation $\TFrePlus$ has depth-indexed references (Section 5)
+but we give the presentation $\TCarPlus$ having named references as well (Appendex B).
+
+As we saw, $\TPlus$ is confluent
+and weak normalization implies strong normalization.
+Moreover, we can map each term of $\TPlus$ to a term of
+traditional $\lambda K$ so that each $\beta$-reduction step in $\TPlus$
+corresponds to a $\beta$-reduction step in $\lambda K$ and vice versa.
+
+The first author, being experienced in computer-assisted proof verification,
+is checking the present theory of $\TFrePlus$ with Matita \cite{ARST11}
+and plans to report on this activity in future work.
+Moreover, we plan to relate $\TPlus$ to
+other systems featuring delayed $\alpha$-conversion
+like the ones we mentioned in Section 2.
