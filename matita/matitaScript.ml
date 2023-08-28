@@ -818,7 +818,7 @@ object (self)
        include_paths_ <- [];
        self#reset_buffer
     | Some file ->
-       let f = Librarian.absolutize file in
+       let f = Librarian.absolutize ~dir:(Sys.getcwd ()) file in
         tab_label#set_text (Filename.basename f);
         filename_ <- Some f;
         include_paths_ <- MatitaEngine.read_include_paths ~include_paths:[] f;

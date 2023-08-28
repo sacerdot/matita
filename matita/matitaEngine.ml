@@ -255,12 +255,7 @@ let read_include_paths ~include_paths:_ file =
  try 
    let root, _buri, _fname, _tgt = 
      Librarian.baseuri_of_script ~include_paths:[] file in 
-   let includes =
-    try
-     Str.split (Str.regexp " ") 
-      (List.assoc "include_paths" (Librarian.load_root_file (root^"/root")))
-    with Not_found -> []
-   in
+   let includes = Librarian.read_include_paths root in
    let rc = root :: includes in
     List.iter (HLog.debug) rc; rc
   with Librarian.NoRootFor _ | Librarian.FileNotFound _ ->
@@ -423,12 +418,7 @@ and assert_ng ~already_included ~compiling ~asserted ~include_paths mapath =
   else
     begin
       let include_paths =
-        let includes =
-          try
-            Str.split (Str.regexp " ")
-              (List.assoc "include_paths" (Librarian.load_root_file (root^"/root")))
-          with Not_found -> []
-        in
+        let includes = Librarian.read_include_paths root in
         root::includes @
         Helm_registry.get_list Helm_registry.string "matita.includes" in
       let baseuri = NUri.uri_of_string baseuri in
