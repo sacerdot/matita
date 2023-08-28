@@ -23,4 +23,7 @@ include "ground/arith/nat_succ.ma".
 (*** iter_S *)
 lemma niter_succ (A) (f) (n:ℕ):
       f∘f^n ⊜ f^{A}(⁤↑n).
-// qed.
+// (* FIX ME *)
+#A #f #n #a
+<niter_pos_ppred //
+qed.

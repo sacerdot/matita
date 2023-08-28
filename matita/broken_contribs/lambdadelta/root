@@ -1,1 +1,2 @@
-baseuri=cic:/matita/lambdadelta/
+baseuri=cic:/matita/lambdadelta
+include_paths=../../contribs/fguidi

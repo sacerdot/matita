@@ -1,2 +1,2 @@
 baseuri=cic:/matita/limits
-include_paths=../../broken_contribs/lambdadelta
+include_paths=../fguidi

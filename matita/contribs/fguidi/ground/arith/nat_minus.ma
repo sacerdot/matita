@@ -53,8 +53,12 @@ qed.
 
 (*** minus_S_S *)
 lemma nminus_succ_bi (m) (n): m - n = (⁤↑m) - (⁤↑n).
-#m #n @(nat_ind_succ … n) -n //
-<nminus_zero_dx <nminus_unit_dx //
+#m #n @(nat_ind_succ … n) -n // 
+(* FIX ME *)
+[| #n #IH ]
+[ <nminus_unit_dx //
+| <nminus_succ_dx >IH -IH //
+]
 qed.
 
 lemma nminus_succ_dx_pred_sn (m) (n): ⫰m - n = m - (⁤↑n).
@@ -67,7 +71,8 @@ qed.
 
 (*** minus_Sn_n *)
 lemma nminus_succ_sn_refl (m): (⁤𝟏) = (⁤↑m) - m.
-#m @(nat_ind_succ … m) -m //
+#m @(nat_ind_succ … m) -m // #n #IH
+<nminus_succ_bi //
 qed.
 
 (*** minus_minus_comm *)

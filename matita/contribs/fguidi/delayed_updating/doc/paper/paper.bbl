@@ -6,6 +6,15 @@ Mart\'in {Abadi}, Luca {Cardelli}, Pierre-Louis {Curien}, and Jean-Jacques
 \newblock {Explicit Substitutions}.
 \newblock {\em J. of Functional Programming}, 1(4):375--416, 1991.
 
+\bibitem{ARST11}
+Andrea {Asperti}, Wilmer {Ricciotti}, Claudio {Sacerdoti Coen}, and Enrico
+  {Tassi}.
+\newblock {The Matita Interactive Theorem Prover}.
+\newblock In Nikolaj {Bj{\o}rner} and Viorica {Sofronie-Stokkermans}, editors,
+  {\em {Proceedings of the 23rd International Conference on Automated Deduction
+  (CADE-2011)}}, volume 6803 of {\em Lecture Notes in Computer Science}, pages
+  64--69, Berlin, Germany, 2011. Springer.
+
 \bibitem{CHL96}
 Pierre-Louis {Curien}, Th\'er\`ese {Hardin}, and Jean-Jacques {L\'evy}.
 \newblock {Confluence Properties of Weak and Strong Calculi of Explicit
