@@ -1,14 +1,14 @@
 (* Copyright (C) 2005, HELM Team.
- * 
+ *
  * This file is part of HELM, an Hypertextual, Electronic
  * Library of Mathematics, developed at the Computer Science
  * Department, University of Bologna, Italy.
- * 
+ *
  * HELM is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * HELM is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,7 +18,7 @@
  * along with HELM; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  * MA  02111-1307, USA.
- * 
+ *
  * For details, see the HELM World-Wide-Web page,
  * http://helm.cs.unibo.it/
  *)
@@ -36,10 +36,10 @@ let exc_located_wrapper f =
   | Ploc.Exc (floc, Stream.Error msg) ->
       raise (HExtlib.Localized (floc,CicNotationParser.Parse_error msg))
   | Ploc.Exc (floc, HExtlib.Localized(_,exn)) ->
-      raise (HExtlib.Localized 
+      raise (HExtlib.Localized
         (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
   | Ploc.Exc (floc, exn) ->
-      raise (HExtlib.Localized 
+      raise (HExtlib.Localized
         (floc,CicNotationParser.Parse_error (Printexc.to_string exn)))
 
 type parsable = Grammar.parsable * Sedlexing.lexbuf
@@ -57,12 +57,12 @@ let strm_of_parsable (_,buf) = buf
 let add_raw_attribute ~text t = N.AttributedTerm (`Raw text, t)
 
 let default_associativity = Gramext.NonA
-        
-let mk_rec_corec src flavour ind_kind defs loc = 
+
+let mk_rec_corec src flavour ind_kind defs loc =
  let attrs = src, flavour, `Regular in
   (loc, N.LetRec (ind_kind, defs, attrs))
 
-let nmk_rec_corec src flavour ind_kind defs loc index = 
+let nmk_rec_corec src flavour ind_kind defs loc index =
  let loc,t = mk_rec_corec src flavour ind_kind defs loc in
   G.NObj (loc,t,index)
 
@@ -70,7 +70,7 @@ let shift_vars binder (vars, ty) bo =
    let map var bo = N.Binder (binder, (var, ty), bo) in
    List.fold_right map vars bo
 
-let shift_params binder params bo = 
+let shift_params binder params bo =
    List.fold_right (shift_vars binder) params bo
 (*
 let nnon_punct_of_punct = function
@@ -146,15 +146,15 @@ EXTEND
          None -> None,[],Some N.UserInput
        | Some ps -> ps]
   ];
-  inverter_param_list: [ 
-    [ params = tactic_term -> 
+  inverter_param_list: [
+    [ params = tactic_term ->
       let deannotate = function
         | N.AttributedTerm (_,t) | t -> t
       in match deannotate params with
       | N.Implicit _ -> [false]
       | N.UserInput -> [true]
-      | N.Appl l -> 
-         List.map (fun x -> match deannotate x with  
+      | N.Appl l ->
+         List.map (fun x -> match deannotate x with
            | N.Implicit _ -> false
            | N.UserInput -> true
            | _ -> raise (Invalid_argument "malformed target parameter list 1")) l
@@ -181,12 +181,12 @@ EXTEND
         SYMBOL <:unicode<vdash>>;
         concl = tactic_term -> (List.rev hyps,concl) ] ->
          G.NTactic(loc,[G.NAssert (loc, seqs)])
-    | SYMBOL "/"; num = OPT NUMBER ; 
+    | SYMBOL "/"; num = OPT NUMBER ;
        just_and_params = auto_params; SYMBOL "/" ->
        let just,params = just_and_params in
        let depth = match num with Some n -> n | None -> "1" in
        (match just with
-       | None -> 
+       | None ->
 	         G.NTactic(loc,
             [G.NAuto(loc,(None,["depth",depth]@params))])
        | Some (`Univ univ) ->
@@ -197,16 +197,16 @@ EXTEND
              G.NAutoInteractive (loc, (None,["depth",depth]@params))))
     | SYMBOL "#"; SYMBOL "#" -> G.NMacro (loc, G.NIntroGuess loc)
     | IDENT "check"; t = tactic_term -> G.NMacro(loc,G.NCheck (loc,t))
-    | IDENT "screenshot"; fname = QSTRING -> 
+    | IDENT "screenshot"; fname = QSTRING ->
         G.NMacro(loc,G.Screenshot (loc, fname))
     | IDENT "cases"; what = tactic_term ; where = pattern_spec ->
         G.NTactic(loc,[G.NCases (loc, what, where)])
-    | IDENT "change";  "with"; with_what = tactic_term; what = pattern_spec -> 
+    | IDENT "change";  "with"; with_what = tactic_term; what = pattern_spec ->
         G.NTactic(loc,[G.NChange (loc, what, with_what)])
     | SYMBOL "-"; id = IDENT ->
         G.NTactic(loc,[G.NClear (loc, [id])])
-    | PLACEHOLDER; num = OPT NUMBER; 
-	l = OPT [ SYMBOL "{"; l = LIST1 tactic_term; SYMBOL "}" -> l ] -> 
+    | PLACEHOLDER; num = OPT NUMBER;
+	l = OPT [ SYMBOL "{"; l = LIST1 tactic_term; SYMBOL "}" -> l ] ->
         G.NTactic(loc,[G.NConstructor (loc, (match num with None -> None | Some x -> Some (int_of_string x)),match l with None -> [] | Some l -> l)])
     | IDENT "cut"; t = tactic_term -> G.NTactic(loc,[G.NCut (loc, t)])
     | IDENT "destruct"; just = OPT [ dom = ident_list1 -> dom ];
@@ -227,15 +227,15 @@ EXTEND
         G.NTactic(loc,[G.NReduce (loc, kind, p)])
     | dir = direction; what = tactic_term ; where = pattern_spec ->	
         G.NTactic(loc,[G.NRewrite (loc, dir, what, where)])
-    | IDENT "try"; tac = SELF -> 
+    | IDENT "try"; tac = SELF ->
         let tac = match tac with G.NTactic(_,[t]) -> t | _ -> assert false in
         G.NTactic(loc,[ G.NTry (loc,tac)])
-    | IDENT "repeat"; tac = SELF -> 
+    | IDENT "repeat"; tac = SELF ->
         let tac = match tac with G.NTactic(_,[t]) -> t | _ -> assert false in
         G.NTactic(loc,[ G.NRepeat (loc,tac)])
-    | LPAREN; l = LIST1 SELF; RPAREN -> 
-        let l = 
-          List.flatten 
+    | LPAREN; l = LIST1 SELF; RPAREN ->
+        let l =
+          List.flatten
             (List.map (function G.NTactic(_,t) -> t | _ -> assert false) l) in
         G.NTactic(loc,[G.NBlock (loc,l)])
     | IDENT "assumption" -> G.NTactic(loc,[ G.NAssumption loc])
@@ -249,10 +249,10 @@ EXTEND
         G.NTactic(loc,[G.NLetIn (loc,(None,[],Some N.UserInput),t,name)])
     | just =
        [ IDENT "using"; t=tactic_term -> `Term t
-       | params = auto_params -> 
+       | params = auto_params ->
             let just,params = params in
             `Auto
-            (match just with 
+            (match just with
              | None -> (None,params)
              | Some (`Univ univ) -> (Some univ,params)
              (* `Trace behaves exaclty like None for the moment being *)
@@ -273,9 +273,9 @@ EXTEND
         G.NTactic (loc,[G.We_need_to_prove (loc, t, id)])
     | IDENT "that" ; IDENT "is" ; IDENT "equivalent" ; "to" ; t = tactic_term -> G.NTactic(loc,[G.BetaRewritingStep (loc,t)])
     | IDENT "the" ; IDENT "thesis" ; IDENT "becomes" ; t1=tactic_term -> G.NTactic (loc,[G.Thesisbecomes(loc,t1)])
-    | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "cases" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->  
+    | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "cases" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->
         G.NTactic (loc,[G.We_proceed_by_cases_on (loc, t, t1)])
-    | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "induction" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->  
+    | IDENT "we" ; IDENT "proceed" ; IDENT "by" ; IDENT "induction" ; "on" ; t=tactic_term ; "to" ; IDENT "prove" ; t1=tactic_term ->
         G.NTactic (loc,[G.We_proceed_by_induction_on (loc, t, t1)])
     | IDENT "by" ; IDENT "induction" ; IDENT "hypothesis" ; IDENT "we" ; IDENT "know" ; t=tactic_term ; LPAREN ; id = IDENT ; RPAREN ->
         G.NTactic (loc,[G.Byinduction(loc, t, id)])
@@ -285,7 +285,7 @@ EXTEND
     | IDENT "print_stack" -> G.NTactic (loc,[G.PrintStack loc])
     (* DO NOT FACTORIZE with the two following, camlp5 sucks*)
 (*
-    | IDENT "conclude";  
+    | IDENT "conclude";
       termine = tactic_term;
       SYMBOL "=" ;
       t1=tactic_term ;
@@ -293,10 +293,10 @@ EXTEND
        [ IDENT "using"; t=tactic_term -> `Term t
        | IDENT "using"; IDENT "once"; term=tactic_term -> `SolveWith term
        | IDENT "proof" -> `Proof
-       | params = auto_params -> `Auto 
+       | params = auto_params -> `Auto
             (
                let just,params = params in
-               match just with 
+               match just with
                  | None -> (None,params)
                  | Some (`Univ univ) -> (Some univ,params)
                  (* `Trace behaves exaclty like None for the moment being *)
@@ -313,10 +313,10 @@ EXTEND
        [ IDENT "using"; t=tactic_term -> `Term t
        | IDENT "using"; IDENT "once"; term=tactic_term -> `SolveWith term
        | IDENT "proof" -> `Proof
-       | params = auto_params -> `Auto 
+       | params = auto_params -> `Auto
             (
                let just,params = params in
-               match just with 
+               match just with
                  | None -> (None,params)
                  | Some (`Univ univ) -> (Some univ,params)
                  (* `Trace behaves exaclty like None for the moment being *)
@@ -337,10 +337,10 @@ EXTEND
        [ IDENT "using"; t=tactic_term -> `Term t
        | IDENT "using"; IDENT "once"; term=tactic_term -> `SolveWith term
        | IDENT "proof" -> `Proof
-       | params = auto_params -> `Auto 
+       | params = auto_params -> `Auto
             (
                let just,params = params in
-               match just with 
+               match just with
                  | None -> (None,params)
                  | Some (`Univ univ) -> (Some univ,params)
                  (* `Trace behaves exaclty like None for the moment being *)
@@ -358,16 +358,18 @@ EXTEND
    | IDENT "width"
    | IDENT "size"
    | IDENT "nohyps"
-(*   | IDENT "timeout" *)
+   | IDENT "time"
+   | IDENT "debug"
+   | IDENT "steps"
    ]
 ];
   auto_params: [
-    [ params = 
+    [ params =
       LIST0 [
          i = auto_fixed_param -> i,""
        | i = auto_fixed_param ; SYMBOL "="; v = [ v = int ->
-              string_of_int v | v = IDENT -> v ] -> i,v ]; 
-      just = OPT [ IDENT "by"; by = 
+              string_of_int v | v = IDENT -> v ] -> i,v ];
+      just = OPT [ IDENT "by"; by =
         [ univ = LIST0 tactic_term SEP SYMBOL "," -> `Univ univ
         | SYMBOL "_" -> `Trace ] -> by ] -> just,params
    ]
@@ -377,7 +379,7 @@ EXTEND
     [ WEPROVED; ty = tactic_term ; id = OPT [ LPAREN ; id = IDENT ; RPAREN -> id] -> BYC_weproved (ty,id)
     | "done" -> BYC_done
     | "let" ; id1 = IDENT ; SYMBOL ":" ; t1 = tactic_term ;
-      IDENT "such" ; IDENT "that" ; t2=tactic_term ; LPAREN ; 
+      IDENT "such" ; IDENT "that" ; t2=tactic_term ; LPAREN ;
       id2 = IDENT ; RPAREN -> BYC_letsuchthat (id1,t1,t2,id2)
     | WEHAVE; t1=tactic_term ; LPAREN ; id1=IDENT ; RPAREN ;"and" ; t2=tactic_term ; LPAREN ; id2=IDENT ; RPAREN ->
               BYC_wehaveand (id1,t1,id2,t2)
@@ -454,7 +456,7 @@ EXTEND
     ]
   ];
   inductive_spec: [ [
-    fst_name = IDENT; 
+    fst_name = IDENT;
       params = LIST0 protected_binder_vars;
     SYMBOL ":"; fst_typ = term; SYMBOL <:unicode<def>>; OPT SYMBOL "|";
     fst_constructors = LIST0 constructor SEP SYMBOL "|";
@@ -475,23 +477,23 @@ EXTEND
         let ind_types = fst_ind_type :: tl_ind_types in
         (params, ind_types)
     ] ];
-    
+
     record_spec: [ [
-      name = IDENT; 
+      name = IDENT;
       params = LIST0 protected_binder_vars;
-       SYMBOL ":"; typ = term; SYMBOL <:unicode<def>>; SYMBOL "{" ; 
-       fields = LIST0 [ 
+       SYMBOL ":"; typ = term; SYMBOL <:unicode<def>>; SYMBOL "{" ;
+       fields = LIST0 [
          name = IDENT ;
          params = LIST0 protected_binder_vars; (* FG: params added *)
-         coercion = [ 
-             SYMBOL ":" -> false,0 
+         coercion = [
+             SYMBOL ":" -> false,0
            | SYMBOL ":"; SYMBOL ">" -> true,0
            | SYMBOL ":"; arity = int ; SYMBOL ">" -> true,arity
-         ]; 
-         ty = term -> 
+         ];
+         ty = term ->
            let b,n = coercion in
-           (name, shift_params `Forall params ty, b, n) 
-       ] SEP SYMBOL ";"; SYMBOL "}" -> 
+           (name, shift_params `Forall params ty, b, n)
+       ] SEP SYMBOL ";"; SYMBOL "}" ->
         let params =
           List.fold_right
             (fun (names, typ) acc ->
@@ -555,7 +557,7 @@ EXTEND
       [ dir = OPT direction; s = QSTRING;
         assoc = OPT associativity; prec = precedence;
         IDENT "for";
-        p2 = 
+        p2 =
           [ blob = UNPARSED_AST ->
               add_raw_attribute ~text:(Printf.sprintf "@{%s}" blob)
                 (CicNotationParser.parse_level2_ast lstatus
@@ -594,13 +596,13 @@ EXTEND
           (s, args, t)
       ]
     ];
-    
+
     include_command: [ [
-        IDENT "include" ; path = QSTRING -> 
+        IDENT "include" ; path = QSTRING ->
           loc,path,G.WithPreferences
-      | IDENT "include" ; IDENT "alias"; path = QSTRING -> 
+      | IDENT "include" ; IDENT "alias"; path = QSTRING ->
           loc,path,G.OnlyPreferences
-      | IDENT "include'" ; path = QSTRING -> 
+      | IDENT "include'" ; path = QSTRING ->
           loc,path,G.WithoutPreferences
      ]];
 
@@ -630,7 +632,7 @@ EXTEND
       body = term ->
         let body = shift_params `Lambda params body in
         let attrs = src, nflavour, `Regular in
-        G.NObj (loc, 
+        G.NObj (loc,
           N.Theorem(name, N.Implicit `JustOne, Some body, attrs),
           true)
     | src = source; IDENT "axiom"; i = index; name = IDENT;
@@ -651,24 +653,24 @@ EXTEND
     | src = source; IDENT "record" ; (params,name,ty,fields) = record_spec ->
         G.NObj (loc, N.Record (params,name,ty,fields,src),true)
 (* FG: new syntax for inductive/coinductive definitions and statements *)
-    | src = source; IDENT "rec"; nflavour = ntheorem_flavour; defs = let_defs -> 
+    | src = source; IDENT "rec"; nflavour = ntheorem_flavour; defs = let_defs ->
         nmk_rec_corec src nflavour `Inductive defs loc true
     | src = source; IDENT "corec"; nflavour = ntheorem_flavour; defs = let_codefs ->
         nmk_rec_corec src nflavour `CoInductive defs loc true
 (**)
-    | LETCOREC ; defs = let_codefs -> 
+    | LETCOREC ; defs = let_codefs ->
         nmk_rec_corec `Provided `Definition `CoInductive defs loc true
-    | LETREC ; defs = let_defs -> 
+    | LETREC ; defs = let_defs ->
         nmk_rec_corec `Provided `Definition `Inductive defs loc true
     | IDENT "discriminator" ; indty = tactic_term -> G.NDiscriminator (loc,indty)
     | IDENT "inverter"; name = IDENT; IDENT "for" ; indty = tactic_term ;
-      paramspec = OPT inverter_param_list ; 
-      outsort = OPT [ SYMBOL ":" ; outsort = term -> outsort ] -> 
+      paramspec = OPT inverter_param_list ;
+      outsort = OPT [ SYMBOL ":" ; outsort = term -> outsort ] ->
         G.NInverter (loc,name,indty,paramspec,outsort)
-    | IDENT "universe"; cyclic = OPT [ IDENT "cyclic" -> () ] ; IDENT "constraint"; u1 = tactic_term; 
+    | IDENT "universe"; cyclic = OPT [ IDENT "cyclic" -> () ] ; IDENT "constraint"; u1 = tactic_term;
         SYMBOL <:unicode<lt>> ; u2 = tactic_term ->
         let acyclic = match cyclic with None -> true | Some () -> false in
-        let urify = function 
+        let urify = function
           | NotationPt.AttributedTerm (_, NotationPt.Sort (`NType i)) ->
               NUri.uri_of_string ("cic:/matita/pts/Type"^i^".univ")
           | _ -> raise (Failure "only a Type[…] sort can be constrained")
@@ -680,13 +682,13 @@ EXTEND
         G.UnificationHint (loc, t, n)
     | IDENT "coercion"; name = IDENT;
         compose = OPT [ IDENT "nocomposites" -> () ];
-        spec = OPT [ SYMBOL ":"; ty = term; 
-        SYMBOL <:unicode<def>>; t = term; "on"; 
+        spec = OPT [ SYMBOL ":"; ty = term;
+        SYMBOL <:unicode<def>>; t = term; "on";
         id = [ IDENT | PIDENT ]; SYMBOL ":"; source = term;
         "to"; target = term -> t,ty,(id,source),target ] ->
           let compose = compose = None in
           G.NCoercion(loc,name,compose,spec)
-    | IDENT "copy" ; s = IDENT; IDENT "from"; u = URI; "with"; 
+    | IDENT "copy" ; s = IDENT; IDENT "from"; u = URI; "with";
       m = LIST0 [ u1 = URI; SYMBOL <:unicode<mapsto>>; u2 = URI -> u1,u2 ] ->
         G.NCopy (loc,s,NUri.uri_of_string u,
           List.map (fun a,b -> NUri.uri_of_string a, NUri.uri_of_string b) m)
@@ -707,18 +709,18 @@ EXTEND
     | tac = nnon_punctuation_tactical(*; punct = npunctuation_tactical*) ->
           G.NTactic (loc, [tac])
     | tac = ntactic (*; punct = npunctuation_tactical*) ->
-         tac 
+         tac
 (*
-    | tac = nnon_punctuation_tactical; 
+    | tac = nnon_punctuation_tactical;
         punct = npunctuation_tactical ->
           G.NTactic (loc, [tac; punct])
 *)
     ]
   ];
   comment: [
-    [ BEGINCOMMENT ; ex = executable ; ENDCOMMENT -> 
+    [ BEGINCOMMENT ; ex = executable ; ENDCOMMENT ->
        G.Code (loc, ex)
-    | str = NOTE -> 
+    | str = NOTE ->
        G.Note (loc, str)
     ]
   ];
@@ -757,7 +759,7 @@ class virtual status =
    db <- Some (mk_parser (Grammar.Entry.create grammar "statement") self)
  end
 
-let extend status l1 action = 
+let extend status l1 action =
   let status = CicNotationParser.extend status l1 action in
   let grammar = CicNotationParser.level2_ast_grammar status in
   status#set_parser_db
@@ -765,7 +767,7 @@ let extend status l1 action =
 ;;
 
 
-let parse_statement status = 
+let parse_statement status =
   parse_statement status#parser_db
 
 (* vim:set foldmethod=marker: *)

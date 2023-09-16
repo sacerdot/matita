@@ -1,3 +1,5 @@
+*.exe
+_build
 matita/broken_contribs/lambdadelta/bin/*/_build
 matita/broken_contribs/lambdadelta/.depend
 matita/broken_contribs/lambdadelta/bin/recomm/srcs

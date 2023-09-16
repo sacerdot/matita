@@ -47,7 +47,7 @@ fun s ->
 ;;
 
 let eq = (==);;
-let compare (n1,_) (n2,_) = n2 - n1;;
+let compare (n1,_) (n2,_) = n2 - n1;; (* we compare by age *)
 let hash (n,_) = n;;
 
 module HT = struct

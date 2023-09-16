@@ -11,6 +11,8 @@
 
 (* $Id: orderings.ml 9869 2009-06-11 22:52:38Z denes $ *)
 
+val max_steps: int ref
+
 module type Paramod =
   sig
     type t

@@ -121,7 +121,7 @@ let pp_unit_clause ~formatter:f c =
           Format.fprintf f "@]"
 ;;
 
-let pp_bag ~formatter:f (_,bag) = 
+let pp_bag ~formatter:f (_,bag) =
   Format.fprintf f "@[<v>";
   Terms.M.iter 
   (fun _ (c,d,_) -> pp_unit_clause ~formatter:f c;
