@@ -93,22 +93,36 @@ share_root: [
   "_build/install/default/share/matita/myshare/lib/basics/core_notation.ma" {"matita/myshare/lib/basics/core_notation.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/apart_2.ma" {"matita/myshare/lib/basics/core_notation/apart_2.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/card_1.ma" {"matita/myshare/lib/basics/core_notation/card_1.ma"}
-  "_build/install/default/share/matita/myshare/lib/basics/core_notation/compose_2.ma" {"matita/myshare/lib/basics/core_notation/compose_2.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/complexes_0.ma" {"matita/myshare/lib/basics/core_notation/complexes_0.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/compose_5.ma" {"matita/myshare/lib/basics/core_notation/compose_5.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/comprehension_2.ma" {"matita/myshare/lib/basics/core_notation/comprehension_2.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/downarrow_1.ma" {"matita/myshare/lib/basics/core_notation/downarrow_1.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/eq_3.ma" {"matita/myshare/lib/basics/core_notation/eq_3.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/exp_2.ma" {"matita/myshare/lib/basics/core_notation/exp_2.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/fact_1.ma" {"matita/myshare/lib/basics/core_notation/fact_1.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/fintersects_2.ma" {"matita/myshare/lib/basics/core_notation/fintersects_2.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/funion_2.ma" {"matita/myshare/lib/basics/core_notation/funion_2.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/hide_1.ma" {"matita/myshare/lib/basics/core_notation/hide_1.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/imply_2.ma" {"matita/myshare/lib/basics/core_notation/imply_2.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/integers_0.ma" {"matita/myshare/lib/basics/core_notation/integers_0.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/invert_1.ma" {"matita/myshare/lib/basics/core_notation/invert_1.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/invert_appl_2.ma" {"matita/myshare/lib/basics/core_notation/invert_appl_2.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/napart_2.ma" {"matita/myshare/lib/basics/core_notation/napart_2.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/naturals_0.ma" {"matita/myshare/lib/basics/core_notation/naturals_0.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/neutral_0.ma" {"matita/myshare/lib/basics/core_notation/neutral_0.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/overlaps_2.ma" {"matita/myshare/lib/basics/core_notation/overlaps_2.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/pair_2.ma" {"matita/myshare/lib/basics/core_notation/pair_2.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/product_2.ma" {"matita/myshare/lib/basics/core_notation/product_2.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/rationals_0.ma" {"matita/myshare/lib/basics/core_notation/rationals_0.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/reals_0.ma" {"matita/myshare/lib/basics/core_notation/reals_0.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/singl_1.ma" {"matita/myshare/lib/basics/core_notation/singl_1.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/sqrt_1.ma" {"matita/myshare/lib/basics/core_notation/sqrt_1.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/subset_1.ma" {"matita/myshare/lib/basics/core_notation/subset_1.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/subseteq_2.ma" {"matita/myshare/lib/basics/core_notation/subseteq_2.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/uminus_1.ma" {"matita/myshare/lib/basics/core_notation/uminus_1.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/uparrow_1.ma" {"matita/myshare/lib/basics/core_notation/uparrow_1.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/vdash_1.ma" {"matita/myshare/lib/basics/core_notation/vdash_1.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/vdash_3.ma" {"matita/myshare/lib/basics/core_notation/vdash_3.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/deqlist.ma" {"matita/myshare/lib/basics/deqlist.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/deqsets.ma" {"matita/myshare/lib/basics/deqsets.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/finset.ma" {"matita/myshare/lib/basics/finset.ma"}
