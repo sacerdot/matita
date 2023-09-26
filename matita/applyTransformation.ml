@@ -23,16 +23,6 @@
  * http://cs.unibo.it/helm/.
  *)
 
-(***************************************************************************)
-(*                                                                         *)
-(*                               PROJECT HELM                              *)
-(*                                                                         *)
-(*                   Andrea Asperti <asperti@cs.unibo.it>                  *)
-(*                                21/11/2003                               *)
-(*                                                                         *)
-(*                                                                         *)
-(***************************************************************************)
-
 (* $Id$ *)
 
 let use_high_level_pretty_printer = ref true;; 
@@ -107,4 +97,6 @@ let notation_pp_term status term =
    BoxPp.render_to_string ~map_unicode_to_tex:(Helm_registry.get_bool "matita.paste_unicode_as_tex")
     (function x::_ -> x | _ -> assert false) size pres
 
-let _ = NotationPp.set_pp_term (fun status y -> snd (notation_pp_term (Obj.magic status) y))
+let _ =
+  NotationPp.set_pp_term
+    (fun _status y -> snd (notation_pp_term (new status) y))

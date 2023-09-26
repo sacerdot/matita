@@ -121,7 +121,11 @@ type obj_kind =
  | Inductive of bool * int * inductiveType list * i_attr
                 (* true -> inductive, leftno, types *)
 
- (* the int must be 0 if the object has no body *)
+ (* the int (height) must be 0 if the object has no body *)
+ (* FG: where is this assumption used?
+    the height goes in the uri fragment of the object (def, fix)
+    but a def or a fix without a body does not exist
+ *)
 type obj = NUri.uri * int * metasenv * substitution * obj_kind
 
 (* pretty-printing *)
