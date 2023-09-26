@@ -1,10 +1,9 @@
 H=@
 
-#FG matex renders lamdba-terms to LaTeX
-#FG matitadep exports the dependencies of .ma files
-#FG probe returns statistics on compiled files
-#FG xoa generates matita files for n-ary logical operators/quantifiers
-BINARIES=matex matitadep probe xoa
+#CSC: saturate is broken after the huge refactoring of auto/paramodulation
+#CSC: by Andrea
+#CSC: the others have not been maintained for a while or they are now useless
+BINARIES=
 
 all: $(BINARIES:%=rec@all@%) 
 opt: $(BINARIES:%=rec@opt@%)
