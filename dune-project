@@ -40,6 +40,7 @@
                               ; in components/ocaml_http_stubs
    (camlzip (>= 1.11))
    (lablgtk3-sourceview3 (>= 3.1.3))
+   (cairo2 (>= 0.6.4))
    dune-build-info
    dune-site
    (camlp5 (>= 8.00.04)))
