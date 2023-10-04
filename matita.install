@@ -9,6 +9,7 @@ bin: [
   "_build/install/default/bin/matitac"
   "_build/install/default/bin/matitaclean"
   "_build/install/default/bin/matitadep"
+  "_build/install/default/bin/matitalsp"
   "_build/install/default/bin/probe"
   "_build/install/default/bin/xoa"
 ]
