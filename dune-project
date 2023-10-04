@@ -11,14 +11,11 @@
 (source
  (github sacerdot/matita))
 
-(authors "HELM Team (Andrea Asperti, Ferruccio Guidi, Luca Padovani, Claudio Sacerdoti Coen, Enrico Tassi, Stefano Zacchiroli et alt.)")
+(authors "HELM Team" "Andrea Asperti" "Ferruccio Guidi" "Luca Padovani" "Claudio Sacerdoti Coen" "Enrico Tassi" "Stefano Zacchiroli")
 
 (maintainers "Claudio Sacerdoti Coen")
 
 (license GPL-2.0-or-later)
-
-
-(bug_reports "mailto:claudio.sacerdoticoen@unibo.it")
 
 (homepage http://matita.cs.unibo.it)
 
