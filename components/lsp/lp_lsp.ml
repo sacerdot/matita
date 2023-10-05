@@ -108,7 +108,6 @@ let grab_doc params =
     Hashtbl.(find doc_table doc_file, find completed_table doc_file) in
   doc_file, start_doc, end_doc
 
-(*
 let mk_syminfo file (name, _path, kind, pos) : J.t =
   `Assoc [
     "name", `String name;
@@ -125,6 +124,7 @@ let mk_definfo file pos =
     ; "range", LSP.mk_range pos
         ]
 
+(*
 let kind_of_type tm =
   let open Term in
   let open Timed in
