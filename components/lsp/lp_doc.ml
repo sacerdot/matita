@@ -16,20 +16,68 @@ open Lplib
 *)
 
 module LSP = Lsp_base
+module LIO = Lsp_io
+
+(* Buffer for storing the log messages *)
+let lp_logger = Buffer.create 100
 
 module Pure =
 struct
-  type state = [`State]
+  type state = GrafiteTypes.status
   type goal = [`Goal]
 
-  let initial_state : string -> state = fun _path -> `State
+  let initial_state : string -> state =
+   fun _path ->
+    let baseuri = "cic://foo" (*XXX*) in
+    new MatitaEngine.status baseuri
 
   module Command =
   struct
-    type t = [`Command]
+    type t = GrafiteAst.statement
+
+    let get_pos : t -> Pos.popt = fun _ -> None (*XXX*)
   end
 
-  let parse_text : state -> fname:string -> string -> Command.t list * state = fun _ ~fname:_ _text -> [],`State
+    (** raised when one of the script margins (top or bottom) is reached *)
+  exception Margin
+
+  let only_dust_RE = Pcre.regexp "^(\\s|\n|%%[^\n]*\n)*$"
+
+  let parse_text : state -> fname:string -> string -> Command.t list * state =
+   fun status ~fname text ->
+    let include_paths =
+      MatitaEngine.read_include_paths ~include_paths:[] fname @
+       Helm_registry.get_list Helm_registry.string "matita.includes" in (*XXX inefficient, precompute and store*)
+    LIO.log_object "include_paths" (`String (String.concat "##" include_paths)) ;
+    if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
+    let strm =
+     GrafiteParser.parsable_statement status
+      (Sedlexing.Utf8.from_string text) in
+    let ast = MatitaEngine.get_ast status include_paths strm in
+    [ast], status
+
+  let handle_command : state -> Command.t -> state list =
+   fun status ast ->
+     match ast with
+      | GrafiteAst.Executable (_loc, _ex) ->
+         let include_paths =
+          Helm_registry.get_list Helm_registry.string "matita.includes" in (*XXX only standard lib, inefficient, precompute and store*)
+         LIO.log_object "include_paths" (`String (String.concat "##" include_paths)) ;
+         let text = "" in (*XXX*)
+         let prefix_len = 0 in (*XXX*)
+         let status_aliases =
+          try
+           MatitaEngine.eval_ast ~include_paths
+            ~do_heavy_checks:(Helm_registry.get_bool "matita.do_heavy_checks")
+            status (text,prefix_len,ast)
+          with
+           | MatitaTypes.Cancel -> assert false (*XXX*)
+           | GrafiteEngine.NMacro (_loc,_macro) -> assert false (*XXX*) in
+         LIO.log_object "handle_command" (`String ("## OK " ^ string_of_int (List.length status_aliases))) ;
+         List.map fst status_aliases
+      | GrafiteAst.Comment _ -> assert false (*XXX*)
+
+
   let rangemap : Command.t list -> unit = fun _cmds -> ()
 
   exception Parse_error of Pos.pos * string
@@ -37,9 +85,6 @@ struct
 end
 
 (* exception NoPosition of string *)
-
-(* Buffer for storing the log messages *)
-let lp_logger = Buffer.create 100
 
 type doc_node =
   { ast   : Pure.Command.t
@@ -71,11 +116,11 @@ let option_default o1 d =
 let mk_error ~doc pos msg =
   LSP.mk_diagnostics ~uri:doc.uri ~version:doc.version [pos, 1, msg, None]
 
-  (*
 let buf_get_and_clear buf =
   let res = Buffer.contents buf in
   Buffer.clear buf; res
 
+  (*
 let process_pstep (pstate,diags,logs) tac nb_subproofs =
   let open Pure in
   let tac_loc = Tactic.get_pos tac in
@@ -105,24 +150,32 @@ let get_goals dg_proof =
 *)
 
 (* XXX: Imperative problem *)
-let process_cmd _file (nodes,st,dg,logs) ast =
+let process_cmd _file (nodes,status,dg,logs) ast =
   (*XXXX*)
-    let cmd_loc = Some Pos.cscdummy in
+  (*
+    let cmd_loc = None in
     let qres = "OK" in
     let nodes = { ast; exec = true; goals = [] } :: nodes in
     let ok_diag = cmd_loc, 4, qres, None in
-    nodes, st, ok_diag :: dg, logs
+    nodes, status, ok_diag :: dg, logs
+  *)
   (*/XXX*)
-  (*
   let open Pure in
   (* let open Timed in *)
   (* XXX: Capture output *)
   (* Console.out_fmt := lp_fmt;
    * Console.err_fmt := lp_fmt; *)
   let cmd_loc = Command.get_pos ast in
-  let hndl_cmd_res = handle_command st ast in
+  let hndl_cmd_res = handle_command status ast in
   let logs = ((3, buf_get_and_clear lp_logger), cmd_loc) :: logs in
   match hndl_cmd_res with
+    [status] ->
+     let qres = "OK" in (*XXX match qres with None -> "OK" | Some x -> x in *)
+     let nodes = { ast; exec = true; goals = [] } :: nodes in
+     let ok_diag = cmd_loc, 4, qres, None in
+     nodes, status, ok_diag :: dg, logs
+  | _ -> assert false (*XXX*)
+  (*
   | Cmd_OK (st, qres) ->
     let qres = match qres with None -> "OK" | Some x -> x in
     let nodes = { ast; exec = true; goals = [] } :: nodes in
@@ -153,7 +206,7 @@ let process_cmd _file (nodes,st,dg,logs) ast =
     let nodes = { ast; exec = false; goals = [] } :: nodes in
     let loc = option_default loc Command.(get_pos ast) in
     nodes, st, (loc, 1, msg, None) :: dg, ((1, msg), loc) :: logs
-*)
+  *)
 
 let new_doc ~uri ~version ~text =
   let root =
@@ -187,6 +240,7 @@ let dummy_loc =
 *)
 
 let check_text ~doc =
+  LIO.log_object "CSC check_text" (`String doc.text) ;
   let uri, version = doc.uri, doc.version in
   try
     let cmds =

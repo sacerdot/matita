@@ -34,15 +34,11 @@ let mk_reply ~id ~result =
 let mk_event m p   =
   `Assoc [ "jsonrpc", `String "2.0"; "method", `String m; "params", `Assoc p ]
 
-let mk_range (_p : Pos.pos) : J.t = assert false (*XXX*)
-(*
+let mk_range (p : Pos.pos) : J.t =
   let open Pos in
-  let {start_line=line1; start_col=col1; end_line=line2; end_col=col2; _} =
-    p
-  in
+  let {start_line=line1; start_col=col1; end_line=line2; end_col=col2; _} = p in
   `Assoc ["start", `Assoc ["line", `Int (line1 - 1); "character", `Int col1];
           "end",   `Assoc ["line", `Int (line2 - 1); "character", `Int col2]]
-*)
 
 let json_of_goal _ = assert false (*XXX*)
 (*
@@ -76,8 +72,7 @@ let json_of_goals ?logs goals =
     ]
 
 let mk_diagnostic
-      ((_p : Pos.pos), (_lvl : int), (_msg : string), (_goals : _ option)) : J.t = assert false (*XXX*)
-(*
+      ((p : Pos.pos), (lvl : int), (msg : string), (goals : _ option)) : J.t =
   let goals = json_of_goals goals in
   let range = mk_range p in
   `Assoc (mk_extra ["goal_info", goals] @
@@ -85,7 +80,6 @@ let mk_diagnostic
            "severity", `Int lvl;
            "message",  `String msg;
           ])
-*)
 
 let mk_diagnostics ~uri ~version ld : J.t =
   let extra = mk_extra ["version", `Int version] in

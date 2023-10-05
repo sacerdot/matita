@@ -1,7 +1,7 @@
 (library
  (name matita_cli)
  (wrapped false)
- (libraries helm_grafite_engine helm_lsp lablgtk3-sourceview3 dune-build-info dune-site)
+ (libraries helm_grafite_engine lablgtk3-sourceview3 dune-build-info dune-site)
  (modules 
    mysites buildTimeConf matitaTypes matitaMiscCli applyTransformation matitaEngine matitaExcPp matitaInit))
 
@@ -25,11 +25,18 @@
    matitaGuiInit matitaGeneratedGui lablGraphviz matitaGuiTypes matitaMisc matitaGtkMisc virtuals cicMathView predefined_virtuals matitaMathView matitaScript matitaGui matita))
 
 (executables
- (names matitalsp matitac matitaclean)
- (public_names matitalsp matitac matitaclean)
+ (names matitac matitaclean)
+ (public_names matitac matitaclean)
  (promote (until-clean)) 
  (libraries matita_cli)
- (modules matitalsp matitac matitaclean))
+ (modules matitac matitaclean))
+
+(executables
+ (names matitalsp)
+ (public_names matitalsp)
+ (promote (until-clean)) 
+ (libraries helm_lsp)
+ (modules matitalsp))
 
 (install
  (section (site (matita myshare)))

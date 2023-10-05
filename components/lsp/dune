@@ -1,6 +1,6 @@
 (library
  (name helm_lsp)
- (libraries helm_grafite_engine yojson)
+ (libraries matita_cli yojson)
  (wrapped false))
 (env
   (_
