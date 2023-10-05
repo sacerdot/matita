@@ -100,7 +100,6 @@ let do_close _ofmt params =
   let doc_file = string_field "uri" document in
   Hashtbl.remove doc_table doc_file
 
-(*
 let grab_doc params =
   let document = dict_field "textDocument" params in
   let doc_file = string_field "uri" document in
@@ -109,6 +108,7 @@ let grab_doc params =
     Hashtbl.(find doc_table doc_file, find completed_table doc_file) in
   doc_file, start_doc, end_doc
 
+(*
 let mk_syminfo file (name, _path, kind, pos) : J.t =
   `Assoc [
     "name", `String name;
@@ -139,9 +139,8 @@ let kind_of_type tm =
     12                         (* Function *)
 *)
 
-let do_symbols _ofmt ~id:_ _params =
-  assert false (*XXX*)
-(*
+let do_symbols ofmt ~id _params =
+  let sym = [] in (*XXX
   let file, _, doc = grab_doc params in
   let sym = Pure.get_symbols doc.final in
   let sym =
@@ -155,6 +154,7 @@ let do_symbols _ofmt ~id:_ _params =
           (fun p -> mk_syminfo file
               (s.sym_name, s.sym_path, kind_of_type s, p) :: l) l s.sym_pos)
       sym [] in
+*)
   let msg = LSP.mk_reply ~id ~result:(`List sym) in
   LIO.send_json ofmt msg
 
@@ -170,6 +170,7 @@ let get_textPosition params =
   let line, character = int_field "line" pos, int_field "character" pos in
   line, character
 
+(*
 (** [closest_before (line, pos) objs] returns the element in [objs] with
 largest position which is before [(line, pos)]*)
 let closest_before : int * int -> ('a * Pos.popt) list ->
@@ -288,8 +289,9 @@ let get_logs ~doc ~line ~pos : string =
   String.concat "" logs
 *)
 
-let do_goals _ofmt ~id:_ _params =
-  assert false (*XXX*)
+let do_goals ofmt ~id _params =
+  let goals = None in
+  let logs = "" in (*XXX*)
   (*
   let uri, line, pos = get_docTextPosition params in
   let doc = Hashtbl.find completed_table uri in
@@ -301,6 +303,7 @@ let do_goals _ofmt ~id:_ _params =
     | _ -> line, pos in
   let goals = get_goals ~doc ~line ~pos in
   let logs = get_logs ~doc ~line ~pos in
+*) (*/XXX*)
   let result = LSP.json_of_goals goals ~logs in
   let msg = LSP.mk_reply ~id ~result in
   LIO.send_json ofmt msg
@@ -309,6 +312,7 @@ let msg_fail hdr msg =
   LIO.log_error hdr msg;
   failwith msg
 
+(*
 let get_symbol : Range.point ->
 ('a * 'b) RangeMap.t -> ('b * Range.t) option
 = fun pos doc ->
@@ -321,8 +325,8 @@ let get_symbol : Range.point ->
 *)
 
 
-let do_definition _ofmt ~id:_ _params =
-  assert false (*XXX*)
+let do_definition ofmt ~id _params =
+  let sym_info = `Null in (*XXX*)
 (*
 
   let _, _, doc = grab_doc params in
@@ -363,12 +367,13 @@ let do_definition _ofmt ~id:_ _params =
         mk_definfo
           Library.(file_of_path s.Term.sym_path ^ lp_src_extension) pos
   in
+*)
   let msg = LSP.mk_reply ~id ~result:sym_info in
   LIO.send_json ofmt msg
-*)
 
-let hover_symInfo _ofmt ~id:_ _params =
-  assert false (*XXX*)
+let hover_symInfo ofmt ~id _params =
+  let msg = LSP.mk_reply ~id ~result:`Null in
+  LIO.send_json ofmt msg (*XXX*)
 (*
   let _, _, doc = grab_doc params in
   let ln, pos = get_textPosition params in

@@ -13,9 +13,28 @@
 (*
 open Common
 open Lplib
+*)
 
 module LSP = Lsp_base
-*)
+
+module Pure =
+struct
+  type state = [`State]
+  type goal = [`Goal]
+
+  let initial_state : string -> state = fun _path -> `State
+
+  module Command =
+  struct
+    type t = [`Command]
+  end
+
+  let parse_text : state -> fname:string -> string -> Command.t list * state = fun _ ~fname:_ _text -> [],`State
+  let rangemap : Command.t list -> unit = fun _cmds -> ()
+
+  exception Parse_error of Pos.pos * string
+
+end
 
 (* exception NoPosition of string *)
 
@@ -23,14 +42,10 @@ module LSP = Lsp_base
 let lp_logger = Buffer.create 100
 
 type doc_node =
-  unit (*XXX*)
-(*
   { ast   : Pure.Command.t
   ; exec  : bool
-  (*; tactics : Proof.Tactic.t list*)
   ; goals : (Pure.goal list * Pos.popt) list
   }
-*)
 
 (* Private. A doc is a list of nodes for now. The first element in
    the list is assumed to be the tip of the document. The initial
@@ -40,8 +55,8 @@ type t = {
   uri : string;
   version: int;
   text : string;
-  mutable root  : unit; (*XXX*) (*Pure.state; (* Only mutated after parsing. *)*)
-  mutable final : unit; (*XXX*) (*Pure.state; (* Only mutated after parsing. *)*)
+  mutable root  : Pure.state; (* Only mutated after parsing. *)
+  mutable final : Pure.state; (* Only mutated after parsing. *)
   nodes : doc_node list;
   (* severity is same as LSP specifications : https://git.io/JiGAB *)
   logs : ((int * string) * Pos.popt) list; (*((severity, message), location)*)
@@ -51,10 +66,12 @@ type t = {
 (*
 let option_default o1 d =
   match o1 with | None -> d | Some x -> x
+  *)
 
 let mk_error ~doc pos msg =
   LSP.mk_diagnostics ~uri:doc.uri ~version:doc.version [pos, 1, msg, None]
 
+  (*
 let buf_get_and_clear buf =
   let res = Buffer.contents buf in
   Buffer.clear buf; res
@@ -85,8 +102,18 @@ let get_goals dg_proof =
     | (loc,_,_,None)::s ->
         let goals = (goals @ [[], loc]) in get_goals_aux goals s
   in get_goals_aux [] dg_proof
+*)
+
 (* XXX: Imperative problem *)
 let process_cmd _file (nodes,st,dg,logs) ast =
+  (*XXXX*)
+    let cmd_loc = Some Pos.cscdummy in
+    let qres = "OK" in
+    let nodes = { ast; exec = true; goals = [] } :: nodes in
+    let ok_diag = cmd_loc, 4, qres, None in
+    nodes, st, ok_diag :: dg, logs
+  (*/XXX*)
+  (*
   let open Pure in
   (* let open Timed in *)
   (* XXX: Capture output *)
@@ -132,9 +159,8 @@ let new_doc ~uri ~version ~text =
   let root =
     (* We remove the ["file://"] prefix. *)
     assert(String.is_prefix "file://" uri);
-    let _path = String.sub uri 7 (String.length uri - 7) in
-    () (*XXX*)(*
-    Pure.initial_state path*)
+    let path = String.sub uri 7 (String.length uri - 7) in
+    Pure.initial_state path
   in
   { uri;
     text;
@@ -160,9 +186,7 @@ let dummy_loc =
         }
 *)
 
-let check_text ~doc:_ =
-  (assert false : t * 'a) (*XXX*)
-(*
+let check_text ~doc =
   let uri, version = doc.uri, doc.version in
   try
     let cmds =
@@ -189,4 +213,3 @@ let check_text ~doc:_ =
   | Pure.Parse_error(loc, msg) ->
     let logs = [((1, msg), Some loc)] in
     {doc with logs}, mk_error ~doc loc msg
-*)

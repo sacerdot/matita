@@ -1,0 +1,170 @@
+{
+  "name": "matita",
+  "displayName": "matita",
+  "description": "VSCode extension for the Matita proof assistant",
+  "contributors": [
+    "Emilio Jesús Gallego Arias <e@x80.org>",
+    "Houda Mouzoun <houda.mouzoun@gmail.com>",
+    "François Lefoulon <francois.lefoulon@lilo.org>",
+    "Ashish Barnawal <ashbrnwl.2000@gmail.com>"
+  ],
+  "version": "0.2.1",
+  "publisher": "Deducteam",
+  "engines": {
+    "vscode": "^1.37.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "interactive theorem proving",
+    "dependent types",
+    "matita"
+  ],
+  "homepage": "http://matita.cs.unibo.it",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sacerdot/matita.git"
+  },
+  "activationEvents": [
+    "onLanguage:ma"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "ma",
+        "aliases": [
+          "Matita"
+        ],
+        "extensions": [
+          ".ma"
+        ],
+        "configuration": "./ma.configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ma",
+        "scopeName": "source.ma",
+        "path": "./syntaxes/ma.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "matita configuration",
+      "properties": {
+        "matita.path": {
+          "type": "string",
+          "default": "matita",
+          "description": "Path to matita binary"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.matita.restart",
+        "title": "Restart the Matita VSCode mode",
+        "category": "Matita"
+      },
+      {
+        "command": "extension.matita.fw",
+        "title": "Step Forward in a Matita proof",
+        "category": "Matita"
+      },
+      {
+        "command": "extension.matita.bw",
+        "title": "Step Backwards in a Matita proof",
+        "category": "Matita"
+      },
+      {
+        "command": "extension.matita.tc",
+        "title": "Navigate until cursor in a Matita proof",
+        "category": "Matita"
+      },
+      {
+        "command": "extension.matita.cursor",
+        "title": "Toggle navigation w/ cursor only or keybindings",
+        "category": "Matita"
+      },
+      {
+        "command": "extension.matita.reveal",
+        "title": "Toggle centered highlight",
+        "category": "Matita"
+      },
+      {
+        "command": "extension.matita.nx",
+        "title": "Go to next proof",
+        "category": "Matita"
+      },
+      {
+        "command": "extension.matita.pv",
+        "title": "Go to previous proof",
+        "category": "Matita"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "ctrl+right",
+        "command": "extension.matita.fw",
+        "when": "editorTextFocus && editorLangId == ma"
+      },
+      {
+        "key": "ctrl+left",
+        "command": "extension.matita.bw",
+        "when": "editorTextFocus && editorLangId == ma"
+      },
+      {
+        "key": "ctrl+enter",
+        "command": "extension.matita.tc",
+        "when": "editorTextFocus && editorLangId == ma"
+      },
+      {
+        "key": "ctrl+alt+c",
+        "command": "extension.matita.cursor",
+        "when": "editorTextFocus && editorLangId == ma"
+      },
+      {
+        "key": "ctrl+alt+w",
+        "command": "extension.matita.reveal",
+        "when": "editorTextFocus && editorLangId == ma"
+      },
+      {
+        "key": "shift+alt+w",
+        "command": "extension.matita.center",
+        "when": "editorTextFocus && editorLangId == ma"
+      },
+      {
+        "key": "ctrl+up",
+        "command": "extension.matita.pv",
+        "when": "editorTextFocus && editorLangId == ma"
+      },
+      {
+        "key": "ctrl+down",
+        "command": "extension.matita.nx",
+        "when": "editorTextFocus && editorLangId == ma"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "ma",
+        "path": "snippets/unicode.json"
+      }
+    ]
+  },
+  "main": "out/src/client.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^10.14.15",
+    "@types/vscode": "^1.37",
+    "typescript": "^3.3.1"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "vscode-languageclient": "5.2.1"
+  }
+}

@@ -1,2 +1,3 @@
 type pos
-type popt
+type popt = pos option
+val cscdummy : pos

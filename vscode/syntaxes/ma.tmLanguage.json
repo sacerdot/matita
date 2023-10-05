@@ -1,0 +1,82 @@
+{
+  "scopeName": "source.ma",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#tactics"
+    },
+    {
+      "include": "#signature-commands"
+    },
+    {
+      "include": "#warning"
+    },
+    {
+      "include": "#misc"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#external"
+    }
+  ],
+  "repository": {
+    "commands": {
+      "match": "\\b(abort|admit|admitted|apply|as|assert|assertnot|associative|assume|begin|builtin|coerce_rule|commutative|compute|constant|debug|end|fail|flag|focus|generalize|have|in|induction|inductive|infix|injective|left|let|notation|off|on|open|opaque|postfix|prefix|print|private|proofterm|protected|prover|prover_timeout|quantifier|refine|reflexivity|remove|require|rewrite|rule|search|sequential|simplify|symbol|symmetry|type|TYPE|unif_rule|why3|with)\\b",
+      "name": "keyword.control.ma"
+    },
+    "comments": {
+      "patterns": [
+        {
+          "begin": "//",
+          "end": "$",
+          "name": "comment.line.double-slash.ma"
+        },
+        {
+          "begin": "/\\*",
+          "end": "\\*/",
+          "name": "comment.block.ma"
+        }
+      ]
+    },
+
+    "tactics": {
+      "match": "\\b(apply|assume|fail|focus|generalize|have|induction|refine|reflexivity|remove|rewrite|simplify|solve|symmetry|why3)\\b",
+      "name": "keyword.control.tactics.ma"
+    },
+
+    "signature-commands": {
+      "match": "(coerce_rule|inductive|rule|symbol|unif_rule|with)\\s+([^\\s+]*)",
+      "captures": {
+        "1": {"name": "storage.type.ma"},
+        "2": {"name": "entity.name.function.theorem.ma"}
+      }
+    },
+
+    "external": {
+      "match": "(open|require)\\s+(([^\\s+]*\\s+)*$)",
+      "captures": {
+        "1": {"name": "storage.type.ma"},
+        "2": {"name": "entity.name.function.theorem.ma"}
+      }
+    },
+
+    "warning": {
+      "match": "\\b(abort|admit|admitted|fail)\\b",
+      "name": "keyword.control.warning.ma"
+    },
+
+    "misc": {
+      "match": "\\b(assert|assertnot|compute|print|proofterm|search|type)\\b",
+      "name": "keyword.control.query.ma"
+    },
+
+    "keywords": {
+      "match": "\\b(as|associative|begin|builtin|coerce_rule|commutative|constant|debug|end|flag|in|infix|injective|left|off|notation|on|opaque|postfix|prefix|private|protected|prover|prover_timeout|quantifier|right|sequential|TYPE|unif_rule)\\b",
+      "name": "storage.modifier.ma"
+    }
+  }
+}
