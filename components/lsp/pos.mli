@@ -8,3 +8,5 @@ type pos =
   ; end_col    : int (** Column number (utf8) of the ending point.   *) }
 
 type popt = pos option
+
+val pp : Format.formatter -> pos option -> unit

@@ -41,6 +41,7 @@ let do_initialize ofmt ~id _params =
       `Assoc ["capabilities",
        `Assoc [
           "textDocumentSync", `Int 1
+          (* means always send whole doc; 2 means incremental *)
         ; "documentSymbolProvider", `Bool true
         ; "hoverProvider", `Bool true
         ; "definitionProvider", `Bool true
@@ -103,7 +104,6 @@ let do_close _ofmt params =
 let grab_doc params =
   let document = dict_field "textDocument" params in
   let doc_file = string_field "uri" document in
-
   let start_doc, end_doc =
     Hashtbl.(find doc_table doc_file, find completed_table doc_file) in
   doc_file, start_doc, end_doc
@@ -170,7 +170,6 @@ let get_textPosition params =
   let line, character = int_field "line" pos, int_field "character" pos in
   line, character
 
-(*
 (** [closest_before (line, pos) objs] returns the element in [objs] with
 largest position which is before [(line, pos)]*)
 let closest_before : int * int -> ('a * Pos.popt) list ->
@@ -228,7 +227,7 @@ let rec get_goals ~doc ~line ~pos =
   let goals = match node with
     | None -> None
     | Some n ->
-        closest_before (line+1, pos) n.goals in
+        closest_before (line+1, pos) n.Lp_doc.goals in
   match goals with
     | None -> begin match node with
               | None   -> None
@@ -251,6 +250,7 @@ let get_first_error doc =
           acc else Some b) None doc.Lp_doc.logs
 
 let get_logs ~doc ~line ~pos : string =
+  let open Pos in
   (* DEBUG LOG START *)
   LIO.log_error "get_logs"
     (Printf.sprintf "%s:%d,%d" doc.Lp_doc.uri line pos);
@@ -287,12 +287,9 @@ let get_logs ~doc ~line ~pos : string =
       doc.Lp_doc.logs
   in
   String.concat "" logs
-*)
 
-let do_goals ofmt ~id _params =
-  let goals = None in
-  let logs = "" in (*XXX*)
-  (*
+let do_goals ofmt ~id params =
+  let open Pos in
   let uri, line, pos = get_docTextPosition params in
   let doc = Hashtbl.find completed_table uri in
   let line, pos = match get_first_error doc with
@@ -303,7 +300,6 @@ let do_goals ofmt ~id _params =
     | _ -> line, pos in
   let goals = get_goals ~doc ~line ~pos in
   let logs = get_logs ~doc ~line ~pos in
-*) (*/XXX*)
   let result = LSP.json_of_goals goals ~logs in
   let msg = LSP.mk_reply ~id ~result in
   LIO.send_json ofmt msg
