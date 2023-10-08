@@ -25,6 +25,7 @@ let lp_logger = Buffer.create 100
 
 type doc_node =
   { ast   : Pure.Command.t
+  ; pos   : Pos.pos
   ; exec  : bool
   ; goals : (Pure.goal list * Pos.popt) list
   }
@@ -87,7 +88,7 @@ let get_goals dg_proof =
   in get_goals_aux [] dg_proof
 
 (* XXX: Imperative problem *)
-let process_cmd _file (nodes,status,dg,logs) ast =
+let process_cmd text _file (nodes,status,dg,logs) ast =
   (*XXXX*)
   (*
     let cmd_loc = None in
@@ -102,20 +103,20 @@ let process_cmd _file (nodes,status,dg,logs) ast =
   (* XXX: Capture output *)
   (* Console.out_fmt := lp_fmt;
    * Console.err_fmt := lp_fmt; *)
-  let cmd_loc = Command.get_pos ast in
+  let cmd_loc = Command.pos_of_loc text (Command.get_loc ast) in
   let hndl_cmd_res = handle_command status ast in
-  let logs = ((3, buf_get_and_clear lp_logger), cmd_loc) :: logs in
+  let logs = ((3, buf_get_and_clear lp_logger), Some cmd_loc) :: logs in
   match hndl_cmd_res with
     `Ok [status] ->
      let qres = "OK" in (*XXX match qres with None -> "OK" | Some x -> x in *)
      let goals = Pure.get_goals status in
      let goals = [goals, None] in (*XXX ??*)
-     let nodes = { ast; exec = true; goals } :: nodes in
-     let ok_diag = cmd_loc, 4, qres, None in
+     let nodes = { ast; pos = cmd_loc; exec = true; goals } :: nodes in
+     let ok_diag = Some cmd_loc, 4, qres, None in
      nodes, status, ok_diag :: dg, logs
   | `Ko exn ->
     let msg = Printexc.to_string exn in
-    let nodes = { ast; exec = false; goals = [] } :: nodes in
+    let nodes = { ast; pos = cmd_loc; exec = false; goals = [] } :: nodes in
     let loc = None in (*XXX let loc = option_default loc Command.(get_pos ast) in*)
     nodes, status, (loc, 1, msg, None) :: dg, ((1, msg), loc) :: logs
   | _ -> assert false (*XXX*)
@@ -192,12 +193,13 @@ let check_text ~doc =
       (* One shot state update after parsing. *)
       doc.root <- root; doc.final <- root; cmds
     in
+    LIO.log_object "CSC parsed" (`String doc.text) ;
 
     (* compute rangemap *)
     let map = Pure.rangemap cmds in
 
     let nodes, final, diag, logs =
-      List.fold_left (process_cmd uri) ([],doc.root,[],[]) cmds in
+      List.fold_left (process_cmd doc.text uri) ([],doc.root,[],[]) cmds in
     let logs = List.rev logs in
     let doc = { doc with nodes; final; map; logs } in
     doc,
@@ -211,9 +213,19 @@ let check_text ~doc =
   | Pure.Parse_error(loc, msg) ->
     let logs = [((1, msg), Some loc)] in
     {doc with logs}, mk_error ~doc loc msg
+  | HExtlib.Localized (loc, exn) ->
+    let aaa = Ploc.string_of_location loc in
+    LIO.log_object "BEFORE POS_OF_LOC" (`String ".") ;
+    let loc = Pure.Command.pos_of_loc doc.text loc in (*XXX*)
+    LIO.log_object "AFTER POS_OF_LOC" (`String ".") ;
+    let msg = Printexc.to_string exn in
+    LIO.log_object "CSC error localized" (`String (aaa ^ " :: " ^ msg)) ;
+    let logs = [((0, msg), Some loc)] in
+    {doc with logs}, mk_error ~doc loc msg
   | exn ->
     let loc = (*XXX*)
-     { Pos.fname = None ; start_line = 0 ; start_col = 0 ; end_line = 100 ; end_col = 100 } in
+     { Pos.fname = None ; start_line = 1 ; start_col = 3 ; end_line = 2 ; end_col = 10 } in
     let msg = Printexc.to_string exn in
-    let logs = [((1, msg), Some loc)] in
+    LIO.log_object "CSC error NOT localized" (`String msg) ;
+    let logs = [((0, msg), Some loc)] in
     {doc with logs}, mk_error ~doc loc msg

@@ -213,8 +213,8 @@ let in_range ?loc (line, pos) =
 
 let get_node_at_pos doc line pos =
   let open Lp_doc in
-  List.find_opt (fun { ast; _ } ->
-      let loc = Pure.Command.get_pos ast in
+  List.find_opt (fun { pos=loc; _ } ->
+      let loc = Some loc in
       let res = in_range ?loc (line,pos) in
       let ls = Format.asprintf "%B l:%d p:%d / %a "
                  res line pos Pos.pp loc in

@@ -7,7 +7,8 @@ exception Parse_error of Pos.pos * string
 
 module Command : sig
  type t
- val get_pos : t -> Pos.popt
+ val get_loc : t -> Ploc.t
+ val pos_of_loc : text:string -> Ploc.t -> Pos.pos
 end
 
 val initial_state : string -> state
