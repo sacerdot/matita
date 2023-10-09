@@ -212,6 +212,7 @@ let in_range ?loc (line, pos) =
     (compare (end_line, end_col) (line, pos)) <= 0
 
 let get_node_at_pos doc line pos =
+  LIO.log_object "GET_NODE_AT_POS" (`String (Printf.sprintf "%d:%d" line pos));
   let open Lp_doc in
   List.find_opt (fun { pos=loc; _ } ->
       let loc = Some loc in
@@ -298,10 +299,12 @@ let do_goals ofmt ~id params =
       if compare (eline, epos) (line, pos) <= 0 then
         eline, epos else line, pos
     | _ -> line, pos in
+  LIO.log_object "DO_GOALS" (`String (Printf.sprintf "%d:%d" line pos));
   let goals = get_goals ~doc ~line ~pos in
   let logs = get_logs ~doc ~line ~pos in
   let result = LSP.json_of_goals goals ~logs in
   let msg = LSP.mk_reply ~id ~result in
+  LIO.log_object "DO_GOALS ANSWER" (`String (Printf.sprintf "%s:%s" (if goals = None then "none" else "some") logs));
   LIO.send_json ofmt msg
 
 let msg_fail hdr msg =

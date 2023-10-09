@@ -1,11 +1,21 @@
 module LIO = Lsp_io
 
 type state = GrafiteTypes.status
-type goal = int * NCic.conjecture
+type goal = string * (string * string) list * string
 
 let get_goals (status : #GrafiteTypes.status) =
- let _,_,metasenv,_,_ = status#obj in
- metasenv
+ let _,_,metasenv,subst,_ = status#obj in
+ List.map
+  ( fun (n,(_,ctx,ty)) ->
+     "?" ^ string_of_int n,
+     List.rev (fst (List.fold_right
+      (fun ((n,dod) as hyp) (res,ctx) ->
+        match dod with
+         | NCic.Decl ty -> (n, status#ppterm ~context:ctx ~subst ~metasenv ty)::res,hyp::ctx
+         | NCic.Def (ty,bo) -> (n, status#ppterm ~context:ctx ~subst ~metasenv ty ^ " := " ^ status#ppterm ~context:ctx ~subst ~metasenv bo)::res,hyp::ctx
+      ) ctx ([],[]))),
+     status#ppterm ~context:ctx ~subst ~metasenv ty
+  ) metasenv
 
 let initial_state : string -> state =
  fun _path ->

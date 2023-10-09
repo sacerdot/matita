@@ -1,5 +1,5 @@
 type state
-type goal
+type goal = string * (string * string) list * string
 
 val get_goals : state -> goal list
 

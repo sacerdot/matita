@@ -77,6 +77,7 @@ let process_proof pstate tacs logs =
   Pure.ProofTree.fold process_pstep (pstate,[],logs) tacs
 *)
 
+(*
 let get_goals dg_proof =
   let rec get_goals_aux goals dg_proof =
     match dg_proof with
@@ -86,6 +87,7 @@ let get_goals dg_proof =
     | (loc,_,_,None)::s ->
         let goals = (goals @ [[], loc]) in get_goals_aux goals s
   in get_goals_aux [] dg_proof
+*)
 
 (* XXX: Imperative problem *)
 let process_cmd text _file (nodes,status,dg,logs) ast =
@@ -110,7 +112,8 @@ let process_cmd text _file (nodes,status,dg,logs) ast =
     `Ok [status] ->
      let qres = "OK" in (*XXX match qres with None -> "OK" | Some x -> x in *)
      let goals = Pure.get_goals status in
-     let goals = [goals, None] in (*XXX ??*)
+     let goals = [goals, Some cmd_loc] in (*XXX ?? Some cmd_loc ?? *)
+     LIO.log_object "GOALS" (`Int (List.length goals)) ;
      let nodes = { ast; pos = cmd_loc; exec = true; goals } :: nodes in
      let ok_diag = Some cmd_loc, 4, qres, None in
      `Ok, nodes, status, ok_diag :: dg, logs
