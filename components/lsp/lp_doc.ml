@@ -113,12 +113,11 @@ let process_cmd text _file (nodes,status,dg,logs) ast =
      let goals = [goals, None] in (*XXX ??*)
      let nodes = { ast; pos = cmd_loc; exec = true; goals } :: nodes in
      let ok_diag = Some cmd_loc, 4, qres, None in
-     nodes, status, ok_diag :: dg, logs
+     `Ok, nodes, status, ok_diag :: dg, logs
   | `Ko exn ->
-    let msg = Printexc.to_string exn in
+    let _,msg = MatitaExcPp.to_string exn in
     let nodes = { ast; pos = cmd_loc; exec = false; goals = [] } :: nodes in
-    let loc = None in (*XXX let loc = option_default loc Command.(get_pos ast) in*)
-    nodes, status, (loc, 1, msg, None) :: dg, ((1, msg), loc) :: logs
+    `Ko, nodes, status, (Some cmd_loc, 1, msg, None) :: dg, ((1, msg), Some cmd_loc) :: logs
   | _ -> assert false (*XXX*)
   (*
   | Cmd_OK (st, qres) ->
@@ -197,11 +196,12 @@ let check_text ~doc =
      doc.final <- final;
      (* compute rangemap *)
      let map = Pure.rangemap map cmd in
-     let nodes', final, diag', logs' = process_cmd doc.text uri ([],doc.final,[],[]) cmd in
-     aux (nodes'@nodes,final,diag'@diag,logs'@logs,map)
+     let continue, nodes', final, diag', logs' = process_cmd doc.text uri ([],doc.final,[],[]) cmd in
+     match continue with
+      | `Ok -> aux (nodes'@nodes,final,diag'@diag,logs'@logs,map)
+      | `Ko -> nodes',final,diag',logs',map
     with
-     | End_of_file -> res
-  in
+     | End_of_file -> res in
    let nodes,final,diag,logs,map= aux ([],doc.root,[],[],()) in
    let logs = List.rev logs in
    let doc = { doc with nodes; final; map; logs } in
@@ -221,14 +221,14 @@ let check_text ~doc =
     LIO.log_object "BEFORE POS_OF_LOC" (`String ".") ;
     let loc = Pure.Command.pos_of_loc doc.text loc in (*XXX*)
     LIO.log_object "AFTER POS_OF_LOC" (`String ".") ;
-    let msg = Printexc.to_string exn in
+    let _,msg = MatitaExcPp.to_string exn in
     LIO.log_object "CSC error localized" (`String (aaa ^ " :: " ^ msg)) ;
     let logs = [((0, msg), Some loc)] in
     {doc with logs}, mk_error ~doc loc msg
   | exn ->
     let loc = (*XXX*)
      { Pos.fname = None ; start_line = 1 ; start_col = 3 ; end_line = 2 ; end_col = 10 } in
-    let msg = Printexc.to_string exn in
+    let _,msg = MatitaExcPp.to_string exn in
     LIO.log_object "CSC error NOT localized" (`String msg) ;
     let logs = [((0, msg), Some loc)] in
     {doc with logs}, mk_error ~doc loc msg

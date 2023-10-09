@@ -80,10 +80,10 @@ let mk_parse_text : state -> fname:string -> string -> state * (state -> state *
     status, ast
    with
     | (HExtlib.Localized _ | End_of_file) as exn ->
-       LIO.log_object "EXCEPTION" (`String ("2: " ^ Printexc.to_string exn)) ;
+       LIO.log_object "PARSING EXCEPTION" (`String ("2: " ^ snd (MatitaExcPp.to_string exn))) ;
        raise exn
     | exn ->
-       LIO.log_object "EXCEPTION " (`String ("3: " ^ Printexc.to_string exn)) ;
+       LIO.log_object "PARSING EXCEPTION " (`String ("3: " ^ snd (MatitaExcPp.to_string exn))) ;
        (*CSC: XXX wrong! *)
        let strm = GrafiteParser.parsable_statement status (Sedlexing.Utf8.from_string text) in
        let ast = GrafiteParser.parse_statement status strm in
@@ -113,8 +113,12 @@ let handle_command : state -> Command.t -> [`Ok of state list | `Ko of exn] =
        `Ok (List.map fst status_aliases)
     | GrafiteAst.Comment _ -> assert false (*XXX*)
   with
-   | HExtlib.Localized _ as exn -> `Ko exn
-   | exn -> `Ko (HExtlib.Localized (Command.get_loc ast,exn))
+   | HExtlib.Localized _ as exn ->
+       LIO.log_object "HANDLE EXCEPTION" (`String ("2: " ^ snd (MatitaExcPp.to_string exn))) ;
+      `Ko exn
+   | exn ->
+       LIO.log_object "HANDLE EXCEPTION" (`String ("2: " ^ snd (MatitaExcPp.to_string exn))) ;
+      `Ko (HExtlib.Localized (Command.get_loc ast,exn))
 
 
 let rangemap : unit -> Command.t -> unit = fun () _cmds -> ()
