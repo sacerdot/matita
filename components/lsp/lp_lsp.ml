@@ -516,6 +516,13 @@ let process_input ofmt (com : J.t) =
     LIO.log_error "[BT]" bt;
     LIO.log_error "process_input" (Printexc.to_string exn)
 
+let helm_logger severity msg =
+ match severity with
+  | `Debug -> LIO.log_object "[Debug]" (`String msg) ;
+  | `Error -> LIO.log_error "[Error]" msg ;
+  | `Message -> LIO.log_object "[Message]" (`String msg) ;
+  | `Warning -> LIO.log_object "[Warning]" (`String msg)
+
 let main std log_file =
   Printexc.record_backtrace true;
   LSP.std_protocol := std;
@@ -531,6 +538,8 @@ let main std log_file =
   Console.out_fmt := lp_fmt;
   Error.err_fmt := lp_fmt;
   (* Console.verbose := 4; *)
+
+  HLog.set_log_callback helm_logger ;
 
   let rec loop () =
     let com = LIO.read_request stdin in

@@ -185,30 +185,33 @@ let dummy_loc =
 *)
 
 let check_text ~doc =
-  LIO.log_object "CSC check_text" (`String doc.text) ;
+  (*debug: LIO.log_object "CSC check_text" (`String doc.text) ;*)
   let uri, version = doc.uri, doc.version in
   try
-    let cmds =
-      let (cmds, root) = Pure.parse_text doc.root ~fname:uri doc.text in
-      (* One shot state update after parsing. *)
-      doc.root <- root; doc.final <- root; cmds
-    in
-    LIO.log_object "CSC parsed" (`String doc.text) ;
-
-    (* compute rangemap *)
-    let map = Pure.rangemap cmds in
-
-    let nodes, final, diag, logs =
-      List.fold_left (process_cmd doc.text uri) ([],doc.root,[],[]) cmds in
-    let logs = List.rev logs in
-    let doc = { doc with nodes; final; map; logs } in
-    doc,
-    LSP.mk_diagnostics ~uri ~version @@
-    List.fold_left (fun acc (pos,lvl,msg,goal) ->
-        match pos with
-        | None     -> acc
-        | Some pos -> (pos,lvl,msg,goal) :: acc
-      ) [] diag
+   let status,parse = Pure.mk_parse_text doc.root ~fname:uri doc.text in
+   doc.root <- status ; doc.final <- status ;
+   let rec aux ((nodes,final,diag,logs,map) as res) =
+    (*debug: LIO.log_object "AUX" (`String " ") ;*)
+    try
+     let (final, cmd) = parse final in
+     doc.final <- final;
+     (* compute rangemap *)
+     let map = Pure.rangemap map cmd in
+     let nodes', final, diag', logs' = process_cmd doc.text uri ([],doc.final,[],[]) cmd in
+     aux (nodes'@nodes,final,diag'@diag,logs'@logs,map)
+    with
+     | End_of_file -> res
+  in
+   let nodes,final,diag,logs,map= aux ([],doc.root,[],[],()) in
+   let logs = List.rev logs in
+   let doc = { doc with nodes; final; map; logs } in
+   doc,
+   LSP.mk_diagnostics ~uri ~version @@
+   List.fold_left (fun acc (pos,lvl,msg,goal) ->
+       match pos with
+       | None     -> acc
+       | Some pos -> (pos,lvl,msg,goal) :: acc
+     ) [] diag
   with
   | Pure.Parse_error(loc, msg) ->
     let logs = [((1, msg), Some loc)] in
