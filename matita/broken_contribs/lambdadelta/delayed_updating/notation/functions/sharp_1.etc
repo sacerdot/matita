@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( a ∗∗ break b )"
-  left associative with precedence 65
-  for @{ 'Power $a $b }.
+notation "hvbox( ♯ break term 70 p )"
+  non associative with precedence 70
+  for @{ 'Sharp $p }.

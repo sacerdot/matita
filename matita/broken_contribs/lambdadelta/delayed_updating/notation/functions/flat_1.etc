@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
 notation "hvbox( ♭ break term 70 p )"
   non associative with precedence 70

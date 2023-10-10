@@ -12,12 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path.ma".
-include "ground/lib/list_singleton_rcons.ma".
-include "ground/notation/functions/power_2.ma".
+include "delayed_updating/unwind_n/preunwind2_rmap.ma".
+include "ground/relocation/tr_pap_eq.ma".
+include "ground/relocation/tr_pn_eq.ma".
 
-(* SINGLETON FOR PATH *******************************************************)
+(* TAILED PREUNWIND FOR RELOCATION MAP **************************************)
 
-interpretation
-  "singleton (path)"
-  'Power l n = (list_singleton n label l).
+(* Constructions with tr_map_eq *********************************************)
+
+lemma preunwind2_rmap_eq_repl (l):
+      stream_eq_repl … (λf1,f2. ▶[f1]l ≗ ▶[f2]l).
+* // #k #f1 #f2 #Hf
+<preunwind2_rmap_d <preunwind2_rmap_d
+<(tr_pap_eq_repl … Hf) -Hf //
+qed-.

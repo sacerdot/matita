@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "ground/arith/nat_plus.ma".
+include "delayed_updating/notation/functions/sharp_1.ma".
 include "delayed_updating/syntax/path.ma".
-include "ground/notation/functions/sharp_1.ma".
 
 (* HEIGHT FOR PATH **********************************************************)
 

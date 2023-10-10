@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path.ma".
 include "ground/arith/nat_plus.ma".
-include "ground/notation/functions/flat_1.ma".
+include "delayed_updating/notation/functions/flat_1.ma".
+include "delayed_updating/syntax/path.ma".
 
 (* DEPTH FOR PATH ***********************************************************)
 
