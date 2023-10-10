@@ -425,13 +425,14 @@ function checkProofUntilCursor(context : ExtensionContext) {
     
     //The current position of the cursor
     let cursorPosition : Position =  openEditor.selection.active;    
-    if (proofState.line == cursorPosition.line) 
+    //CSC if (proofState.line == cursorPosition.line) 
+    if (proofState == cursorPosition) 
         return;
     
-    //To simplify the code, proof states are always at the beggining of the highlighted line
-    //So must be the cursor position since it is the new proof state
-    if (cursorPosition.character != 0)
-        cursorPosition = new Position(cursorPosition.line, 0);
+    //CSC //To simplify the code, proof states are always at the beggining of the highlighted line
+    //CSC //So must be the cursor position since it is the new proof state
+    //CSC if (cursorPosition.character != 0)
+        //CSC cursorPosition = new Position(cursorPosition.line, 0);
     
     context.workspaceState.update('proofState', cursorPosition); //proof state is set to the cursor position
     
