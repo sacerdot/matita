@@ -188,10 +188,11 @@ let dummy_loc =
 
 let check_text ~doc =
   (*debug: LIO.log_object "CSC check_text" (`String doc.text) ;*)
+  Pure.time_travel doc.root ;
   let uri, version = doc.uri, doc.version in
   try
    let status,parse = Pure.mk_parse_text doc.root ~fname:uri doc.text in
-   doc.root <- status ; doc.final <- status ;
+   doc.final <- status ;
    let rec aux ((nodes,final,diag,logs,map) as res) =
     (*debug: LIO.log_object "AUX" (`String " ") ;*)
     try

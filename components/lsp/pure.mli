@@ -12,6 +12,7 @@ module Command : sig
 end
 
 val initial_state : string -> state
+val time_travel : state -> unit
 val mk_parse_text : state -> fname:string -> string -> state * (state -> state * Command.t)
 val handle_command : state -> Command.t -> [`Ok of state list | `Ko of exn]
 val rangemap : unit -> Command.t -> unit

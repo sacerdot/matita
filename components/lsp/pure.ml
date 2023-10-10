@@ -22,6 +22,8 @@ let initial_state : string -> state =
   let baseuri = "cic://foo" (*XXX*) in
   new MatitaEngine.status baseuri
 
+let time_travel = NCicLibrary.time_travel
+
 module Command =
 struct
   type t = GrafiteAst.statement
