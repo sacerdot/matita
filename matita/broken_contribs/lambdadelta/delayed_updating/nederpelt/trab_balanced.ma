@@ -36,7 +36,7 @@ lemma trab_des_gen (p1) (p2) (q1) (q2) (n1) (n2):
   @ex3_intro [| // ] // (**) (* auto fails *)
 | #H
   elim (IH … H) -IH -H #r #Hr1 #Hr2
-  <list_singleton_succ_rcons <path_append_append_lcons #Hr destruct
+  <list_times_succ_rcons <path_append_append_lcons #Hr destruct
   @ex3_intro [| // ] // (**) (* auto fails *)
 | @(nat_ind_succ … n1) -n1
   [ <trab_unfold_A_zero #H destruct
@@ -44,7 +44,7 @@ lemma trab_des_gen (p1) (p2) (q1) (q2) (n1) (n2):
   | #n1 #_ #H
     elim (IH … H) -IH -H #r #Hr1 #Hr2 #Hr destruct
     @ex3_intro [| // | // ]
-    <list_singleton_succ_rcons <path_append_append_lcons
+    <list_times_succ_rcons <path_append_append_lcons
     >list_append_assoc in Hr; #Hr
     lapply (pbc_insert_redex … Hr) -Hr #Hr
     /2 width=1 by pbc_empty, pbc_redex/

@@ -18,10 +18,6 @@ notation < "hvbox( term 66 f ^ break term 90 x )"
   non associative with precedence 65
   for @{ 'Exp $X $f $x }.
 
-notation > "hvbox( f ^ break term 90 x )"
+notation > "hvbox( f ^ opt ( { break term 46 X } ) break term 90 x )"
   non associative with precedence 65
-  for @{ 'Exp ? $f $x }.
-
-notation > "hvbox( f ^{ break term 46 X } break term 90 x )"
-  non associative with precedence 65
-  for @{ 'Exp $X $f $x }.
+  for @{ 'Exp ${default @{$X}@{?}} $f $x }.

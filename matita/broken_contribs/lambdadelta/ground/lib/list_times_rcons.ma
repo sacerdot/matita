@@ -13,19 +13,19 @@
 (**************************************************************************)
 
 include "ground/lib/list_rcons.ma".
-include "ground/lib/list_singleton_append.ma".
+include "ground/lib/list_times_append.ma".
 
-(* SINGLETON FOR LISTS ******************************************************)
+(* PRODUCT FOR LIST ELEMENTS ************************************************)
 
 (* Constructions with list_rcons ********************************************)
 
-lemma list_singleton_succ_rcons (A) (a) (n):
-      a^n ⨭ a = a^{A}(⁤↑n).
+lemma list_times_succ_rcons (A) (a) (n):
+      a×n ⨭ a = a×{A}(⁤↑n).
 #A #a #n
->nplus_unit_sn >list_singleton_append //
+>nplus_unit_sn >list_times_append //
 qed.
 
-lemma list_singleton_cons_shift (A) (a) (n):
-      a ⨮ a^n = a^n ⨭{A} a.
+lemma list_times_cons_shift (A) (a) (n):
+      a ⨮ a×n = a×n ⨭{A} a.
 #A #a #n //
 qed.

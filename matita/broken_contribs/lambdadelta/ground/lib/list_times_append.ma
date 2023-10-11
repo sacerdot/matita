@@ -14,14 +14,14 @@
 
 include "ground/arith/nat_plus.ma".
 include "ground/lib/list_append.ma".
-include "ground/lib/list_singleton.ma".
+include "ground/lib/list_times.ma".
 
-(* SINGLETON FOR LISTS ******************************************************)
+(* PRODUCT FOR LIST ELEMENTS ************************************************)
 
 (* Constructions with list_append *******************************************)
 
-lemma list_singleton_append (A) (a) (m) (n):
-      a^(m+n) = a^n ⨁{A} a^m.
+lemma list_times_append (A) (a) (m) (n):
+      a×(m+n) = a×n ⨁{A} a×m.
 #A #a #m #n @(nat_ind_succ … n) -n [ // | #n #IH ]
-<nplus_succ_dx <list_singleton_succ_lcons >IH -IH //
+<nplus_succ_dx <list_times_succ_lcons >IH -IH //
 qed.

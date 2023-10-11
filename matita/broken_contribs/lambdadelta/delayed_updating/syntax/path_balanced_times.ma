@@ -22,8 +22,8 @@ include "delayed_updating/syntax/path_balanced.ma".
 lemma pbc_redexes (n) (b):
       b ϵ 𝐁 → (𝗔*n)●b●(𝗟*n) ϵ 𝐁.
 #n @(nat_ind_succ … n) -n [| #n #IH ] #b #Hb
-[ <list_singleton_zero //
-| <list_singleton_succ_rcons <list_singleton_succ_lcons
+[ <list_times_zero //
+| <list_times_succ_rcons <list_times_succ_lcons
   >path_append_lcons_append <path_append_append_lcons
   /3 width=1 by pbc_redex/
 ]
