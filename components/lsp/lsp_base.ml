@@ -55,8 +55,10 @@ let json_of_goals ?logs goals =
     `Assoc [
       "logs", `String logs
     ]
-  | Some goals ->
+  | Some (goals,pos) ->
+    let range = mk_range pos in
     `Assoc [
+      "range", range;
       "goals", `List List.(map json_of_goal goals);
       "logs" , `String logs
     ]

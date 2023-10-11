@@ -447,7 +447,7 @@ function refreshGoals(panel : WebviewPanel, editor : TextEditor | undefined, pro
         return;
     
     const styleUri = panel.webview.asWebviewUri(Uri.joinPath(context.extensionUri, 'media', 'styles.css'))
-    sendGoalsRequest(proofState, panel, editor.document.uri, styleUri);
+    sendGoalsRequest(context, editor, proofState, panel, editor.document.uri, styleUri);
 }
 
 // returns the HTML code of goals environment
@@ -564,11 +564,12 @@ export interface TypGoal extends Goal {
 }
 
 export interface GoalResp {
+    range : Range
     goals : Goal[]
     logs : string
 }
 
-function sendGoalsRequest(position: Position, panel : WebviewPanel, docUri : Uri, styleUri : Uri) {
+function sendGoalsRequest(context : ExtensionContext, openEditor : TextEditor, position: Position, panel : WebviewPanel, docUri : Uri, styleUri : Uri) {
 
     let doc = {uri : docUri.toString()}
     let cursor = {textDocument : doc, position : position};
@@ -578,6 +579,11 @@ function sendGoalsRequest(position: Position, panel : WebviewPanel, docUri : Uri
         updateTerminalText(goals.logs);
 
         if(goals.goals) {
+
+            let cursorPosition = goals.range.end;
+            context.workspaceState.update('proofState', cursorPosition); //proof state is set to the cursor position
+            highlight(context, cursorPosition, openEditor);
+
             let goal_render = buildGoalsContent(goals.goals, styleUri);
             panel.webview.html = goal_render
             // Disabled as this is experimental

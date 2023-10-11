@@ -233,7 +233,8 @@ let rec get_goals ~doc ~line ~pos =
     | None -> begin match node with
               | None   -> None
               | Some _ -> get_goals ~doc ~line:(line-1) ~pos:0 end
-    | Some (v,_) -> Some v
+    | Some (v,Some pos) -> Some (v,pos)
+    | Some (_,None) -> assert false (*CSC*)
 
 (** [get_first_error doc] returns the first error inferred from doc.logs *)
 let get_first_error doc =
