@@ -1,7 +1,7 @@
 // VSCode extension for https://github.com/sacerdot/matita
 // a proof assistant based on the Calculus of Inductive Constructions
 
-import { workspace, ExtensionContext, Position, Uri, commands, window, WebviewPanel, ViewColumn, TextEditor, TextDocument, SnippetString, Range, TextEditorDecorationType, Pseudoterminal, EventEmitter, TreeItemCollapsibleState, WebviewViewProvider, CancellationToken, WebviewView, WebviewViewResolveContext, TextDocumentChangeEvent, Diagnostic, languages } from 'vscode';
+import { workspace, ExtensionContext, Position, Selection, Uri, commands, window, WebviewPanel, ViewColumn, TextEditor, TextDocument, SnippetString, Range, TextEditorDecorationType, Pseudoterminal, EventEmitter, TreeItemCollapsibleState, WebviewViewProvider, CancellationToken, WebviewView, WebviewViewResolveContext, TextDocumentChangeEvent, Diagnostic, languages } from 'vscode';
 
 // Insiders API, disabled
 // import { WebviewEditorInset } from 'vscode';
@@ -581,6 +581,7 @@ function sendGoalsRequest(context : ExtensionContext, openEditor : TextEditor, p
         if(goals.goals) {
 
             let cursorPosition = goals.range.end;
+            openEditor.selection = new Selection(cursorPosition, cursorPosition);
             context.workspaceState.update('proofState', cursorPosition); //proof state is set to the cursor position
             highlight(context, cursorPosition, openEditor);
 
