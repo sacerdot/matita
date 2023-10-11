@@ -26,7 +26,7 @@ include "ground/arith/nat.ma".
 (* LABEL ********************************************************************)
 
 inductive label: Type[0] ≝
-(* Note: label_d (𝟎) denotes a deactivated inner variable *)
+(* Note: label_d (𝟎) denotes a cleared inner variable *)
 | label_d: ℕ → label
 | label_m: label
 | label_L: label

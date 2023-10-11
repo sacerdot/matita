@@ -12,15 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "delayed_updating/syntax/label_times.ma".
 include "delayed_updating/syntax/path_balanced.ma".
-include "delayed_updating/syntax/path_singleton.ma".
 
 (* BALANCE CONDITION FOR PATH ***********************************************)
 
-(* Constructions with singleton for path ************************************)
+(* Constructions with product for labels ************************************)
 
 lemma pbc_redexes (n) (b):
-      b ϵ 𝐁 → (𝗔∗∗n)●b● 𝗟∗∗n ϵ 𝐁.
+      b ϵ 𝐁 → (𝗔*n)●b●(𝗟*n) ϵ 𝐁.
 #n @(nat_ind_succ … n) -n [| #n #IH ] #b #Hb
 [ <list_singleton_zero //
 | <list_singleton_succ_rcons <list_singleton_succ_lcons

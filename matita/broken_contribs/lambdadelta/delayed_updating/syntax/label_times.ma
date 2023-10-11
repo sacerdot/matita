@@ -13,11 +13,10 @@
 (**************************************************************************)
 
 include "ground/lib/list_singleton_rcons.ma".
-include "delayed_updating/notation/functions/power_2.ma".
 include "delayed_updating/syntax/path.ma".
 
-(* SINGLETON FOR PATH *******************************************************)
+(* PRODUCT FOR LABELS *******************************************************)
 
 interpretation
-  "singleton (path)"
-  'Power l n = (list_singleton n label l).
+  "product (label)"
+  'times l n = (list_singleton n label l).

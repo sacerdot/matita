@@ -15,61 +15,61 @@
 include "delayed_updating/syntax/path.ma".
 include "delayed_updating/notation/functions/circled_zero_1.ma".
 
-(* DEACTIVATION FOR PATH ****************************************************)
+(* CLEAR FOR PATH ***********************************************************)
 
-rec definition pda (p) on p ≝
+rec definition path_clear (p) on p ≝
 match p with
 [ list_empty     ⇒ p
 | list_lcons l q ⇒
    match l with
-   [ label_d k ⇒ (pda q)◖𝗱(𝟎)
-   | label_m   ⇒ (pda q)◖𝗺
-   | label_L   ⇒ (pda q)◖𝗟
-   | label_A   ⇒ (pda q)◖𝗔
-   | label_S   ⇒ (pda q)◖𝗦
+   [ label_d k ⇒ (path_clear q)◖𝗱(𝟎)
+   | label_m   ⇒ (path_clear q)◖𝗺
+   | label_L   ⇒ (path_clear q)◖𝗟
+   | label_A   ⇒ (path_clear q)◖𝗔
+   | label_S   ⇒ (path_clear q)◖𝗦
    ]
 ].
 
 interpretation
-  "deactivation (path)"
-  'CircledZero p = (pda p).
+  "clear (path)"
+  'CircledZero p = (path_clear p).
 
 (* Basic constructions ******************************************************)
 
-lemma pda_empty:
+lemma path_clear_empty:
       𝐞 = ⓪𝐞.
 // qed.
 
-lemma pda_d_dx (p) (k):
+lemma path_clear_d_dx (p) (k):
       (⓪p)◖𝗱(𝟎) = ⓪(p◖𝗱k).
 // qed.
 
-lemma pda_m_dx (p):
+lemma path_clear_m_dx (p):
       (⓪p)◖𝗺 = ⓪(p◖𝗺).
 // qed.
 
-lemma pda_L_dx (p):
+lemma path_clear_L_dx (p):
       (⓪p)◖𝗟 = ⓪(p◖𝗟).
 // qed.
 
-lemma pda_A_dx (p):
+lemma path_clear_A_dx (p):
       (⓪p)◖𝗔 = ⓪(p◖𝗔).
 // qed.
 
-lemma pda_S_dx (p):
+lemma path_clear_S_dx (p):
       (⓪p)◖𝗦 = ⓪(p◖𝗦).
 // qed.
 
 (* Main constructions *******************************************************)
 
-theorem pda_idem (p):
+theorem path_clear_idem (p):
         ⓪p = ⓪⓪p.
 #p elim p -p //
 * [ #k ] #p #IH //
-<pda_d_dx <pda_d_dx //
+<path_clear_d_dx <path_clear_d_dx //
 qed.
 
-theorem pda_append (p) (q):
+theorem path_clear_append (p) (q):
         ⓪p●⓪q = ⓪(p●q).
 #p #q elim q -q //
 * [ #k ] #q #IH
@@ -78,27 +78,27 @@ qed.
 
 (* Constructions with path_lcons ********************************************)
 
-lemma pda_d_sn (p) (k):
+lemma path_clear_d_sn (p) (k):
       (𝗱(𝟎)◗⓪p) = ⓪(𝗱k◗p).
-#p #k <pda_append //
+#p #k <path_clear_append //
 qed.
 
-lemma pda_m_sn (p):
+lemma path_clear_m_sn (p):
       (𝗺◗⓪p) = ⓪(𝗺◗p).
-#p <pda_append //
+#p <path_clear_append //
 qed.
 
-lemma pda_L_sn (p):
+lemma path_clear_L_sn (p):
       (𝗟◗⓪p) = ⓪(𝗟◗p).
-#p <pda_append //
+#p <path_clear_append //
 qed.
 
-lemma pda_A_sn (p):
+lemma path_clear_A_sn (p):
       (𝗔◗⓪p) = ⓪(𝗔◗p).
-#p <pda_append //
+#p <path_clear_append //
 qed.
 
-lemma pda_S_sn (p):
+lemma path_clear_S_sn (p):
       (𝗦◗⓪p) = ⓪(𝗦◗p).
-#p <pda_append //
+#p <path_clear_append //
 qed.
