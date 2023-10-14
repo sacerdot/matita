@@ -93,11 +93,19 @@ lemma ctls_succ_unwind2_rmap_append_closed_Lq_dx (f) (p) (q) (n):
 /2 width=1 by ctls_succ_plus_unwind2_rmap_push_closed/
 qed-.
 
-lemma unwind2_rmap_append_closed_Lq_dx_lapp_plus (f) (p) (q) (m) (n):
-      q ϵ 𝐂❨n❩ →
-      (▶[p]f)＠❨m❩+♭q = (▶[p●𝗟◗q]f)＠§❨m+n❩.
+theorem unwind2_rmap_append_closed_Lq_dx_lapp_plus (f) (p) (q) (m) (n):
+        q ϵ 𝐂❨n❩ →
+        (▶[p]f)＠❨m❩+♭q = (▶[p●𝗟◗q]f)＠§❨m+n❩.
 #f #p #q #m #n #Hq
 <fbr_lapp_plus_dx_xapp
 <ctls_succ_unwind2_rmap_append_closed_Lq_dx //
 <unwind2_rmap_append_closed_Lq_dx_lapp_depth //
+qed-.
+
+theorem ctls_succ_plus_unwind2_rmap_append_closed_Lq_dx (f) (p) (q) (m) (n):
+        q ϵ 𝐂❨n❩ →
+        (⫰*[m]▶[p]f) = ⫰*[⁤↑(m+n)]▶[p●𝗟◗q]f.
+#f #p #q #m #n #Hn
+<nplus_comm >nplus_succ_sn <fbr_ctls_plus
+<ctls_succ_unwind2_rmap_append_closed_Lq_dx //
 qed-.

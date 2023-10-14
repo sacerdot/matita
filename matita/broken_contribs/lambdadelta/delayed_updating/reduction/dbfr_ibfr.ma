@@ -20,7 +20,7 @@ include "delayed_updating/unwind_k/unwind2_preterm_fsubst.ma".
 include "delayed_updating/unwind_k/unwind2_preterm_eq.ma".
 include "delayed_updating/unwind_k/unwind2_prototerm_lift.ma".
 include "delayed_updating/unwind_k/unwind2_prototerm_append.ma".
-include "delayed_updating/unwind_k/unwind2_rmap_closed.ma".
+include "delayed_updating/unwind_k/unwind2_rmap_crux.ma".
 
 include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
@@ -51,25 +51,22 @@ theorem dbfr_des_ibfr (f) (t1) (t2) (r): t1 ϵ 𝐓 →
   @(subset_eq_trans … (unwind2_term_fsubst_ppc …))
   [ @fsubst_eq_repl [ // | // ]
     @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
-    [| /3 width=6 by tpc_pt_append_dx, ppc_lcons/ ]
-    <path_structure_clear_swap
+    [| /3 width=6 by tpc_pt_append_dx, ppc_lcons/ ] <path_structure_clear_swap
     @pt_append_eq_repl
     @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
-    [| /2 width=5 by ppc_iref/ ]
-    <structure_L_sn
+    [| /2 width=5 by ppc_iref/ ] <structure_L_sn
     @pt_append_eq_repl
     @(subset_eq_trans … (unwind2_term_iref …))
     @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))
     [ @unwind2_term_grafted_S /2 width=2 by ex_intro/ | skip ] -Ht1
     @(subset_eq_trans … (lift_unwind2_term_after …))
     @unwind2_term_eq_repl_sn
-(*
 (* Note: crux of the proof begins *)
-    /2 width=1 by unwind2_rmap_uni_crux/
+    >unwind2_rmap_append <unwind2_rmap_uni_crux //
 (* Note: crux of the proof ends *)
-*)
   | //
   | /2 width=2 by ex_intro/
   | @tpc_pt_append_sn @tpc_pt_append_dx //
   ]
 ]
+qed-.
