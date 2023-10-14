@@ -61,12 +61,12 @@ lemma unwind2_term_fsubst_pic (f) (t) (u) (p): p ϵ 𝐈 → p ϵ ▵t → t ϵ 
 
 (* Constructions with fsubst and ppc ****************************************)
 
-lemma unwind2_term_fsubst_ppc_sn (f) (t) (u) (p): u ϵ 𝐏 →
+lemma unwind2_term_fsubst_ppc_sn (f) (t) (u) (p): u ⊆ 𝐏 →
       (▼[f]t)[⋔(⊗p)←▼[▶[p]f]u] ⊆ ▼[f](t[⋔p←u]).
 #f #t #u #p #Hu #ql * *
 [ #rl * #r #Hr #H1 #H2 destruct
   >unwind2_path_append_ppc_dx
-  /4 width=5 by in_comp_unwind2_path_term, in_comp_tpc_trans, or_introl, ex2_intro/
+  /4 width=5 by in_comp_unwind2_path_term, subset_in_le_trans, or_introl, ex2_intro/
 | * #q #Hq #H1 #H0
   @(ex2_intro … H1) @or_intror @conj // *
   [ <list_append_empty_sn #H2 destruct
@@ -77,12 +77,12 @@ lemma unwind2_term_fsubst_ppc_sn (f) (t) (u) (p): u ϵ 𝐏 →
 ]
 qed-.
 
-lemma unwind2_term_fsubst_ppc_dx (f) (t) (u) (p): u ϵ 𝐏 → p ϵ ▵t → t ϵ 𝐓 →
+lemma unwind2_term_fsubst_ppc_dx (f) (t) (u) (p): u ⊆ 𝐏 → p ϵ ▵t → t ϵ 𝐓 →
       ▼[f](t[⋔p←u]) ⊆ (▼[f]t)[⋔(⊗p)←▼[▶[p]f]u].
 #f #t #u #p #Hu #H1p #H2p #ql * #q * *
 [ #r #Hu #H1 #H2 destruct
   @or_introl @ex2_intro
-  [|| <unwind2_path_append_ppc_dx /2 width=5 by in_comp_tpc_trans/ ]
+  [|| <unwind2_path_append_ppc_dx /2 width=5 by subset_in_le_trans/ ]
   /2 width=3 by ex2_intro/
 | #Hq #H0 #H1 destruct
   @or_intror @conj [ /2 width=1 by in_comp_unwind2_path_term/ ] *
@@ -96,6 +96,6 @@ lemma unwind2_term_fsubst_ppc_dx (f) (t) (u) (p): u ϵ 𝐏 → p ϵ ▵t → t 
 ]
 qed-.
 
-lemma unwind2_term_fsubst_ppc (f) (t) (u) (p): u ϵ 𝐏 → p ϵ ▵t → t ϵ 𝐓 →
+lemma unwind2_term_fsubst_ppc (f) (t) (u) (p): u ⊆ 𝐏 → p ϵ ▵t → t ϵ 𝐓 →
       (▼[f]t)[⋔(⊗p)←▼[▶[p]f]u] ⇔ ▼[f](t[⋔p←u]).
 /4 width=3 by unwind2_term_fsubst_ppc_sn, conj, unwind2_term_fsubst_ppc_dx/ qed.

@@ -12,15 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/prototerm_proper.ma".
-include "delayed_updating/syntax/path_inner_proper.ma".
-include "ground/lib/subset_overlap.ma".
+include "delayed_updating/syntax/path_structure.ma".
+include "delayed_updating/syntax/path_clear.ma".
 
-(* PROPER CONDITION FOR PROTOTERM *******************************************)
+(* CLEAR FOR PATH ***********************************************************)
 
-(* Constructions with pic ***************************************************)
+(* Constructions with structure *********************************************)
 
-lemma term_proper_outer (t):
-      t ⧸≬ 𝐈 → t ⊆ 𝐏.
-/4 width=3 by path_des_outer_proper, subset_ol_i/
+lemma path_clear_structure (p):
+      ⊗p = ⓪⊗p.
+#p elim p -p //
+* [ #k ] #p #IH //
 qed.
+
+lemma path_structure_clear (p):
+      ⊗p = ⊗⓪p.
+#p elim p -p //
+* [ #k ] #p #IH //
+[ <path_clear_d_dx
+| <structure_m_dx >IH -IH //
+] //
+qed.
+
+lemma path_structure_clear_swap (p):
+      ⓪⊗p = ⊗⓪p.
+// qed-.

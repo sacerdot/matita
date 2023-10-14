@@ -19,6 +19,19 @@ include "delayed_updating/unwind/unwind2_rmap_guard.ma".
 
 (* Crucial constructions with tr_uni ****************************************)
 
+f : (𝔽𝔹)
+ t1 : prototerm
+ H0t1 : (t1ϵ𝐓)
+ p : (list label)
+ b : (list label)
+ q : (list label)
+ n : ℕ
+ Hb : (⊗bϵ𝐁)
+ Hn : (qϵ𝐂❨n❩)
+ ---------------------------
+  
+ (𝐮❨⁤↑(♭⊗b+♭q)❩•▶[p]f≐⮤*[⁤↑(♭b+n)]▶[𝗟◗q]▶[⓪b]▶[p◖𝗔]f)
+
 (* Note: crux of the commutation between unwind and balanced focused reduction *)
 lemma unwind2_rmap_uni_crux (f) (p) (b) (q) (m) (n):
       p ϵ 𝐆 → b ϵ 𝐂❨Ⓕ,m❩ → q ϵ 𝐂❨Ⓕ,n❩ →
