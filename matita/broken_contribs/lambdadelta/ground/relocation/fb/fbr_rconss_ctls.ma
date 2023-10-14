@@ -20,6 +20,13 @@ include "ground/relocation/fb/fbr_ctls_xapp.ma".
 
 (* Constructions with fbr_ctls **********************************************)
 
+lemma fbr_ctls_pushs (f) (n):
+      f = ⫰*[n]⫯*[n]f.
+#f #n @(nat_ind_succ … n) -n //
+#n #IH
+<fbr_rconss_succ <fbr_ctls_succ_push //
+qed.
+
 lemma fbr_after_nexts_dx (n) (g) (f):
       ↑*[g＠❨n❩](⫰*[n]g•f) = g•↑*[n]f.
 #n @(nat_ind_succ … n) -n //
