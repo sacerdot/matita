@@ -34,3 +34,9 @@ lemma subset_le_refl (A):
 theorem subset_le_trans (A):
         Transitive … (subset_le A).
 /3 width=1 by/ qed-.
+
+(* Basic inversions *********************************************************)
+
+lemma subset_in_le_trans (A) (u1) (u2) (p):
+      p ϵ u1 → u1 ⊆ u2 → p ϵ{A} u2.
+/2 width=1 by/ qed-.
