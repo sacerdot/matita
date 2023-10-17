@@ -1,7 +1,0 @@
-include "ground/relocation/nap.ma".
-
-lemma lift_term_iref_nap (f) (t) (n):
-      (𝛕↑(f＠§❨n❩).🠡[⫰*[↑n]f]t) ⇔ 🠡[f](𝛕↑n.t).
-#f #t #n
->tr_pap_succ_nap //
-qed.

@@ -15,12 +15,12 @@
 include "delayed_updating/reduction/dbfr.ma".
 include "delayed_updating/reduction/ibfr.ma".
 
-include "delayed_updating/unwind_k/unwind2_prototerm_constructors.ma".
-include "delayed_updating/unwind_k/unwind2_preterm_fsubst.ma".
-include "delayed_updating/unwind_k/unwind2_preterm_eq.ma".
-include "delayed_updating/unwind_k/unwind2_prototerm_lift.ma".
-include "delayed_updating/unwind_k/unwind2_prototerm_append.ma".
-include "delayed_updating/unwind_k/unwind2_rmap_crux.ma".
+include "delayed_updating/unwind/unwind2_prototerm_constructors.ma".
+include "delayed_updating/unwind/unwind2_preterm_fsubst.ma".
+include "delayed_updating/unwind/unwind2_preterm_eq.ma".
+include "delayed_updating/unwind/unwind2_prototerm_lift.ma".
+include "delayed_updating/unwind/unwind2_prototerm_append.ma".
+include "delayed_updating/unwind/unwind2_rmap_crux.ma".
 
 include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
