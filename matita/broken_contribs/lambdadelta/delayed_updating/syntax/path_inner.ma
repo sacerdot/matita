@@ -60,3 +60,12 @@ lemma pic_S_sn (p):
       p ϵ 𝐈 → 𝗦◗p ϵ 𝐈.
 #p * -p //
 qed.
+
+(* Destructions with path_append ********************************************)
+
+lemma pic_des_append_sn (p) (q):
+      p●q ϵ 𝐈 → q ϵ 𝐈 .
+#p * // * [ #k ] // #q
+<list_append_lcons_sn #H0
+elim (pic_inv_d_dx … H0)
+qed-.

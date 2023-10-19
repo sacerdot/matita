@@ -70,3 +70,22 @@ lemma lift_term_grafted (f) (t) (p):
 lemma lift_term_grafted_S (f) (t) (p):
       🠡[🠢[p]f](t⋔(p◖𝗦)) ⇔ (🠡[f]t)⋔((🠡[f]p)◖𝗦).
 // qed.
+
+lemma lift_pt_append_sn (f) (p) (u):
+      (🠡[f]p)●(🠡[🠢[p]f]u) ⊆ 🠡[f](p●u).
+#f #p #u #r * #q * #s #Hs #H1 #H2 destruct
+>lift_path_append
+/3 width=1 by in_comp_lift_path_term, pt_append_in, subset_in_le_trans/
+qed-.
+
+lemma lift_pt_append_dx (f) (p) (u):
+      (🠡[f](p●u)) ⊆ (🠡[f]p)●(🠡[🠢[p]f]u).
+#f #p #u #r * #q * #s #Hs #H1 #H2 destruct
+<lift_path_append
+/3 width=1 by in_comp_lift_path_term, pt_append_in, subset_in_le_trans/
+qed-.
+
+lemma lift_pt_append (f) (p) (u):
+      (🠡[f]p)●(🠡[🠢[p]f]u) ⇔ 🠡[f](p●u).
+/3 width=1 by conj, lift_pt_append_sn, lift_pt_append_dx/
+qed.

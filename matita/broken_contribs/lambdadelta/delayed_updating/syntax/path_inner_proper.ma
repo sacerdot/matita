@@ -17,6 +17,14 @@ include "delayed_updating/syntax/path_proper.ma".
 
 (* INNER CONDITION FOR PATH *************************************************)
 
+(* Constructions with proper condition for path *****************************)
+
+lemma pic_ppc_append_sn (p) (q):
+      q ϵ 𝐈 → q ϵ 𝐏 → p●q ϵ 𝐈.
+#p #q * // #H0
+elim (ppc_inv_empty … H0)
+qed.
+
 (* Destructions with proper condition for path ******************************)
 
 lemma path_des_outer_proper (p):
