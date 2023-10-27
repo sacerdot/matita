@@ -13,16 +13,26 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift_path.ma".
-include "delayed_updating/substitution/lift_rmap_closed.ma".
-include "ground/arith/nat_le_plus.ma".
+include "delayed_updating/syntax/path_clear.ma".
 
 (* LIFT FOR PATH ************************************************************)
 
-(* Constructions with pcc ***************************************************)
+(* Constructions with path_clear ********************************************)
 
-lemma lift_path_closed_des_gen (f) (q) (n):
-      q ϵ 𝐂❨n❩ → q = 🠡[f]q.
-#f #q #n #Hq elim Hq -q -n //
-#q #n #k #Hq #IH
-<lift_path_d_dx <(lift_rmap_closed_xapp_le … Hq) -Hq //
-qed-.
+lemma clear_lift_path (f) (p):
+      ⓪p = ⓪🠡[f]p.
+#f #p elim p -p //
+* [ #k ] #p #IH //
+<path_clear_d_dx <lift_path_d_dx //
+qed.
+
+lemma lift_path_clear (f) (p):
+      ⓪p = 🠡[f]⓪p.
+#f #p elim p -p //
+* [ #k ] #p #IH //
+<path_clear_d_dx <lift_path_d_dx //
+qed.
+
+lemma lift_path_clear_swap (f) (p):
+      ⓪🠡[f]p = 🠡[f]⓪p.
+// qed-.

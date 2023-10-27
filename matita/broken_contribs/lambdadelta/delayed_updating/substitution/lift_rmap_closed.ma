@@ -13,36 +13,54 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift_rmap.ma".
-include "delayed_updating/syntax/path_closed.ma".
+include "delayed_updating/syntax/path_closed_clear.ma".
+include "ground/relocation/fb/fbr_rconss_ctls.ma".
+include "ground/relocation/fb/fbr_rconss_xapp.ma".
 
 (* LIFT MAP FOR PATH ********************************************************)
 
 (* Destructions with cpp ****************************************************)
 
-(* TODO
-lemma lift_rmap_unfold_d_dx (f) (p) (k) (h):
-      (🠢[p]f)＠⧣❨h+k❩-(🠢[p]f)＠⧣❨k❩ = (🠢[p◖𝗱k]f)＠⧣❨h❩.
-// qed.
-*)
-
-lemma ctls_plus_lift_rmap_closed (f) (q) (n):
-      q ϵ 𝐂❨n❩ →
-      ∀m. ⫰*[m]f = ⫰*[m+n]🠢[q]f.
+lemma lift_rmap_closed_des_gen (f) (q) (n):
+      q ϵ 𝐂❨n❩ → ⫯*[n]f = 🠢[q]f.
 #f #q #n #Hq elim Hq -q -n //
-#q #n #k #_ #IH #m
-<lift_rmap_d_dx >fbr_ctls_plus //
-qed.
+#q #n #_ #IH
+<fbr_rconss_succ //
+qed-.
 
 lemma ctls_lift_rmap_closed (f) (q) (n):
       q ϵ 𝐂❨n❩ →
       f = ⫰*[n]🠢[q]f.
-#f #q #n #H0
-/2 width=1 by ctls_plus_lift_rmap_closed/
+#f #q #n #Hq
+<(lift_rmap_closed_des_gen … Hq) -q //
 qed-.
 
-lemma ctls_succ_lift_rmap_append_L_closed_dx (f) (p) (q) (n):
-      q ϵ 𝐂❨n❩ →
-      (🠢[p]f) = ⫰*[⁤↑n]🠢[p●𝗟◗q]f.
+lemma ctls_succ_plus_lift_rmap_append_clear_L_closed_dx (f) (b) (q) (n):
+      q ϵ 𝐂❨n❩ → f = ⫰*[⁤↑(♭b+n)]🠢[⓪b●𝗟◗q]f.
+#f #b #q #n #Hq
+>nplus_succ_dx
+/4 width=1 by ctls_lift_rmap_closed, pcc_append_bi, pcc_L_sn/
+qed-.
+
+lemma lift_rmap_closed_xapp_le (f) (q) (n) (m):
+      q ϵ 𝐂❨n❩ → m ≤ n → m = (🠢[q]f)＠❨m❩.
+#f #q #n #m #Hq #Hmn
+<(lift_rmap_closed_des_gen … Hq) -q
+/2 width=1 by fbr_xapp_pushs_le/
+qed-.
+
+lemma lift_rmap_append_L_closed_dx_xapp_succ (f) (p) (q) (n):
+      q ϵ 𝐂❨n❩ → (⁤↑n) = (🠢[p●𝗟◗q]f)＠❨⁤↑n❩.
 #f #p #q #n #Hq
-/3 width=1 by ctls_lift_rmap_closed, pcc_L_sn/
+<lift_rmap_append <lift_rmap_closed_xapp_le
+/2 width=3 by pcc_L_sn, nle_refl/
+qed-.
+
+lemma lift_rmap_append_clear_L_closed_dx_xapp_succ_plus (f) (b) (q) (n):
+      q ϵ 𝐂❨n❩ → (⁤↑(♭b+n)) = (🠢[⓪b●𝗟◗q]f)＠❨⁤↑(♭b+n)❩.
+#f #b #q #n #Hq
+@lift_rmap_closed_xapp_le
+[1,2: /3 width=3 by pcc_append_bi, pcc_L_sn/
+| //
+]
 qed-.
