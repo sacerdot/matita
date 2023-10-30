@@ -44,17 +44,16 @@ theorem dbfr_lift_bi (f) (t1) (t2) (r):
   @(subset_eq_trans … (lift_pt_append …))
   <lift_path_clear_swap @pt_append_eq_repl
   @(subset_eq_trans … (lift_pt_append …))
-  <lift_path_L_sn
+  <lift_path_L_sn <lift_rmap_A_dx <lift_path_depth
   <(lift_path_closed_des_gen … Hn) <(lift_path_closed_des_gen … Hn)
   @pt_append_eq_repl
   @(subset_eq_trans … (lift_term_iref_xapp …))
-  >lift_rmap_append <lift_rmap_A_dx
-  <lift_path_depth <(lift_rmap_append_clear_L_closed_dx_xapp_succ_plus … Hn)
-  @iref_eq_repl
-  @(subset_eq_canc_sn … (lift_term_grafted_S …))
-  @lift_term_eq_repl_sn
 (* Note: crux of the proof begins *)
-  <ctls_succ_plus_lift_rmap_append_clear_L_closed_dx //
+  >lift_rmap_append
+  <(lift_rmap_append_clear_L_closed_dx_xapp_succ_plus … Hn)
+  <(ctls_succ_plus_lift_rmap_append_clear_L_closed_dx … Hn)
+  @iref_eq_repl
+  @(subset_eq_canc_sn … (lift_term_grafted_S …)) //
 (* Note: crux of the proof ends *)
 ]
 qed.
