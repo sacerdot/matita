@@ -12,24 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/powerclass_1.ma".
-include "ground/notation/relations/epsilon_3.ma".
-include "ground/notation/relations/not_epsilon_3.ma".
-include "ground/lib/relations.ma".
+include "ground/arith/nat_plus.ma".
+include "ground/lib/list_length.ma".
 
-(* SUBSETS ******************************************************************)
+(* BINARY WEIGHT FOR LISTS **************************************************)
 
-interpretation
-  "power class (subset)"
-  'PowerClass A = (predicate A).
+definition list_weight_2 (A) (B) (l1) (l2): ℕ ≝
+  ❘l1❘{A}+❘l2❘{B}.
 
-definition subset_in (A): 𝒫❨A❩ → 𝒫❨A❩ ≝
-           λu.u.
+(* Basic constructions ******************************************************)
 
-interpretation
-  "membership (subset)"
-  'Epsilon A a u = (subset_in A u a).
+lemma list_weight_2_unfold (A) (B) (l1) (l2):
+      ❘l1❘+❘l2❘ = list_weight_2 A B l1 l2.
+// qed-.
 
-interpretation
-  "negated membership (subset)"
-  'NotEpsilon A a u = (negation (subset_in A u a)).
+lemma list_weight_2_lcons_sn (A) (B) (l1) (l2) (a):
+      (⁤↑(list_weight_2 … l1 l2)) = list_weight_2 A B (a⨮l1) l2.
+#A #B #l1 #l2 #a1
+<list_weight_2_unfold <list_weight_2_unfold //
+qed.
+
+lemma list_weight_2_lcons_dx (A) (B) (l1) (l2) (a):
+      (⁤↑(list_weight_2 … l1 l2)) = list_weight_2 A B l1 (a⨮l2).
+#A #B #l1 #l2 #a1
+<list_weight_2_unfold <list_weight_2_unfold //
+qed.

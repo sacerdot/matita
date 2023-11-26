@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/lib/subset.ma".
+include "ground/lib/functions.ma".
 
 (* EXTENSIONS FOR SUBSETS ***************************************************)
 
@@ -42,6 +43,13 @@ lemma subset_in_ext_f1_1_dx_2 (A11) (A21) (A0) (f1) (f2) (u11) (u21) (a21):
 /3 width=3 by subset_in_ext_f1_dx, or_intror/ qed.
 
 (* Basic inversions *********************************************************)
+
+lemma subset_in_inv_ext_f1_dx (A1) (A0) (f) (u1) (a1):
+      injective_2_fwd … (eq …) (eq …) f → 
+      f a1 ϵ subset_ext_f1 A1 A0 f u1 → a1 ϵ u1.
+#A1 #A0 #f #u1 #a1 #Hf * #a0 #Ha0 #H0
+lapply (Hf … H0) -f #H0 destruct //
+qed-.
 
 lemma subset_in_inv_ext_p1_dx (A1) (Q) (u1) (a1):
       a1 ϵ u1 → subset_ext_p1 A1 Q u1 → Q a1.

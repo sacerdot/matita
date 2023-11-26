@@ -12,24 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/powerclass_1.ma".
-include "ground/notation/relations/epsilon_3.ma".
-include "ground/notation/relations/not_epsilon_3.ma".
-include "ground/lib/relations.ma".
+include "ground/notation/relations/between_3.ma".
+include "ground/notation/relations/not_between_3.ma".
+include "ground/lib/subset.ma".
 
-(* SUBSETS ******************************************************************)
+(* OVERLAP FOR SUBSETS ******************************************************)
 
-interpretation
-  "power class (subset)"
-  'PowerClass A = (predicate A).
-
-definition subset_in (A): 𝒫❨A❩ → 𝒫❨A❩ ≝
-           λu.u.
+definition subset_ol (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
+           λu1,u2. ∃∃p. p ϵ u1 & p ϵ u2.
 
 interpretation
-  "membership (subset)"
-  'Epsilon A a u = (subset_in A u a).
+  "overlap (subset)"
+  'Between A u1 u2 = (subset_ol A u1 u2).
 
 interpretation
-  "negated membership (subset)"
-  'NotEpsilon A a u = (negation (subset_in A u a)).
+  "negated overlap (subset)"
+  'NotBetween A u1 u2 = (negation (subset_ol A u1 u2)).
+
+(* Basic constructions ******************************************************)
+
+lemma subset_ol_i (A) (u1) (u2) (a):
+      a ϵ u1 → a ϵ u2 → u1 ≬{A} u2.
+/2 width=3 by ex2_intro/ qed.

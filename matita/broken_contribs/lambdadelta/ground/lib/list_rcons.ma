@@ -96,3 +96,13 @@ lemma eq_inv_list_append_dx_dx_refl (A) (l1) (l2):
 elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_
 /2 width=1 by/
 qed-.
+
+lemma eq_inv_list_append_dx_bi (A) (l1) (l2) (l):
+      l1 ⨁ l = l2 ⨁{A} l → l1 = l2.
+#A #l1 #l2 #l #H0
+elim (eq_inv_list_append_bi … H0) -H0 * #m #H1 #H2
+[ lapply (eq_inv_list_append_dx_dx_refl … H2) -H2
+| lapply (eq_inv_list_append_dx_dx_refl … H1) -H1
+]
+#H0 destruct //
+qed-.

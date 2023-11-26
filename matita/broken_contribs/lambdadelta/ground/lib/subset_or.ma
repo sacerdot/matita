@@ -12,24 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/powerclass_1.ma".
-include "ground/notation/relations/epsilon_3.ma".
-include "ground/notation/relations/not_epsilon_3.ma".
-include "ground/lib/relations.ma".
+include "ground/lib/subset.ma".
 
-(* SUBSETS ******************************************************************)
+(* UNION FOR SUBSETS ********************************************************)
 
-interpretation
-  "power class (subset)"
-  'PowerClass A = (predicate A).
-
-definition subset_in (A): 𝒫❨A❩ → 𝒫❨A❩ ≝
-           λu.u.
+definition subset_or (A) (u1) (u2): 𝒫❨A❩ ≝
+           λp. ∨∨ p ϵ u1 | p ϵ u2.
 
 interpretation
-  "membership (subset)"
-  'Epsilon A a u = (subset_in A u a).
+  "union (subset)"
+  'union u1 u2 = (subset_or ? u1 u2).
 
-interpretation
-  "negated membership (subset)"
-  'NotEpsilon A a u = (negation (subset_in A u a)).
+(* Basic constructions ******************************************************)
+
+lemma subset_or_in_sn (A) (u1) (u2) (p):
+      p ϵ{A} u1 → p ϵ u1 ∪ u2.
+/2 width=1 by or_introl/
+qed.
+
+lemma subset_or_in_dx (A) (u1) (u2) (p):
+      p ϵ{A} u2 → p ϵ u1 ∪ u2.
+/2 width=1 by or_intror/
+qed.

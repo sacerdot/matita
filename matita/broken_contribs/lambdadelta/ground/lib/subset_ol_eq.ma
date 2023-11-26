@@ -12,25 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/between_3.ma".
-include "ground/notation/relations/not_between_3.ma".
-include "ground/lib/subset.ma".
+include "ground/lib/subset_eq.ma".
+include "ground/lib/subset_ol_le.ma".
 
 (* OVERLAP FOR SUBSETS ******************************************************)
 
-definition subset_ol (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
-           λu1,u2. ∃∃p. p ϵ u1 & p ϵ u2.
+(* Constructions with subset_eq *********************************************)
 
-interpretation
-  "overlap (subset)"
-  'Between A u1 u2 = (subset_ol A u1 u2).
-
-interpretation
-  "negated overlap (subset)"
-  'NotBetween A u1 u2 = (negation (subset_ol A u1 u2)).
-
-(* Basic constructions ******************************************************)
-
-lemma subset_ol_i (A) (u1) (u2) (a):
-       a ϵ u1 → a ϵ u2 → u1 ≬{A} u2.
-/2 width=3 by ex2_intro/ qed.
+lemma subset_ol_eq_repl (A):
+      replace_2 … (subset_eq …) (subset_eq …) (subset_ol A).
+#A #u1 #v1 #H1 #u2 * #H2 #_ #v2 * #H3 #_
+/2 width=5 by subset_ol_le_repl/
+qed.

@@ -114,6 +114,16 @@ lemma eq_inv_list_append_dx_sn_refl (A) (l1) (l2):
 /2 width=1 by/
 qed-.
 
+lemma eq_inv_list_append_sn_bi (A) (l1) (l2) (l):
+      l ⨁ l1 = l ⨁{A} l2 → l1 = l2.
+#A #l1 #l2 #l #H0
+elim (eq_inv_list_append_bi … H0) -H0 * #m #H1 #H2
+[ lapply (eq_inv_list_append_dx_sn_refl … H1) -H1
+| lapply (eq_inv_list_append_dx_sn_refl … H2) -H2
+]
+#H0 destruct //
+qed-.
+
 (* Advanced eliminations ****************************************************)
 
 lemma list_ind_append_dx (A) (Q:predicate …):

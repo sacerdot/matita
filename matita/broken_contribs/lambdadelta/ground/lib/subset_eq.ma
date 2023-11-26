@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/notation/relations/arroweq_2.ma".
-include "ground/lib/subset_inclusion.ma".
+include "ground/lib/subset_le.ma".
 
 (* EQUIVALENCE FOR SUBSETS **************************************************)
 

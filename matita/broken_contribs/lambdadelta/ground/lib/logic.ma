@@ -17,19 +17,24 @@ include "ground/notation/xoa/false_0.ma".
 include "ground/notation/xoa/true_0.ma".
 include "ground/notation/xoa/or_2.ma".
 include "ground/notation/xoa/and_2.ma".
-
-interpretation
-  "false (logic)"
-  'false = False.
-
-interpretation
-  "true (logic)"
-  'true = True.
+include "ground/notation/relations/not_eq_3.ma".
 
 (* LOGIC ********************************************************************)
 
+interpretation
+  "false (logic)"
+  'false = (False).
+
+interpretation
+  "true (logic)"
+  'true = (True).
+
 definition negation (A:Prop): Prop ≝
            A → ⊥.
+
+interpretation
+  "negated leibnitz's equality (logic)"
+  'NotEq S a b = (negation (eq S a b)).
 
 (* Constructions with land **************************************************)
 
