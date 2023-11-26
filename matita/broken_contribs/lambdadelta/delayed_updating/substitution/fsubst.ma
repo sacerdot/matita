@@ -12,17 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/lib/subset_ol.ma".
 include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/notation/functions/pitchforkleftarrow_3.ma".
+include "delayed_updating/notation/functions/square_sw_black_3.ma".
 
 (* FOCALIZED SUBSTITUTION ***************************************************)
 
-definition fsubst (p) (u): prototerm → prototerm ≝
-           λt,q.
-           ∨∨ ∃∃r. r ϵ u & p●r = q
-            | ∧∧ q ϵ t & (∀r. p●r = q → ⊥)
+definition fsubst (u) (v) (t): 𝕋 ≝
+           λr.
+           ∨∨ ∧∧ t ≬ u & r ϵ v
+            | ∧∧ r ϵ t & r ⧸ϵ u
 .
 
 interpretation
   "focalized substitution (prototerm)"
-  'PitchforkLeftArrow t p u = (fsubst p u t).
+  'SquareSWBlack u v t = (fsubst u v t).
+
+(* Basic constructions ******************************************************)
+
+lemma fsubst_in_comp_true (t) (u) (v) (r):
+      t ≬ u → r ϵ v → r ϵ ⬕[u←v]t.
+/3 width=1 by or_introl, conj/
+qed.
+
+lemma fsubst_in_comp_false (t) (u) (v) (r):
+      r ϵ t → r ⧸ϵ u → r ϵ ⬕[u←v]t.
+/3 width=1 by or_intror, conj/
+qed.

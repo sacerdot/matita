@@ -25,10 +25,20 @@ lemma structure_pic (p):
 [ <structure_empty //
 | * [ #k ] #p #IH
   [ <structure_d_dx //
-  | <structure_m_dx //
   | <structure_L_dx //
   | <structure_A_dx //
   | <structure_S_dx //
   ]
 ]
 qed.
+
+(* Inversions with pic ******************************************************)
+
+lemma eq_inv_empty_structure_inner (p):
+      p ϵ 𝐈 → 𝐞 = ⊗p → 𝐞 = p.
+#p * -p // #p
+[ <structure_L_dx
+| <structure_A_dx
+| <structure_S_dx
+] #H0 destruct
+qed-.

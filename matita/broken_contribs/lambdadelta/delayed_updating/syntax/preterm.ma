@@ -13,29 +13,19 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/notation/functions/class_t_0.ma".
 
 (* PRETERM ******************************************************************)
 
-(* Note: a preterm is a prototerm satislying the condition below *)
-(* Note: different root paths have different structure *)
-definition structure_injective: predicate prototerm ≝
-           λt. ∀p1,p2. p1 ϵ ▵t → p2 ϵ ▵t → ⊗p1 = ⊗p2 → p1 = p2
-.
+record preterm_axs (t): Prop ≝
+  { term_complete_ax:
+(* Note: we cannot extend complete paths *)
+      ∀p1,p2. p1 ϵ t → p2 ϵ t → p1 ϵ ↑p2 → p1 = p2
+  ; term_root_ax:
+(* Note: root paths do not diverge on varible references *)
+      ∀p,l1,k2. p◖l1 ϵ ▵t → p◖𝗱k2 ϵ ▵t → l1 = 𝗱k2
+  }.
 
 interpretation
   "preterm (prototerm)"
-  'ClassT = (structure_injective).
-
-(* Basic inversions *********************************************************)
-
-lemma preterm_in_root_append_inv_structure_empty_dx (t) (p) (q):
-      p●q ϵ ▵t → t ϵ 𝐓 → 𝐞 = ⊗q → 𝐞 = q.
-#t #p #q #Hpq #Ht #Hq
-lapply (Ht p ?? Hpq ?)
-[ <structure_append //
-| /2 width=2 by prototerm_in_root_append_des_sn/
-| /2 width=3 by eq_inv_list_append_dx_dx_refl/
-]
-qed-.
+  'ClassT = (preterm_axs).

@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( t ⋔ break p )"
-  left associative with precedence 47
-  for @{ 'Pitchfork $t $p }.
+notation "hvbox( ⋔ [ break term 46 p ] break term 70 t )"
+  non associative with precedence 70
+  for @{ 'Pitchfork $p $t }.

@@ -24,5 +24,5 @@ lemma cpp_clear (p):
       ⓪p ϵ 𝐂❨♭p❩.
 #p elim p -p //
 * [ #k ] #p #IH
-/2 width=1 by pcc_d_dx, pcc_m_dx, pcc_L_dx, pcc_A_dx, pcc_S_dx/
+/2 width=1 by pcc_d_dx, pcc_L_dx, pcc_A_dx, pcc_S_dx/
 qed.

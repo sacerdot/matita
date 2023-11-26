@@ -12,31 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path.ma".
-include "delayed_updating/syntax/path_proper.ma".
+include "ground/lib/subset_ol.ma".
+include "delayed_updating/substitution/lift_prototerm.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* LIFT FOR PROTOTERM *******************************************************)
 
-(* Constructions with proper condition for path *****************************)
+(* Constructions with subset_ol *********************************************)
 
-lemma lift_path_proper (f) (p):
-      p ϵ 𝐏 → 🠡[f]p ϵ 𝐏.
-#f *
-[ #H0 elim (ppc_inv_empty … H0)
-| * [ #k ] #p #_
-  [ <lift_path_d_dx
-  | <lift_path_L_dx
-  | <lift_path_A_dx
-  | <lift_path_S_dx
-  ]
-  /2 width=3 by ppc_rcons/
-]
+lemma term_ol_lift_bi (f) (t) (u):
+      t ≬ u → 🠡[f]t ≬ 🠡[f]u.
+#f #t #u * #r #H1r #H2r
+/3 width=3 by in_comp_lift_bi, subset_ol_i/
 qed.
 
-(* Inversions with proper condition for path ********************************)
+(* Inversions with subset_ol ************************************************)
 
-lemma lift_path_inv_proper (f) (p):
-      🠡[f]p ϵ 𝐏 → p ϵ 𝐏.
-#f * //
-#H0 elim (ppc_inv_empty … H0)
+lemma term_ol_inv_lift_bi (f) (t) (u):
+      (🠡[f]t) ≬ 🠡[f]u → t ≬ u.
+#f #t #u * #r * #s1 #Hs1 #H1 * #s2 #Hs2 #H2 destruct
+lapply (lift_path_inj … H2) -f #H0 destruct
+/2 width=3 by subset_ol_i/
 qed-.

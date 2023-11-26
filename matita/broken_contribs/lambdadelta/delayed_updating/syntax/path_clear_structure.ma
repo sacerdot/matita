@@ -29,9 +29,7 @@ lemma path_structure_clear (p):
       ⊗p = ⊗⓪p.
 #p elim p -p //
 * [ #k ] #p #IH //
-[ <path_clear_d_dx
-| <structure_m_dx >IH -IH //
-] //
+<path_clear_d_dx //
 qed.
 
 lemma path_structure_clear_swap (p):

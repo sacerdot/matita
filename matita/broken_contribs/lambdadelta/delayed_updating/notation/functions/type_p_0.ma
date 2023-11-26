@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( 𝗺 )"
+notation "hvbox( ℙ )"
   non associative with precedence 70
-  for @{ 'NodeLabelM }.
+  for @{ 'TypeP }.

@@ -16,8 +16,8 @@
  * Initial invocation: - Patience on me to gain peace and perfection! -
  *)
 
+include "delayed_updating/notation/functions/type_l_0.ma".
 include "delayed_updating/notation/functions/nodelabel_d_1.ma".
-include "delayed_updating/notation/functions/nodelabel_m_0.ma".
 include "delayed_updating/notation/functions/edgelabel_l_0.ma".
 include "delayed_updating/notation/functions/edgelabel_a_0.ma".
 include "delayed_updating/notation/functions/edgelabel_s_0.ma".
@@ -28,19 +28,18 @@ include "ground/arith/nat.ma".
 inductive label: Type[0] ≝
 (* Note: label_d (𝟎) denotes a cleared inner variable *)
 | label_d: ℕ → label
-| label_m: label
 | label_L: label
 | label_A: label
 | label_S: label
 .
 
 interpretation
-  "variable reference by depth (label)"
-  'NodeLabelD k = (label_d k).
+  "label ()"
+  'TypeL = (label).
 
 interpretation
-  "mark (label)"
-  'NodeLabelM = (label_m).
+  "variable reference by depth (label)"
+  'NodeLabelD k = (label_d k).
 
 interpretation
   "name-free functional abstruction (label)"
@@ -53,3 +52,12 @@ interpretation
 interpretation
   "side branch (label)"
   'EdgeLabelS = (label_S).
+
+(* Advanced inversions ******************************************************)
+
+lemma label_is_d (l):
+      ∨∨ ∃k. 𝗱k = l
+       | ∀k. 𝗱k = l → ⊥.
+* [ /3 width=2 by ex_intro, or_introl/ ]
+@or_intror #k #H0 destruct
+qed-.  

@@ -23,7 +23,6 @@ match p with
 | list_lcons l q ⇒
    match l with
    [ label_d k ⇒ (path_clear q)◖𝗱(𝟎)
-   | label_m   ⇒ (path_clear q)◖𝗺
    | label_L   ⇒ (path_clear q)◖𝗟
    | label_A   ⇒ (path_clear q)◖𝗔
    | label_S   ⇒ (path_clear q)◖𝗦
@@ -42,10 +41,6 @@ lemma path_clear_empty:
 
 lemma path_clear_d_dx (p) (k):
       (⓪p)◖𝗱(𝟎) = ⓪(p◖𝗱k).
-// qed.
-
-lemma path_clear_m_dx (p):
-      (⓪p)◖𝗺 = ⓪(p◖𝗺).
 // qed.
 
 lemma path_clear_L_dx (p):
@@ -81,11 +76,6 @@ qed.
 lemma path_clear_d_sn (p) (k):
       (𝗱(𝟎)◗⓪p) = ⓪(𝗱k◗p).
 #p #k <path_clear_append //
-qed.
-
-lemma path_clear_m_sn (p):
-      (𝗺◗⓪p) = ⓪(𝗺◗p).
-#p <path_clear_append //
 qed.
 
 lemma path_clear_L_sn (p):

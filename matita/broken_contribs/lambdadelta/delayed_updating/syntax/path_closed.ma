@@ -21,13 +21,11 @@ include "ground/generated/insert_eq_1.ma".
 
 (* CLOSED CONDITION FOR PATH ************************************************)
 
-inductive pcc: relation2 nat path ≝
+inductive pcc: relation2 (ℕ) (ℙ) ≝
 | pcc_empty:
   pcc (𝟎) (𝐞)
 | pcc_d_dx (p) (n) (k):
   pcc (n+k) p → pcc n (p◖𝗱k)
-| pcc_m_dx (p) (n):
-  pcc n p → pcc n (p◖𝗺)
 | pcc_L_dx (p) (n):
   pcc n p → pcc (⁤↑n) (p◖𝗟)
 | pcc_A_dx (p) (n):
@@ -52,13 +50,6 @@ qed-.
 lemma pcc_inv_d_dx (p) (n) (k):
       p◖𝗱k ϵ 𝐂❨n❩ → p ϵ 𝐂❨n+k❩.
 #p #n #h @(insert_eq_1 … (p◖𝗱h))
-#x * -x -n
-[|*: #x #n [ #k ] #Hx ] #H0 destruct //
-qed-.
-
-lemma pcc_inv_m_dx (p) (n):
-      p◖𝗺 ϵ 𝐂❨n❩ → p ϵ 𝐂❨n❩.
-#p #n @(insert_eq_1 … (p◖𝗺))
 #x * -x -n
 [|*: #x #n [ #k ] #Hx ] #H0 destruct //
 qed-.
@@ -114,17 +105,10 @@ theorem pcc_append_bi (p) (q) (m) (n):
         p ϵ 𝐂❨m❩ → q ϵ 𝐂❨n❩ → p●q ϵ 𝐂❨m+n❩.
 #p #q #m #n #Hm #Hm elim Hm -Hm // -Hm
 #p #n [ #k ] #_ #IH [3: <nplus_succ_dx ]
-/2 width=1 by pcc_d_dx, pcc_m_dx, pcc_L_dx, pcc_A_dx, pcc_S_dx/
+/2 width=1 by pcc_d_dx, pcc_L_dx, pcc_A_dx, pcc_S_dx/
 qed.
 
 (* Constructions with path_lcons ********************************************)
-
-lemma pcc_m_sn (q) (n):
-      q ϵ 𝐂❨n❩ → (𝗺◗q) ϵ 𝐂❨n❩.
-#q #n #Hq
-lapply (pcc_append_bi (𝐞◖𝗺) … Hq) -Hq
-/2 width=3 by pcc_m_dx/
-qed.
 
 lemma pcc_L_sn (q) (n):
       q ϵ 𝐂❨n❩ → (𝗟◗q) ϵ 𝐂❨⁤↑n❩.
@@ -157,8 +141,6 @@ theorem pcc_mono (q) (n1):
 | lapply (pcc_inv_d_dx … Hn2) -Hn2 #Hn2
   lapply (IH … Hn2) -q1 #H0
   /2 width=2 by eq_inv_nplus_bi_dx/
-| lapply (pcc_inv_m_dx … Hn2) -Hn2 #Hn2
-  <(IH … Hn2) -q1 -n2 //
 | elim (pcc_inv_L_dx … Hn2) -Hn2 #Hn2 #H0
   >(IH … Hn2) -q1 //
 | lapply (pcc_inv_A_dx … Hn2) -Hn2 #Hn2
@@ -178,8 +160,6 @@ theorem pcc_inj_L_sn (p1) (p2) (q1) (n):
 elim (eq_inv_list_lcons_bi ????? H0) -H0 #H0 #H1 destruct
 [ elim (pcc_inv_L_dx_zero … Hq2)
 | lapply (pcc_inv_d_dx … Hq2) -Hq2 #Hq2
-  <(IH … Hq2) //
-| lapply (pcc_inv_m_dx … Hq2) -Hq2 #Hq2
   <(IH … Hq2) //
 | lapply (pcc_inv_L_dx_succ … Hq2) -Hq2 #Hq2
   <(IH … Hq2) //

@@ -21,7 +21,7 @@ include "ground/xoa/ex_3_2.ma".
 (* BALANCE CONDITION FOR PATH ***********************************************)
 
 (* Note: this condition applies to a structural path *)
-inductive pbc: predicate path ≝
+inductive pbc: 𝒫❨ℙ❩ ≝
 | pbc_empty: pbc (𝐞)
 | pbc_redex: ∀b. pbc b → pbc (𝗔◗b◖𝗟)
 | pbc_after: ∀b1,b2. pbc b1 → pbc b2 → pbc (b1●b2)

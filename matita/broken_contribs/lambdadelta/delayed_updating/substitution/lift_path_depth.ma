@@ -24,7 +24,6 @@ lemma lift_path_depth (f) (p):
 #f #p elim p -p //
 * [ #k ] #p #IH
 [ <lift_path_d_dx <depth_d_dx <depth_d_dx
-| <lift_path_m_dx <depth_m_dx <depth_m_dx
 | <lift_path_L_dx <depth_L_dx <depth_L_dx
 | <lift_path_A_dx <depth_A_dx <depth_A_dx
 | <lift_path_S_dx <depth_S_dx <depth_S_dx

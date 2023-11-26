@@ -32,9 +32,6 @@ lemma trab_des_gen (p1) (p2) (q1) (q2) (n1) (n2):
   elim (IH … H) -IH -H #r #Hr1 #Hr2 #Hr destruct
   @ex3_intro [| // ] // (**) (* auto fails *)
 | #H
-  elim (IH … H) -IH -H #r #Hr1 #Hr2 #Hr destruct
-  @ex3_intro [| // ] // (**) (* auto fails *)
-| #H
   elim (IH … H) -IH -H #r #Hr1 #Hr2
   <list_times_succ_rcons <path_append_append_lcons #Hr destruct
   @ex3_intro [| // ] // (**) (* auto fails *)

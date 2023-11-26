@@ -19,7 +19,7 @@ include "ground/xoa/ex_1_2.ma".
 
 (* PROPER CONDITION FOR PATH ************************************************)
 
-definition ppc: predicate path ≝
+definition ppc: 𝒫❨ℙ❩ ≝
            λp. 𝐞 = p → ⊥
 .
 
@@ -60,5 +60,13 @@ lemma ppc_inv_lcons (p):
 #p @(list_ind_rcons … p) -p
 [ #H0 elim (ppc_inv_empty … H0)
 | #q #l #_ #_ /2 width=3 by ex1_2_intro/
+]
+qed-.
+
+lemma path_inv_ppc (p):
+      ∨∨ 𝐞 = p | p ϵ 𝐏.
+*
+[ /2 width=1 by or_introl/
+| /3 width=3 by ppc_rcons, or_intror/
 ]
 qed-.

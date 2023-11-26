@@ -14,7 +14,7 @@
 
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/syntax/path_proper.ma".
-include "ground/lib/subset_inclusion.ma".
+include "ground/lib/subset_le.ma".
 
 (* PROPER CONDITION FOR PROTOTERM *******************************************)
 
@@ -27,8 +27,7 @@ qed.
 
 (* Basic inversions *********************************************************)
 
-(* Note: 𝒫❨path❩ fixes δ-expansion in tpc_pt_append_sn *)
-lemma tpc_inv_empty (t:𝒫❨path❩):
+lemma tpc_inv_empty (t):
       (𝐞) ϵ t → t ⊆ 𝐏 → ⊥.
 /3 width=5 by subset_in_le_trans, ppc_inv_empty/
 qed-.
@@ -39,7 +38,7 @@ lemma tpc_pt_append_dx (p) (t):
       p ϵ 𝐏 → p●t ⊆ 𝐏.
 #p #t #Hp
 @tpc_in * #q #_ #H0
-elim (eq_inv_list_append_empty … H0) -H0 #_ #H0 destruct -q
+elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 destruct -q
 /2 width=1 by ppc_inv_empty/
 qed.
 
@@ -47,6 +46,6 @@ lemma tpc_pt_append_sn (p) (t):
       t ⊆ 𝐏 → p●t ⊆ 𝐏.
 #p #t #Hp
 @tpc_in * #q #Hq #H0
-elim (eq_inv_list_append_empty … H0) -H0 #H0 #_ destruct -p
+elim (eq_inv_list_empty_append … H0) -H0 #H0 #_ destruct -p
 /2 width=3 by tpc_inv_empty/
 qed.

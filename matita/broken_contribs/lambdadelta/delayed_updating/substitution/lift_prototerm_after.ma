@@ -23,8 +23,8 @@ lemma lift_term_after (f) (g) (t):
       🠡[g]🠡[f]t ⇔ 🠡[g•f]t.
 #f #g #t @subset_eq_trans
 [
-| @subset_inclusion_ext_f1_compose
-| @subset_equivalence_ext_f1_exteq
+| @subset_le_ext_f1_compose
+| @subset_eq_ext_f1_exteq
   #p <lift_path_after //
 ]
 qed.

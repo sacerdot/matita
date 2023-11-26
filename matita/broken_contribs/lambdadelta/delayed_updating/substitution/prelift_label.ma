@@ -21,7 +21,6 @@ include "ground/relocation/fb/fbr_xapp_lt.ma".
 definition prelift_label (f) (l): label ≝
 match l with
 [ label_d k ⇒ 𝗱(f＠❨k❩)
-| label_m   ⇒ 𝗺
 | label_L   ⇒ 𝗟
 | label_A   ⇒ 𝗔
 | label_S   ⇒ 𝗦
@@ -35,10 +34,6 @@ interpretation
 
 lemma prelift_label_d (f) (k):
       (𝗱(f＠❨k❩)) = 🠡[f]𝗱k.
-// qed.
-
-lemma prelift_label_m (f):
-      (𝗺) = 🠡[f]𝗺.
 // qed.
 
 lemma prelift_label_L (f):
@@ -67,7 +62,6 @@ lemma prelift_label_inv_d_sn (f) (l) (k1):
       ∃∃k2. k1 = f＠❨k2❩ & 𝗱k2 = l.
 #f * [ #k ] #k1
 [ <prelift_label_d
-| <prelift_label_m
 | <prelift_label_L
 | <prelift_label_A
 | <prelift_label_S
@@ -75,22 +69,10 @@ lemma prelift_label_inv_d_sn (f) (l) (k1):
 /2 width=3 by ex2_intro/
 qed-.
 
-lemma prelift_label_inv_m_sn (f) (l):
-      (𝗺) = 🠡[f]l → 𝗺 = l.
-#f * [ #k ]
-[ <prelift_label_d
-| <prelift_label_m
-| <prelift_label_L
-| <prelift_label_A
-| <prelift_label_S
-] #H0 destruct //
-qed-.
-
 lemma prelift_label_inv_L_sn (f) (l):
       (𝗟) = 🠡[f]l → 𝗟 = l.
 #f * [ #k ]
 [ <prelift_label_d
-| <prelift_label_m
 | <prelift_label_L
 | <prelift_label_A
 | <prelift_label_S
@@ -101,7 +83,6 @@ lemma prelift_label_inv_A_sn (f) (l):
       (𝗔) = 🠡[f]l → 𝗔 = l.
 #f * [ #k ]
 [ <prelift_label_d
-| <prelift_label_m
 | <prelift_label_L
 | <prelift_label_A
 | <prelift_label_S
@@ -112,7 +93,6 @@ lemma prelift_label_inv_S_sn (f) (l):
       (𝗦) = 🠡[f]l → 𝗦 = l.
 #f * [ #k ]
 [ <prelift_label_d
-| <prelift_label_m
 | <prelift_label_L
 | <prelift_label_A
 | <prelift_label_S
@@ -126,7 +106,6 @@ theorem prelift_label_inj (f) (l1) (l2):
 #f * [ #k1 ] #l2 #Hl
 [ elim (prelift_label_inv_d_sn … Hl) -Hl #k2 #Hk #H0 destruct
   <(eq_inv_fbr_xapp_bi … Hk) -Hk //
-| <(prelift_label_inv_m_sn … Hl) -l2 //
 | <(prelift_label_inv_L_sn … Hl) -l2 //
 | <(prelift_label_inv_A_sn … Hl) -l2 //
 | <(prelift_label_inv_S_sn … Hl) -l2 //

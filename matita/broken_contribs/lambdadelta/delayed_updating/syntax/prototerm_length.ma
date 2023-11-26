@@ -12,8 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR DELAYED UPDATING ********************************************)
+include "ground/lib/list_length_append.ma".
+include "delayed_updating/syntax/prototerm.ma".
 
-notation "hvbox( ɱ. break term 70 t )"
-  non associative with precedence 70
-  for @{ 'MHook $t }.
+(* PROTOTERM ****************************************************************)
+
+(* Inversions with list_length **********************************************)
+
+lemma term_slice_eq_inv_length_bi (p1) (p2):
+      p1 ϵ↑ p2 → ❘p1❘ = ❘p2❘ → p1 = p2.
+#p1 #p2 * #q #H0 #Hp destruct
+<list_length_append in Hp; #Hp
+lapply (nplus_refl_dx … (sym_eq … Hp)) -Hp #Hq
+<(list_length_inv_zero_sn … Hq) -q //
+qed-.

@@ -13,46 +13,46 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/prototerm.ma".
-include "ground/lib/subset_equivalence.ma".
+include "ground/lib/subset_eq.ma".
 
 (* EQUIVALENCE FOR PROTOTERM ************************************************)
 
 (* Constructions with prototerm_grafted *************************************)
 
-lemma grafted_empty_dx (t):
-      t ⇔ t⋔𝐞.
+lemma term_grafted_empty_dx (t):
+      t ⇔ ⋔[𝐞]t.
 /2 width=1 by conj/
 qed.
 
-lemma grafted_incl_repl (t1) (t2) (p):
-      t1 ⊆ t2 → t1⋔p ⊆ t2⋔p.
+lemma term_grafted_le_repl (t1) (t2) (p):
+      t1 ⊆ t2 → ⋔[p]t1 ⊆ ⋔[p]t2.
 #t1 #t2 #p #Ht #q #Hq
 /2 width=1 by/
 qed.
 
-lemma grafted_eq_repl (t1) (t2) (p):
-      t1 ⇔ t2 → t1⋔p ⇔ t2⋔p.
+lemma term_grafted_eq_repl (t1) (t2) (p):
+      t1 ⇔ t2 → ⋔[p]t1 ⇔ ⋔[p]t2.
 #t1 #t2 #p * #H1t #H2t
-/3 width=1 by conj, grafted_incl_repl/
+/3 width=1 by conj, term_grafted_le_repl/
 qed.
 
-(* Constructions with prototerm_root ****************************************)
+(* Constructions with term_root *********************************************)
 
-lemma prototerm_root_incl_repl:
+lemma term_root_le_repl:
       ∀t1,t2. t1 ⊆ t2 → ▵t1 ⊆ ▵t2.
 #t1 #t2 #Ht #p * #q #Hq
 /3 width=2 by ex_intro/
 qed.
 
-lemma prototerm_root_eq_repl:
+lemma term_root_eq_repl:
       ∀t1,t2. t1 ⇔ t2 → ▵t1 ⇔ ▵t2.
 #t1 #t2 * #H1 #H2
-/3 width=3 by conj, prototerm_root_incl_repl/
+/3 width=3 by conj, term_root_le_repl/
 qed.
 
 (* Constructions with pt_append *********************************************)
 
-lemma pt_append_incl_repl (p):
+lemma pt_append_le_repl (p):
       ∀t1,t2. t1 ⊆ t2 → p●t1 ⊆ p●t2.
 #p #t1 #t2 #Ht #r * #q #Hq #H0 destruct
 /3 width=1 by pt_append_in/
@@ -61,23 +61,46 @@ qed.
 lemma pt_append_eq_repl (p):
       ∀t1,t2. t1 ⇔ t2 → p●t1 ⇔ p●t2.
 #p #t1 #t2 * #H1 #H2
-/3 width=3 by conj, pt_append_incl_repl/
+/3 width=3 by conj, pt_append_le_repl/
 qed.
 
-lemma pt_append_assoc_sn (p) (q) (t:prototerm):
+lemma pt_append_assoc_sn (p) (q) (t:𝕋):
       p●(q●t) ⊆ (p●q)●t.
 #p #q #t #r * #s1 * #s2 #Hs2 #H2 #H1 destruct
 /3 width=1 by pt_append_in/
 qed.
 
-lemma pt_append_assoc_dx (p) (q) (t:prototerm):
+lemma pt_append_assoc_dx (p) (q) (t:𝕋):
       (p●q)●t ⊆ p●(q●t).
 #p #q #t #r * #s #Hs #H0 destruct
 /3 width=1 by pt_append_in/
 qed.
 
-lemma pt_append_assoc (p) (q) (t:prototerm):
+lemma pt_append_assoc (p) (q) (t:𝕋):
       p●(q●t) ⇔ (p●q)●t.
 #p #q #t
 /3 width=1 by conj, pt_append_assoc_sn, pt_append_assoc_dx/
 qed.
+
+(* Constructions with term_slice ********************************************)
+
+lemma term_slice_append (p) (q):
+      p●↑q ⇔ ↑(p●q).
+#p #q @conj #r * #s
+[ #Hs #H0 destruct
+  cases Hs -Hs #r #H0 destruct //
+| #H0 destruct /2 width=1 by pt_append_in/
+]
+qed.
+
+lemma append_in_comp_slice_bi (p) (q) (s):
+      s ϵ ↑q → p●s ϵ ↑(p●q).
+/3 width=4 by subset_in_eq_repl_back, pt_append_in/
+qed.
+
+(* Inversions with term_slice ***********************************************)
+
+lemma append_in_comp_slice_inv_bi (p) (q) (s):
+      p●s ϵ ↑(p●q) → s ϵ ↑q.
+/3 width=4 by subset_in_eq_repl_fwd, append_in_comp_inv_bi/
+qed-.

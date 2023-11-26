@@ -23,9 +23,7 @@ lemma structure_lift_path (f) (p):
       ⊗p = ⊗🠡[f]p.
 #f #p elim p -p //
 * [ #k ] #p #IH //
-[ <lift_path_d_dx <structure_d_dx <structure_d_dx //
-| <lift_path_m_dx <structure_m_dx <structure_m_dx //
-]
+<lift_path_d_dx <structure_d_dx <structure_d_dx //
 qed.
 
 lemma lift_path_structure (f) (p):

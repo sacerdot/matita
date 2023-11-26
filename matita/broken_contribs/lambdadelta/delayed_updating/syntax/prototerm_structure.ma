@@ -12,31 +12,34 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path.ma".
-include "delayed_updating/syntax/path_proper.ma".
+include "delayed_updating/syntax/prototerm.ma".
+include "delayed_updating/syntax/path_structure.ma".
+include "ground/lib/subset_ext.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* STRUCTURE FOR PROTOTERM **************************************************)
 
-(* Constructions with proper condition for path *****************************)
+interpretation
+  "structure (prototerm)"
+  'CircledTimes t = (subset_ext_f1 ?? structure t).
 
-lemma lift_path_proper (f) (p):
-      p ϵ 𝐏 → 🠡[f]p ϵ 𝐏.
-#f *
-[ #H0 elim (ppc_inv_empty … H0)
-| * [ #k ] #p #_
-  [ <lift_path_d_dx
-  | <lift_path_L_dx
-  | <lift_path_A_dx
-  | <lift_path_S_dx
-  ]
-  /2 width=3 by ppc_rcons/
-]
+(* Basic constructions ******************************************************)
+
+lemma in_comp_structure_bi (t) (p):
+      p ϵ t → ⊗p ϵ ⊗t.
+/2 width=1 by subset_in_ext_f1_dx/
 qed.
 
-(* Inversions with proper condition for path ********************************)
+(* Basic inversions *********************************************************)
 
-lemma lift_path_inv_proper (f) (p):
-      🠡[f]p ϵ 𝐏 → p ϵ 𝐏.
-#f * //
-#H0 elim (ppc_inv_empty … H0)
+lemma term_in_comp_structure_grafted_inv_d_dx (t) (p) (q) (k):
+      q ϵ ⋔[p◖𝗱k]⊗t → ⊥.
+#t #p #q #k * #r #_ #H0 -t
+elim (eq_inv_append_structure … (sym_eq … H0)) -H0 #s1 #s2 #H0 #_ #_ 
+elim (eq_inv_d_dx_structure … H0)
+qed-.
+
+lemma term_in_root_structure_inv_d_dx (t) (p) (k):
+      p◖𝗱k ϵ ▵⊗t → ⊥.
+#t #p #k * #q #H0
+elim (term_in_comp_structure_grafted_inv_d_dx … H0)
 qed-.

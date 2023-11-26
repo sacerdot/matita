@@ -42,10 +42,6 @@ lemma lift_rmap_d_dx (f) (p) (k):
       (⫰*[k]🠢[p]f) = 🠢[p◖𝗱k]f.
 // qed.
 
-lemma lift_rmap_m_dx (f) (p):
-      (🠢[p]f) = 🠢[p◖𝗺]f.
-// qed.
-
 lemma lift_rmap_L_dx (f) (p):
       (⫯🠢[p]f) = 🠢[p◖𝗟]f.
 // qed.
@@ -73,10 +69,6 @@ lemma lift_rmap_lcons (f) (p) (l):
 
 lemma lift_rmap_d_sn (f) (p) (k):
       (🠢[p]⫰*[k]f) = 🠢[𝗱k◗p]f.
-// qed.
-
-lemma lift_rmap_m_sn (f) (p):
-      (🠢[p]f) = 🠢[𝗺◗p]f.
 // qed.
 
 lemma lift_rmap_L_sn (f) (p):

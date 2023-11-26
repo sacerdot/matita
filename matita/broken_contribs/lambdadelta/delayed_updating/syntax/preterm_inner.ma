@@ -12,31 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path.ma".
-include "delayed_updating/syntax/path_proper.ma".
+include "delayed_updating/syntax/path_structure_inner.ma".
+include "delayed_updating/syntax/preterm_structure.ma".
 
-(* LIFT FOR PATH ************************************************************)
+(* PRETERM ******************************************************************)
 
-(* Constructions with proper condition for path *****************************)
+(* Descrtructions with pic **************************************************)
 
-lemma lift_path_proper (f) (p):
-      p ϵ 𝐏 → 🠡[f]p ϵ 𝐏.
-#f *
-[ #H0 elim (ppc_inv_empty … H0)
-| * [ #k ] #p #_
-  [ <lift_path_d_dx
-  | <lift_path_L_dx
-  | <lift_path_A_dx
-  | <lift_path_S_dx
-  ]
-  /2 width=3 by ppc_rcons/
-]
-qed.
-
-(* Inversions with proper condition for path ********************************)
-
-lemma lift_path_inv_proper (f) (p):
-      🠡[f]p ϵ 𝐏 → p ϵ 𝐏.
-#f * //
-#H0 elim (ppc_inv_empty … H0)
+lemma term_root_pic_sn (t) (p1) (p2):
+      t ϵ 𝐓 → p1 ϵ 𝐈 → p1 ϵ ▵t → p2 ϵ ▵t → ⊗p1 = ⊗p2 →
+      ∃∃q1. p2 = p1●q1 & 𝐞 = ⊗q1.
+#t #p1 #p2 #Ht #H1p1 #H2p1 #Hp2 #Hp
+elim (term_root_eq_des_structure_bi … Ht … Hp) -Hp // -t
+* #q2 #H0 #H1q2 destruct
+lapply (pic_des_append_sn … H1p1) -H1p1 #H2q2
+lapply (eq_inv_empty_structure_inner … H1q2) -H1q2 // -H2q2 #H0 destruct
+/2 width=3 by ex2_intro/
 qed-.

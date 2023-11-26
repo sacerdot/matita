@@ -18,27 +18,30 @@ include "ground/notation/functions/black_circle_2.ma".
 include "ground/notation/functions/black_halfcircleright_2.ma".
 include "ground/notation/functions/black_halfcircleleft_2.ma".
 include "delayed_updating/syntax/label.ma".
+include "delayed_updating/notation/functions/type_p_0.ma".
 
 (* PATH *********************************************************************)
 
 (* Note: a path is a list of labels *)
 (* Note: constructed from the leaf (right end) to the root (left end) *)
-definition path ≝ list label.
+interpretation
+  "path ()"
+  'TypeP = (list label).
 
 interpretation
-  "empty (paths)"
+  "empty (path)"
   'ElementE = (list_empty label).
 
 interpretation
-  "right cons (paths)"
+  "right cons (path)"
   'BlackHalfCircleLeft p l = (list_lcons label l p).
 
 interpretation
-  "append (paths)"
+  "append (path)"
   'BlackCircle p q = (list_append label q p).
 
 interpretation
-  "left cons (paths)"
+  "left cons (path)"
   'BlackHalfCircleRight l p = (list_append label p (list_lcons label l (list_empty label))).
 
 (* Helper constructions *****************************************************)

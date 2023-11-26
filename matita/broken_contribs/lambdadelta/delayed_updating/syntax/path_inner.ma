@@ -19,9 +19,8 @@ include "ground/generated/insert_eq_1.ma".
 
 (* INNER CONDITION FOR PATH *************************************************)
 
-inductive pic: predicate path ≝
+inductive pic: 𝒫❨ℙ❩ ≝
 | pic_empty: (𝐞) ϵ pic
-| pic_m_dx (p): p◖𝗺 ϵ pic
 | pic_L_dx (p): p◖𝗟 ϵ pic
 | pic_A_dx (p): p◖𝗔 ϵ pic
 | pic_S_dx (p): p◖𝗦 ϵ pic
@@ -40,11 +39,6 @@ lemma pic_inv_d_dx (p) (k):
 qed-.
 
 (* Constructions with path_lcons ********************************************)
-
-lemma pic_m_sn (p):
-      p ϵ 𝐈 → 𝗺◗p ϵ 𝐈.
-#p * -p //
-qed.
 
 lemma pic_L_sn (p):
       p ϵ 𝐈 → 𝗟◗p ϵ 𝐈.

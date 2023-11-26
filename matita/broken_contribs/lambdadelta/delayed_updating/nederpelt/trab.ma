@@ -18,7 +18,7 @@ include "ground/arith/nat_pred_succ.ma".
 
 (* BALANCED SEGMENT TRAVERSAL ***********************************************)
 
-definition trab_k (S:Type[0]): Type[0] ≝ path → ℕ → path → S.
+definition trab_k (S:Type[0]): Type[0] ≝ ℙ → ℕ → ℙ → S.
 
 (* Note: we add the case "label_S" to make the function total *)
 rec definition trab (S:Type[0]) (K:trab_k S) (p) (n) (q) on p : S ≝
@@ -27,7 +27,6 @@ match p with
 | list_lcons l x ⇒
   match l with
   [ label_d k ⇒ trab S K x n (𝗱k◗q)
-  | label_m   ⇒ trab S K x n (𝗺◗q)
   | label_L   ⇒ trab S K x (⁤↑n) (𝗟◗q)
   | label_A   ⇒
     match n with
@@ -50,10 +49,6 @@ lemma trab_unfold_empty (S) (K) (q) (n):
 
 lemma trab_unfold_d (S) (K) (p) (q) (n) (k):
       ▷𝐛{S}[K]❨p,n,𝗱k◗q❩ = ▷𝐛{S}[K]❨p◖𝗱k,n,q❩.
-// qed.
-
-lemma trab_unfold_m (S) (K) (p) (q) (n):
-      ▷𝐛{S}[K]❨p,n,𝗺◗q❩ = ▷𝐛{S}[K]❨p◖𝗺,n,q❩.
 // qed.
 
 lemma trab_unfold_L (S) (K) (p) (q) (n):

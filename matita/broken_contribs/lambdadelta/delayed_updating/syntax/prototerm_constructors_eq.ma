@@ -13,7 +13,8 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/prototerm_constructors.ma".
-include "ground/lib/subset_ext_equivalence.ma".
+include "delayed_updating/syntax/prototerm_eq.ma".
+include "ground/lib/subset_or_eq.ma".
 
 (* CONSTRUCTORS FOR PROTOTERM ***********************************************)
 
@@ -21,44 +22,44 @@ include "ground/lib/subset_ext_equivalence.ma".
 
 lemma iref_eq_repl (t1) (t2) (k):
       t1 ⇔ t2 → 𝛕k.t1 ⇔ 𝛕k.t2.
-/2 width=1 by subset_equivalence_ext_f1_bi/
+/3 width=1 by pt_append_eq_repl/
 qed.
 
 lemma abst_eq_repl (t1) (t2):
       t1 ⇔ t2 → 𝛌.t1 ⇔ 𝛌.t2.
-/2 width=1 by subset_equivalence_ext_f1_bi/
+/2 width=1 by pt_append_eq_repl/
 qed.
 
 lemma appl_eq_repl (u1) (u2) (t1) (t2):
       u1 ⇔ u2 → t1 ⇔ t2 → ＠u1.t1 ⇔ ＠u2.t2.
-/2 width=1 by subset_equivalence_ext_f1_1_bi/
+/3 width=1 by pt_append_eq_repl, subset_or_eq_repl/
 qed.
 
-(* Constructions with prototerm_grafted *************************************)
+(* Constructions with term_grafted ******************************************)
 
-lemma grafted_abst_hd (t) (p):
-      t⋔p ⇔ (𝛌.t)⋔(𝗟◗p).
+lemma term_grafted_abst_hd (t) (p):
+      (⋔[p]t) ⇔ ⋔[𝗟◗p]𝛌.t.
 #t #p @conj #r #Hr
 [ /2 width=3 by ex2_intro/
-| lapply (prototerm_grafted_inv_gen … Hr) -Hr
+| lapply (term_grafted_inv_gen … Hr) -Hr
   /2 width=1 by in_comp_inv_abst_hd/
 ]
 qed.
 
-lemma grafted_appl_sd (v) (t) (p):
-      v⋔p ⇔ (＠v.t)⋔(𝗦◗p).
+lemma term_grafted_appl_sd (v) (t) (p):
+      (⋔[p]v) ⇔ ⋔[𝗦◗p]＠v.t.
 #v #t #p @conj #r #Hr
 [ /3 width=3 by ex2_intro, or_introl/
-| lapply (prototerm_grafted_inv_gen … Hr) -Hr
+| lapply (term_grafted_inv_gen … Hr) -Hr
   /2 width=2 by in_comp_inv_appl_sd/
 ]
 qed.
 
-lemma grafted_appl_hd (v) (t) (p):
-      t⋔p ⇔ (＠v.t)⋔(𝗔◗p).
+lemma term_grafted_appl_hd (v) (t) (p):
+      (⋔[p]t) ⇔ ⋔[𝗔◗p]＠v.t.
 #v #t #p @conj #r #Hr
 [ /3 width=3 by ex2_intro, or_intror/
-| lapply (prototerm_grafted_inv_gen … Hr) -Hr
+| lapply (term_grafted_inv_gen … Hr) -Hr
   /2 width=2 by in_comp_inv_appl_hd/
 ]
 qed.

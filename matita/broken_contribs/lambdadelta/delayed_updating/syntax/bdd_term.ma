@@ -23,7 +23,7 @@ include "ground/xoa/ex_5_3.ma".
 
 (* BY-DEPTH DELAYED (BDD) TERM **********************************************)
 
-inductive bdd: 𝒫❨prototerm❩ ≝
+inductive bdd: 𝒫❨𝕋❩ ≝
 | bdd_oref: ∀k. bdd (⧣k)
 | bdd_iref: ∀t,k. bdd t → bdd (𝛕k.t)
 | bdd_abst: ∀t. bdd t → bdd (𝛌.t)

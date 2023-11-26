@@ -23,26 +23,23 @@ include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 lemma lift_term_oref_xapp (f) (k):
       (⧣(f＠❨k❩)) ⇔ 🠡[f]⧣k.
 #f #k @conj #p *
-[ /2 width=1 by in_comp_lift_path_term/
+[ /2 width=1 by in_comp_lift_bi/
 | #q * #H0 destruct //
 ]
 qed.
 
-lemma lift_term_iref_xapp_sn (f) (t:prototerm) (k):
-      (𝛕f＠❨k❩.🠡[⫰*[k]f]t) ⊆ 🠡[f](𝛕k.t).
-#f #t #k #p * #q * #r #Hr #H1 #H2 destruct
-@(ex2_intro … (𝗱k◗𝗺◗r))
-[ /2 width=1 by in_comp_iref_hd/
-| <lift_path_d_sn <lift_path_m_sn //
-]
+lemma lift_term_iref_xapp_sn (f) (t:𝕋) (k):
+      (𝛕f＠❨k❩.🠡[⫰*[k]f]t) ⊆ 🠡[f]𝛕k.t.
+#f #t #k #p * #q * #s #Hs #H1 #H2 destruct
+/3 width=1 by in_comp_lift_bi, in_comp_iref_hd/
 qed-.
 
 lemma lift_term_iref_xapp_dx (f) (t) (k):
-      🠡[f](𝛕k.t) ⊆ 𝛕f＠❨k❩.🠡[⫰*[k]f]t.
+      (🠡[f]𝛕k.t) ⊆ 𝛕f＠❨k❩.🠡[⫰*[k]f]t.
 #f #t #k #p * #q #Hq #H0 destruct
 elim (in_comp_inv_iref … Hq) -Hq #p #H0 #Hp destruct
-<lift_path_d_sn <lift_path_m_sn
-/3 width=1 by in_comp_iref_hd, in_comp_lift_path_term/
+<lift_path_d_sn
+/3 width=1 by in_comp_iref_hd, in_comp_lift_bi/
 qed-.
 
 lemma lift_term_iref_xapp (f) (t) (k):
@@ -64,10 +61,10 @@ lemma lift_term_abst (f) (t):
       (𝛌.🠡[⫯f]t) ⇔ 🠡[f]𝛌.t.
 #f #t @conj #p #Hp
 [ elim (in_comp_inv_abst … Hp) -Hp #q #H1 * #r #Hr #H2 destruct
-  /3 width=1 by in_comp_lift_path_term, in_comp_abst_hd/
+  /3 width=1 by in_comp_lift_bi, in_comp_abst_hd/
 | elim Hp -Hp #q #Hq #H0 destruct
   elim (in_comp_inv_abst … Hq) -Hq #r #H0 #Hr destruct 
-  /3 width=1 by in_comp_lift_path_term, in_comp_abst_hd/
+  /3 width=1 by in_comp_lift_bi, in_comp_abst_hd/
 ]
 qed.
 
@@ -75,9 +72,9 @@ lemma lift_term_appl (f) (v) (t):
       ＠🠡[f]v.🠡[f]t ⇔ 🠡[f]＠v.t.
 #f #v #t @conj #p #Hp
 [ elim (in_comp_inv_appl … Hp) -Hp * #q #H1 * #r #Hr #H2 destruct
-  /3 width=1 by in_comp_lift_path_term, in_comp_appl_sd, in_comp_appl_hd/
+  /3 width=1 by in_comp_lift_bi, in_comp_appl_sd, in_comp_appl_hd/
 | elim Hp -Hp #q #Hq #H0 destruct
   elim (in_comp_inv_appl … Hq) -Hq * #r #H0 #Hr destruct 
-  /3 width=1 by in_comp_lift_path_term, in_comp_appl_sd, in_comp_appl_hd/
+  /3 width=1 by in_comp_lift_bi, in_comp_appl_sd, in_comp_appl_hd/
 ]
 qed.

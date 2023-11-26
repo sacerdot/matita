@@ -21,7 +21,7 @@ include "delayed_updating/substitution/lift_path.ma".
 
 (* Constructions with map_after *********************************************)
 
-lemma lift_rmap_after (g) (f) (p:path):
+lemma lift_rmap_after (g) (f) (p:ℙ):
       (🠢[🠡[f]p]g•🠢[p]f) = 🠢[p](g•f).
 #g #f #p elim p -p //
 #l #p #IH <lift_rmap_rcons

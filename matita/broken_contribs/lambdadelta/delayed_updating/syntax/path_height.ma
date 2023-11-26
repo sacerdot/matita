@@ -24,7 +24,6 @@ match p with
 | list_lcons l q ⇒
   match l with
   [ label_d k ⇒ height q + k
-  | label_m   ⇒ height q
   | label_L   ⇒ height q
   | label_A   ⇒ height q
   | label_S   ⇒ height q
@@ -42,10 +41,6 @@ lemma height_empty: 𝟎 = ♯𝐞.
 
 lemma height_d_dx (p) (k):
       ♯p+k = ♯(p◖𝗱k).
-// qed.
-
-lemma height_m_dx (p):
-      ♯p = ♯(p◖𝗺).
 // qed.
 
 lemma height_L_dx (p):
@@ -67,7 +62,6 @@ theorem height_append (p) (q):
 #p #q elim q -q //
 * [ #k ] #q #IH <list_append_lcons_sn
 [ <height_d_dx <height_d_dx //
-| <height_m_dx <height_m_dx //
 | <height_L_dx <height_L_dx //
 | <height_A_dx <height_A_dx //
 | <height_S_dx <height_S_dx //
@@ -78,10 +72,6 @@ qed.
 
 lemma height_d_sn (p) (k):
       k+♯p = ♯(𝗱k◗p).
-// qed.
-
-lemma height_m_sn (p):
-      ♯p = ♯(𝗺◗p).
 // qed.
 
 lemma height_L_sn (p):
