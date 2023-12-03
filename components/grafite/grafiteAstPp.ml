@@ -221,6 +221,9 @@ let pp_notation status dir_opt l1_pattern assoc prec l2_pattern =
     (pp_precedence prec)
     (pp_l2_pattern status l2_pattern)
 
+let pp_transport() = 
+  sprintf "transport debug, wip."
+
 let pp_ncommand status = function
   | UnificationHint (_,t, n) ->
       "unification hint " ^ string_of_int n ^ " " ^ NotationPp.pp_term status t
@@ -249,6 +252,8 @@ let pp_ncommand status = function
       pp_interpretation dsc symbol arg_patterns cic_appl_pattern
   | Notation (_, dir_opt, l1_pattern, assoc, prec, l2_pattern) ->
       pp_notation status dir_opt l1_pattern assoc prec l2_pattern
+  | Transfer (_, _) -> 
+    pp_transport()
 ;;
 
 let pp_executable status ~map_unicode_to_tex =

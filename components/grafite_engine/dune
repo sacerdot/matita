@@ -1,6 +1,6 @@
 (library
  (name helm_grafite_engine)
- (libraries helm_grafite_parser helm_ng_tactics helm_ng_extraction)
+ (libraries helm_grafite_parser helm_ng_tactics helm_ng_extraction helm_grafite_transfer)
  (wrapped false))
 (env
   (_

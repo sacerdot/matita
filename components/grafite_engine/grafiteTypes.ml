@@ -45,6 +45,7 @@ class virtual status = fun (b : string) ->
    inherit OcamlExtractionTable.status
    inherit GrafiteParser.status
    inherit TermContentPres.status
+   inherit GrafiteTransfer.status
    val baseuri = b
    val ng_mode = (`CommandMode : [`CommandMode | `ProofMode])
    method baseuri = baseuri

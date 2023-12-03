@@ -1017,6 +1017,7 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      in
       let mode = GrafiteAst.WithPreferences in(*assert false in (* VEDI SOPRA *) MATITA 1.0*)
        eval_alias status (mode,diff)
+  | GrafiteAst.Transfer (_, s) -> GrafiteTransfer.transfer status s
 ;;
 
 let eval_comment _opts status (_text,_prefix_len,_c) = status
