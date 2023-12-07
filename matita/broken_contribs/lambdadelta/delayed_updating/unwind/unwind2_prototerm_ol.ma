@@ -12,21 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_rmap.ma".
-include "delayed_updating/syntax/path_structure.ma".
-include "ground/relocation/fb/fbr_after.ma".
+include "delayed_updating/unwind/unwind2_prototerm.ma".
+include "ground/lib/subset_ol.ma".
 
-(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
+(* TAILED UNWIND FOR PROTOTERM **********************************************)
 
-(* Constructions with map_after *********************************************)
+(* Constructions with subset_ol *********************************************)
 
-lemma unwind2_rmap_after (g) (f) (p:ℙ):
-      ▶[⊗p]g•▶[p]f = ▶[p](g•f).
-#g #f #p elim p -p //
-* [ #k ] #p #IH //
-[ <structure_L_dx <unwind2_rmap_L_dx
-  <unwind2_rmap_L_dx <unwind2_rmap_L_dx <IH -IH //
-| <structure_A_dx <unwind2_rmap_A_dx //
-| <structure_S_dx <unwind2_rmap_S_dx //
-]
+lemma term_ol_unwind2_bi (f) (t) (u):
+      t ≬ u → ▼[f]t ≬ ▼[f]u.
+#f #t #u * #r #H1r #H2r
+/3 width=3 by in_comp_unwind2_bi, subset_ol_i/
 qed.

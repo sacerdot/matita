@@ -107,5 +107,12 @@ lemma preterm_structure (t):
   ]
 | #p #l1 #k2 #_ #H0
   elim (term_in_root_structure_inv_d_dx … H0)
+| #p1 #H0
+  elim (term_in_root_strucrure_inv_rcons … H0) -H0
+  [ #p2 #Hp2 #H0 destruct
+    lapply (term_full_A_ax … Ht … Hp2) -Ht -Hp2 #Hp2
+    /2 width=1 by in_root_structure_bi/
+  | #k #H0 destruct
+  ]
 ]
 qed.

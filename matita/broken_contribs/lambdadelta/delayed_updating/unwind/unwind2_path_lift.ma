@@ -23,7 +23,7 @@ include "ground/relocation/fb/fbr_after_xapp.ma".
 
 lemma lift_unwind2_path_after (g) (f) (p):
       (🠡[g]▼[f]p) = ▼[g•f]p.
-#g #f * // * [ #k ] #p //
+#g #f * // * [ #k ] #p
 [ <unwind2_path_d_dx <unwind2_path_d_dx <lift_path_d_dx
   <lift_path_structure //
 | <unwind2_path_L_dx <unwind2_path_L_dx //
@@ -36,7 +36,6 @@ lemma unwind2_lift_path_after (g) (f) (p):
 #g #f * // * [ #k ] #p
 [ <unwind2_path_d_dx <unwind2_path_d_dx
   <structure_lift_path //
-| <unwind2_path_m_dx <unwind2_path_m_dx //
 | <unwind2_path_L_dx <unwind2_path_L_dx //
 | <unwind2_path_A_dx <unwind2_path_A_dx //
 | <unwind2_path_S_dx <unwind2_path_S_dx //

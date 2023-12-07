@@ -19,13 +19,12 @@ include "ground/relocation/fb/fbr_xapp.ma".
 
 (* TAILED UNWIND FOR PATH ***************************************************)
 
-definition unwind2_path (f) (p): path ≝
+definition unwind2_path (f) (p): ℙ ≝
 match p with
 [ list_empty     ⇒ (𝐞)
 | list_lcons l q ⇒
   match l with
   [ label_d k ⇒ (⊗q)◖𝗱((▶[q]f)＠❨k❩)
-  | label_m   ⇒ ⊗p
   | label_L   ⇒ ⊗p
   | label_A   ⇒ ⊗p
   | label_S   ⇒ ⊗p
@@ -44,10 +43,6 @@ lemma unwind2_path_empty (f):
 
 lemma unwind2_path_d_dx (f) (p) (k) :
       (⊗p)◖𝗱((▶[p]f)＠❨k❩) = ▼[f](p◖𝗱k).
-// qed.
-
-lemma unwind2_path_m_dx (f) (p):
-      ⊗p = ▼[f](p◖𝗺).
 // qed.
 
 lemma unwind2_path_L_dx (f) (p):
@@ -90,11 +85,29 @@ qed-.
 
 (* Destructions with structure **********************************************)
 
-lemma unwind2_path_des_structure (f) (q) (p):
+lemma eq_des_unwind2_path_bi_structure (f1) (f2) (p1) (p2):
+      ▼[f1]p1 = ▼[f2]p2 → ⊗p1 = ⊗p2.
+// qed-.
+
+lemma eq_des_structure_unwind2_path (f) (q) (p):
       ⊗q = ▼[f]p → ⊗q = ⊗p.
 // qed-.
 
+lemma eq_des_unwind2_path_structure (f) (q) (p):
+      ▼[f]p = ⊗q → ⊗p = ⊗q.
+// qed-.
+
 (* Basic inversions *********************************************************)
+
+lemma eq_inv_empty_unwind2_path (f) (p):
+      (𝐞) = ▼[f]p → 𝐞 = p.
+#f * [| * [ #k ] #p ] //
+[ <unwind2_path_d_dx #H0 destruct
+| <unwind2_path_L_dx #H0 destruct
+| <unwind2_path_A_dx #H0 destruct
+| <unwind2_path_S_dx #H0 destruct
+]
+qed-.
 
 lemma eq_inv_d_dx_unwind2_path (f) (q) (p) (h):
       q◖𝗱h = ▼[f]p →
@@ -103,21 +116,6 @@ lemma eq_inv_d_dx_unwind2_path (f) (q) (p) (h):
 [ <unwind2_path_empty #H0 destruct
 | <unwind2_path_d_dx #H0 destruct
   /2 width=5 by ex3_2_intro/
-| <unwind2_path_m_dx #H0
-  elim (eq_inv_d_dx_structure … H0)
-| <unwind2_path_L_dx #H0 destruct
-| <unwind2_path_A_dx #H0 destruct
-| <unwind2_path_S_dx #H0 destruct
-]
-qed-.
-
-lemma eq_inv_m_dx_unwind2_path (f) (q) (p):
-      q◖𝗺 = ▼[f]p → ⊥.
-#f #q * [| * [ #k ] #p ]
-[ <unwind2_path_empty #H0 destruct
-| <unwind2_path_d_dx #H0 destruct
-| <unwind2_path_m_dx #H0
-  elim (eq_inv_m_dx_structure … H0)
 | <unwind2_path_L_dx #H0 destruct
 | <unwind2_path_A_dx #H0 destruct
 | <unwind2_path_S_dx #H0 destruct
@@ -126,15 +124,12 @@ qed-.
 
 lemma eq_inv_L_dx_unwind2_path (f) (q) (p):
       q◖𝗟 = ▼[f]p →
-      ∃∃r1,r2. q = ⊗r1 & ∀g. 𝐞 = ▼[g]r2 & r1●𝗟◗r2 = p.
+      ∃∃r. q = ⊗r & r◖𝗟 = p.
 #f #q * [| * [ #k ] #p ]
 [ <unwind2_path_empty #H0 destruct
 | <unwind2_path_d_dx #H0 destruct
-| <unwind2_path_m_dx #H0
-  elim (eq_inv_L_dx_structure … H0) -H0 #r1 #r2 #H1 #H2 #H3 destruct
-  /2 width=5 by ex3_2_intro/
 | <unwind2_path_L_dx #H0 destruct
-  /2 width=5 by ex3_2_intro/
+  /2 width=3 by ex2_intro/
 | <unwind2_path_A_dx #H0 destruct
 | <unwind2_path_S_dx #H0 destruct
 ]
@@ -142,32 +137,26 @@ qed-.
 
 lemma eq_inv_A_dx_unwind2_path (f) (q) (p):
       q◖𝗔 = ▼[f]p →
-      ∃∃r1,r2. q = ⊗r1 & ∀g. 𝐞 = ▼[g]r2 & r1●𝗔◗r2 = p.
+      ∃∃r. q = ⊗r & r◖𝗔 = p.
 #f #q * [| * [ #k ] #p ]
 [ <unwind2_path_empty #H0 destruct
 | <unwind2_path_d_dx #H0 destruct
-| <unwind2_path_m_dx #H0
-  elim (eq_inv_A_dx_structure … H0) -H0 #r1 #r2 #H1 #H2 #H3 destruct
-  /2 width=5 by ex3_2_intro/
 | <unwind2_path_L_dx #H0 destruct
 | <unwind2_path_A_dx #H0 destruct
-  /2 width=5 by ex3_2_intro/
+  /2 width=3 by ex2_intro/
 | <unwind2_path_S_dx #H0 destruct
 ]
 qed-.
 
 lemma eq_inv_S_dx_unwind2_path (f) (q) (p):
       q◖𝗦 = ▼[f]p →
-      ∃∃r1,r2. q = ⊗r1 & ∀g. 𝐞 = ▼[g]r2 & r1●𝗦◗r2 = p.
+      ∃∃r. q = ⊗r & r◖𝗦 = p.
 #f #q * [| * [ #k ] #p ]
 [ <unwind2_path_empty #H0 destruct
 | <unwind2_path_d_dx #H0 destruct
-| <unwind2_path_m_dx #H0
-  elim (eq_inv_S_dx_structure … H0) -H0 #r1 #r2 #H1 #H2 #H3 destruct
-  /2 width=5 by ex3_2_intro/
 | <unwind2_path_L_dx #H0 destruct
 | <unwind2_path_A_dx #H0 destruct
 | <unwind2_path_S_dx #H0 destruct
-  /2 width=5 by ex3_2_intro/
+  /2 width=3 by ex2_intro/
 ]
 qed-.

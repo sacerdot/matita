@@ -22,7 +22,7 @@ include "ground/relocation/fb/fbr_after_xapp.ma".
 
 lemma unwind2_path_after (g) (f) (p):
       ▼[g]▼[f]p = ▼[g•f]p.
-#g #f * // * [ #k ] #p //
+#g #f * // * [ #k ] #p
 [ <unwind2_path_d_dx <unwind2_path_d_dx
   >fbr_xapp_after //
 | <unwind2_path_L_dx <unwind2_path_L_dx //

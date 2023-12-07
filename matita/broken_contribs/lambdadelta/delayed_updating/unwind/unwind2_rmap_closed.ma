@@ -36,8 +36,6 @@ lemma unwind2_rmap_append_closed_dx_xapp_le (f) (p) (q) (n):
   @IH -IH (**) (* auto too slow *)
   @nle_trans [| @fbr_xapp_uni_le ]
   /2 width=1 by nle_plus_bi_dx/
-| <unwind2_rmap_m_dx <unwind2_rmap_m_dx
-  /2 width=2 by/
 | <unwind2_rmap_L_dx <unwind2_rmap_L_dx
   elim (nle_inv_succ_dx … Hm) -Hm // * #Hm #H0
   >H0 -H0 <fbr_xapp_push_succ <fbr_xapp_push_succ

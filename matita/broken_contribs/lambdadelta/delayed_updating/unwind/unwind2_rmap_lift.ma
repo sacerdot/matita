@@ -32,7 +32,7 @@ lemma lift_unwind2_rmap_after (g) (f) (p):
 ]
 qed.
 
-lemma unwind2_lift_rmap_after (g) (f) (p:path):
+lemma unwind2_lift_rmap_after (g) (f) (p:ℙ):
       ▶[🠡[f]p]g•🠢[p]f = ▶[p](g•f).
 #g #f #p elim p -p // #l #p #IH
 <lift_path_rcons <lift_rmap_rcons <unwind2_rmap_rcons <unwind2_rmap_rcons

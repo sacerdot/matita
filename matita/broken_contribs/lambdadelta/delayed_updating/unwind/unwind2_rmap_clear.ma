@@ -26,7 +26,6 @@ lemma unwind2_rmap_clear (f) (p):
 #f #p elim p -p //
 * [ #k ] #p #IH
 [ <unwind2_rmap_d_dx <fbr_after_id_dx //
-| <unwind2_rmap_m_dx //
 | <unwind2_rmap_L_dx <depth_L_dx <fbr_rconss_succ //
 | <unwind2_rmap_A_dx //
 | <unwind2_rmap_S_dx //

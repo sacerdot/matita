@@ -167,6 +167,18 @@ lemma eq_inv_S_dx_structure (q) (p):
 ]
 qed-.
 
+lemma eq_inv_rcons_structure (p) (q) (l):
+      (∀k. 𝗱k = l → ⊥) →
+      q◖l = ⊗p →
+      ∃∃r1,r2. q = ⊗r1 & 𝐞 = ⊗r2 & r1●l◗r2 = p.
+#p #q * [ #k ] #Hl #H0
+[ elim Hl -Hl -H0 //
+| /2 width=1 by eq_inv_L_dx_structure/
+| /2 width=1 by eq_inv_A_dx_structure/
+| /2 width=1 by eq_inv_S_dx_structure/
+]
+qed-.
+
 (* Main inversions **********************************************************)
 
 theorem eq_inv_append_structure (p) (q) (r):

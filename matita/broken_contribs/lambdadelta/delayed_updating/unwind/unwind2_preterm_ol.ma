@@ -12,21 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_rmap.ma".
-include "delayed_updating/syntax/path_structure.ma".
-include "ground/relocation/fb/fbr_after.ma".
+include "delayed_updating/unwind/unwind2_prototerm.ma".
+include "delayed_updating/syntax/preterm_structure.ma".
+include "ground/lib/subset_or_le.ma".
+include "ground/lib/subset_ol.ma".
 
-(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
+(* TAILED UNWIND FOR PRETERM ************************************************)
 
-(* Constructions with map_after *********************************************)
+(* Inversions with subset_ol ************************************************)
 
-lemma unwind2_rmap_after (g) (f) (p:ℙ):
-      ▶[⊗p]g•▶[p]f = ▶[p](g•f).
-#g #f #p elim p -p //
-* [ #k ] #p #IH //
-[ <structure_L_dx <unwind2_rmap_L_dx
-  <unwind2_rmap_L_dx <unwind2_rmap_L_dx <IH -IH //
-| <structure_A_dx <unwind2_rmap_A_dx //
-| <structure_S_dx <unwind2_rmap_S_dx //
-]
-qed.
+lemma term_ol_inv_unwind_bi (f) (t1) (t2):
+      t1 ∪ t2 ϵ 𝐓 →
+      (▼[f]t1) ≬ ▼[f]t2 → t1 ≬ t2.
+#f #t1 #t2 #Ht * #r * #s1 #Hs1 #H1 * #s2 #Hs2 #H2 destruct
+lapply (eq_des_unwind2_path_bi_structure … H2) -H2 #H2
+lapply (term_structure_inj … Ht … H2) -H2 [3: #H0 destruct ]
+/2 width=3 by subset_or_in_dx, subset_or_in_sn, subset_ol_i/
+qed-.

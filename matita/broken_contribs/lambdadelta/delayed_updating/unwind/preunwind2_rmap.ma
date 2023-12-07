@@ -21,7 +21,6 @@ include "ground/relocation/fb/fbr_joins.ma".
 definition preunwind2_rmap (l) (f): 𝔽𝔹 ≝
 match l with
 [ label_d k ⇒ ⮤*[k]f
-| label_m   ⇒ f
 | label_L   ⇒ (⫯f)
 | label_A   ⇒ f
 | label_S   ⇒ f
@@ -35,10 +34,6 @@ interpretation
 
 lemma preunwind2_rmap_d (f) (k):
       (⮤*[k]f) = ▶[𝗱k]f.
-// qed.
-
-lemma preunwind2_rmap_m (f):
-      f = ▶[𝗺]f.
 // qed.
 
 lemma preunwind2_rmap_L (f):

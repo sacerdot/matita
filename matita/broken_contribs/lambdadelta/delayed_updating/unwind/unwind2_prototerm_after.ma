@@ -23,7 +23,7 @@ lemma unwind2_term_after (f1) (f2) (t):
       ▼[f2]▼[f1]t ⇔ ▼[f2•f1]t.
 #f1 #f2 #t @subset_eq_trans
 [
-| @subset_inclusion_ext_f1_compose
-| @subset_equivalence_ext_f1_exteq /2 width=5/
+| @subset_le_ext_f1_compose
+| @subset_eq_ext_f1_exteq /2 width=5/
 ]
 qed.

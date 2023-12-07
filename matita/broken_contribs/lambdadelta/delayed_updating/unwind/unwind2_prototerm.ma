@@ -24,7 +24,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma in_comp_unwind2_path_term (f) (p) (t):
+lemma in_comp_unwind2_bi (f) (p) (t):
       p ϵ t → ▼[f]p ϵ ▼[f]t.
 /2 width=1 by subset_in_ext_f1_dx/
 qed.

@@ -19,7 +19,7 @@ include "delayed_updating/unwind/preunwind2_rmap_eq.ma".
 
 (* Constructions with map_eq ************************************************)
 
-lemma unwind2_rmap_eq_repl (p:path):
+lemma unwind2_rmap_eq_repl (p:ℙ):
       compatible_2_fwd … fbr_eq fbr_eq (λf.▶[p]f).
 #p elim p -p //
 #l #p #IH #f1 #f2 #Hf
