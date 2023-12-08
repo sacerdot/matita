@@ -20,6 +20,10 @@ include "ground/lib/subset_or_eq.ma".
 
 (* Constructions with constructors for prototerm ****************************)
 
+lemma fsubst_iref (t) (u1) (u2) (k):
+      (𝛕k.⬕[u1←u2]t) ⇔ ⬕[𝗱k◗u1←𝗱k◗u2]𝛕k.t.
+// qed.
+
 lemma fsubst_abst_hd (t) (u1) (u2):
       (𝛌.⬕[u1←u2]t) ⇔ ⬕[𝗟◗u1←𝗟◗u2]𝛌.t.
 // qed.

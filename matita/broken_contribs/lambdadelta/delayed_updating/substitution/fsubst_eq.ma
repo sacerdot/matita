@@ -50,6 +50,24 @@ lemma fsubst_eq_repl (t1) (t2) (u1) (u2) (v1) (v2):
 /4 width=7 by conj, fsubst_le_repl, subset_eq_sym/
 qed.
 
+lemma fsubst_le_repl_slice (t) (u1) (u2) (p1) (p2):
+      t ⊆ u1 →
+      ⬕[p1●u1←u2](p1●t) ⊆ ⬕[p2●u1←u2](p2●t).
+#t #u1 #u2 #p1 #p2 #Ht #r * * #Hp #Hr
+[ lapply (term_ol_inv_append_bi … Hp) -Hp #Hp
+  /3 width=1 by fsubst_in_comp_true, term_ol_append_bi/
+| @fsubst_in_comp_false
+  elim Hr -Hr
+  /2 width=3 by pt_append_le_repl/
+]
+qed.
+
+lemma fsubst_eq_repl_slice (t) (u1) (u2) (p1) (p2):
+      t ⊆ u1 →
+      ⬕[p1●u1←u2](p1●t) ⇔ ⬕[p2●u1←u2](p2●t).
+/3 width=2 by conj, fsubst_le_repl_slice/
+qed.
+
 lemma fsubst_or (t1) (t2) (u) (v):
       (⬕[u←v]t1) ∪ (⬕[u←v]t2) ⇔ ⬕[u←v](t1 ∪ t2).
 #t1 #t2 #u #v @conj
