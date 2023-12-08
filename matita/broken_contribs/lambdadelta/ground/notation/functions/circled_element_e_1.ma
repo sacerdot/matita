@@ -18,10 +18,6 @@ notation < "hvbox( ⓔ )"
   non associative with precedence 70
   for @{ 'CircledElementE $S }.
 
-notation > "hvbox( ⓔ )"
+notation > "hvbox( ⓔ opt ( { term 46 S } ) )"
   non associative with precedence 70
-  for @{ 'CircledElementE ? }.
-
-notation > "hvbox( ⓔ{ term 46 S } )"
-  non associative with precedence 70
-  for @{ 'CircledElementE $S }.
+  for @{ 'CircledElementE ${default @{$S}@{?}} }.

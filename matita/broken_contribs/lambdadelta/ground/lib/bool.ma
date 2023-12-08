@@ -13,19 +13,19 @@
 (**************************************************************************)
 
 include "basics/bool.ma".
-include "ground/notation/functions/no_0.ma".
-include "ground/notation/functions/yes_0.ma".
+include "ground/notation/functions/circled_element_f_0.ma".
+include "ground/notation/functions/circled_element_t_0.ma".
 include "ground/lib/relations.ma".
 
 (* BOOLEANS *****************************************************************)
 
 interpretation
   "false (booleans)"
-  'no = false.
+  'CircledElementF = (false).
 
 interpretation
   "true (booleans)"
-  'yes = true.
+  'CircledElementT = (true).
 
 (* Advanced constructions ***************************************************)
 

@@ -12,28 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/negrightarrow_2.ma".
-include "ground/lib/bool.ma".
+include "ground/notation/functions/circled_collection_f_1.ma".
+include "ground/lib/subset.ma".
 
-(* EXCLUSIVE DISJUNCTION FOR BOOLEANS ***************************************)
+(* FULL SUBSET FOR SUBSETS **************************************************)
 
-definition bminus (b1) (b2): bool ≝
-  b1 ∧ ¬b2.
+definition subset_full (A): 𝒫❨A❩ ≝
+           λp. ⊤.
 
 interpretation
-  "negated implication (booleans)"
-  'NegRightArrow b1 b2 = (bminus b1 b2).
+  "full (subset)"
+  'CircledCollectionF A = (subset_full A).
 
 (* Basic constructions ******************************************************)
 
-lemma bninus_false_sn (b):
-      ⓕ = ⓕ ↛ b.
-// qed.
-
-lemma bninus_true_false:
-      ⓣ = ⓣ ↛ ⓕ.
-// qed.
-
-lemma bninus_true_bi:
-      ⓕ = ⓣ ↛ ⓣ.
-// qed.
+lemma subset_full_in (A) (p):
+      p ϵ{A} Ⓕ.
+//
+qed.

@@ -23,25 +23,25 @@ lemma commutative_andb:
 * * // qed.
 
 lemma andb_false_dx (b):
-      Ⓕ = (b ∧ Ⓕ).
+      ⓕ = (b ∧ ⓕ).
 * // qed.
 
 lemma andb_false_sn (b):
-      Ⓕ = (Ⓕ ∧ b).
+      ⓕ = (ⓕ ∧ b).
 // qed.
 
 lemma andb_true_dx (b):
-      b = (b ∧ Ⓣ).
+      b = (b ∧ ⓣ).
 * // qed.
 
 lemma andb_true_sn (b):
-      b = (Ⓣ ∧ b).
+      b = (ⓣ ∧ b).
 // qed.
 
 (* Advanced inversions ******************************************************)
 
 lemma andb_inv_true_sn (b1) (b2):
-      Ⓣ = (b1 ∧ b2) → ∧∧ Ⓣ = b1 & Ⓣ = b2.
+      ⓣ = (b1 ∧ b2) → ∧∧ ⓣ = b1 & ⓣ = b2.
 * normalize
 [ /2 width=1 by conj/
 | #b2 #H destruct

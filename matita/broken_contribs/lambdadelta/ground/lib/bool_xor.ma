@@ -28,13 +28,13 @@ lemma commutative_xorb:
 * * // qed.
 
 lemma xorb_false_dx (b):
-      b = b ⊻ Ⓕ.
+      b = b ⊻ ⓕ.
 * // qed.
 
 lemma xorb_false_sn (b):
-      b = Ⓕ ⊻ b.
+      b = ⓕ ⊻ b.
 // qed.
 
 lemma xorb_true_bi:
-      Ⓕ = Ⓣ ⊻ Ⓣ.
+      ⓕ = ⓣ ⊻ ⓣ.
 // qed.

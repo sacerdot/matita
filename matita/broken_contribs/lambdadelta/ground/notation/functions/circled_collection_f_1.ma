@@ -14,6 +14,10 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "hvbox( Ⓕ )"
+notation < "hvbox( Ⓕ )"
   non associative with precedence 70
-  for @{ 'no }.
+  for @{ 'CircledCollectionF $S }.
+
+notation > "hvbox( Ⓕ opt ( { term 46 S } ) )"
+  non associative with precedence 70
+  for @{ 'CircledCollectionF ${default @{$S}@{?}} }.

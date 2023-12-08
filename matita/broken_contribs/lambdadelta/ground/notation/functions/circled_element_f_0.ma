@@ -12,28 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/negrightarrow_2.ma".
-include "ground/lib/bool.ma".
+(* NOTATION FOR GROUND ******************************************************)
 
-(* EXCLUSIVE DISJUNCTION FOR BOOLEANS ***************************************)
-
-definition bminus (b1) (b2): bool ≝
-  b1 ∧ ¬b2.
-
-interpretation
-  "negated implication (booleans)"
-  'NegRightArrow b1 b2 = (bminus b1 b2).
-
-(* Basic constructions ******************************************************)
-
-lemma bninus_false_sn (b):
-      ⓕ = ⓕ ↛ b.
-// qed.
-
-lemma bninus_true_false:
-      ⓣ = ⓣ ↛ ⓕ.
-// qed.
-
-lemma bninus_true_bi:
-      ⓕ = ⓣ ↛ ⓣ.
-// qed.
+notation "hvbox( ⓕ )"
+  non associative with precedence 70
+  for @{ 'CircledElementF }.

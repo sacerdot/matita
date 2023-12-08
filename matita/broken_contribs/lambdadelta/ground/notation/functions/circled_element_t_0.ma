@@ -14,6 +14,6 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation "hvbox( Ⓣ )"
+notation "hvbox( ⓣ )"
   non associative with precedence 70
-  for @{ 'yes }.
+  for @{ 'CircledElementT }.

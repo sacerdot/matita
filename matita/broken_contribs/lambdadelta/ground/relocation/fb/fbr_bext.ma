@@ -20,11 +20,11 @@ include "ground/notation/functions/element_bx_3.ma".
 rec definition fbr_bext (f) (f1) (f2) on f1: 𝔽𝔹 ≝
 match f1 with
 [ list_empty       ⇒
-  if f (Ⓕ) (Ⓣ) then f2 else f1
+  if f (ⓕ) (ⓣ) then f2 else f1
 | list_lcons b1 g1 ⇒
   match f2 with
   [ list_empty       ⇒
-    if f (Ⓣ) (Ⓕ) then f1 else f2
+    if f (ⓣ) (ⓕ) then f1 else f2
   | list_lcons b2 g2 ⇒
     (fbr_bext f g1 g2)◖(f b1 b2)
   ]
@@ -39,25 +39,25 @@ interpretation
 lemma fbr_bext_id_bi (f):
       (𝐢) = 𝐛𝐱[f]❨𝐢,𝐢❩.
 #f normalize 
-cases (f (Ⓕ) (Ⓣ)) //
+cases (f (ⓕ) (ⓣ)) //
 qed.
 
 lemma fbr_bext_id_sn_false (f) (f2):
-      Ⓕ = f (Ⓕ) (Ⓣ) →
+      ⓕ = f (ⓕ) (ⓣ) →
       (𝐢) = 𝐛𝐱[f]❨𝐢,f2❩.
 #f #f2 #H0
 normalize <H0 -H0 //
 qed.
 
 lemma fbr_bext_id_sn_true (f) (f2):
-      Ⓣ = f (Ⓕ) (Ⓣ) →
+      ⓣ = f (ⓕ) (ⓣ) →
       f2 = 𝐛𝐱[f]❨𝐢,f2❩.
 #f #f2 #H0
 normalize <H0 -H0 //
 qed.
 
 lemma fbr_bext_id_dx_false (f) (f1):
-      Ⓕ = f (Ⓣ) (Ⓕ) →
+      ⓕ = f (ⓣ) (ⓕ) →
       (𝐢) = 𝐛𝐱[f]❨f1,𝐢❩.
 #f *
 [ #_ @fbr_bext_id_bi (**) (* auto fails *)
@@ -66,7 +66,7 @@ lemma fbr_bext_id_dx_false (f) (f1):
 qed.
 
 lemma fbr_bext_id_dx_true (f) (f1):
-      Ⓣ = f (Ⓣ) (Ⓕ) →
+      ⓣ = f (ⓣ) (ⓕ) →
       f1 = 𝐛𝐱[f]❨f1,𝐢❩.
 #f *
 [ #_ @fbr_bext_id_bi (**) (* auto fails *)

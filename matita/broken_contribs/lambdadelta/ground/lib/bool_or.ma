@@ -23,16 +23,16 @@ lemma commutative_orb:
 * * // qed.
 
 lemma orb_true_dx (b):
-      (b ∨ Ⓣ) = Ⓣ.
+      (b ∨ ⓣ) = ⓣ.
 * // qed.
 
 lemma orb_true_sn (b):
-      (Ⓣ ∨ b) = Ⓣ.
+      (ⓣ ∨ b) = ⓣ.
 // qed.
 
 (* Advanced inversions ******************************************************)
 
 lemma orb_inv_false_dx (b1) (b2):
-      (b1 ∨ b2) = Ⓕ → ∧∧ b1 = Ⓕ & b2 = Ⓕ.
+      (b1 ∨ b2) = ⓕ → ∧∧ b1 = ⓕ & b2 = ⓕ.
 * normalize /2 width=1 by conj/ #b2 #H destruct
 qed-.
