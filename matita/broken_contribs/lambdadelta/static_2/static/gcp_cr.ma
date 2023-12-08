@@ -59,7 +59,7 @@ record gcr (RR:relation4 genv lenv term term) (RS:relation term) (RP,C:candidate
 (* the functional construction for candidates *)
 definition cfun: candidate → candidate → candidate ≝
                  λC1,C2,G,K,T. ∀f,L,W,U.
-                 ⇩*[Ⓕ,f] L ≘ K → ⇧*[f] T ≘ U → C1 G L W → C2 G L (ⓐW.U).
+                 ⇩*[ⓕ,f] L ≘ K → ⇧*[f] T ≘ U → C1 G L W → C2 G L (ⓐW.U).
 
 (* the reducibility candidate associated to an atomic arity *)
 rec definition acr (RP:candidate) (A:aarity) on A: candidate ≝
@@ -74,7 +74,7 @@ interpretation
 
 (* Basic properties *********************************************************)
 
-(* Note: this requires Ⓕ-slicing in cfun since b is unknown in d_liftable_1 *)
+(* Note: this requires ⓕ-slicing in cfun since b is unknown in d_liftable_1 *)
 (* Note: this requires multiple relocation *)
 (* Basic 1: includes: sc3_lift *)
 (* Basic 2A1: includes: gcr_lift *)

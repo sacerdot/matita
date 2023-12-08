@@ -48,7 +48,7 @@ lemma nta_ind_rest_cnv (h) (Q:relation4 …):
       ) →
       ∀G,L,T,U. ❨G,L❩ ⊢ T :[h,𝟐] U → Q G L T U.
 #h #Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #G #L #T
-@(fqup_wf_ind_eq (Ⓣ) … G L T) -G -L -T #G0 #L0 #T0 #IH #G #L * * [|||| * ]
+@(fqup_wf_ind_eq (ⓣ) … G L T) -G -L -T #G0 #L0 #T0 #IH #G #L * * [|||| * ]
 [ #s #HG #HL #HT #X #H destruct -IH
   elim (nta_inv_sort_sn … H) -H #HUX #HX
   /2 width=4 by/
@@ -109,7 +109,7 @@ lemma nta_ind_ext_cnv_mixed (h) (Q:relation4 …):
       ) →
       ∀G,L,T,U. ❨G,L❩ ⊢ T :[h,𝛚] U → Q G L T U.
 #h #Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #IH9 #G #L #T
-@(fqup_wf_ind_eq (Ⓣ) … G L T) -G -L -T #G0 #L0 #T0 #IH #G #L * * [|||| * ]
+@(fqup_wf_ind_eq (ⓣ) … G L T) -G -L -T #G0 #L0 #T0 #IH #G #L * * [|||| * ]
 [ #s #HG #HL #HT #X #H destruct -IH
   elim (nta_inv_sort_sn … H) -H #HUX #HX
   /2 width=4 by/

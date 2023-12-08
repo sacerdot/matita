@@ -88,7 +88,7 @@ qed-.
 lemma cpg_lifts_sn (Rs) (Rk) (c) (G): reflexive … Rk →
       d_liftable2_sn … lifts (cpg Rs Rk c G).
 #Rs #Rk #c #G #HRk #K #T generalize in match c; -c
-@(fqup_wf_ind_eq (Ⓣ) … G K T) -G -K -T #G0 #K0 #T0 #IH #G #K * *
+@(fqup_wf_ind_eq (ⓣ) … G K T) -G -K -T #G0 #K0 #T0 #IH #G #K * *
 [ #s1 #HG #HK #HT #c #X2 #H2 #b #f #L #HLK #X1 #H1 destruct -IH
   lapply (lifts_inv_sort1 … H1) -H1 #H destruct
   elim (cpg_inv_sort1 … H2) -H2 *
@@ -174,7 +174,7 @@ lemma cpg_lifts_bi (Rs) (Rk) (c) (G): reflexive … Rk →
 lemma cpg_inv_lifts_sn (Rs) (Rk) (c) (G): reflexive … Rk →
       d_deliftable2_sn … lifts (cpg Rs Rk c G).
 #Rs #Rk #c #G #HRk #L #U generalize in match c; -c
-@(fqup_wf_ind_eq (Ⓣ) … G L U) -G -L -U #G0 #L0 #U0 #IH #G #L * *
+@(fqup_wf_ind_eq (ⓣ) … G L U) -G -L -U #G0 #L0 #U0 #IH #G #L * *
 [ #s1 #HG #HL #HU #c #X2 #H2 #b #f #K #HLK #X1 #H1 destruct -IH
   lapply (lifts_inv_sort2 … H1) -H1 #H destruct
   elim (cpg_inv_sort1 … H2) -H2 *

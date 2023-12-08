@@ -31,8 +31,8 @@ include "static_2/relocation/lifts.ma".
 inductive fqu (b:bool): tri_relation genv lenv term ≝
 | fqu_lref_O : ∀I,G,L,V. fqu b G (L.ⓑ[I]V) (#0) G L V
 | fqu_pair_sn: ∀I,G,L,V,T. fqu b G L (②[I]V.T) G L V
-| fqu_bind_dx: ∀p,I,G,L,V,T. b = Ⓣ → fqu b G L (ⓑ[p,I]V.T) G (L.ⓑ[I]V) T
-| fqu_clear  : ∀p,I,G,L,V,T. b = Ⓕ → fqu b G L (ⓑ[p,I]V.T) G (L.ⓧ) T
+| fqu_bind_dx: ∀p,I,G,L,V,T. b = ⓣ → fqu b G L (ⓑ[p,I]V.T) G (L.ⓑ[I]V) T
+| fqu_clear  : ∀p,I,G,L,V,T. b = ⓕ → fqu b G L (ⓑ[p,I]V.T) G (L.ⓧ) T
 | fqu_flat_dx: ∀I,G,L,V,T. fqu b G L (ⓕ[I]V.T) G L T
 | fqu_drop   : ∀I,G,L,T,U. ⇧[1] T ≘ U → fqu b G (L.ⓘ[I]) U G L T
 .
@@ -117,8 +117,8 @@ lemma fqu_inv_gref1: ∀b,G1,G2,L1,L2,T2,l. ❨G1,L1,§l❩ ⬂[b] ❨G2,L2,T2�
 fact fqu_inv_bind1_aux: ∀b,G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G2,L2,T2❩ →
                         ∀p,I,V1,U1. T1 = ⓑ[p,I]V1.U1 →
                         ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
-                         | ∧∧ G1 = G2 & L1.ⓑ[I]V1 = L2 & U1 = T2 & b = Ⓣ
-                         | ∧∧ G1 = G2 & L1.ⓧ = L2 & U1 = T2 & b = Ⓕ
+                         | ∧∧ G1 = G2 & L1.ⓑ[I]V1 = L2 & U1 = T2 & b = ⓣ
+                         | ∧∧ G1 = G2 & L1.ⓧ = L2 & U1 = T2 & b = ⓕ
                          | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧[1] T2 ≘ ⓑ[p,I]V1.U1.
 #b #G1 #G2 #L1 #L2 #T1 #T2 * -G1 -G2 -L1 -L2 -T1 -T2
 [ #I #G #L #T #q #J #V0 #U0 #H destruct
@@ -132,8 +132,8 @@ qed-.
 
 lemma fqu_inv_bind1: ∀b,p,I,G1,G2,L1,L2,V1,U1,T2. ❨G1,L1,ⓑ[p,I]V1.U1❩ ⬂[b] ❨G2,L2,T2❩ →
                      ∨∨ ∧∧ G1 = G2 & L1 = L2 & V1 = T2
-                      | ∧∧ G1 = G2 & L1.ⓑ[I]V1 = L2 & U1 = T2 & b = Ⓣ
-                      | ∧∧ G1 = G2 & L1.ⓧ = L2 & U1 = T2 & b = Ⓕ
+                      | ∧∧ G1 = G2 & L1.ⓑ[I]V1 = L2 & U1 = T2 & b = ⓣ
+                      | ∧∧ G1 = G2 & L1.ⓧ = L2 & U1 = T2 & b = ⓕ
                       | ∃∃J. G1 = G2 & L1 = L2.ⓘ[J] & ⇧[1] T2 ≘ ⓑ[p,I]V1.U1.
 /2 width=4 by fqu_inv_bind1_aux/ qed-.
 

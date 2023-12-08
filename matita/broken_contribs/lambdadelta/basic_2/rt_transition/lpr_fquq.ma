@@ -32,7 +32,7 @@ lemma fqu_cpr_trans_sn (h) (b): ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G
 | /3 width=5 by cpm_bind_unit, fqu_clear, ex3_2_intro/
 | /3 width=5 by cpr_flat, fqu_flat_dx, ex3_2_intro/
 | #I #G #K #U #T #HUT #U2 #HU2
-  elim (cpm_lifts_sn … HU2 (Ⓣ) … (K.ⓘ[I]) … HUT) -U
+  elim (cpm_lifts_sn … HU2 (ⓣ) … (K.ⓘ[I]) … HUT) -U
   /3 width=5 by lpr_bind_refl_dx, fqu_drop, drops_refl, drops_drop, ex3_2_intro/
 ]
 qed-.
@@ -47,7 +47,7 @@ lemma fqu_cpr_trans_dx (h) (b): ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G
 | /3 width=5 by cpm_bind_unit, fqu_clear, ex3_2_intro/
 | /3 width=5 by cpr_flat, fqu_flat_dx, ex3_2_intro/
 | #I #G #K #U #T #HUT #U2 #HU2
-  elim (cpm_lifts_sn … HU2 (Ⓣ) … (K.ⓘ[I]) … HUT) -U
+  elim (cpm_lifts_sn … HU2 (ⓣ) … (K.ⓘ[I]) … HUT) -U
   /3 width=5 by lpr_bind_refl_dx, fqu_drop, drops_refl, drops_drop, ex3_2_intro/
 ]
 qed-.

@@ -131,6 +131,6 @@ qed-.
 lemma cnv_cpm_teqx_conf_lpr (h) (a) (G0) (L0) (T0):
       IH_cnv_cpm_teqx_conf_lpr h a G0 L0 T0.
 #h #a #G0 #L0 #T0
-@(fqup_wf_ind (Ⓣ) … G0 L0 T0) -G0 -L0 -T0 #G0 #L0 #T0 #IH
+@(fqup_wf_ind (ⓣ) … G0 L0 T0) -G0 -L0 -T0 #G0 #L0 #T0 #IH
 /3 width=17 by cnv_cpm_teqx_conf_lpr_aux/
 qed-.

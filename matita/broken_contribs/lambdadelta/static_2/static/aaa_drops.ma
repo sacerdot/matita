@@ -56,7 +56,7 @@ qed-.
 (* Note: it should use drops_split_trans_pair2 *)
 lemma aaa_lifts: ∀G,L1,T1,A. ❨G,L1❩ ⊢ T1 ⁝ A → ∀b,f,L2. ⇩*[b,f] L2 ≘ L1 →
                  ∀T2. ⇧*[f] T1 ≘ T2 → ❨G,L2❩ ⊢ T2 ⁝ A.
-@(fqup_wf_ind_eq (Ⓣ)) #G0 #L0 #T0 #IH #G #L1 * *
+@(fqup_wf_ind_eq (ⓣ)) #G0 #L0 #T0 #IH #G #L1 * *
 [ #s #HG #HL #HT #A #H #b #f #L2 #HL21 #X #HX -b -IH
   lapply (aaa_inv_sort … H) -H #H destruct
   >(lifts_inv_sort1 … HX) -HX //
@@ -95,7 +95,7 @@ qed-.
 (* Basic_2A1: includes: aaa_inv_lift *)
 lemma aaa_inv_lifts: ∀G,L2,T2,A. ❨G,L2❩ ⊢ T2 ⁝ A → ∀b,f,L1. ⇩*[b,f] L2 ≘ L1 →
                      ∀T1. ⇧*[f] T1 ≘ T2 → ❨G,L1❩ ⊢ T1 ⁝ A.
-@(fqup_wf_ind_eq (Ⓣ)) #G0 #L0 #T0 #IH #G #L2 * *
+@(fqup_wf_ind_eq (ⓣ)) #G0 #L0 #T0 #IH #G #L2 * *
 [ #s #HG #HL #HT #A #H #b #f #L1 #HL21 #X #HX -b -IH
   lapply (aaa_inv_sort … H) -H #H destruct
   >(lifts_inv_sort2 … HX) -HX //

@@ -32,7 +32,7 @@ lemma fqu_cpx_trans (b):
   /3 width=3 by fqu_drop, cpx_delta, ex2_intro/
 | /5 width=4 by lsubr_cpx_trans, cpx_bind, lsubr_unit, fqu_clear, ex2_intro/
 | #I #G #L2 #T2 #X2 #HTX2 #U2 #HTU2
-  elim (cpx_lifts_sn … HTU2 (Ⓣ) … (L2.ⓘ[I]) … HTX2)
+  elim (cpx_lifts_sn … HTU2 (ⓣ) … (L2.ⓘ[I]) … HTX2)
   /3 width=3 by fqu_drop, drops_refl, drops_drop, ex2_intro/
 ]
 qed-.
@@ -98,7 +98,7 @@ lemma fqu_cpx_trans_tneqx (b):
   | #H elim (teqx_inv_pair … H) -H /2 width=1 by/
   ]
 | #I #G #L #T1 #U1 #HTU1 #T2 #HT12 #H0
-  elim (cpx_lifts_sn … HT12 (Ⓣ) … (L.ⓘ[I]) … HTU1) -HT12
+  elim (cpx_lifts_sn … HT12 (ⓣ) … (L.ⓘ[I]) … HTU1) -HT12
   /4 width=6 by fqu_drop, drops_refl, drops_drop, teqx_inv_lifts_bi, ex3_intro/
 ]
 qed-.

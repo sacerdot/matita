@@ -63,7 +63,7 @@ lemma rsx_inv_lref_pair_drops (G):
 
 lemma rsx_inv_lref_drops (G):
       ∀L,i. G ⊢ ⬈*𝐒[#i] L →
-      ∨∨ ⇩*[Ⓕ,𝐔❨i❩] L ≘ ⋆
+      ∨∨ ⇩*[ⓕ,𝐔❨i❩] L ≘ ⋆
        | ∃∃I,K. ⇩[i] L ≘ K.ⓤ[I]
        | ∃∃I,K,V. ⇩[i] L ≘ K.ⓑ[I]V & ❨G,K❩ ⊢ ⬈*𝐒 V & G ⊢ ⬈*𝐒[V] K.
 #G #L #i #H elim (drops_F_uni L i)
@@ -116,7 +116,7 @@ qed.
 (* Basic_2A1: uses: csx_lsx *)
 theorem csx_rsx (G):
         ∀L,T. ❨G,L❩ ⊢ ⬈*𝐒 T → G ⊢ ⬈*𝐒[T] L.
-#G #L #T @(fqup_wf_ind_eq (Ⓣ) … G L T) -G -L -T
+#G #L #T @(fqup_wf_ind_eq (ⓣ) … G L T) -G -L -T
 #Z #Y #X #IH #G #L * *
 [ //
 | #i #HG #HL #HT #H destruct

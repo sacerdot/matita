@@ -66,7 +66,7 @@ lemma cpxs_inv_zero1 (G) (L):
   elim (cpx_inv_zero1 … HT2) -HT2 /2 width=1 by or_introl/
   * /4 width=7 by cpx_cpxs, ex3_4_intro, or_intror/
 | * #I #K #V1 #T1 #HVT1 #HT1 #H destruct
-  elim (cpx_inv_lifts_sn … HT2 (Ⓣ) … K … HT1) -T
+  elim (cpx_inv_lifts_sn … HT2 (ⓣ) … K … HT1) -T
   /4 width=7 by cpxs_strap1, drops_refl, drops_drop, ex3_4_intro, or_intror/
 ]
 qed-.
@@ -81,7 +81,7 @@ lemma cpxs_inv_lref1 (G) (L):
   elim (cpx_inv_lref1 … HT2) -HT2 /2 width=1 by or_introl/
   * /4 width=6 by cpx_cpxs, ex3_3_intro, or_intror/
 | * #I #K #T1 #Hi #HT1 #H destruct
-  elim (cpx_inv_lifts_sn … HT2 (Ⓣ) … K … HT1) -T
+  elim (cpx_inv_lifts_sn … HT2 (ⓣ) … K … HT1) -T
   /4 width=6 by cpxs_strap1, drops_refl, drops_drop, ex3_3_intro, or_intror/
 ]
 qed-.

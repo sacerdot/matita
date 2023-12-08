@@ -24,7 +24,7 @@ lemma fsle_lifts_sn: ∀T1,U1. ⇧[1] T1 ≘ U1 → ∀L1,L2. |L2| ≤ |L1| →
 #T1 #U1 #HTU1 #L1 #L2 #H1L #T2
 * #n #m #f #g #Hf #Hg #H2L #Hfg
 lapply (lveq_length_fwd_dx … H2L ?) // -H1L #H destruct
-lapply (frees_lifts_SO (Ⓣ) (L1.ⓧ) … HTU1 … Hf)
+lapply (frees_lifts_SO (ⓣ) (L1.ⓧ) … HTU1 … Hf)
 [ /3 width=4 by drops_refl, drops_drop/ ] -T1 #Hf
 @(ex4_4_intro … Hf Hg) /2 width=4 by lveq_void_sn/ (**) (* explict constructor *)
 qed-.
@@ -35,7 +35,7 @@ lemma fsle_lifts_dx (L1) (L2):
 #L1 #L2 #HL21 #T2 #U2 #HTU2 #T1
 * #n #m #f #g #Hf #Hg #H2L #Hfg
 lapply (lveq_length_fwd_sn … H2L ?) // -HL21 #H destruct
-lapply (frees_lifts_SO (Ⓣ) (L2.ⓧ) … HTU2 … Hg)
+lapply (frees_lifts_SO (ⓣ) (L2.ⓧ) … HTU2 … Hg)
 [ /3 width=4 by drops_refl, drops_drop/ ] -T2 #Hg
 @(ex4_4_intro … Hf Hg) /2 width=4 by lveq_void_dx/ (**) (* explict constructor *)
 qed-.
@@ -69,7 +69,7 @@ lemma fsle_inv_lifts_sn: ∀T1,U1. ⇧[1] T1 ≘ U1 →
 elim (lveq_inv_pair_pair … HL) -HL #HL #H1 #H2 destruct
 elim (frees_total L2 V2) #g1 #Hg1
 elim (pr_sor_isf_bi g1 (⫰g2)) /3 width=3 by frees_fwd_isfin, pr_isf_tl/ #g #Hg #_
-lapply (frees_inv_lifts_SO (Ⓣ) … Hf2 … HTU1)
+lapply (frees_inv_lifts_SO (ⓣ) … Hf2 … HTU1)
 [1,2: /3 width=4 by drops_refl, drops_drop/ ] -U1 #Hf2
 lapply (pr_sor_inv_sle_dx … Hg) #H0g
 /5 width=10 by frees_bind, pr_sle_tl, pr_sle_trans, ex4_4_intro/

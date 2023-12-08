@@ -40,7 +40,7 @@ record is_model (M): Prop ≝ {
 (* Note: interpretation: application *)
    ma: ∀gv,lv,V,T. ⟦ⓐV.T⟧{M}[gv,lv] ≗ ⟦V⟧[gv,lv] @ ⟦T⟧[gv,lv];
 (* Note: interpretation: ζ-equivalence *)
-   mz: ∀d1,d2. d1 ⊕{M}[Ⓣ] d2 ≗ d2;
+   mz: ∀d1,d2. d1 ⊕{M}[ⓣ] d2 ≗ d2;
 (* Note: interpretation: ϵ-equivalence *)
    me: ∀gv,lv,W,T. ⟦ⓝW.T⟧{M}[gv,lv] ≗ ⟦T⟧[gv,lv];
 (* Note: interpretation: β-requivalence *)
@@ -58,7 +58,7 @@ record is_extensional (M): Prop ≝ {
 
 record is_injective (M): Prop ≝ {
 (* Note: conjunction: injectivity *)
-   mj: ∀d1,d3,d2,d4. d1 ⊕[Ⓕ] d2 ≗{M} d3 ⊕[Ⓕ] d4 → d2 ≗ d4
+   mj: ∀d1,d3,d2,d4. d1 ⊕[ⓕ] d2 ≗{M} d3 ⊕[ⓕ] d4 → d2 ≗ d4
 }.
 
 (* Basic properties *********************************************************)

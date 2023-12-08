@@ -82,7 +82,7 @@ elim (cpx_inv_appl1 … HL) -HL *
 [ -HV #V0 #Y #HLV10 #HL #H0 destruct
   elim (cpx_inv_abbr1 … HL) -HL *
   [ #V3 #T3 #HV3 #HLT3 #H0 destruct
-    elim (cpx_lifts_sn … HLV10 (Ⓣ) … (L.ⓓV) … HV12) -HLV10 /3 width=1 by drops_refl, drops_drop/ #V4 #HV04 #HV24
+    elim (cpx_lifts_sn … HLV10 (ⓣ) … (L.ⓓV) … HV12) -HLV10 /3 width=1 by drops_refl, drops_drop/ #V4 #HV04 #HV24
     elim (teqx_dec (ⓓ[p]V.ⓐV2.T) (ⓓ[p]V3.ⓐV4.T3)) #H0
     [ -IHVT -HV3 -HV24 -HLT3
       elim (teqx_inv_pair … H0) -H0 #_ #HV3 #H0
@@ -92,13 +92,13 @@ elim (cpx_inv_appl1 … HL) -HL *
     | -V1 @(IHVT … H0 … HV04) -V0 /4 width=1 by cpx_cpxs, cpx_flat, cpx_bind/
     ]
   | #T0 #HT0 #HLT0 #H0 destruct -H -IHVT
-    lapply (csx_inv_lifts … HVT (Ⓣ) … L ???) -HVT
+    lapply (csx_inv_lifts … HVT (ⓣ) … L ???) -HVT
     [5:|*: /3 width=4 by drops_refl, drops_drop, lifts_flat/ ] -V2 -T #HVT
     /3 width=5 by csx_cpx_trans, cpx_flat/
   ]
 | -HV -HV12 -HVT -IHVT -H #b #V0 #W0 #W1 #T0 #T1 #_ #_ #_ #H destruct
 | -IHVT -H #b #V0 #V3 #W0 #W1 #T0 #T1 #HLV10 #HV03 #HLW01 #HLT01 #H1 #H2 destruct
-  lapply (cpx_lifts_bi … HLV10 (Ⓣ) … (L.ⓓW0) … HV12 … HV03) -HLV10 -HV12 -HV03 /3 width=1 by drops_refl, drops_drop/ #HLV23
+  lapply (cpx_lifts_bi … HLV10 (ⓣ) … (L.ⓓW0) … HV12 … HV03) -HLV10 -HV12 -HV03 /3 width=1 by drops_refl, drops_drop/ #HLV23
   @csx_abbr /2 width=3 by csx_cpx_trans/ -HV
   @(csx_lpx_conf … (L.ⓓW0)) /2 width=1 by lpx_pair/ -W1
   /4 width=5 by csx_cpxs_trans, cpx_cpxs, cpx_flat/

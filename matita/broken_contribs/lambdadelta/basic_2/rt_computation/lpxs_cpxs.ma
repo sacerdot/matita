@@ -41,7 +41,7 @@ qed-.
 lemma cpxs_inv_abbr1_dx (p) (G) (L):
       ∀V1,T1,U2. ❨G,L❩ ⊢ ⓓ[p]V1.T1 ⬈* U2 →
       ∨∨ ∃∃V2,T2. ❨G,L❩ ⊢ V1 ⬈* V2 & ❨G,L.ⓓV1❩ ⊢ T1 ⬈* T2 & U2 = ⓓ[p]V2.T2
-       | ∃∃T2. ❨G,L.ⓓV1❩ ⊢ T1 ⬈* T2 & ⇧[1] U2 ≘ T2 & p = Ⓣ.
+       | ∃∃T2. ❨G,L.ⓓV1❩ ⊢ T1 ⬈* T2 & ⇧[1] U2 ≘ T2 & p = ⓣ.
 #p #G #L #V1 #T1 #U2 #H
 @(cpxs_ind … H) -U2 /3 width=5 by ex3_2_intro, or_introl/
 #U0 #U2 #_ #HU02 * *
@@ -51,11 +51,11 @@ lemma cpxs_inv_abbr1_dx (p) (G) (L):
     lapply (lpxs_cpx_trans … HT02 (L.ⓓV1) ?)
     /4 width=5 by lpxs_pair, cpxs_trans, cpxs_strap1, ex3_2_intro, or_introl/
   | #T2 #HT20 #HTU2 #Hp -V0
-    elim (cpx_lifts_sn … HTU2 (Ⓣ) … (L.ⓓV1) … HT20) -T2 [| /3 width=3 by drops_refl, drops_drop/ ] #U0 #HU20 #HTU0
+    elim (cpx_lifts_sn … HTU2 (ⓣ) … (L.ⓓV1) … HT20) -T2 [| /3 width=3 by drops_refl, drops_drop/ ] #U0 #HU20 #HTU0
     /4 width=3 by cpxs_strap1, ex3_intro, or_intror/
   ]
 | #U1 #HTU1 #HU01 #Hp
-  elim (cpx_lifts_sn … HU02 (Ⓣ) … (L.ⓓV1) … HU01) -U0 [| /3 width=3 by drops_refl, drops_drop/ ] #U #HU2 #HU1
+  elim (cpx_lifts_sn … HU02 (ⓣ) … (L.ⓓV1) … HU01) -U0 [| /3 width=3 by drops_refl, drops_drop/ ] #U #HU2 #HU1
   /4 width=3 by cpxs_strap1, ex3_intro, or_intror/
 ]
 qed-.

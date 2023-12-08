@@ -46,7 +46,7 @@ qed-.
 
 (* Basic_2A1: uses: lsx_lref_free *)
 lemma rsx_lref_atom_drops (G):
-      ∀L,i. ⇩*[Ⓕ,𝐔❨i❩] L ≘ ⋆ → G ⊢ ⬈*𝐒[#i] L.
+      ∀L,i. ⇩*[ⓕ,𝐔❨i❩] L ≘ ⋆ → G ⊢ ⬈*𝐒[#i] L.
 #G #L1 #i #HL1
 @(rsx_lifts … (#0) … HL1) -HL1 //
 qed.

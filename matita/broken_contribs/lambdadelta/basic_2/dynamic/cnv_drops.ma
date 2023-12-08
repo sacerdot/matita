@@ -79,7 +79,7 @@ qed-.
 (* Basic_2A1: uses: snv_lift *)
 lemma cnv_lifts (h) (a): ∀G. d_liftable1 (cnv h a G).
 #h #a #G #K #T
-@(fqup_wf_ind_eq (Ⓣ) … G K T) -G -K -T #G0 #K0 #T0 #IH #G #K * * [|||| * ]
+@(fqup_wf_ind_eq (ⓣ) … G K T) -G -K -T #G0 #K0 #T0 #IH #G #K * * [|||| * ]
 [ #s #HG #HK #HT #_ #b #f #L #_ #X #H2 destruct
   >(lifts_inv_sort1 … H2) -X -K -f //
 | #i #HG #HK #HT #H1 #b #f #L #HLK #X #H2 destruct
@@ -118,7 +118,7 @@ qed-.
 (* Basic_2A1: uses: snv_inv_lift *)
 lemma cnv_inv_lifts (h) (a): ∀G. d_deliftable1 (cnv h a G).
 #h #a #G #L #U
-@(fqup_wf_ind_eq (Ⓣ) … G L U) -G -L -U #G0 #L0 #U0 #IH #G #L * * [|||| * ]
+@(fqup_wf_ind_eq (ⓣ) … G L U) -G -L -U #G0 #L0 #U0 #IH #G #L * * [|||| * ]
 [ #s #HG #HL #HU #H1 #b #f #K #HLK #X #H2 destruct
   >(lifts_inv_sort2 … H2) -X -L -f //
 | #j #HG #HL #HU #H1 #b #f #K #HLK #X #H2 destruct

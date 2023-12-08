@@ -60,7 +60,7 @@ theorem drops_trans: ∀b1,f1,L1,L. ⇩*[b1,f1] L1 ≘ L →
 qed-.
 
 theorem drops_conf_div_isuni:
-        ∀f1,L,K. ⇩*[Ⓣ,f1] L ≘ K → ∀f2. ⇩*[Ⓣ,f2] L ≘ K →
+        ∀f1,L,K. ⇩*[ⓣ,f1] L ≘ K → ∀f2. ⇩*[ⓣ,f2] L ≘ K →
         𝐔❨f1❩ → 𝐔❨f2❩ → f1 ≡ f2.
 #f1 #L #K #H elim H -f1 -L -K
 [ #f1 #Hf1 #f2 #Hf2 elim (drops_inv_atom1 … Hf2) -Hf2
@@ -92,7 +92,7 @@ lemma drops_mono: ∀b1,f,L,L1. ⇩*[b1,f] L ≘ L1 →
 /3 width=8 by drops_conf, drops_fwd_isid/
 qed-.
 
-lemma drops_inv_uni: ∀L,i. ⇩*[Ⓕ,𝐔❨i❩] L ≘ ⋆ → ∀I,K. ⇩[i] L ≘ K.ⓘ[I] → ⊥.
+lemma drops_inv_uni: ∀L,i. ⇩*[ⓕ,𝐔❨i❩] L ≘ ⋆ → ∀I,K. ⇩[i] L ≘ K.ⓘ[I] → ⊥.
 #L #i #H1 #I #K #H2
 lapply (drops_F … H2) -H2 #H2
 lapply (drops_mono … H2 … H1) -L -i #H destruct
@@ -130,7 +130,7 @@ qed-.
 (* Basic_2A1: includes: drops_conf_div *)
 lemma drops_conf_div_bind_isuni:
       ∀f1,f2,I1,I2,L,K.
-      ⇩*[Ⓣ,f1] L ≘ K.ⓘ[I1] → ⇩*[Ⓣ,f2] L ≘ K.ⓘ[I2] →
+      ⇩*[ⓣ,f1] L ≘ K.ⓘ[I1] → ⇩*[ⓣ,f2] L ≘ K.ⓘ[I2] →
       𝐔❨f1❩ → 𝐔❨f2❩ → f1 ≡ f2 ∧ I1 = I2.
 #f1 #f2 #I1 #I2 #L #K #Hf1 #Hf2 #HU1 #HU2
 lapply (drops_isuni_fwd_drop2 … Hf1) // #H1

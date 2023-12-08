@@ -24,7 +24,7 @@ inductive teqw: relation term ≝
 | teqw_sort: ∀s1,s2. teqw (⋆s1) (⋆s2)
 | teqw_lref: ∀i. teqw (#i) (#i)
 | teqw_gref: ∀l. teqw (§l) (§l)
-| teqw_abbr: ∀p,V1,V2,T1,T2. (p=Ⓣ→teqw T1 T2) → teqw (ⓓ[p]V1.T1) (ⓓ[p]V2.T2)
+| teqw_abbr: ∀p,V1,V2,T1,T2. (p=ⓣ→teqw T1 T2) → teqw (ⓓ[p]V1.T1) (ⓓ[p]V2.T2)
 | teqw_abst: ∀p,V1,V2,T1,T2. teqw (ⓛ[p]V1.T1) (ⓛ[p]V2.T2)
 | teqw_appl: ∀V1,V2,T1,T2. teqw T1 T2 → teqw (ⓐV1.T1) (ⓐV2.T2)
 | teqw_cast: ∀V1,V2,T1,T2. teqw V1 V2 → teqw T1 T2 → teqw (ⓝV1.T1) (ⓝV2.T2)
@@ -105,7 +105,7 @@ lemma teqw_inv_gref_sn:
 
 fact teqw_inv_abbr_sn_aux:
      ∀X,Y. X ≃ Y → ∀p,V1,T1. X = ⓓ[p]V1.T1 →
-     ∃∃V2,T2. p = Ⓣ → T1 ≃ T2 & Y = ⓓ[p]V2.T2.
+     ∃∃V2,T2. p = ⓣ → T1 ≃ T2 & Y = ⓓ[p]V2.T2.
 #X #Y * -X -Y
 [1  : #s1 #s2 #q #W1 #U1 #H destruct
 |2,3: #i #q #W1 #U1 #H destruct
@@ -118,7 +118,7 @@ qed-.
 
 lemma teqw_inv_abbr_sn:
       ∀p,V1,T1,Y. ⓓ[p]V1.T1 ≃ Y →
-      ∃∃V2,T2. p = Ⓣ → T1 ≃ T2 & Y = ⓓ[p]V2.T2.
+      ∃∃V2,T2. p = ⓣ → T1 ≃ T2 & Y = ⓓ[p]V2.T2.
 /2 width=4 by teqw_inv_abbr_sn_aux/ qed-.
 
 fact teqw_inv_abst_sn_aux:

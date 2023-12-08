@@ -54,7 +54,7 @@ lemma tm_md (h) (p) (gv) (lv) (V) (T):
 /6 width=4 by mf_delta_drops, cpcs_bind1, cpc_cpcs, drops_refl, or_introl/
 qed.
 
-lemma tm_mz (h) (V) (T): V ⊕[Ⓣ] T ≗{TM h} T.
+lemma tm_mz (h) (V) (T): V ⊕[ⓣ] T ≗{TM h} T.
 /4 width=3 by cpc_cpcs, cpm_zeta, or_introl/ qed.
 
 lemma tm_me (h) (gv) (lv) (U) (T):

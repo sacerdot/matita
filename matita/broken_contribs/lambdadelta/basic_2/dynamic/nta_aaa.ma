@@ -49,7 +49,7 @@ elim (nta_fwd_aaa … H2) -H2 #A2 #H2T #H2U2
 elim (nta_fwd_aaa … H1) -H1 #X1 #H1 #HU1
 elim (aaa_inv_abst … H1) -a -h -p #B #A1 #_ #H1T #H destruct
 lapply (aaa_mono … H1T … H2T) -T #H destruct
-lapply (aaa_inv_lifts … H2U2 (Ⓣ) … K … HU12)
+lapply (aaa_inv_lifts … H2U2 (ⓣ) … K … HU12)
 [ /3 width=1 by drops_refl, drops_drop/ ] -W -U2 #H2U1
 lapply (aaa_mono … HU1 … H2U1) -G -K -U1 #H
 elim (discr_apair_xy_y … H)

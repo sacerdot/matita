@@ -21,7 +21,7 @@ include "static_2/static/lsubf_lsubr.ma".
 
 (* Note: this replaces lemma 1400 concluding the "big tree" theorem *)
 lemma frees_total: ∀L,T. ∃f. L ⊢ 𝐅+❨T❩ ≘ f.
-#L #T @(fqup_wf_ind_eq (Ⓣ) … (⋆) L T) -L -T
+#L #T @(fqup_wf_ind_eq (ⓣ) … (⋆) L T) -L -T
 #G0 #L0 #T0 #IH #G #L * *
 [ /3 width=2 by frees_sort, ex_intro/
 | cases L -L /3 width=2 by frees_atom, ex_intro/
@@ -128,7 +128,7 @@ lemma frees_ind_void (Q:relation3 …):
       ) →
       ∀L,T,f. L ⊢ 𝐅+❨T❩ ≘ f →  Q L T f.
 #Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #L #T
-@(fqup_wf_ind_eq (Ⓕ) … (⋆) L T) -L -T #G0 #L0 #T0 #IH #G #L * *
+@(fqup_wf_ind_eq (ⓕ) … (⋆) L T) -L -T #G0 #L0 #T0 #IH #G #L * *
 [ #s #HG #HL #HT #f #H destruct -IH
   lapply (frees_inv_sort … H) -H /2 width=1 by/
 | cases L -L

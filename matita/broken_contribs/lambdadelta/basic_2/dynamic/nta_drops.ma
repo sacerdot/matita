@@ -24,9 +24,9 @@ lemma nta_ldef (h) (a) (G) (K):
       ∀U. ⇧[1] W ≘ U → ❨G,K.ⓓV❩ ⊢ #0 :[h,a] U.
 #h #a #G #K #V #W #H #U #HWU
 elim (cnv_inv_cast … H) -H #X #HW #HV #HWX #HVX
-lapply (cnv_lifts … HW (Ⓣ) … (K.ⓓV) … HWU) -HW
+lapply (cnv_lifts … HW (ⓣ) … (K.ⓓV) … HWU) -HW
 [ /3 width=3 by drops_refl, drops_drop/ ] #HU
-elim (cpms_lifts_sn … HWX … (Ⓣ) … (K.ⓓV) … HWU) -W
+elim (cpms_lifts_sn … HWX … (ⓣ) … (K.ⓓV) … HWU) -W
 [| /3 width=3 by drops_refl, drops_drop/ ] #XW #HXW #HUXW
 /3 width=5 by cnv_zero, cnv_cast, cpms_delta/
 qed.
@@ -35,7 +35,7 @@ lemma nta_ldec_cnv (h) (a) (G) (K):
       ∀W. ❨G,K❩ ⊢ W ![h,a] →
       ∀U. ⇧[1] W ≘ U → ❨G,K.ⓛW❩ ⊢ #0 :[h,a] U.
 #h #a #G #K #W #HW #U #HWU
-lapply (cnv_lifts … HW (Ⓣ) … (K.ⓛW) … HWU)
+lapply (cnv_lifts … HW (ⓣ) … (K.ⓛW) … HWU)
 /3 width=5 by cnv_zero, cnv_cast, cpms_ell, drops_refl, drops_drop/
 qed.
 
@@ -44,11 +44,11 @@ lemma nta_lref (h) (a) (I) (G) (K):
       ∀U. ⇧[1] T ≘ U → ❨G,K.ⓘ[I]❩ ⊢ #(↑i) :[h,a] U.
 #h #a #I #G #K #T #i #H #U #HTU
 elim (cnv_inv_cast … H) -H #X #HT #Hi #HTX #H2
-lapply (cnv_lifts … HT (Ⓣ) … (K.ⓘ[I]) … HTU) -HT
+lapply (cnv_lifts … HT (ⓣ) … (K.ⓘ[I]) … HTU) -HT
 [ /3 width=3 by drops_refl, drops_drop/ ] #HU
-lapply (cnv_lifts … Hi (Ⓣ) (𝐔❨1❩) (K.ⓘ[I]) ???) -Hi
+lapply (cnv_lifts … Hi (ⓣ) (𝐔❨1❩) (K.ⓘ[I]) ???) -Hi
 [4:|*: /3 width=3 by drops_refl, drops_drop/ ] #Hi
-elim (cpms_lifts_sn … HTX … (Ⓣ) … (K.ⓘ[I]) … HTU) -T
+elim (cpms_lifts_sn … HTX … (ⓣ) … (K.ⓘ[I]) … HTU) -T
 [| /3 width=3 by drops_refl, drops_drop/ ] #XU #HXU #HUXU
 /3 width=5 by cnv_cast, cpms_lref/
 qed.

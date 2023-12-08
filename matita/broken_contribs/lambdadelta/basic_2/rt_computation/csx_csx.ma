@@ -82,7 +82,7 @@ qed-.
 
 lemma csx_inv_lref_drops (G) (L):
       ∀i. ❨G,L❩ ⊢ ⬈*𝐒 #i →
-      ∨∨ ⇩*[Ⓕ,𝐔❨i❩] L ≘ ⋆
+      ∨∨ ⇩*[ⓕ,𝐔❨i❩] L ≘ ⋆
        | ∃∃I,K. ⇩[i] L ≘ K.ⓤ[I]
        | ∃∃I,K,V. ⇩[i] L ≘ K.ⓑ[I]V & ❨G,K❩ ⊢ ⬈*𝐒 V.
 #G #L #i #H elim (drops_F_uni L i) /2 width=1 by or3_intro0/

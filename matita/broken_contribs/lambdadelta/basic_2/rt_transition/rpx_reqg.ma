@@ -96,7 +96,7 @@ lemma cpx_teqg_repl_reqg (S) (G) (L0) (T0):
 | #G #L0 #V0 #U0 #T0 #T1 #HTU0 #_ #IH #X2 #HX2 #X3 #HX3 #L2 #HL02
   elim (teqg_inv_pair1 … HX2) -HX2 #V2 #U2 #HV02 #HU02 #H destruct
   elim (reqg_inv_bind_refl … HL02) -HL02 // #HV0 #HU0
-  lapply (reqg_inv_lifts_bi … HU0 (Ⓣ) … HTU0) -HU0
+  lapply (reqg_inv_lifts_bi … HU0 (ⓣ) … HTU0) -HU0
   [6:|*: /3 width=2 by drops_refl, drops_drop/ ] #HT0
   elim (teqg_inv_lifts_sn … HU02 … HTU0) -U0 #T2 #HTU2 #HT02
   /3 width=3 by cpx_zeta/

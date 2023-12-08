@@ -40,7 +40,7 @@ lemma cpt_ind (h) (Q:relation5 …):
       ∀n,G,L,T1,T2. ❨G,L❩ ⊢ T1 ⬆[h,n] T2 → Q n G L T1 T2.
 #h #Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #IH9 #n #G #L #T1
 generalize in match n; -n
-@(fqu_wf_ind (Ⓣ) … G L T1) -G -L -T1 #G0 #L0 * [| * [| * ]]
+@(fqu_wf_ind (ⓣ) … G L T1) -G -L -T1 #G0 #L0 * [| * [| * ]]
 [ #I #IH #n #X2 #HX2 -IH6 -IH7 -IH8 -IH9
   elim (cpt_inv_atom_sn … HX2) -HX2 *
   [ #H1 #H2 destruct -IH2 -IH3 -IH4 -IH5 //

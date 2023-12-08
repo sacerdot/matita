@@ -76,7 +76,7 @@ lemma nta_ind_cnv (h) (a) (Q:relation4 …):
       ) →
       ∀G,L,T,U. ❨G,L❩ ⊢ T :[h,a] U → Q G L T U.
 #h #a #Q #IH1 #IH2 #IH3 #IH4 #IH5 #IH6 #IH7 #IH8 #H9 #G #L #T
-@(fqup_wf_ind_eq (Ⓣ) … G L T) -G -L -T #G0 #L0 #T0 #IH #G #L * * [|||| * ]
+@(fqup_wf_ind_eq (ⓣ) … G L T) -G -L -T #G0 #L0 #T0 #IH #G #L * * [|||| * ]
 [ #s #HG #HL #HT #X #H destruct -IH
   elim (nta_inv_sort_sn … H) -H #HUX #HX
   /2 width=4 by/

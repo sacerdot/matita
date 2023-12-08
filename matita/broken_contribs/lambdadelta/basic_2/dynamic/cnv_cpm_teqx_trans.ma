@@ -47,8 +47,8 @@ fact cnv_cpm_teqx_cpm_trans_sub (h) (a) (G0) (L0) (T0):
     /3 width=6 by cpm_bind, teqx_pair, ex3_intro/
   | #T2 #HT2 #HTX2 #H1 #H2 destruct -IH2
     elim (teqx_inv_lifts_dx … H2T1 … HT2) -H2T1 #XT #HXT1 #H2XT2
-    lapply (cpm_inv_lifts_bi … H1T1 (Ⓣ) … HXT1 … HT2) -T [3:|*: /3 width=2 by drops_refl, drops_drop/ ] #H1XT2
-    lapply (cnv_inv_lifts … H0T1 (Ⓣ) … HXT1) -H0T1 [3:|*: /3 width=2 by drops_refl, drops_drop/ ] #H0XT2
+    lapply (cpm_inv_lifts_bi … H1T1 (ⓣ) … HXT1 … HT2) -T [3:|*: /3 width=2 by drops_refl, drops_drop/ ] #H1XT2
+    lapply (cnv_inv_lifts … H0T1 (ⓣ) … HXT1) -H0T1 [3:|*: /3 width=2 by drops_refl, drops_drop/ ] #H0XT2
     elim (IH1 … H0XT2 … H1XT2 H2XT2 … HTX2) -T2 -IH1 -H0XT2 [| /2 width=1 by fqup_zeta/ ] #T2 #HXT2 #H1TX2 #H2XT2
     /3 width=4 by cpm_zeta, ex3_intro/
   ]
@@ -92,6 +92,6 @@ fact cnv_cpm_teqx_cpm_trans_aux (h) (a) (G0) (L0) (T0):
      (∀G,L,T. ❨G0,L0,T0❩ > ❨G,L,T❩ → IH_cnv_cpm_trans_lpr h a G L T) →
      IH_cnv_cpm_teqx_cpm_trans h a G0 L0 T0.
 #h #a #G0 #L0 #T0
-@(fqup_wf_ind (Ⓣ) … G0 L0 T0) -G0 -L0 -T0 #G0 #L0 #T0 #IH #IH0
+@(fqup_wf_ind (ⓣ) … G0 L0 T0) -G0 -L0 -T0 #G0 #L0 #T0 #IH #IH0
 /5 width=10 by cnv_cpm_teqx_cpm_trans_sub, fqup_fpbg_trans/
 qed-.

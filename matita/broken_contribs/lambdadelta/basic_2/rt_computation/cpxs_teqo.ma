@@ -80,7 +80,7 @@ elim (cpxs_inv_appl1 … H) -H *
     /6 width=9 by cpxs_lifts_bi, drops_refl, drops_drop, cpxs_flat, cpxs_bind/
   | #X #HT1 #H #H0 destruct
     elim (lifts_inv_bind1 … H) -H #V5 #T5 #HV05 #HT05 #H destruct
-    lapply (cpxs_lifts_bi … HV13 (Ⓣ) … (L.ⓓV0) … HV12 … HV34) -V3 /3 width=1 by drops_refl, drops_drop/ #HV24
+    lapply (cpxs_lifts_bi … HV13 (ⓣ) … (L.ⓓV0) … HV12 … HV34) -V3 /3 width=1 by drops_refl, drops_drop/ #HV24
     @(cpxs_trans … (+ⓓV.ⓐV2.ⓓ[q]V5.T5)) [ /3 width=1 by cpxs_flat_dx, cpxs_bind_dx/ ] -T
     @(cpxs_strap2 … (ⓐV1.ⓓ[q]V0.T0)) [ /4 width=7 by cpx_zeta, lifts_bind, lifts_flat/ ] -V -V5 -T5
     @(cpxs_strap2 … (ⓓ[q]V0.ⓐV2.T0)) /3 width=3 by cpxs_pair_sn, cpxs_bind_dx, cpx_theta/

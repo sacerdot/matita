@@ -140,7 +140,7 @@ elim (cpms_inv_lref1_drops … H2) -H2 *
 | #n #Y #X #U #H #HVU #HUX1 #H0 destruct
   lapply (drops_mono … H … HLK) -H #H destruct
   elim (lifts_total V (𝐔❨↑i❩)) #W #HVW
-  lapply (cpms_lifts_bi … HVU (Ⓣ) … L … HVW … HUX1) -U
+  lapply (cpms_lifts_bi … HVU (ⓣ) … L … HVW … HUX1) -U
   [ /2 width=2 by drops_isuni_fwd_drop2/ ] #HWX1
   /4 width=9 by cprs_div, ex5_3_intro, or_intror/
 ]

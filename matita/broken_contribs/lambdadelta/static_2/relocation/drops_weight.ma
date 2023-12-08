@@ -30,7 +30,7 @@ lemma drops_fwd_lw: ∀b,f,L1,L2. ⇩*[b,f] L1 ≘ L2 → ♯❨L2❩ ≤ ♯❨
 qed-.
 
 (* Basic_2A1: includes: drop_fwd_lw_lt *)
-lemma drops_fwd_lw_lt: ∀f,L1,L2. ⇩*[Ⓣ,f] L1 ≘ L2 →
+lemma drops_fwd_lw_lt: ∀f,L1,L2. ⇩*[ⓣ,f] L1 ≘ L2 →
                        (𝐈❨f❩ → ⊥) → ♯❨L2❩ < ♯❨L1❩.
 #f #L1 #L2 #H elim H -f -L1 -L2
 [ #f #Hf #Hnf elim Hnf -Hnf /2 width=1 by/

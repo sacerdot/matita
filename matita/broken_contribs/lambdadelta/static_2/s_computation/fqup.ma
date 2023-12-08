@@ -47,10 +47,10 @@ lemma fqup_strap2: ∀b,G1,G,G2,L1,L,L2,T1,T,T2.
 lemma fqup_pair_sn: ∀b,I,G,L,V,T. ❨G,L,②[I]V.T❩ ⬂+[b] ❨G,L,V❩.
 /2 width=1 by fqu_pair_sn, fqu_fqup/ qed.
 
-lemma fqup_bind_dx: ∀p,I,G,L,V,T. ❨G,L,ⓑ[p,I]V.T❩ ⬂+[Ⓣ] ❨G,L.ⓑ[I]V,T❩.
+lemma fqup_bind_dx: ∀p,I,G,L,V,T. ❨G,L,ⓑ[p,I]V.T❩ ⬂+[ⓣ] ❨G,L.ⓑ[I]V,T❩.
 /3 width=1 by fqu_bind_dx, fqu_fqup/ qed.
 
-lemma fqup_clear: ∀p,I,G,L,V,T. ❨G,L,ⓑ[p,I]V.T❩ ⬂+[Ⓕ] ❨G,L.ⓧ,T❩.
+lemma fqup_clear: ∀p,I,G,L,V,T. ❨G,L,ⓑ[p,I]V.T❩ ⬂+[ⓕ] ❨G,L.ⓧ,T❩.
 /3 width=1 by fqu_clear, fqu_fqup/ qed.
 
 lemma fqup_flat_dx: ∀b,I,G,L,V,T. ❨G,L,ⓕ[I]V.T❩ ⬂+[b] ❨G,L,T❩.
@@ -59,10 +59,10 @@ lemma fqup_flat_dx: ∀b,I,G,L,V,T. ❨G,L,ⓕ[I]V.T❩ ⬂+[b] ❨G,L,T❩.
 lemma fqup_flat_dx_pair_sn: ∀b,I1,I2,G,L,V1,V2,T. ❨G,L,ⓕ[I1]V1.②[I2]V2.T❩ ⬂+[b] ❨G,L,V2❩.
 /2 width=5 by fqu_pair_sn, fqup_strap1/ qed.
 
-lemma fqup_bind_dx_flat_dx: ∀p,G,I1,I2,L,V1,V2,T. ❨G,L,ⓑ[p,I1]V1.ⓕ[I2]V2.T❩ ⬂+[Ⓣ] ❨G,L.ⓑ[I1]V1,T❩.
+lemma fqup_bind_dx_flat_dx: ∀p,G,I1,I2,L,V1,V2,T. ❨G,L,ⓑ[p,I1]V1.ⓕ[I2]V2.T❩ ⬂+[ⓣ] ❨G,L.ⓑ[I1]V1,T❩.
 /2 width=5 by fqu_flat_dx, fqup_strap1/ qed.
 
-lemma fqup_flat_dx_bind_dx: ∀p,I1,I2,G,L,V1,V2,T. ❨G,L,ⓕ[I1]V1.ⓑ[p,I2]V2.T❩ ⬂+[Ⓣ] ❨G,L.ⓑ[I2]V2,T❩.
+lemma fqup_flat_dx_bind_dx: ∀p,I1,I2,G,L,V1,V2,T. ❨G,L,ⓕ[I1]V1.ⓑ[p,I2]V2.T❩ ⬂+[ⓣ] ❨G,L.ⓑ[I2]V2,T❩.
 /3 width=5 by fqu_bind_dx, fqup_strap1/ qed.
 
 (* Basic eliminators ********************************************************)

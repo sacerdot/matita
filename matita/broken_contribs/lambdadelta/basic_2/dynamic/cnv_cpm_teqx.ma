@@ -148,7 +148,7 @@ lemma cpm_teqx_ind (h) (a) (n) (G) (Q:relation3 …):
       ∀T2. ❨G,L❩ ⊢ T1 ➡[h,n] T2 → T1 ≅ T2 → Q L T1 T2.
 #h #a #n #G #Q #IH1 #IH2 #IH3 #IH4 #IH5 #L #T1
 @(insert_eq_0 … G) #F
-@(fqup_wf_ind_eq (Ⓣ) … F L T1) -L -T1 -F
+@(fqup_wf_ind_eq (ⓣ) … F L T1) -L -T1 -F
 #G0 #L0 #T0 #IH #F #L * [| * [| * ]]
 [ #I #_ #_ #_ #_ #HF #X #H1X #H2X destruct -G0 -L0 -T0
   elim (cpm_teqx_inv_atom_sn … H1X H2X) -H1X -H2X *

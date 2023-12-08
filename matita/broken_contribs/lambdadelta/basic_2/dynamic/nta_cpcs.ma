@@ -62,7 +62,7 @@ elim (cpms_inv_ell_sn … H2) -H2 *
 [ #_ #H destruct
 | #m #W #HVW #HWX1 #H destruct
   elim (lifts_total V (𝐔❨1❩)) #U #HVU
-  lapply (cpms_lifts_bi … HVW (Ⓣ) … (K.ⓛV) … HVU … HWX1) -W
+  lapply (cpms_lifts_bi … HVW (ⓣ) … (K.ⓛV) … HVU … HWX1) -W
   [ /3 width=1 by drops_refl, drops_drop/ ] #HUX1
   /3 width=5 by cprs_div, ex4_intro/
 ]

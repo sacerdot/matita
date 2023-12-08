@@ -28,7 +28,7 @@ include "basic_2/rt_transition/rpx_fqup.ma".
 lemma rpx_cpx_conf_fsge (G):
       ∀L0,T0,T1. ❨G,L0❩ ⊢ T0 ⬈ T1 →
       ∀L2. ❨G,L0❩ ⊢⬈[T0] L2 → ❨L2,T1❩ ⊆ ❨L0,T0❩.
-#G0 #L0 #T0 @(fqup_wf_ind_eq (Ⓣ) … G0 L0 T0) -G0 -L0 -T0
+#G0 #L0 #T0 @(fqup_wf_ind_eq (ⓣ) … G0 L0 T0) -G0 -L0 -T0
 #G #L #T #IH #G0 #L0 * *
 [ #s0 #HG #HL #HT #X #HX #Y #HY destruct -IH
   elim (cpx_inv_sort1 … HX) -HX #s1 #H destruct
@@ -75,7 +75,7 @@ lemma rpx_cpx_conf_fsge (G):
     lapply (rpx_fwd_length … HV0) #H0
     /4 width=6 by fsle_bind_eq, fsle_fwd_pair_sn/
   | #T #H2T0 #HTX #H1 #H2 destruct
-    lapply (rpx_inv_lifts_bi … HT0 (Ⓣ) … H2T0) -HT0 [6:|*: /3 width=2 by drops_refl, drops_drop/ ] #HT
+    lapply (rpx_inv_lifts_bi … HT0 (ⓣ) … H2T0) -HT0 [6:|*: /3 width=2 by drops_refl, drops_drop/ ] #HT
     lapply (rpx_fwd_length … HV0) #H0
     /5 width=6 by fsle_bind_dx_dx, fsle_lifts_dx, fqup_zeta/
   ]

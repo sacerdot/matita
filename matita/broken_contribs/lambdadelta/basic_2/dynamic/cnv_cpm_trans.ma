@@ -35,7 +35,7 @@ fact cnv_cpm_trans_lpr_aux (h) (a):
   elim (cnv_inv_lref_drops … H1) -H1 #I #K1 #V1 #HLK1 #HV1
   elim (lpr_drops_conf … HLK1 … HL12) -HL12 // #Y #H #HLK2
   elim (lpr_inv_pair_sn … H) -H #K2 #V2 #HK12 #HV12 #H destruct
-  lapply (fqup_lref (Ⓣ) … G1 … HLK1) #HKL
+  lapply (fqup_lref (ⓣ) … G1 … HLK1) #HKL
   elim (cpm_inv_lref1_drops … H2) -H2 *
   [ #H1 #H2 destruct -HLK1 /4 width=7 by fqup_fpbg, cnv_lref_drops/
   | #K0 #V0 #W0 #H #HVW0 #W0 -HV12
@@ -97,9 +97,9 @@ fact cnv_cpm_trans_lpr_aux (h) (a):
     elim (cnv_cpms_strip_lpr_sub … IH2 … HTU0 … HT02 … (L2.ⓓW2) … (L2.ⓓW2)) [|*: /2 width=2 by fqup_fpbg, lpr_pair/ ] -HTU0 -HT02 -HW02
     #X #H #HTX2 -IH2 -IH1 -L1 -W0 -T0 -U1
     elim (cpms_inv_abst_sn … H) -H #W #X2 #HW3 #_ #H destruct -U3
-    lapply (cnv_lifts … HV0 (Ⓣ) … (L2.ⓓW2) … HV02) /3 width=1 by drops_refl, drops_drop/ -HV0 #HV2
-    elim (cpms_lifts_sn … HXV0 (Ⓣ) … (L2.ⓓW2) … HV02) /3 width=1 by drops_refl, drops_drop/ -V0 #XW2 #HXW12 #HXVW2
-    lapply (cpms_lifts_bi … HXW1 (Ⓣ) … (L2.ⓓW2) … HW13 … HXW12) /3 width=1 by drops_refl, drops_drop/ -W1 -XW1 #HXW32
+    lapply (cnv_lifts … HV0 (ⓣ) … (L2.ⓓW2) … HV02) /3 width=1 by drops_refl, drops_drop/ -HV0 #HV2
+    elim (cpms_lifts_sn … HXV0 (ⓣ) … (L2.ⓓW2) … HV02) /3 width=1 by drops_refl, drops_drop/ -V0 #XW2 #HXW12 #HXVW2
+    lapply (cpms_lifts_bi … HXW1 (ⓣ) … (L2.ⓓW2) … HW13 … HXW12) /3 width=1 by drops_refl, drops_drop/ -W1 -XW1 #HXW32
     elim (cprs_conf … HXW32 … HW3) -W3 #W3 #HXW23 #HW3
     lapply (cpms_trans … HXVW2 … HXW23) -XW2 <plus_n_O #H1
     lapply (cpms_trans … HTX2 ? (ⓛ[p]W3.X2) ?) [3:|*:/2 width=2 by cpms_bind/ ] -W #H2

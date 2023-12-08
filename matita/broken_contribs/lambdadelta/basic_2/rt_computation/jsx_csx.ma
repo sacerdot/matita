@@ -31,7 +31,7 @@ lemma jsx_csx_conf (G):
 lemma rsx_jsx_trans (G):
       ∀L1,V. G ⊢ ⬈*𝐒[V] L1 →
       ∀L2. G ⊢ L1 ⊒ L2 → G ⊢ ⬈*𝐒[V] L2.
-#G #L1 #V @(fqup_wf_ind_eq (Ⓕ) … G L1 V) -G -L1 -V
+#G #L1 #V @(fqup_wf_ind_eq (ⓕ) … G L1 V) -G -L1 -V
 #G0 #L0 #V0 #IH #G #L1 * *
 [ //
 | #i #HG #HL #HV #H #L2 #HL12 destruct

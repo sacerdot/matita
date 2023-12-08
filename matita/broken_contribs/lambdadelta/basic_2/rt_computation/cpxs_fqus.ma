@@ -87,7 +87,7 @@ lemma fqu_cpxs_trans_tneqg (S) (b):
   | #H elim (teqg_inv_pair … H) -H /2 width=1 by/
   ]
 | #I #G #L #T1 #U1 #HTU1 #T2 #HT12 #H0
-  elim (cpxs_lifts_sn … HT12 (Ⓣ) … (L.ⓘ[I]) … HTU1) -HT12
+  elim (cpxs_lifts_sn … HT12 (ⓣ) … (L.ⓘ[I]) … HTU1) -HT12
   /4 width=6 by fqu_drop, drops_refl, drops_drop, teqg_inv_lifts_bi, ex3_intro/
 ]
 qed-.
