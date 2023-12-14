@@ -12,21 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/circled_collection_t_1.ma".
-include "ground/lib/subset.ma".
+(* NOTATION FOR GROUND ******************************************************)
 
-(* FULL SUBSET FOR SUBSETS **************************************************)
+notation < "hvbox( Ⓣ )"
+  non associative with precedence 70
+  for @{ 'CircledCollectionT $S }.
 
-definition subset_full (A): 𝒫❨A❩ ≝
-           λp. ⊤.
-
-interpretation
-  "full (subset)"
-  'CircledCollectionT A = (subset_full A).
-
-(* Basic constructions ******************************************************)
-
-lemma subset_full_in (A) (p):
-      p ϵ{A} Ⓣ.
-//
-qed.
+notation > "hvbox( Ⓣ opt ( { term 46 S } ) )"
+  non associative with precedence 70
+  for @{ 'CircledCollectionT ${default @{$S}@{?}} }.

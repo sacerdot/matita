@@ -12,12 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/lib/subset_eq.ma".
+include "ground/lib/subset_and_le.ma".
 
-notation < "hvbox( Ⓕ )"
-  non associative with precedence 70
-  for @{ 'CircledCollectionF $S }.
+(* INTERSECTION FOR SUBSETS *************************************************)
 
-notation > "hvbox( Ⓕ opt ( { term 46 S } ) )"
-  non associative with precedence 70
-  for @{ 'CircledCollectionF ${default @{$S}@{?}} }.
+(* Main constructions with subset_eq ****************************************)
+
+theorem subset_and_eq_repl (A):
+        compatible_3 … (subset_eq …) (subset_eq …) (subset_eq …) (subset_and A).
+#A #u1 #v1 * #H1 #H2 #u2 #v2 * #H3 #H4
+/3 width=5 by conj, subset_and_le_repl/
+qed.

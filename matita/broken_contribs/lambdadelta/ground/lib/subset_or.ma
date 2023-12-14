@@ -26,11 +26,11 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma subset_or_in_sn (A) (u1) (u2) (p):
-      p ϵ{A} u1 → p ϵ u1 ∪ u2.
+      p ϵ u1 → p ϵ{A} u1 ∪ u2.
 /2 width=1 by or_introl/
 qed.
 
 lemma subset_or_in_dx (A) (u1) (u2) (p):
-      p ϵ{A} u2 → p ϵ u1 ∪ u2.
+      p ϵ u2 → p ϵ{A} u1 ∪ u2.
 /2 width=1 by or_intror/
 qed.

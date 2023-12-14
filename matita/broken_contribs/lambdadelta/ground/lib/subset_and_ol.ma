@@ -12,21 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/circled_collection_t_1.ma".
-include "ground/lib/subset.ma".
+include "ground/lib/subset_ol.ma".
+include "ground/lib/subset_and.ma".
 
-(* FULL SUBSET FOR SUBSETS **************************************************)
+(* INTERSECTION FOR SUBSETS *************************************************)
 
-definition subset_full (A): 𝒫❨A❩ ≝
-           λp. ⊤.
+(* Constructions with subset_ol *********************************************)
 
-interpretation
-  "full (subset)"
-  'CircledCollectionT A = (subset_full A).
+(* Note: overlap algebra: preservation of infimum *)
+lemma subset_ol_and_dx_refl_sn (A) (u1) (u2):
+      u1 ≬ u2 → u1 ≬{A} (u1 ∩ u2).
+#A #u1 #u2 * #p #H1 #H2
+/3 width=4 by subset_and_in, subset_ol_i/
+qed.
 
-(* Basic constructions ******************************************************)
-
-lemma subset_full_in (A) (p):
-      p ϵ{A} Ⓣ.
-//
+(* Note: overlap algebra: preservation of infimum *)
+lemma subset_ol_and_sn_refl_dx (A) (u1) (u2):
+      u1 ≬ u2 → (u1 ∩ u2) ≬{A} u2.
+#A #u1 #u2 * #p #H1 #H2
+/3 width=4 by subset_and_in, subset_ol_i/
 qed.
