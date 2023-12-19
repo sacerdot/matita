@@ -1017,7 +1017,20 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
      in
       let mode = GrafiteAst.WithPreferences in(*assert false in (* VEDI SOPRA *) MATITA 1.0*)
        eval_alias status (mode,diff)
-  | GrafiteAst.Transfer (_, s) -> GrafiteTransfer.transfer status s
+  | GrafiteAst.Transfer (_, term) -> 
+    let _metasenv,_subst,_,cic_term =
+      GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,term) in 
+    GrafiteTransfer.transfer status cic_term
+  | GrafiteAst.Configuration (_, type1, type2) -> 
+    let _metasenv,_subst,status,cic_type1 =
+      GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,type1) in
+      let _metasenv,_subst,status,cic_type2 =
+        GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,type2) in
+    GrafiteTransfer.add_equivalence status cic_type1 cic_type2
+  | GrafiteAst.Print (_, term) -> 
+    let _metasenv,_subst,_,cic_term =
+      GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,term) in 
+      GrafiteTransfer.print_cic_term cic_term; status
 ;;
 
 let eval_comment _opts status (_text,_prefix_len,_c) = status

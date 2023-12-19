@@ -142,7 +142,9 @@ type command =
       string * (string * NotationPt.argument_pattern list) *
         NotationPt.cic_appl_pattern
       (* description (i.e. id), symbol, arg pattern, appl pattern *)
-  | Transfer of loc * string
+  | Transfer of loc * nterm
+  | Configuration of loc * nterm * nterm
+  | Print of loc * nterm
 
 type code =
   | NCommand of loc * command

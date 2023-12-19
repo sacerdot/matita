@@ -42,6 +42,7 @@ class virtual status :
    inherit OcamlExtractionTable.status
    inherit GrafiteParser.status
    inherit TermContentPres.status
+   inherit GrafiteTransfer.status
    method baseuri: string
    method set_baseuri: string -> 'self
    method ng_mode: [`ProofMode | `CommandMode]

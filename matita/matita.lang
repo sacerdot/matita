@@ -140,6 +140,7 @@
           <keyword>as</keyword>
           <keyword>associative</keyword>
           <keyword>coercion</keyword>
+          <keyword>configuration</keyword>
           <keyword>prefer</keyword>
           <keyword>nocomposites</keyword>
           <keyword>coinductive</keyword>

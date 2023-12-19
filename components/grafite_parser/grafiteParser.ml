@@ -692,8 +692,12 @@ EXTEND
       m = LIST0 [ u1 = URI; SYMBOL <:unicode<mapsto>>; u2 = URI -> u1,u2 ] ->
         G.NCopy (loc,s,NUri.uri_of_string u,
           List.map (fun a,b -> NUri.uri_of_string a, NUri.uri_of_string b) m)
-    | IDENT "transfer"; arg = QSTRING ->
-        G.Transfer (loc, arg)
+    | IDENT "transfer"; t = term->
+        G.Transfer (loc, t)
+    | IDENT "configuration"; type1 = term; SYMBOL ":"; type2 = term ->
+        G.Configuration (loc, type1, type2)
+    | IDENT "print" ; t = term ->
+        G.Print (loc, t)
   ]];
 
   lexicon_command: [ [
