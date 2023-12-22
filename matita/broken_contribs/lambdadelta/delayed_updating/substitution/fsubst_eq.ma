@@ -16,6 +16,7 @@ include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/syntax/prototerm_ol.ma".
 include "ground/lib/subset_or_le.ma".
 include "ground/lib/subset_or_ol.ma".
+include "ground/lib/subset_and_ol.ma".
 
 (* FOCALIZED SUBSTITUTION ***************************************************)
 
@@ -109,4 +110,27 @@ lemma fsubst_lcons_neq (t) (u) (v) (l1) (l2):
   /2 width=3 by term_ol_des_lcons_bi/
 | * #Hr #_ -u -v -l2 //
 ]
+qed.
+
+lemma fsubst_and_rc_sn_sn (t) (u) (v):
+      ⬕[t∩u←v]t ⊆ ⬕[u←v]t.
+#t #u #v #r * *
+[ /3 width=1 by fsubst_in_comp_true, subset_ol_inv_and_dx_refl_sn/
+| /4 width=1 by fsubst_in_comp_false, subset_and_in/
+]
+qed-.
+
+lemma fsubst_and_rc_sn_dx (t) (u) (v):
+      ⬕[u←v]t ⊆ ⬕[t∩u←v]t.
+#t #u #v #r * *
+[ /3 width=1 by subset_ol_and_dx_refl_sn, fsubst_in_comp_true/
+| #H1r #H0
+  @fsubst_in_comp_false // -H1r
+  * /2 width=1 by/
+]
+qed-.
+
+lemma fsubst_and_rc_sn (t) (u) (v):
+      ⬕[t∩u←v]t ⇔ ⬕[u←v]t.
+/3 width=1 by conj, fsubst_and_rc_sn_sn, fsubst_and_rc_sn_dx/
 qed.

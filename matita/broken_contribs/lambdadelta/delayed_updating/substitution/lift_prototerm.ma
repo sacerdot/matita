@@ -47,7 +47,7 @@ qed.
 
 lemma in_comp_slice_lift_inv_bi (f) (p) (r):
       (🠡[f]r) ϵ ↑🠡[f]p → r ϵ ↑p.
-#f #p #r * #q #H0
+#f #p #r * #q #_ #H0
 elim (eq_inv_lift_path_append … H0) -H0 #s1 #s2 #Hs1 #_ #H0 destruct
 lapply (lift_path_inj … Hs1) -Hs1 #H0 destruct //
 qed-.

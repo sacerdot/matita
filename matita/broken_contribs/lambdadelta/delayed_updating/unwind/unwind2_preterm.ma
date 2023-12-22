@@ -13,7 +13,10 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/preterm_structure.ma".
+include "delayed_updating/syntax/preterm_proper.ma".
+include "delayed_updating/syntax/preterm_inner.ma".
 include "delayed_updating/unwind/unwind2_prototerm.ma".
+include "delayed_updating/unwind/unwind2_path_append.ma".
 include "ground/lib/subset_or.ma".
 
 (* TAILED UNWIND FOR PRETERM ************************************************)
@@ -30,6 +33,30 @@ lapply (eq_des_unwind2_path_bi_structure … H0) -H0 #H0
 qed-.
 
 (* Basic constructions ******************************************************)
+
+(* Constructions with term_slice ********************************************)
+
+lemma in_comp_slice_unwind2_bi (f) (t) (p) (r) (l):
+      t ϵ 𝐓 → p◖l ϵ t → r ϵ t →
+      r ϵ ↑p → ▼[f]r ϵ ↑⊗p.
+#f #t #p #r #l #Ht #Hp #Hr * #s #_ #H0 destruct
+<unwind2_path_append_ppc_dx //
+/2 width=8 by term_in_comp_path_append_des_sn_rcons/
+qed.
+
+
+
+
+
+(*  
+  
+  Hr : (▼[f]sϵ↑⊗p) → (sϵ↑p)  
+
+  H2s : )
+*)  
+
+
+
 (*
 lemma pippo (f) (p1) (p2):
       ▼[f]p1 ϵ ↑▼[f]p2 → ⊗p1 ϵ ↑⊗p2.

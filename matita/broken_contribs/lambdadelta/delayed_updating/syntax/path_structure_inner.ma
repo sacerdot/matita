@@ -59,7 +59,7 @@ qed-.
 
 theorem eq_inv_append_structure_pic (p) (q) (r):
         p●q = ⊗r →
-        ∃∃r1,r2. r1 ϵ 𝐈  & p = ⊗r1 & q = ⊗r2 & r1●r2 = r.
+        ∃∃r1,r2. r1 ϵ 𝐈 & p = ⊗r1 & q = ⊗r2 & r1●r2 = r.
 #p #q #r #H0
 elim (eq_inv_append_structure … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
 elim (path_split_pic_sn r1) #p1 #q1 #Hp1 #Hq1 #H0 destruct

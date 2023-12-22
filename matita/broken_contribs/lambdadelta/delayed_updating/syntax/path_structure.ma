@@ -179,6 +179,20 @@ lemma eq_inv_rcons_structure (p) (q) (l):
 ]
 qed-.
 
+(* Advanced inversions ******************************************************)
+
+lemma eq_inv_empty_structure_singleton (l):
+      (𝐞) =⊗(𝐞◖l) →
+      ∃k. 𝗱k = l.
+#l elim (label_is_d l)
+[ * /2 width=2 by ex_intro/
+| #Hl <structure_rcons_inner
+  [ #H0 destruct
+  | /2 width=2 by/
+  ]
+]
+qed-.
+
 (* Main inversions **********************************************************)
 
 theorem eq_inv_append_structure (p) (q) (r):

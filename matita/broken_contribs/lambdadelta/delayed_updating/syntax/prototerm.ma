@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset.ma".
+include "ground/lib/subset_full.ma".
 include "delayed_updating/syntax/path.ma".
 include "delayed_updating/notation/functions/type_t_0.ma".
 include "delayed_updating/notation/functions/pitchfork_2.ma".
@@ -50,12 +50,9 @@ interpretation
   "left_cons (prototerm)"
   'BlackHalfCircleRight l t = (pt_append (list_lcons label l (list_empty label)) t).
 
-definition term_slice (p): 𝕋 ≝
-           λr. ∃q. r = p●q.
-
 interpretation
   "slice (prototerm)"
-  'UpArrow p = (term_slice p).
+  'UpArrow p = (pt_append p (subset_full ?)).
 
 (* Basic inversions *********************************************************)
 
@@ -73,15 +70,15 @@ lemma term_slice_inv_lcons_bi (p1) (p2) (l1) (l2):
       l1◗p1 ϵ ↑(l2◗p2) →
       ∧∧ l1 = l2 & p1 ϵ ↑p2.
 #p1 #p2 #l1 #l2 *
-#q <list_append_assoc #H0
+#q <list_append_assoc #_ #H0
 elim (eq_inv_list_rcons_bi ??? … H0) -H0
 #H1 #H2 destruct
-/3 width=2 by ex_intro, conj/
+/3 width=3 by ex2_intro, conj/
 qed-.
 
 lemma term_le_antisym (p1) (p2):
       p1 ϵ ↑p2 → p2 ϵ ↑p1 → p1 = p2.
-#p1 #p2 * #q2 #H2 >H2 -p1 * #q1
+#p1 #p2 * #q2 #_ #H2 >H2 -p1 * #q1 #_
 <list_append_assoc #H1
 lapply (eq_inv_list_append_dx_dx_refl … H1) -H1 #H0
 elim (eq_inv_list_empty_append … H0) -H0 #_ #H2 destruct //
@@ -106,7 +103,7 @@ qed.
 
 lemma term_slice_in (p) (q):
       p●q ϵ ↑p.
-/2 width=2 by term_in_root/
+/2 width=2 by pt_append_in/
 qed.
 
 lemma term_le_refl (p):

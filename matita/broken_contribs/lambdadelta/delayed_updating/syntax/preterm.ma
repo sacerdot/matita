@@ -27,6 +27,9 @@ record preterm_axs (t): Prop ≝
 (* Note: applications have arguments *)
   ; term_full_A_ax (p):
       p◖𝗔 ϵ ▵t → p◖𝗦 ϵ ▵t
+(* application arguments are not empty *)
+  ; term_proper_S_ax (p):
+      p◖𝗦 ϵ t → ⊥
   }.
 
 interpretation

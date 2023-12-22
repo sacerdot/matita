@@ -16,7 +16,8 @@ include "delayed_updating/unwind/unwind2_preterm_ol.ma".
 include "delayed_updating/unwind/unwind2_preterm.ma".
 include "delayed_updating/unwind/unwind2_prototerm_ol.ma".
 include "delayed_updating/unwind/unwind2_prototerm_eq.ma".
-include "delayed_updating/substitution/fsubst.ma".
+include "delayed_updating/substitution/fsubst_eq.ma".
+include "delayed_updating/syntax/preterm_eq.ma".
 
 (* TAILED UNWIND FOR PRETERM ************************************************)
 
@@ -47,3 +48,20 @@ lemma unwind2_term_fsubst (f) (t) (u1) (u2):
       t ∪ u1 ϵ 𝐓 →
       ⬕[▼[f]u1←▼[f]u2]▼[f]t ⇔ ▼[f]⬕[u1←u2]t.
 /3 width=1 by unwind2_term_fsubst_sn, unwind2_term_fsubst_dx, conj/ qed.
+
+lemma subset_le_or_sn_refl_dx (A) (u1) (u2:𝒫❨A❩): (**)
+      u1 ⊆ u2 → u2 ∪ u1 ⊆ u2.
+/2 width=5 by subset_le_or_sn/
+qed.
+
+lemma unwind2_term_fsubst_and_sn_sn (f) (t) (u1) (u2):
+      t ϵ 𝐓 →
+      ⬕[▼[f](t∩u1)←▼[f]u2]▼[f]t ⇔ ▼[f]⬕[u1←u2]t.
+#f #t #u1 #u2 #Ht
+@subset_eq_trans
+[3: @(unwind2_term_eq_repl_dx …(fsubst_and_rc_sn …)) | skip ]
+@(subset_eq_trans … (unwind2_term_fsubst …)) //
+@(term_eq_repl_fwd … Ht) -f -Ht (**) (* auto fails *)
+@conj //
+@subset_le_or_sn_refl_dx //
+qed.

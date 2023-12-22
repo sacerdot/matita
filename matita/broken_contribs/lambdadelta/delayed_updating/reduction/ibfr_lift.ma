@@ -36,17 +36,21 @@ theorem ibfr_lift_bi (f) (t1) (t2) (r):
 [ -Hb -Hn -Ht1 -Ht2 //
 | -Hn -Ht1 -Ht2 //
 | -Hb -Ht1 -Ht2 <lift_path_closed_des_gen //
-| lapply (in_comp_lift_path_term f … Ht1) -Ht2 -Ht1
+| lapply (in_comp_lift_bi f … Ht1) -Ht2 -Ht1
   <lift_path_d_dx <path_append_pLq
   <lift_rmap_append_L_closed_dx_xapp_succ //
 | lapply (lift_term_eq_repl_dx f … Ht2) -Ht2 #Ht2 -Ht1
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (lift_term_fsubst …))
+  @(subset_eq_trans … (fsubst_and_rc_sn …))
+  @(subset_eq_canc_sn … (fsubst_and_rc_sn …))
   @fsubst_eq_repl [ // | // ]
+  @(subset_eq_trans … (lift_pt_append …))
+  @pt_append_eq_repl
   @(subset_eq_trans … (lift_pt_append …))
   <lift_path_clear_swap @pt_append_eq_repl
   @(subset_eq_trans … (lift_pt_append …))
-  <lift_path_L_sn <lift_rmap_L_dx <lift_rmap_A_dx <lift_path_depth
+  <lift_path_L_sn <lift_rmap_A_dx <lift_path_depth
   <(lift_path_closed_des_gen … Hn) <(lift_path_closed_des_gen … Hn)
   @pt_append_eq_repl
   @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))

@@ -81,6 +81,14 @@ lemma unwind2_path_S_sn (f) (p):
 #f #p <unwind2_path_append_pic_sn //
 qed.
 
+(* Destructions with ppc ****************************************************)
+
+lemma unwind2_path_des_ppc (f) (p):
+      ▼[f]p ϵ 𝐏 → p ϵ 𝐏.
+#f #p #Hp #H0 destruct
+/2 width=1 by/
+qed-.
+
 (* Destructions with pic ****************************************************)
 
 lemma unwind2_path_des_pic (f) (p):
@@ -136,6 +144,18 @@ lemma unwind2_path_inv_append_ppc_dx (f) (p) (q1) (q2):
   elim (eq_inv_append_structure … Hr) -Hr #s1 #s2 #H1 #H2 #H3 destruct
   /2 width=5 by refl, ex3_2_intro/
 ]
+qed-.
+
+lemma unwind2_path_inv_append_ppc_dx_pic (f) (p) (q1) (q2):
+      q2 ϵ 𝐏 → q1●q2 = ▼[f]p →
+      ∃∃p1,p2. p1 ϵ 𝐈 & q1 = ⊗p1 & q2 = ▼[▶[p1]f]p2 & p1●p2 = p.
+#f #p #q1 #q2 #Hq2 #H0
+elim (unwind2_path_inv_append_ppc_dx … H0) -H0 // #p1 #p2 #H1 #H2 #H0 destruct
+elim (path_split_pic_sn p1) #r0 #r1 #Hr0 #Hr1 #H0 destruct
+<structure_append <list_append_assoc
+@(ex4_2_intro … r0 (r1●p2)) //
+<unwind2_path_append_ppc_dx
+/2 width=1 by unwind2_path_des_ppc/
 qed-.
 
 (* Inversions with path_lcons ***********************************************)

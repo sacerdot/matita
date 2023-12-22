@@ -50,6 +50,18 @@ lemma term_root_eq_repl:
 /3 width=3 by conj, term_root_le_repl/
 qed.
 
+lemma term_root_eq_repl_back (t1) (t2) (p):
+      p ϵ ▵t2 → t1 ⇔ t2 → p ϵ ▵t1.
+#t1 #t2 #p * #q #Hq #Ht
+/3 width=4 by term_in_root, subset_in_eq_repl_back/
+qed-.
+
+lemma term_root_eq_repl_fwd (t1) (t2) (p):
+      p ϵ ▵t1 → t1 ⇔ t2 → p ϵ ▵t2.
+#t1 #t2 #p * #q #Hq #Ht
+/3 width=4 by term_in_root, subset_in_eq_repl_fwd/
+qed-.
+
 (* Constructions with pt_append *********************************************)
 
 lemma pt_append_le_repl (p):
@@ -95,12 +107,12 @@ qed.
 
 lemma append_in_comp_slice_bi (p) (q) (s):
       s ϵ ↑q → p●s ϵ ↑(p●q).
-/3 width=4 by subset_in_eq_repl_back, pt_append_in/
+/3 width=4 by subset_in_eq_repl_fwd, pt_append_in/
 qed.
 
 (* Inversions with term_slice ***********************************************)
 
 lemma append_in_comp_slice_inv_bi (p) (q) (s):
       p●s ϵ ↑(p●q) → s ϵ ↑q.
-/3 width=4 by subset_in_eq_repl_fwd, append_in_comp_inv_bi/
+/3 width=4 by subset_in_eq_repl_back, append_in_comp_inv_bi/
 qed-.

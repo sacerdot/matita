@@ -13,7 +13,9 @@
 (**************************************************************************)
 
 (**) (* reverse include *)
+include "ground/lib/subset_and_eq.ma".
 include "ground/lib/subset_ext_eq.ma".
+include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/substitution/lift_path_eq.ma".
 include "delayed_updating/substitution/lift_prototerm.ma".
 
@@ -83,16 +85,34 @@ lemma lift_pt_append_sn (f) (p) (u):
 #f #p #u #r * #q * #s #Hs #H1 #H2 destruct
 >lift_path_append
 /3 width=1 by in_comp_lift_bi, pt_append_in, subset_in_le_trans/
-qed-.
+qed.
 
 lemma lift_pt_append_dx (f) (p) (u):
       (🠡[f](p●u)) ⊆ (🠡[f]p)●(🠡[🠢[p]f]u).
 #f #p #u #r * #q * #s #Hs #H1 #H2 destruct
 <lift_path_append
 /3 width=1 by in_comp_lift_bi, pt_append_in, subset_in_le_trans/
-qed-.
+qed.
 
 lemma lift_pt_append (f) (p) (u):
       (🠡[f]p)●(🠡[🠢[p]f]u) ⇔ 🠡[f](p●u).
 /3 width=1 by conj, lift_pt_append_sn, lift_pt_append_dx/
+qed.
+
+lemma lift_slice_and_sn (f) (t) (p):
+      (🠡[f]t)∩↑🠡[f]p ⇔ (🠡[f]t)∩🠡[f]↑p.
+#f #t #p
+@subset_eq_trans
+[3: @(subset_and_eq_repl … (lift_pt_append …)) [| @subset_eq_refl ] | skip ]
+@conj
+[ @subset_le_and_dx //
+  #r * * #s1 #Hs1 #H1 * #s2 #_ #H2 destruct >H2
+  elim (eq_inv_append_lift_path … (sym_eq … H2)) -H2
+  #r1 #r2 #H1 #H2 #_ -s1 destruct
+  <(lift_path_inj … H1) -r1
+  /3 width=1 by pt_append_in, in_comp_lift_bi/
+| @subset_le_and_dx //
+  @subset_le_trans [| @subset_le_and_sn_refl_dx ]
+  /2 width=3 by pt_append_le_repl/
+]
 qed.

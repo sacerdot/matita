@@ -12,31 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path_structure_inner.ma".
-include "delayed_updating/syntax/preterm_structure.ma".
+include "delayed_updating/syntax/prototerm_eq.ma".
+include "delayed_updating/syntax/preterm.ma".
 
 (* PRETERM ******************************************************************)
 
-(* Destructions with pic ****************************************************)
+(* Constructions with subset_eq *********************************************)
 
-lemma term_root_pic_sn (t) (p1) (p2):
-      t ϵ 𝐓 → p1 ϵ 𝐈 → p1 ϵ ▵t → p2 ϵ ▵t → ⊗p1 = ⊗p2 →
-      ∃∃q1. p2 = p1●q1 & 𝐞 = ⊗q1.
-#t #p1 #p2 #Ht #H1p1 #H2p1 #Hp2 #Hp
-elim (term_root_eq_des_structure_bi … Ht … Hp) -Hp // -t
-* #q2 #H0 #H1q2 destruct
-lapply (pic_des_append_sn … H1p1) -H1p1 #H2q2
-lapply (eq_inv_empty_structure_pic … H1q2) -H1q2 // -H2q2 #H0 destruct
-/2 width=3 by ex2_intro/
+lemma term_eq_repl_back (t1) (t2):
+      t2 ϵ 𝐓 → t1 ⇔ t2 → t1 ϵ 𝐓.
+#t1 #t2 * #H1 #H2 #H3 #H4 #Ht
+@mk_preterm_axs
+[ /3 width=3 by subset_in_eq_repl_fwd/
+| /3 width=5 by term_root_eq_repl_fwd/
+| #p #Hp (**) (* full auto too slow *)
+  @(term_root_eq_repl_back … Ht)
+  /3 width=3 by term_root_eq_repl_fwd/
+| /3 width=4 by subset_in_eq_repl_fwd/
+]
 qed-.
 
-lemma term_root_pic_bi (t) (p1) (p2):
-      t ϵ 𝐓 → p1 ϵ 𝐈 → p2 ϵ 𝐈 → p1 ϵ ▵t → p2 ϵ ▵t → ⊗p1 = ⊗p2 → p1 = p2.
-#t #p1 #p2 #Ht #H1p1 #H1p2 #H2p1 #H2p2 #Hp
-elim (term_root_eq_des_structure_bi … Ht … Hp) -Hp // -t
-* #q #H0 #H1q destruct
-[ lapply (pic_des_append_sn … H1p1) -H1p1 #H2q
-| lapply (pic_des_append_sn … H1p2) -H1p2 #H2q
+lemma term_eq_repl_fwd (t1) (t2):
+      t1 ϵ 𝐓 → t1 ⇔ t2 → t2 ϵ 𝐓.
+#t1 #t2 * #H1 #H2 #H3 #H4 #Ht
+@mk_preterm_axs
+[ /3 width=3 by subset_in_eq_repl_back/
+| /3 width=5 by term_root_eq_repl_back/
+| #p #Hp (**) (* full auto too slow *)
+  @(term_root_eq_repl_fwd … Ht)
+  /3 width=3 by term_root_eq_repl_back/
+| /3 width=4 by subset_in_eq_repl_back/
 ]
-lapply (eq_inv_empty_structure_pic … H1q) -H1q // #H0 destruct //
 qed-.

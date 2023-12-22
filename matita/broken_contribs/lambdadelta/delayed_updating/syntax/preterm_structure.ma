@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/preterm.ma".
-include "delayed_updating/syntax/prototerm_structure.ma".
 include "delayed_updating/syntax/prototerm_length.ma".
+include "delayed_updating/syntax/path_structure.ma".
 include "ground/lib/list_weight_2_rcons.ma".
 include "ground/arith/wf2_ind_nlt.ma".
 
@@ -29,9 +29,9 @@ lemma term_slice_des_structure_bi (t) (p) (q1) (q2):
 generalize in match p; -p
 @(wf2_ind_nlt … (list_weight_2 …) … q1 q2) -q1 -q2
 #n #IH #q1 @(list_ind_rcons … q1) -q1
-[ /3 width=2 by term_in_root, or_intror/ ]
+[ /3 width=3 by ex2_intro, or_intror/ ]
 #q1 #l1 #_ #q2 @(list_ind_rcons … q2) -q2
-[ /3 width=2 by term_in_root, or_introl/ ]
+[ /3 width=3 by ex2_intro, or_introl/ ]
 #q2 #l2 #_ <list_weight_2_rcons_sn <list_weight_2_rcons_dx
 #H0 #p #Hq1 #Hq2 #Hq destruct
 elim (label_is_d l1)
@@ -65,7 +65,7 @@ lemma term_root_eq_des_structure_bi (t) (p) (q1) (q2):
       |  ∃∃r1. q2 = q1●r1 & 𝐞 = ⊗r1.
 #t #p #q1 #q2 #Ht #Hq1 #Hq2 #Hq
 elim (term_slice_des_structure_bi … q1 q2 Ht …) // -t
-* #r #H0 destruct
+* #r #_ #H0 destruct
 <structure_append in Hq; #Hq
 [ lapply (eq_inv_list_append_dx_dx_refl … (sym_eq … Hq)) -Hq #Hq
   /3 width=3 by ex2_intro, or_introl/
@@ -93,26 +93,28 @@ elim (term_slice_des_structure_bi … q1 q2 Ht …) // -Hq
 lapply (term_complete_ax … Ht … H0) -Ht -H0 //
 qed-.
 
-(* Constructions with term_structure ****************************************)
-
-lemma preterm_structure (t):
-      t ϵ 𝐓 → ⊗t ϵ 𝐓.
-#t #Ht
-@mk_preterm_axs
-[ #p1 #p2 * #r1 #Hr1 #H1 * #r2 #Hr2 #H2 #Hp destruct
-  elim (term_slice_des_structure_bi … r1 r2 Ht …) // -Hp
-  [ #Hr <(term_complete_ax … Ht … Hr1 Hr2) -t //
-  | #Hr <(term_complete_ax … Ht … Hr2 Hr1) -t //
-  |*: /2 width=3 by term_in_comp_root/
-  ]
-| #p #l1 #k2 #_ #H0
-  elim (term_in_root_structure_inv_d_dx … H0)
-| #p1 #H0
-  elim (term_in_root_strucrure_inv_rcons … H0) -H0
-  [ #p2 #Hp2 #H0 destruct
-    lapply (term_full_A_ax … Ht … Hp2) -Ht -Hp2 #Hp2
-    /2 width=1 by in_root_structure_bi/
-  | #k #H0 destruct
-  ]
+(* Note: a generalization of term_root_ax *)
+lemma term_comp_inv (t) (q1) (q2) (p):
+      t ϵ 𝐓 → p●q1 ϵ t → p●q2 ϵ t →
+      (𝐞) = ⊗q2 → q1 = q2.
+#t
+#q1 @(list_ind_rcons … q1) -q1 [| #q1 #l1 #IH ]
+#q2 @(list_ind_rcons … q2) -q2 [2,4: #q2 #l2 #_]
+#p #Ht #Hq1 #Hq2 #Hq
+[ lapply (term_complete_ax … Ht … Hq2 Hq1 ?) -t -Hq // #H0
+  lapply (eq_inv_list_append_dx_dx_refl … (sym_eq … H0)) -H0 #H0
+  elim (eq_inv_list_empty_rcons ??? H0)
+| <structure_append in Hq; #H0
+  elim (eq_inv_list_empty_append … H0) -H0 #Hq #H0
+  elim (eq_inv_empty_structure_singleton … H0) -H0 #k2 #H0 destruct
+  lapply (term_root_ax … Ht p l1 k2 ? ?)
+  [1,2: /2 width=2 by term_in_root/ ] #H0 destruct
+  <list_append_rcons_sn in Hq1; #Hq1
+  <list_append_rcons_sn in Hq2; #Hq2
+  <(IH … Hq1 Hq2) -IH -Hq1 -Hq2 //
+| //
+| lapply (term_complete_ax … Ht … Hq1 Hq2 ?) -t -Hq // #H0
+  lapply (eq_inv_list_append_dx_dx_refl … (sym_eq … H0)) -H0 #H0
+  elim (eq_inv_list_empty_rcons ??? H0)
 ]
-qed.
+qed-.

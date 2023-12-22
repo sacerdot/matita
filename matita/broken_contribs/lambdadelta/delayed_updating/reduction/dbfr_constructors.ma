@@ -71,7 +71,7 @@ qed.
 
 lemma dbfr_beta (v) (b) (t) (q) (n):
       ⊗b ϵ 𝐁 → q ϵ 𝐂❨n❩ → q◖𝗱(⁤↑n) ϵ t →
-      ＠v.(b●𝛌.t) ➡𝐝𝐛𝐟[𝗔◗b●𝗟◗q] ＠v.(⬕[b●𝗟◗q●↑𝐞←⓪b●𝗟◗q●𝛕(⁤↑(♭b+n)).v](b●𝛌.t)).
+      ＠v.(b●𝛌.t) ➡𝐝𝐛𝐟[𝗔◗b●𝗟◗q] ＠v.(⬕[↑(b●𝗟◗q)←⓪b●𝗟◗q●𝛕(⁤↑(♭b+n)).v](b●𝛌.t)).
 #v #b #t #q #n #Hb #Hn #Ht
 @(ex5_4_intro … (𝐞) … Hb Hn) -Hb -Hn
 [ //
@@ -79,11 +79,7 @@ lemma dbfr_beta (v) (b) (t) (q) (n):
   /3 width=1 by pt_append_in, in_comp_abst_hd/
 | @subset_eq_canc_dx [3: @fsubst_appl_hd | skip ]
   @fsubst_eq_repl [ // ]
-  [ @subset_eq_canc_sn [| @pt_append_assoc ]
-    @pt_append_eq_repl
-    @subset_eq_canc_sn [| @pt_append_assoc ]
-    @pt_append_eq_repl
-    @subset_eq_canc_sn [| @pt_append_assoc ] //
+  [ @subset_eq_canc_sn [| @term_slice_append ] //
   | @pt_append_eq_repl @pt_append_eq_repl
     @subset_eq_canc_dx [3: @pt_append_assoc | skip ]
     @pt_append_eq_repl >list_cons_comm
