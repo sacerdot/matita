@@ -27,13 +27,13 @@ interpretation
 (* Basic destructions *******************************************************)
 
 lemma subset_in_eq_repl_back (A) (a:A):
-      ∀u1. a ϵ u1 → ∀u2. u1 ⇔ u2 → a ϵ u2.
+      ∀u1. a ϵ u1 → ∀u2. u2 ⇔ u1 → a ϵ u2.
 #A #a #u1 #Hu1 #u2 *
 /2 width=1 by/
 qed-.
 
 lemma subset_in_eq_repl_fwd (A) (a:A):
-      ∀u1. a ϵ u1 → ∀u2. u2 ⇔ u1 → a ϵ u2.
+      ∀u1. a ϵ u1 → ∀u2. u1 ⇔ u2 → a ϵ u2.
 #A #a #u1 #Hu1 #u2 *
 /2 width=1 by/
 qed-.

@@ -12,37 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset_ol_le.ma".
-include "ground/lib/subset_and_le.ma".
+include "ground/lib/subset_eq.ma".
+include "ground/lib/subset_ext.ma".
+include "ground/lib/subset_and.ma".
 
 (* INTERSECTION FOR SUBSETS *************************************************)
 
-(* Constructions with subset_ol *********************************************)
+(* Constructions with extensions for subsets ********************************)
 
-(* Note: overlap algebra: preservation of infimum *)
-lemma subset_ol_and_dx_refl_sn (A) (u1) (u2):
-      u1 ≬ u2 → u1 ≬{A} (u1 ∩ u2).
-#A #u1 #u2 * #p #H1 #H2
-/3 width=4 by subset_and_in, subset_ol_i/
+lemma subset_and_ext_f1 (A1) (A0) (f) (u1) (u2):
+      (∀p1,p2. p1 ϵ u1 → p2 ϵ u2 → f p1 = f p2 → p1 = p2) →
+      (subset_ext_f1 A1 A0 f u1) ∩ (subset_ext_f1 A1 A0 f u2) ⇔
+      subset_ext_f1 A1 A0 f (u1 ∩ u2).
+#A1 #A0 #f #u1 #u2 #Hf
+@conj #r
+[ * * #s1 #Hs1 #H1 * #s2 #Hs2 #H2 destruct
+  lapply (Hf … (sym_eq … H2)) -Hf -H2 // #H0 destruct
+  /3 width=1 by subset_and_in, subset_in_ext_f1_dx/
+| * #s * #H1s #H2s #H0 destruct
+  /3 width=1 by subset_and_in, subset_in_ext_f1_dx/
+]
 qed.
-
-(* Note: overlap algebra: preservation of infimum *)
-lemma subset_ol_and_sn_refl_dx (A) (u1) (u2):
-      u1 ≬ u2 → (u1 ∩ u2) ≬{A} u2.
-#A #u1 #u2 * #p #H1 #H2
-/3 width=4 by subset_and_in, subset_ol_i/
-qed.
-
-(* Inversions with subset_ol ************************************************)
-
-lemma subset_ol_inv_and_dx_refl_sn (A) (u1) (u2):
-      u1 ≬{A} (u1 ∩ u2) → u1 ≬ u2.
-#A #u1 #u2 #H0
-@(subset_ol_le_repl … H0) -H0 //
-qed-.
-
-lemma subset_ol_inv_and_sn_refl_dx (A) (u1) (u2):
-      (u1 ∩ u2) ≬{A} u2 → u1 ≬ u2.
-#A #u1 #u2 #H0
-@(subset_ol_le_repl … H0) -H0 //
-qed-.
