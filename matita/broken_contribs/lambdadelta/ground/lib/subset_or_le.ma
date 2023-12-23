@@ -36,6 +36,11 @@ lemma subset_le_or_dx_refl_dx (A) (u1:𝒫❨A❩) (u2): (**)
 /2 width=1 by subset_or_in_dx/
 qed.
 
+lemma subset_le_or_sn_refl_dx (A) (u1) (u2:𝒫❨A❩): (**)
+      u1 ⊆ u2 → u2 ∪ u1 ⊆ u2.
+/2 width=5 by subset_le_or_sn/
+qed.
+
 (* Inversions with subset_le ************************************************)
 
 lemma subset_le_or_inv_sn_sn (A) (u1) (u2) (v:𝒫❨A❩): (**)

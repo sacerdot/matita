@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/notation/functions/powerclass_1.ma".
+include "ground/notation/relations/curly_brackets_3.ma".
 include "ground/notation/relations/epsilon_3.ma".
 include "ground/notation/relations/not_epsilon_3.ma".
 include "ground/lib/relations.ma".

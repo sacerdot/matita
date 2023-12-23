@@ -17,7 +17,7 @@ include "ground/lib/subset.ma".
 (* UNION FOR SUBSETS ********************************************************)
 
 definition subset_or (A) (u1) (u2): 𝒫❨A❩ ≝
-           λp. ∨∨ p ϵ u1 | p ϵ u2.
+           ❴p ❘ ∨∨ p ϵ u1 | p ϵ u2❵.
 
 interpretation
   "union (subset)"
