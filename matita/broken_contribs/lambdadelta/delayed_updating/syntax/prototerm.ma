@@ -26,21 +26,21 @@ interpretation
   'TypeT = (predicate (list label)).
 
 definition term_grafted (p) (t): 𝕋 ≝
-           λq. p●q ϵ t.
+           ❴q ❘ p●q ϵ t❵.
 
 interpretation
   "grafted (prototerm)"
   'Pitchfork p t = (term_grafted p t).
 
 definition term_root (t): 𝕋 ≝
-           λp. ∃q. q ϵ ⋔[p]t.
+           ❴p ❘ ∃q. q ϵ ⋔[p]t❵.
 
 interpretation
   "root (prototerm)"
   'UpTriangle t = (term_root t).
 
 definition pt_append (p) (t): 𝕋 ≝
-           λr. ∃∃q. q ϵ t & r = p●q.
+           ❴r ❘ ∃∃q. q ϵ t & r = p●q❵.
 
 interpretation
   "append (prototerm)"

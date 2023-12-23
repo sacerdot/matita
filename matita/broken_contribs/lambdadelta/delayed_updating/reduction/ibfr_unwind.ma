@@ -52,11 +52,10 @@ lemma ibfr_unwind_bi (f) (t1) (t2) (r):
   @(subset_eq_canc_sn … (fsubst_and_rc_sn …))
   @fsubst_eq_repl [ // | /2 width=2 by unwind2_slice_and_sn/ ]
   @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
-  [| @tpc_pt_append_sn /3 width=6 by tpc_pt_append_dx, ppc_lcons/ ]
+  [| @tpc_pt_append_sn @tpc_pt_append_dx // ]
   @pt_append_eq_repl
   @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
-  [| /3 width=6 by tpc_pt_append_dx, ppc_lcons/ ]
-  <path_structure_clear_swap
+  [| @tpc_pt_append_dx // ] <path_structure_clear_swap
   @pt_append_eq_repl
   @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
   [| @lift_term_proper /2 width=6 by term_grafted_S_dx_proper/ ]

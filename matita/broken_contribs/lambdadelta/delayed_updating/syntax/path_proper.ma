@@ -20,7 +20,7 @@ include "ground/xoa/ex_1_2.ma".
 (* PROPER CONDITION FOR PATH ************************************************)
 
 definition ppc: 𝒫❨ℙ❩ ≝
-           λp. 𝐞 = p → ⊥
+           ❴p ❘ 𝐞 = p → ⊥❵
 .
 
 interpretation

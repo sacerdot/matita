@@ -22,10 +22,10 @@ include "ground/lib/subset_or.ma".
 (* CONSTRUCTORS FOR PROTOTERM ***********************************************)
 
 definition term_node_0 (l): 𝕋 ≝
-           λp. l◗𝐞 = p.
+           ❴p ❘ l◗𝐞 = p❵.
 
 definition term_node_1 (l): 𝕋 → 𝕋 ≝
-           λt.l◗t.
+           λt. l◗t.
 
 definition term_node_2 (l1) (l2): 𝕋 → 𝕋 → 𝕋 ≝
            λt1,t2.
