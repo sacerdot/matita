@@ -30,7 +30,7 @@ definition ibfr (r): relation2 (𝕋) (𝕋) ≝
            λt1,t2.
            ∃∃p,b,q,n. p●𝗔◗b●𝗟◗q = r &
            ⊗b ϵ 𝐁 & q ϵ 𝐂❨n❩ & r◖𝗱(⁤↑n) ϵ t1 &
-           ⬕[↑r←(p◖𝗔)●(⓪b)●(𝗟◗q)●🠡[𝐮❨⁤↑(♭b+n)❩]⋔[p◖𝗦]t1]t1 ⇔ t2
+           ⬕[↑r←(p●𝗔◗(⓪b)●𝗟◗q)●🠡[𝐮❨⁤↑(♭b+n)❩]⋔[p◖𝗦]t1]t1 ⇔ t2
 .
 
 interpretation

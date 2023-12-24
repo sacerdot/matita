@@ -47,7 +47,7 @@ interpretation
 (* Helper constructions *****************************************************)
 
 lemma path_append_pbLq (p) (b) (q):
-      (p◖𝗔)●b●𝗟◗q = p●𝗔◗b●𝗟◗q.
+      (p◖𝗔)●b●(𝗟◗q) = p●𝗔◗b●𝗟◗q.
 //
 qed-.
 

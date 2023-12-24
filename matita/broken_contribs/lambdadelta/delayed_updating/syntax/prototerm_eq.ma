@@ -64,15 +64,15 @@ qed-.
 
 (* Constructions with pt_append *********************************************)
 
-lemma pt_append_le_repl (p):
-      ∀t1,t2. t1 ⊆ t2 → p●t1 ⊆ p●t2.
-#p #t1 #t2 #Ht #r * #q #Hq #H0 destruct
+lemma pt_append_le_repl (t1) (t2) (p) :
+      t1 ⊆ t2 → p●t1 ⊆ p●t2.
+#t1 #t2 #p #Ht #r * #q #Hq #H0 destruct
 /3 width=1 by pt_append_in/
 qed.
 
-lemma pt_append_eq_repl (p):
-      ∀t1,t2. t1 ⇔ t2 → p●t1 ⇔ p●t2.
-#p #t1 #t2 * #H1 #H2
+lemma pt_append_eq_repl_bi (t1) (t2) (p1) (p2):
+      p1 = p2 → t1 ⇔ t2 → p1●t1 ⇔ p2●t2.
+#t1 #t2 #p1 #p2 #p * #H1 #H2
 /3 width=3 by conj, pt_append_le_repl/
 qed.
 

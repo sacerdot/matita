@@ -52,9 +52,7 @@ lemma lift_term_iref_pos_uni (t) (n) (k):
 #t #n #k
 @(subset_eq_trans … (lift_term_iref_xapp …))
 <fbr_xapp_uni_pos
-@iref_eq_repl
-@(subset_eq_trans … (lift_term_id …))
-/2 width=1 by lift_term_eq_repl_sn/
+/2 width=1 by iref_eq_repl_bi/
 qed.
 
 lemma lift_term_abst (f) (t):

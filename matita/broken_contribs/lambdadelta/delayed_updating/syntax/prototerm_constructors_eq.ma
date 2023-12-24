@@ -20,19 +20,19 @@ include "ground/lib/subset_or_eq.ma".
 
 (* Constructions with equivalence for prototerm *****************************)
 
-lemma iref_eq_repl (t1) (t2) (k):
-      t1 ⇔ t2 → 𝛕k.t1 ⇔ 𝛕k.t2.
-/3 width=1 by pt_append_eq_repl/
+lemma iref_eq_repl_bi (t1) (t2) (k1) (k2):
+      k1 = k2 → t1 ⇔ t2 → 𝛕k1.t1 ⇔ 𝛕k2.t2.
+/3 width=2 by pt_append_eq_repl_bi/
 qed.
 
 lemma abst_eq_repl (t1) (t2):
       t1 ⇔ t2 → 𝛌.t1 ⇔ 𝛌.t2.
-/2 width=1 by pt_append_eq_repl/
+/2 width=2 by pt_append_eq_repl_bi/
 qed.
 
 lemma appl_eq_repl (u1) (u2) (t1) (t2):
       u1 ⇔ u2 → t1 ⇔ t2 → ＠u1.t1 ⇔ ＠u2.t2.
-/3 width=1 by pt_append_eq_repl, subset_or_eq_repl/
+/3 width=2 by pt_append_eq_repl_bi, subset_or_eq_repl/
 qed.
 
 (* Constructions with term_grafted ******************************************)

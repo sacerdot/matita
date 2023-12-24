@@ -32,8 +32,8 @@ lemma dbfr_abst_hd (t1) (t2) (r):
   @subset_eq_trans [| @fsubst_abst_hd ]
   @fsubst_eq_repl [ // | // ]
   @subset_eq_trans [| @pt_append_assoc ]
-  @pt_append_eq_repl @pt_append_eq_repl @pt_append_eq_repl
-  @iref_eq_repl @term_grafted_abst_hd
+  @pt_append_eq_repl_bi [ // ]
+  @iref_eq_repl_bi [ // ] @term_grafted_abst_hd
 ]
 qed.
 
@@ -48,8 +48,8 @@ lemma dbfr_appl_hd (v) (t1) (t2) (r):
   @subset_eq_trans [| @fsubst_appl_hd ]
   @fsubst_eq_repl [ // | // ]
   @subset_eq_trans [| @pt_append_assoc ]
-  @pt_append_eq_repl @pt_append_eq_repl @pt_append_eq_repl
-  @iref_eq_repl @term_grafted_appl_hd
+  @pt_append_eq_repl_bi [ // ]
+  @iref_eq_repl_bi [ // ] @term_grafted_appl_hd
 ]
 qed.
 
@@ -64,14 +64,14 @@ lemma dbfr_appl_sd (v1) (v2) (t) (r):
   @subset_eq_trans [| @fsubst_appl_sd ]
   @fsubst_eq_repl [ // | // ]
   @subset_eq_trans [| @pt_append_assoc ]
-  @pt_append_eq_repl @pt_append_eq_repl @pt_append_eq_repl
-  @iref_eq_repl @term_grafted_appl_sd
+  @pt_append_eq_repl_bi [ // ]
+  @iref_eq_repl_bi [ // ] @term_grafted_appl_sd
 ]
 qed.
 
 lemma dbfr_beta (v) (b) (t) (q) (n):
       ⊗b ϵ 𝐁 → q ϵ 𝐂❨n❩ → q◖𝗱(⁤↑n) ϵ t →
-      ＠v.(b●𝛌.t) ➡𝐝𝐛𝐟[𝗔◗b●𝗟◗q] ＠v.(⬕[↑(b●𝗟◗q)←⓪b●𝗟◗q●𝛕(⁤↑(♭b+n)).v](b●𝛌.t)).
+      ＠v.(b●𝛌.t) ➡𝐝𝐛𝐟[𝗔◗b●𝗟◗q] ＠v.(⬕[↑(b●𝗟◗q)←(⓪b●𝗟◗q)●𝛕(⁤↑(♭b+n)).v](b●𝛌.t)).
 #v #b #t #q #n #Hb #Hn #Ht
 @(ex5_4_intro … (𝐞) … Hb Hn) -Hb -Hn
 [ //
@@ -80,11 +80,11 @@ lemma dbfr_beta (v) (b) (t) (q) (n):
 | @subset_eq_canc_dx [3: @fsubst_appl_hd | skip ]
   @fsubst_eq_repl [ // ]
   [ @subset_eq_canc_sn [| @term_slice_append ] //
-  | @pt_append_eq_repl @pt_append_eq_repl
-    @subset_eq_canc_dx [3: @pt_append_assoc | skip ]
-    @pt_append_eq_repl >list_cons_comm
-    @iref_eq_repl @subset_eq_sym
-    @subset_eq_trans [3: @term_grafted_appl_sd | skip ] //
+  | @subset_eq_canc_dx [3: @pt_append_assoc | skip ]
+    @pt_append_eq_repl_bi [ // ]
+    @iref_eq_repl_bi [ // ] >list_cons_comm
+    @subset_eq_canc_sn [| @term_grafted_appl_sd ]
+    @subset_eq_sym //
   ]
 ]
 qed.
