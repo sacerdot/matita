@@ -12,8 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR DELAYED UPDATING ********************************************)
+include "ground/relocation/fb/fbr_uni_dapp.ma".
+include "ground/relocation/fb/fbr_lapp.ma".
+include "ground/arith/nat_plus_rplus.ma".
 
-notation "hvbox( 𝐏 )"
-  non associative with precedence 70
-  for @{ 'ClassP }.
+(* UNIFORM ELEMENTS FOR FINITE RELOCATION MAPS WITH BOOLEANS ****************)
+
+(* Constructions with fbr_lapp **********************************************)
+
+lemma fbr_lapp_uni (n) (m):
+      m+n = 𝐮❨n❩＠§❨m❩.
+// qed.

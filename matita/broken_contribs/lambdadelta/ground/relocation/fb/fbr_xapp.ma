@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/relocation/fb/fbr_dapp.ma".
-include "ground/arith/nat_psucc.ma".
+include "ground/arith/nat_pred_succ.ma".
 include "ground/arith/nat_split.ma".
 include "ground/notation/functions/at_2.ma".
 
@@ -52,6 +52,26 @@ lemma fbr_xapp_push_succ (f) (n):
 #f * //
 qed.
 
-lemma fbr_next_pos (f) (p):
+lemma fbr_xapp_next_pos (f) (p):
       (⁤↑(f＠❨⁤p❩)) = (↑f)＠❨⁤p❩.
 // qed.
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_unit_fbr_xapp_push (f) (m):
+      (⁤𝟏) = ⫯f＠❨m❩ → (⁤𝟏) = m.
+#f #m
+elim (nat_split_zero_pos m) #Hm destruct //
+>Hm in ⊢ (%→?); <fbr_xapp_pos #H0
+lapply (eq_inv_npos_bi … H0) -H0 #H0
+>(eq_inv_unit_fbr_dapp_push … H0) -H0 //
+qed-.
+
+(* Basic destructions *******************************************************)
+
+lemma eq_des_succ_fbr_xapp (f) (n) (m):
+      (⁤↑n) = f＠❨m❩ → m ϵ 𝐏.
+#f #n #m #Hm
+elim (nat_split_zero_pos m) #H0 // destruct
+<fbr_xapp_zero in Hm; #H0 destruct
+qed-.

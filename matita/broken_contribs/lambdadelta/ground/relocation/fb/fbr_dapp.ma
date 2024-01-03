@@ -44,3 +44,11 @@ lemma fbr_dapp_push_dx_succ (f) (p):
 lemma fbr_dapp_next_dx (f) (p):
       ↑(f＠⧣❨p❩) = (↑f)＠⧣❨p❩.
 // qed.
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_unit_fbr_dapp_push (f) (p):
+      (𝟏) = ⫯f＠⧣❨p❩ → 𝟏 = p.
+#f * //
+#p <fbr_dapp_push_dx_succ #H0 destruct
+qed-.
