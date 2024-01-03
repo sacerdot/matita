@@ -20,7 +20,7 @@ include "delayed_updating/syntax/path_depth.ma".
 
 (* Constructions with path_clear and depth **********************************)
 
-lemma cpp_clear (p):
+lemma pcc_clear (p):
       ⓪p ϵ 𝐂❨♭p❩.
 #p elim p -p //
 * [ #k ] #p #IH

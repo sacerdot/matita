@@ -12,10 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/class_p_0.ma".
-include "ground/lib/subset.ma".
+include "ground/notation/functions/subset_p_0.ma".
 include "ground/xoa/ex_1_2.ma".
+include "ground/lib/subset.ma".
+include "delayed_updating/syntax/path.ma".
 
 (* PROPER CONDITION FOR PATH ************************************************)
 
@@ -25,7 +25,7 @@ definition ppc: 𝒫❨ℙ❩ ≝
 
 interpretation
   "proper condition (path)"
-  'ClassP = (ppc).
+  'SubsetP = (ppc).
 
 (* Basic constructions ******************************************************)
 

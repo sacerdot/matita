@@ -19,15 +19,22 @@ include "delayed_updating/syntax/path_structure.ma".
 
 (* Constructions with structure *********************************************)
 
-lemma path_closed_structure_height (p) (n):
-      p ϵ 𝐂❨n❩ → ⊗p ϵ 𝐂❨♯p+n❩.
-#p #n #Hn elim Hn -Hn //
-#p #n #_ #IH [ <nplus_succ_dx ]
+lemma pcc_structure (p):
+      ⊗p ϵ 𝐂❨♭p❩.
+#p elim p -p //
+* [ #k ] #p #IH
 /2 width=1 by pcc_L_dx, pcc_A_dx, pcc_S_dx/
 qed.
 
-lemma path_closed_structure_depth (p) (n):
-      p ϵ 𝐂❨n❩ → ⊗p ϵ 𝐂❨♭p❩.
-#p #n #Hp <path_closed_depth
-/2 width=3 by path_closed_structure_height/
+lemma pcc_structure_height (p) (n):
+      p ϵ 𝐂❨n❩ → ⊗p ϵ 𝐂❨♯p+n❩.
+#p #n #Hn
+>pcc_depth //
 qed.
+
+(* Inversions with structure ************************************************)
+
+lemma pcc_inv_structure (p) (n):
+      ⊗p ϵ 𝐂❨n❩ → n = ♭p.
+/2 width=3 by pcc_mono/
+qed-.

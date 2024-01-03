@@ -16,14 +16,41 @@ include "delayed_updating/unwind/unwind2_rmap_ctls.ma".
 include "delayed_updating/syntax/path_closed.ma".
 include "delayed_updating/syntax/path_depth.ma".
 include "ground/relocation/fb/fbr_uni_xapp.ma".
+include "ground/relocation/fb/fbr_uni_lapp.ma".
 include "ground/relocation/fb/fbr_after_xapp.ma".
+include "ground/relocation/fb/fbr_after_lapp.ma".
 include "ground/relocation/fb/fbr_ctls_lapp.ma".
 include "ground/arith/nat_le_plus.ma".
 include "ground/arith/nat_le_pred.ma".
 
 (* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
-(* Destructions with cpp ****************************************************)
+(* Constructions with pcc ***************************************************)
+
+(* Note: arithmetic miracle in the case of label "𝗱"! *)
+lemma eq_succ_depth_unwind2_rmap_Lq_pcc (f) (q) (n):
+      ♭q = ▶[𝗟◗q]f＠§❨n❩ →
+      q ϵ 𝐂❨n❩.
+#f #q <unwind2_rmap_L_sn elim q -q
+[ #n
+  <depth_empty <unwind2_rmap_empty #H0
+  <(eq_inv_zero_fbr_lapp_push … H0) -H0 //
+| * [ #k ] #q #IH #n
+  [ <depth_d_dx <unwind2_rmap_d_dx
+    <fbr_lapp_after <fbr_lapp_uni #Hq
+    /3 width=1 by pcc_d_dx/
+  | <depth_L_dx <unwind2_rmap_L_dx #Hq
+    elim (eq_inv_succ_fbr_lapp_push … Hq) -Hq #Hn #Hn >Hn
+    /3 width=2 by pcc_L_dx/
+  | <depth_A_dx <unwind2_rmap_A_dx #Hq
+    /3 width=2 by pcc_A_dx/
+  | <depth_S_dx <unwind2_rmap_S_dx #Hq
+    /3 width=2 by pcc_S_dx/
+  ]
+]
+qed-.
+
+(* Destructions with pcc ****************************************************)
 
 lemma unwind2_rmap_append_closed_dx_xapp_le (f) (p) (q) (n):
       q ϵ 𝐂❨n❩ → ∀m. m ≤ n →
@@ -57,6 +84,7 @@ lapply (unwind2_rmap_append_closed_dx_xapp_le f p … Hq (⁤↑n) ?) -Hq //
 /2 width=1 by eq_inv_nsucc_bi/
 qed-.
 
+(* Note: this inverts eq_succ_depth_unwind2_rmap_Lq_pcc *)
 lemma unwind2_rmap_push_closed_lapp (f) (q) (n):
       q ϵ 𝐂❨n❩ →
       ♭q = (▶[q]⫯f)＠§❨n❩.

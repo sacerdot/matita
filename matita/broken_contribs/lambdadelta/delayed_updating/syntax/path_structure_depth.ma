@@ -28,3 +28,11 @@ lemma depth_structure (p):
 | <structure_S_dx <depth_S_dx <depth_S_dx //
 ]
 qed.
+
+(* Advanced constructions with depth ****************************************)
+
+lemma depth_append_empty_structure_dx (b1) (b2):
+      (𝐞) = ⊗b2 → ♭b1 = ♭(b1●b2).
+#b1 #b2 #Hb2
+<depth_append >(depth_structure b2) <Hb2 -Hb2 //
+qed.

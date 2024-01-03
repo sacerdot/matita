@@ -56,7 +56,7 @@ theorem ibfr_lift_bi (f) (t1) (t2) (r):
     @(subset_eq_canc_dx … (lift_term_after …))
     @lift_term_eq_repl_sn
 (* Note: crux of the proof begins *)
-    <path_append_pbLq <lift_rmap_append <fbr_after_uni_dx
+    <path_append_pbLq_1 <lift_rmap_append <fbr_after_uni_dx
     <lift_rmap_append_clear_L_closed_dx_xapp_succ_plus //
     <ctls_succ_plus_lift_rmap_append_clear_L_closed_dx //
 (* Note: crux of the proof ends *)

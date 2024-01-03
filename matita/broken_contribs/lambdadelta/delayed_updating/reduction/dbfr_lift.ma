@@ -50,7 +50,7 @@ theorem dbfr_lift_bi (f) (t1) (t2) (r):
     <(lift_path_closed_des_gen … Hn) <(lift_path_closed_des_gen … Hn) //
   | @(subset_eq_trans … (lift_term_iref_xapp …))
 (* Note: crux of the proof begins *)
-    <path_append_pbLq <lift_rmap_append
+    <path_append_pbLq_1 <lift_rmap_append
     <(lift_rmap_append_clear_L_closed_dx_xapp_succ_plus … Hn)
     <(ctls_succ_plus_lift_rmap_append_clear_L_closed_dx … Hn)
     @iref_eq_repl_bi [ // ]

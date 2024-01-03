@@ -20,7 +20,7 @@ include "delayed_updating/syntax/path_depth.ma".
 
 (* Constructions with height and depth **************************************)
 
-lemma path_closed_depth (p) (n):
+lemma pcc_depth (p) (n):
       p ϵ 𝐂❨n❩ → ♯p + n = ♭p.
 #p #n #Hn elim Hn -Hn //
 qed.

@@ -41,8 +41,7 @@ lemma ibfr_unwind_bi (f) (t1) (t2) (r):
 @(ex5_4_intro … (⊗p) (⊗b) (⊗q) (♭q))
 [ -H1t1 -Hb -Hn -Ht1 -Ht2 //
 | -H1t1 -Hn -Ht1 -Ht2 //
-| -H1t1 -Hb -Ht1 -Ht2
-  /2 width=2 by path_closed_structure_depth/
+| -H1t1 -Hb -Ht1 -Ht2 //
 | lapply (in_comp_unwind2_bi f … Ht1) -Ht2 -Ht1 -H1t1 -Hb
   <unwind2_path_d_dx <path_append_pLq in ⊢ ((???%)→?);
   <fbr_xapp_succ_lapp <unwind2_rmap_append_closed_Lq_dx_lapp_depth //
@@ -62,7 +61,7 @@ lemma ibfr_unwind_bi (f) (t1) (t2) (r):
     @(subset_eq_canc_dx … (unwind2_lift_term_after …))
     @unwind2_term_eq_repl_sn
 (* Note: crux of the proof begins *)
-    <path_append_pbLq <unwind2_rmap_append
+    <path_append_pbLq_1 <unwind2_rmap_append
     <unwind2_rmap_uni_crux //
 (* Note: crux of the proof ends *)
   ]
