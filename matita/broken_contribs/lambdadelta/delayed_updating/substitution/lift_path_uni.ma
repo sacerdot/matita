@@ -14,7 +14,6 @@
 
 include "delayed_updating/substitution/lift_path_eq.ma".
 include "ground/relocation/fb/fbr_uni_ctls.ma".
-include "ground/relocation/fb/fbr_uni_xapp.ma".
 
 (* LIFT FOR PATH ************************************************************)
 

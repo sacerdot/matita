@@ -14,7 +14,6 @@
 
 include "ground/relocation/fb/fbr_ctls_xapp.ma".
 include "ground/relocation/fb/fbr_xapp_lapp.ma".
-include "ground/arith/nat_pred_succ.ma".
 
 (* ITERATED COARSE TAIL FOR FINITE RELOCATION MAPS WITH BOOLEANS ************)
 

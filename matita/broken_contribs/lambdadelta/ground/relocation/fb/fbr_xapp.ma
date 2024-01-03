@@ -14,7 +14,6 @@
 
 include "ground/relocation/fb/fbr_dapp.ma".
 include "ground/arith/nat_pred_succ.ma".
-include "ground/arith/nat_split.ma".
 include "ground/notation/functions/at_2.ma".
 
 (* EXTENDED DEPTH APPLICATION FOR FINITE RELOCATION MAPS WITH BOOLEANS ******)

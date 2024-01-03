@@ -14,7 +14,6 @@
 
 include "ground/relocation/fb/br_item.ma".
 include "ground/arith/pnat_split.ma".
-include "ground/notation/functions/uparrow_1.ma".
 include "ground/notation/functions/upspoon_1.ma".
 include "ground/notation/functions/atsharp_2.ma".
 

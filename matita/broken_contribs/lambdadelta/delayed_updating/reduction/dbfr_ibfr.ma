@@ -22,7 +22,6 @@ include "delayed_updating/unwind/unwind2_prototerm_lift.ma".
 include "delayed_updating/unwind/unwind2_prototerm_append.ma".
 include "delayed_updating/unwind/unwind2_rmap_crux.ma".
 
-include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
 include "delayed_updating/syntax/prototerm_structure_eq.ma".

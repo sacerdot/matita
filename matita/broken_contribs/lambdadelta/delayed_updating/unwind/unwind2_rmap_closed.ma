@@ -15,7 +15,6 @@
 include "delayed_updating/unwind/unwind2_rmap_ctls.ma".
 include "delayed_updating/syntax/path_closed.ma".
 include "delayed_updating/syntax/path_depth.ma".
-include "ground/relocation/fb/fbr_uni_xapp.ma".
 include "ground/relocation/fb/fbr_uni_lapp.ma".
 include "ground/relocation/fb/fbr_after_xapp.ma".
 include "ground/relocation/fb/fbr_after_lapp.ma".

@@ -13,11 +13,8 @@
 (**************************************************************************)
 
 include "delayed_updating/unwind/unwind2_preterm.ma".
-include "delayed_updating/unwind/unwind2_path_append.ma".
-include "delayed_updating/syntax/preterm_inner.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "ground/lib/subset_and.ma".
-include "ground/lib/subset_eq.ma".
 
 (* TAILED UNWIND FOR PRETERM ************************************************)
 

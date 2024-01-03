@@ -14,7 +14,6 @@
 
 include "delayed_updating/reduction/dbfr.ma".
 include "delayed_updating/substitution/fsubst_constructors.ma".
-include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)

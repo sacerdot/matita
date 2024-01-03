@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/arith/pnat_lt.ma".
-include "ground/arith/nat_le_psucc_ple.ma".
+include "ground/arith/nat_le_ple.ma".
 include "ground/arith/nat_lt.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)

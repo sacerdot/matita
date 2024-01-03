@@ -15,7 +15,6 @@
 include "delayed_updating/unwind/unwind2_rmap.ma".
 include "delayed_updating/syntax/path_clear.ma".
 include "delayed_updating/syntax/path_depth.ma".
-include "ground/relocation/fb/fbr_rconss.ma".
 
 (* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 

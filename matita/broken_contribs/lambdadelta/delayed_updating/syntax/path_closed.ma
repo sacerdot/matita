@@ -16,7 +16,6 @@ include "delayed_updating/syntax/path.ma".
 include "delayed_updating/notation/functions/class_c_1.ma".
 include "ground/arith/nat_plus.ma".
 include "ground/arith/nat_pred_succ.ma".
-include "ground/lib/subset.ma".
 include "ground/generated/insert_eq_1.ma".
 
 (* CLOSED CONDITION FOR PATH ************************************************)

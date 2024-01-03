@@ -14,7 +14,6 @@
 
 include "delayed_updating/substitution/prelift_rmap_after.ma".
 include "delayed_updating/substitution/prelift_rmap_eq.ma".
-include "delayed_updating/substitution/lift_rmap.ma".
 include "delayed_updating/substitution/lift_path.ma".
 
 (* LIFT FOR RELOCATION MAP **************************************************)

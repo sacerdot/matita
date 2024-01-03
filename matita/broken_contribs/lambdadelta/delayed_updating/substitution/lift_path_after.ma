@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/lift_path.ma".
 include "delayed_updating/substitution/lift_rmap_after.ma".
 include "delayed_updating/substitution/prelift_label_after.ma".
 

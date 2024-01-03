@@ -14,7 +14,6 @@
 
 include "ground/relocation/fb/fbr_xapp.ma".
 include "ground/relocation/fb/fbr_lapp.ma".
-include "ground/arith/nat_pred.ma".
 
 (* EXTENDED DEPTH APPLICATION FOR FINITE RELOCATION MAPS WITH BOOLEANS ******)
 

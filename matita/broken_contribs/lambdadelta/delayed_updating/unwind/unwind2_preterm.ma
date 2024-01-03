@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/preterm_structure.ma".
 include "delayed_updating/syntax/preterm_proper.ma".
 include "delayed_updating/syntax/preterm_inner.ma".
 include "delayed_updating/unwind/unwind2_prototerm.ma".

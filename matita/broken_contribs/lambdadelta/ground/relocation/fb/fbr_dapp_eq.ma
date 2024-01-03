@@ -14,8 +14,6 @@
 
 include "ground/relocation/fb/fbr_dapp.ma".
 include "ground/relocation/fb/fbr_eq.ma".
-include "ground/lib/exteq.ma".
-include "ground/lib/functions.ma".
 include "ground/notation/relations/doteqdot_2.ma".
 
 (* DEPTH APPLICATION FOR FINITE RELOCATION MAPS WITH BOOLEANS **************)

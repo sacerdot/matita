@@ -9,16 +9,14 @@ XOA_DIR := broken_contribs/lambdadelta/ground
 XOA_CONF := $(RT_BASE_DIR)/$(XOA_DIR)/xoa.conf.xml
 
 DEP_INPUT    := .depend
-DEP_DIR      := ../../../components/binaries/matitadep
-DEP          := matitadep.native
 DEP_OPTS     :=
 
-PRB_DIR      := ../../../components/binaries/probe
-PRB          := probe.native
-PRB_OPTS     := $(XOA_OPTS) -g -i
+# PRB_DIR      := ../../../components/binaries/probe
+# PRB          := probe.native
+# PRB_OPTS     := $(XOA_OPTS) -g -i
 
-ORIG         := . ./orig.sh
-ORIGS        := basic_2/basic_1.orig
+# ORIG         := . ./orig.sh
+# ORIGS        := basic_2/basic_1.orig
 
 WWW          := ../../../../helm/www/lambdadelta
 
@@ -94,19 +92,19 @@ $(DEP_INPUT): $(MAS) Makefile
 
 deps: $(DEP_INPUT)
 	@echo "  MATITADEP -c"
-	$(H)$(DEP_DIR)/$(DEP) -c $(DEP_OPTS) $<
+	$(H)matitadep -c $(DEP_OPTS) $<
 
 # top ########################################################################
 
 top: $(DEP_INPUT)
 	@echo "  MATITADEP -t"
-	$(H)$(DEP_DIR)/$(DEP) -t $(DEP_OPTS) $<
+	$(H)matitadep -t $(DEP_OPTS) $<
 
 # leaf #######################################################################
 
 leaf: $(DEP_INPUT)
 	@echo "  MATITADEP -l"
-	$(H)$(DEP_DIR)/$(DEP) -l $(DEP_OPTS) $<
+	$(H)matitadep -l $(DEP_OPTS) $<
 
 # stats ######################################################################
 
