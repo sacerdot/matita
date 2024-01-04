@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/class_c_1.ma".
+include "delayed_updating/notation/functions/subset_c_1.ma".
 include "ground/arith/nat_plus.ma".
 include "ground/arith/nat_pred_succ.ma".
 include "ground/generated/insert_eq_1.ma".
@@ -35,7 +35,7 @@ inductive pcc: relation2 (ℕ) (ℙ) ≝
 
 interpretation
   "closed condition (path)"
-  'ClassC n = (pcc n).
+  'SubsetC n = (pcc n).
 
 (* Basic inversions ********************************************************)
 

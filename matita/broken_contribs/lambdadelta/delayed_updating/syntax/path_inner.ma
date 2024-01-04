@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/class_i_0.ma".
+include "delayed_updating/notation/functions/subset_i_0.ma".
 include "ground/lib/subset.ma".
 include "ground/generated/insert_eq_1.ma".
 
@@ -28,7 +28,7 @@ inductive pic: 𝒫❨ℙ❩ ≝
 
 interpretation
   "inner condition (path)"
-  'ClassI = (pic).
+  'SubsetI = (pic).
 
 (* Basic inversions ********************************************************)
 

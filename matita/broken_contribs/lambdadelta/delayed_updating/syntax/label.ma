@@ -16,7 +16,7 @@
  * Initial invocation: - Patience on me to gain peace and perfection! -
  *)
 
-include "delayed_updating/notation/functions/type_l_0.ma".
+include "delayed_updating/notation/functions/category_l_0.ma".
 include "delayed_updating/notation/functions/nodelabel_d_1.ma".
 include "delayed_updating/notation/functions/edgelabel_l_0.ma".
 include "delayed_updating/notation/functions/edgelabel_a_0.ma".
@@ -35,7 +35,7 @@ inductive label: Type[0] ≝
 
 interpretation
   "label ()"
-  'TypeL = (label).
+  'CategoryL = (label).
 
 interpretation
   "variable reference by depth (label)"

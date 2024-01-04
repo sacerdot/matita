@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( 𝐈 )"
+notation "hvbox( 𝕋 )"
   non associative with precedence 70
-  for @{ 'ClassI }.
+  for @{ 'CategoryT }.

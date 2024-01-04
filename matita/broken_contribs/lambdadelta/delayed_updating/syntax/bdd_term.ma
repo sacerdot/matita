@@ -14,7 +14,7 @@
 
 include "delayed_updating/syntax/prototerm_constructors.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
-include "delayed_updating/notation/functions/class_d_tau_0.ma".
+include "delayed_updating/notation/functions/subset_d_tau_0.ma".
 include "ground/xoa/or_5.ma".
 include "ground/xoa/ex_3_1.ma".
 include "ground/xoa/ex_4_2.ma".
@@ -33,7 +33,7 @@ inductive bdd: 𝒫❨𝕋❩ ≝
 
 interpretation
   "by-depth delayed (prototerm)"
-  'ClassDTau = (bdd).
+  'SubsetDTau = (bdd).
 
 (* COMMENT
 

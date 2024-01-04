@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( ℙ )"
+notation "hvbox( 𝕃 )"
   non associative with precedence 70
-  for @{ 'TypeP }.
+  for @{ 'CategoryL }.

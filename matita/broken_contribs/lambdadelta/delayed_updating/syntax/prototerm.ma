@@ -14,7 +14,7 @@
 
 include "ground/lib/subset_full.ma".
 include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/type_t_0.ma".
+include "delayed_updating/notation/functions/category_t_0.ma".
 include "delayed_updating/notation/functions/pitchfork_2.ma".
 include "delayed_updating/notation/functions/uptriangle_1.ma".
 
@@ -23,7 +23,7 @@ include "delayed_updating/notation/functions/uptriangle_1.ma".
 (* Note: a prototerm is a subset of complete paths *)
 interpretation
   "prototerm ()"
-  'TypeT = (predicate (list label)).
+  'CategoryT = (predicate (list label)).
 
 definition term_grafted (p) (t): 𝕋 ≝
            ❴q ❘ p●q ϵ t❵.

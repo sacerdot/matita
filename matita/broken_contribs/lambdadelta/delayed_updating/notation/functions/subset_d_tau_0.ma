@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( 𝕃 )"
+notation "hvbox( 𝐃𝛕 )"
   non associative with precedence 70
-  for @{ 'TypeL }.
+  for @{ 'SubsetDTau }.

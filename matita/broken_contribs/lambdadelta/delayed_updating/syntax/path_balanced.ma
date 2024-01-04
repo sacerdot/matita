@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/class_b_0.ma".
+include "delayed_updating/notation/functions/subset_b_0.ma".
 include "ground/lib/subset.ma".
 include "ground/generated/insert_eq_1.ma".
 include "ground/xoa/ex_3_2.ma".
@@ -29,7 +29,7 @@ inductive pbc: 𝒫❨ℙ❩ ≝
 
 interpretation
   "balance condition (path)"
-  'ClassB = (pbc).
+  'SubsetB = (pbc).
 
 (* Advanced constructions ***************************************************)
 

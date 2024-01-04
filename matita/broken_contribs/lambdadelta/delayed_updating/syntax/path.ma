@@ -18,7 +18,7 @@ include "ground/notation/functions/black_circle_2.ma".
 include "ground/notation/functions/black_halfcircleright_2.ma".
 include "ground/notation/functions/black_halfcircleleft_2.ma".
 include "delayed_updating/syntax/label.ma".
-include "delayed_updating/notation/functions/type_p_0.ma".
+include "delayed_updating/notation/functions/category_p_0.ma".
 
 (* PATH *********************************************************************)
 
@@ -26,7 +26,7 @@ include "delayed_updating/notation/functions/type_p_0.ma".
 (* Note: constructed from the leaf (right end) to the root (left end) *)
 interpretation
   "path ()"
-  'TypeP = (list label).
+  'CategoryP = (list label).
 
 interpretation
   "empty (path)"
