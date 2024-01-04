@@ -14,7 +14,7 @@
 
 include "ground/relocation/fb/br_item.ma".
 include "ground/lib/list_rcons.ma".
-include "ground/notation/relations/category_fb_0.ma".
+include "ground/notation/functions/category_fb_0.ma".
 include "ground/notation/functions/element_i_0.ma".
 include "ground/notation/functions/black_circle_2.ma".
 include "ground/notation/functions/black_halfcircleright_2.ma".

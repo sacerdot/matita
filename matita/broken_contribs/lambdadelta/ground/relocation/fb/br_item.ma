@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/lib/bool.ma".
-include "ground/notation/relations/category_bi_0.ma".
+include "ground/notation/functions/category_bi_0.ma".
 include "ground/notation/functions/item_p_0.ma".
 include "ground/notation/functions/item_n_0.ma".
 
