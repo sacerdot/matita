@@ -23,7 +23,6 @@ include "delayed_updating/unwind/unwind2_rmap_crux.ma".
 include "delayed_updating/substitution/lift_prototerm_proper.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
-include "delayed_updating/syntax/prototerm_structure_eq.ma".
 include "delayed_updating/syntax/path_closed_structure.ma".
 include "delayed_updating/syntax/path_clear_structure.ma".
 include "delayed_updating/syntax/path_structure_depth.ma".
@@ -102,8 +101,8 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
   @fsubst_eq_repl
   [ //
   | @(subset_eq_trans … (unwind2_slice_and_sn … H2t1)) [| // ]
-    @subset_and_eq_repl [ // ]
-    @term_slice_structure_pAbLq //
+    <path_structure_pAbLq [2,3: // ]
+    @subset_eq_refl
   ]
   @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
   [| @lift_term_proper /2 width=6 by term_grafted_S_dx_proper/ ]

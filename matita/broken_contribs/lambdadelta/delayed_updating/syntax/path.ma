@@ -63,6 +63,10 @@ lemma path_append_pAbLq_4 (p1) (p2) (b1) (b2) (q:ℙ):
       p2●p1●𝗔◗b1●b2●𝗟◗q = (p2●p1●𝗔◗b1●b2)●(𝗟◗q).
 // qed-.
 
+lemma path_append_pAbLq_5 (p0) (b0) (q0:ℙ):
+      p0●𝗔◗b0●𝗟◗q0 = (p0●𝗔◗b0)●𝗟◗q0.
+// qed-.
+
 lemma path_append_pLq (p) (b) (q):
       (p●𝗔◗b)●𝗟◗q = p●𝗔◗b●𝗟◗q.
 // qed-.

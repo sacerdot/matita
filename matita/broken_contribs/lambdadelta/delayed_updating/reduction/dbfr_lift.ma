@@ -22,6 +22,8 @@ include "delayed_updating/substitution/lift_path_structure.ma".
 include "delayed_updating/substitution/lift_path_clear.ma".
 include "delayed_updating/substitution/lift_path_depth.ma".
 
+include "ground/relocation/fb/fbr_xapp_lapp.ma".
+
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 
 (* Constructions with lift **************************************************)
@@ -59,3 +61,55 @@ theorem dbfr_lift_bi (f) (t1) (t2) (r):
   ]
 ]
 qed.
+
+(* Inversions with lift *****************************************************)
+
+lemma dbfr_inv_lift_sn (f) (t1) (u2) (s):
+      (🠡[f]t1) ➡𝐝𝐛𝐟[s] u2 →
+      ∃∃t2,r. t1 ➡𝐝𝐛𝐟[r] t2 & 🠡[f]t2 ⇔ u2 & 🠡[f]r = s.
+#f #t1 #u2 #s
+* #p #b #q #n #Hs #Hb #Hq * #x0 #Ht1 #H0 #Hu2 destruct
+elim (eq_inv_d_dx_lift_path … (sym_eq … H0)) -H0 #x1 #n0 #H0 #H1n0 #H1 destruct
+elim (eq_inv_append_lift_path … H0) -H0 #p0 #x2 #H1 #H0 #H2 destruct
+elim (eq_inv_A_sn_lift_path … H0) -H0 #x3 #H0 #H1 destruct
+elim (eq_inv_append_lift_path … H0) -H0 #b0 #x4 #H1 #H0 #H2 destruct
+elim (eq_inv_L_sn_lift_path … H0) -H0 #q0 #H0 #H1 destruct
+lapply (lift_path_inv_closed … Hq) -Hq #Hq0
+elim (eq_inv_succ_fbr_xapp … H1n0) #_ #H2n0 >H2n0 in H1n0;
+>(lift_rmap_append_L_closed_dx_xapp_succ f (p0●𝗔◗b0) … Hq0)
+<path_append_pAbLq_5 #H1n0
+lapply (eq_inv_fbr_xapp_bi … H1n0) -H1n0 #H0
+lapply (eq_inv_nsucc_bi … H0) -H0 #H0 destruct
+<structure_lift_path in Hb; #Hb
+@(
+  let r ≝ (p0●𝗔◗b0●𝗟◗q0) in
+  let v ≝ ((p0●𝗔◗(⓪b0)●𝗟◗q0)●𝛕(⁤↑(♭b0+⫰n0)).⋔[p0◖𝗦]t1) in
+  ex3_2_intro … (⬕[↑r←v]t1) r
+)
+[ @(ex5_4_intro … p0 b0 q0 (⫰n0)) [1,2,3,4: // ]
+  @subset_eq_refl
+| @(subset_eq_canc_sn … Hu2) -u2
+  @(subset_eq_trans … (lift_term_fsubst …))
+  @(subset_eq_canc_sn … (fsubst_and_rc_sn …))
+  @(subset_eq_canc_sn ????? (fsubst_and_rc_sn …))
+  @fsubst_eq_repl
+  [ @subset_eq_refl
+  | @(subset_eq_canc_sn … (lift_slice_and_sn …)) <lift_path_pAbLq
+    @subset_eq_refl
+  ]
+  @(subset_eq_canc_sn … (lift_pt_append …))
+  @pt_append_eq_repl_bi
+  [ <lift_path_pAbLq >lift_path_clear_swap
+    <(lift_path_closed_des_gen … Hq0) <(lift_path_closed_des_gen … Hq0) //
+  | @(subset_eq_canc_sn … (lift_term_iref_xapp …))
+(* Note: crux of the proof begins *)
+    <path_append_pbLq_1 <lift_rmap_append
+    <(lift_rmap_append_clear_L_closed_dx_xapp_succ_plus … Hq0)
+    <(ctls_succ_plus_lift_rmap_append_clear_L_closed_dx … Hq0)
+    @iref_eq_repl_bi [ // ]
+    @(subset_eq_canc_sn … (lift_term_grafted_S …)) //
+(* Note: crux of the proof ends *)
+  ]
+| <lift_path_pAbLq //
+]
+qed-.

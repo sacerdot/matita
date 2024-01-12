@@ -88,6 +88,12 @@ lemma lift_path_S_sn (f) (p):
       (𝗦◗🠡[f]p) = 🠡[f](𝗦◗p).
 // qed.
 
+(* Advanced constructions ***************************************************)
+
+lemma lift_path_pAbLq (f) (p) (b) (q):
+      (🠡[f]p)●𝗔◗🠡[🠢[p]f]b●𝗟◗🠡[⫯🠢[b]🠢[p]f]q = 🠡[f](p●𝗔◗b●𝗟◗q).
+// qed-.
+
 (* Basic inversions *********************************************************)
 
 lemma eq_inv_empty_lift_path (f) (p):
@@ -105,6 +111,44 @@ lemma eq_inv_rcons_lift_path (f) (p2) (q1) (l1):
 ]
 #H0 destruct
 /2 width=5 by ex3_2_intro/
+qed-.
+
+(* Advanced inversions with path_rcons **************************************)
+
+lemma eq_inv_d_dx_lift_path (f) (p2) (q1) (k1):
+      q1◖𝗱k1 = 🠡[f]p2 →
+      ∃∃q2,k2. q1 = 🠡[f]q2 & k1 = 🠢[q2]f＠❨k2❩ & q2◖𝗱k2 = p2.
+#f #p2 #q1 #k1 #H0
+elim (eq_inv_rcons_lift_path … H0) -H0 #q2 #l2 #H1 #H0 #H2 destruct
+elim (prelift_label_inv_d_sn … H0) -H0 #k2 #H1 #H2 destruct
+/2 width=5 by ex3_2_intro/
+qed-.
+
+lemma eq_inv_L_dx_lift_path (f) (p2) (q1):
+      q1◖𝗟 = 🠡[f]p2 →
+      ∃∃q2. q1 = 🠡[f]q2 & q2◖𝗟 = p2.
+#f #p2 #q1 #H0
+elim (eq_inv_rcons_lift_path … H0) -H0 #q2 #l2 #H1 #H0 #H2 destruct
+lapply (prelift_label_inv_L_sn … H0) -H0 #H0 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma eq_inv_A_dx_lift_path (f) (p2) (q1):
+      q1◖𝗔 = 🠡[f]p2 →
+      ∃∃q2. q1 = 🠡[f]q2 & q2◖𝗔 = p2.
+#f #p2 #q1 #H0
+elim (eq_inv_rcons_lift_path … H0) -H0 #q2 #l2 #H1 #H0 #H2 destruct
+lapply (prelift_label_inv_A_sn … H0) -H0 #H0 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma eq_inv_S_dx_lift_path (f) (p2) (q1):
+      q1◖𝗦 = 🠡[f]p2 →
+      ∃∃q2. q1 = 🠡[f]q2 & q2◖𝗦 = p2.
+#f #p2 #q1 #H0
+elim (eq_inv_rcons_lift_path … H0) -H0 #q2 #l2 #H1 #H0 #H2 destruct
+lapply (prelift_label_inv_S_sn … H0) -H0 #H0 destruct
+/2 width=3 by ex2_intro/
 qed-.
 
 (* Inversions with path_append **********************************************)
@@ -128,6 +172,54 @@ lemma eq_inv_lift_path_append (f) (p1) (q2) (r2):
 #f #p1 #q2 #r2 #H0
 elim (eq_inv_append_lift_path … (sym_eq … H0)) -H0
 /2 width=5 by ex3_2_intro/
+qed-.
+
+(* Advanced inversions with path_lcons **************************************)
+
+lemma eq_inv_lcons_lift_path (f) (r1) (p2) (l1):
+      l1◗r1 = 🠡[f]p2 →
+      ∃∃r2,l2. l1 = 🠡[f]l2 & r1 = 🠡[🠢[l2]f]r2 & l2◗r2 = p2.
+#f #r1 #p2 #l1 #H0
+elim (eq_inv_append_lift_path … H0) -H0 #q2 #r2 #H0 #H1 #H2 destruct
+elim (eq_inv_rcons_lift_path … H0) -H0 #p2 #l2 #H0 #H1 #H2 destruct
+lapply (eq_inv_empty_lift_path … H0) -H0 #H0 destruct
+/2 width=5 by ex3_2_intro/
+qed-.
+
+lemma eq_inv_d_sn_lift_path (f) (p2) (q1) (k1):
+      (𝗱k1)◗q1 = 🠡[f]p2 →
+      ∃∃q2,k2. k1 = f＠❨k2❩ & q1 = 🠡[⫰*[k2]f]q2 & 𝗱k2◗q2 = p2.
+#f #p2 #q1 #k1 #H0
+elim (eq_inv_lcons_lift_path … H0) -H0 #q2 #l2 #H0 #H1 #H2 destruct
+elim (prelift_label_inv_d_sn … H0) -H0 #k2 #H1 #H2 destruct
+/2 width=5 by ex3_2_intro/
+qed-.
+
+lemma eq_inv_L_sn_lift_path (f) (p2) (q1):
+      (𝗟)◗q1 = 🠡[f]p2 →
+      ∃∃q2. q1 = 🠡[⫯f]q2 & 𝗟◗q2 = p2.
+#f #p2 #q1 #H0
+elim (eq_inv_lcons_lift_path … H0) -H0 #q2 #l2 #H0 #H1 #H2 destruct
+lapply (prelift_label_inv_L_sn … H0) -H0 #H0 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma eq_inv_A_sn_lift_path (f) (p2) (q1):
+      (𝗔)◗q1 = 🠡[f]p2 →
+      ∃∃q2. q1 = 🠡[f]q2 & 𝗔◗q2 = p2.
+#f #p2 #q1 #H0
+elim (eq_inv_lcons_lift_path … H0) -H0 #q2 #l2 #H0 #H1 #H2 destruct
+lapply (prelift_label_inv_A_sn … H0) -H0 #H0 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma eq_inv_S_sn_lift_path (f) (p2) (q1):
+      (𝗦)◗q1 = 🠡[f]p2 →
+      ∃∃q2. q1 = 🠡[f]q2 & 𝗦◗q2 = p2.
+#f #p2 #q1 #H0
+elim (eq_inv_lcons_lift_path … H0) -H0 #q2 #l2 #H0 #H1 #H2 destruct
+lapply (prelift_label_inv_S_sn … H0) -H0 #H0 destruct
+/2 width=3 by ex2_intro/
 qed-.
 
 (* Main inversions **********************************************************)

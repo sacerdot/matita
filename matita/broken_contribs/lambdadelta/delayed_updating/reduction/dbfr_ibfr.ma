@@ -24,7 +24,6 @@ include "delayed_updating/unwind/unwind2_rmap_crux.ma".
 
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
-include "delayed_updating/syntax/prototerm_structure_eq.ma".
 include "delayed_updating/syntax/prototerm_proper_constructors.ma".
 include "delayed_updating/syntax/path_closed_structure.ma".
 include "delayed_updating/syntax/path_clear_structure.ma".
@@ -67,8 +66,8 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
   @fsubst_eq_repl
   [ //
   | @(subset_eq_trans … (unwind2_slice_and_sn … H2t1)) [| // ]
-    @subset_and_eq_repl [ // ]
-    @term_slice_structure_pAbLq //
+    <path_structure_pAbLq [2,3: // ]
+    @subset_eq_refl
   ]
   @(subset_eq_trans … (unwind2_pt_append_tpc_dx …)) [| // ]
   @pt_append_eq_repl_bi
@@ -97,7 +96,7 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
 ]
 qed-.
 
-(* Main Inversions with ibfr ************************************************)
+(* Main inversions with ibfr ************************************************)
 
 theorem dbfr_inv_ibfr (f) (t1) (t2) (r):
         t1 ϵ 𝐓 →
