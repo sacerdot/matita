@@ -12,13 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/xoa/ex_4_1.ma".
+include "ground/xoa/sig_1_1_props.ma".
+include "ground/arith/pnat_le.ma".
+include "ground/relocation/fb/fbr_dapp.ma".
 
-(* LOGIC ********************************************************************)
+(* INVERSE OF FINITE RELOCATION MAPS WITH BOOLEANS **************************)
 
-(* Constructions with ex4 ***************************************************)
+record ibfr_type: Type[0] ≝
+  { imap: ℕ⁺ → ℕ⁺
+  ; dmap: 𝔽𝔹
+  }
+.
 
-lemma ex4_commute (A0) (P0,P1,P2,P3:A0→Prop):
-                  (∃∃x0. P0 x0 & P1 x0 & P2 x0 & P3 x0) → ∃∃x0. P2 x0 & P3 x0 & P0 x0 & P1 x0.
-#A0 #P0 #P1 #P2 #P3 * /2 width=5 by ex4_intro/
-qed-.
+record ibfr_posts (z): Prop ≝
+  { ibfr_post_id (p): p = imap z ((dmap z)＠⧣❨p❩)
+  ; ibfr_post_di (p): p ≤ (dmap z)＠⧣❨imap z p❩
+  }
+.
+
+definition ifbr_map: Type[0] ≝
+           Σz.(ibfr_posts z).
+
+definition ifbr_map_id (g) ≝
+           ibfr_post_id (sig_a ? ? g) (sig_d ? ? g).
+
+definition ifbr_map_di (g) ≝
+           ibfr_post_di (sig_a ? ? g) (sig_d ? ? g).

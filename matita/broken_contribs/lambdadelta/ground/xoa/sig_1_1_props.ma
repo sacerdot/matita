@@ -12,13 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/xoa/ex_4_1.ma".
+include "basics/pts.ma".
+include "basics/core_notation/imply_2.ma".
 
 (* LOGIC ********************************************************************)
 
-(* Constructions with ex4 ***************************************************)
+(* Weak sigma type (1, 1) ***************************************************)
 
-lemma ex4_commute (A0) (P0,P1,P2,P3:A0→Prop):
-                  (∃∃x0. P0 x0 & P1 x0 & P2 x0 & P3 x0) → ∃∃x0. P2 x0 & P3 x0 & P0 x0 & P1 x0.
-#A0 #P0 #P1 #P2 #P3 * /2 width=5 by ex4_intro/
+record sig (A:Type[0]) (f:A→Prop) : Type[0] ≝
+  { sig_a: A        (* car *)
+  ; sig_d: f sig_a  (* cdr *)
+  }
+.
+
+interpretation
+  "weak sigma type (1, 1)"
+  'sigma x = (sig ? x).
+
+(*
+interpretation "mk_Sig" 'dp x y = (mk_Sig ?? x y).
+
+lemma sub_pi2 : ∀A.∀P,P':A → Prop. (∀x.P x → P' x) → ∀x:Σx:A.P x. P' (pi1 … x).
+#A #P #P' #H1 * #x #H2 @H1 @H2
+qed.
+
+lemma inj_mk_Sig: ∀A,P.∀x. x = mk_Sig A P (pi1 A P x) (pi2 A P x).
+#A #P #x cases x //
 qed-.
+*)
