@@ -477,6 +477,37 @@ EXTEND
         let ind_types = fst_ind_type :: tl_ind_types in
         (params, ind_types)
     ] ];
+  constructor_mapping: [[
+    source = term;
+    args_s = LIST0 IDENT;
+    SYMBOL ":";
+    target = term;
+    args_t = LIST0 IDENT
+    ->
+      (source, target)
+  ]];
+  equivalence_spec: [ [
+    first_type = term;
+    params = LIST0 protected_binder_vars;
+    SYMBOL ":";
+    second_type = term; 
+    SYMBOL <:unicode<def>>;
+    OPT SYMBOL "|";
+    constructors = LIST0 constructor_mapping SEP SYMBOL "|"
+    ->
+      (* let params =
+        List.fold_right
+          (fun (names, typ) acc ->
+            (List.map (fun name -> (name, typ)) names) @ acc)
+          params []
+      in *)
+      (* let fst_ind_type = (fst_name, true, fst_typ, constructors) in *)
+      (* let tl_ind_types = match tl with None -> [] | Some types -> types in *)
+      (* let ind_types = fst_ind_type :: tl_ind_types in *)
+      (* (first_type, second_type, params, ind_types) *)
+      (first_type, second_type, constructors)
+  ]
+  ];
 
     record_spec: [ [
       name = IDENT;
@@ -694,8 +725,9 @@ EXTEND
           List.map (fun a,b -> NUri.uri_of_string a, NUri.uri_of_string b) m)
     | IDENT "transfer"; t = term->
         G.Transfer (loc, t)
-    | IDENT "configuration"; type1 = term; SYMBOL ":"; type2 = term ->
-        G.Configuration (loc, type1, type2)
+    | src = source; IDENT "configuration"; spec = equivalence_spec ->
+      let (first_type, second_type, mappings) = spec in 
+        G.Configuration (loc, first_type, second_type, mappings)
     | IDENT "print" ; t = term ->
         G.Print (loc, t)
   ]];

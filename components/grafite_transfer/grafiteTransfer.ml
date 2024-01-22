@@ -1,7 +1,7 @@
 type equivalence = {
   sourceType: NCic.term;
   targetType: NCic.term;
-  rest: string;
+  mappings: (NCic.term * NCic.term) list;
 }
 
 class virtual status =
@@ -16,17 +16,10 @@ class virtual status =
     method add_equivalence (equiv: equivalence) = 
       {< equivalences = equiv :: equivalences >}
 
-
-    method equivalent_type (target_type: NCic.term): NCic.term option =
-      let compare: equivalence -> bool = fun equiv ->
-        true
-      in 
-      
-      match List.find_opt (compare) equivalences with
-      | Some right_equivalence -> Some right_equivalence.targetType
-      | None -> None
   end
 
+
+(*debuggin helper functions*)
 let rec app_strings_spaced (strings: string list): string =
   match strings with
   | [] -> ""
@@ -38,13 +31,14 @@ let add_constructor_annotation (spec: NReference.spec) (name: string): string =
   | NReference.Con (a,constructor_number,c) -> 
     "C"^string_of_int constructor_number^"(" ^ name ^ ")"
     (* "[CON]" ^ string_of_int a ^","^ string_of_int b ^","^ string_of_int c *)
-  | _ -> name
+  
   (*inductive type*)
   (* | NReference.Ind (bool_val, a, b) -> "[IND]" ^ string_of_bool bool_val ^","^ string_of_int a ^","^ string_of_int b *)
   (* | NReference.Decl -> "[DECL]" *)
   (* | NReference.Def (a) ->"[DEF]" ^ string_of_int a  *)
   (* | NReference.Fix (a,b,c) ->"[FIX]" ^ string_of_int a ^","^ string_of_int b ^","^ string_of_int c *)
   (* | NReference.CoFix (a) -> "[CoFIX]" ^ string_of_int a *)
+  | _ -> name
 
 let rec stringify_cic_term (vars: string list) (term: NCic.term) =
   match term with
@@ -87,8 +81,65 @@ let rec stringify_cic_term (vars: string list) (term: NCic.term) =
   | NCic.Implicit annot -> 
     "[IMPLICIT NI]"
 
+
 let print_cic_term term = 
   print_endline (stringify_cic_term [] term)
+
+
+
+let are_inductive_and_equal (type1: NCic.term) (type2: NCic.term): bool = 
+  print_endline "comparing type1:";
+  print_cic_term type1;
+  print_endline "with type2:";
+  print_cic_term type2;
+  match type1, type2 with 
+  | NCic.Const ref1, NCic.Const ref2 -> 
+    print_endline "gucci";
+    NReference.eq ref1 ref2
+
+  | _ -> false
+
+
+
+
+
+let equivalent_type (target_type: NCic.term) (equivalences: equivalence list): NCic.term option =
+  let check_mapping (mapping: NCic.term * NCic.term): NCic.term option = 
+    let (cons1, cons2) = mapping in 
+    (*we're looking for the equivalent type so the returned term is the other one*) 
+    if are_inductive_and_equal cons1 target_type then
+      Some cons2 
+    else if are_inductive_and_equal cons2 target_type then 
+      Some cons1 
+    else None 
+  in
+  let check_mappgings_list (mappings: (NCic.term * NCic.term) list): NCic.term option =
+    match 
+      List.find_opt (fun mapping -> Option.is_some (check_mapping mapping) ) mappings
+    with
+    | Some mapping -> check_mapping mapping
+    | None -> None
+  in
+
+  let check_equivalence (equiv: equivalence): NCic.term option = 
+    let (type1, type2) = (equiv.targetType, equiv.sourceType) in
+    (*we're looking for the equivalent type so the returned term is the other one*) 
+    if are_inductive_and_equal type1 target_type then
+      Some type2
+    else if are_inductive_and_equal type2 target_type then 
+      Some type1 
+    else
+      check_mappgings_list equiv.mappings 
+  in 
+
+
+  print_endline "scanning registered equivalences for type term:";
+  print_cic_term target_type;
+  match List.find_opt (fun equiv -> Option.is_some (check_equivalence equiv)) equivalences with
+  (*TODO: properly check which field to return*)
+  | Some right_equivalence -> check_equivalence right_equivalence
+  | None -> None
+
 
 (* Implements the proof term transformation as in the paper*)
 let rec transform_term (s: #status as 'status) (context: 'a list) (term: NCic.term): NCic.term * 'a list =
@@ -111,14 +162,14 @@ let rec transform_term (s: #status as 'status) (context: 'a list) (term: NCic.te
   (*DEP-CONSTR like*)
   (*TODO: this is where the constructor mapping between the changed type is done*)
   | NCic.Const ref -> 
-    let equiv_type = s#equivalent_type (term) in 
+    let equiv_type = equivalent_type term s#equivalences in 
     (match equiv_type with 
-    | Some (NCic.Const equiv_ref) ->
-      (NCic.Const equiv_ref, context)
-    | Some _ ->
-      (NCic.Const ref, context)
-    | None -> 
-      (NCic.Const ref, context))
+    | Some equiv_term ->
+      print_endline "branch some";
+      (* NCic.Const equiv_ref, context *)
+      (equiv_term, context) 
+
+    | _ -> print_endline "branch none"; (term, context))
   (*TODO: check if this even needs a transformation*)
   | NCic.Sort s -> 
     (NCic.Sort s, context)
@@ -147,24 +198,17 @@ let rec transform_term (s: #status as 'status) (context: 'a list) (term: NCic.te
   | NCic.Implicit annot -> (NCic.Implicit annot, context)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-let add_equivalence status (src: NCic.term) (trg: NCic.term) =
-  let newEquiv: equivalence = {sourceType=src; targetType=trg; rest=""} in
+let add_equivalence status (src: NCic.term) (trg: NCic.term) (mappings: (NCic.term * NCic.term) list) =
+  let newEquiv: equivalence = {
+    sourceType=src;
+    targetType=trg;
+    mappings=mappings;
+  } in
   print_endline "adding equivalence between the 2 terms:";
   print_cic_term (newEquiv.sourceType);
   print_cic_term (newEquiv.targetType);
-  print_endline "";
+  print_endline "with constructor equivalences:";
+  List.iter (fun (t1, t2) -> print_endline (stringify_cic_term [] t1 ^" -> "^ stringify_cic_term [] t2);) mappings;
   status#add_equivalence newEquiv
 
 let transfer (status: #status as 'status) (term: NCic.term) = 

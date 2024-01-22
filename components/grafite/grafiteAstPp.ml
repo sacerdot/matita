@@ -254,7 +254,7 @@ let pp_ncommand status = function
       pp_notation status dir_opt l1_pattern assoc prec l2_pattern
   | Transfer (_, _) -> 
     pp_transfer()
-  | Configuration (_, _, _) ->
+  | Configuration (_, _, _, _) ->
     pp_transfer()
   | Print (_,_) ->
     pp_transfer()

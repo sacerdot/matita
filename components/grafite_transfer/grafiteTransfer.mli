@@ -1,19 +1,14 @@
-type equivalence = {
-  sourceType: NCic.term;
-  targetType: NCic.term;
-  rest: string;
-}
+type equivalence
 
 class virtual status :
   object ('self)
     val equivalences: equivalence list
     method equivalences: equivalence list
     method add_equivalence: equivalence -> 'self
-    method equivalent_type: NCic.term -> NCic.term option
   end
 
 
-val add_equivalence: (#status as 'status) -> NCic.term -> NCic.term -> 'status
+val add_equivalence: (#status as 'status) -> NCic.term -> NCic.term -> (NCic.term * NCic.term) list -> 'status
 
 val transfer: (#status as 'status) -> NCic.term -> 'status
 

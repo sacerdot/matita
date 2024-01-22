@@ -143,7 +143,7 @@ type command =
         NotationPt.cic_appl_pattern
       (* description (i.e. id), symbol, arg pattern, appl pattern *)
   | Transfer of loc * nterm
-  | Configuration of loc * nterm * nterm
+  | Configuration of loc * nterm * nterm * (nterm * nterm) list
   | Print of loc * nterm
 
 type code =

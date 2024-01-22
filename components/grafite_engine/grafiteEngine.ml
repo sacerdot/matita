@@ -1021,12 +1021,20 @@ let rec eval_ncommand ~include_paths opts status (text,prefix_len,cmd) =
     let _metasenv,_subst,_,cic_term =
       GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,term) in 
     GrafiteTransfer.transfer status cic_term
-  | GrafiteAst.Configuration (_, type1, type2) -> 
+  | GrafiteAst.Configuration (_, type1, type2, mappings) -> 
     let _metasenv,_subst,status,cic_type1 =
       GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,type1) in
-      let _metasenv,_subst,status,cic_type2 =
-        GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,type2) in
-    GrafiteTransfer.add_equivalence status cic_type1 cic_type2
+    let _metasenv,_subst,status,cic_type2 =
+      GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,type2) in
+    let cic_mappings: (NCic.term * NCic.term) list = List.map (
+      fun (c1, c2) ->
+        let _metasenv,_subst,status,cic_cons1 =
+        GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,c1) in
+        let _metasenv,_subst,_,cic_cons2 =
+        GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,c2) in
+        (cic_cons1, cic_cons2)
+    ) mappings in
+    GrafiteTransfer.add_equivalence status cic_type1 cic_type2 cic_mappings
   | GrafiteAst.Print (_, term) -> 
     let _metasenv,_subst,_,cic_term =
       GrafiteDisambiguate.disambiguate_nterm status `XTNone [] [] [] (text,prefix_len,term) in 
