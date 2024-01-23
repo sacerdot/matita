@@ -1,7 +1,7 @@
 (library
  (name helm_grafite_transfer)
  (libraries helm_ng_kernel helm_grafite helm_extlib helm_ng_disambiguation)
- (modules grafiteTransfer)
+ (modules grafiteTransfer equivalence transferHelper)
  (wrapped false))
 (env
   (_

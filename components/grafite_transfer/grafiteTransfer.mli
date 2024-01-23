@@ -1,10 +1,10 @@
-type equivalence
+open Equivalence
 
 class virtual status :
   object ('self)
-    val equivalences: equivalence list
-    method equivalences: equivalence list
-    method add_equivalence: equivalence -> 'self
+    val equivalences: Equivalence.equivalence list
+    method equivalences: Equivalence.equivalence list
+    method add_equivalence: Equivalence.equivalence -> 'self
   end
 
 
