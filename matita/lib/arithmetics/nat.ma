@@ -11,6 +11,7 @@
 
 include "basics/relations.ma".
 include "basics/core_notation/naturals_0.ma".
+include "basics/core_notation/times_2.ma".
 
 (* Definitions **************************************************************)
 

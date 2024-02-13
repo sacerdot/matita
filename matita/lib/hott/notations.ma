@@ -213,10 +213,6 @@ notation "hvbox(a break - b)"
   left associative with precedence 55
 for @{ 'minus $a $b }.
 
-notation "hvbox(a break * b)" 
-  left associative with precedence 60
-for @{ 'times $a $b }.
-
 notation "hvbox(a break \middot b)" 
   left associative with precedence 60
   for @{ 'middot $a $b }.
