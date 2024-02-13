@@ -17,7 +17,7 @@ include "ground/lib/subset.ma".
 (* INTERSECTION FOR SUBSETS *************************************************)
 
 definition subset_and (A) (u1) (u2): 𝒫❨A❩ ≝
-           ❴p ❘ ∧∧ p ϵ u1 & p ϵ u2❵.
+           {p | ∧∧ p ϵ u1 & p ϵ u2}.
 
 interpretation
   "intersection (subset)"

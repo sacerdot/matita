@@ -12,36 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/not_subseteq_3.ma".
+include "ground/notation/functions/curly_2.ma".
 include "ground/lib/subset.ma".
 
-(* INCLUSION FOR SUBSETS ****************************************************)
+(* SINGLETON FOR SUBSETS ****************************************************)
 
-definition subset_le (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
-           λu1,u2. ∀p. p ϵ u1 → p ϵ u2.
-
-interpretation
-  "inclusion (subset)"
-  'subseteq u1 u2 = (subset_le ? u1 u2).
+definition subset_singleton (A) (a): 𝒫❨A❩ ≝
+           {p | a = p}.
 
 interpretation
-  "negated inclusion (subset)"
-  'NotSubsetEq A u1 u2 = (negation (subset_le A u1 u2)).
+  "singleton (subset)"
+  'Curly A a = (subset_singleton A a).
 
 (* Basic constructions ******************************************************)
 
-lemma subset_le_refl (A):
-      reflexive … (subset_le A).
-// qed.
-
-(* Main constructions *******************************************************)
-
-theorem subset_le_trans (A):
-        Transitive … (subset_le A).
-/3 width=1 by/ qed-.
+lemma subset_singleton_in (A) (a):
+      a ϵ ❴a:A❵.
+//
+qed.
 
 (* Basic inversions *********************************************************)
 
-lemma subset_in_le_trans (A) (u1) (u2) (p):
-      p ϵ u1 → u1 ⊆ u2 → p ϵ{A} u2.
-/2 width=1 by/ qed-.
+lemma subset_singleton_inv_in (A) (a) (p):
+      p ϵ ❴a:A❵ → a = p.
+//
+qed-.

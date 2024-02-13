@@ -36,6 +36,12 @@ lemma list_append_lcons_sn (A):
       ∀a,l1,l2. a ⨮ l1 ⨁ l2 = (a⨮l1) ⨁{A} l2.
 // qed.
 
+(* Helper constructions *****************************************************)
+
+lemma list_append_lcons_empty_sn (A):
+      ∀a,l. a ⨮ l = (a⨮ⓔ) ⨁{A} l.
+// qed-.
+
 (* Advanced constructions ***************************************************)
 
 lemma list_append_empty_dx (A):

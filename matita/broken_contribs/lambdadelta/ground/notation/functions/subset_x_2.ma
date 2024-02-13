@@ -12,36 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/not_subseteq_3.ma".
-include "ground/lib/subset.ma".
+(* NOTATION FOR GROUND ******************************************************)
 
-(* INCLUSION FOR SUBSETS ****************************************************)
+notation < "hvbox( 𝐗❨ break term 46 l ❩ )"
+  non associative with precedence 70
+  for @{ 'SubsetX $S $l }.
 
-definition subset_le (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
-           λu1,u2. ∀p. p ϵ u1 → p ϵ u2.
-
-interpretation
-  "inclusion (subset)"
-  'subseteq u1 u2 = (subset_le ? u1 u2).
-
-interpretation
-  "negated inclusion (subset)"
-  'NotSubsetEq A u1 u2 = (negation (subset_le A u1 u2)).
-
-(* Basic constructions ******************************************************)
-
-lemma subset_le_refl (A):
-      reflexive … (subset_le A).
-// qed.
-
-(* Main constructions *******************************************************)
-
-theorem subset_le_trans (A):
-        Transitive … (subset_le A).
-/3 width=1 by/ qed-.
-
-(* Basic inversions *********************************************************)
-
-lemma subset_in_le_trans (A) (u1) (u2) (p):
-      p ϵ u1 → u1 ⊆ u2 → p ϵ{A} u2.
-/2 width=1 by/ qed-.
+notation > "hvbox( 𝐗 opt ( { term 46 S } ) ❨ break term 46 l ❩ )"
+  non associative with precedence 70
+  for @{ 'SubsetX ${default @{$S}@{?}} $l }.

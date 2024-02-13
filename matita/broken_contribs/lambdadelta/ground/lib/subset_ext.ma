@@ -18,12 +18,12 @@ include "ground/lib/functions.ma".
 (* EXTENSIONS FOR SUBSETS ***************************************************)
 
 definition subset_ext_f1 (A1) (A0) (f:A1→A0): 𝒫❨A1❩ → 𝒫❨A0❩ ≝
-           λu1. ❴a0 ❘ ∃∃a1. a1 ϵ u1 & f a1 = a0❵.
+           λu1. {a0 | ∃∃a1. a1 ϵ u1 & f a1 = a0}.
 
 definition subset_ext_f1_1 (A11) (A21) (A0) (f1:A11→A0) (f2:A21→A0): 𝒫❨A11❩ → 𝒫❨A21❩ → 𝒫❨A0❩ ≝
-           λu11,u21. ❴a0 ❘
+           λu11,u21. {a0 |
            ∨∨ subset_ext_f1 A11 A0 f1 u11 a0
-            | subset_ext_f1 A21 A0 f2 u21 a0❵.
+            | subset_ext_f1 A21 A0 f2 u21 a0}.
 
 definition subset_ext_p1 (A1) (Q:predicate A1): predicate (𝒫❨A1❩) ≝
            λu1. ∀a1. a1 ϵ u1 → Q a1.

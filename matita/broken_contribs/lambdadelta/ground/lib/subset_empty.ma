@@ -12,36 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/not_subseteq_3.ma".
+include "ground/notation/functions/circled_collection_f_1.ma".
 include "ground/lib/subset.ma".
 
-(* INCLUSION FOR SUBSETS ****************************************************)
+(* EMPTY SUBSET FOR SUBSETS *************************************************)
 
-definition subset_le (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
-           λu1,u2. ∀p. p ϵ u1 → p ϵ u2.
-
-interpretation
-  "inclusion (subset)"
-  'subseteq u1 u2 = (subset_le ? u1 u2).
+definition subset_empty (A): 𝒫❨A❩ ≝
+           {p | ⊥}.
 
 interpretation
-  "negated inclusion (subset)"
-  'NotSubsetEq A u1 u2 = (negation (subset_le A u1 u2)).
-
-(* Basic constructions ******************************************************)
-
-lemma subset_le_refl (A):
-      reflexive … (subset_le A).
-// qed.
-
-(* Main constructions *******************************************************)
-
-theorem subset_le_trans (A):
-        Transitive … (subset_le A).
-/3 width=1 by/ qed-.
+  "empty (subset)"
+  'CircledCollectionF A = (subset_empty A).
 
 (* Basic inversions *********************************************************)
 
-lemma subset_in_le_trans (A) (u1) (u2) (p):
-      p ϵ u1 → u1 ⊆ u2 → p ϵ{A} u2.
-/2 width=1 by/ qed-.
+lemma subset_empty_inv_in (A) (p):
+      p ϵ{A} Ⓕ → ⊥.
+//
+qed-.

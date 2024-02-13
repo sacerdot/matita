@@ -12,36 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/not_subseteq_3.ma".
-include "ground/lib/subset.ma".
+include "ground/notation/relations/subset_3.ma".
+include "ground/lib/subset_le.ma".
 
-(* INCLUSION FOR SUBSETS ****************************************************)
+(* STRICT INCLUSION FOR SUBSETS *********************************************)
 
-definition subset_le (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
-           λu1,u2. ∀p. p ϵ u1 → p ϵ u2.
-
-interpretation
-  "inclusion (subset)"
-  'subseteq u1 u2 = (subset_le ? u1 u2).
+definition subset_lt (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
+           λu1,u2. ∧∧ u1 ⊆ u2 & u2 ⧸⊆ u1
+.
 
 interpretation
-  "negated inclusion (subset)"
-  'NotSubsetEq A u1 u2 = (negation (subset_le A u1 u2)).
-
-(* Basic constructions ******************************************************)
-
-lemma subset_le_refl (A):
-      reflexive … (subset_le A).
-// qed.
-
-(* Main constructions *******************************************************)
-
-theorem subset_le_trans (A):
-        Transitive … (subset_le A).
-/3 width=1 by/ qed-.
-
-(* Basic inversions *********************************************************)
-
-lemma subset_in_le_trans (A) (u1) (u2) (p):
-      p ϵ u1 → u1 ⊆ u2 → p ϵ{A} u2.
-/2 width=1 by/ qed-.
+  "strict inclusion (subset)"
+  'Subset A u1 u2 = (subset_lt A u1 u2).

@@ -12,36 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/not_subseteq_3.ma".
+include "ground/xoa/ex_1_2.ma".
+include "ground/lib/list_append.ma".
 include "ground/lib/subset.ma".
+include "ground/notation/functions/circled_collection_f_1.ma".
 
-(* INCLUSION FOR SUBSETS ****************************************************)
+(* SUBSET WITH LISTED ELEMENTS **********************************************)
 
-definition subset_le (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
-           λu1,u2. ∀p. p ϵ u1 → p ϵ u2.
-
-interpretation
-  "inclusion (subset)"
-  'subseteq u1 u2 = (subset_le ? u1 u2).
+definition subset_listed (A) (l): 𝒫❨A❩ ≝
+           {a | ∃∃l1,l2. l1 ⨁ a ⨮ l2 = l}.
 
 interpretation
-  "negated inclusion (subset)"
-  'NotSubsetEq A u1 u2 = (negation (subset_le A u1 u2)).
-
-(* Basic constructions ******************************************************)
-
-lemma subset_le_refl (A):
-      reflexive … (subset_le A).
-// qed.
-
-(* Main constructions *******************************************************)
-
-theorem subset_le_trans (A):
-        Transitive … (subset_le A).
-/3 width=1 by/ qed-.
-
-(* Basic inversions *********************************************************)
-
-lemma subset_in_le_trans (A) (u1) (u2) (p):
-      p ϵ u1 → u1 ⊆ u2 → p ϵ{A} u2.
-/2 width=1 by/ qed-.
+  "listed (subset)"
+  'SubsetX A l = (subset_listed A l).

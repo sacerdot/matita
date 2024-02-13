@@ -21,7 +21,7 @@ include "ground/arith/nat_pred.ma".
 (* PREDECESSOR FOR NON-NEGATIVE INTEGERS ************************************)
 
 definition nispos: 𝒫❨ℕ❩ ≝
-           ❴n ❘ n = (⁤↑⫰n)❵.
+           {n | n = (⁤↑⫰n)}.
 
 interpretation
   "positivity predicate (non-negative integers)"

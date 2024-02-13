@@ -18,7 +18,7 @@ include "ground/lib/subset.ma".
 (* FULL SUBSET FOR SUBSETS **************************************************)
 
 definition subset_full (A): 𝒫❨A❩ ≝
-           ❴p ❘ ⊤❵.
+           {p | ⊤}.
 
 interpretation
   "full (subset)"

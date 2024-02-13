@@ -14,10 +14,10 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation < "hvbox( ❴ ident i ❘ break term 19 P ❵ )"
-  non associative with precedence 19
-  for @{ λ${ident i}. $P }.
+notation < "hvbox( ❴ term 19 a ❵ )"
+  non associative with precedence 70
+  for @{ 'Curly $S $a }.
 
-notation > "hvbox( ❴ ident i opt ( { : break term 19 T ) ❘ break term 19 P ❵ )"
-  non associative with precedence 19
-  for @{ λ${ident i}:${default @{$T}@{?}}. $P }.
+notation > "hvbox( ❴ term 19 a opt ( : break term 19 S ) ❵ )"
+  non associative with precedence 70
+  for @{ 'Curly ${default @{$S}@{?}} $a }.
