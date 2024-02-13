@@ -18,11 +18,12 @@ include "delayed_updating/notation/functions/tau_2.ma".
 include "delayed_updating/notation/functions/lamda_1.ma".
 include "delayed_updating/notation/functions/at_2.ma".
 include "ground/lib/subset_or.ma".
+include "ground/lib/subset_singleton.ma".
 
 (* CONSTRUCTORS FOR PROTOTERM ***********************************************)
 
 definition term_node_0 (l): 𝕋 ≝
-           ❴p ❘ l◗𝐞 = p❵.
+           ❴l◗𝐞❵.
 
 definition term_node_1 (l): 𝕋 → 𝕋 ≝
            λt. l◗t.

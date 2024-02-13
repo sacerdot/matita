@@ -92,3 +92,17 @@ lemma path_clear_S_sn (p):
       (𝗦◗⓪p) = ⓪(𝗦◗p).
 #p <path_clear_append //
 qed.
+
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_path_empty_clear (p):
+      (𝐞) = ⓪p → (𝐞) = p.
+* //
+* [ #k ] #p
+[ <path_clear_d_dx
+| <path_clear_L_dx
+| <path_clear_A_dx
+| <path_clear_S_dx
+]
+#H0 destruct
+qed-.

@@ -12,11 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_times_rcons.ma".
-include "delayed_updating/syntax/path.ma".
+include "delayed_updating/syntax/path_neutral.ma".
+include "delayed_updating/syntax/prototerm_normal.ma".
 
-(* PRODUCT FOR LABELS *******************************************************)
+(* NORMAL FORM FOR PROTOTERM ************************************************)
 
-interpretation
-  "product (label)"
-  'middot l n = (list_times n label l).
+(* Constructions with neutral path ******************************************)
+
+lemma tnf_A_sn (t):
+      t ⊆ 𝐍 → t ϵ 𝐍𝐅 → 𝗔◗t ϵ 𝐍𝐅.
+#t #H1t #H2t #r * #p
+@(list_ind_rcons … p) -p
+[ #b #q #n #_ #Hb #_
+  <list_append_empty_dx >list_append_lcons_sn #Hn
+  elim (append_in_comp_inv_lcons_bi … Hn) -Hn #_ #H0
+  /4 width=6 by/
+| #p #l0 #_ #b #q #n #Hr #Hb #Hq
+  <list_append_rcons_dx >list_append_lcons_sn #Hn
+  elim (append_in_comp_inv_lcons_bi … Hn) -Hn #H0 #Hn destruct
+  elim (tnf_inv_gen … (⓪(p●𝗔◗b●𝗟◗q)) H2t) -H2t
+  /2 width=3 by prc_mk/
+]
+qed.

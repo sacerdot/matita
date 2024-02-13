@@ -20,7 +20,7 @@ include "delayed_updating/syntax/path.ma".
 (* PROPER CONDITION FOR PATH ************************************************)
 
 definition ppc: 𝒫❨ℙ❩ ≝
-           ❴p ❘ 𝐞 = p → ⊥❵
+           {p | 𝐞 = p → ⊥}
 .
 
 interpretation

@@ -12,11 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_times_rcons.ma".
-include "delayed_updating/syntax/path.ma".
+include "delayed_updating/syntax/path_balanced.ma".
+include "delayed_updating/syntax/path_structure.ma".
 
-(* PRODUCT FOR LABELS *******************************************************)
+(* BALANCE CONDITION FOR PATH ***********************************************)
 
-interpretation
-  "product (label)"
-  'middot l n = (list_times n label l).
+(* Destructions with path_structure *****************************************)
+
+lemma pbc_des_structure (b):
+      b ϵ 𝐁 → b = ⊗b.
+#b #Hb elim Hb -b //
+[ #b #_ #IH
+  <structure_A_sn <structure_L_dx <IH -IH //
+| #b1 #b2 #_ #_ #IH1 #IH2
+  <structure_append <IH1 <IH2 -IH1 -IH2 //
+]
+qed-.

@@ -26,21 +26,21 @@ interpretation
   'CategoryT = (predicate (list label)).
 
 definition term_grafted (p) (t): 𝕋 ≝
-           ❴q ❘ p●q ϵ t❵.
+           {q | p●q ϵ t}.
 
 interpretation
   "grafted (prototerm)"
   'Pitchfork p t = (term_grafted p t).
 
 definition term_root (t): 𝕋 ≝
-           ❴p ❘ ∃q. q ϵ ⋔[p]t❵.
+           {p | ∃q. q ϵ ⋔[p]t}.
 
 interpretation
   "root (prototerm)"
   'UpTriangle t = (term_root t).
 
 definition pt_append (p) (t): 𝕋 ≝
-           ❴r ❘ ∃∃q. q ϵ t & r = p●q❵.
+           {r | ∃∃q. q ϵ t & r = p●q}.
 
 interpretation
   "append (prototerm)"
@@ -66,17 +66,27 @@ lemma append_in_comp_inv_bi (p) (q) (t):
 >(eq_inv_list_append_dx_bi … H0) -p -q //
 qed-.
 
+lemma append_in_comp_inv_lcons_bi (t) (p) (l1) (l2):
+      l1◗p ϵ l2◗t →
+      ∧∧ l1 = l2 & p ϵ t.
+#t #p #l1 #l2 *
+#q #Hq #H0
+elim (eq_inv_list_rcons_bi ??? … H0) -H0
+#H1 #H2 destruct
+/2 width=1 by conj/
+qed-.
+
 lemma term_slice_inv_lcons_bi (p1) (p2) (l1) (l2):
       l1◗p1 ϵ ↑(l2◗p2) →
       ∧∧ l1 = l2 & p1 ϵ ↑p2.
 #p1 #p2 #l1 #l2 *
-#q <list_append_assoc #_ #H0
+#q #_ <list_append_assoc #H0
 elim (eq_inv_list_rcons_bi ??? … H0) -H0
 #H1 #H2 destruct
 /3 width=3 by ex2_intro, conj/
 qed-.
 
-lemma term_le_antisym (p1) (p2):
+lemma term_slice_antisym (p1) (p2):
       p1 ϵ ↑p2 → p2 ϵ ↑p1 → p1 = p2.
 #p1 #p2 * #q2 #_ #H2 >H2 -p1 * #q1 #_
 <list_append_assoc #H1
@@ -96,6 +106,14 @@ lemma term_in_comp_root (t) (p):
 /2 width=2 by term_in_root/
 qed.
 
+lemma term_in_root_rcons (t) (p) (l):
+      p◖l ϵ t → p ϵ ▵t.
+#t #p #l
+>(list_append_empty_sn … p) in ⊢ (%→?);
+>list_append_lcons_sn
+/2 width=2 by term_in_root/
+qed.
+
 lemma pt_append_in (p) (q) (t):
       q ϵ t → p●q ϵ p●t.
 /2 width=3 by ex2_intro/
@@ -106,7 +124,7 @@ lemma term_slice_in (p) (q):
 /2 width=2 by pt_append_in/
 qed.
 
-lemma term_le_refl (p):
+lemma term_slice_refl (p):
       p ϵ ↑p.
 // qed.
 
@@ -117,8 +135,21 @@ qed.
 
 (* Basic destructions *******************************************************)
 
+lemma term_in_comp_pt_append_des_slice (t) (p1) (p2):
+      p1 ϵ p2●t → p1 ϵ ↑p2.
+#t #p1 #p2 * #q2 #_ #H0 destruct -t //
+qed-.
+
 lemma term_in_root_append_des_sn (t) (p) (q):
       p●q ϵ ▵t → p ϵ ▵t.
 #t #p #q * #r #Hr
 /2 width=2 by ex_intro/
+qed-.
+
+lemma term_slice_des_rcons_bi (p1) (p2) (l1) (l2):
+      p1◖l1 ϵ ↑(p2◖l2) → p1 ϵ ↑p2.
+#p1 #p2 #l1 #l2 * * [| #l0 #q ] #_
+[ <list_append_empty_sn #H0 destruct //
+| <list_append_lcons_sn #H0 destruct //
+]
 qed-.

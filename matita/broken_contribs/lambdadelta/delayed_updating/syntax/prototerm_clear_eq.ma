@@ -12,11 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_times_rcons.ma".
-include "delayed_updating/syntax/path.ma".
+include "delayed_updating/syntax/prototerm_eq.ma".
+include "delayed_updating/syntax/prototerm_clear.ma".
 
-(* PRODUCT FOR LABELS *******************************************************)
+(* CLEARED PROTOTERM ********************************************************)
 
-interpretation
-  "product (label)"
-  'middot l n = (list_times n label l).
+(* Constructions with equivalence for prototerm *****************************)
+
+lemma clear_pt_append (p) (t):
+      (⓪p)●(⓪t) ⇔ ⓪(p●t).
+#p #t @conj #r * #s * #q #Hq #H1 #H2 destruct
+/3 width=1 by pt_append_in, in_comp_term_clear/
+qed.

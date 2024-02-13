@@ -19,7 +19,7 @@ include "ground/lib/subset.ma".
 (* FREE CONDITION FOR PATH **************************************************)
 
 definition pfc: 𝒫❨ℙ❩ ≝
-           ❴r ❘ ∀p,q,n. r = p●𝗱n◗q → 𝐞 = q❵
+           {r | ∀p,q,n. r = p●𝗱n◗q → 𝐞 = q}
 .
 
 interpretation

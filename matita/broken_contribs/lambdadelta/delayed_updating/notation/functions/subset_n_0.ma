@@ -12,11 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_times_rcons.ma".
-include "delayed_updating/syntax/path.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* PRODUCT FOR LABELS *******************************************************)
-
-interpretation
-  "product (label)"
-  'middot l n = (list_times n label l).
+notation "hvbox( 𝐍 )"
+  non associative with precedence 70
+  for @{ 'SubsetN }.

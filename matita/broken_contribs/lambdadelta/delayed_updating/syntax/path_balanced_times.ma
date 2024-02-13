@@ -20,7 +20,7 @@ include "delayed_updating/syntax/path_balanced.ma".
 (* Constructions with product for labels ************************************)
 
 lemma pbc_redexes (n) (b):
-      b ϵ 𝐁 → (𝗔*n)●b●(𝗟*n) ϵ 𝐁.
+      b ϵ 𝐁 → (𝗔·n)●b●(𝗟·n) ϵ 𝐁.
 #n @(nat_ind_succ … n) -n [| #n #IH ] #b #Hb
 [ <list_times_zero //
 | <list_times_succ_rcons <list_times_succ_lcons

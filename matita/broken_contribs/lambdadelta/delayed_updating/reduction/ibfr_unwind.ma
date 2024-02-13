@@ -24,8 +24,9 @@ include "delayed_updating/substitution/lift_prototerm_proper.ma".
 include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
 include "delayed_updating/syntax/path_closed_structure.ma".
-include "delayed_updating/syntax/path_clear_structure.ma".
+include "delayed_updating/syntax/path_clear_help.ma".
 include "delayed_updating/syntax/path_structure_depth.ma".
+include "delayed_updating/syntax/path_structure_help.ma".
 
 (* IMMEDIATE BALANCED FOCUSED REDUCTION *************************************)
 
@@ -41,7 +42,7 @@ lemma ibfr_unwind_bi (f) (t1) (t2) (r):
 | -H1t1 -Hn -Ht1 -Ht2 //
 | -H1t1 -Hb -Ht1 -Ht2 //
 | lapply (in_comp_unwind2_bi f … Ht1) -Ht2 -Ht1 -H1t1 -Hb
-  <unwind2_path_d_dx <path_append_pLq in ⊢ ((???%)→?);
+  <unwind2_path_d_dx <path_append_pAbLq_6 in ⊢ ((???%)→?);
   <fbr_xapp_succ_lapp <unwind2_rmap_append_closed_Lq_dx_lapp_depth //
 | lapply (unwind2_term_eq_repl_dx f … Ht2) -Ht2 #Ht2
   @(subset_eq_trans … Ht2) -t2
@@ -51,15 +52,14 @@ lemma ibfr_unwind_bi (f) (t1) (t2) (r):
   @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
   [| @lift_term_proper /2 width=6 by term_grafted_S_dx_proper/ ]
   @pt_append_eq_repl_bi
-  [ <structure_append <structure_A_sn
-    <structure_append <structure_L_sn //
+  [ >path_structure_clear_swap //
   | @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))
     [ @unwind2_term_grafted_S_dx /2 width=2 by term_in_root/ | skip ] -Ht1
     @(subset_eq_trans … (lift_unwind2_term_after …))
     @(subset_eq_canc_dx … (unwind2_lift_term_after …))
     @unwind2_term_eq_repl_sn
 (* Note: crux of the proof begins *)
-    <path_append_pbLq_1 <unwind2_rmap_append
+    <path_append_pAbLq_1 <unwind2_rmap_append
     <unwind2_rmap_uni_crux //
 (* Note: crux of the proof ends *)
   ]
@@ -86,11 +86,11 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
 @(
   let r ≝ (p0●xa●𝗔◗b0●xl●𝗟◗q0) in
   let v ≝ ((p0●xa●𝗔◗(⓪b0)●(⓪xl)●𝗟◗q0)●🠡[𝐮❨⁤↑(♭b0+⫰n0)❩]⋔[p0●xa◖𝗦]t1) in 
-  ex3_2_intro … (⬕[↑r←v]t1) r
+  ex3_2_intro … (⬕[↑r←v]t1) (⓪r)
 )
 [ @(ex5_4_intro … (p0●xa) (b0●xl) q0 (⫰n0)) [1,3,4: // ]
   [ <structure_append <Hl -xl //
-  | @fsubst_eq_repl [1,2: @subset_eq_refl ]
+  | @fsubst_eq_repl [1,2: // ]
     <depth_append_empty_structure_dx [| // ]
     @pt_append_eq_repl_bi [| // ]
     <path_clear_append //
@@ -101,7 +101,7 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
   @fsubst_eq_repl
   [ //
   | @(subset_eq_trans … (unwind2_slice_and_sn … H2t1)) [| // ]
-    <path_structure_pAbLq [2,3: // ]
+    <path_structure_pAbLq_flat [2,3: // ]
     @subset_eq_refl
   ]
   @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
@@ -127,6 +127,7 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
     ]
 (* Note: crux of the proof ends *)
   ]
-| <path_structure_pAbLq //
+| <path_clear_structure_pAbLq <path_structure_clear
+  <path_structure_pAbLq_flat //
 ]
 qed-.

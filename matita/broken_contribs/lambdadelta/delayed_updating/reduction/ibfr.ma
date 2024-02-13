@@ -14,6 +14,7 @@
 
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/substitution/lift_prototerm.ma".
+include "delayed_updating/syntax/prototerm_clear.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/path_closed.ma".
 include "delayed_updating/syntax/path_balanced.ma".
@@ -28,9 +29,9 @@ include "ground/xoa/ex_5_4.ma".
 
 definition ibfr (r): relation2 (𝕋) (𝕋) ≝
            λt1,t2.
-           ∃∃p,b,q,n. p●𝗔◗b●𝗟◗q = r &
-           ⊗b ϵ 𝐁 & q ϵ 𝐂❨n❩ & r◖𝗱(⁤↑n) ϵ t1 &
-           ⬕[↑r←(p●𝗔◗(⓪b)●𝗟◗q)●🠡[𝐮❨⁤↑(♭b+n)❩]⋔[p◖𝗦]t1]t1 ⇔ t2
+           ∃∃p,b,q,n. ⓪(p●𝗔◗b●𝗟◗q) = r &
+           ⊗b ϵ 𝐁 & q ϵ 𝐂❨n❩ & (p●𝗔◗b●𝗟◗q)◖𝗱(⁤↑n) ϵ t1 &
+           ⬕[↑(p●𝗔◗b●𝗟◗q)←(p●𝗔◗(⓪b)●𝗟◗q)●🠡[𝐮❨⁤↑(♭b+n)❩]⋔[p◖𝗦]t1]t1 ⇔ t2
 .
 
 interpretation
@@ -44,4 +45,15 @@ lemma ibfr_eq_trans (t) (t1) (t2) (r):
 #t #t1 #t2 #r
 * #p #b #q #n #Hr #Hb #Hn #Ht1 #Ht #Ht2
 /3 width=13 by subset_eq_trans, ex5_4_intro/
+qed-.
+
+(* Basic destructions *******************************************************)
+
+lemma ibfr_des_in_comp_neq (t1) (t2) (r) (s):
+      t1 ➡𝐢𝐛𝐟[r] t2 → ⓪s ⧸ϵ ↑r →
+      s ϵ t1 → s ϵ t2.
+#t1 #t2 #r #s *
+#p #b #q #n #H0 #_ #_ #_ #Ht2 #Hns #Hs destruct
+@(subset_in_eq_repl_fwd ????? Ht2) -t2
+/4 width=1 by fsubst_in_comp_false, term_slice_clear/
 qed-.

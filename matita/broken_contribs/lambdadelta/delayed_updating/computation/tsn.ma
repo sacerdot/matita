@@ -12,11 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_times_rcons.ma".
-include "delayed_updating/syntax/path.ma".
+include "delayed_updating/notation/functions/subset_sn_0.ma".
+include "delayed_updating/reduction/dbfr.ma".
 
-(* PRODUCT FOR LABELS *******************************************************)
+(* STRONG NORMALIZATION FOR PROTOTERM ***************************************)
+
+inductive tsn: 𝒫❨𝕋❩ ≝
+| is_tsn (t1): (∀t2,r. t1 ➡𝐝𝐛𝐟[r] t2 → t2 ϵ tsn) → t1 ϵ tsn
+.
 
 interpretation
-  "product (label)"
-  'middot l n = (list_times n label l).
+  "strong normalization (prototerm)"
+  'SubsetSN = (tsn).

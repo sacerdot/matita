@@ -12,11 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_times_rcons.ma".
-include "delayed_updating/syntax/path.ma".
+include "delayed_updating/syntax/prototerm_normal.ma".
+include "delayed_updating/reduction/dbfr_reducuble.ma".
+include "delayed_updating/computation/tsn.ma".
 
-(* PRODUCT FOR LABELS *******************************************************)
+(* STRONG NORMALIZATION FOR PROTOTERM ***************************************)
 
-interpretation
-  "product (label)"
-  'middot l n = (list_times n label l).
+(* Constructions with normal prototerms *************************************)
+
+lemma tsn_normal (t):
+      t ϵ 𝐍𝐅 → t ϵ 𝐒𝐍.
+#t1 #Ht1 @is_tsn
+#t2 #r #Hr elim Ht1 -Ht1
+/2 width=3 by dbfr_inv_reducuble/
+qed.

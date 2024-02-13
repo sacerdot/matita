@@ -29,7 +29,7 @@ include "ground/relocation/fb/fbr_xapp_lapp.ma".
 (* Constructions with lift **************************************************)
 
 theorem dbfr_lift_bi (f) (t1) (t2) (r):
-        t1 ➡𝐝𝐛𝐟[r] t2 → 🠡[f]t1 ➡𝐝𝐛𝐟[🠡[f]r] 🠡[f]t2.
+        t1 ➡𝐝𝐛𝐟[r] t2 → 🠡[f]t1 ➡𝐝𝐛𝐟[r] 🠡[f]t2.
 #f #t1 #t2 #r
 * #p #b #q #n #Hr #Hb #Hn #Ht1 #Ht2 destruct
 @(ex5_4_intro … (🠡[f]p) (🠡[🠢[p◖𝗔]f]b) (🠡[🠢[p◖𝗔●b◖𝗟]f]q) n)
@@ -37,7 +37,7 @@ theorem dbfr_lift_bi (f) (t1) (t2) (r):
 | -Hn -Ht1 -Ht2 //
 | -Hb -Ht1 -Ht2 <lift_path_closed_des_gen //
 | lapply (in_comp_lift_bi f … Ht1) -Ht2 -Ht1
-  <lift_path_d_dx <path_append_pLq in ⊢ ((???%)→?);
+  <lift_path_d_dx <path_append_pAbLq_6 in ⊢ ((???%)→?);
   <lift_rmap_append_L_closed_dx_xapp_succ //
 | lapply (lift_term_eq_repl_dx f … Ht2) -Ht2 #Ht2 -Ht1
   @(subset_eq_trans … Ht2) -t2
@@ -52,7 +52,7 @@ theorem dbfr_lift_bi (f) (t1) (t2) (r):
     <(lift_path_closed_des_gen … Hn) <(lift_path_closed_des_gen … Hn) //
   | @(subset_eq_trans … (lift_term_iref_xapp …))
 (* Note: crux of the proof begins *)
-    <path_append_pbLq_1 <lift_rmap_append
+    <path_append_pAbLq_1 <lift_rmap_append
     <(lift_rmap_append_clear_L_closed_dx_xapp_succ_plus … Hn)
     <(ctls_succ_plus_lift_rmap_append_clear_L_closed_dx … Hn)
     @iref_eq_repl_bi [ // ]
@@ -66,7 +66,7 @@ qed.
 
 lemma dbfr_inv_lift_sn (f) (t1) (u2) (s):
       (🠡[f]t1) ➡𝐝𝐛𝐟[s] u2 →
-      ∃∃t2,r. t1 ➡𝐝𝐛𝐟[r] t2 & 🠡[f]t2 ⇔ u2 & 🠡[f]r = s.
+      ∃∃t2. t1 ➡𝐝𝐛𝐟[s] t2 & 🠡[f]t2 ⇔ u2.
 #f #t1 #u2 #s
 * #p #b #q #n #Hs #Hb #Hq * #x0 #Ht1 #H0 #Hu2 destruct
 elim (eq_inv_d_dx_lift_path … (sym_eq … H0)) -H0 #x1 #n0 #H0 #H1n0 #H1 destruct
@@ -84,7 +84,7 @@ lapply (eq_inv_nsucc_bi … H0) -H0 #H0 destruct
 @(
   let r ≝ (p0●𝗔◗b0●𝗟◗q0) in
   let v ≝ ((p0●𝗔◗(⓪b0)●𝗟◗q0)●𝛕(⁤↑(♭b0+⫰n0)).⋔[p0◖𝗦]t1) in
-  ex3_2_intro … (⬕[↑r←v]t1) r
+  ex2_intro ??? (⬕[↑r←v]t1)
 )
 [ @(ex5_4_intro … p0 b0 q0 (⫰n0)) [1,2,3,4: // ]
   @subset_eq_refl
@@ -103,13 +103,12 @@ lapply (eq_inv_nsucc_bi … H0) -H0 #H0 destruct
     <(lift_path_closed_des_gen … Hq0) <(lift_path_closed_des_gen … Hq0) //
   | @(subset_eq_canc_sn … (lift_term_iref_xapp …))
 (* Note: crux of the proof begins *)
-    <path_append_pbLq_1 <lift_rmap_append
+    <path_append_pAbLq_1 <lift_rmap_append
     <(lift_rmap_append_clear_L_closed_dx_xapp_succ_plus … Hq0)
     <(ctls_succ_plus_lift_rmap_append_clear_L_closed_dx … Hq0)
     @iref_eq_repl_bi [ // ]
     @(subset_eq_canc_sn … (lift_term_grafted_S …)) //
 (* Note: crux of the proof ends *)
   ]
-| <lift_path_pAbLq //
 ]
 qed-.

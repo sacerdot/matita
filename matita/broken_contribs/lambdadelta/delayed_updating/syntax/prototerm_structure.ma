@@ -12,11 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_times_rcons.ma".
-include "delayed_updating/syntax/path.ma".
+include "delayed_updating/syntax/path_structure.ma".
+include "delayed_updating/syntax/prototerm.ma".
 
-(* PRODUCT FOR LABELS *******************************************************)
+(* PROTOTERM ****************************************************************)
 
-interpretation
-  "product (label)"
-  'middot l n = (list_times n label l).
+(* Constructions with path_structure ****************************************)
+
+lemma term_slice_structure (p1) (p2):
+      p1 ϵ ↑p2 → ⊗p1 ϵ ↑⊗p2.
+#p1 #p2 * #q2 #_ #H0 destruct //
+qed.

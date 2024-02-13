@@ -25,6 +25,7 @@ lemma dbfr_abst_hd (t1) (t2) (r):
 #t1 #t2 #r *
 #p #b #q #n #Hr #Hb #Hn #Ht1 #Ht2 destruct
 @(ex5_4_intro … (𝗟◗p) … Hb Hn) -Hb -Hn
+<list_append_rcons_dx
 [ -Ht2 //
 | -Ht2 /2 width=1 by in_comp_abst_hd/
 | @subset_eq_canc_sn [|| @(abst_eq_repl … Ht2) ] -Ht1 -Ht2
@@ -41,6 +42,7 @@ lemma dbfr_appl_hd (v) (t1) (t2) (r):
 #v #t1 #t2 #r *
 #p #b #q #n #Hr #Hb #Hn #Ht1 #Ht2 destruct
 @(ex5_4_intro … (𝗔◗p) … Hb Hn) -Hb -Hn
+<list_append_rcons_dx
 [ -Ht2 //
 | -Ht2 /2 width=1 by in_comp_appl_hd/
 | @subset_eq_canc_sn [|| @(appl_eq_repl … Ht2) // ] -Ht1 -Ht2
@@ -57,6 +59,7 @@ lemma dbfr_appl_sd (v1) (v2) (t) (r):
 #v1 #v2 #t #r *
 #p #b #q #n #Hr #Hb #Hn #Hv1 #Hv2 destruct
 @(ex5_4_intro … (𝗦◗p) … Hb Hn) -Hb -Hn
+<list_append_rcons_dx
 [ -Hv2 //
 | -Hv2 /2 width=1 by in_comp_appl_sd/
 | @subset_eq_canc_sn [|| @(appl_eq_repl … Hv2) // ] -Hv1 -Hv2
@@ -70,9 +73,10 @@ qed.
 
 lemma dbfr_beta (v) (b) (t) (q) (n):
       ⊗b ϵ 𝐁 → q ϵ 𝐂❨n❩ → q◖𝗱(⁤↑n) ϵ t →
-      ＠v.(b●𝛌.t) ➡𝐝𝐛𝐟[𝗔◗b●𝗟◗q] ＠v.(⬕[↑(b●𝗟◗q)←(⓪b●𝗟◗q)●𝛕(⁤↑(♭b+n)).v](b●𝛌.t)).
+      ＠v.(b●𝛌.t) ➡𝐝𝐛𝐟[𝗔◗(⓪b)●𝗟◗(⓪q)] ＠v.(⬕[↑(b●𝗟◗q)←(⓪b●𝗟◗q)●𝛕(⁤↑(♭b+n)).v](b●𝛌.t)).
 #v #b #t #q #n #Hb #Hn #Ht
 @(ex5_4_intro … (𝐞) … Hb Hn) -Hb -Hn
+<list_append_empty_dx
 [ //
 | @(in_comp_appl_hd ?? (b●𝗟◗q◖𝗱⁤↑n) ?) (**) (* explicit term *)
   /3 width=1 by pt_append_in, in_comp_abst_hd/

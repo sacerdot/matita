@@ -72,7 +72,7 @@ lemma unwind2_term_grafted_S_dx (f) (t) (p):
       t ϵ 𝐓 → p◖𝗔 ϵ ▵t →
       ▼[▶[p]f]⋔[p◖𝗦]t ⇔ ⋔[(⊗p)◖𝗦]▼[f]t.
 #f #t #p #Ht #Hp
-/3 width=1 by unwind2_term_grafted_pic, term_full_A_ax/
+/3 width=1 by unwind2_term_grafted_pic, term_full_A_post/
 qed.
 
 lemma unwind2_term_grafted_ppc_sn (f) (t) (p):

@@ -12,11 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/list_times_rcons.ma".
-include "delayed_updating/syntax/path.ma".
+include "delayed_updating/syntax/path_le.ma".
+include "delayed_updating/syntax/prototerm_clear.ma".
 
-(* PRODUCT FOR LABELS *******************************************************)
+(* ROOT ORDER FOR PATH ******************************************************)
 
-interpretation
-  "product (label)"
-  'middot l n = (list_times n label l).
+(* Constructions with path_clear ********************************************)
+
+lemma path_le_clear_bi (p1) (p2):
+      p1 ⊑ p2 → ⓪p1 ⊑ ⓪p2.
+/2 width=1 by term_slice_clear/
+qed.

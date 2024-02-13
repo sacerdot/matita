@@ -24,7 +24,7 @@ include "ground/xoa/ex_3_1.ma".
 
 lemma trab_des_gen (p1) (p2) (q1) (q2) (n1) (n2):
       〈p2,n2,q2〉 = ▷𝐛[〈·,·,·〉]❨p1,n1,q1❩ →
-      ∃∃r. p2●r = p1 & r●q1 = q2 & (𝗔*n2)●(⊗r)●(𝗟*n1) ϵ 𝐁.
+      ∃∃r. p2●r = p1 & r●q1 = q2 & (𝗔·n2)●(⊗r)●(𝗟·n1) ϵ 𝐁.
 #p1 elim p1 -p1 [| * [ #k1 ] #p1 #IH ] #p2 #q1 #q2 #n1 #n2
 [ <trab_unfold_empty #H destruct
   /3 width=4 by pbc_redexes, pbc_empty, ex3_intro/
