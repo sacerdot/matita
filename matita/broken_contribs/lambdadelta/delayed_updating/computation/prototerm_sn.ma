@@ -12,25 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/subset_f_0.ma".
-include "ground/lib/subset.ma".
+include "delayed_updating/notation/functions/subset_sn_0.ma".
+include "delayed_updating/reduction/dbfr.ma".
 
-(* FREE CONDITION FOR PATH **************************************************)
+(* STRONG NORMALIZATION FOR PROTOTERM ***************************************)
 
-definition pfc: 𝒫❨ℙ❩ ≝
-           {r | ∀p,q,n. r = p●𝗱n◗q → 𝐞 = q}
+(* Note: we cannot use the ϵ notation for (tsn t1) and (tsn t2) *)
+(*       because the constant subset_in gets in the way         *)
+inductive tsn: 𝒫❨𝕋❩ ≝
+| tsn_step (t1): (∀t2,r. t1 ➡𝐝𝐛𝐟[r] t2 → (tsn t2)) → (tsn t1)
 .
 
 interpretation
-  "Nederpelt's Tfre (path)"
-  'SubsetF = (pfc).
-
-(* Basic constructions ******************************************************)
-
-lemma pfc_empty:
-      (𝐞) ϵ 𝐅.
-#p #q #n #H0
-elim (eq_inv_list_empty_append … H0) -H0 #H0 #_
-elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 destruct
-qed.
+  "strong normalization (prototerm)"
+  'SubsetSN = (tsn).

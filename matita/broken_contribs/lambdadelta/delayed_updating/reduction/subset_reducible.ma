@@ -18,20 +18,19 @@ include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/syntax/path_clear.ma".
 include "delayed_updating/syntax/path_balanced.ma".
 include "delayed_updating/syntax/path_closed.ma".
-include "delayed_updating/syntax/prototerm.ma".
 
-(* REDEX FOR PATH ***********************************************************)
+(* SUBSET OF REDEX POINTERS *************************************************)
 
-(* Note: redex identifiers are cleared paths to reducible variables *)
+(* Note: redex pointers are cleared paths to reducible variables *)
 (* Note: thus we can compare them in computation steps *)
 definition prc (t): 𝒫❨ℙ❩ ≝
-           { r | ∃∃p,b,q,n. ⓪(p●𝗔◗b●𝗟◗q) = r &
-                            ⊗b ϵ 𝐁 & q ϵ 𝐂❨n❩ & (p●𝗔◗b●𝗟◗q)◖𝗱(⁤↑n) ϵ t
+           {r | ∃∃p,b,q,n. ⓪(p●𝗔◗b●𝗟◗q) = r &
+                           ⊗b ϵ 𝐁 & q ϵ 𝐂❨n❩ & (p●𝗔◗b●𝗟◗q)◖𝗱(⁤↑n) ϵ t
            }
 .
 
 interpretation
-  "reducible condition (path)"
+  "redex pointer (subset of paths)"
   'SubsetR t = (prc t).
 
 (* Basic constructions ******************************************************)

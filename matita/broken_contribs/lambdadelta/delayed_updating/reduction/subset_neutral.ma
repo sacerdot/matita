@@ -15,16 +15,15 @@
 include "delayed_updating/notation/functions/subset_n_0.ma".
 include "delayed_updating/syntax/path_structure_help.ma".
 include "delayed_updating/syntax/path_balanced.ma".
-include "delayed_updating/syntax/prototerm.ma".
 
-(* NEUTRAL CONDITION FOR PATH ***********************************************)
+(* SUBSET OF NEUTRAL PATHS **************************************************)
 
 definition pnc: 𝒫❨ℙ❩ ≝
-           {p | ∀b,q. ⊗b ϵ 𝐁 → p ⧸= b●𝗟◗q}
+           {r | ∀b,q. ⊗b ϵ 𝐁 → r ⧸= b●𝗟◗q} (**) (* reversee ⧸= *)
 .
 
 interpretation
-  "neutral condition (path)"
+  "neutral (path subset)"
   'SubsetN = (pnc).
 
 (* Basic constructions ******************************************************)

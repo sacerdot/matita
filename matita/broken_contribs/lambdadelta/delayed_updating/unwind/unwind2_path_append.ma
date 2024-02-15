@@ -85,7 +85,7 @@ qed.
 lemma unwind2_path_des_ppc (f) (p):
       ▼[f]p ϵ 𝐏 → p ϵ 𝐏.
 #f #p #Hp #H0 destruct
-/2 width=1 by/
+lapply (ppc_inv_empty … Hp) -Hp //
 qed-.
 
 (* Destructions with pic ****************************************************)
@@ -154,7 +154,9 @@ elim (path_split_pic_sn p1) #r0 #r1 #Hr0 #Hr1 #H0 destruct
 <structure_append <list_append_assoc
 @(ex4_2_intro … r0 (r1●p2)) //
 <unwind2_path_append_ppc_dx
-/2 width=1 by unwind2_path_des_ppc/
+[ /2 width=1 by unwind2_path_des_ppc/
+| #H0 @Hq2 //
+]
 qed-.
 
 (* Inversions with path_lcons ***********************************************)

@@ -13,10 +13,10 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path_clear_help.ma".
-include "delayed_updating/syntax/path_reducible.ma".
 include "delayed_updating/syntax/path_le.ma".
 include "delayed_updating/syntax/prototerm_clear_eq.ma".
 include "delayed_updating/syntax/preterm_clear.ma".
+include "delayed_updating/reduction/subset_reducible.ma".
 include "delayed_updating/reduction/dbfr.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path_reducible.ma".
 include "delayed_updating/syntax/preterm_clear.ma".
+include "delayed_updating/reduction/subset_reducible.ma".
 include "delayed_updating/reduction/ibfr.ma".
 
 (* IMMEDIATE BALANCED FOCUSED REDUCTION *************************************)

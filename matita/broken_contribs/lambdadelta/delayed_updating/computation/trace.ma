@@ -12,25 +12,29 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path_neutral.ma".
-include "delayed_updating/syntax/prototerm_normal.ma".
+include "delayed_updating/notation/functions/category_pstar_0.ma".
+include "delayed_updating/syntax/path.ma".
 
-(* NORMAL FORM FOR PROTOTERM ************************************************)
+(* TRACE ********************************************************************)
 
-(* Constructions with neutral path ******************************************)
+(* Note: a trace is a list of redexes fired in a computation *)
+(* Note: constructed from the first (left end) to the last (right end) *)
+interpretation
+  "trace ()"
+  'CategoryPStar = (list (list label)).
 
-lemma tnf_A_sn (t):
-      t ⊆ 𝐍 → t ϵ 𝐍𝐅 → 𝗔◗t ϵ 𝐍𝐅.
-#t #H1t #H2t #r * #p
-@(list_ind_rcons … p) -p
-[ #b #q #n #_ #Hb #_
-  <list_append_empty_dx >list_append_lcons_sn #Hn
-  elim (append_in_comp_inv_lcons_bi … Hn) -Hn #_ #H0
-  /4 width=6 by/
-| #p #l0 #_ #b #q #n #Hr #Hb #Hq
-  <list_append_rcons_dx >list_append_lcons_sn #Hn
-  elim (append_in_comp_inv_lcons_bi … Hn) -Hn #H0 #Hn destruct
-  elim (tnf_inv_gen … (⓪(p●𝗔◗b●𝗟◗q)) H2t) -H2t
-  /2 width=3 by prc_mk/
-]
-qed.
+interpretation
+  "empty (trace)"
+  'ElementE = (list_empty (list label)).
+
+interpretation
+  "left cons (trace)"
+  'BlackHalfCircleRight r ss = (list_lcons (list label) r ss).
+
+interpretation
+  "append (trace)"
+  'BlackCircle rs ss = (list_append (list label) rs ss).
+
+interpretation
+  "right cons (trace)"
+  'BlackHalfCircleLeft rs s = (list_append (list label) rs (list_lcons (list label) s (list_empty (list label)))).

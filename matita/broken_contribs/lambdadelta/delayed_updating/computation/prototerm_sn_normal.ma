@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/prototerm_normal.ma".
+include "delayed_updating/reduction/prototerm_normal.ma".
 include "delayed_updating/reduction/dbfr_reducuble.ma".
-include "delayed_updating/computation/tsn.ma".
+include "delayed_updating/computation/prototerm_sn.ma".
 
 (* STRONG NORMALIZATION FOR PROTOTERM ***************************************)
 
@@ -22,7 +22,7 @@ include "delayed_updating/computation/tsn.ma".
 
 lemma tsn_normal (t):
       t ϵ 𝐍𝐅 → t ϵ 𝐒𝐍.
-#t1 #Ht1 @is_tsn
+#t1 #Ht1 @tsn_step
 #t2 #r #Hr elim Ht1 -Ht1
 /2 width=3 by dbfr_inv_reducuble/
 qed.

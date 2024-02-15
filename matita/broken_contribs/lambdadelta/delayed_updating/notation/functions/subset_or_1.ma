@@ -12,15 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/notation/functions/subset_sn_0.ma".
-include "delayed_updating/reduction/dbfr.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* STRONG NORMALIZATION FOR PROTOTERM ***************************************)
-
-inductive tsn: 𝒫❨𝕋❩ ≝
-| is_tsn (t1): (∀t2,r. t1 ➡𝐝𝐛𝐟[r] t2 → t2 ϵ tsn) → t1 ϵ tsn
-.
-
-interpretation
-  "strong normalization (prototerm)"
-  'SubsetSN = (tsn).
+notation "hvbox( 𝐎𝐑❨ break term 46 t ❩ )"
+  non associative with precedence 70
+  for @{ 'SubsetOR $t }.
