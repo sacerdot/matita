@@ -25,7 +25,7 @@ rec definition fr2_append f1 f2 on f1 ≝ match f1 with
 ].
 
 interpretation
-  "append (finite relocation maps with pairs)" 
+  "append (finite relocation maps with pairs)"
   'BlackCircle f1 f2 = (fr2_append f1 f2).
 
 (* Basic constructions ******************************************************)

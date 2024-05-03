@@ -190,7 +190,7 @@ qed.
 
 lemma bi_TC_decomp_r (A) (B) (R:bi_relation A B):
       ∀a1,a2,b1,b2. bi_TC … R a1 b1 a2 b2 →
-      ∨∨ R a1 b1 a2 b2 
+      ∨∨ R a1 b1 a2 b2
        | ∃∃a,b. bi_TC … R a1 b1 a b & R a b a2 b2.
 #A #B #R #a1 #a2 #b1 #b2 * -a2 -b2 /2 width=1/ /3 width=4 by ex2_2_intro, or_intror/
 qed-.

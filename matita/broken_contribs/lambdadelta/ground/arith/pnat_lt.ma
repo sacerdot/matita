@@ -65,7 +65,7 @@ qed-.
 
 lemma le_false_plt (p) (q): (q ≤ p → ⊥) → p < q.
 #p #q elim (pnat_split_lt_ge p q) [ // ]
-#H #Hq elim Hq -Hq // 
+#H #Hq elim Hq -Hq //
 qed.
 
 lemma plt_ple_trans (r) (p) (q): p < r → r ≤ q → p < q.

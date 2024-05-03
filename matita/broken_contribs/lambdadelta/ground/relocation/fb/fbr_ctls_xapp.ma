@@ -26,4 +26,4 @@ lemma fbr_xapp_plus (f) (m) (n):
 #f * // #p * // #q
 <nplus_pos_sn <nplus_pos_sn <nrplus_pos_dx
 >fbr_dapp_plus //
-qed. 
+qed.

@@ -43,7 +43,7 @@ lemma ylt_des_succ_sn (x) (y):
   elim (nlt_inv_succ_sn … Hn) -Hn #Hm #_
   /2 width=1 by ylt_inj/
 | #m0 #H
-  elim (eq_inv_ysucc_inj … H) -H #m #H1 #H2 destruct //  
+  elim (eq_inv_ysucc_inj … H) -H #m #H1 #H2 destruct //
 ]
 qed-.
 

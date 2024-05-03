@@ -17,7 +17,7 @@ include "ground/arith/nat_plus.ma".
 
 (* ADDITION FOR NON-NEGATIVE INTEGERS ***************************************)
 
-(* Constructions with npred *************************************************) 
+(* Constructions with npred *************************************************)
 
 lemma nplus_pred_sn (m) (n):
       m ϵ 𝐏 → ⫰(m+n) = (⫰m)+n.

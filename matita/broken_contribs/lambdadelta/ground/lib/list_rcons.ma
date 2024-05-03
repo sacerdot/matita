@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/notation/functions/oplusleft_3.ma".
-include "ground/generated/pull_2.ma". 
+include "ground/generated/pull_2.ma".
 include "ground/lib/list_append.ma".
 
 (* RIGHT CONS FOR LISTS *****************************************************)

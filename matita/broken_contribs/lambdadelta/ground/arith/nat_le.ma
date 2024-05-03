@@ -68,7 +68,7 @@ lemma nle_inv_succ_bi (m) (n): (⁤↑m) ≤ (⁤↑n) → m ≤ n.
 #x * -x
 [ #H >(eq_inv_nsucc_bi … H) -n //
 | #o #Ho #H >(eq_inv_nsucc_bi … H) -n
-  /2 width=1 by nle_des_succ_sn/ 
+  /2 width=1 by nle_des_succ_sn/
 ]
 qed-.
 

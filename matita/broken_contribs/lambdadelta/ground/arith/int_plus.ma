@@ -64,7 +64,7 @@ qed.
 lemma zplus_zero_sn (z):
       z = 𝟎 +z.
 #z @(int_ind_psucc … z) -z //
-#z #H0 
+#z #H0
 
 qed.
 

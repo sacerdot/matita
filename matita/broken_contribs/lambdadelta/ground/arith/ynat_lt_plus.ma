@@ -34,7 +34,7 @@ lemma ylt_plus_dx_sn (z) (x) (y):
       z < x → z < x + y.
 #z #x #y * -z -x //
 #o #m #Hom @(ynat_split_nat_inf … y) - y //
-/3 width=1 by ylt_inj, nlt_plus_dx_dx/ 
+/3 width=1 by ylt_inj, nlt_plus_dx_dx/
 qed.
 
 (*** ylt_plus_dx2_trans *)
@@ -69,7 +69,7 @@ qed.
 (*** monotonic_ylt_plus_sn *)
 lemma ylt_plus_bi_sn (z) (x) (y):
       x < y → z < ∞ → z + x < z + y.
-#z #x #y #Hxy #Hz <yplus_comm <yplus_comm in ⊢ (??%); 
+#z #x #y #Hxy #Hz <yplus_comm <yplus_comm in ⊢ (??%);
 /2 width=1 by ylt_plus_bi_dx/
 qed.
 

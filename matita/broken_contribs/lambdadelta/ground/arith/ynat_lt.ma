@@ -39,7 +39,7 @@ qed-.
 lemma ylt_des_lt_inf_dx (x) (y): x < y → x < ∞.
 #x #y #H
 elim (ylt_des_gen_sn … H) -y #m #H destruct //
-qed-. 
+qed-.
 
 (*** ylt_fwd_lt_O1 *)
 lemma ylt_des_lt_zero_sn (x) (y): x < y → 𝟎 < y.

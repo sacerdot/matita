@@ -74,7 +74,7 @@ qed-.
 (*** not_le_to_lt *)
 lemma le_false_nlt (m) (n): (n ≤ m → ⊥) → m < n.
 #m #n elim (nat_split_lt_ge m n) [ // ]
-#H #Hn elim Hn -Hn // 
+#H #Hn elim Hn -Hn //
 qed.
 
 (*** lt_to_le_to_lt *)
@@ -111,7 +111,7 @@ lemma nlt_inv_zero_sn_pos (n):
 *
 [ #H0 elim (nlt_inv_refl … H0)
 | /2 width=2 by ex_intro/
-] 
+]
 qed-.
 
 (* Basic destructions *******************************************************)

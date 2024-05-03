@@ -74,7 +74,7 @@ lemma yle_antisym (x) (y):
 [ #m #n #Hmn #Hnm
   <(nle_antisym … Hmn) -Hmn /2 width=1 by yle_inv_inj_bi/
 | /2 width=1 by yle_inv_inf_sn/
-] 
+]
 qed-.
 
 (* Basic constructions ******************************************************)
@@ -99,7 +99,7 @@ lemma ynat_split_le_ge (x) (y):
 #m #y @(ynat_split_nat_inf … y) -y
 [| /3 width=1 by yle_inf, or_introl/ ]
 #n elim (nat_split_le_ge m n)
-/3 width=1 by yle_inj, or_introl, or_intror/  
+/3 width=1 by yle_inj, or_introl, or_intror/
 qed-.
 
 (* Main constructions *******************************************************)

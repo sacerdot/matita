@@ -44,4 +44,4 @@ lemma fbr_dapp_nexts (f) (p) (n):
 #f #p #n @(nat_ind_succ … n) -n //
 #n #IH
 <fbr_rconss_succ <fbr_dapp_next_dx <IH -IH //
-qed. 
+qed.

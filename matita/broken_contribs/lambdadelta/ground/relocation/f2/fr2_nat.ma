@@ -52,7 +52,7 @@ qed-.
 (*** at_inv_cons *)
 lemma fr2_nat_inv_lcons (f) (d) (h) (l1) (l2):
       ＠§❨l1, ❨d,h❩◗f❩ ≘ l2 →
-      ∨∨ ∧∧ l1 < d & ＠§❨l1, f❩ ≘ l2 
+      ∨∨ ∧∧ l1 < d & ＠§❨l1, f❩ ≘ l2
        | ∧∧ d ≤ l1 & ＠§❨l1+h, f❩ ≘ l2.
 #g #d #h #l1 #l2 @(insert_eq_1 … (❨d, h❩◗g))
 #f * -f -l1 -l2

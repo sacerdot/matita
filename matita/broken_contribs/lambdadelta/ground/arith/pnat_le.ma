@@ -60,7 +60,7 @@ lemma ple_inv_succ_bi (p) (q): ↑p ≤ ↑q → p ≤ q.
 #x * -x
 [ #H destruct //
 | #o #Ho #H destruct
-  /2 width=1 by ple_des_succ_sn/ 
+  /2 width=1 by ple_des_succ_sn/
 ]
 qed-.
 

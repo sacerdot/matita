@@ -108,5 +108,5 @@ lemma yle_des_plus_bi_sn_inj_md (m1) (m2) (y1) (y2):
       yinj_nat m2 ≤ y1 → y1 + yinj_nat m1 ≤ yinj_nat m2 + y2 → yinj_nat m1 ≤ y2.
 #m1 #m2 #y1 #y2 @(ynat_split_nat_inf … y2) -y2 //
 #n2 @(ynat_split_nat_inf … y1) -y1
-/2 width=4 by yle_des_plus_bi_sn_inj_sn/ 
+/2 width=4 by yle_des_plus_bi_sn_inj_sn/
 qed-.

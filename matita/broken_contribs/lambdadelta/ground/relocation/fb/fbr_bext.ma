@@ -38,7 +38,7 @@ interpretation
 
 lemma fbr_bext_id_bi (f):
       (𝐢) = 𝐛𝐱[f]❨𝐢,𝐢❩.
-#f normalize 
+#f normalize
 cases (f (ⓕ) (ⓣ)) //
 qed.
 

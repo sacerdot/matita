@@ -26,4 +26,4 @@ lemma fbr_after_next_dx (g) (f):
 #g elim g -g //
 * #g #IH #f //
 <fbr_after_next_sn <fbr_dapp_next_dx <fbr_rconss_pos <IH -IH //
-qed. 
+qed.

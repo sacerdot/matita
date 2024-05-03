@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/notation/functions/subset_p_0.ma".
-include "ground/lib/subset.ma".
+include "ground/subsets/subset.ma".
 include "ground/arith/nat_succ.ma".
 include "ground/arith/nat_ppred_psucc.ma".
 include "ground/arith/nat_pred.ma".

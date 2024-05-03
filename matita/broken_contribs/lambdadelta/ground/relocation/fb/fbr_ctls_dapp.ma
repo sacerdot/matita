@@ -33,4 +33,4 @@ lemma fbr_dapp_plus (f) (q) (p):
 #q #IH #p
 <pplus_succ_shift <IH -IH
 <fbr_dapp_succ_sn <fbr_dapp_succ_dx >fbr_ctls_succ //
-qed. 
+qed.
