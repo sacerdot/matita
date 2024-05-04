@@ -156,7 +156,7 @@ qed-.
 
 lemma lreq_inv_zero2: ∀I2,K2,L1,V2. L1 ⩬[0, 0] K2.ⓑ{I2}V2 →
                       ∃∃I1,K1,V1. K1 ⩬[0, 0] K2 & L1 = K1.ⓑ{I1}V1.
-#I2 #K2 #L1 #V2 #H elim (lreq_inv_zero1 … (lreq_sym … H)) -H 
+#I2 #K2 #L1 #V2 #H elim (lreq_inv_zero1 … (lreq_sym … H)) -H
 /3 width=5 by lreq_sym, ex2_3_intro/
 qed-.
 
@@ -168,7 +168,7 @@ qed-.
 
 lemma lreq_inv_succ2: ∀I2,K2,L1,V2,l,m. L1 ⩬[l, m] K2.ⓑ{I2}V2 → 0 < l →
                       ∃∃I1,K1,V1. K1 ⩬[↓l, m] K2 & L1 = K1.ⓑ{I1}V1.
-#I2 #K2 #L1 #V2 #l #m #H #Hl elim (lreq_inv_succ1 … (lreq_sym … H)) -H 
+#I2 #K2 #L1 #V2 #l #m #H #Hl elim (lreq_inv_succ1 … (lreq_sym … H)) -H
 /3 width=5 by lreq_sym, ex2_3_intro/
 qed-.
 

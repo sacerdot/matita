@@ -21,7 +21,7 @@ include "basic_2/rt_computation/cprre.ma".
 (* Properties with context-sensitive parallel r-computation for terms ******)
 
 lemma cprre_cprs_conf (h) (G) (L) (T):
-      ∀T1. ❨G,L❩ ⊢ T ➡*[h,0] T1 → 
+      ∀T1. ❨G,L❩ ⊢ T ➡*[h,0] T1 →
       ∀T2. ❨G,L❩ ⊢ T ➡*𝐍[h,0] T2 → ❨G,L❩ ⊢ T1 ➡*𝐍[h,0] T2.
 #h #G #L #T0 #T1 #HT01 #T2 * #HT02 #HT2
 elim (cprs_conf … HT01 … HT02) -T0 #T0 #HT10 #HT20

@@ -72,7 +72,7 @@ lemma lstas_inv_da_ge: ∀h,G,L,T,U,d2,d. ⦃G, L⦄ ⊢ T •*[h, d2] U →
 [ /4 width=5 by da_sort, deg_iter, ex3_2_intro/
 | #G #L #K #V #W #U #i #d2 #HLK #_ #HWU *
   lapply (drop_fwd_drop2 … HLK) /3 width=10 by da_lift, da_ldef, ex3_2_intro/
-| #G #L #K #W #V #i #HLK #_ * 
+| #G #L #K #W #V #i #HLK #_ *
   #g #d1 #HW #HV #Hd1 /4 width=6 by da_ldec, lt_to_le, le_S_S, ex3_2_intro/
 | #G #L #K #W #V #U #i #d2 #HLK #_ #HVU *
   lapply (drop_fwd_drop2 … HLK)
@@ -90,6 +90,6 @@ lemma lstas_inv_refl_pos: ∀h,G,L,T,d. ⦃G, L⦄ ⊢ T •*[h, d+1] T → ⊥.
 #g #d1 #HT1 #HT12 #Hd21 lapply (da_mono … HT1 … HT12) -h -G -L -T
 #H elim (discr_x_minus_xy … H) -H
 [ #H destruct /2 width=3 by le_plus_xSy_O_false/
-| -d1 <plus_n_Sm #H destruct 
+| -d1 <plus_n_Sm #H destruct
 ]
 qed-.

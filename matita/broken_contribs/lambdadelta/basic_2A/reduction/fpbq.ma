@@ -35,7 +35,7 @@ interpretation
 lemma fpbq_refl: ∀h,g. tri_reflexive … (fpbq h g).
 /2 width=1 by fpbq_cpx/ qed.
 
-lemma cpr_fpbq: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L, T1⦄ ≽[h, g] ⦃G, L, T2⦄. 
+lemma cpr_fpbq: ∀h,g,G,L,T1,T2. ⦃G, L⦄ ⊢ T1 ➡ T2 → ⦃G, L, T1⦄ ≽[h, g] ⦃G, L, T2⦄.
 /3 width=1 by fpbq_cpx, cpr_cpx/ qed.
 
 lemma lpr_fpbq: ∀h,g,G,L1,L2,T. ⦃G, L1⦄ ⊢ ➡ L2 → ⦃G, L1, T⦄ ≽[h, g] ⦃G, L2, T⦄.

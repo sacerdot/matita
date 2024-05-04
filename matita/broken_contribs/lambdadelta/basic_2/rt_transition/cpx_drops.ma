@@ -44,7 +44,7 @@ qed-.
 (* Basic_2A1: was: cpx_inv_lref1 *)
 lemma cpx_inv_lref1_drops (G) (L):
       ∀T2,i. ❨G,L❩ ⊢ #i ⬈ T2 →
-      ∨∨ T2 = #i 
+      ∨∨ T2 = #i
        | ∃∃J,K,V,V2. ⇩[i] L ≘ K. ⓑ[J]V & ❨G,K❩ ⊢ V ⬈ V2 & ⇧[↑i] V2 ≘ T2.
 #G #L #T1 #i * #c #H elim (cpg_inv_lref1_drops … H) -H *
 /4 width=7 by ex3_4_intro, ex_intro, or_introl, or_intror/

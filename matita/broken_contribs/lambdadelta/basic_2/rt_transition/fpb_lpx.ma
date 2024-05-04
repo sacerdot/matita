@@ -25,7 +25,7 @@ lemma lpx_fpb (G) (T):
 /3 width=1 by rpx_fpb, lpx_rpx/ qed.
 
 lemma fpb_intro_req (G1) (G2) (L1) (L2) (T1) (T2):
-      ∀L0,L,T. ❨G1,L1,T1❩ ⬂⸮ ❨G2,L,T❩ → ❨G2,L❩ ⊢ T ⬈ T2 → 
+      ∀L0,L,T. ❨G1,L1,T1❩ ⬂⸮ ❨G2,L,T❩ → ❨G2,L❩ ⊢ T ⬈ T2 →
       L ≡[T] L0 → ❨G2,L0❩ ⊢ ⬈ L2 → ❨G1,L1,T1❩ ≽ ❨G2,L2,T2❩.
 /4 width=10 by fpb_intro, lpx_rpx, reqg_rpx_trans/ qed.
 

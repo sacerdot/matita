@@ -29,7 +29,7 @@ theorem lleq_canc_dx: ∀L1,L2,L,T,l. L1 ≡[l, T] L → L2 ≡[l, T] L → L1 �
 
 (* Advanced properies on negated lazy equivalence *****************************)
 
-(* Note: for use in auto, works with /4 width=8/ so lleq_canc_sn is preferred *) 
+(* Note: for use in auto, works with /4 width=8/ so lleq_canc_sn is preferred *)
 lemma lleq_nlleq_trans: ∀l,T,L1,L. L1 ≡[T, l] L →
                         ∀L2. (L ≡[T, l] L2 → ⊥) → (L1 ≡[T, l] L2 → ⊥).
 /3 width=3 by lleq_canc_sn/ qed-.

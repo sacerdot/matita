@@ -20,7 +20,7 @@ include "basic_2A/equivalence/scpes.ma".
 (* Advanced inversion lemmas ************************************************)
 
 lemma scpes_inv_abst2: ∀h,g,a,G,L,T1,T2,W2,d1,d2. ⦃G, L⦄ ⊢ T1 •*⬌*[h, g, d1, d2] ⓛ{a}W2.T2 →
-                       ∃∃W,T. ⦃G, L⦄ ⊢ T1 •*➡*[h, g, d1] ⓛ{a}W.T & ⦃G, L⦄ ⊢ W2 ➡* W & 
+                       ∃∃W,T. ⦃G, L⦄ ⊢ T1 •*➡*[h, g, d1] ⓛ{a}W.T & ⦃G, L⦄ ⊢ W2 ➡* W &
                               ⦃G, L.ⓛW2⦄ ⊢ T2 •*➡*[h, g, d2] T.
 #h #g #a #G #L #T1 #T2 #W2 #d1 #d2 * #T0 #HT10 #H
 elim (scpds_inv_abst1 … H) -H #W #T #HW2 #HT2 #H destruct /2 width=5 by ex3_2_intro/

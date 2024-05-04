@@ -16,7 +16,7 @@
   <body>
     Marks:
     "@" system feature,
-    "+" added feature, "*" replaced feature, "-" removed feature 
+    "+" added feature, "*" replaced feature, "-" removed feature
   </body>
   <table name="changes"/>
 

@@ -53,7 +53,7 @@ lemma rpx_teqg_conf_sn (S) (G):
 lemma rpx_teqg_div (S) (G):
       reflexive … S → symmetric … S →
       ∀T1,T2. T1 ≛[S] T2 → ∀L1,L2. ❨G,L1❩ ⊢ ⬈[T2] L2 → ❨G,L1❩ ⊢ ⬈[T1] L2.
-/2 width=6 by teqg_rex_div/ qed-. 
+/2 width=6 by teqg_rex_div/ qed-.
 
 lemma cpx_teqg_repl_reqg (S) (G) (L0) (T0):
       reflexive … S →

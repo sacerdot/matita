@@ -27,7 +27,7 @@ lemma lpx_sn_llpx_sn: ∀R. (∀L. reflexive … (R L)) →
 [ -HR -IH /4 width=2 by lpx_sn_fwd_length, llpx_sn_sort/
 | -HR #i elim (lt_or_ge i (|L1|))
   [2: -IH /4 width=4 by lpx_sn_fwd_length, llpx_sn_free, le_repl_sn_conf_aux/ ]
-  #Hi #Hx #L2 #l elim (ylt_split i l) 
+  #Hi #Hx #L2 #l elim (ylt_split i l)
   [ -x /3 width=2 by llpx_sn_skip, lpx_sn_fwd_length/ ]
   #Hli #HL12 elim (drop_O1_lt (Ⓕ) L1 i) //
   #I #K1 #V1 #HLK1 elim (lpx_sn_drop_conf … HL12 … HLK1) -HL12

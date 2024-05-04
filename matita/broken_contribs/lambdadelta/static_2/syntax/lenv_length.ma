@@ -38,7 +38,7 @@ lemma length_bind: ∀I,L. |L.ⓘ[I]| = ↑|L|.
 lemma length_inv_zero_dx: ∀L. |L| = 𝟎 → L = ⋆.
 * // #L #I
 >length_bind #H
-elim (eq_inv_nsucc_zero … H) 
+elim (eq_inv_nsucc_zero … H)
 qed-.
 
 lemma length_inv_zero_sn: ∀L. 𝟎 = |L| → L = ⋆.
@@ -49,7 +49,7 @@ lemma length_inv_succ_dx: ∀n,L. |L| = ↑n →
                           ∃∃I,K. |K| = n & L = K. ⓘ[I].
 #n *
 [ >length_atom #H
-  elim (eq_inv_zero_nsucc … H) 
+  elim (eq_inv_zero_nsucc … H)
 | #L #I >length_bind
   /3 width=4 by ex2_2_intro, eq_inv_nsucc_bi/
 ]

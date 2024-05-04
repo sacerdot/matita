@@ -39,7 +39,7 @@ elim (eq_genv_dec G1 G2) #HnG destruct
 @or_intror #H
 elim (feqg_inv_gen_sn … H) -H #H #HL #HT destruct
 /2 width=1 by/
-qed-. 
+qed-.
 
 (* Main properties **********************************************************)
 

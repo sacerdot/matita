@@ -150,7 +150,7 @@ qed-.
 lemma fqu_cpx_trans: ∀h,g,G1,G2,L1,L2,T1,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ →
                      ∀U2. ⦃G2, L2⦄ ⊢ T2 ➡[h, g] U2 →
                      ∃∃U1. ⦃G1, L1⦄ ⊢ T1 ➡[h, g] U1 & ⦃G1, L1, U1⦄ ⊐ ⦃G2, L2, U2⦄.
-#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 
+#h #g #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2
 /3 width=3 by fqu_pair_sn, fqu_bind_dx, fqu_flat_dx, cpx_pair_sn, cpx_bind, cpx_flat, ex2_intro/
 [ #I #G #L #V2 #U2 #HVU2
   elim (lift_total U2 0 1)

@@ -180,7 +180,7 @@ lemma cpg_inv_lifts_sn (Rs) (Rk) (c) (G): reflexive … Rk →
   elim (cpg_inv_sort1 … H2) -H2 *
   [ #H1 #H2 destruct /2 width=3 by cpg_atom, lifts_sort, ex2_intro/
   | #s2 #HRs #H1 #H2 destruct /3 width=3 by cpg_ess, lifts_sort, ex2_intro/
-  ] 
+  ]
 | #i2 #HG #HL #HU #c #U2 #H2 #b #f #K #HLK #X1 #H1 destruct
   elim (cpg_inv_lref1_drops … H2) -H2 *
   [ #H1 #H2 destruct /3 width=3 by cpg_refl, ex2_intro/ ]

@@ -37,7 +37,7 @@ lemma fpbc_intro (G1) (L1) (T1) (G2) (L2) (T2):
 
 lemma rpx_fpbc (G) (T):
       ∀L1,L2. ❨G,L1❩ ⊢ ⬈[T] L2 → (L1 ≅[T] L2 → ⊥) → ❨G,L1,T❩ ≻ ❨G,L2,T❩.
-/4 width=4 by fpbc_intro, rpx_fpb, feqg_fwd_reqg_sn/ qed.  
+/4 width=4 by fpbc_intro, rpx_fpb, feqg_fwd_reqg_sn/ qed.
 
 (* Basic inversion lemmas ***************************************************)
 

@@ -29,7 +29,7 @@ interpretation
 (* Basic properties *********************************************************)
 
 lemma fpb_intro (G1) (L1) (T1) (G2) (L2) (T2):
-      ∀L,T. ❨G1,L1,T1❩ ⬂⸮ ❨G2,L,T❩ → ❨G2,L❩ ⊢ T ⬈ T2 → 
+      ∀L,T. ❨G1,L1,T1❩ ⬂⸮ ❨G2,L,T❩ → ❨G2,L❩ ⊢ T ⬈ T2 →
       ❨G2,L❩ ⊢ ⬈[T] L2 → ❨G1,L1,T1❩ ≽ ❨G2,L2,T2❩.
 /2 width=5 by ex3_2_intro/ qed.
 

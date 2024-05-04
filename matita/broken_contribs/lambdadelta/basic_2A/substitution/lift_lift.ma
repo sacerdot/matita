@@ -130,7 +130,7 @@ theorem lift_trans_be: ∀l1,m1,T1,T. ⬆[l1, m1] T1 ≡ T →
 | #p #l1 #m1 #l2 #m2 #T2 #HT2 #_ #_
   >(lift_inv_gref1 … HT2) -HT2 //
 | #a #I #V1 #V2 #T1 #T2 #l1 #m1 #_ #_ #IHV12 #IHT12 #l2 #m2 #X #HX #Hl12 #Hl21
-  elim (lift_inv_bind1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct 
+  elim (lift_inv_bind1 … HX) -HX #V0 #T0 #HV20 #HT20 #HX destruct
   lapply (IHV12 … HV20 ? ?) // -IHV12 -HV20 #HV10
   lapply (IHT12 … HT20 ? ?) /2 width=1 by lift_bind, monotonic_le_plus_l, le_S_S/ (* full auto a bit slow *)
 | #I #V1 #V2 #T1 #T2 #l1 #m1 #_ #_ #IHV12 #IHT12 #l2 #m2 #X #HX #Hl12 #Hl21

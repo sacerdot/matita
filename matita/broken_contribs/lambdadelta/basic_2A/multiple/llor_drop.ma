@@ -36,7 +36,7 @@ lemma llor_total: ∀L1,L2,T,l. |L1| = |L2| → ∃L. L1 ⋓[T, l] L2 ≡ L.
   elim (ylt_split l (|ⓑ{I1}V1.L1|))
   [ elim (frees_dec (ⓑ{I1}V1.L1) T l (|L1|)) #HnU
     elim (IHL1 L2 T l) // -IHL1 -HL12
-    [ #L #HL12 >ltail_length /4 width=2 by llor_tail_frees, ylt_fwd_succ2, ex_intro/ 
+    [ #L #HL12 >ltail_length /4 width=2 by llor_tail_frees, ylt_fwd_succ2, ex_intro/
     | /4 width=2 by llor_tail_cofrees, ex_intro/
     ]
   | -IHL1 /4 width=2 by llor_skip, plus_minus_m_m, ex_intro/

@@ -100,7 +100,7 @@ table {
          "basic slicing (lenvs) removed"
          "primitive finite slicing (lenvs)"
          "basic relocation (terms, lists of terms) removed"
-         "primitive finite relocation (items)" 
+         "primitive finite relocation (items)"
          "primitive finite relocation (terms, lists of terms)"
        }
      ]

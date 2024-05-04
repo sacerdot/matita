@@ -33,7 +33,7 @@ inductive term: Type[0] ≝
   | TGRef: nat → term          (* reference by level: starts at 0 *)
   | TAbst: term → term         (* abstraction: scope *)
   | TAbbr: term → term → term  (* abbreviation: definition, scope *)
-  | TCons: term → term → term  (* group: body, tail *) 
+  | TCons: term → term → term  (* group: body, tail *)
 .
 
 interpretation

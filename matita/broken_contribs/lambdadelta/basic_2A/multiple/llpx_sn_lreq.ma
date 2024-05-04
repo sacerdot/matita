@@ -23,7 +23,7 @@ include "basic_2A/multiple/llpx_sn.ma".
 lemma lreq_llpx_sn_trans: ∀R,L2,L,T,l. llpx_sn R l T L2 L →
                           ∀L1. L1 ⩬[l, ∞] L2 → llpx_sn R l T L1 L.
 #R #L2 #L #T #l #H elim H -L2 -L -T -l
-/4 width=5 by llpx_sn_flat, llpx_sn_gref, llpx_sn_skip, llpx_sn_sort, lreq_fwd_length, trans_eq/  
+/4 width=5 by llpx_sn_flat, llpx_sn_gref, llpx_sn_skip, llpx_sn_sort, lreq_fwd_length, trans_eq/
 [ #I #L2 #L #K2 #K #V2 #V #l #i #Hli #HLK2 #HLK #HK2 #HV2 #_ #L1 #HL12
   elim (lreq_drop_trans_be … HL12 … HLK2) -L2 // >yminus_Y_inj #K1 #HK12 #HLK1
   lapply (lreq_inv_O_Y … HK12) -HK12 #H destruct /2 width=9 by llpx_sn_lref/
@@ -35,7 +35,7 @@ qed-.
 lemma llpx_sn_lreq_trans: ∀R,L,L1,T,l. llpx_sn R l T L L1 →
                           ∀L2. L1 ⩬[l, ∞] L2 → llpx_sn R l T L L2.
 #R #L #L1 #T #l #H elim H -L -L1 -T -l
-/4 width=5 by llpx_sn_flat, llpx_sn_gref, llpx_sn_skip, llpx_sn_sort, lreq_fwd_length, trans_eq/  
+/4 width=5 by llpx_sn_flat, llpx_sn_gref, llpx_sn_skip, llpx_sn_sort, lreq_fwd_length, trans_eq/
 [ #I #L #L1 #K #K1 #V #V1 #l #i #Hli #HLK #HLK1 #HK1 #HV1 #_ #L2 #HL12
   elim (lreq_drop_conf_be … HL12 … HLK1) -L1 // >yminus_Y_inj #K2 #HK12 #HLK2
   lapply (lreq_inv_O_Y … HK12) -HK12 #H destruct /2 width=9 by llpx_sn_lref/
@@ -44,7 +44,7 @@ lemma llpx_sn_lreq_trans: ∀R,L,L1,T,l. llpx_sn R l T L L1 →
 ]
 qed-.
 
-lemma llpx_sn_lreq_repl: ∀R,L1,L2,T,l. llpx_sn R l T L1 L2 → ∀K1. K1 ⩬[l, ∞] L1 → 
+lemma llpx_sn_lreq_repl: ∀R,L1,L2,T,l. llpx_sn R l T L1 L2 → ∀K1. K1 ⩬[l, ∞] L1 →
                          ∀K2. L2 ⩬[l, ∞] K2 → llpx_sn R l T K1 K2.
 /3 width=4 by llpx_sn_lreq_trans, lreq_llpx_sn_trans/ qed-.
 

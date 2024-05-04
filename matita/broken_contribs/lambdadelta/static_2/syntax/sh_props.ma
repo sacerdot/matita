@@ -19,7 +19,7 @@ include "static_2/syntax/sh_nexts.ma".
 (* acyclicity condition *)
 record sh_acyclic (h): Prop ≝
 {
-(**) (* use extensional equivalence *) 
+(**) (* use extensional equivalence *)
   sh_nexts_inj: ∀s,n1,n2. ⇡*[h,n1]s = ⇡*[h,n2]s → n1 = n2
 }.
 

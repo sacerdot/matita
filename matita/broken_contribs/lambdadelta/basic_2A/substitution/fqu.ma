@@ -78,13 +78,13 @@ qed-.
 
 lemma fqu_inv_eq: ∀G,L1,L2,T. ⦃G, L1, T⦄ ⊐ ⦃G, L2, T⦄ → |L1| = |L2| → ⊥.
 #G #L1 #L2 #T #H #H0 @(fqu_inv_eq_aux … H … H0) // (**) (* full auto fails *)
-qed-. 
+qed-.
 
 (* Advanced eliminators *****************************************************)
 
 lemma fqu_wf_ind: ∀R:relation3 …. (
                      ∀G1,L1,T1. (∀G2,L2,T2. ⦃G1, L1, T1⦄ ⊐ ⦃G2, L2, T2⦄ → R G2 L2 T2) →
-		                R G1 L1 T1
-		  ) → ∀G1,L1,T1. R G1 L1 T1.
+                                R G1 L1 T1
+                  ) → ∀G1,L1,T1. R G1 L1 T1.
 #R #HR @(f3_ind … fw) #x #IHx #G1 #L1 #T1 #H destruct /4 width=1 by fqu_fwd_fw/
 qed-.

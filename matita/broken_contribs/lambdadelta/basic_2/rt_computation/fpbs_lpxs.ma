@@ -90,7 +90,7 @@ lemma fpbs_intro_star (S) (G) (T) (T0) (L) (L0):
 
 (* Basic_2A1: uses: fpbs_inv_alt *)
 lemma fpbs_inv_star (S):
-      reflexive … S → symmetric … S → Transitive  … S → 
+      reflexive … S → symmetric … S → Transitive  … S →
       ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ≥ ❨G2,L2,T2❩ →
       ∃∃G,L,L0,T,T0. ❨G1,L1❩ ⊢ T1 ⬈* T & ❨G1,L1,T❩ ⬂* ❨G,L,T0❩ & ❨G,L❩ ⊢ ⬈* L0 & ❨G,L0,T0❩ ≛[S] ❨G2,L2,T2❩.
 #S #H1S #H2S #H3S #G1 #G2 #L1 #L2 #T1 #T2 #H @(fpbs_ind_dx … H) -G1 -L1 -T1

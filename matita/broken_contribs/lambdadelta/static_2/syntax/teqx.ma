@@ -48,7 +48,7 @@ lemma teqg_teqx (S):
 lemma teqx_inv_sort1:
       ∀X2,s1. ⋆s1 ≅ X2 →
       ∃s2. X2 = ⋆s2.
-#X1 #s1 #H elim (teqg_inv_sort1 … H) -H /2 width=2 by ex_intro/  
+#X1 #s1 #H elim (teqg_inv_sort1 … H) -H /2 width=2 by ex_intro/
 qed-.
 (*
 lemma teqx_inv_lref1:

@@ -65,7 +65,7 @@ lemma append_inj_length_sn: ∀K1,K2,L1,L2. L1 + K1 = L2 + K2 → |K1| = |K2| �
   [ #L1 #L2 #_ >length_atom >length_bind
     #H elim (eq_inv_nsucc_zero … H)
   | #K2 #I2 #L1 #L2 #H1 >length_bind >length_bind #H2
-    lapply (eq_inv_nsucc_bi … H2) -H2 #H2  
+    lapply (eq_inv_nsucc_bi … H2) -H2 #H2
     elim (destruct_lbind_lbind_aux … H1) -H1 #H1 #H3 destruct (**) (* destruct lemma needed *)
     elim (IH … H1) -IH -H1 /3 width=4 by conj/
   ]

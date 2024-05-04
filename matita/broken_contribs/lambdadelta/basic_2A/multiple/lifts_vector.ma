@@ -33,7 +33,7 @@ lemma lifts_inv_applv1: ∀V1s,U1,T2,cs. ⬆*[cs] Ⓐ V1s. U1 ≡ T2 →
                         ∃∃V2s,U2. ⬆*[cs] V1s ≡ V2s & ⬆*[cs] U1 ≡ U2 &
                                   T2 = Ⓐ V2s. U2.
 #V1s elim V1s -V1s normalize
-[ #T1 #T2 #cs #HT12  
+[ #T1 #T2 #cs #HT12
   @ex3_2_intro [3,4: // |1,2: skip | // ] (**) (* explicit constructor *)
 | #V1 #V1s #IHV1s #T1 #X #cs #H
   elim (lifts_inv_flat1 … H) -H #V2 #Y #HV12 #HY #H destruct

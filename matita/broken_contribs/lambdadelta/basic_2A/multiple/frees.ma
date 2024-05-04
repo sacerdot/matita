@@ -70,7 +70,7 @@ qed-.
 lemma frees_inv_lref_skip: ∀L,l,j,i. L ⊢ i ϵ 𝐅*[l]⦃#j⦄ → yinj j < l → j = i.
 #L #l #j #i #H #Hjl elim (frees_inv_lref … H) -H //
 * #I #K #W #Hlj elim (ylt_yle_false … Hlj) -Hlj //
-qed-. 
+qed-.
 
 lemma frees_inv_lref_ge: ∀L,l,j,i. L ⊢ i ϵ 𝐅*[l]⦃#j⦄ → i ≤ j → j = i.
 #L #l #j #i #H #Hij elim (frees_inv_lref … H) -H //

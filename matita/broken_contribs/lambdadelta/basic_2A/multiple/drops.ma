@@ -44,7 +44,7 @@ definition d_liftables1: relation2 lenv term → predicate bool ≝
 
 definition d_liftables1_all: relation2 lenv term → predicate bool ≝
                              λR,s. ∀L,K,cs. ⬇*[s, cs] L ≡ K →
-                             ∀Ts,Us. ⬆*[cs] Ts ≡ Us → 
+                             ∀Ts,Us. ⬆*[cs] Ts ≡ Us →
                              all … (R K) Ts → all … (R L) Us.
 
 (* Basic inversion lemmas ***************************************************)

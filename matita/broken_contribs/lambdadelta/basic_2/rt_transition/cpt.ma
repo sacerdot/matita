@@ -124,7 +124,7 @@ lemma cpt_inv_sort_sn (h) (n) (G) (L) (s):
 elim (cpg_inv_sort1 … H) -H * #H1 #H2 destruct
 [ /2 width=1 by conj/
 | #H1 #H2 destruct /2 width=1 by conj/
-] 
+]
 qed-.
 
 lemma cpt_inv_zero_sn (h) (n) (G) (L):

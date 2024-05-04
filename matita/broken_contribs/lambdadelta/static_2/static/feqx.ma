@@ -28,5 +28,5 @@ lemma feqg_feqx (S) (G1) (G2) (L1) (L2) (T1) (T2):
       ❨G1,L1,T1❩ ≛[S] ❨G2,L2,T2❩ → ❨G1,L1,T1❩ ≅ ❨G2,L2,T2❩.
 #S #G1 #G2 #L1 #L2 #T1 #T2 #H
 elim (feqg_inv_gen_sn … H) -H
-/3 width=2 by feqg_intro_sn, reqg_reqx, teqg_teqx/ 
+/3 width=2 by feqg_intro_sn, reqg_reqx, teqg_teqx/
 qed.

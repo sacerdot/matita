@@ -92,7 +92,7 @@ theorem reqg_canc_dx (S) (T):
 /3 width=3 by reqg_trans, reqg_sym/ qed-.
 
 theorem reqg_repl (S) (T:term):
-        reflexive … S → symmetric … S → Transitive … S → 
+        reflexive … S → symmetric … S → Transitive … S →
         ∀L1,L2. L1 ≛[S,T] L2 →
         ∀K1. L1 ≛[S,T] K1 → ∀K2. L2 ≛[S,T] K2 → K1 ≛[S,T] K2.
 /3 width=3 by reqg_canc_sn, reqg_trans/ qed-.

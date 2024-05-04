@@ -87,7 +87,7 @@ qed-.
 fact lpx_sn_dropable_aux: ∀R,L2,K2,s,l,m. ⬇[s, l, m] L2 ≡ K2 → ∀L1. lpx_sn R L1 L2 →
                           l = 0 → ∃∃K1. ⬇[s, 0, m] L1 ≡ K1 & lpx_sn R K1 K2.
 #R #L2 #K2 #s #l #m #H elim H -L2 -K2 -l -m
-[ #l #m #Hm #X #H >(lpx_sn_inv_atom2 … H) -H 
+[ #l #m #Hm #X #H >(lpx_sn_inv_atom2 … H) -H
   /4 width=3 by drop_atom, lpx_sn_atom, ex2_intro/
 | #I #K2 #V2 #X #H elim (lpx_sn_inv_pair2 … H) -H
   #K1 #V1 #HK12 #HV12 #H destruct

@@ -36,7 +36,7 @@ lemma frees_dec: ∀L,U,l,i. Decidable (frees l L U i).
       [ elim (drop_O1_lt (Ⓕ) L j) // -Hj #I #K #W #HLK destruct
         elim (IH K W … 0 (i-j-1)) -IH [1,3: /3 width=5 by frees_lref_be, drop_fwd_rfw, or_introl/ ] #HnW
         @or_intror #H elim (frees_inv_lref_lt … H) // #Z #Y #X #_ #HLY -l
-        lapply (drop_mono … HLY … HLK) -L #H destruct /2 width=1 by/  
+        lapply (drop_mono … HLY … HLK) -L #H destruct /2 width=1 by/
       | -x @or_intror #H elim (lt_refl_false i)
         lapply (frees_inv_lref_free … H ?) -l //
       ]

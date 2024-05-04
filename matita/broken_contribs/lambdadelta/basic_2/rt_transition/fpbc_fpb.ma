@@ -24,7 +24,7 @@ lemma fpb_inv_fpbc:
       ∀G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ≽ ❨G2,L2,T2❩ →
       ∨∨ ❨G1,L1,T1❩ ≅ ❨G2,L2,T2❩
        | ❨G1,L1,T1❩ ≻ ❨G2,L2,T2❩.
-#G1 #G2 #L1 #L2 #T1 #T2 #H 
+#G1 #G2 #L1 #L2 #T1 #T2 #H
 elim (feqx_dec G1 G2 L1 L2 T1 T2)
 /4 width=1 by fpbc_intro, or_intror, or_introl/
 qed-.

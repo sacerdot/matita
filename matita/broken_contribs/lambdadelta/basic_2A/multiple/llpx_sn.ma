@@ -182,7 +182,7 @@ lemma llpx_sn_ge_up: ∀R,L1,L2,U,lt. llpx_sn R lt U L1 L2 → ∀T,l,m. ⬆[l, 
 | /2 width=1 by llpx_sn_free/
 | #L1 #L2 #lt #p #HL12 #X #l #m #H #_ >(lift_inv_gref2 … H) -H /2 width=1 by llpx_sn_gref/
 | #a #I #L1 #L2 #W #U #lt #_ #_ #IHV #IHT #X #l #m #H #Hltlm destruct
-  elim (lift_inv_bind2 … H) -H #V #T #HVW >commutative_plus #HTU #H destruct 
+  elim (lift_inv_bind2 … H) -H #V #T #HVW >commutative_plus #HTU #H destruct
   @(llpx_sn_bind) /2 width=4 by/ (**) (* full auto fails *)
   @(IHT … HTU) /2 width=1 by yle_succ/
 | #I #L1 #L2 #W #U #lt #_ #_ #IHV #IHT #X #l #m #H #Hltlm destruct
