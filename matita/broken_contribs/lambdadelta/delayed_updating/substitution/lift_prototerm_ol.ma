@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset_ol.ma".
+include "ground/subsets/subset_ol.ma".
 include "delayed_updating/substitution/lift_prototerm.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)

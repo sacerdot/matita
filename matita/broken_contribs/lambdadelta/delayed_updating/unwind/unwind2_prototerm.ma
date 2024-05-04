@@ -14,7 +14,7 @@
 
 include "delayed_updating/unwind/unwind2_path.ma".
 include "delayed_updating/syntax/prototerm.ma".
-include "ground/lib/subset_ext.ma".
+include "ground/subsets/subset_ext.ma".
 
 (* TAILED UNWIND FOR PROTOTERM **********************************************)
 

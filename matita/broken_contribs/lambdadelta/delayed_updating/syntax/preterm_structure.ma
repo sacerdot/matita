@@ -61,7 +61,7 @@ qed-.
 
 lemma term_root_eq_des_structure_bi (t) (p) (q1) (q2):
       t ϵ 𝐓 → p●q1 ϵ ▵t → p●q2 ϵ ▵t → ⊗q1 = ⊗q2 →
-      ∨∨ ∃∃r2. q1 = q2●r2 & 𝐞 = ⊗r2 
+      ∨∨ ∃∃r2. q1 = q2●r2 & 𝐞 = ⊗r2
       |  ∃∃r1. q2 = q1●r1 & 𝐞 = ⊗r1.
 #t #p #q1 #q2 #Ht #Hq1 #Hq2 #Hq
 elim (term_slice_des_structure_bi … q1 q2 Ht …) // -t

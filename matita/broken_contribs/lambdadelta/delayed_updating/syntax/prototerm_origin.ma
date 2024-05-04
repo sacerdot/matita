@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset_le.ma".
-include "ground/lib/subset_empty.ma".
+include "ground/subsets/subset_le.ma".
+include "ground/subsets/subset_listed.ma".
 include "delayed_updating/syntax/subset_fired.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/notation/functions/subset_o_0.ma".

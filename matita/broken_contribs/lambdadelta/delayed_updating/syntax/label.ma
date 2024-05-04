@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* A SYSTEM OF λ-CALCULUS WITH DELAYED UPDATING 
+(* A SYSTEM OF λ-CALCULUS WITH DELAYED UPDATING
  * Initial invocation: - Patience on me to gain peace and perfection! -
  *)
 
@@ -60,4 +60,4 @@ lemma label_is_d (l):
        | ∀k. 𝗱k = l → ⊥.
 * [ /3 width=2 by ex_intro, or_introl/ ]
 @or_intror #k #H0 destruct
-qed-.  
+qed-.

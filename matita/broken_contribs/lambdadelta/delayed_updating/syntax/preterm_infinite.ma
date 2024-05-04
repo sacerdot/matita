@@ -74,10 +74,9 @@ theorem preterm_y:
         term_y ϵ 𝐓.
 @mk_preterm_posts
 [ #p1 #p2 * #n1 #H1 * #n2 #H2 * #q2 #_
-  >(list_append_empty_sn … p1) in ⊢ (%→?); #H0 destruct 
+  >(list_append_empty_sn … p1) in ⊢ (%→?); #H0 destruct
   <(eq_inv_append_bi_path_y_sn … H0) -n2 //
-| #p #l1 #k2 * #q1 * #n1 #H1 * #q2 * #n2 #H2 
-  
-  
-  
-  
+| #p #l1 #k2 * #q1 * #n1 #H1 * #q2 * #n2 #H2
+
+
+

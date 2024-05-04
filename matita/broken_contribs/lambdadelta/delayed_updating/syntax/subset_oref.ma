@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset.ma".
+include "ground/subsets/subset.ma".
 include "delayed_updating/syntax/path_clear.ma".
 include "delayed_updating/notation/functions/subset_or_1.ma".
 

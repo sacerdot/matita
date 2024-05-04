@@ -58,5 +58,5 @@ lemma unwind2_term_fsubst_and_sn_sn (f) (t) (u1) (u2):
 @(subset_eq_trans … (unwind2_term_fsubst …)) //
 @(term_eq_repl_fwd … Ht) -f -Ht (**) (* auto fails *)
 @conj //
-@subset_le_or_sn_refl_dx //
+@subset_le_or_sn_refl_sn //
 qed.

@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 (**) (* reverse include *)
-include "ground/lib/subset_and_eq.ma".
-include "ground/lib/subset_ext_eq.ma".
+include "ground/subsets/subset_and_eq.ma".
+include "ground/subsets/subset_ext_eq.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/substitution/lift_path_eq.ma".
 include "delayed_updating/substitution/lift_prototerm.ma".

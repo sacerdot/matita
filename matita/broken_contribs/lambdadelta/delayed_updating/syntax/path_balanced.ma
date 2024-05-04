@@ -14,7 +14,7 @@
 
 include "delayed_updating/syntax/path_help.ma".
 include "delayed_updating/notation/functions/subset_b_0.ma".
-include "ground/lib/subset.ma".
+include "ground/subsets/subset.ma".
 include "ground/generated/insert_eq_1.ma".
 include "ground/xoa/ex_3_2.ma".
 

@@ -12,9 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset_le.ma".
-include "ground/lib/subset_empty.ma".
-include "ground/lib/subset_singleton.ma".
+include "ground/subsets/subset_le.ma".
+include "ground/subsets/subset_listed.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/reduction/subset_reducible.ma".
 include "delayed_updating/notation/functions/subset_nf_0.ma".
@@ -32,18 +31,20 @@ interpretation
 (* Basic inversion **********************************************************)
 
 lemma tnf_inv_gen (t) (r):
-      t ϵ 𝐍𝐅 → r ϵ 𝐑❨t❩ → ⊥.
-/2 width=3 by/
+      t ϵ 𝐍𝐅 → r ⧸ϵ 𝐑❨t❩.
+/3 width=3 by subset_nin_inv_empty/
 qed-.
 
 (* Basic constructions ******************************************************)
 
 lemma tnf_empty: Ⓕ ϵ 𝐍𝐅.
-#r * #p #b #q #n #_ #_ #_ #Hn elim Hn
+#r * #p #b #q #n #_ #_ #_ #Hn
+elim (subset_nin_inv_empty ?? Hn)
 qed.
 
 lemma tnf_null: ❴𝐞❵ ϵ 𝐍𝐅.
-#r * #p #b #q #n #_ #_ #_ #Hn destruct
+#r * #p #b #q #n #_ #_ #_ #Hn
+lapply (subset_in_inv_single ??? Hn) -Hn #Hn destruct
 qed.
 
 lemma tnf_lcons (t) (l):

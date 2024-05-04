@@ -16,7 +16,7 @@ include "delayed_updating/syntax/preterm_proper.ma".
 include "delayed_updating/syntax/preterm_inner.ma".
 include "delayed_updating/unwind/unwind2_prototerm.ma".
 include "delayed_updating/unwind/unwind2_path_append.ma".
-include "ground/lib/subset_or.ma".
+include "ground/subsets/subset_or.ma".
 
 (* TAILED UNWIND FOR PRETERM ************************************************)
 
@@ -47,12 +47,12 @@ qed.
 
 
 
-(*  
-  
-  Hr : (▼[f]sϵ↑⊗p) → (sϵ↑p)  
+(*
+
+  Hr : (▼[f]sϵ↑⊗p) → (sϵ↑p)
 
   H2s : )
-*)  
+*)
 
 
 

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset_full.ma".
+include "ground/subsets/subset_full.ma".
 include "delayed_updating/syntax/path.ma".
 include "delayed_updating/notation/functions/category_t_0.ma".
 include "delayed_updating/notation/functions/pitchfork_2.ma".

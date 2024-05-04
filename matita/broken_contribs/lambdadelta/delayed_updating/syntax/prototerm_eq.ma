@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/prototerm.ma".
-include "ground/lib/subset_eq.ma".
+include "ground/subsets/subset_eq.ma".
 
 (* EQUIVALENCE FOR PROTOTERM ************************************************)
 

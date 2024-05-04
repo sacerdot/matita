@@ -23,4 +23,4 @@ include "delayed_updating/computation/prototerm_sn.ma".
 lemma tsn_des_twn (t):
       t ϵ 𝐒𝐍 → t ϵ 𝐖𝐍.
 #t #Ht elim Ht -t
-#t1 #Ht1 #IH @IH   
+#t1 #Ht1 #IH @IH

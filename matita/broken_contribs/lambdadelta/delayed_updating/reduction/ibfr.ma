@@ -18,7 +18,6 @@ include "delayed_updating/syntax/prototerm_clear.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/path_closed.ma".
 include "delayed_updating/syntax/path_balanced.ma".
-include "delayed_updating/syntax/path_clear.ma".
 include "delayed_updating/syntax/path_structure.ma".
 include "delayed_updating/syntax/path_depth.ma".
 include "delayed_updating/notation/relations/black_rightarrow_ibf_3.ma".

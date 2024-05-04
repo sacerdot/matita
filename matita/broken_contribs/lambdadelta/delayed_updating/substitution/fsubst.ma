@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset_ol.ma".
+include "ground/subsets/subset_ol.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/notation/functions/square_sw_black_3.ma".
 

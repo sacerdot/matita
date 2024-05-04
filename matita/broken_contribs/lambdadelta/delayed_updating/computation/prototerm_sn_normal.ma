@@ -23,6 +23,6 @@ include "delayed_updating/computation/prototerm_sn.ma".
 lemma tsn_normal (t):
       t ϵ 𝐍𝐅 → t ϵ 𝐒𝐍.
 #t1 #Ht1 @tsn_step
-#t2 #r #Hr elim Ht1 -Ht1
+#t2 #r #Hr elim (tnf_inv_gen … Ht1) -Ht1
 /2 width=3 by dbfr_inv_reducuble/
 qed.

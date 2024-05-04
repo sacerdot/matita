@@ -14,8 +14,8 @@
 
 include "delayed_updating/unwind/unwind2_prototerm.ma".
 include "delayed_updating/syntax/preterm_structure.ma".
-include "ground/lib/subset_or_le.ma".
-include "ground/lib/subset_ol.ma".
+include "ground/subsets/subset_or_le.ma".
+include "ground/subsets/subset_ol.ma".
 
 (* TAILED UNWIND FOR PRETERM ************************************************)
 

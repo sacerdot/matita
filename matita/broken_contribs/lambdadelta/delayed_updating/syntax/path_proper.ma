@@ -14,7 +14,7 @@
 
 include "ground/notation/functions/subset_p_0.ma".
 include "ground/xoa/ex_1_2.ma".
-include "ground/lib/subset.ma".
+include "ground/subsets/subset.ma".
 include "delayed_updating/syntax/path.ma".
 
 (* PROPER CONDITION FOR PATH ************************************************)

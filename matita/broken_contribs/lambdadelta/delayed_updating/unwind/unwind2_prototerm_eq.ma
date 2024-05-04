@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 (**) (* reverse include *)
-include "ground/lib/subset_ext_eq.ma".
+include "ground/subsets/subset_ext_eq.ma".
 include "delayed_updating/unwind/unwind2_path_eq.ma".
 include "delayed_updating/unwind/unwind2_prototerm.ma".
 

@@ -14,7 +14,7 @@
 
 include "delayed_updating/syntax/prototerm_proper.ma".
 include "delayed_updating/syntax/path_inner_proper.ma".
-include "ground/lib/subset_ol.ma".
+include "ground/subsets/subset_ol.ma".
 
 (* PROPER CONDITION FOR PROTOTERM *******************************************)
 

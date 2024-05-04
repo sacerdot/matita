@@ -17,8 +17,8 @@ include "delayed_updating/notation/functions/hash_1.ma".
 include "delayed_updating/notation/functions/tau_2.ma".
 include "delayed_updating/notation/functions/lamda_1.ma".
 include "delayed_updating/notation/functions/at_2.ma".
-include "ground/lib/subset_or.ma".
-include "ground/lib/subset_singleton.ma".
+include "ground/subsets/subset_or.ma".
+include "ground/subsets/subset_listed.ma".
 
 (* CONSTRUCTORS FOR PROTOTERM ***********************************************)
 
@@ -101,18 +101,18 @@ lemma in_comp_inv_abst_hd (t) (p):
 #t #p #H0
 elim (in_comp_inv_abst … H0) -H0 #q #H0 #Hq
 elim (eq_inv_list_rcons_bi ????? H0) -H0 #H1 #H2 destruct //
-qed-. 
+qed-.
 
 lemma in_comp_inv_appl_sd (u) (t) (p):
       (𝗦◗p) ϵ ＠u.t → p ϵ u.
 #u #t #p #H0
 elim (in_comp_inv_appl … H0) -H0 * #q #H0 #Hq
 elim (eq_inv_list_rcons_bi ????? H0) -H0 #H1 #H2 destruct //
-qed-. 
+qed-.
 
 lemma in_comp_inv_appl_hd (u) (t) (p):
       (𝗔◗p) ϵ ＠u.t → p ϵ t.
 #u #t #p #H0
 elim (in_comp_inv_appl … H0) -H0 * #q #H0 #Hq
 elim (eq_inv_list_rcons_bi ????? H0) -H0 #H1 #H2 destruct //
-qed-. 
+qed-.

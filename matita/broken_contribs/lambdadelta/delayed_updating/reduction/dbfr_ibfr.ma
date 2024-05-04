@@ -26,7 +26,6 @@ include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
 include "delayed_updating/syntax/prototerm_proper_constructors.ma".
 include "delayed_updating/syntax/path_closed_structure.ma".
-include "delayed_updating/syntax/path_clear_structure.ma".
 include "delayed_updating/syntax/path_clear_help.ma".
 include "delayed_updating/syntax/path_structure_depth.ma".
 include "delayed_updating/syntax/path_structure_help.ma".

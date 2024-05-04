@@ -26,7 +26,7 @@ lemma tnf_A_sn (t):
 [ #b #q #n #_ #Hb #_
   <list_append_empty_dx >list_append_lcons_sn #Hn
   elim (append_in_comp_inv_lcons_bi … Hn) -Hn #_ #H0
-  /4 width=6 by/
+  elim (H1t … H0 …) -t //
 | #p #l0 #_ #b #q #n #Hr #Hb #Hq
   <list_append_rcons_dx >list_append_lcons_sn #Hn
   elim (append_in_comp_inv_lcons_bi … Hn) -Hn #H0 #Hn destruct

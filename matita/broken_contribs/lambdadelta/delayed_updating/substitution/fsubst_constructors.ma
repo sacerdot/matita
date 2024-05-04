@@ -14,7 +14,7 @@
 
 include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/syntax/prototerm_constructors.ma".
-include "ground/lib/subset_or_eq.ma".
+include "ground/subsets/subset_or_eq.ma".
 
 (* FOCALIZED SUBSTITUTION ***************************************************)
 

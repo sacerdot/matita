@@ -22,10 +22,9 @@ include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 
 lemma lift_term_oref_xapp (f) (k):
       (⧣(f＠❨k❩)) ⇔ 🠡[f]⧣k.
-#f #k @conj #p *
-[ /2 width=1 by in_comp_lift_bi/
-| #q * #H0 destruct //
-]
+#f #k @conj #p [ #H1 | * #q #H1 #H2 ]
+lapply (subset_in_inv_single ??? H1) -H1 #H1 destruct
+/2 width=1 by in_comp_lift_bi/
 qed.
 
 lemma lift_term_iref_xapp_sn (f) (t:𝕋) (k):
@@ -61,7 +60,7 @@ lemma lift_term_abst (f) (t):
 [ elim (in_comp_inv_abst … Hp) -Hp #q #H1 * #r #Hr #H2 destruct
   /3 width=1 by in_comp_lift_bi, in_comp_abst_hd/
 | elim Hp -Hp #q #Hq #H0 destruct
-  elim (in_comp_inv_abst … Hq) -Hq #r #H0 #Hr destruct 
+  elim (in_comp_inv_abst … Hq) -Hq #r #H0 #Hr destruct
   /3 width=1 by in_comp_lift_bi, in_comp_abst_hd/
 ]
 qed.
@@ -72,7 +71,7 @@ lemma lift_term_appl (f) (v) (t):
 [ elim (in_comp_inv_appl … Hp) -Hp * #q #H1 * #r #Hr #H2 destruct
   /3 width=1 by in_comp_lift_bi, in_comp_appl_sd, in_comp_appl_hd/
 | elim Hp -Hp #q #Hq #H0 destruct
-  elim (in_comp_inv_appl … Hq) -Hq * #r #H0 #Hr destruct 
+  elim (in_comp_inv_appl … Hq) -Hq * #r #H0 #Hr destruct
   /3 width=1 by in_comp_lift_bi, in_comp_appl_sd, in_comp_appl_hd/
 ]
 qed.

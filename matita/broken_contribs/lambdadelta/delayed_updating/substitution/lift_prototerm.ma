@@ -14,7 +14,7 @@
 
 include "delayed_updating/substitution/lift_path.ma".
 include "delayed_updating/syntax/prototerm.ma".
-include "ground/lib/subset_ext.ma".
+include "ground/subsets/subset_ext.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)
 

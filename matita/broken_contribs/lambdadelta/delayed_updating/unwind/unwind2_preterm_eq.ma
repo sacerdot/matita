@@ -14,7 +14,7 @@
 
 include "delayed_updating/unwind/unwind2_preterm.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
-include "ground/lib/subset_and.ma".
+include "ground/subsets/subset_and.ma".
 
 (* TAILED UNWIND FOR PRETERM ************************************************)
 

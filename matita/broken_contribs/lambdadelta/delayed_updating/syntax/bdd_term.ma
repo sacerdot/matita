@@ -195,7 +195,7 @@ lemma bbd_mono_in_root_d:
   | elim (bdd_inv_in_root_L … Ht Hn) -Ht -Hn
     #u #Hu #Hp #H0
     lapply (prototerm_root_eq_repl … H0) -H0 #H0
-    lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl  
+    lapply (subset_in_eq_repl_fwd ?? … Hl … H0) -H0 -Hl #Hl
     elim (prototerm_in_root_inv_lcons_abst … Hl) -Hl #_ #Hl
     /2 width=4 by/
   | elim (bdd_inv_in_root_A … Ht Hn) -Ht -Hn

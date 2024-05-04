@@ -22,10 +22,9 @@ include "delayed_updating/syntax/prototerm_constructors.ma".
 
 lemma unwind2_term_oref_xapp (f) (k):
       (⧣(f＠❨k❩)) ⇔ ▼[f]⧣k.
-#f #k @conj #p *
-[ /2 width=1 by in_comp_unwind2_bi/
-| #q * #H0 destruct //
-]
+#f #k @conj #p [ #H1 | * #q #H1 #H2 ]
+lapply (subset_in_inv_single ??? H1) -H1 #H1 destruct
+/2 width=1 by in_comp_unwind2_bi/
 qed.
 
 lemma unwind2_term_iref (f) (t) (k):

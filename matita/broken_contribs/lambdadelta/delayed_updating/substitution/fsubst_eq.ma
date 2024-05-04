@@ -14,9 +14,9 @@
 
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/syntax/prototerm_ol.ma".
-include "ground/lib/subset_or_le.ma".
-include "ground/lib/subset_or_ol.ma".
-include "ground/lib/subset_and_ol.ma".
+include "ground/subsets/subset_or_le.ma".
+include "ground/subsets/subset_or_ol.ma".
+include "ground/subsets/subset_and_ol.ma".
 
 (* FOCALIZED SUBSTITUTION ***************************************************)
 

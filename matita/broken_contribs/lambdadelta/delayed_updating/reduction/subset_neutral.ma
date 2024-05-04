@@ -19,7 +19,7 @@ include "delayed_updating/syntax/path_balanced.ma".
 (* SUBSET OF NEUTRAL PATHS **************************************************)
 
 definition pnc: 𝒫❨ℙ❩ ≝
-           {r | ∀b,q. ⊗b ϵ 𝐁 → r ⧸= b●𝗟◗q} (**) (* reversee ⧸= *)
+           {r | ∀b,q. ⊗b ϵ 𝐁 → r ⧸= b●𝗟◗q} (**) (* reverse ⧸= *)
 .
 
 interpretation

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/subset_ol_eq.ma".
+include "ground/subsets/subset_ol_eq.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 
 (* PROTOTERM ****************************************************************)

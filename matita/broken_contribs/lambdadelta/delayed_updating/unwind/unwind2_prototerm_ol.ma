@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/unwind/unwind2_prototerm.ma".
-include "ground/lib/subset_ol.ma".
+include "ground/subsets/subset_ol.ma".
 
 (* TAILED UNWIND FOR PROTOTERM **********************************************)
 

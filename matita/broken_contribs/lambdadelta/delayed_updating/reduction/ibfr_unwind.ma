@@ -85,7 +85,7 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
 <structure_idem in Hb; #Hb
 @(
   let r ≝ (p0●xa●𝗔◗b0●xl●𝗟◗q0) in
-  let v ≝ ((p0●xa●𝗔◗(⓪b0)●(⓪xl)●𝗟◗q0)●🠡[𝐮❨⁤↑(♭b0+⫰n0)❩]⋔[p0●xa◖𝗦]t1) in 
+  let v ≝ ((p0●xa●𝗔◗(⓪b0)●(⓪xl)●𝗟◗q0)●🠡[𝐮❨⁤↑(♭b0+⫰n0)❩]⋔[p0●xa◖𝗦]t1) in
   ex3_2_intro … (⬕[↑r←v]t1) (⓪r)
 )
 [ @(ex5_4_intro … (p0●xa) (b0●xl) q0 (⫰n0)) [1,3,4: // ]
