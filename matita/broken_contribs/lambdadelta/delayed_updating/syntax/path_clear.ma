@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/xoa/ex_3_2.ma".
 include "delayed_updating/syntax/path.ma".
 include "delayed_updating/notation/functions/circled_zero_1.ma".
 
@@ -105,4 +106,125 @@ lemma eq_inv_path_empty_clear (p):
 | <path_clear_S_dx
 ]
 #H0 destruct
+qed-.
+
+lemma eq_inv_path_d_dx_clear (x) (p) (k):
+      p◖𝗱k = ⓪x →
+      ∃∃r,n. p = ⓪r & k = 𝟎 & r◖𝗱n = x.
+* [| * [ #n ] #x ] #p #k
+[ <path_clear_empty
+| <path_clear_d_dx
+| <path_clear_L_dx
+| <path_clear_A_dx
+| <path_clear_S_dx
+] #H0 destruct
+/2 width=5 by ex3_2_intro/
+qed-.
+
+lemma eq_inv_path_L_dx_clear (x) (p):
+      p◖𝗟 = ⓪x →
+      ∃∃r. p = ⓪r & r◖𝗟 = x.
+* [| * [ #n ] #x ] #p
+[ <path_clear_empty
+| <path_clear_d_dx
+| <path_clear_L_dx
+| <path_clear_A_dx
+| <path_clear_S_dx
+] #H0 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma eq_inv_path_A_dx_clear (x) (p):
+      p◖𝗔 = ⓪x →
+      ∃∃r. p = ⓪r & r◖𝗔 = x.
+* [| * [ #n ] #x ] #p
+[ <path_clear_empty
+| <path_clear_d_dx
+| <path_clear_L_dx
+| <path_clear_A_dx
+| <path_clear_S_dx
+] #H0 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma eq_inv_path_S_dx_clear (x) (p):
+      p◖𝗦 = ⓪x →
+      ∃∃r. p = ⓪r & r◖𝗦 = x.
+* [| * [ #n ] #x ] #p
+[ <path_clear_empty
+| <path_clear_d_dx
+| <path_clear_L_dx
+| <path_clear_A_dx
+| <path_clear_S_dx
+] #H0 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+(* main inversions **********************************************************)
+
+theorem eq_inv_path_append_clear (p) (q) (x):
+        p●q = ⓪x →
+        ∃∃r,s. p = ⓪r & q = ⓪s & r●s = x.
+#p #q elim q -q [| * [ #k ] #q #IH ] #x
+[ <list_append_empty_sn #H0 destruct
+  /2 width=5 by ex3_2_intro/
+| <list_append_lcons_sn #H0
+  elim (eq_inv_path_d_dx_clear … H0) -H0 #r0 #n #H0 #H1 #H2 destruct
+  elim (IH … H0) -IH -H0 #r #s #H1 #H2 #H3 destruct
+  /2 width=5 by ex3_2_intro/
+| <list_append_lcons_sn #H0
+  elim (eq_inv_path_L_dx_clear … H0) -H0 #r0 #H0 #H1 destruct
+  elim (IH … H0) -IH -H0 #r #s #H1 #H2 #H3 destruct
+  /2 width=5 by ex3_2_intro/
+| <list_append_lcons_sn #H0
+  elim (eq_inv_path_A_dx_clear … H0) -H0 #r0 #H0 #H1 destruct
+  elim (IH … H0) -IH -H0 #r #s #H1 #H2 #H3 destruct
+  /2 width=5 by ex3_2_intro/
+| <list_append_lcons_sn #H0
+  elim (eq_inv_path_S_dx_clear … H0) -H0 #r0 #H0 #H1 destruct
+  elim (IH … H0) -IH -H0 #r #s #H1 #H2 #H3 destruct
+  /2 width=5 by ex3_2_intro/
+]
+qed-.
+
+(* Basic inversions with path_lcons *****************************************)
+
+lemma eq_inv_path_d_sn_clear (x) (q) (k):
+      (𝗱k◗q) = ⓪x →
+      ∃∃s,n. q = ⓪s & k = 𝟎 & 𝗱n◗s = x.
+#x #q #k #H0
+elim (eq_inv_path_append_clear … H0) -H0 #x0 #q0 #H0 #H1 #H2 destruct
+elim (eq_inv_path_d_dx_clear … H0) -H0 #p0 #n #H0 #H1 #H2 destruct
+lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct
+/2 width=5 by ex3_2_intro/
+qed-.
+
+lemma eq_inv_path_L_sn_clear (x) (q):
+      (𝗟◗q) = ⓪x →
+      ∃∃s. q = ⓪s & 𝗟◗s = x.
+#x #q #H0
+elim (eq_inv_path_append_clear … H0) -H0 #x0 #q0 #H0 #H1 #H2 destruct
+elim (eq_inv_path_L_dx_clear … H0) -H0 #p0 #H0 #H1 destruct
+lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma eq_inv_path_A_sn_clear (x) (q):
+      (𝗔◗q) = ⓪x →
+      ∃∃s. q = ⓪s & 𝗔◗s = x.
+#x #q #H0
+elim (eq_inv_path_append_clear … H0) -H0 #x0 #q0 #H0 #H1 #H2 destruct
+elim (eq_inv_path_A_dx_clear … H0) -H0 #p0 #H0 #H1 destruct
+lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
+lemma eq_inv_path_S_sn_clear (x) (q):
+      (𝗦◗q) = ⓪x →
+      ∃∃s. q = ⓪s & 𝗦◗s = x.
+#x #q #H0
+elim (eq_inv_path_append_clear … H0) -H0 #x0 #q0 #H0 #H1 #H2 destruct
+elim (eq_inv_path_S_dx_clear … H0) -H0 #p0 #H0 #H1 destruct
+lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct
+/2 width=3 by ex2_intro/
 qed-.

@@ -12,25 +12,39 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_le.ma".
+include "ground/lib/functions.ma".
+include "ground/subsets/subset_eq.ma".
 include "ground/subsets/subset_listed.ma".
+include "ground/subsets/subsets_inhabited.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/syntax/prototerm_irefs.ma".
-include "delayed_updating/notation/functions/subset_o_0.ma".
 
-(* ORIGIN FOR PROTOTERM ************************************************)
+(* SUBSET OF INNER REFERENCES ***********************************************)
 
-definition toc: 𝒫❨𝕋❩ ≝
-           {t | 𝐈❨t❩ ⊆ Ⓕ}
-.
+(* Constructions with subset_le *********************************************)
 
-interpretation
-  "origin (prototerm)"
-  'SubsetO = (toc).
+lemma subset_le_pirc_bi:
+      compatible_2_fwd … (subset_le …) (subset_le …) pirc.
+#t1 #t2 #Ht #r * #p #q #n #Hr #Hq #Hp destruct
+/3 width=4 by pirc_mk/
+qed.
 
-(* Basic properties *********************************************************)
+lemma pirc_le_single_append (t) (p):
+      t ϵ ⊙ → 𝐈❨❴p❵❩ ⊆ 𝐈❨p●t❩.
+#t #p #Ht #r * #s1 #s2 #n #Hs1 #Hs2 * #q1 #q2 #H0 destruct
+elim (subsets_inh_inv_in … Ht) -Ht #q #Hq
+elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 *
+[ #H1 #H0 destruct
+  /3 width=6 by pirc_mk, ex2_intro, in_comp_ppc_append_sn/
+| -q #q #_ #H0 -q1 -Hs2
+  elim (eq_inv_list_empty_append … H0) #_ #H0 -q destruct
+]
+qed.
 
-lemma toc_mk (t):
-      (𝐈❨t❩) ⊆ Ⓕ → t ϵ 𝐎.
-/2 width=1 by/
+(* Constructions with subset_eq *********************************************)
+
+lemma subset_eq_pirc_bi:
+      compatible_2_fwd … (subset_eq …) (subset_eq …) pirc.
+#t1 #t2 * #H12 #Ht21
+/3 width=3 by conj, subset_le_pirc_bi/
 qed.

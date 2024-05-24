@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_ol.ma".
+include "ground/subsets/subset_nimply.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/notation/functions/square_sw_black_3.ma".
 
@@ -21,7 +22,7 @@ include "delayed_updating/notation/functions/square_sw_black_3.ma".
 definition fsubst (u) (v) (t): 𝕋 ≝
            λr.
            ∨∨ ∧∧ t ≬ u & r ϵ v
-            | ∧∧ r ϵ t & r ⧸ϵ u
+            | r ϵ t ⧵ u
 .
 
 interpretation

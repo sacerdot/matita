@@ -12,26 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/xoa/ex_3_3.ma".
-include "delayed_updating/syntax/path_clear.ma".
-include "delayed_updating/syntax/path_proper.ma".
-include "delayed_updating/notation/functions/subset_f_1.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* SUBSET OF FIRED PATHS ****************************************************)
-
-(* Note: fired paths are cleared paths not containing outer references *)
-(* Note: thus we can compare them in computation steps *)
-definition pfc (t): 𝒫❨ℙ❩ ≝
-           {r | ∃∃p,q,n. ⓪(p●𝗱n◗q) = r & q ϵ 𝐏 & p●𝗱n◗q ϵ t}
-.
-
-interpretation
-  "fired (path subset)"
-  'SubsetF t = (pfc t).
-
-(* Basic constructions ******************************************************)
-
-lemma pfc_mk (t) (p) (q) (n):
-      q ϵ 𝐏 → p●𝗱n◗q ϵ t → ⓪(p●𝗱n◗q) ϵ 𝐅❨t❩.
-/2 width=6 by ex3_3_intro/
-qed.
+notation "hvbox( 𝐈❨ break term 46 t ❩ )"
+  non associative with precedence 70
+  for @{ 'SubsetI $t }.

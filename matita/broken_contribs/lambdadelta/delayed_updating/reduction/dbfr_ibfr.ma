@@ -82,7 +82,7 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
     ] -H2t1
     @(subset_eq_trans … (lift_unwind2_term_after …))
     @(subset_eq_trans ????? (unwind2_term_iref …))
-    [| /2 width=6 by term_grafted_S_dx_proper/ ]
+    [| /2 width=6 by term_le_grafted_S_dx_proper/ ]
     @unwind2_term_eq_repl_sn
 (* Note: crux of the proof begins *)
     >path_append_pAbLq_3 <unwind2_rmap_append in ⊢ (??%);
@@ -124,7 +124,7 @@ theorem dbfr_inv_ibfr (f) (t1) (t2) (r):
     [ @unwind2_term_grafted_S_dx /2 width=2 by term_in_root/ | skip ] -Ht1
     @(subset_eq_trans … (lift_unwind2_term_after …))
     @(subset_eq_trans ????? (unwind2_term_iref …))
-    [| /2 width=6 by term_grafted_S_dx_proper/ ]
+    [| /2 width=6 by term_le_grafted_S_dx_proper/ ]
     @unwind2_term_eq_repl_sn
 (* Note: crux of the proof begins *)
     <path_append_pAbLq_1 <unwind2_rmap_append

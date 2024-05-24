@@ -70,3 +70,12 @@ lemma path_inv_ppc (p):
 | /3 width=3 by ppc_rcons, or_intror/
 ]
 qed-.
+
+(* Advanced constructions ***************************************************)
+
+lemma in_comp_ppc_append_sn (p) (q):
+      p ϵ 𝐏 → p●q ϵ 𝐏.
+#p #q #Hp #H0
+elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 destruct
+/2 width=1 by ppc_inv_empty/
+qed.

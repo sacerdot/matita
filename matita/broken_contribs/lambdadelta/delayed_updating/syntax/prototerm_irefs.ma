@@ -12,38 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/xoa/ex_4_4.ma".
-include "delayed_updating/notation/functions/subset_r_1.ma".
-include "delayed_updating/syntax/path_structure.ma".
+include "ground/xoa/ex_3_3.ma".
 include "delayed_updating/syntax/path_clear.ma".
-include "delayed_updating/syntax/path_balanced.ma".
-include "delayed_updating/syntax/path_closed.ma".
+include "delayed_updating/syntax/path_proper.ma".
+include "delayed_updating/notation/functions/subset_i_1.ma".
 
-(* SUBSET OF REDEX POINTERS *************************************************)
+(* SUBSET OF INNER REFERENCES ***********************************************)
 
-(* Note: redex pointers are cleared paths to reducible variables *)
-(* Note: thus we can compare them in computation steps *)
-definition prc (t): 𝒫❨ℙ❩ ≝
-           {r | ∃∃p,b,q,n. ⓪(p●𝗔◗b●𝗟◗q) = r &
-                           ⊗b ϵ 𝐁 & q ϵ 𝐂❨n❩ & (p●𝗔◗b●𝗟◗q)◖𝗱(⁤↑n) ϵ t
-           }
+(* Note: we identify inner references with cleared paths to them *)
+(* Note: thus we can compare these paths in computation steps *)
+definition pirc (t): 𝒫❨ℙ❩ ≝
+           {r | ∃∃p,q,n. ⓪p = r & q ϵ 𝐏 & p●𝗱n◗q ϵ t}
 .
 
 interpretation
-  "redex pointer (subset of paths)"
-  'SubsetR t = (prc t).
+  "pointer to inner reference"
+  'SubsetI t = (pirc t).
 
 (* Basic constructions ******************************************************)
 
-lemma prc_mk (t) (p) (b) (q) (n):
-      (p●𝗔◗b●𝗟◗q)◖𝗱(⁤↑n) ϵ t → ⊗b ϵ 𝐁 → q ϵ 𝐂❨n❩ →
-      (⓪(p●𝗔◗b●𝗟◗q)) ϵ 𝐑❨t❩.
-/2 width=8 by ex4_4_intro/
+lemma pirc_mk (t) (p) (q) (n):
+      q ϵ 𝐏 → p●𝗱n◗q ϵ t → ⓪p ϵ 𝐈❨t❩.
+/2 width=6 by ex3_3_intro/
 qed.
-
-(* Basic destructions *******************************************************)
-
-lemma prc_des_clear (t) (r):
-      r ϵ 𝐑❨t❩ → ⓪r = r.
-#t #r * #p #b #q #n #H0 #_ #_ #_ destruct //
-qed-.

@@ -12,6 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/subsets/subset_le.ma".
+include "ground/subsets/subset_and.ma".
+include "ground/subsets/subset_listed.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/notation/functions/subset_t_0.ma".
 
@@ -63,3 +66,12 @@ lemma term_comp_append (t) (p) (q) (n):
   ]
 ]
 qed-.
+
+(* Basic constructions ******************************************************)
+
+lemma term_le_and_sn_single_dx (t) (p) (n):
+      t ϵ 𝐓 → p◖𝗱n ϵ t → t ∩ ↑p ⊆ ❴p◖𝗱n❵.
+#t #p #k #Ht #Hp #r * #Hr * #q #_ #H0 destruct
+lapply (term_comp_append ???? Ht Hp Hr) -t #H0 destruct
+/2 width=5 by pt_append_in/
+qed.

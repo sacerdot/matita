@@ -18,6 +18,13 @@ include "ground/subsets/subset_or_eq.ma".
 
 (* CONSTRUCTORS FOR PROTOTERM ***********************************************)
 
+(* Constructions with inclusion for prototerm *******************************)
+
+lemma term_le_pt_append_bi_iref_dx (t) (p) (n):
+      (p◖𝗱n)●t ⊆ p●𝛕n.t.
+/2 width=1 by pt_append_assoc_dx/
+qed.
+
 (* Constructions with equivalence for prototerm *****************************)
 
 lemma iref_eq_repl_bi (t1) (t2) (k1) (k2):

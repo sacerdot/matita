@@ -20,6 +20,30 @@ include "ground/subsets/subset_and_ol.ma".
 
 (* FOCALIZED SUBSTITUTION ***************************************************)
 
+(* Constructions with subset_le *********************************************)
+
+lemma fsubst_le_true (t) (u) (v):
+      t ≬ u → v ⊆ ⬕[u←v]t.
+/2 width=1 by fsubst_in_comp_true/
+qed.
+
+lemma fsubst_le_false (t) (u) (v):
+      t ⧵ u ⊆ ⬕[u←v]t.
+#t #u #v #r * #Hr #Hnr
+/2 width=1 by fsubst_in_comp_false/
+qed.
+
+lemma fsubst_le_dx (t) (u) (v):
+      t ≬ u → v ∪ (t ⧵ u) ⊆ ⬕[u←v]t.
+/3 width=5 by fsubst_le_true, subset_le_or_sn, fsubst_le_false/
+qed.
+
+lemma fsubst_le_sn (t) (u) (v):
+      t ≬ u → ⬕[u←v]t ⊆ v ∪ (t ⧵ u).
+#t #u #v #Hu #r * *
+/3 width=1 by subset_or_in_dx, subset_or_in_sn, conj/
+qed. 
+
 (* Constructions with subset_eq *********************************************)
 (*
 lemma fsubst_pt_append_refl_sn (t) (p) (u):
@@ -39,6 +63,7 @@ lemma fsubst_empty_rc (t) (u):
 ]
 qed.
 *)
+
 lemma fsubst_le_repl (t1) (t2) (u1) (u2) (v1) (v2):
       t1 ⊆ t2 → u1 ⇔ u2 → v1 ⊆ v2 → ⬕[u1←v1]t1 ⊆ ⬕[u2←v2]t2.
 #t1 #t2 #u1 #u2 #v1 #v2 #Ht * #H1u #H2u #Hv #r * * #H1 #H2

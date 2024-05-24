@@ -12,25 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_le.ma".
-include "ground/subsets/subset_listed.ma".
-include "delayed_updating/syntax/prototerm.ma".
+include "ground/subsets/subset_ol.ma".
+include "delayed_updating/syntax/prototerm_constructors.ma".
 include "delayed_updating/syntax/prototerm_irefs.ma".
-include "delayed_updating/notation/functions/subset_o_0.ma".
 
-(* ORIGIN FOR PROTOTERM ************************************************)
+(* SUBSET OF INNER REFERENCES ***********************************************)
 
-definition toc: 𝒫❨𝕋❩ ≝
-           {t | 𝐈❨t❩ ⊆ Ⓕ}
-.
+(* Constructions with prototerm_constructors ********************************)
 
-interpretation
-  "origin (prototerm)"
-  'SubsetO = (toc).
-
-(* Basic properties *********************************************************)
-
-lemma toc_mk (t):
-      (𝐈❨t❩) ⊆ Ⓕ → t ϵ 𝐎.
-/2 width=1 by/
+lemma pirc_mk_iref (t) (p) (n):
+      t ≬ 𝐏 → ⓪p ϵ 𝐈❨p●𝛕n.t❩.
+#t #p #n * #q #H1q #H2q
+/4 width=4 by pirc_mk, pt_append_in/
 qed.

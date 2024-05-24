@@ -153,3 +153,26 @@ lemma term_slice_des_rcons_bi (p1) (p2) (l1) (l2):
 | <list_append_lcons_sn #H0 destruct //
 ]
 qed-.
+
+lemma term_in_slice_dec (p) (r):
+      Decidable (r ϵ ↑p).
+#r @(list_ind_rcons … r) -r
+[ /3 width=3 by ex2_intro, or_introl/
+| #r #l2 #IH #p @(list_ind_rcons … p) -p
+  [ @or_intror * #q #_ <list_append_rcons_dx
+   /2 width=4 by eq_inv_list_empty_rcons/
+  | #p #l1 #_
+    elim (eq_label_dec l1 l2) #Hnl destruct
+    [ elim (IH p) -IH #Hp
+      [ /3 width=1 by term_slice_append_sn, or_introl/
+      | @or_intror * #q #_ <list_append_rcons_dx #H0
+        elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_ destruct
+        /2 width=1 by/
+      ]
+    | @or_intror * #q #_ <list_append_rcons_dx #H0
+      elim (eq_inv_list_rcons_bi ????? H0) -H0
+      /2 width=1 by/
+    ]
+  ]
+]
+qed-.

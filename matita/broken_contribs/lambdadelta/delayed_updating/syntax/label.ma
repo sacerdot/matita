@@ -53,11 +53,20 @@ interpretation
   "side branch (label)"
   'EdgeLabelS = (label_S).
 
-(* Advanced inversions ******************************************************)
+(* Advanced destructions ****************************************************)
 
 lemma label_is_d (l):
       ∨∨ ∃k. 𝗱k = l
        | ∀k. 𝗱k = l → ⊥.
 * [ /3 width=2 by ex_intro, or_introl/ ]
 @or_intror #k #H0 destruct
+qed-.
+
+lemma eq_label_dec (l1) (l2):
+      Decidable (l1 ={𝕃} l2).
+* [ #k1 ] * [1,5,9,13: #k2 ]
+[ elim (eq_nat_dec k1 k2) #Hnk destruct ]
+/2 width=1 by or_introl/
+@or_intror #H0 destruct
+/2 width=1 by/
 qed-.

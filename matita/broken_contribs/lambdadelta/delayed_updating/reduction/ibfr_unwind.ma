@@ -50,7 +50,7 @@ lemma ibfr_unwind_bi (f) (t1) (t2) (r):
   @(subset_eq_canc_sn … (fsubst_and_rc_sn …))
   @fsubst_eq_repl [ // | /2 width=2 by unwind2_slice_and_sn/ ]
   @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
-  [| @lift_term_proper /2 width=6 by term_grafted_S_dx_proper/ ]
+  [| @lift_term_proper /2 width=6 by term_le_grafted_S_dx_proper/ ]
   @pt_append_eq_repl_bi
   [ >path_structure_clear_swap //
   | @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))
@@ -105,7 +105,7 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
     @subset_eq_refl
   ]
   @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
-  [| @lift_term_proper /2 width=6 by term_grafted_S_dx_proper/ ]
+  [| @lift_term_proper /2 width=6 by term_le_grafted_S_dx_proper/ ]
   @pt_append_eq_repl_bi
   [ <path_structure_pAbLq_clear //
   | @(subset_eq_canc_sn … (lift_term_eq_repl_dx …))

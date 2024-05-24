@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/subset_neutral.ma".
+include "delayed_updating/reduction/prototerm_neutral.ma".
 include "delayed_updating/reduction/prototerm_normal.ma".
 
 (* NORMAL FORM FOR PROTOTERM ************************************************)

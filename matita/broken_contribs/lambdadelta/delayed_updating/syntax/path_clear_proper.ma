@@ -12,25 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_le.ma".
-include "ground/subsets/subset_listed.ma".
-include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/syntax/prototerm_irefs.ma".
-include "delayed_updating/notation/functions/subset_o_0.ma".
+include "delayed_updating/syntax/path_proper.ma".
+include "delayed_updating/syntax/path_clear.ma".
 
-(* ORIGIN FOR PROTOTERM ************************************************)
+(* CLEAR FOR PATH ***********************************************************)
 
-definition toc: 𝒫❨𝕋❩ ≝
-           {t | 𝐈❨t❩ ⊆ Ⓕ}
-.
+(* Constructions with ppc ***************************************************)
 
-interpretation
-  "origin (prototerm)"
-  'SubsetO = (toc).
+lemma path_clear_ppc (p):
+      p ϵ 𝐏 → ⓪p ϵ 𝐏 .
+#p #Hp #H0
+lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct
+/2 width=1 by ppc_inv_empty/
+qed-.
 
-(* Basic properties *********************************************************)
+(* Inversions with ppc ******************************************************)
 
-lemma toc_mk (t):
-      (𝐈❨t❩) ⊆ Ⓕ → t ϵ 𝐎.
-/2 width=1 by/
-qed.
+lemma path_clear_inv_ppc (p):
+      ⓪p ϵ 𝐏 → p ϵ 𝐏 .
+#p #Hp #H0 destruct
+<path_clear_empty in Hp;
+/2 width=1 by ppc_inv_empty/
+qed-.

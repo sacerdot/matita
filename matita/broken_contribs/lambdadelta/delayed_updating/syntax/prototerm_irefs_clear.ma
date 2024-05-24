@@ -13,24 +13,26 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_le.ma".
-include "ground/subsets/subset_listed.ma".
-include "delayed_updating/syntax/prototerm.ma".
+include "delayed_updating/syntax/path_clear_proper.ma".
+include "delayed_updating/syntax/prototerm_clear.ma".
 include "delayed_updating/syntax/prototerm_irefs.ma".
-include "delayed_updating/notation/functions/subset_o_0.ma".
 
-(* ORIGIN FOR PROTOTERM ************************************************)
+(* SUBSET OF INNER REFERENCES ***********************************************)
 
-definition toc: 𝒫❨𝕋❩ ≝
-           {t | 𝐈❨t❩ ⊆ Ⓕ}
-.
+(* Constructions with subset_le and prototerm_clear *************************)
 
-interpretation
-  "origin (prototerm)"
-  'SubsetO = (toc).
+lemma term_le_pirc_bi_clear_dx (t):
+      (𝐈❨t❩) ⊆ 𝐈❨⓪t❩.
+#t #r * #p #q #n #H0 #Hq #Hp destruct
+>path_clear_idem
+/3 width=4 by pirc_mk, in_comp_term_clear, path_clear_ppc/
+qed.
 
-(* Basic properties *********************************************************)
-
-lemma toc_mk (t):
-      (𝐈❨t❩) ⊆ Ⓕ → t ϵ 𝐎.
-/2 width=1 by/
+lemma term_le_pirc_bi_clear_sn (t):
+      (𝐈❨⓪t❩) ⊆ 𝐈❨t❩.
+#t #r * #p #q #n #H1 #Hq * #s #Hs #H2 destruct
+elim (eq_inv_path_append_clear … H2) -H2 #p0 #x0 #H1 #H0 #H2 destruct
+elim (eq_inv_path_d_sn_clear … H0) -H0 #q0 #n0 #H1 #H2 #H3 destruct
+<path_clear_idem
+/3 width=4 by pirc_mk, path_clear_inv_ppc/
 qed.

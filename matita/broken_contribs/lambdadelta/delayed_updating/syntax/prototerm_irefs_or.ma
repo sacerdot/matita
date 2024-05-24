@@ -12,8 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR DELAYED UPDATING ********************************************)
+include "ground/subsets/subset_or_le.ma".
+include "delayed_updating/syntax/prototerm_irefs_eq.ma".
 
-notation "hvbox( 𝐅❨ break term 46 t ❩ )"
-  non associative with precedence 70
-  for @{ 'SubsetF $t }.
+(* SUBSET OF INNER REFERENCES ***********************************************)
+
+(* Constructions with subset_or and subset_le *******************************)
+
+lemma subset_le_or_pirc (t1) (t2):
+      (𝐈❨t1❩) ∪ 𝐈❨t2❩ ⊆ 𝐈❨t1 ∪ t2❩.
+#t1 #t2
+@subset_le_or_sn
+@subset_le_pirc_bi // (**) (* auto fails *)
+qed.
+
+lemma subset_le_pirc_or (t1) (t2):
+      (𝐈❨t1 ∪ t2❩) ⊆ 𝐈❨t1❩ ∪ 𝐈❨t2❩.
+#t1 #t2 #r * #p #q #n #Hr #Hp * #Ht destruct
+/3 width=4 by pirc_mk, subset_or_in_sn, subset_or_in_dx/
+qed.

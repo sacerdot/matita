@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_le.ma".
+include "ground/subsets/subset_ol.ma".
 include "delayed_updating/syntax/path_proper.ma".
 include "delayed_updating/syntax/preterm.ma".
 
@@ -20,11 +21,21 @@ include "delayed_updating/syntax/preterm.ma".
 
 (* Constructions with ppc ***************************************************)
 
-lemma term_grafted_S_dx_proper (t) (p):
+lemma term_le_grafted_S_dx_proper (t) (p):
       t ϵ 𝐓 → ⋔[p◖𝗦]t ⊆ 𝐏.
 #t #p #Ht #q
 elim (path_inv_ppc q) // #H0 #Hq destruct
 elim (term_proper_S_post … Ht p) //
+qed.
+
+lemma term_ol_grafted_S_dx_proper (t) (p):
+      t ϵ 𝐓 → p◖𝗔 ϵ ▵t → ⋔[p◖𝗦]t ≬ 𝐏.
+#t #p #Ht #Hp
+elim (term_full_A_post … Ht … Hp) -Hp #q #Hq
+elim (path_inv_ppc q) #H0 destruct
+[ elim (term_proper_S_post … Ht p) -Ht //
+| /2 width=3 by subset_ol_i/
+]
 qed.
 
 (* Destructions with ppc ****************************************************)
