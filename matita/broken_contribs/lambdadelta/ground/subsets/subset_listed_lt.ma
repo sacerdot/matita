@@ -83,7 +83,7 @@ elim l2 -l2 [ #u #_ #H1b #_ | #a #l2 #IH #u #H1u #H1b #H2b ]
       lapply (subset_le_nimp_bi ?? (❴a❵) ? (❴a❵) H1b ?) -H1b // #H1b
       lapply (subset_le_trans … H1u … (subset_le_nimp_or_sn_refl_sn …)) -H1u #H1u
       lapply (subset_le_trans … H1b … (subset_le_nimp_or_sn_refl_sn …)) -H1b #H1b
-      lapply (subset_le_trans ??? (subset_le_nimp_dx_refl_sn_rev ????) ? H1b) -H1b
+      lapply (subset_le_trans ??? (subset_le_nimp_dx_refl_sn_bck ????) ? H1b) -H1b
       [ /3 width=5 by subset_nol_inv_single_bi/ ] #H1b
       lapply (subset_le_inv_single_sn ??? H1b) -H1b #H1b
       elim (IH … H1u H1b …) -IH -H1u -H1b
@@ -114,3 +114,11 @@ lemma subset_listed_ind_lt_le (A:Type[0]) (Q:predicate …): (**)
   /2 width=3 by/
 ]
 qed-.
+
+lemma subset_listed_ind_lt (A:Type[0]) (Q:predicate …): (**)
+      (∀a1,a2. Decidable … (a1 ={A} a2)) →
+      (∀l2. (∀l1. 𝐗{A}❨l1❩ ⊂ 𝐗❨l2❩ → Q l1) → Q l2) →
+      ∀l2. Q l2.
+#A #Q #HA #IH #l2
+@(subset_listed_ind_lt_le … HA IH l2) -Q -HA //
+qed-.  

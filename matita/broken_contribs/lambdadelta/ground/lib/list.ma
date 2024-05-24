@@ -61,3 +61,18 @@ lemma eq_inv_refl_list_lcons (A) (a) (l):
       l ⧸= a⨮{A}l.
 /2 width=4 by eq_inv_list_lcons_refl/
 qed-.
+
+(* Basic destructions *******************************************************)
+
+lemma eq_list_dec (A:Type[0]):
+      (∀a1,a2. Decidable (a1 ={A} a2)) →
+      ∀l1,l2. Decidable (l1 ={list A} l2).
+#A #HA #l1 elim l1 -l1 [| #a1 #l1 #IH ]
+* [2,4: #a2 #l2 ]
+[2: elim (HA a1 a2) #Hna destruct -HA
+  [ elim (IH l2) -IH destruct #Hnl destruct | -IH ]
+]
+/2 width=1 by or_introl/
+@or_intror #H0 destruct
+/2 width=1 by/
+qed-.
