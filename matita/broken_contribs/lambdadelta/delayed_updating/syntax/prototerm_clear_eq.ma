@@ -16,8 +16,6 @@ include "ground/subsets/subset_listed.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_clear.ma".
 
-(* CLEARED PROTOTERM ********************************************************)
-
 (* Constructions with equivalence for prototerm *****************************)
 
 lemma clear_pt_append (p) (t):

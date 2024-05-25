@@ -32,7 +32,7 @@ record preterm_posts (t): Prop ≝
       p◖𝗔 ϵ ▵t → p◖𝗦 ϵ ▵t
 (* application arguments are not empty *)
   ; term_proper_S_post (p):
-      p◖𝗦 ϵ t → ⊥
+      p◖𝗦 ⧸ϵ t
   }.
 
 interpretation

@@ -42,9 +42,10 @@ lapply (term_slice_des_clear_bi … (𝐞) q2 q1 Ht ???) // #H2
 qed-.
 
 (* Constructions with term_clear ********************************************)
-(*
-lemma preterm_clear (t):
+
+axiom preterm_clear (t):
       t ϵ 𝐓 → ⓪t ϵ 𝐓.
+(*
 #t * #H1 #H2 #H3 #H4
 @mk_preterm_posts
 [ #p1 #p2 * #r1 #Hr1 #H1 * #r2 #Hr2 #H2 * #q2 #_ #H0 destruct

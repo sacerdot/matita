@@ -12,17 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/prototerm_normal.ma".
-include "delayed_updating/reduction/dbfr_reducibles.ma".
-include "delayed_updating/computation/prototerm_sn.ma".
+include "ground/subsets/subsets_inhabited.ma".
+include "delayed_updating/syntax/preterm.ma".
 
-(* STRONG NORMALIZATION FOR PROTOTERM ***************************************)
+(* PRETERM ******************************************************************)
 
-(* Constructions with normal prototerms *************************************)
+(* Constructions with subsets_inhabited *************************************)
 
-lemma tsn_normal (t):
-      t ϵ 𝐍𝐅 → t ϵ 𝐒𝐍.
-#t1 #Ht1 @tsn_step
-#t2 #r #Hr elim (tnf_inv_gen … Ht1) -Ht1
-/2 width=3 by dbfr_inv_reducuble/
+lemma term_grafted_S_dx_inh (t) (p):
+      t ϵ 𝐓 → p◖𝗔 ϵ ▵t → ⋔[p◖𝗦]t ϵ ⊙.
+#t #p #Ht #Hp
+lapply (term_full_A_post … Ht … Hp) -Hp * #r #Hr
+/2 width=2 by subsets_inh_in/
 qed.
