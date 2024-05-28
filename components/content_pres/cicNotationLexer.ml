@@ -201,6 +201,7 @@ let mk_lexer token =
     Token.tok_match = Token.default_match;
     Token.tok_text = Token.lexer_text;
     Token.tok_comm = None;
+    Token.kwds = Hashtbl.create 23;
   }
 
 let expand_macro lexbuf =
