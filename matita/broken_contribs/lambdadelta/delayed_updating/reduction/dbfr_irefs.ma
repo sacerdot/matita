@@ -29,8 +29,6 @@ include "delayed_updating/reduction/dbfr.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 
-(* Constructions with pirc **************************************************)
-
 (* Inversions with pirc *****************************************************)
 
 lemma dbfr_inv_nin_pirc_sn (t1) (t2) (r):
@@ -42,8 +40,7 @@ lapply (term_clear_inj … H0t1 … H0) -H0
 lapply (term_root_post … H0t1 (p●𝗔◗b●𝗟◗q) (𝗱n0) (⁤↑n) ??)
 [1,2: /2 width=2 by term_in_root/ ] #H0 destruct
 lapply (term_complete_post … H0t1 … H2t1 H1t1 ?) -t1 // #H0
-lapply (eq_inv_list_append_dx_bi ?? (𝗱⁤↑n◗𝐞) ? H0) -H0 #H0
-lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0 destruct
+lapply (eq_inv_list_append_dx_dx_refl … (sym_eq … H0)) -H0 #H0 destruct
 /2 width=1 by ppc_inv_empty/
 qed-.
 

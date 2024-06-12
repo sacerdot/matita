@@ -59,7 +59,7 @@ qed-.
 
 lemma ibfrs_ind_sn (t2) (Q:relation2 …):
       (∀t1,t2,rs. t1 ⇔ t2 → Q t2 rs → Q t1 rs) →
-      (∀t1. t1 ⇔ t2 → Q t2 (𝐞)) →
+      Q t2 (𝐞) →
       (∀t,t1,ss,r. t1 ➡𝐢𝐛𝐟[r] t → t ➡*𝐢𝐛𝐟[ss] t2 → Q t ss → Q t1 (r◗ss)) →
       ∀t1,rs. t1 ➡*𝐢𝐛𝐟[rs] t2 → Q t1 rs.
 #t2 #Q
@@ -71,7 +71,7 @@ qed-.
 
 lemma ibfrs_ind_dx (t1) (Q:relation2 …):
       (∀t1,t2,rs. t1 ⇔ t2 → Q t2 rs → Q t1 rs) →
-      (∀t2. t1 ⇔ t2 → Q t2 (𝐞)) →
+      Q t1 (𝐞) →
       (∀t,t2,rs,s. t1 ➡*𝐢𝐛𝐟[rs] t → t ➡𝐢𝐛𝐟[s] t2 → Q t rs → Q t2 (rs◖s)) →
       ∀t2,rs. t1 ➡*𝐢𝐛𝐟[rs] t2 → Q t2 rs.
 #t1 #Q

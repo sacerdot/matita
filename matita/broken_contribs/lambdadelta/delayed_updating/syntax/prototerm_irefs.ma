@@ -22,7 +22,7 @@ include "delayed_updating/notation/functions/subset_i_1.ma".
 (* Note: we identify inner references with cleared paths to them *)
 (* Note: thus we can compare these paths in computation steps *)
 definition pirc (t): 𝒫❨ℙ❩ ≝
-           {r | ∃∃p,q,n. ⓪p = r & q ϵ 𝐏 & p●𝗱n◗q ϵ t}
+           {r | ∃∃p,q,k. ⓪p = r & q ϵ 𝐏 & p◖𝗱k●q ϵ t}
 .
 
 interpretation
@@ -31,7 +31,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma pirc_mk (t) (p) (q) (n):
-      q ϵ 𝐏 → p●𝗱n◗q ϵ t → ⓪p ϵ 𝐈❨t❩.
+lemma in_comp_pirc (t) (p) (q) (k):
+      q ϵ 𝐏 → p◖𝗱k●q ϵ t → ⓪p ϵ 𝐈❨t❩.
 /2 width=6 by ex3_3_intro/
 qed.

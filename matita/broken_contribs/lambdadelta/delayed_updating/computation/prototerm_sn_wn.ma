@@ -19,7 +19,7 @@ include "delayed_updating/computation/prototerm_sn.ma".
 
 (* Destructions with twn ****************************************************)
 
-(* Note: this holds if w can decide whether 𝐑❨t❩ is empty *)
+(* Note: this holds if we can decide whether 𝐑❨t❩ is empty *)
 lemma tsn_des_twn (t):
       t ϵ 𝐒𝐍 → t ϵ 𝐖𝐍.
 #t #Ht elim Ht -t

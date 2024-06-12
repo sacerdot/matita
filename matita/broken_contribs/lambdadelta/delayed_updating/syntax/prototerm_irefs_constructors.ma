@@ -23,5 +23,5 @@ include "delayed_updating/syntax/prototerm_irefs.ma".
 lemma pirc_mk_iref (t) (p) (n):
       t ≬ 𝐏 → ⓪p ϵ 𝐈❨p●𝛕n.t❩.
 #t #p #n * #q #H1q #H2q
-/4 width=4 by pirc_mk, pt_append_in/
+/4 width=4 by in_comp_pirc, pt_append_in/
 qed.

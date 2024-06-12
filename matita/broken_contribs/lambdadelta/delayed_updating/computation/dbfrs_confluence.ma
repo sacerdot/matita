@@ -12,22 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_or_le.ma".
-include "delayed_updating/syntax/prototerm_irefs_eq.ma".
+include "ground/xoa/ex_2_3.ma".
+include "delayed_updating/syntax/preterm.ma".
+include "delayed_updating/computation/dbfrs.ma".
 
-(* SUBSET OF INNER REFERENCES ***********************************************)
+(* DELAYED BALANCED FOCUSED COMPUTATION *************************************)
 
-(* Constructions with subset_or and subset_le *******************************)
+(* Confluence ***************************************************************)
 
-lemma subset_le_or_pirc (t1) (t2):
-      (𝐈❨t1❩) ∪ 𝐈❨t2❩ ⊆ 𝐈❨t1 ∪ t2❩.
-#t1 #t2
-@subset_le_or_sn
-@subset_le_pirc_bi // (**) (* auto fails *)
-qed.
-
-lemma subset_le_pirc_or (t1) (t2):
-      (𝐈❨t1 ∪ t2❩) ⊆ 𝐈❨t1❩ ∪ 𝐈❨t2❩.
-#t1 #t2 #r * #p #q #n #Hr #Hp * #Ht destruct
-/3 width=4 by in_comp_pirc, subset_or_in_sn, subset_or_in_dx/
-qed.
+axiom dbfrs_conf (t0):
+      t0 ϵ 𝐓 → ∀t1,rs1. t0 ➡*𝐝𝐛𝐟[rs1] t1 → ∀t2,rs2. t0 ➡*𝐝𝐛𝐟[rs2] t2 →
+      ∃∃t,ss1,ss2. t1 ➡*𝐝𝐛𝐟[ss1] t & t2 ➡*𝐝𝐛𝐟[ss2] t.

@@ -94,6 +94,11 @@ lemma pt_append_assoc (p) (q) (t:𝕋):
 /3 width=1 by conj, pt_append_assoc_sn, pt_append_assoc_dx/
 qed.
 
+lemma term_le_pt_append_grafted_refl (t) (p):
+      p●⋔[p]t ⊆ t.
+#t #p #r * #q #Hq #H0 destruct //
+qed.
+
 (* Constructions with term_slice ********************************************)
 
 lemma term_slice_append (p) (q):

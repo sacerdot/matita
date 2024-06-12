@@ -50,3 +50,26 @@ lemma eq_path_dec (p1) (p2):
       Decidable (p1 ={ℙ} p2).
 /3 width=1 by eq_label_dec, eq_list_dec/
 qed-.
+
+lemma is_path_append_sn_dec (p) (r):
+      Decidable (∃q. r = p●q).
+#p @(list_ind_rcons … p) -p [| #p #lp #IH ] #r
+[ /3 width=3 by ex_intro, or_introl/
+| @(list_ind_rcons … r) -r [| #r #lr #_ ]
+  [ @or_intror * #q <list_append_rcons_dx
+   /2 width=4 by eq_inv_list_empty_rcons/
+  | elim (eq_label_dec lp lr) #Hnl destruct
+    [ elim (IH r) -IH
+      [ * #q #H0 destruct
+        /3 width=2 by ex_intro, or_introl/
+      | #Hr @or_intror * #q <list_append_rcons_dx #H0
+        elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_ destruct
+        /3 width=2 by ex_intro/
+      ]
+    | @or_intror * #q <list_append_rcons_dx #H0
+      elim (eq_inv_list_rcons_bi ????? H0) -H0 -IH #_ #H0 destruct
+      /2 width=1 by/
+    ]
+  ]
+]
+qed-.

@@ -12,22 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_or_le.ma".
-include "delayed_updating/syntax/prototerm_irefs_eq.ma".
+include "delayed_updating/computation/prototerm_originated_irefs.ma".
+include "delayed_updating/computation/preterm_sn_wn.ma".
 
-(* SUBSET OF INNER REFERENCES ***********************************************)
+(* STRONG NORMALIZATION FOR PRETERM *****************************************)
 
-(* Constructions with subset_or and subset_le *******************************)
-
-lemma subset_le_or_pirc (t1) (t2):
-      (𝐈❨t1❩) ∪ 𝐈❨t2❩ ⊆ 𝐈❨t1 ∪ t2❩.
-#t1 #t2
-@subset_le_or_sn
-@subset_le_pirc_bi // (**) (* auto fails *)
-qed.
-
-lemma subset_le_pirc_or (t1) (t2):
-      (𝐈❨t1 ∪ t2❩) ⊆ 𝐈❨t1❩ ∪ 𝐈❨t2❩.
-#t1 #t2 #r * #p #q #n #Hr #Hp * #Ht destruct
-/3 width=4 by in_comp_pirc, subset_or_in_sn, subset_or_in_dx/
+theorem topc_twn_tsn (t):
+        t ϵ 𝐓 → t ϵ 𝐎⁺ → t ϵ 𝐖𝐍 → t ϵ 𝐒𝐍.
+#t #H1t #H2t #H3t
+/3 width=1 by finite_pirc_twn_tsn, topc_des_pirc_finite/
 qed.

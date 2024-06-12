@@ -36,13 +36,18 @@ interpretation
   "balanced focused reduction with delayed updating (prototerm)"
   'BlackRightArrowDBF t1 r t2 = (dbfr r t1 t2).
 
-(* Constructions with subset_equivalence ************************************)
+(* Constructions with subset_eq *********************************************)
 
 lemma dbfr_eq_trans (t) (t1) (t2) (r):
       t1 ➡𝐝𝐛𝐟[r] t → t ⇔ t2 → t1 ➡𝐝𝐛𝐟[r] t2.
 #t #t1 #t2 #r
 * #p #b #q #n #Hr #Hb #Hn #Ht1 #Ht #Ht2
 /3 width=13 by subset_eq_trans, ex5_4_intro/
+qed-.
+
+lemma dbfr_eq_canc_dx (t) (t1) (t2) (r):
+      t1 ➡𝐝𝐛𝐟[r] t → t2 ⇔ t → t1 ➡𝐝𝐛𝐟[r] t2.
+/3 width=3 by dbfr_eq_trans, subset_eq_sym/
 qed-.
 
 (* Basic destructions *******************************************************)

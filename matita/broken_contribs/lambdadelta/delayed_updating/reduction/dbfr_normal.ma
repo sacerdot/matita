@@ -12,22 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_or_le.ma".
-include "delayed_updating/syntax/prototerm_irefs_eq.ma".
+include "delayed_updating/reduction/prototerm_normal.ma".
+include "delayed_updating/reduction/dbfr_reducibles.ma".
 
-(* SUBSET OF INNER REFERENCES ***********************************************)
+(* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 
-(* Constructions with subset_or and subset_le *******************************)
+(* Inversions with tnf ******************************************************)
 
-lemma subset_le_or_pirc (t1) (t2):
-      (𝐈❨t1❩) ∪ 𝐈❨t2❩ ⊆ 𝐈❨t1 ∪ t2❩.
-#t1 #t2
-@subset_le_or_sn
-@subset_le_pirc_bi // (**) (* auto fails *)
-qed.
-
-lemma subset_le_pirc_or (t1) (t2):
-      (𝐈❨t1 ∪ t2❩) ⊆ 𝐈❨t1❩ ∪ 𝐈❨t2❩.
-#t1 #t2 #r * #p #q #n #Hr #Hp * #Ht destruct
-/3 width=4 by in_comp_pirc, subset_or_in_sn, subset_or_in_dx/
-qed.
+lemma dbfr_inv_tnf_sn (t1) (t2) (r):
+      t1 ϵ 𝐍𝐅 → t1 ➡𝐝𝐛𝐟[r] t2 → ⊥.
+#t1 #t2 #r #Ht1 #Ht12
+/4 width=3 by dbfr_inv_reducuble, subset_nin_inv_empty/
+qed-.

@@ -25,6 +25,12 @@ lemma term_le_pt_append_bi_iref_dx (t) (p) (n):
 /2 width=1 by pt_append_assoc_dx/
 qed.
 
+lemma term_le_pt_append_bi_iref_sn (t) (p) (k):
+      p●𝛕k.t ⊆ (p◖𝗱k)●t.
+#t #p #r
+@pt_append_assoc_sn
+qed.
+
 (* Constructions with equivalence for prototerm *****************************)
 
 lemma iref_eq_repl_bi (t1) (t2) (k1) (k2):

@@ -12,22 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_or_le.ma".
-include "delayed_updating/syntax/prototerm_irefs_eq.ma".
+include "delayed_updating/computation/dbfrs_irefs_finite.ma".
+include "delayed_updating/computation/prototerm_originated.ma".
 
-(* SUBSET OF INNER REFERENCES ***********************************************)
+(* SUBSET OF ORIGINATED PROTOTERMS ******************************************)
 
-(* Constructions with subset_or and subset_le *******************************)
+(* Destructions with pirc and subsets_finite ********************************)
 
-lemma subset_le_or_pirc (t1) (t2):
-      (𝐈❨t1❩) ∪ 𝐈❨t2❩ ⊆ 𝐈❨t1 ∪ t2❩.
-#t1 #t2
-@subset_le_or_sn
-@subset_le_pirc_bi // (**) (* auto fails *)
-qed.
-
-lemma subset_le_pirc_or (t1) (t2):
-      (𝐈❨t1 ∪ t2❩) ⊆ 𝐈❨t1❩ ∪ 𝐈❨t2❩.
-#t1 #t2 #r * #p #q #n #Hr #Hp * #Ht destruct
-/3 width=4 by in_comp_pirc, subset_or_in_sn, subset_or_in_dx/
-qed.
+lemma topc_des_pirc_finite (t):
+      t ϵ 𝐎⁺ → 𝐈❨t❩ ϵ 𝛀.
+#t2 * #t1 #rs #Ht1 #Ht12
+@(dbfrs_pirc_finite_sn … Ht12) -t2 -rs
+/3 width=2 by subsets_finite_in/
+qed-.

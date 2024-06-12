@@ -12,22 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_or_le.ma".
-include "delayed_updating/syntax/prototerm_irefs_eq.ma".
+include "delayed_updating/syntax/preterm_eq.ma".
+include "delayed_updating/reduction/dbfr_preterm.ma".
+include "delayed_updating/computation/dbfrs.ma".
 
-(* SUBSET OF INNER REFERENCES ***********************************************)
+(* DELAYED BALANCED FOCUSED COMPUTATION *************************************)
 
-(* Constructions with subset_or and subset_le *******************************)
+(* Destructions with preterm ************************************************)
 
-lemma subset_le_or_pirc (t1) (t2):
-      (𝐈❨t1❩) ∪ 𝐈❨t2❩ ⊆ 𝐈❨t1 ∪ t2❩.
-#t1 #t2
-@subset_le_or_sn
-@subset_le_pirc_bi // (**) (* auto fails *)
-qed.
-
-lemma subset_le_pirc_or (t1) (t2):
-      (𝐈❨t1 ∪ t2❩) ⊆ 𝐈❨t1❩ ∪ 𝐈❨t2❩.
-#t1 #t2 #r * #p #q #n #Hr #Hp * #Ht destruct
-/3 width=4 by in_comp_pirc, subset_or_in_sn, subset_or_in_dx/
-qed.
+lemma dbfrs_preterm_trans (t1) (t2) (rs):
+      t1 ϵ 𝐓 → t1 ➡*𝐝𝐛𝐟[rs] t2 → t2 ϵ 𝐓.
+#t1 #t2 #rs #Ht1 #H0
+@(dbfrs_ind_dx … H0) -t2 -rs //
+[ /2 width=3 by term_eq_repl_back/
+| #t #t2 #rs #r #_ #Ht2 #IH -Ht1
+  /2 width=4 by dbfr_preterm_trans/
+]
+qed. 

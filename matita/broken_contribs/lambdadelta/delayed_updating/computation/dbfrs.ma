@@ -59,7 +59,7 @@ qed-.
 
 lemma dbfrs_ind_sn (t2) (Q:relation2 …):
       (∀t1,t2,rs. t1 ⇔ t2 → Q t2 rs → Q t1 rs) →
-      (∀t1. t1 ⇔ t2 → Q t2 (𝐞)) →
+      Q t2 (𝐞) →
       (∀t,t1,ss,r. t1 ➡𝐝𝐛𝐟[r] t → t ➡*𝐝𝐛𝐟[ss] t2 → Q t ss → Q t1 (r◗ss)) →
       ∀t1,rs. t1 ➡*𝐝𝐛𝐟[rs] t2 → Q t1 rs.
 #t2 #Q
@@ -71,7 +71,7 @@ qed-.
 
 lemma dbfrs_ind_dx (t1) (Q:relation2 …):
       (∀t1,t2,rs. t1 ⇔ t2 → Q t2 rs → Q t1 rs) →
-      (∀t2. t1 ⇔ t2 → Q t2 (𝐞)) →
+      Q t1 (𝐞) →
       (∀t,t2,rs,s. t1 ➡*𝐝𝐛𝐟[rs] t → t ➡𝐝𝐛𝐟[s] t2 → Q t rs → Q t2 (rs◖s)) →
       ∀t2,rs. t1 ➡*𝐝𝐛𝐟[rs] t2 → Q t2 rs.
 #t1 #Q
@@ -79,4 +79,24 @@ lemma dbfrs_ind_dx (t1) (Q:relation2 …):
 [ /3 width=3 by dbfr_eq_canc_sn, subset_eq_sym/
 | /2 width=3 by dbfr_eq_trans/
 ]
+qed-.
+
+(* Constructions with subset_eq *********************************************)
+
+lemma dbfrs_eq_trans (t):
+      ∀t1,rs. t1 ➡*𝐝𝐛𝐟[rs] t →
+      ∀t2. t ⇔ t2 → t1 ➡*𝐝𝐛𝐟[rs] t2.
+#t #t1 #rs #H0
+@(dbfrs_ind_dx … H0) -t -rs
+[ #t #t0 #rs #Ht0 #IH #t2 #Ht2
+  /3 width=3 by subset_eq_canc_sn/
+| /2 width=1 by frs_refl/
+| #u1 #u2 #ss #s #Htu #Hu #_ #t2 #Hut
+  /3 width=5 by frs_step_dx, dbfr_eq_trans/
+]
+qed-.
+
+lemma dbfrs_eq_canc_dx (t) (t1) (t2) (rs):
+      t1 ➡*𝐝𝐛𝐟[rs] t → t2 ⇔ t → t1 ➡*𝐝𝐛𝐟[rs] t2.
+/3 width=3 by dbfrs_eq_trans, subset_eq_sym/
 qed-.

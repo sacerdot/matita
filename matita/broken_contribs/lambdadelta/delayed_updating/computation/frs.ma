@@ -137,7 +137,7 @@ lemma frs_ind_sn (R) (t2) (Q:relation2 …):
       (∀t,t1,t2,r. t1 ⇔ t → R r t t2 → R r t1 t2) →
       (∀t,t1,t2,r. R r t1 t → t ⇔ t2 → R r t1 t2) →
       (∀t1,t2,rs. t1 ⇔ t2 → Q t2 rs → Q t1 rs) →
-      (∀t1. t1 ⇔ t2 → Q t2 (𝐞)) →
+      (Q t2 (𝐞)) →
       (∀t,t1,ss,r. R r t1 t → frs R ss t t2 → Q t ss → Q t1 (r◗ss)) →
       ∀t1,rs. frs R rs t1 t2 → Q t1 rs.
 #R #t2 #Q #H1R #H2R #HQ #IH1 #IH2 #t1 #rs
@@ -154,14 +154,14 @@ lemma frs_ind_dx (R) (t1) (Q:relation2 …):
       (∀t,t1,t2,r. t1 ⇔ t → R r t t2 → R r t1 t2) →
       (∀t,t1,t2,r. R r t1 t → t ⇔ t2 → R r t1 t2) →
       (∀t1,t2,rs. t1 ⇔ t2 → Q t2 rs → Q t1 rs) →
-      (∀t2. t1 ⇔ t2 → Q t2 (𝐞)) →
+      (Q t1 (𝐞)) →
       (∀t,t2,rs,s. frs R rs t1 t → R s t t2 → Q t rs → Q t2 (rs◖s)) →
       ∀t2,rs. frs R rs t1 t2 → Q t2 rs.
 #R #t1 #Q #H1R #H2R #HQ #IH1 #IH2 #t2 #rs
 generalize in match t2; -t2
 @(list_ind_rcons … rs) -rs [| #rs #r #IH ] #t2 #Ht
 [ lapply (frs_inv_empty … Ht) -Ht #Ht
-  /3 width=3 by/
+  /4 width=3 by subset_eq_sym/
 | elim (frs_inv_step_dx … H1R H2R … Ht) -Ht #t #Ht1 #Ht2
   /3 width=4 by/
 ]

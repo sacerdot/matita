@@ -96,6 +96,10 @@ qed-.
 
 (* Basic constructions ******************************************************)
 
+lemma term_grafted_gen (t) (p) (q):
+      p●q ϵ t → q ϵ ⋔[p]t.
+// qed-.
+
 lemma term_in_root (t) (p) (q):
       p●q ϵ t → p ϵ ▵t.
 /2 width=2 by ex_intro/
@@ -156,23 +160,10 @@ qed-.
 
 lemma term_in_slice_dec (p) (r):
       Decidable (r ϵ ↑p).
-#r @(list_ind_rcons … r) -r
-[ /3 width=3 by ex2_intro, or_introl/
-| #r #l2 #IH #p @(list_ind_rcons … p) -p
-  [ @or_intror * #q #_ <list_append_rcons_dx
-   /2 width=4 by eq_inv_list_empty_rcons/
-  | #p #l1 #_
-    elim (eq_label_dec l1 l2) #Hnl destruct
-    [ elim (IH p) -IH #Hp
-      [ /3 width=1 by term_slice_append_sn, or_introl/
-      | @or_intror * #q #_ <list_append_rcons_dx #H0
-        elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_ destruct
-        /2 width=1 by/
-      ]
-    | @or_intror * #q #_ <list_append_rcons_dx #H0
-      elim (eq_inv_list_rcons_bi ????? H0) -H0
-      /2 width=1 by/
-    ]
-  ]
+#p #r elim (is_path_append_sn_dec p r)
+[ * #q #H0 destruct
+  /2 width=1 by or_introl/
+| #Hnq @or_intror * #q #_ #H0 destruct
+  /3 width=2 by ex_intro/
 ]
 qed-.

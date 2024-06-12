@@ -12,22 +12,26 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_or_le.ma".
-include "delayed_updating/syntax/prototerm_irefs_eq.ma".
+include "ground/xoa/ex_2_3.ma".
+include "ground/subsets/subset.ma".
+include "delayed_updating/syntax/path_clear.ma".
+include "delayed_updating/notation/functions/subset_l_1.ma".
 
-(* SUBSET OF INNER REFERENCES ***********************************************)
+(* SUBSET OF LOCAL REFERENCES ***********************************************)
 
-(* Constructions with subset_or and subset_le *******************************)
+(* Note: we identify local references with cleared paths to them *)
+(* Note: thus we can compare these paths in computation steps *)
+definition plrc (t): 𝒫❨ℙ❩ ≝
+           {r | ∃∃p,q,k. ⓪p = r & p◖𝗱k●q ϵ t}
+.
 
-lemma subset_le_or_pirc (t1) (t2):
-      (𝐈❨t1❩) ∪ 𝐈❨t2❩ ⊆ 𝐈❨t1 ∪ t2❩.
-#t1 #t2
-@subset_le_or_sn
-@subset_le_pirc_bi // (**) (* auto fails *)
-qed.
+interpretation
+  "pointer to local reference"
+  'SubsetL t = (plrc t).
 
-lemma subset_le_pirc_or (t1) (t2):
-      (𝐈❨t1 ∪ t2❩) ⊆ 𝐈❨t1❩ ∪ 𝐈❨t2❩.
-#t1 #t2 #r * #p #q #n #Hr #Hp * #Ht destruct
-/3 width=4 by in_comp_pirc, subset_or_in_sn, subset_or_in_dx/
+(* Basic constructions ******************************************************)
+
+lemma in_comp_plrc (t) (p) (q) (k):
+      p◖𝗱k●q ϵ t → ⓪p ϵ 𝐋❨t❩.
+/2 width=5 by ex2_3_intro/
 qed.

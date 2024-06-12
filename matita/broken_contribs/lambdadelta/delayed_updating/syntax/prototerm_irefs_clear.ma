@@ -25,14 +25,14 @@ lemma term_le_pirc_bi_clear_dx (t):
       (𝐈❨t❩) ⊆ 𝐈❨⓪t❩.
 #t #r * #p #q #n #H0 #Hq #Hp destruct
 >path_clear_idem
-/3 width=4 by pirc_mk, in_comp_term_clear, path_clear_ppc/
+/3 width=4 by in_comp_pirc, in_comp_term_clear, path_clear_ppc/
 qed.
 
 lemma term_le_pirc_bi_clear_sn (t):
       (𝐈❨⓪t❩) ⊆ 𝐈❨t❩.
 #t #r * #p #q #n #H1 #Hq * #s #Hs #H2 destruct
-elim (eq_inv_path_append_clear … H2) -H2 #p0 #x0 #H1 #H0 #H2 destruct
-elim (eq_inv_path_d_sn_clear … H0) -H0 #q0 #n0 #H1 #H2 #H3 destruct
+elim (eq_inv_path_append_clear … H2) -H2 #p0 #x0 #H0 #H1 #H2 destruct
+elim (eq_inv_path_d_dx_clear … H0) -H0 #q0 #n0 #H1 #H2 #H3 destruct
 <path_clear_idem
-/3 width=4 by pirc_mk, path_clear_inv_ppc/
+/3 width=4 by in_comp_pirc, path_clear_inv_ppc/
 qed.
