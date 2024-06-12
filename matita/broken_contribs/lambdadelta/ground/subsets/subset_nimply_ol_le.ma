@@ -32,7 +32,7 @@ qed.
 
 lemma subset_le_nimp_dx_refl_sn_fwd (A) (u1) (u2):
       u1 ⧸≬{A} u2 → u1 ⊆ u1 ⧵ u2.
-/2 width=1 by subset_le_nimpl_dx_fwd/
+/2 width=4 by subset_le_nimpl_dx_fwd/
 qed.
 
 lemma subset_le_nimp_dx_refl_sn_bck (A) (u1) (u2):

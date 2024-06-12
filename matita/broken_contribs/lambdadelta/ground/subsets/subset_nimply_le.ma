@@ -20,7 +20,7 @@ include "ground/subsets/subset_nimply.ma".
 (* Constructions with subset_le *********************************************)
 
 lemma subset_le_nimp_sn_refl_sn (A) (u1) (u2):
-       u1 ⧵{A} u2 ⊆ u1.
+      u1 ⧵{A} u2 ⊆ u1.
 #A #u1 #u2 #a * #Hu1 #_ //
 qed.
 
