@@ -12,43 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_le.ma".
-include "ground/lib/list_length.ma".
-include "ground/subsets/subset_eq.ma".
-include "ground/subsets/subset_nimply_le.ma".
-include "ground/subsets/subset_listed_le.ma".
+include "ground/subsets/subset_nimply.ma".
+include "ground/subsets/subset_listed.ma".
 
 (* SUBSET WITH LISTED ELEMENTS **********************************************)
 
 (* Constructions with subset_nimp *******************************************)
 
-lemma pippo (A:Type[0]) (u) (l2):
+lemma in_nimp_single_dx_dec (A:Type[0]) (u) (b):
       (∀a1,a2. Decidable … (a1 ={A} a2)) →
-      (∀a. Decidable … (a ϵ{A} u)) →
-      u ⊆ 𝐗{A}❨l2❩ →
-      ∃∃l1. 𝐗❨l1❩ ⇔ u & ❘l1❘ ≤ ❘l2❘.
-#A #u #l2 #HA
-generalize in match u; -u
-elim l2 -l2 [| #a #l2 #IH ] #u #H1u #H2u
-[ /4 width=3 by subset_empty_le_sn, ex2_intro, conj/
-| lapply (subset_le_inv_listed_lcons_dx ???? H2u) -H2u #H2u
-  elim (IH … H2u) -IH -H2u
-  [ #l1 #Hl1 #Hl12
-    @(ex2_intro … (a⨮l1))
-    [
-    | /2 width=1 by nle_succ_bi/
-
-
-lemma subset_nimp_empty_sn (A) (u):
-      (Ⓕ{A}) ⇔ Ⓕ ⧵ u.
-/3 width=2 by subset_empty_le_sn, subset_le_nimp_sn_refl_sn, conj/
-qed.
-
-lemma subset_nimp_listed (A:Type[0]) (l1) (l2):
-      (∀a1,a2. Decidable … (a1 ={A} a2)) →
-      ∃∃l. 𝐗{A}❨l❩ ⇔ 𝐗❨l1❩ ⧵ 𝐗❨l2❩ & ❘l❘ ≤ ❘l1❘.
-#A #l1 #l2 #HA
-generalize in match l2; -l2
-elim l1 -l1 [| #a1 #l1 #IH ] #l2
-[ /2 width=3 by ex2_intro/
-|
+      (∀a:A.Decidable (aϵu)) →
+      ∀a:A.Decidable (aϵu⧵❴b❵).
+#A #u #b #HA #Hu
+/3 width=1 by subset_in_nimp_dec, subset_in_listed_dec/
+qed-.

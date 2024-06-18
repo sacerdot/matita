@@ -1,0 +1,12 @@
+lemma subset_listed_le_lcons_sn (A) (l) (a):
+      a ϵ{A} 𝐗❨l❩ → 𝐗❨a⨮l❩ ⊆ 𝐗❨l❩.
+#A #l #a #Ha
+@(subset_le_trans … (subset_le_listed_lcons_or …))
+/3 width=3 by subset_single_le_sn, subset_le_or_sn_refl_dx/
+qed.
+
+lemma subset_nimp_empty_sn (A) (u):
+      (Ⓕ{A}) ⇔ Ⓕ ⧵ u.
+/3 width=2 by subset_empty_le_sn, subset_le_nimp_sn_refl_sn, conj/
+qed.
+

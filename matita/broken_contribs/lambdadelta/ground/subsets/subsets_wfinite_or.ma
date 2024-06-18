@@ -12,23 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_lt.ma".
-include "ground/subsets/subset_or_le.ma".
+include "ground/subsets/subset_listed_or_le.ma".
+include "ground/subsets/subsets_wfinite.ma".
 
-(* UNION FOR SUBSETS ********************************************************)
+(* WEAKLY FINITE SUBSETS ****************************************************)
 
-(* Constructions with subset_lt and subset_ol *******************************)
+(* Constructions with subset_or *********************************************)
 
-lemma subset_lt_or_bi_sn (A) (u1) (u2) (v): (**)
-      v ⧸≬{A} u2 → u1 ⊂ u2 → v ∪ u1 ⊂ v ∪ u2.
-#A #u1 #u2 #v #Hu2 * #Hu #H0
-@subset_lt_mk
-[ /2 width=5 by subset_or_le_repl/
-| elim (subsets_inh_inv_in … H0) -H0 #a * #Ha #Hna
-  @(subsets_inh_in … a)
-  @subset_in_nimp
-  [ /2 width=1 by subset_or_in_dx/
-  | /4 width=7 by subset_nin_inv_or, subset_ol_i/
-  ]
-]
+lemma subsets_wfinite_or (A) (u1) (u2):
+      u1 ϵ 𝐖𝛀 → u2 ϵ 𝐖𝛀 → u1 ∪ u2 ϵ 𝐖𝛀{A}.
+#A #u1 #u2 * #l1 #Hl1 * #l2 #Hl2
+/4 width=7 by subset_le_or_listed_append, subsets_wfinite_in, subset_or_le_repl/
 qed.

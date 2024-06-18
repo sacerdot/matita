@@ -22,7 +22,7 @@ include "ground/subsets/subset_listed_nimply_le.ma".
 lemma subset_le_nimp_or_sn (A) (u1) (u2) (v:𝒫❨A❩): (**)
       (u1 ∪ u2) ⧵ v ⊆ (u1 ⧵ v) ∪ (u2 ⧵ v).
 #A #u1 #u2 #v #a * * #Hu #Hnv
-/3 width=1 by subset_nimply_in, subset_or_in_dx, subset_or_in_sn/
+/3 width=1 by subset_in_nimp, subset_or_in_dx, subset_or_in_sn/
 qed.
 
 lemma subset_le_nimp_or_sn_refl_sn (A) (u1) (u2:𝒫❨A❩): (**)
@@ -42,7 +42,7 @@ lemma subset_le_or_dx_nimp_sn_refl_bi (A) (u1) (u2): (**)
 #A #u1 #u2 #Hu2 #a #Ha
 elim (Hu2 a) -Hu2 #Hu2
 [ /2 width=1 by subset_or_in_dx/
-| /4 width=1 by subset_nimply_in, subset_or_in_sn/
+| /4 width=1 by subset_in_nimp, subset_or_in_sn/
 ]
 qed.
 
@@ -52,6 +52,6 @@ lemma subset_le_or_dx_nimp_dx_refl_bi (A) (u1) (u2): (**)
 #A #u1 #u2 #Hu2 #a #Ha
 elim (Hu2 a) -Hu2 #Hu2
 [ /2 width=1 by subset_or_in_sn/
-| /4 width=1 by subset_nimply_in, subset_or_in_dx/
+| /4 width=1 by subset_in_nimp, subset_or_in_dx/
 ]
 qed.

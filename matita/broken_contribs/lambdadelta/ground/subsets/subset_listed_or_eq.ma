@@ -12,35 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_le.ma".
-include "ground/subsets/subset_listed.ma".
-include "ground/notation/functions/subset_omega_1.ma".
+include "ground/subsets/subset_eq.ma".
+include "ground/subsets/subset_listed_or_le.ma".
 
-(* FINITE SUBSETS ***********************************************************)
+(* SUBSET WITH LISTED ELEMENTS **********************************************)
 
-definition subsets_finite (A): 𝒫❨𝒫❨A❩❩ ≝
-           {u | ∃l. u ⊆ 𝐗❨l❩}.
+(* Constructions with subset_or and subset_eq *******************************)
 
-interpretation
-  "finite (subset of subsets)"
-  'SubsetOmega A = (subsets_finite A).
-
-(* Basic constructions ******************************************************)
-
-lemma subsets_finite_in (A) (u) (l):
-      u ⊆ 𝐗❨l❩ → u ϵ 𝛀{A}.
-/2 width=2 by ex_intro/
+lemma subset_eq_or_listed_append (A) (l1) (l2):
+      (𝐗❨l1❩) ∪ 𝐗❨l2❩ ⇔ 𝐗{A}❨l1⨁l2❩.
+#A #l1 #l2
+/3 width=1 by subset_le_listed_append_or, subset_le_or_listed_append, conj/
 qed.
 
-(* Advanced constructions ***************************************************)
-
-lemma subsets_finite_listed (A) (l):
-      (𝐗❨l❩) ϵ 𝛀{A}.
-/2 width=2 by subsets_finite_in/
+lemma subset_eq_or_listed_lcons (A) (a1) (l2):
+      ❴a1❵ ∪ 𝐗❨l2❩ ⇔ 𝐗{A}❨a1⨮l2❩.
+/3 width=1 by subset_le_listed_lcons_or, subset_le_or_listed_lcons, conj/
 qed.
-
-lemma subsets_finite_le_trans (A) (u) (v):
-      u ⊆ v → v ϵ 𝛀 → u ϵ 𝛀{A}.
-#A #u #v #Huv * #l #Hv
-/3 width=6 by subsets_finite_in, subset_le_trans/
-qed-.

@@ -19,7 +19,7 @@ include "ground/subsets/subset_nimply.ma".
 
 (* DIFFERENCE FOR SUBSETS ***************************************************)
 
-(* Constructions with subset_and and subset_or and subset_le  ***************)
+(* Constructions with subset_and and subset_or and subset_le ****************)
 
 lemma subset_le_or_dx_and_nimp_refl_sn_bi (A) (u) (v):
       (∀a. Decidable (a ϵ{A} v)) →
@@ -27,7 +27,7 @@ lemma subset_le_or_dx_and_nimp_refl_sn_bi (A) (u) (v):
 #A #u #v #Hu #a #Ha  
 elim (Hu a) #Hna
 [ /3 width=1 by subset_or_in_sn, subset_and_in/
-| /4 width=1 by subset_nimply_in, subset_or_in_dx/
+| /4 width=1 by subset_in_nimp, subset_or_in_dx/
 ]
 qed.
 

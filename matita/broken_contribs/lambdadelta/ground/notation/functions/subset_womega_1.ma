@@ -12,23 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_lt.ma".
-include "ground/subsets/subset_or_le.ma".
+(* NOTATION FOR GROUND ******************************************************)
 
-(* UNION FOR SUBSETS ********************************************************)
+notation < "hvbox( 𝐖𝛀 )"
+  non associative with precedence 70
+  for @{ 'SubsetWOmega $S }.
 
-(* Constructions with subset_lt and subset_ol *******************************)
-
-lemma subset_lt_or_bi_sn (A) (u1) (u2) (v): (**)
-      v ⧸≬{A} u2 → u1 ⊂ u2 → v ∪ u1 ⊂ v ∪ u2.
-#A #u1 #u2 #v #Hu2 * #Hu #H0
-@subset_lt_mk
-[ /2 width=5 by subset_or_le_repl/
-| elim (subsets_inh_inv_in … H0) -H0 #a * #Ha #Hna
-  @(subsets_inh_in … a)
-  @subset_in_nimp
-  [ /2 width=1 by subset_or_in_dx/
-  | /4 width=7 by subset_nin_inv_or, subset_ol_i/
-  ]
-]
-qed.
+notation > "hvbox( 𝐖𝛀 opt ( { term 46 S } ) )"
+  non associative with precedence 70
+  for @{ 'SubsetWOmega ${default @{$S}@{?}} }.

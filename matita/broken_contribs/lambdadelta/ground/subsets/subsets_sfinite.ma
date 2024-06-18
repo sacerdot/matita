@@ -12,23 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_lt.ma".
-include "ground/subsets/subset_or_le.ma".
+include "ground/subsets/subset_eq.ma".
+include "ground/subsets/subset_listed.ma".
+include "ground/notation/functions/subset_somega_1.ma".
 
-(* UNION FOR SUBSETS ********************************************************)
+(* STRONGLY FINITE SUBSETS **************************************************)
 
-(* Constructions with subset_lt and subset_ol *******************************)
+definition subsets_sfinite (A): 𝒫❨𝒫❨A❩❩ ≝
+           {u | ∃l. u ⇔ 𝐗❨l❩}.
 
-lemma subset_lt_or_bi_sn (A) (u1) (u2) (v): (**)
-      v ⧸≬{A} u2 → u1 ⊂ u2 → v ∪ u1 ⊂ v ∪ u2.
-#A #u1 #u2 #v #Hu2 * #Hu #H0
-@subset_lt_mk
-[ /2 width=5 by subset_or_le_repl/
-| elim (subsets_inh_inv_in … H0) -H0 #a * #Ha #Hna
-  @(subsets_inh_in … a)
-  @subset_in_nimp
-  [ /2 width=1 by subset_or_in_dx/
-  | /4 width=7 by subset_nin_inv_or, subset_ol_i/
-  ]
-]
+interpretation
+  "strongly finite (subset of subsets)"
+  'SubsetSOmega A = (subsets_sfinite A).
+
+(* Basic constructions ******************************************************)
+
+lemma subsets_sfinite_in (A) (u) (l):
+      u ⇔ 𝐗❨l❩ → u ϵ 𝐒𝛀{A}.
+/2 width=2 by ex_intro/
 qed.
+
+(* Advanced constructions ***************************************************)
+
+lemma subsets_sfinite_listed (A) (l):
+      (𝐗❨l❩) ϵ 𝐒𝛀{A}.
+/2 width=2 by subsets_sfinite_in/
+qed.
+
+lemma subsets_sfinite_eq_trans (A) (u) (v):
+      u ⇔ v → v ϵ 𝐒𝛀 → u ϵ 𝐒𝛀{A}.
+#A #u #v #Huv * #l #Hv
+/3 width=6 by subsets_sfinite_in, subset_eq_trans/
+qed-.

@@ -12,23 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_lt.ma".
-include "ground/subsets/subset_or_le.ma".
+include "ground/subsets/subset_eq.ma".
+include "ground/subsets/subset_or.ma".
+include "ground/subsets/subset_nimply.ma".
 
-(* UNION FOR SUBSETS ********************************************************)
+(* DIFFERENCE FOR SUBSETS ***************************************************)
 
-(* Constructions with subset_lt and subset_ol *******************************)
+(* Constructions with subset_or and subset_eq *******************************)
 
-lemma subset_lt_or_bi_sn (A) (u1) (u2) (v): (**)
-      v ⧸≬{A} u2 → u1 ⊂ u2 → v ∪ u1 ⊂ v ∪ u2.
-#A #u1 #u2 #v #Hu2 * #Hu #H0
-@subset_lt_mk
-[ /2 width=5 by subset_or_le_repl/
-| elim (subsets_inh_inv_in … H0) -H0 #a * #Ha #Hna
-  @(subsets_inh_in … a)
-  @subset_in_nimp
-  [ /2 width=1 by subset_or_in_dx/
-  | /4 width=7 by subset_nin_inv_or, subset_ol_i/
-  ]
+lemma subset_eq_or_dx (A) (u) (u1) (u2):
+      u2 ⊆ u1 → (∀a:A.Decidable (aϵu2)) →
+      u1 ⧵{A} u2 ⇔ u → u1 ⇔ u2 ∪ u.
+#A #u #u1 #u2 #H1u #H2u * #Hu1 #Hu2
+@conj #a [ elim (H2u a) #H2a | * ] #H1a
+[ /2 width=1 by subset_or_in_sn/
+| /5 width=1 by subset_in_nimp, subset_or_in_dx/
+| /2 width=1 by/
+| lapply (Hu2 … H1a) -u * #Ha #_ //
 ]
 qed.

@@ -91,7 +91,6 @@ lemma subset_nin_inv_single (A) (a) (b):
 /2 width=1 by/
 qed-.
 
-
 (* Advanced properties ******************************************************)
 
 lemma subset_in_listed_dec (A:Type[0]):

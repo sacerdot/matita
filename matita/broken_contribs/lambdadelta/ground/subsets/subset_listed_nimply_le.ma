@@ -39,7 +39,7 @@ qed.
 
 lemma subset_le_nimp_dx_refl_empty (A) (u): (**)
       u ⊆ u ⧵ Ⓕ{A}.
-/3 width=3 by subset_nimply_in, subset_nin_inv_empty/
+/3 width=3 by subset_in_nimp, subset_nin_inv_empty/
 qed.
 
 (* Inversions with subset_nimp and subset_le ********************************)

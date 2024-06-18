@@ -22,12 +22,12 @@ include "ground/subsets/subset_nimply.ma".
 
 lemma subset_le_nimpl_dx_fwd (A) (u) (u1) (u2):
       u ⊆ u1 → u ⧸≬ u2 → u ⊆ u1 ⧵{A} u2.
-/4 width=3 by subset_nimply_in, subset_ol_i/
+/4 width=3 by subset_in_nimp, subset_ol_i/
 qed.
 
 lemma subset_le_nimpl_dx_bck (A) (u) (u1) (u2):
       u ⊆ u1 → u2 ⧸≬ u → u ⊆ u1 ⧵{A} u2.
-/4 width=3 by subset_nimply_in, subset_ol_i/
+/4 width=3 by subset_in_nimp, subset_ol_i/
 qed.
 
 lemma subset_le_nimp_dx_refl_sn_fwd (A) (u1) (u2):

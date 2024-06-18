@@ -12,23 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_lt.ma".
-include "ground/subsets/subset_or_le.ma".
+include "ground/subsets/subset_listed_eq.ma".
 
-(* UNION FOR SUBSETS ********************************************************)
+(* SUBSET WITH LISTED ELEMENTS **********************************************)
 
-(* Constructions with subset_lt and subset_ol *******************************)
+(* Constructions with subset_nimp and subset_eq *****************************)
 
-lemma subset_lt_or_bi_sn (A) (u1) (u2) (v): (**)
-      v ⧸≬{A} u2 → u1 ⊂ u2 → v ∪ u1 ⊂ v ∪ u2.
-#A #u1 #u2 #v #Hu2 * #Hu #H0
-@subset_lt_mk
-[ /2 width=5 by subset_or_le_repl/
-| elim (subsets_inh_inv_in … H0) -H0 #a * #Ha #Hna
-  @(subsets_inh_in … a)
-  @subset_in_nimp
-  [ /2 width=1 by subset_or_in_dx/
-  | /4 width=7 by subset_nin_inv_or, subset_ol_i/
-  ]
-]
-qed.
+lemma subset_nimp_listed_sn (A:Type[0]) (u) (l1):
+      (∀a1,a2. Decidable … (a1 ={A} a2)) →
+      (∀a. Decidable … (a ϵ u)) →
+      ∃∃l. 𝐗❨l1❩ ⧵ u ⇔ 𝐗{A}❨l❩ & ❘l❘ ≤ ❘l1❘.
+#A #u #l1 #HA #Hu
+@(subset_listed_dx_le_to_eq … HA) //
+/3 width=1 by subset_in_nimp_dec, subset_in_listed_dec/
+qed-.
+
+lemma subset_nimp_listed_bi (A:Type[0]) (l1) (l2):
+      (∀a1,a2. Decidable … (a1 ={A} a2)) →
+      ∃∃l. 𝐗❨l1❩ ⧵ 𝐗❨l2❩ ⇔ 𝐗{A}❨l❩ & ❘l❘ ≤ ❘l1❘.
+#A #l1 #l2 #HA
+/3 width=1 by subset_nimp_listed_sn, subset_in_listed_dec/
+qed-.

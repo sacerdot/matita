@@ -27,5 +27,5 @@ qed.
 lemma subset_le_nimp_bi (A) (u1) (u2) (v1) (v2):
       u1 ⊆ v1 → u2 ⊆ v2 → u1 ⧵ v2 ⊆ v1 ⧵{A} u2.
 #A #u1 #u2 #v1 #v2 #H1 #H2 #a * #Hu1 #Hv2
-/4 width=1 by subset_nimply_in/
+/4 width=1 by subset_in_nimp/
 qed.

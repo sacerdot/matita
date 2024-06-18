@@ -27,7 +27,7 @@ include "ground/subsets/subset_listed_inhabited.ma".
 
 lemma subset_lt_listed_lcons_dx (A) (l) (a):
       a ⧸ϵ 𝐗❨l❩ → 𝐗❨l❩ ⊂ 𝐗{A}❨a⨮l❩.
-/4 width=3 by subset_listed_le_lcons_dx, subset_lt_mk, subsets_inh_in, subset_nimply_in/
+/4 width=3 by subset_listed_le_lcons_dx, subset_lt_mk, subsets_inh_in, subset_in_nimp/
 qed.
 
 lemma subset_lt_listed_lcons_bi (A) (a) (l1) (l2):
