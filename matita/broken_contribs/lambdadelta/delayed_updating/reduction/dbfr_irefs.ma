@@ -81,7 +81,7 @@ qed-.
 
 lemma dbfr_des_in_comp_nimp_pirc_bi (t1) (t2) (r):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → r ϵ 𝐈❨t2❩ ⧵ 𝐈❨t1❩.
-/3 width=6 by dbfr_des_in_pirc_dx, dbfr_inv_nin_pirc_sn, subset_nimply_in/
+/3 width=6 by dbfr_des_in_pirc_dx, dbfr_inv_nin_pirc_sn, subset_in_nimp/
 qed-.
 
 lemma dbfr_des_lt_pirc_bi (t1) (t2) (r):

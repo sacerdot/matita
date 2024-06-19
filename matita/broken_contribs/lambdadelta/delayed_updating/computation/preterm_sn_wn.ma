@@ -12,11 +12,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subsets_finite_lt.ma".
+include "ground/subsets/subsets_wfinite_lt.ma".
 include "delayed_updating/reduction/dbfr_preterm.ma".
 include "delayed_updating/computation/dbfrs_normal.ma".
 include "delayed_updating/computation/dbfrs_irefs.ma".
-include "delayed_updating/computation/dbfrs_irefs_finite.ma".
+include "delayed_updating/computation/dbfrs_irefs_wfinite.ma".
 include "delayed_updating/computation/dbfrs_confluence.ma".
 include "delayed_updating/computation/prototerm_wn.ma".
 include "delayed_updating/computation/prototerm_sn.ma".
@@ -25,11 +25,11 @@ include "delayed_updating/computation/prototerm_sn.ma".
 
 (* Constructions with twn ***************************************************)
 
-lemma finite_pirc_twn_tsn_aux (t1):
-      t1 ϵ 𝐍𝐅 → ∀u0. u0 ϵ 𝛀 →
+lemma wfinite_pirc_twn_tsn_aux (t1):
+      t1 ϵ 𝐍𝐅 → ∀u0. u0 ϵ 𝐖𝛀 →
       ∀t0,rs. t0 ➡*𝐝𝐛𝐟[rs] t1 → t0 ϵ 𝐓 →  𝐈❨t1❩ ⧵ 𝐈❨t0❩ ⊆ u0 →
       t0 ϵ 𝐒𝐍.
-#t1 #Ht1 @(subsets_finite_ind_lt … eq_path_dec)
+#t1 #Ht1 @(subsets_wfinite_ind_lt … eq_path_dec)
 #u0 #_ #IH #t0 #rs #Ht01 #Ht0 #Hu0
 @tsn_step #t2 #r #Ht02
 elim (dbfrs_conf … Ht0 … Ht01 … t2) -rs
@@ -45,9 +45,9 @@ lapply (dbfrs_des_le_pirc_bi … H1t21) // #H2t21
 @(subset_le_trans ????? H2t21) //
 qed.
 
-theorem finite_pirc_twn_tsn (t):
-        t ϵ 𝐓 → 𝐈❨t❩ ϵ 𝛀 → t ϵ 𝐖𝐍 → t ϵ 𝐒𝐍.
+theorem wfinite_pirc_twn_tsn (t):
+        t ϵ 𝐓 → 𝐈❨t❩ ϵ 𝐖𝛀 → t ϵ 𝐖𝐍 → t ϵ 𝐒𝐍.
 #t #H1t #H2t * #t0 #rs #H1t0 #H2t0
-lapply (dbfrs_pirc_finite_sn … H1t0) // -H2t #H3t0
-@(finite_pirc_twn_tsn_aux … (𝐈❨t0❩) … H1t0) -rs //
+lapply (dbfrs_pirc_wfinite_sn … H1t0) // -H2t #H3t0
+@(wfinite_pirc_twn_tsn_aux … (𝐈❨t0❩) … H1t0) -rs //
 qed.

@@ -12,20 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/dbfr_irefs_finite.ma".
-include "delayed_updating/computation/dbfrs.ma".
+include "delayed_updating/computation/prototerm_originated_irefs.ma".
+include "delayed_updating/computation/preterm_sn_wn.ma".
 
-(* DELAYED BALANCED FOCUSED COMPUTATION *************************************)
+(* STRONG NORMALIZATION FOR PRETERM *****************************************)
 
-(* Inversions with pirc and subsets_finite **********************************)
+(* Constructions with topc **************************************************)
 
-lemma dbfrs_pirc_finite_sn (t1) (t2) (rs):
-      (𝐈❨t1❩) ϵ 𝛀 → t1 ➡*𝐝𝐛𝐟[rs] t2 →  𝐈❨t2❩ ϵ 𝛀.
-#t1 #t2 #rs #Ht1 #H0
-@(dbfrs_ind_dx … H0) -t2 -rs //
-[ #t0 #t2 #_ * #Ht02 #_ #Ht2 -t1
-  /3 width=3 by subset_le_pirc_bi, subsets_finite_le_trans/
-| #t0 #t2 #rs #r #_ #Ht02 #Ht0 -t1 -rs
-  /2 width=4 by dbfr_pirc_finite_sn/
-]
-qed-.
+theorem topc_twn_tsn (t):
+        t ϵ 𝐓 → t ϵ 𝐎⁺ → t ϵ 𝐖𝐍 → t ϵ 𝐒𝐍.
+#t #H1t #H2t #H3t
+/3 width=1 by wfinite_pirc_twn_tsn, topc_des_pirc_wfinite/
+qed.

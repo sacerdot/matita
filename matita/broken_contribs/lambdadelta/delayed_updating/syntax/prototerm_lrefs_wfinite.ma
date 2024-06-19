@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subsets_finite_or.ma".
+include "ground/subsets/subsets_wfinite_or.ma".
 include "delayed_updating/syntax/prototerm_lrefs.ma".
 
 (* SUBSET OF LOCAL REFERENCES ***********************************************)
 
-(* constructions with finite_subsets ****************************************)
+(* constructions with subsets_wfinite ***************************************)
 
 lemma subset_le_plrc_single_empty_sn:
       (𝐋❨❴𝐞❵❩) ⊆ Ⓕ.
@@ -36,11 +36,11 @@ elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 * [| #s ] #H1 #h2 dest
 ]
 qed.
 
-lemma plrc_single_finite (p):
-      (𝐋❨❴p❵❩) ϵ 𝛀.
+lemma plrc_single_wfinite (p):
+      (𝐋❨❴p❵❩) ϵ 𝐖𝛀.
 #p elim p -p [| #l #p #IH ]
-[ @(subsets_finite_le_trans … (subset_le_plrc_single_empty_sn …)) //
-| @(subsets_finite_le_trans … (subset_le_plrc_single_rcons_sn …))
-  /2 width=1 by subsets_finite_or/
+[ @(subsets_wfinite_le_trans … (subset_le_plrc_single_empty_sn …)) //
+| @(subsets_wfinite_le_trans … (subset_le_plrc_single_rcons_sn …))
+  /2 width=1 by subsets_wfinite_or/
 ]
 qed.

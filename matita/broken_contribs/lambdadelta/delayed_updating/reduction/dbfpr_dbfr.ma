@@ -12,13 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/computation/prototerm_originated_irefs.ma".
-include "delayed_updating/computation/preterm_sn_wn.ma".
+include "ground/subsets/subset_listed_nimply_le.ma".
+include "delayed_updating/reduction/dbfr.ma".
+include "delayed_updating/reduction/dbfpr.ma".
 
-(* STRONG NORMALIZATION FOR PRETERM *****************************************)
+(* DELAYED BALANCED FOCUSED PARALLEL REDUCTION ******************************)
 
-theorem topc_twn_tsn (t):
-        t ϵ 𝐓 → t ϵ 𝐎⁺ → t ϵ 𝐖𝐍 → t ϵ 𝐒𝐍.
-#t #H1t #H2t #H3t
-/3 width=1 by finite_pirc_twn_tsn, topc_des_pirc_finite/
+(* Constructions with dbfr **************************************************)
+
+lemma dbfr_dbfpr (t1) (t2) (r):
+      t1 ➡𝐝𝐛𝐟[r] t2 → t1 ∥➡𝐝𝐛𝐟[❴r❵] t2.
+#t1 #t2 #r * #p #b #q #n #H0 #Hb #Hq #Ht1 #Ht2 destruct
+@(dbfpr_step … Hb Hq Ht1 … Ht2) //
+@dbfpr_refl //
 qed.

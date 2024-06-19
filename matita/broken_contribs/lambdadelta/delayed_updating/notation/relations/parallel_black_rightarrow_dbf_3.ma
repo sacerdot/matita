@@ -12,16 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/computation/dbfrs_irefs_wfinite.ma".
-include "delayed_updating/computation/prototerm_originated.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* SUBSET OF ORIGINATED PROTOTERMS ******************************************)
-
-(* Destructions with pirc and subsets_wfinite *******************************)
-
-lemma topc_des_pirc_wfinite (t):
-      t ϵ 𝐎⁺ → 𝐈❨t❩ ϵ 𝐖𝛀.
-#t2 * #t1 #rs #Ht1 #Ht12
-@(dbfrs_pirc_wfinite_sn … Ht12) -t2 -rs
-/3 width=2 by subsets_wfinite_in/
-qed-.
+notation "hvbox( t1 ∥➡𝐝𝐛𝐟[ break term 46 u ] break term 46 t2 )"
+  non associative with precedence 45
+  for @{ 'ParallelBlackRightArrowDBF $t1 $u $t2 }.
