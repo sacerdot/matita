@@ -21,10 +21,10 @@ include "delayed_updating/reduction/dbfpr.ma".
 
 lemma dbfpr_eq_repl_rc (t1) (t2) (u):
       t1 ∥➡𝐝𝐛𝐟[u] t2 → ∀v. u ⇔ v → t1 ∥➡𝐝𝐛𝐟[v] t2.
-#t1 #t2 #u #H0 elim H0 -t1 -t2 -u
-[ #t1 #t2 #u #Ht12 #Hu #v * #_ #Hvu
+#t1 #t2 #u #H0 elim H0 -t2 -u
+[ #t2 #u #Ht12 #Hu #v * #_ #Hvu
   /3 width=5 by dbfpr_refl, subset_le_trans/
-| #t0 #t1 #t2 #u #p #b #q #n #Hb #Hq #Ht1 #Hu #Ht2 #_ #IH #v #Huv
+| #t0 #t2 #u #p #b #q #n #Hb #Hq #Ht1 #Hu #Ht2 #_ #IH #v #Huv
   lapply (subset_in_eq_repl_fwd ??? Hu … Huv) -Hu #Hv
   @(dbfpr_step … Hb Hq Ht1 Hv Ht2) -t2 -n -Hb -Hv
   /3 width=1 by subset_nimp_eq_repl/

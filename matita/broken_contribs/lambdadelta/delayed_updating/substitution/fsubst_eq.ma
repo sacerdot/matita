@@ -42,7 +42,7 @@ lemma fsubst_le_sn (t) (u) (v):
       t ≬ u → ⬕[u←v]t ⊆ v ∪ (t ⧵ u).
 #t #u #v #Hu #r * *
 /3 width=1 by subset_or_in_dx, subset_or_in_sn, conj/
-qed. 
+qed.
 
 (* Constructions with subset_eq *********************************************)
 (*

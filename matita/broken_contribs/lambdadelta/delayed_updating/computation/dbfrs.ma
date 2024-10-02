@@ -100,3 +100,24 @@ lemma dbfrs_eq_canc_dx (t) (t1) (t2) (rs):
       t1 ➡*𝐝𝐛𝐟[rs] t → t2 ⇔ t → t1 ➡*𝐝𝐛𝐟[rs] t2.
 /3 width=3 by dbfrs_eq_trans, subset_eq_sym/
 qed-.
+
+lemma dbfrs_eq_canc_sn (t) (t1) (t2) (rs):
+      t ⇔ t1 → t ➡*𝐝𝐛𝐟[rs] t2 → t1 ➡*𝐝𝐛𝐟[rs] t2.
+#t #t1 #t2 #rs #Ht1 #H0 @(dbfrs_ind_dx … H0) -t2 -rs
+[ #t0 #t2 #rs #Ht02 #Ht12
+  /2 width=3 by dbfrs_eq_canc_dx/
+| /3 width=1 by frs_refl, subset_eq_sym/
+| #t0 #t2 #rs #s #_ #Ht02 #Ht10
+  /2 width=3 by frs_step_dx/
+]
+qed-.
+
+lemma eq_dbfrs_trans (t) (t1) (t2) (rs):
+      t1 ⇔ t → t ➡*𝐝𝐛𝐟[rs] t2 → t1 ➡*𝐝𝐛𝐟[rs] t2.
+/3 width=3 by dbfrs_eq_canc_sn, subset_eq_sym/
+qed-.
+
+lemma dbfrs_eq_repl (t1) (t2) (u1) (u2) (rs):
+      t1 ⇔ u1 → t2 ⇔ u2 → t1 ➡*𝐝𝐛𝐟[rs] t2 → u1 ➡*𝐝𝐛𝐟[rs] u2.
+/3 width=3 by dbfrs_eq_canc_sn, dbfrs_eq_trans/
+qed-.

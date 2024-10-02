@@ -12,20 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/preterm_eq.ma".
-include "delayed_updating/reduction/dbfr_preterm.ma".
-include "delayed_updating/computation/dbfrs.ma".
+include "delayed_updating/reduction/path_diamond.ma".
+include "delayed_updating/notation/relations/white_diamond_2.ma".
 
-(* DELAYED BALANCED FOCUSED COMPUTATION *************************************)
+(* SUBSET OF DISJOINT REDEXES ***********************************************)
 
-(* Destructions with preterm ************************************************)
+definition term_drc: relation2 (𝕋) (𝕋) ≝
+           λt,u.
+           ∀r1,r2. r1 ϵ u → r2 ϵ u → r1 ⧸= r2 → r1 ◇[t] r2.
 
-lemma dbfrs_preterm_trans (t1) (t2) (rs):
-      t1 ϵ 𝐓 → t1 ➡*𝐝𝐛𝐟[rs] t2 → t2 ϵ 𝐓.
-#t1 #t2 #rs #Ht1 #H0
-@(dbfrs_ind_dx … H0) -t2 -rs //
-[ /2 width=3 by term_eq_repl_back/
-| #t #t2 #rs #r #_ #Ht2 #IH -Ht1
-  /2 width=4 by dbfr_preterm_trans/
-]
-qed.
+interpretation
+  "disjoint redexes condition (prototerm)"
+  'WhiteDiamond t u = (term_drc t u).
+
+(* Basic constructions ******************************************************)
