@@ -12,27 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_le.ma".
-include "ground/subsets/subset_or.ma".
-include "ground/subsets/subset_and.ma".
-include "ground/subsets/subset_nimply.ma".
+(* NOTATION FOR GROUND ******************************************************)
 
-(* DIFFERENCE FOR SUBSETS ***************************************************)
+notation < "hvbox( x1 ⊔ break x2 )"
+  left associative with precedence 55
+  for @{ 'SqCup $X1 $X2 $x1 $x2 }.
 
-(* Constructions with subset_and and subset_or and subset_le ****************)
-
-lemma subset_le_or_dx_and_nimp_refl_sn_bi (A) (u) (v):
-      (∀a. Decidable (a ϵ{A} v)) →
-      u ⊆ (u ∩ v) ∪ (u ⧵ v).
-#A #u #v #Hu #a #Ha
-elim (Hu a) #Hna
-[ /3 width=1 by subset_or_in_sn, subset_and_in/
-| /4 width=1 by subset_in_nimp, subset_or_in_dx/
-]
-qed.
-
-lemma subset_le_or_sn_and_nimp_refl_sn_bi (A) (u) (v):
-      (∀a. Decidable (a ϵ{A} v)) →
-      (u ∩ v) ∪ (u ⧵ v) ⊆ u.
-#A #u #v #Hu #a * * //
-qed.
+notation > "hvbox( x1 ⊔ opt ( { break term 46 X1, term 46 X2 } ) break term 56 x2 )"
+  non associative with precedence 55
+  for @{ 'SqCup ${default @{$X1}@{?}} ${default @{$X2}@{?}} $x1 $x2 }.

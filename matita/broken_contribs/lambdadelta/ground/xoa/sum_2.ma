@@ -12,27 +12,33 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_le.ma".
-include "ground/subsets/subset_or.ma".
-include "ground/subsets/subset_and.ma".
-include "ground/subsets/subset_nimply.ma".
+include "ground/lib/relations.ma".
+include "ground/notation/xoa/sum_2.ma".
 
-(* DIFFERENCE FOR SUBSETS ***************************************************)
+(* TYPES ********************************************************************)
 
-(* Constructions with subset_and and subset_or and subset_le ****************)
+inductive sum_2 (A1,A2:Type[0]): Type[0] ≝
+| in_1_2: A1 → sum_2 A1 A2
+| in_2_2: A2 → sum_2 A1 A2
+.
 
-lemma subset_le_or_dx_and_nimp_refl_sn_bi (A) (u) (v):
-      (∀a. Decidable (a ϵ{A} v)) →
-      u ⊆ (u ∩ v) ∪ (u ⧵ v).
-#A #u #v #Hu #a #Ha
-elim (Hu a) #Hna
-[ /3 width=1 by subset_or_in_sn, subset_and_in/
-| /4 width=1 by subset_in_nimp, subset_or_in_dx/
+interpretation
+  "multiple sum (2)"
+  'Sum A1 A2 = (sum_2 A1 A2).
+
+(* Basic constructions ******************************************************)
+
+lemma eq_sum_2_dec (A1,A2:Type[0]):
+      (∀a1,a2. Decidable (a1 ={A1} a2)) →
+      (∀a1,a2. Decidable (a1 ={A2} a2)) →
+      ∀a1,a2. Decidable (a1 ={++A1|A2} a2).
+#A1 #A2 #HA1 #HA2 * #a1 * #a2
+[ elim (HA1 a1 a2) -HA1 -HA2 #Hna destruct
+  [ /2 width=1 by or_introl/]
+|4: elim (HA2 a1 a2) -HA1 -HA2 #Hna destruct
+  [ /2 width=1 by or_introl/]
 ]
-qed.
-
-lemma subset_le_or_sn_and_nimp_refl_sn_bi (A) (u) (v):
-      (∀a. Decidable (a ϵ{A} v)) →
-      (u ∩ v) ∪ (u ⧵ v) ⊆ u.
-#A #u #v #Hu #a * * //
-qed.
+@or_intror
+#H0 destruct
+/2 width=1 by/
+qed-.

@@ -121,4 +121,4 @@ lemma subset_listed_ind_lt (A:Type[0]) (Q:predicate …): (**)
       ∀l2. Q l2.
 #A #Q #HA #IH #l2
 @(subset_listed_ind_lt_le … HA IH l2) -Q -HA //
-qed-.  
+qed-.

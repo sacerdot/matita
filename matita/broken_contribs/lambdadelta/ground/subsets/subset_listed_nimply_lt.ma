@@ -13,36 +13,19 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_lt.ma".
-include "ground/subsets/subset_or_le.ma".
+include "ground/subsets/subset_nimply_le.ma".
+include "ground/subsets/subset_listed.ma".
 
-(* UNION FOR SUBSETS ********************************************************)
+(* SUBSET WITH LISTED ELEMENTS **********************************************)
 
-(* Constructions with subset_lt and subset_ol *******************************)
+(* Constructions with subset_nimp and subset_lt *****************************)
 
-lemma subset_lt_or_bi_sn (A) (u1) (u2) (v): (**)
-      v ⧸≬{A} u2 → u1 ⊂ u2 → v ∪ u1 ⊂ v ∪ u2.
-#A #u1 #u2 #v #Hu2 * #Hu #H0
-@subset_lt_mk
-[ /2 width=5 by subset_or_le_repl/
-| elim (subsets_inh_inv_in … H0) -H0 #a * #Ha #Hna
-  @(subsets_inh_in … a)
-  @subset_in_nimp
-  [ /2 width=1 by subset_or_in_dx/
-  | /4 width=7 by subset_nin_inv_or, subset_ol_i/
-  ]
-]
-qed.
-
-lemma subset_lt_or_bi_dx (A) (u1) (u2) (v): (**)
-      v ⧸≬{A} u2 → u1 ⊂ u2 → u1 ∪ v ⊂ u2 ∪ v.
-#A #u1 #u2 #v #Hu2 * #Hu #H0
-@subset_lt_mk
-[ /2 width=5 by subset_or_le_repl/
-| elim (subsets_inh_inv_in … H0) -H0 #a * #Ha #Hna
-  @(subsets_inh_in … a)
-  @subset_in_nimp
-  [ /2 width=1 by subset_or_in_sn/
-  | /4 width=7 by subset_nin_inv_or, subset_ol_i/
-  ]
-]
+lemma subset_lt_nimp_single_dx_refl (A) (u) (a):
+      a ϵ u → u⧵❴a:A❵ ⊂ u.
+#A #u #a #Ha
+@subset_lt_mk //
+@(subsets_inh_in … a)
+@subset_in_nimp //
+* #_ #H0
+/2 width=1 by/
 qed.

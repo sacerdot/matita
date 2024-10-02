@@ -12,27 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_le.ma".
-include "ground/subsets/subset_or.ma".
-include "ground/subsets/subset_and.ma".
-include "ground/subsets/subset_nimply.ma".
+(* NOTATION FOR GROUND ******************************************************)
 
-(* DIFFERENCE FOR SUBSETS ***************************************************)
-
-(* Constructions with subset_and and subset_or and subset_le ****************)
-
-lemma subset_le_or_dx_and_nimp_refl_sn_bi (A) (u) (v):
-      (∀a. Decidable (a ϵ{A} v)) →
-      u ⊆ (u ∩ v) ∪ (u ⧵ v).
-#A #u #v #Hu #a #Ha
-elim (Hu a) #Hna
-[ /3 width=1 by subset_or_in_sn, subset_and_in/
-| /4 width=1 by subset_in_nimp, subset_or_in_dx/
-]
-qed.
-
-lemma subset_le_or_sn_and_nimp_refl_sn_bi (A) (u) (v):
-      (∀a. Decidable (a ϵ{A} v)) →
-      (u ∩ v) ∪ (u ⧵ v) ⊆ u.
-#A #u #v #Hu #a * * //
-qed.
+notation "hvbox(++ term 29 A1 break | term 29 A2)"
+  non associative with precedence 30
+  for @{ 'Sum $A1 $A2 }.
