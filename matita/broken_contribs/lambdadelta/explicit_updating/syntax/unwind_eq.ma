@@ -12,17 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp_eq.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_after.ma".
+include "explicit_updating/syntax/substitution_unwind_eq.ma".
+include "explicit_updating/syntax/substitution_tapp_eq.ma".
+include "explicit_updating/syntax/unwind.ma".
 
-(* COMPOSITION WITH RELOCATION FOR SUBSTITUTION *****************************)
+(* UNWIND FOR TERM *********************************************************)
 
-(* Constructions with extensional equivalence for substitution **************)
+(* Constructions with α-equivalence for term ********************************)
 
-lemma subst_after_eq_repl:
-      compatible_3 … subst_eq fbr_eq subst_eq subst_after.
-#S1 #S2 #HS #f1 #f2 #Hf #p
-<subst_after_dapp <subst_after_dapp
-/3 width=1 by subst_dapp_eq_repl, fbr_dapp_eq_repl/
+lemma unwind_eq_repl:
+      compatible_3 … fbr_eq term_eq term_eq unwind.
+#f1 #f2 #Hf
+/3 width=1 by subst_tapp_eq_repl, subst_unwind_eq_repl/
+qed.
+
+lemma unwind_lift (f) (g) (t):
+      ▼[f•g]t ≐ ▼[f](ϕg.t).
+#f #g #t
+<unwind_unfold <unwind_unfold <subst_tapp_lift
+/2 width=1 by subst_tapp_eq_repl/
 qed.

@@ -12,17 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp_eq.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_after.ma".
+include "ground/relocation/fb/fbr_dapp.ma".
+include "explicit_updating/syntax/substitution.ma".
+include "explicit_updating/notation/functions/element_s_1.ma".
 
-(* COMPOSITION WITH RELOCATION FOR SUBSTITUTION *****************************)
+(* SUBSTITUTION FOR UNWIND **************************************************)
 
-(* Constructions with extensional equivalence for substitution **************)
+definition subst_unwind (f): 𝕊 ≝ λp.ξ(f＠⧣❨p❩).
 
-lemma subst_after_eq_repl:
-      compatible_3 … subst_eq fbr_eq subst_eq subst_after.
-#S1 #S2 #HS #f1 #f2 #Hf #p
-<subst_after_dapp <subst_after_dapp
-/3 width=1 by subst_dapp_eq_repl, fbr_dapp_eq_repl/
-qed.
+interpretation
+  "for unwind (substitution)"
+  'ElementS f = (subst_unwind f).
+
+(* Basic constructions ******************************************************)
+
+lemma subst_unwind_dapp (f) (p):
+      ξ(f＠⧣❨p❩) = 𝐬❨f❩＠⧣❨p❩.
+// qed.

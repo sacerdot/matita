@@ -12,17 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp_eq.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_after.ma".
+(* NOTATION FOR EXPLICIT UPDATING *******************************************)
 
-(* COMPOSITION WITH RELOCATION FOR SUBSTITUTION *****************************)
-
-(* Constructions with extensional equivalence for substitution **************)
-
-lemma subst_after_eq_repl:
-      compatible_3 … subst_eq fbr_eq subst_eq subst_after.
-#S1 #S2 #HS #f1 #f2 #Hf #p
-<subst_after_dapp <subst_after_dapp
-/3 width=1 by subst_dapp_eq_repl, fbr_dapp_eq_repl/
-qed.
+notation "hvbox( ▼[ break term 46 f ] break term 70 t )"
+  non associative with precedence 70
+  for @{ 'BlackDownTriangle $f $t }.

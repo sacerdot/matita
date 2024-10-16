@@ -20,7 +20,8 @@ include "explicit_updating/syntax/substitution_tapp.ma".
 
 (* Constructions with extensional equivalence for substitution **************)
 
-lemma subst_after_eq_repl: compatible_3 … subst_eq term_eq term_eq subst_tapp.
+lemma subst_tapp_eq_repl:
+      compatible_3 … subst_eq term_eq term_eq subst_tapp.
 #S1 #S2 #HS #t1 #t2 #Ht
 generalize in match HS; -HS
 generalize in match S2; -S2
@@ -34,4 +35,4 @@ elim Ht -t1 -t2
 | #f1 #f2 #t1 #t2 #Hf #_ #IH #S1 #S2 #HS
   /4 width=1 by term_eq_lift, subst_after_eq_repl/
 ]
-qed-.
+qed.

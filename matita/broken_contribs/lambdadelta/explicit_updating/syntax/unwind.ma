@@ -12,17 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp_eq.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_after.ma".
+include "explicit_updating/syntax/substitution_unwind.ma".
+include "explicit_updating/syntax/substitution_tapp.ma".
+include "explicit_updating/notation/functions/black_downtriangle_2.ma".
 
-(* COMPOSITION WITH RELOCATION FOR SUBSTITUTION *****************************)
+(* UNWIND FOR TERM *********************************************************)
 
-(* Constructions with extensional equivalence for substitution **************)
+definition unwind (f): 𝕋 → 𝕋 ≝
+           subst_tapp (subst_unwind f)
+.
 
-lemma subst_after_eq_repl:
-      compatible_3 … subst_eq fbr_eq subst_eq subst_after.
-#S1 #S2 #HS #f1 #f2 #Hf #p
-<subst_after_dapp <subst_after_dapp
-/3 width=1 by subst_dapp_eq_repl, fbr_dapp_eq_repl/
+interpretation
+  "unwind (term)"
+  'BlackDownTriangle f t = (unwind f t).
+
+(* Basic constructions ******************************************************)
+
+lemma unwind_unfold (f) (t):
+      (𝐬❨f❩＠⧣❨t❩) = ▼[f]t.
+//
+qed.
+
+lemma unwind_lref (f) (p):
+      ξ(f＠⧣❨p❩) = ▼[f](ξp).
+#f #p
+//
+qed.
+
+lemma unwind_appl (f) (v) (t):
+      (＠▼[f]v.▼[f]t) = ▼[f](＠v.t).
+#f #v #t
+//
 qed.

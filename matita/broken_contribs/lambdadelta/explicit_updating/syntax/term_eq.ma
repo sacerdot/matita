@@ -84,19 +84,22 @@ qed-.
 
 (* Basic constructions ******************************************************)
 
-lemma term_eq_refl: reflexive … term_eq.
+lemma term_eq_refl:
+      reflexive … term_eq.
 #t elim t -t
 /2 width=1 by term_eq_lref, term_eq_abst, term_eq_appl, term_eq_lift/
 qed.
 
-lemma term_eq_sym: symmetric … term_eq.
+lemma term_eq_sym:
+      symmetric … term_eq.
 #t1 #t2 #Ht elim Ht -t1 -t2
 /3 width=1 by term_eq_lref, term_eq_abst, term_eq_appl, term_eq_lift, fbr_eq_sym/
 qed-.
 
 (* Main constructions *******************************************************)
 
-theorem term_eq_trans: Transitive … term_eq.
+theorem term_eq_trans:
+        Transitive … term_eq.
 #t1 #t #Ht1 elim Ht1 -t1 -t
 [ //
 | #b #t1 #t #_ #IH #x2 #Hx2
