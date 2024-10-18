@@ -12,35 +12,48 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/substitution_unwind.ma".
-include "explicit_updating/syntax/substitution_tapp.ma".
-include "explicit_updating/notation/functions/black_downtriangle_2.ma".
+include "ground/arith/nat_succ_iter.ma".
+include "ground/notation/functions/uparrowstar_2.ma".
+include "explicit_updating/syntax/term_next.ma".
 
-(* UNWIND FOR TERM *********************************************************)
+(* ITERATED NEXT FOR TERM ***************************************************)
 
-definition unwind (f): 𝕋 → 𝕋 ≝
-           subst_tapp (𝐬❨f❩)
-.
+definition term_nexts (n:ℕ): 𝕋 → 𝕋 ≝
+           (λt.↑t)^n.
 
 interpretation
-  "unwind (term)"
-  'BlackDownTriangle f t = (unwind f t).
+  "iterated next (term)"
+  'UpArrowStar n t = (term_nexts n t).
 
 (* Basic constructions ******************************************************)
 
-lemma unwind_unfold (f) (t):
-      (𝐬❨f❩＠⧣❨t❩) = ▼[f]t.
-//
+lemma term_nexts_zero (t):
+      t = ↑*[𝟎]t.
+// qed.
+
+lemma term_nexts_unit (t):
+      ↑t = ↑*[⁤𝟏]t.
+// qed-.
+
+lemma term_nexts_next (n) (t):
+      ↑↑*[n]t = ↑*[n]↑t.
+#n #t @(niter_appl … (λt.↑t))
 qed.
 
-lemma unwind_lref (f) (p):
-      ξ(f＠⧣❨p❩) = ▼[f](ξp).
-#f #p
-//
+lemma term_nexts_pos (p) (t):
+      ↑↑*[↓p]t = ↑*[⁤p]t.
+#p #t @(niter_pos_ppred … (λt.↑t))
 qed.
 
-lemma unwind_appl (f) (v) (t):
-      (＠▼[f]v.▼[f]t) = ▼[f](＠v.t).
-#f #v #t
-//
+lemma term_nexts_succ (n) (t:𝕋):
+      ↑↑*[n]t = ↑*[⁤↑n]t.
+#n #t @(niter_succ … (λt.↑t))
 qed.
+
+lemma term_nexts_pos_swap (p) (t):
+      ↑*[↓p]↑t = ↑*[⁤p]t.
+// qed.
+
+lemma term_nexts_succ_swap (n) (t:𝕋):
+      ↑*[n]↑t = ↑*[⁤↑n]t.
+// qed.

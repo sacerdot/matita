@@ -12,35 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/substitution_unwind.ma".
-include "explicit_updating/syntax/substitution_tapp.ma".
-include "explicit_updating/notation/functions/black_downtriangle_2.ma".
+(* NOTATION FOR EXPLICIT UPDATING *******************************************)
 
-(* UNWIND FOR TERM *********************************************************)
-
-definition unwind (f): 𝕋 → 𝕋 ≝
-           subst_tapp (𝐬❨f❩)
-.
-
-interpretation
-  "unwind (term)"
-  'BlackDownTriangle f t = (unwind f t).
-
-(* Basic constructions ******************************************************)
-
-lemma unwind_unfold (f) (t):
-      (𝐬❨f❩＠⧣❨t❩) = ▼[f]t.
-//
-qed.
-
-lemma unwind_lref (f) (p):
-      ξ(f＠⧣❨p❩) = ▼[f](ξp).
-#f #p
-//
-qed.
-
-lemma unwind_appl (f) (v) (t):
-      (＠▼[f]v.▼[f]t) = ▼[f](＠v.t).
-#f #v #t
-//
-qed.
+notation "hvbox( ⬕[ break term 46 n ← break term 46 v ] break term 70 t )"
+  non associative with precedence 70
+  for @{ 'SquareSWBlack $n $v $t }.

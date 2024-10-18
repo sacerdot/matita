@@ -12,35 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/substitution_unwind.ma".
-include "explicit_updating/syntax/substitution_tapp.ma".
-include "explicit_updating/notation/functions/black_downtriangle_2.ma".
+include "explicit_updating/syntax/substitution_eq.ma".
+include "explicit_updating/syntax/substitution_beta.ma".
 
-(* UNWIND FOR TERM *********************************************************)
+(* SUBSTITUTION FOR β-REDUCTION *********************************************)
 
-definition unwind (f): 𝕋 → 𝕋 ≝
-           subst_tapp (𝐬❨f❩)
-.
+(* Constructions with extensional equivalence for substitution **************)
 
-interpretation
-  "unwind (term)"
-  'BlackDownTriangle f t = (unwind f t).
-
-(* Basic constructions ******************************************************)
-
-lemma unwind_unfold (f) (t):
-      (𝐬❨f❩＠⧣❨t❩) = ▼[f]t.
-//
-qed.
-
-lemma unwind_lref (f) (p):
-      ξ(f＠⧣❨p❩) = ▼[f](ξp).
-#f #p
-//
-qed.
-
-lemma unwind_appl (f) (v) (t):
-      (＠▼[f]v.▼[f]t) = ▼[f](＠v.t).
-#f #v #t
-//
+lemma subst_beta_eq_repl:
+      compatible_2_fwd … term_eq subst_eq subst_beta.
+#t1 #t2 #Ht * //
 qed.

@@ -12,35 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/substitution_unwind.ma".
-include "explicit_updating/syntax/substitution_tapp.ma".
-include "explicit_updating/notation/functions/black_downtriangle_2.ma".
+include "explicit_updating/syntax/substitution_pushs_nexts.ma".
+include "explicit_updating/syntax/beta.ma".
 
-(* UNWIND FOR TERM *********************************************************)
+(* β-SUBSTITUTION FOR TERM **************************************************)
 
-definition unwind (f): 𝕋 → 𝕋 ≝
-           subst_tapp (𝐬❨f❩)
-.
+(* Constructions with subst_nexts *******************************************)
 
-interpretation
-  "unwind (term)"
-  'BlackDownTriangle f t = (unwind f t).
+lemma beta_lref_le (m) (n) (v):
+      m ≤ n → ↑*[m](ξ𝟏) = ⬕[⁤↑n←v]ξ↑m.
+/2 width=1 by subst_pushs_dapp_le/
+qed-.
 
-(* Basic constructions ******************************************************)
-
-lemma unwind_unfold (f) (t):
-      (𝐬❨f❩＠⧣❨t❩) = ▼[f]t.
-//
+lemma beta_lref_succ (n) (v):
+      ↑*[n]v = ⬕[n←v]ξ↑n.
+#n #v
+<beta_unfold <subst_tapp_lref //
 qed.
 
-lemma unwind_lref (f) (p):
-      ξ(f＠⧣❨p❩) = ▼[f](ξp).
-#f #p
-//
-qed.
-
-lemma unwind_appl (f) (v) (t):
-      (＠▼[f]v.▼[f]t) = ▼[f](＠v.t).
-#f #v #t
-//
+lemma beta_lref_gt_succ (p) (n) (v):
+      ↑*[n]ξp = ⬕[n←v]ξ(↑p+n).
+#p #n #v
+<beta_unfold <subst_tapp_lref
+<subst_pushs_dapp_gt //
 qed.

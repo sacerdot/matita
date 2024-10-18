@@ -12,35 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/substitution_unwind.ma".
-include "explicit_updating/syntax/substitution_tapp.ma".
-include "explicit_updating/notation/functions/black_downtriangle_2.ma".
+include "explicit_updating/syntax/term_next_eq.ma".
+include "explicit_updating/syntax/term_nexts.ma".
 
-(* UNWIND FOR TERM *********************************************************)
+(* ITERATED NEXT FOR TERM ***************************************************)
 
-definition unwind (f): 𝕋 → 𝕋 ≝
-           subst_tapp (𝐬❨f❩)
-.
+(* Constructions with α-equivalence for term ********************************)
 
-interpretation
-  "unwind (term)"
-  'BlackDownTriangle f t = (unwind f t).
-
-(* Basic constructions ******************************************************)
-
-lemma unwind_unfold (f) (t):
-      (𝐬❨f❩＠⧣❨t❩) = ▼[f]t.
-//
-qed.
-
-lemma unwind_lref (f) (p):
-      ξ(f＠⧣❨p❩) = ▼[f](ξp).
-#f #p
-//
-qed.
-
-lemma unwind_appl (f) (v) (t):
-      (＠▼[f]v.▼[f]t) = ▼[f](＠v.t).
-#f #v #t
-//
+lemma term_nexts_eq_repl:
+      compatible_3 … (eq …) term_eq term_eq term_nexts.
+#n1 #n2 #Hn destruct
+@(nat_ind_succ … n2) -n2
+/3 width=1 by term_next_eq_repl/
 qed.

@@ -12,35 +12,48 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/substitution_unwind.ma".
-include "explicit_updating/syntax/substitution_tapp.ma".
-include "explicit_updating/notation/functions/black_downtriangle_2.ma".
+include "ground/arith/nat_succ_iter.ma".
+include "ground/notation/functions/upspoonstar_2.ma".
+include "explicit_updating/syntax/substitution_push.ma".
 
-(* UNWIND FOR TERM *********************************************************)
+(* ITERATED PUSH FOR SUBSTITUTION *******************************************)
 
-definition unwind (f): 𝕋 → 𝕋 ≝
-           subst_tapp (𝐬❨f❩)
-.
+definition subst_pushs (n:ℕ): 𝕊 → 𝕊 ≝
+           (λS.⫯S)^n.
 
 interpretation
-  "unwind (term)"
-  'BlackDownTriangle f t = (unwind f t).
+  "iterated push (substitution)"
+  'UpSpoonStar n S = (subst_pushs n S).
 
 (* Basic constructions ******************************************************)
 
-lemma unwind_unfold (f) (t):
-      (𝐬❨f❩＠⧣❨t❩) = ▼[f]t.
-//
+lemma subst_pushs_zero (S):
+      S = ⫯*[𝟎]S.
+// qed.
+
+lemma subst_pushs_unit (S):
+      (⫯S) = ⫯*[⁤𝟏]S.
+// qed-.
+
+lemma subst_pushs_push (n) (S):
+      (⫯⫯*[n]S) = ⫯*[n]⫯S.
+#n #S @(niter_appl … (λS.⫯S))
 qed.
 
-lemma unwind_lref (f) (p):
-      ξ(f＠⧣❨p❩) = ▼[f](ξp).
-#f #p
-//
+lemma subst_pushs_pos (p) (S):
+      (⫯⫯*[↓p]S) = ⫯*[⁤p]S.
+#p #S @(niter_pos_ppred … (λS.⫯S))
 qed.
 
-lemma unwind_appl (f) (v) (t):
-      (＠▼[f]v.▼[f]t) = ▼[f](＠v.t).
-#f #v #t
-//
+lemma subst_pushs_succ (n) (S:𝕊):
+      (⫯⫯*[n]S) = ⫯*[⁤↑n]S.
+#n #S @(niter_succ … (λS.⫯S))
 qed.
+
+lemma subst_pushs_pos_swap (p) (S):
+      (⫯*[↓p]⫯S) = ⫯*[⁤p]S.
+// qed.
+
+lemma subst_pushs_succ_swap (n) (S:𝕊):
+      (⫯*[n]⫯S) = ⫯*[⁤↑n]S.
+// qed.

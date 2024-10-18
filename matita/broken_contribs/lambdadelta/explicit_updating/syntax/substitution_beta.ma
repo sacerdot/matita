@@ -12,35 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/substitution_unwind.ma".
-include "explicit_updating/syntax/substitution_tapp.ma".
-include "explicit_updating/notation/functions/black_downtriangle_2.ma".
+include "ground/arith/pnat_split.ma".
+include "explicit_updating/syntax/substitution.ma".
+include "explicit_updating/notation/functions/element_s_1.ma".
 
-(* UNWIND FOR TERM *********************************************************)
+(* SUBSTITUTION FOR β-REDUCTION *********************************************)
 
-definition unwind (f): 𝕋 → 𝕋 ≝
-           subst_tapp (𝐬❨f❩)
-.
+definition subst_beta (v): 𝕊 ≝
+           psplit … v (λp.ξp).
 
 interpretation
-  "unwind (term)"
-  'BlackDownTriangle f t = (unwind f t).
+  "for β-reduction (substitution)"
+  'ElementS v = (subst_beta v).
 
 (* Basic constructions ******************************************************)
 
-lemma unwind_unfold (f) (t):
-      (𝐬❨f❩＠⧣❨t❩) = ▼[f]t.
-//
-qed.
+lemma subst_beta_dapp_unit (v):
+      v = 𝐬❨v❩＠⧣❨𝟏❩.
+// qed.
 
-lemma unwind_lref (f) (p):
-      ξ(f＠⧣❨p❩) = ▼[f](ξp).
-#f #p
-//
-qed.
-
-lemma unwind_appl (f) (v) (t):
-      (＠▼[f]v.▼[f]t) = ▼[f](＠v.t).
-#f #v #t
-//
-qed.
+lemma subst_beta_dapp_succ (v) (p):
+      ξp = 𝐬❨v❩＠⧣❨↑p❩.
+// qed.

@@ -26,6 +26,12 @@ definition compatible_3 (A) (B) (C):
            λSa,Sb,Sc,f.
            ∀a1,a2. Sa a1 a2 → ∀b1,b2. Sb b1 b2 → Sc (f a1 b1) (f a2 b2).
 
+definition compatible_4 (A) (B) (C) (D):
+           relation5 (relation A) (relation B) (relation C) (relation D) … ≝
+           λSa,Sb,Sc,Sd,f.
+           ∀a1,a2. Sa a1 a2 → ∀b1,b2. Sb b1 b2 → ∀c1,c2. Sc c1 c2 →
+           Sd (f a1 b1 c1) (f a2 b2 c2).
+
 definition injective_2_fwd (A) (B): relation3 (relation A) (relation B) … ≝
            λSa,Sb,f.
            ∀a1,a2. Sb (f a1) (f a2) → Sa a1 a2.
