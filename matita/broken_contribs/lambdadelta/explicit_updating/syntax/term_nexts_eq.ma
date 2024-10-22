@@ -17,7 +17,7 @@ include "explicit_updating/syntax/term_nexts.ma".
 
 (* ITERATED NEXT FOR TERM ***************************************************)
 
-(* Constructions with α-equivalence for term ********************************)
+(* Constructions with term_eq ***********************************************)
 
 lemma term_nexts_eq_repl:
       compatible_3 … (eq …) term_eq term_eq term_nexts.

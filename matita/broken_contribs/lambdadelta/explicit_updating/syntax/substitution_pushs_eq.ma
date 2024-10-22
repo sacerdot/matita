@@ -17,7 +17,7 @@ include "explicit_updating/syntax/substitution_pushs.ma".
 
 (* ITERATED PUSH FOR SUBSTITUTION *******************************************)
 
-(* Constructions with extensional equivalence for substitution **************)
+(* Constructions with subst_eq **********************************************)
 
 lemma subst_pushs_eq_repl:
       compatible_3 … (eq …) subst_eq subst_eq subst_pushs.

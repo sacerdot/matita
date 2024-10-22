@@ -12,27 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp_eq.ma".
-include "ground/relocation/fb/fbr_after_dapp.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_after.ma".
-include "explicit_updating/syntax/substitution_unwind.ma".
+include "explicit_updating/syntax/substitution_pushs_eq.ma".
+include "explicit_updating/syntax/substitution_flat_pushs.ma".
+include "explicit_updating/syntax/substitution_flat_tapp.ma".
+include "explicit_updating/syntax/substitution_flat_beta.ma".
+include "explicit_updating/syntax/beta.ma".
 
-(* SUBSTITUTION FOR UNWIND **************************************************)
+(* β-SUBSTITUTION FOR TERM **************************************************)
 
-(* Constructions with subst_eq **********************************************)
+(* Constructions with term_flat *********************************************)
 
-lemma subst_unwind_eq_repl:
-      compatible_2_fwd … fbr_eq subst_eq subst_unwind.
-#f1 #f2 #Hf #p
-<subst_unwind_dapp <subst_unwind_dapp >fbr_dapp_eq_repl
-/2 width=3 by term_eq_lref/
-qed.
-
-lemma subst_unwind_after (g) (f):
-      (𝐬❨g•f❩) ≐ 𝐬❨g❩•f.
-#g #f #p
-<subst_unwind_dapp <fbr_dapp_after
-<subst_after_dapp <subst_unwind_dapp
-//
+lemma beta_flat (n) (v) (t):
+      ⬕[n←♭v]♭t ≐ ♭⬕[n←v]t.
+#n #v #t
+<beta_unfold <beta_unfold
+@(term_eq_trans … (subst_flat_tapp …))
+@subst_tapp_eq_repl //
+@(subst_eq_trans … (subst_flat_pushs …))
+/2 width=1 by subst_pushs_eq_repl/
 qed.

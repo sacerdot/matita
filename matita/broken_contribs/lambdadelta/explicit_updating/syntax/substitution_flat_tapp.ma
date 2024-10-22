@@ -12,27 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp_eq.ma".
-include "ground/relocation/fb/fbr_after_dapp.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_after.ma".
-include "explicit_updating/syntax/substitution_unwind.ma".
+include "explicit_updating/syntax/substitution_tapp_eq.ma".
+include "explicit_updating/syntax/substitution_flat_push.ma".
 
-(* SUBSTITUTION FOR UNWIND **************************************************)
+(* FLATTENING FOR SUBSTITUTION **********************************************)
 
-(* Constructions with subst_eq **********************************************)
+(* Constructions with subst_tapp ********************************************)
 
-lemma subst_unwind_eq_repl:
-      compatible_2_fwd … fbr_eq subst_eq subst_unwind.
-#f1 #f2 #Hf #p
-<subst_unwind_dapp <subst_unwind_dapp >fbr_dapp_eq_repl
-/2 width=3 by term_eq_lref/
-qed.
-
-lemma subst_unwind_after (g) (f):
-      (𝐬❨g•f❩) ≐ 𝐬❨g❩•f.
-#g #f #p
-<subst_unwind_dapp <fbr_dapp_after
-<subst_after_dapp <subst_unwind_dapp
-//
+lemma subst_flat_tapp (t:𝕋) (S):
+      (♭S)＠⧣❨♭t❩ ≐ ♭(S＠⧣❨t❩).
+#t elim t -t //
+[ /4 width=5 by subst_tapp_eq_repl, term_eq_trans, term_eq_abst/
+| /2 width=1 by term_eq_appl/
+]
 qed.

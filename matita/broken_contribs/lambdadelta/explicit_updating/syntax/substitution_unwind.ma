@@ -18,7 +18,7 @@ include "explicit_updating/notation/functions/element_s_1.ma".
 
 (* SUBSTITUTION FOR UNWIND **************************************************)
 
-definition subst_unwind (f): 𝕊 ≝ λp.ξ(f＠⧣❨p❩).
+definition subst_unwind (f): 𝕊 ≝ λp.𝛏(f＠⧣❨p❩).
 
 interpretation
   "for unwind (substitution)"
@@ -27,5 +27,5 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma subst_unwind_dapp (f) (p):
-      ξ(f＠⧣❨p❩) = 𝐬❨f❩＠⧣❨p❩.
+      (𝛏(f＠⧣❨p❩)) = 𝐬❨f❩＠⧣❨p❩.
 // qed.

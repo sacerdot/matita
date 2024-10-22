@@ -33,7 +33,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma subst_tapp_lref (S) (p):
-      S＠⧣❨p❩ = S＠⧣❨ξp❩.
+      S＠⧣❨p❩ = S＠⧣❨𝛏p❩.
 //
 qed.
 
@@ -48,6 +48,6 @@ lemma subst_tapp_appl (S) (v) (t):
 qed.
 
 lemma subst_tapp_lift (S) (f) (t):
-      (S•f)＠⧣❨t❩ = S＠⧣❨ϕf.t❩.
+      (S•f)＠⧣❨t❩ = S＠⧣❨𝛗f.t❩.
 //
 qed.

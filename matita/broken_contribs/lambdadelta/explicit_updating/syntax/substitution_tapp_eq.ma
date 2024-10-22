@@ -18,7 +18,7 @@ include "explicit_updating/syntax/substitution_tapp.ma".
 
 (* TERM APPLICATION FOR SUBSTITUTION ****************************************)
 
-(* Constructions with extensional equivalence for substitution **************)
+(* Constructions with subst_eq **********************************************)
 
 lemma subst_tapp_eq_repl:
       compatible_3 … subst_eq term_eq term_eq subst_tapp.

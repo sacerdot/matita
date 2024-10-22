@@ -18,7 +18,7 @@ include "explicit_updating/syntax/unwind.ma".
 
 (* UNWIND FOR TERM *********************************************************)
 
-(* Constructions with α-equivalence for term ********************************)
+(* Constructions with term_eq **********************************************)
 
 lemma unwind_eq_repl:
       compatible_3 … fbr_eq term_eq term_eq unwind.
@@ -27,7 +27,7 @@ lemma unwind_eq_repl:
 qed.
 
 lemma unwind_lift (f) (g) (t):
-      ▼[f•g]t ≐ ▼[f](ϕg.t).
+      ▼[f•g]t ≐ ▼[f](𝛗g.t).
 #f #g #t
 <unwind_unfold <unwind_unfold <subst_tapp_lift
 /2 width=1 by subst_tapp_eq_repl/

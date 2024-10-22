@@ -43,9 +43,9 @@ theorem subst_eq_trans:
 /2 width=3 by term_eq_trans/
 qed-.
 
-theorem subst_eq_canc_sn:
+theorem subst_eq_canc_sx:
         left_cancellable … subst_eq.
-/2 width=3 by term_eq_canc_sn/
+/2 width=3 by term_eq_canc_sx/
 qed-.
 
 theorem subst_eq_canc_dx:

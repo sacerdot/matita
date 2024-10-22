@@ -12,27 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp_eq.ma".
-include "ground/relocation/fb/fbr_after_dapp.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_after.ma".
-include "explicit_updating/syntax/substitution_unwind.ma".
+include "explicit_updating/syntax/substitution.ma".
+include "explicit_updating/syntax/term_flat.ma".
 
-(* SUBSTITUTION FOR UNWIND **************************************************)
+(* FLATTENING FOR SUBSTITUTION **********************************************)
 
-(* Constructions with subst_eq **********************************************)
+definition subst_flat (S): 𝕊 ≝
+           λp. ♭(S＠⧣❨p❩)
+.
 
-lemma subst_unwind_eq_repl:
-      compatible_2_fwd … fbr_eq subst_eq subst_unwind.
-#f1 #f2 #Hf #p
-<subst_unwind_dapp <subst_unwind_dapp >fbr_dapp_eq_repl
-/2 width=3 by term_eq_lref/
-qed.
+interpretation
+  "flattening (substitution)"
+  'Flat S = (subst_flat S).
 
-lemma subst_unwind_after (g) (f):
-      (𝐬❨g•f❩) ≐ 𝐬❨g❩•f.
-#g #f #p
-<subst_unwind_dapp <fbr_dapp_after
-<subst_after_dapp <subst_unwind_dapp
+(* Basic constructions ******************************************************)
+
+lemma subst_flat_dapp (S) (p):
+      ♭(S＠⧣❨p❩) = (♭S)＠⧣❨p❩.
 //
 qed.

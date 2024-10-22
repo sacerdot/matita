@@ -19,7 +19,7 @@ include "explicit_updating/syntax/beta.ma".
 
 (* β-SUBSTITUTION FOR TERM **************************************************)
 
-(* Constructions with α-equivalence for term ********************************)
+(* Constructions with term_eq ***********************************************)
 
 lemma beta_eq_repl:
       compatible_4 … (eq …) term_eq term_eq term_eq beta.

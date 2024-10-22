@@ -12,27 +12,46 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp_eq.ma".
-include "ground/relocation/fb/fbr_after_dapp.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_after.ma".
-include "explicit_updating/syntax/substitution_unwind.ma".
+include "explicit_updating/syntax/term.ma".
+include "explicit_updating/notation/functions/flat_1.ma".
 
-(* SUBSTITUTION FOR UNWIND **************************************************)
+(* FLATTENING FOR TERM ******************************************************)
 
-(* Constructions with subst_eq **********************************************)
+(* Source: ❘·❘ (Barendregt, The λ-Calculus, 11.1.2 iii) *) 
+rec definition term_flat (t:𝕋) on t : 𝕋 ≝
+match t with
+[ lref p   ⇒ 𝛏p
+| abst b t ⇒ 𝛌ⓕ.(term_flat t)
+| appl v t ⇒ ＠(term_flat v).(term_flat t)
+| lift f t ⇒ 𝛗f.(term_flat t)
+].
 
-lemma subst_unwind_eq_repl:
-      compatible_2_fwd … fbr_eq subst_eq subst_unwind.
-#f1 #f2 #Hf #p
-<subst_unwind_dapp <subst_unwind_dapp >fbr_dapp_eq_repl
-/2 width=3 by term_eq_lref/
+interpretation
+  "flattening (term)"
+  'Flat t = (term_flat t).
+
+definition flattenable: relation2 (relation2 …) (relation2 …) ≝
+           λR1,R2. ∀t1,t2. R1 t1 t2 → R2 (♭t1) (♭t2)
+. 
+
+(* Basic constructions ******************************************************)
+
+lemma term_flat_lref (p):
+      (𝛏p) = ♭(𝛏p).
+//
 qed.
 
-lemma subst_unwind_after (g) (f):
-      (𝐬❨g•f❩) ≐ 𝐬❨g❩•f.
-#g #f #p
-<subst_unwind_dapp <fbr_dapp_after
-<subst_after_dapp <subst_unwind_dapp
+lemma term_flat_abst (b) (t):
+      (𝛌ⓕ.♭t) = ♭(𝛌b.t).
+//
+qed.
+
+lemma term_flat_appl (v) (t):
+      (＠♭v.♭t) = ♭(＠v.t).
+//
+qed.
+
+lemma term_flat_lift (f) (t):
+      (𝛗f.♭t) = ♭(𝛗f.t).
 //
 qed.

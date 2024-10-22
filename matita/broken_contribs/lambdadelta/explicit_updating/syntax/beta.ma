@@ -35,17 +35,17 @@ lemma beta_unfold (n) (v) (t):
 qed.
 
 lemma beta_zero_lref_unit (v):
-      v = ⬕[𝟎←v]ξ𝟏.
+      v = ⬕[𝟎←v]𝛏𝟏.
 //
 qed.
 
 lemma beta_zero_lref_succ (v) (p):
-      ξp = ⬕[𝟎←v]ξ↑p.
+      (𝛏p) = ⬕[𝟎←v]𝛏↑p.
 //
 qed.
 
 lemma beta_succ_lref_unit (n:ℕ) (v):
-      (ξ𝟏) = ⬕[⁤↑n←v]ξ𝟏.
+      (𝛏𝟏) = ⬕[⁤↑n←v]𝛏𝟏.
 #n #v
 <beta_unfold //
 qed.

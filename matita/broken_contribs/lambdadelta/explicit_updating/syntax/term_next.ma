@@ -18,7 +18,7 @@ include "explicit_updating/syntax/term.ma".
 (* NEXT FOR TERM ************************************************************)
 
 definition term_next (t): 𝕋 ≝
-           ϕ(𝐮❨⁤𝟏❩).t
+           (𝛗(𝐮❨⁤𝟏❩).t)
 .
 
 interpretation
@@ -28,6 +28,6 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma term_next_unfold (t):
-      ϕ(𝐮❨⁤𝟏❩).t = ↑t.
+      (𝛗(𝐮❨⁤𝟏❩).t) = ↑t.
 //
 qed.

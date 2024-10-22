@@ -24,7 +24,7 @@ interpretation
   "substitution (term)"
   'CategoryS = (substitution).
 
-definition subst_dapp (S:𝕊):  𝕊 ≝ S.
+definition subst_dapp (S:𝕊): 𝕊 ≝ S.
 
 interpretation
   "depth application (substitution)"

@@ -12,27 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp_eq.ma".
-include "ground/relocation/fb/fbr_after_dapp.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_after.ma".
-include "explicit_updating/syntax/substitution_unwind.ma".
+(* NOTATION FOR EXPLICIT UPDATING *******************************************)
 
-(* SUBSTITUTION FOR UNWIND **************************************************)
-
-(* Constructions with subst_eq **********************************************)
-
-lemma subst_unwind_eq_repl:
-      compatible_2_fwd … fbr_eq subst_eq subst_unwind.
-#f1 #f2 #Hf #p
-<subst_unwind_dapp <subst_unwind_dapp >fbr_dapp_eq_repl
-/2 width=3 by term_eq_lref/
-qed.
-
-lemma subst_unwind_after (g) (f):
-      (𝐬❨g•f❩) ≐ 𝐬❨g❩•f.
-#g #f #p
-<subst_unwind_dapp <fbr_dapp_after
-<subst_after_dapp <subst_unwind_dapp
-//
-qed.
+notation "hvbox( ♭ break term 70 p )"
+  non associative with precedence 70
+  for @{ 'Flat $p }.

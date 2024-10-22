@@ -18,7 +18,7 @@ include "explicit_updating/syntax/substitution_after.ma".
 
 (* COMPOSITION WITH RELOCATION FOR SUBSTITUTION *****************************)
 
-(* Constructions with extensional equivalence for substitution **************)
+(* Constructions with subst_eq **********************************************)
 
 lemma subst_after_eq_repl:
       compatible_3 … subst_eq fbr_eq subst_eq subst_after.

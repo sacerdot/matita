@@ -16,7 +16,7 @@ include "explicit_updating/syntax/substitution_unwind.ma".
 include "explicit_updating/syntax/substitution_tapp.ma".
 include "explicit_updating/notation/functions/black_downtriangle_2.ma".
 
-(* UNWIND FOR TERM *********************************************************)
+(* UNWIND FOR TERM **********************************************************)
 
 definition unwind (f): 𝕋 → 𝕋 ≝
            subst_tapp (𝐬❨f❩)
@@ -34,7 +34,7 @@ lemma unwind_unfold (f) (t):
 qed.
 
 lemma unwind_lref (f) (p):
-      ξ(f＠⧣❨p❩) = ▼[f](ξp).
+      (𝛏(f＠⧣❨p❩)) = ▼[f](𝛏p).
 #f #p
 //
 qed.

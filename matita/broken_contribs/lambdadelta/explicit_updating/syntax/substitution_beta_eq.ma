@@ -17,7 +17,7 @@ include "explicit_updating/syntax/substitution_beta.ma".
 
 (* SUBSTITUTION FOR β-REDUCTION *********************************************)
 
-(* Constructions with extensional equivalence for substitution **************)
+(* Constructions with subst_eq **********************************************)
 
 lemma subst_beta_eq_repl:
       compatible_2_fwd … term_eq subst_eq subst_beta.

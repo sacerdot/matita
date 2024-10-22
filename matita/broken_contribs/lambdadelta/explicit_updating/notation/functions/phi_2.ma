@@ -14,6 +14,6 @@
 
 (* NOTATION FOR EXPLICIT UPDATING *******************************************)
 
-notation "hvbox( ϕ break term 90 f . break term 70 t )"
+notation "hvbox( 𝛗 break term 90 f . break term 70 t )"
   non associative with precedence 70
   for @{ 'Phi $f $t }.
