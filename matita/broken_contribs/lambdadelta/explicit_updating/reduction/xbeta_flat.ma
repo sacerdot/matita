@@ -12,8 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR EXPLICIT UPDATING *******************************************)
+include "explicit_updating/syntax/term_flat_eq.ma".
+include "explicit_updating/syntax/unwind_flat.ma".
+include "explicit_updating/syntax/beta_flat.ma".
+include "explicit_updating/reduction/xbeta.ma".
+include "explicit_updating/reduction/xbeta1.ma".
 
-notation "hvbox( t1 ➡[ break term 45 R ] break term 46 t2 )"
-  non associative with precedence 45
-  for @{ 'BlackRightArrow $t1 $R $t2 }.
+(* β-REDUCTION STEP *********************************************************)
+
+(* Constructions witth xbeta1 and term_flat *********************************)
+
+lemma xbeta_flat: flattenable (𝛃′) (𝛃ⓕ).
+#t1 #t2 * -t1 -t2
+[ #f #t #x #y #Hx #Hy
+  lapply (term_flat_eq_repl … Hx) -Hx <term_flat_lift #Hx
+  lapply (term_flat_eq_repl … Hy) -Hy #Hy
+  lapply (term_eq_trans … (unwind_flat …) … Hy) -Hy #Hy
+  /2 width=4 by xbeta1_unwind/
+| #b #v #t #x #y #Hx #Hy
+  lapply (term_flat_eq_repl … Hx) -Hx <term_flat_appl <term_flat_abst #Hx
+  lapply (term_flat_eq_repl … Hy) -Hy #Hy
+  lapply (term_eq_trans … (beta_flat …) … Hy) -Hy #Hy
+  /2 width=4 by xbeta1_beta/
+]
+qed.

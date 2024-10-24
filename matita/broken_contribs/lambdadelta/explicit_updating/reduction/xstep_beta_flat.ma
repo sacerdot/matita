@@ -12,8 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR EXPLICIT UPDATING *******************************************)
+include "explicit_updating/reduction/xbeta_flat.ma".
+include "explicit_updating/reduction/xstep.ma".
 
-notation "hvbox( t1 ➡[ break term 45 R ] break term 46 t2 )"
-  non associative with precedence 45
-  for @{ 'BlackRightArrow $t1 $R $t2 }.
+(* X-REDUCTION **************************************************************)
+
+(* Constructions with xbetaand xbeta1 ***************************************)
+
+lemma xstep_beta_flat:
+      flattenable (xstep (𝛃′)) (xstep (𝛃ⓕ)).
+#t1 #t2 #Ht elim Ht -t1 -t2
+[ /3 width=1 by xbeta_flat, xstep_step/
+| /2 width=1 by xstep_abst/
+| /3 width=1 by xstep_side, term_flat_eq_repl/
+| /3 width=1 by xstep_head, term_flat_eq_repl/
+| /2 width=1 by xstep_lift/
+]
+qed.

@@ -36,7 +36,17 @@ interpretation
   "x-reduction (term)"
   'BlackRightArrow t1 R t2 = (xstep R t1 t2).
 
-(* Constructions with α-equivalence for term ********************************)
+(* Advanced constructions ***************************************************)
+
+alias symbol "subseteq" (instance 1) = "2-relation inclusion".
+alias symbol "subseteq" (instance 2) = "2-relation inclusion".
+lemma xstep_subeq (R1) (R2):
+      R1 ⊆ R2 → (xstep R1) ⊆ (xstep R2).
+#R1 #R2 #HR #t1 #t2 #Ht elim Ht -t1 -t2
+/3 width=1 by xstep_step, xstep_abst, xstep_side, xstep_head, xstep_lift/
+qed.
+
+(* Constructions term_eq ****************************************************)
 
 lemma xstep_eq_repl (R):
       replace_2 … term_eq term_eq R →

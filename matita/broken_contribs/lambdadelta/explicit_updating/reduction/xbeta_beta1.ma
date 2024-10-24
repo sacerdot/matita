@@ -12,8 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR EXPLICIT UPDATING *******************************************)
+include "explicit_updating/reduction/xbeta.ma".
+include "explicit_updating/reduction/xbeta1.ma".
 
-notation "hvbox( t1 ➡[ break term 45 R ] break term 46 t2 )"
-  non associative with precedence 45
-  for @{ 'BlackRightArrow $t1 $R $t2 }.
+(* β-REDUCTION STEP *********************************************************)
+
+(* Constructions witth xbeta1 ***********************************************)
+
+alias symbol "subseteq" (instance 1) = "2-relation inclusion".
+lemma xbeta_beta1 (b):
+      (𝛃b) ⊆ (𝛃′).
+#b #t1 #t2 * -t1 -t2
+/2 width=5 by xbeta_unwind, xbeta_beta/
+qed.

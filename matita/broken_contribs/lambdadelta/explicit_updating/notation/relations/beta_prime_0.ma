@@ -14,6 +14,6 @@
 
 (* NOTATION FOR EXPLICIT UPDATING *******************************************)
 
-notation "hvbox( t1 ➡[ break term 45 R ] break term 46 t2 )"
+notation "hvbox( 𝛃′ )"
   non associative with precedence 45
-  for @{ 'BlackRightArrow $t1 $R $t2 }.
+  for @{ 'BetaPrime }.
