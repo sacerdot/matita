@@ -82,6 +82,35 @@ lemma term_eq_inv_lift_sx (f1) (t1) (x2):
 ]
 qed-.
 
+(* Advanced destructions ****************************************************)
+
+lemma term_eq_inv_lref_bi (p1) (p2):
+      (𝛏p1) ≐ (𝛏p2) → p1 = p2.
+#p1 #p2 #H0
+lapply (term_eq_inv_lref_sx … H0) -H0 #H0 destruct //
+qed-.
+
+lemma term_eq_inv_abst_bi (b1) (b2) (t1) (t2):
+      (𝛌b1.t1) ≐ (𝛌b2.t2) → ∧∧ b1 = b2 & t1 ≐ t2.
+#b1 #b2 #t1 #t2 #H0
+elim (term_eq_inv_abst_sx … H0) -H0 #u1 #Htu1 #H0 destruct
+/2 width=1 by conj/
+qed-.
+
+lemma term_eq_inv_appl_bi (v1) (v2) (t1) (t2):
+      (＠v1.t1) ≐ (＠v2.t2) → ∧∧ v1 ≐ v2 & t1 ≐ t2.
+#v1 #v2 #t1 #t2 #H0
+elim (term_eq_inv_appl_sx … H0) -H0 #w1 #u1 #Hvw1 #Htu1 #H0 destruct
+/2 width=1 by conj/
+qed-.
+
+lemma term_eq_inv_lift_bi (f1) (f2) (t1) (t2):
+      (𝛗f1.t1) ≐ (𝛗f2.t2) → ∧∧ f1 ≐ f2 & t1 ≐ t2.
+#f1 #f2 #t1 #t2 #H0
+elim (term_eq_inv_lift_sx … H0) -H0 #g1 #u1 #Hfg1 #Htu1 #H0 destruct
+/2 width=1 by conj/
+qed-.
+
 (* Basic constructions ******************************************************)
 
 lemma term_eq_refl:

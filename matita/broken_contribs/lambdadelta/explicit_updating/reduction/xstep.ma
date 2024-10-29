@@ -46,7 +46,7 @@ lemma xstep_subeq (R1) (R2):
 /3 width=1 by xstep_step, xstep_abst, xstep_side, xstep_head, xstep_lift/
 qed.
 
-(* Constructions term_eq ****************************************************)
+(* Constructions with term_eq ***********************************************)
 
 lemma xstep_eq_repl (R):
       replace_2 … term_eq term_eq R →

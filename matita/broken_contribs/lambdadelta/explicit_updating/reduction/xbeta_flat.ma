@@ -36,3 +36,26 @@ lemma xbeta_flat: flattenable (𝛃′) (𝛃ⓕ).
   /2 width=4 by xbeta1_beta/
 ]
 qed.
+
+(* Inversions with xbeta1 and term_flat *************************************)
+
+lemma xbeta1_false_inv_flat_sx_aux (u1) (u2) (t1):
+      (𝛃ⓕ) u1 u2 → ♭t1 = u1 →
+      ∃∃t2. (𝛃′) t1 t2 & ♭t2 ≐ u2.
+#u1 #u2 #t1 * -u1 -u2
+[ #f #u #x #y #Hx #Hy #H0 destruct
+  elim (term_eq_inv_lift_flat … Hx) -Hx #g #t #Hfg #Hut #H0 destruct
+  @(ex2_intro … (▼[g]t))
+  [ /2 width=4 by xbeta_unwind/
+  | @(term_eq_canc_sx … Hy) -Hy
+    /3 width=3 by unwind_eq_repl, unwind_flat, term_eq_trans/
+  ]
+| #w #u #x #y #Hx #Hy #H0 destruct
+  elim (term_eq_inv_appl_flat … Hx) -Hx #v #z #Hvw #Hz #H0 destruct
+  elim (term_eq_inv_abst_flat … Hz) -Hz #b #t #_ #Hut #H0 destruct
+  @(ex2_intro … (⬕[𝟎←v]t))
+  [ /2 width=5 by xbeta_beta/
+  | @(term_eq_canc_sx … Hy) -Hy
+    /3 width=3 by beta_eq_repl, beta_flat, term_eq_trans/
+  ]
+qed-.
