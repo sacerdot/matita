@@ -16,9 +16,9 @@ include "explicit_updating/syntax/substitution_unwind_eq.ma".
 include "explicit_updating/syntax/substitution_tapp_eq.ma".
 include "explicit_updating/syntax/unwind.ma".
 
-(* UNWIND FOR TERM *********************************************************)
+(* UNWIND FOR TERM **********************************************************)
 
-(* Constructions with term_eq **********************************************)
+(* Constructions with term_eq ***********************************************)
 
 lemma unwind_eq_repl:
       compatible_3 … fbr_eq term_eq term_eq unwind.

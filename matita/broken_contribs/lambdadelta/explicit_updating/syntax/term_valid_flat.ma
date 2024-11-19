@@ -12,23 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "explicit_updating/syntax/term_flat.ma".
 include "explicit_updating/syntax/term_valid.ma".
-include "explicit_updating/reduction/xbeta1.ma".
-include "explicit_updating/computation/xsteps.ma".
-include "explicit_updating/notation/relations/black_rightarrow_star_2.ma".
 
-(* X-COMPUTATION TO ♭-NORMAL FORM *******************************************)
+(* VALIDITY FOR TERM ********************************************************)
 
-definition xsteps_phi: relation2 … ≝
-           λt1,t2. ∧∧ t1 ➡*[𝛃ⓣ] t2 & ⓕ ⊢ t2.
+(* Constructions with term_flat *********************************************)
 
-interpretation
-  "x-computation to ♭-normal form (term)"
-  'BlackRightArrowStar t1 t2 = (xsteps_phi t1 t2).
-
-(* Basic constructions ******************************************************)
-
-lemma xsteps_phi_fold (t1) (t2):
-      t1 ➡*[𝛃ⓣ] t2 → ⓕ ⊢ t2 → t1 ➡*𝛟 t2.
-/2 width=1 by conj/
+lemma term_valid_flat (b) (t):
+      b ⊢ ♭t.
+#b #t elim t -t
+/2 width=1 by term_valid_lref, term_valid_abst, term_valid_appl, term_valid_lift/
 qed.
+
+(* Inversions with term_flat ************************************************)
+
+lemma term_valid_inv_false_eq_flat_refl (t):
+      (ⓕ) ⊢ t → ♭t = t.
+#t #Ht elim Ht -t
+/2 width=1 by eq_f2/
+qed-.

@@ -12,23 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/term_valid.ma".
-include "explicit_updating/reduction/xbeta1.ma".
-include "explicit_updating/computation/xsteps.ma".
-include "explicit_updating/notation/relations/black_rightarrow_star_2.ma".
+include "explicit_updating/syntax/substitution_beta.ma".
+include "explicit_updating/syntax/substitution_valid.ma".
 
-(* X-COMPUTATION TO ♭-NORMAL FORM *******************************************)
+(* VALIDITY FOR SUBSTITUTION ************************************************)
 
-definition xsteps_phi: relation2 … ≝
-           λt1,t2. ∧∧ t1 ➡*[𝛃ⓣ] t2 & ⓕ ⊢ t2.
+(* Constructions with subst_beta ********************************************)
 
-interpretation
-  "x-computation to ♭-normal form (term)"
-  'BlackRightArrowStar t1 t2 = (xsteps_phi t1 t2).
-
-(* Basic constructions ******************************************************)
-
-lemma xsteps_phi_fold (t1) (t2):
-      t1 ➡*[𝛃ⓣ] t2 → ⓕ ⊢ t2 → t1 ➡*𝛟 t2.
-/2 width=1 by conj/
+lemma substitution_valid_beta (b) (t):
+      b ⊢ t → b ⊢ 𝐬❨t❩.
+#b #t #Ht *
+/2 width=1 by term_valid_lref/
 qed.
+
+(* Inversions with subst_beta ***********************************************)
+
+lemma substitution_valid_inv_beta (b) (t):
+      b ⊢ 𝐬❨t❩ → b ⊢ t.
+//
+qed-.

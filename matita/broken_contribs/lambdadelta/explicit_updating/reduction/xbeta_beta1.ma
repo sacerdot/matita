@@ -12,12 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/reduction/xbeta.ma".
 include "explicit_updating/reduction/xbeta1.ma".
+include "explicit_updating/reduction/xbeta.ma".
 
 (* β-REDUCTION STEP *********************************************************)
 
-(* Constructions witth xbeta1 ***********************************************)
+(* Constructions with xbeta1 ************************************************)
 
 alias symbol "subseteq" (instance 1) = "2-relation inclusion".
 lemma xbeta_beta1 (b):

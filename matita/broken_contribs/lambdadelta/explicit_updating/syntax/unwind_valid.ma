@@ -12,23 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/term_valid.ma".
-include "explicit_updating/reduction/xbeta1.ma".
-include "explicit_updating/computation/xsteps.ma".
-include "explicit_updating/notation/relations/black_rightarrow_star_2.ma".
+include "explicit_updating/syntax/substitution_valid_tapp.ma".
+include "explicit_updating/syntax/substitution_valid_unwind.ma".
+include "explicit_updating/syntax/unwind.ma".
 
-(* X-COMPUTATION TO ♭-NORMAL FORM *******************************************)
+(* UNWIND FOR TERM **********************************************************)
 
-definition xsteps_phi: relation2 … ≝
-           λt1,t2. ∧∧ t1 ➡*[𝛃ⓣ] t2 & ⓕ ⊢ t2.
+(* Constructions with valid_term ********************************************)
 
-interpretation
-  "x-computation to ♭-normal form (term)"
-  'BlackRightArrowStar t1 t2 = (xsteps_phi t1 t2).
-
-(* Basic constructions ******************************************************)
-
-lemma xsteps_phi_fold (t1) (t2):
-      t1 ➡*[𝛃ⓣ] t2 → ⓕ ⊢ t2 → t1 ➡*𝛟 t2.
-/2 width=1 by conj/
+lemma unwind_valid (b) (f) (t):
+      b ⊢ t → b ⊢ ▼[f]t.
+/2 width=1 by substitution_valid_unwind, subst_valid_tapp/
 qed.

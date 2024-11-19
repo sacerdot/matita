@@ -12,23 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/term_valid.ma".
-include "explicit_updating/reduction/xbeta1.ma".
-include "explicit_updating/computation/xsteps.ma".
-include "explicit_updating/notation/relations/black_rightarrow_star_2.ma".
+include "explicit_updating/syntax/substitution_pushs.ma".
+include "explicit_updating/syntax/substitution_valid_push.ma".
 
-(* X-COMPUTATION TO ♭-NORMAL FORM *******************************************)
+(* VALIDITY FOR SUBSTITUTION *************************************************)
 
-definition xsteps_phi: relation2 … ≝
-           λt1,t2. ∧∧ t1 ➡*[𝛃ⓣ] t2 & ⓕ ⊢ t2.
+(* Constructions with subst_pushs ********************************************)
 
-interpretation
-  "x-computation to ♭-normal form (term)"
-  'BlackRightArrowStar t1 t2 = (xsteps_phi t1 t2).
-
-(* Basic constructions ******************************************************)
-
-lemma xsteps_phi_fold (t1) (t2):
-      t1 ➡*[𝛃ⓣ] t2 → ⓕ ⊢ t2 → t1 ➡*𝛟 t2.
-/2 width=1 by conj/
+lemma subst_valid_pushs (b) (n) (S):
+      b ⊢ S → b ⊢ ⫯*[n]S.
+#b #n @(nat_ind_succ … n) -n //
+#n #IH #S #HS
+/3 width=1 by subst_valid_push/
 qed.
+
+(* Inversions with subst_pushs ***********************************************)
+
+lemma subst_valid_inv_pushs (b) (n) (S):
+      b ⊢ ⫯*[n]S → b ⊢ S.
+#b #n @(nat_ind_succ … n) -n //
+#n #IH #S #HS
+/3 width=1 by subst_valid_inv_push/
+qed-.

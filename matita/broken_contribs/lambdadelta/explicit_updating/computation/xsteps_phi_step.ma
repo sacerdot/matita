@@ -12,23 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/term_valid.ma".
-include "explicit_updating/reduction/xbeta1.ma".
-include "explicit_updating/computation/xsteps.ma".
-include "explicit_updating/notation/relations/black_rightarrow_star_2.ma".
+include "explicit_updating/reduction/xstep_phi.ma".
+include "explicit_updating/computation/xsteps_phi.ma".
 
 (* X-COMPUTATION TO ♭-NORMAL FORM *******************************************)
 
-definition xsteps_phi: relation2 … ≝
-           λt1,t2. ∧∧ t1 ➡*[𝛃ⓣ] t2 & ⓕ ⊢ t2.
+(* Constructions with xstep_phi *********************************************)
 
-interpretation
-  "x-computation to ♭-normal form (term)"
-  'BlackRightArrowStar t1 t2 = (xsteps_phi t1 t2).
+lemma xsteps_phi_step_dx (t) (t1) (t2):
+      t1 ➡*[𝛃ⓣ] t → t ➡𝛟 t2 → t1 ➡*𝛟 t2.
+#t0 #t1 #t2 #Ht10 * #Ht02 #Ht2
+/3 width=3 by xsteps_dx, xsteps_phi_fold/
+qed.
 
-(* Basic constructions ******************************************************)
-
-lemma xsteps_phi_fold (t1) (t2):
-      t1 ➡*[𝛃ⓣ] t2 → ⓕ ⊢ t2 → t1 ➡*𝛟 t2.
-/2 width=1 by conj/
+lemma xsteps_phi_step (t1) (t2):
+      t1 ➡𝛟 t2 → t1 ➡*𝛟 t2.
+/3 width=3 by xsteps_refl, xsteps_phi_step_dx/
 qed.

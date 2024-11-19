@@ -18,7 +18,7 @@ include "explicit_updating/notation/functions/flat_1.ma".
 
 (* FLATTENING FOR TERM ******************************************************)
 
-(* Source: ❘·❘ (Barendregt, The λ-Calculus, 11.1.2 iii) *) 
+(* Source: ❘·❘ (Barendregt, The λ-Calculus, 11.1.2 iii) *)
 rec definition term_flat (t:𝕋) on t : 𝕋 ≝
 match t with
 [ lref p   ⇒ 𝛏p

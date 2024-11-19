@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "explicit_updating/syntax/term_valid_flat.ma".
 include "explicit_updating/reduction/xbeta_beta1.ma".
 include "explicit_updating/computation/xsteps_beta_flat.ma".
 include "explicit_updating/computation/xsteps_phi.ma".
@@ -24,8 +25,6 @@ include "explicit_updating/computation/xsteps_phi.ma".
 lemma xsteps_phi_inv_beta1_false (t1) (t2):
       t1 ➡*𝛟 t2 → ♭t1 ➡*[𝛃ⓕ] t2.
 #t1 #t2 * #Ht12 #Ht2
-@(xsteps_eq_trans … Ht2) -Ht2
-[ /2 width=5 by xbeta1_eq_repl/
-| /4 width=3 by xsteps_beta_flat, xsteps_subeq, xbeta_beta1/
-]
+<(term_valid_inv_false_eq_flat_refl … Ht2) -Ht2
+/4 width=3 by xsteps_beta_flat, xsteps_subeq, xbeta_beta1/
 qed-.
