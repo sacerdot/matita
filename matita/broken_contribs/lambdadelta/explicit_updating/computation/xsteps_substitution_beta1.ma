@@ -12,20 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/reduction/xstep_phi.ma".
-include "explicit_updating/computation/xsteps_phi.ma".
+include "explicit_updating/reduction/xbeta1.ma".
+include "explicit_updating/computation/xsteps_substitution.ma".
 
-(* X-COMPUTATION TO ♭-NORMAL FORM FOR TERM **********************************)
+(* X-COMPUTATION FOR SUBSTITUTION *******************************************)
 
-(* Constructions with xstep_phi *********************************************)
+(* Constructions with xbeta1 ************************************************)
 
-lemma xsteps_phi_step_dx (t) (t1) (t2):
-      t1 ➡*[𝛃ⓣ] t → t ➡𝛟 t2 → t1 ➡*𝛟 t2.
-#t0 #t1 #t2 #Ht10 * #Ht02 #Ht2
-/3 width=3 by xsteps_term_dx, xsteps_phi_fold/
-qed.
-
-lemma xsteps_phi_step (t1) (t2):
-      t1 ➡𝛟 t2 → t1 ➡*𝛟 t2.
-/3 width=3 by xsteps_term_refl, xsteps_phi_step_dx/
+lemma xsteps_subst_push_unwind (b) (f):
+      (⫯𝐬❨f❩) ➡*[𝛃b] 𝐬❨⫯f❩.
+#b #f * [| #p ]
+[ /2 width=1 by xsteps_term_refl/
+| <subst_push_succ <subst_unwind_dapp <subst_unwind_dapp
+  <term_next_unfold <fbr_dapp_push_dx_succ
+  @xsteps_term_step @xstep_term_step
+  @xbeta1_unwind [3: // | skip | skip ] <unwind_lref //
+]
 qed.

@@ -12,20 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/reduction/xstep_phi.ma".
-include "explicit_updating/computation/xsteps_phi.ma".
+include "ground/lib/functions.ma".
+include "explicit_updating/syntax/term_eq.ma".
+include "explicit_updating/syntax/term_weight.ma".
 
-(* X-COMPUTATION TO ♭-NORMAL FORM FOR TERM **********************************)
+(* WEIGHT FOR TERM **********************************************************)
 
-(* Constructions with xstep_phi *********************************************)
+(* Constructions with term_eq ***********************************************)
 
-lemma xsteps_phi_step_dx (t) (t1) (t2):
-      t1 ➡*[𝛃ⓣ] t → t ➡𝛟 t2 → t1 ➡*𝛟 t2.
-#t0 #t1 #t2 #Ht10 * #Ht02 #Ht2
-/3 width=3 by xsteps_term_dx, xsteps_phi_fold/
-qed.
-
-lemma xsteps_phi_step (t1) (t2):
-      t1 ➡𝛟 t2 → t1 ➡*𝛟 t2.
-/3 width=3 by xsteps_term_refl, xsteps_phi_step_dx/
+lemma term_weight_eq_repl:
+      compatible_2_fwd … term_eq (eq …) term_weight.
+#t1 #t2 #Ht12 elim Ht12 -t1 -t2 //
 qed.

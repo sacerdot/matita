@@ -32,6 +32,19 @@ interpretation
   "marked β-reduction step (term)"
   'Beta b = (xbeta1 b).
 
+(* Basic inversions *********************************************************)
+
+lemma xbeta1_inv_abst_sx (c) (b) (t1) (x2):
+      (𝛃c) (𝛌b.t1) x2 → ⊥.
+#c #b #t1 #x2
+@(insert_eq_1 … (𝛌b.t1)) #x1 * -x1 -x2
+[ #f #t #x #y #Hx #_ #H0 destruct
+  elim (term_eq_inv_lift_sx … Hx) -Hx #z #x #_ #_ #H0 destruct
+| #v #t #x #y #Hx #_ #H0 destruct
+  elim (term_eq_inv_appl_sx … Hx) -Hx #z #x #_ #_ #H0 destruct
+]
+qed-.
+
 (* Constructions with term_eq ***********************************************)
 
 lemma xbeta1_eq_repl (b):

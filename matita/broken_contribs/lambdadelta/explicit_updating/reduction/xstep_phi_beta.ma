@@ -16,7 +16,7 @@ include "ground/xoa/ex_3_1.ma".
 include "explicit_updating/reduction/xbeta_valid.ma".
 include "explicit_updating/reduction/xstep_phi.ma".
 
-(* X-REDUCTION TO ♭-NORMAL FORM *********************************************)
+(* X-REDUCTION TO ♭-NORMAL FORM FOR TERM ************************************)
 
 (* Constructions with xbeta *************************************************)
 
@@ -27,7 +27,7 @@ lemma xstep_beta_valid_false (t0) (t1):
 #t0 #t1 #Ht01 elim Ht01 -t0 -t1
 [ #t0 #t1 #Ht01 #Ht0
   elim (xbeta_des_valid_false … Ht01 Ht0) -Ht01 -Ht0 #t2 #Ht21 #Ht1 #Ht2 #H0 destruct
-  /4 width=4 by xstep_phi_fold, xstep_step, ex3_intro/
+  /4 width=4 by xstep_phi_fold, xstep_term_step, ex3_intro/
 | #b #t0 #t1 #_ #IH #H0
   elim (term_valid_inv_abst … H0) -H0 #Ht0 #H0 destruct
   elim (IH Ht0) -IH -Ht0 #t2 #Ht21 #Ht2 #H0 destruct

@@ -12,20 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/reduction/xstep_phi.ma".
-include "explicit_updating/computation/xsteps_phi.ma".
+(* NOTATION FOR EXPLICIT UPDATING *******************************************)
 
-(* X-COMPUTATION TO ♭-NORMAL FORM FOR TERM **********************************)
-
-(* Constructions with xstep_phi *********************************************)
-
-lemma xsteps_phi_step_dx (t) (t1) (t2):
-      t1 ➡*[𝛃ⓣ] t → t ➡𝛟 t2 → t1 ➡*𝛟 t2.
-#t0 #t1 #t2 #Ht10 * #Ht02 #Ht2
-/3 width=3 by xsteps_term_dx, xsteps_phi_fold/
-qed.
-
-lemma xsteps_phi_step (t1) (t2):
-      t1 ➡𝛟 t2 → t1 ➡*𝛟 t2.
-/3 width=3 by xsteps_term_refl, xsteps_phi_step_dx/
-qed.
+notation "hvbox( ♯❨ term 46 X ❩ )"
+ non associative with precedence 70
+ for @{ 'Sharp $X }.

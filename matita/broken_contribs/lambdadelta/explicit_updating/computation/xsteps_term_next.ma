@@ -12,34 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/reduction/xstep_beta_flat.ma".
+include "explicit_updating/syntax/term_next.ma".
 include "explicit_updating/computation/xsteps_term.ma".
 
 (* X-COMPUTATION FOR TERM ***************************************************)
 
-(* Constructions with xbeta and xbeta1 and term_flat ************************)
+(* Constructions with term_next *********************************************)
 
-(* Source: Barendregt, The λ-Calculus, 11.1.6 ii *)
-lemma xsteps_beta_flat:
-      flattenable (xsteps_term (𝛃′)) (xsteps_term (𝛃ⓕ)).
-#t1 #t2 #Ht elim Ht -t2
-/3 width=3 by xsteps_term_refl, xsteps_term_dx, xstep_beta_flat, term_flat_eq_repl/
+lemma xsteps_term_next_bi (R) (t1) (t2):
+      t1 ➡*[R] t2 → ↑t1 ➡*[R] ↑t2.
+/2 width=1 by xsteps_term_lift_bi/
 qed.
-
-(* Inversions with xbeta and xbeta1 and term_flat ***************************)
-
-(* Source: Barendregt, The λ-Calculus, 11.1.6 i *)
-lemma xsteps_beta1_false_inv_flat_sx (t1) (u2):
-      ♭t1 ➡*[𝛃ⓕ] u2 →
-      ∃∃t2. t1 ➡*[𝛃′] t2 & ♭t2 ≐ u2.
-#t1 #u2 #Hu elim Hu -u2
-[ #u1 #Htu1
-  /3 width=3 by xsteps_term_refl, ex2_intro/
-| #u0 #u2 #_ #Hu02 * #t0 #Ht10 #Htu0
-  lapply (eq_xstep_term_trans … Htu0 Hu02) -u0
-  [ /2 width=5 by xbeta1_eq_repl/ ] #Hu02
-  elim (xstep_beta1_false_inv_flat_sx_aux … Hu02) -Hu02
-  [|*: // ] #t2 #Ht02 #Htu2
-  /3 width=3 by xsteps_term_dx, ex2_intro/
-]
-qed.  

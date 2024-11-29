@@ -12,20 +12,42 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/reduction/xstep_phi.ma".
-include "explicit_updating/computation/xsteps_phi.ma".
+include "ground/arith/pnat_plus.ma".
+include "explicit_updating/syntax/term.ma".
+include "explicit_updating/notation/functions/sharp_1.ma".
 
-(* X-COMPUTATION TO ♭-NORMAL FORM FOR TERM **********************************)
+(* WEIGHT FOR TERM **********************************************************)
 
-(* Constructions with xstep_phi *********************************************)
+rec definition term_weight (t:𝕋) on t : ℕ⁺ ≝
+match t with
+[ lref p   ⇒ 𝟏
+| abst b t ⇒ ↑(term_weight t)
+| appl v t ⇒ (term_weight v)+(term_weight t)
+| lift f t ⇒ ↑(term_weight t)
+].
 
-lemma xsteps_phi_step_dx (t) (t1) (t2):
-      t1 ➡*[𝛃ⓣ] t → t ➡𝛟 t2 → t1 ➡*𝛟 t2.
-#t0 #t1 #t2 #Ht10 * #Ht02 #Ht2
-/3 width=3 by xsteps_term_dx, xsteps_phi_fold/
+interpretation
+  "weight (term)"
+  'Sharp t = (term_weight t).
+
+(* Basic constructions ******************************************************)
+
+lemma term_weight_lref (p):
+      (𝟏) = ♯❨𝛏p❩.
+//
 qed.
 
-lemma xsteps_phi_step (t1) (t2):
-      t1 ➡𝛟 t2 → t1 ➡*𝛟 t2.
-/3 width=3 by xsteps_term_refl, xsteps_phi_step_dx/
+lemma term_weight_abst (b) (t):
+      ↑♯❨t❩ = ♯❨𝛌b.t❩.
+//
+qed.
+
+lemma term_weight_appl (v) (t):
+      ♯❨v❩+♯❨t❩ = ♯❨＠v.t❩.
+//
+qed.
+
+lemma term_weight_lift (f) (t):
+      ↑♯❨t❩ = ♯❨𝛗f.t❩.
+//
 qed.

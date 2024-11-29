@@ -12,20 +12,32 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/reduction/xstep_phi.ma".
-include "explicit_updating/computation/xsteps_phi.ma".
+include "explicit_updating/syntax/term_valid_eq.ma".
+include "explicit_updating/syntax/unwind_valid.ma".
+include "explicit_updating/syntax/beta_valid.ma".
+include "explicit_updating/reduction/xbeta1.ma".
 
-(* X-COMPUTATION TO ♭-NORMAL FORM FOR TERM **********************************)
+(* MARKED β-REDUCTION STEP **************************************************)
 
-(* Constructions with xstep_phi *********************************************)
+(* Constructions with valid_term ********************************************)
 
-lemma xsteps_phi_step_dx (t) (t1) (t2):
-      t1 ➡*[𝛃ⓣ] t → t ➡𝛟 t2 → t1 ➡*𝛟 t2.
-#t0 #t1 #t2 #Ht10 * #Ht02 #Ht2
-/3 width=3 by xsteps_term_dx, xsteps_phi_fold/
-qed.
-
-lemma xsteps_phi_step (t1) (t2):
-      t1 ➡𝛟 t2 → t1 ➡*𝛟 t2.
-/3 width=3 by xsteps_term_refl, xsteps_phi_step_dx/
+lemma term_valid_xbeta1_trans (c) (b) (t1) (t2):
+      (𝛃b) t1 t2 → c ⊢ t1 → c ⊢ t2.
+#c #b #t1 #t2 * -t1 -t2
+[ #f #t #x #y #Hx #Hy #H0
+  lapply (term_valid_eq_repl_bck  … H0 … Hx) -x #H0
+  @(term_valid_eq_repl_fwd  … Hy) -y
+  lapply (term_valid_inv_lift … H0) -H0 #H0
+  /2 width=1 by unwind_valid/
+| #v #t #x #y #Hx #Hy #H0
+  lapply (term_valid_eq_repl_bck  … H0 … Hx) -x #H0
+  @(term_valid_eq_repl_fwd  … Hy) -y
+  elim (term_valid_inv_appl … H0) -H0 *
+  [ #Hv #H0
+    elim (term_valid_inv_abst … H0) -H0 #Ht #_ -b
+    /2 width=1 by beta_valid/
+  | #x #v #x #H1 #H2 destruct
+    /2 width=1 by beta_valid/
+  ]
+]
 qed.
