@@ -58,3 +58,23 @@ lemma term_valid_xstep_trans (R) (c):
   /3 width=4 by term_valid_lift/
 ]
 qed.
+
+lemma xstep_term_subeq_valid_false (R1) (R2):
+      (∀t1,t2. R1 t1 t2 → ⓕ ⊢ t1 → R2 t1 t2) →
+      ∀t1,t2. t1 ➡[R1] t2 → ⓕ ⊢ t1 → t1 ➡[R2] t2.
+#R1 #R2 #HR #t1 #t2 #Ht12 elim Ht12 -t1 -t2
+[ /3 width=1 by xstep_term_step/
+| #b #t1 #t2 #_ #IH #H0
+  elim (term_valid_inv_abst … H0) -H0 #Ht1 #H0 destruct
+  /3 width=1 by xstep_term_abst/
+| #v1 #v2 #t1 #t2 #_ #Ht12 #IH #H0
+  elim (term_valid_inv_appl_false … H0) -H0 #Hv1 #_
+  /3 width=1 by xstep_term_side/
+| #v1 #v2 #t1 #t2 #Hv12 #_ #IH #H0
+  elim (term_valid_inv_appl_false … H0) -H0 #_ #Ht1
+  /3 width=1 by xstep_term_head/
+| #f1 #f2 #t1 #t2 #Hf12 #_ #IH #H0
+  lapply (term_valid_inv_lift … H0) -H0 #Ht1
+  /3 width=1 by xstep_term_lift/
+]
+qed.

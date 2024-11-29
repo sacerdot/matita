@@ -4,9 +4,10 @@ include "explicit_updating/computation/xsteps_term.ma".
 
 axiom tmp3 (t0):
       ∀t1. t0 ➡[𝛃′] t1 → ∀t2. t0 ➡*[𝛃ⓣ] t2 →
-      ∃∃t. t1 ➡*[𝛃ⓣ] t & t2 ➡*[𝛃ⓕ] t.
+      ∃∃t. t1 ➡*[𝛃ⓣ] t & t2 ➡*[𝛃′] t.
 
 include "explicit_updating/reduction/xbeta1_valid.ma".
+include "explicit_updating/reduction/xbeta_beta1_valid.ma".
 include "explicit_updating/computation/xsteps_term_valid.ma".
 include "explicit_updating/computation/xsteps_phi.ma".
 
@@ -15,10 +16,16 @@ lemma tmp2 (t0):
       ∃∃t. t1 ➡*𝛟 t & t2 ➡*[𝛃ⓕ] t.
 #t0 #t1 #Ht01 #t2 * #Ht02 #Ht2
 elim (tmp3 … Ht01 … Ht02) -t0 #t0 #Ht10 #Ht20
-lapply (term_valid_xsteps_trans … Ht2 … Ht20) -Ht2
-[ /2 width=6 by term_valid_xbeta1_trans/
+lapply (xsteps_term_subeq_valid_false ? (𝛃ⓕ) … Ht2 … Ht20) -Ht20
+[ /2 width=1 by xbeta_inv_beta1_false/
+| /2 width=6 by term_valid_xbeta1_trans/
 | /2 width=5 by xbeta1_inv_abst_sx/
-| /3 width=3 by xsteps_phi_fold, ex2_intro/
+| #Ht20
+  lapply (term_valid_xsteps_trans … Ht2 … Ht20) -Ht2
+  [ /2 width=6 by term_valid_xbeta1_trans/
+  | /2 width=5 by xbeta1_inv_abst_sx/
+  | /3 width=3 by xsteps_phi_fold, ex2_intro/
+  ]
 ]
 qed-.
 

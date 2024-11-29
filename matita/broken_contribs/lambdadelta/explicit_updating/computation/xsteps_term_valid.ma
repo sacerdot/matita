@@ -29,3 +29,15 @@ lemma term_valid_xsteps_trans (R) (c):
   /3 width=6 by term_valid_xstep_trans/
 ]
 qed.
+
+lemma xsteps_term_subeq_valid_false (R1) (R2):
+      (∀b,t1,t2. R2 (𝛌b.t1) t2 → ⊥) →
+      (∀t1,t2. R2 t1 t2 → ⓕ ⊢ t1 → ⓕ ⊢ t2) →
+      (∀t1,t2. ⓕ ⊢ t1 → R1 t1 t2 → R2 t1 t2) →
+      ∀t1,t2. ⓕ ⊢ t1 → t1 ➡*[R1] t2 → t1 ➡*[R2] t2.
+#R1 #R2 #H1R #H2R #H3R #t1 #t2 #Ht1 #Ht12 elim Ht12 -t2
+[ /3 width=5 by xsteps_term_refl, term_eq_repl/
+| #t0 #t2 #_ #Ht02 #Ht10
+  /5 width=6 by term_valid_xsteps_trans, xsteps_term_dx, xstep_term_subeq_valid_false/
+]
+qed.
