@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "explicit_updating/syntax/term_valid_lref.ma".
 include "explicit_updating/syntax/substitution_unwind.ma".
 include "explicit_updating/syntax/substitution_valid.ma".
 

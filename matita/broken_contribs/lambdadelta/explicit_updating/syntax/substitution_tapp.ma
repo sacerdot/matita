@@ -20,7 +20,7 @@ include "explicit_updating/syntax/substitution_push.ma".
 (* Source: AUT 55 (de Bruijn, 1978) *) 
 rec definition subst_tapp (S:𝕊) (t:𝕋) on t : 𝕋 ≝
 match t with
-[ lref p   ⇒ S＠⧣❨p❩
+[ unit     ⇒ S＠⧣❨𝟏❩
 | abst b t ⇒ 𝛌b.(subst_tapp (⫯S) t)
 | appl v t ⇒ ＠(subst_tapp S v).(subst_tapp S t)
 | lift f t ⇒ subst_tapp (S•f) t
@@ -32,8 +32,8 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma subst_tapp_lref (S) (p):
-      S＠⧣❨p❩ = S＠⧣❨𝛏p❩.
+lemma subst_tapp_unit (S):
+      S＠⧣❨𝟏❩ = S＠⧣❨𝛏❩.
 //
 qed.
 

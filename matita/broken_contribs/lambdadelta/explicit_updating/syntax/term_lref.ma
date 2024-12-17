@@ -12,42 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_plus.ma".
-include "explicit_updating/syntax/term.ma".
-include "explicit_updating/notation/functions/sharp_1.ma".
+include "explicit_updating/syntax/term_nexts.ma".
+include "explicit_updating/notation/functions/xi_1.ma".
 
-(* WEIGHT FOR TERM **********************************************************)
+(* VARIABLE REFERENCE BY DEPTH FOR TERM *************************************)
 
-rec definition term_weight (t:𝕋) on t : ℕ⁺ ≝
-match t with
-[ unit     ⇒ 𝟏
-| abst b t ⇒ ↑(term_weight t)
-| appl v t ⇒ (term_weight v)+(term_weight t)
-| lift f t ⇒ ↑(term_weight t)
-].
+(* Note: "↑*[↓p]𝛏" denoted "𝛏p" (source: λσ) *)
+definition term_lref (p): 𝕋 ≝
+           ↑*[↓p]𝛏.
 
 interpretation
-  "weight (term)"
-  'Sharp t = (term_weight t).
+  "variable reference by depth (term)"
+  'Xi p = (term_lref p).
 
 (* Basic constructions ******************************************************)
 
-lemma term_weight_unit:
-      (𝟏) = ♯❨𝛏❩.
-//
-qed.
+lemma term_lref_unfold (p):
+      ↑*[↓p]𝛏 = 𝛏❨p❩.
+// qed.
 
-lemma term_weight_abst (b) (t):
-      ↑♯❨t❩ = ♯❨𝛌b.t❩.
-//
-qed.
 
-lemma term_weight_appl (v) (t):
-      ♯❨v❩+♯❨t❩ = ♯❨＠v.t❩.
-//
-qed.
+lemma term_lref_unit:
+      (𝛏) = 𝛏❨𝟏❩.
+// qed.
 
-lemma term_weight_lift (f) (t):
-      ↑♯❨t❩ = ♯❨𝛗f.t❩.
-//
+lemma term_lref_succ (p):
+      ↑𝛏❨p❩ = 𝛏❨↑p❩.
+#p <term_lref_unfold <term_lref_unfold //
 qed.

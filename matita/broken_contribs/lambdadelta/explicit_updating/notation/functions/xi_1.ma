@@ -14,6 +14,6 @@
 
 (* NOTATION FOR EXPLICIT UPDATING *******************************************)
 
-notation "hvbox( 𝛏 break term 90 p )"
+notation "hvbox( 𝛏❨ break term 46 p ❩ )"
   non associative with precedence 70
   for @{ 'Xi $p }.

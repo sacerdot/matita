@@ -22,7 +22,7 @@ include "explicit_updating/syntax/term_valid.ma".
 lemma term_valid_flat (b) (t):
       b ⊢ ♭t.
 #b #t elim t -t
-/2 width=1 by term_valid_lref, term_valid_abst, term_valid_appl, term_valid_lift/
+/2 width=1 by term_valid_unit, term_valid_abst, term_valid_appl, term_valid_lift/
 qed.
 
 (* Inversions with term_flat ************************************************)

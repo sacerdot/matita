@@ -22,7 +22,7 @@ include "explicit_updating/syntax/substitution_pushs.ma".
 (* Constructions with subst_nexts *******************************************)
 
 lemma subst_pushs_dapp_le (m) (n):
-      m ≤ n → ∀S. ↑*[m](𝛏𝟏) = (⫯*[⁤↑n]S)＠⧣❨↑m❩.
+      m ≤ n → ∀S. ↑*[m]𝛏 = (⫯*[⁤↑n]S)＠⧣❨↑m❩.
 #m #n #H0 elim H0 -n
 [ #S @(nat_ind_succ … m) -m //
   #m #IH <subst_pushs_succ <subst_push_succ <IH -S //

@@ -12,42 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_plus.ma".
-include "explicit_updating/syntax/term.ma".
-include "explicit_updating/notation/functions/sharp_1.ma".
+include "explicit_updating/syntax/term_nexts_eq.ma".
+include "explicit_updating/syntax/term_lref.ma".
 
-(* WEIGHT FOR TERM **********************************************************)
+(* VARIABLE REFERENCE BY DEPTH FOR TERM *************************************)
 
-rec definition term_weight (t:𝕋) on t : ℕ⁺ ≝
-match t with
-[ unit     ⇒ 𝟏
-| abst b t ⇒ ↑(term_weight t)
-| appl v t ⇒ (term_weight v)+(term_weight t)
-| lift f t ⇒ ↑(term_weight t)
-].
+(* Inversions with term_eq **************************************************)
 
-interpretation
-  "weight (term)"
-  'Sharp t = (term_weight t).
-
-(* Basic constructions ******************************************************)
-
-lemma term_weight_unit:
-      (𝟏) = ♯❨𝛏❩.
-//
-qed.
-
-lemma term_weight_abst (b) (t):
-      ↑♯❨t❩ = ♯❨𝛌b.t❩.
-//
-qed.
-
-lemma term_weight_appl (v) (t):
-      ♯❨v❩+♯❨t❩ = ♯❨＠v.t❩.
-//
-qed.
-
-lemma term_weight_lift (f) (t):
-      ↑♯❨t❩ = ♯❨𝛗f.t❩.
-//
-qed.
+lemma term_eq_inv_lref_bi (p1) (p2):
+      (𝛏p1) ≐ (𝛏p2) → p1 = p2.
+/3 width=2 by term_eq_inv_nexts_unit_bi, eq_inv_pnpred_bi/
+qed-.

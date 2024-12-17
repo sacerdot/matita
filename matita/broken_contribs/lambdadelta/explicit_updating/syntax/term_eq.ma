@@ -19,8 +19,8 @@ include "explicit_updating/syntax/term.ma".
 (* α-EQUIVALENCE FOR TERM ***************************************************)
 
 inductive term_eq: relation2 … ≝
-| term_eq_lref (p):
-  term_eq (𝛏p) (𝛏p)
+| term_eq_unit:
+  term_eq (𝛏) (𝛏)
 | term_eq_abst (b) (t1) (t2):
   term_eq t1 t2 → term_eq (𝛌b.t1) (𝛌b.t2)
 | term_eq_appl (v1) (v2) (t1) (t2):
@@ -35,11 +35,11 @@ interpretation
 
 (* Basic destructions *******************************************************)
 
-lemma term_eq_inv_lref_sx (p) (x2):
-      (𝛏p) ≐ x2 → 𝛏p = x2.
-#p0 #x2
-@(insert_eq_1 … (𝛏p0)) #x1 * -x1 -x2
-[ #p #_ //
+lemma term_eq_inv_unit_sx (x2):
+      (𝛏) ≐ x2 → 𝛏 = x2.
+#x2
+@(insert_eq_1 … (𝛏)) #x1 * -x1 -x2
+[ //
 | #b #t1 #t2 #_ #H0 destruct
 | #v1 #v2 #t1 #t2 #_ #_ #H0 destruct
 | #f1 #f2 #t1 #t2 #_ #_ #H0 destruct
@@ -50,7 +50,7 @@ lemma term_eq_inv_abst_sx (b) (t1) (x2):
       (𝛌b.t1) ≐ x2 → ∃∃t2. t1 ≐ t2 & 𝛌b.t2 = x2.
 #b0 #t0 #x2
 @(insert_eq_1 … (𝛌b0.t0)) #x1 * -x1 -x2
-[ #p #H0 destruct
+[ #H0 destruct
 | #b #t1 #t2 #Ht #H0 destruct
   /2 width=3 by ex2_intro/
 | #v1 #v2 #t1 #t2 #_ #_ #H0 destruct
@@ -62,7 +62,7 @@ lemma term_eq_inv_appl_sx (v1) (t1) (x2):
       (＠v1.t1) ≐ x2 → ∃∃v2,t2. v1 ≐ v2 & t1 ≐ t2 & ＠v2.t2 = x2.
 #v0 #t0 #x2
 @(insert_eq_1 … (＠v0.t0)) #x1 * -x1 -x2
-[ #p #H0 destruct
+[ #H0 destruct
 | #b #t1 #t2 #Ht #H0 destruct
 | #v1 #v2 #t1 #t2 #Hv #Ht #H0 destruct
   /2 width=5 by ex3_2_intro/
@@ -74,7 +74,7 @@ lemma term_eq_inv_lift_sx (f1) (t1) (x2):
       (𝛗f1.t1) ≐ x2 → ∃∃f2,t2. f1 ≐ f2 & t1 ≐ t2 & 𝛗f2.t2 = x2.
 #f0 #t0 #x2
 @(insert_eq_1 … (𝛗f0.t0)) #x1 * -x1 -x2
-[ #p #H0 destruct
+[ #H0 destruct
 | #b #t1 #t2 #Ht #H0 destruct
 | #v1 #v2 #t1 #t2 #_ #_ #H0 destruct
 | #f1 #f2 #t1 #t2 #Hf #Ht #H0 destruct
@@ -83,12 +83,6 @@ lemma term_eq_inv_lift_sx (f1) (t1) (x2):
 qed-.
 
 (* Advanced destructions ****************************************************)
-
-lemma term_eq_inv_lref_bi (p1) (p2):
-      (𝛏p1) ≐ (𝛏p2) → p1 = p2.
-#p1 #p2 #H0
-lapply (term_eq_inv_lref_sx … H0) -H0 #H0 destruct //
-qed-.
 
 lemma term_eq_inv_abst_bi (b1) (b2) (t1) (t2):
       (𝛌b1.t1) ≐ (𝛌b2.t2) → ∧∧ b1 = b2 & t1 ≐ t2.
@@ -116,13 +110,13 @@ qed-.
 lemma term_eq_refl:
       reflexive … term_eq.
 #t elim t -t
-/2 width=1 by term_eq_lref, term_eq_abst, term_eq_appl, term_eq_lift/
+/2 width=1 by term_eq_unit, term_eq_abst, term_eq_appl, term_eq_lift/
 qed.
 
 lemma term_eq_sym:
       symmetric … term_eq.
 #t1 #t2 #Ht elim Ht -t1 -t2
-/3 width=1 by term_eq_lref, term_eq_abst, term_eq_appl, term_eq_lift, fbr_eq_sym/
+/3 width=1 by term_eq_unit, term_eq_abst, term_eq_appl, term_eq_lift, fbr_eq_sym/
 qed-.
 
 (* Main constructions *******************************************************)

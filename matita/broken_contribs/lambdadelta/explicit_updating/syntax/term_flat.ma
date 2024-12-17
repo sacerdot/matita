@@ -21,7 +21,7 @@ include "explicit_updating/notation/functions/flat_1.ma".
 (* Source: ❘·❘ (Barendregt, The λ-Calculus, 11.1.2 iii) *)
 rec definition term_flat (t:𝕋) on t : 𝕋 ≝
 match t with
-[ lref p   ⇒ 𝛏p
+[ unit     ⇒ 𝛏
 | abst b t ⇒ 𝛌ⓕ.(term_flat t)
 | appl v t ⇒ ＠(term_flat v).(term_flat t)
 | lift f t ⇒ 𝛗f.(term_flat t)
@@ -37,8 +37,8 @@ definition flattenable: relation2 (relation2 …) (relation2 …) ≝
 
 (* Basic constructions ******************************************************)
 
-lemma term_flat_lref (p):
-      (𝛏p) = ♭(𝛏p).
+lemma term_flat_unit:
+      (𝛏) = ♭(𝛏).
 //
 qed.
 
@@ -59,10 +59,10 @@ qed.
 
 (* Basic inversions *********************************************************)
 
-lemma eq_inv_lref_flat (p) (y):
-      (𝛏p) = ♭y → 𝛏p = y.
-#p *
-[ #z <term_flat_lref #H0 destruct //
+lemma eq_inv_unit_flat (y):
+      (𝛏) = ♭y → 𝛏 = y.
+*
+[ #_ //
 | #z #x <term_flat_abst #H0 destruct
 | #z #x <term_flat_appl #H0 destruct
 | #z #x <term_flat_lift #H0 destruct
@@ -73,7 +73,7 @@ lemma eq_inv_abst_flat (b) (t) (y):
       (𝛌b.t) = ♭y →
       ∃∃c,u. b = ⓕ & t = ♭u & 𝛌c.u = y.
 #b #t *
-[ #z <term_flat_lref #H0 destruct
+[ <term_flat_unit #H0 destruct
 | #z #x <term_flat_abst #H0 destruct
   /2 width=4 by ex3_2_intro/
 | #z #x <term_flat_appl #H0 destruct
@@ -85,7 +85,7 @@ lemma eq_inv_appl_flat (v) (t) (y):
       (＠v.t) = ♭y →
       ∃∃w,u. v = ♭w & t = ♭u & ＠w.u = y.
 #v #t *
-[ #z <term_flat_lref #H0 destruct
+[ <term_flat_unit #H0 destruct
 | #z #x <term_flat_abst #H0 destruct
 | #z #x <term_flat_appl #H0 destruct
   /2 width=5 by ex3_2_intro/
@@ -97,7 +97,7 @@ lemma eq_inv_lift_flat (f) (t) (y):
       (𝛗f.t) = ♭y →
       ∃∃u. t = ♭u & 𝛗f.u = y.
 #f #t *
-[ #z <term_flat_lref #H0 destruct
+[ <term_flat_unit #H0 destruct
 | #z #x <term_flat_abst #H0 destruct
 | #z #x <term_flat_appl #H0 destruct
 | #z #x <term_flat_lift #H0 destruct
@@ -107,10 +107,9 @@ qed-.
 
 (* Advanced inversions ******************************************************)
 
-lemma eq_inv_flat_lref (x) (p):
-      ♭x = 𝛏p → x =  𝛏p.
-#x #p
-/2 width=1 by eq_inv_lref_flat/
+lemma eq_inv_flat_unit (x):
+      ♭x = 𝛏 → x =  𝛏.
+/2 width=1 by eq_inv_unit_flat/
 qed-.
 
 lemma eq_inv_flat_abst (x) (b) (t):

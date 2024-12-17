@@ -13,12 +13,14 @@
 (**************************************************************************)
 
 include "ground/relocation/fb/fbr_dapp.ma".
+include "explicit_updating/syntax/term_lref.ma".
 include "explicit_updating/syntax/substitution.ma".
 include "explicit_updating/notation/functions/element_s_1.ma".
 
 (* SUBSTITUTION FOR UNWIND **************************************************)
 
-definition subst_unwind (f): 𝕊 ≝ λp.𝛏(f＠⧣❨p❩).
+definition subst_unwind (f): 𝕊 ≝
+           λp.𝛏❨f＠⧣❨p❩❩.
 
 interpretation
   "for unwind (substitution)"
@@ -27,5 +29,5 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma subst_unwind_dapp (f) (p):
-      (𝛏(f＠⧣❨p❩)) = 𝐬❨f❩＠⧣❨p❩.
+      (𝛏❨f＠⧣❨p❩❩) = 𝐬❨f❩＠⧣❨p❩.
 // qed.

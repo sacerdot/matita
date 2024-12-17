@@ -13,13 +13,14 @@
 (**************************************************************************)
 
 include "ground/arith/pnat_split.ma".
+include "explicit_updating/syntax/term_lref.ma".
 include "explicit_updating/syntax/substitution.ma".
 include "explicit_updating/notation/functions/element_s_1.ma".
 
 (* SUBSTITUTION FOR β-REDUCTION *********************************************)
 
 definition subst_beta (v): 𝕊 ≝
-           psplit … v (λp.𝛏p).
+           psplit … v (λp.𝛏❨p❩).
 
 interpretation
   "for β-reduction (substitution)"
@@ -32,5 +33,5 @@ lemma subst_beta_dapp_unit (v):
 // qed.
 
 lemma subst_beta_dapp_succ (v) (p):
-      (𝛏p) = 𝐬❨v❩＠⧣❨↑p❩.
+      (𝛏❨p❩) = 𝐬❨v❩＠⧣❨↑p❩.
 // qed.

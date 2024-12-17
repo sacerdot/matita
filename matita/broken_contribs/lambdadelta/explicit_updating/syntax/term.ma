@@ -17,10 +17,9 @@
  *)
 
 include "ground/lib/bool.ma".
-include "ground/arith/pnat.ma".
 include "ground/relocation/fb/fbr_map.ma".
 include "explicit_updating/notation/functions/category_t_0.ma".
-include "explicit_updating/notation/functions/xi_1.ma".
+include "explicit_updating/notation/functions/xi_0.ma".
 include "explicit_updating/notation/functions/lamda_2.ma".
 include "explicit_updating/notation/functions/at_2.ma".
 include "explicit_updating/notation/functions/phi_2.ma".
@@ -28,7 +27,7 @@ include "explicit_updating/notation/functions/phi_2.ma".
 (* TERM *********************************************************************)
 
 inductive term: Type[0] ≝
-| lref: ℕ⁺ → term
+| unit: term
 | abst: bool → term → term
 | appl: term → term → term
 | lift: 𝔽𝔹 → term → term
@@ -39,8 +38,8 @@ interpretation
   'CategoryT = (term).
 
 interpretation
-  "variable reference by depth (term)"
-  'Xi i = (lref i).
+  "reference to first variable by depth (term)"
+  'Xi = (unit).
 
 interpretation
   "marked name-free functional abstraction (term)"

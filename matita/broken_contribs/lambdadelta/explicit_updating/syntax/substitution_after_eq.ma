@@ -15,6 +15,7 @@
 include "ground/relocation/fb/fbr_dapp_eq.ma".
 include "explicit_updating/syntax/substitution_eq.ma".
 include "explicit_updating/syntax/substitution_after.ma".
+include "explicit_updating/syntax/substitution_push.ma".
 
 (* COMPOSITION WITH RELOCATION FOR SUBSTITUTION *****************************)
 
@@ -25,4 +26,9 @@ lemma subst_after_eq_repl:
 #S1 #S2 #HS #f1 #f2 #Hf #p
 <subst_after_dapp <subst_after_dapp
 /3 width=1 by subst_dapp_eq_repl, fbr_dapp_eq_repl/
+qed.
+
+lemma subst_after_push (S) (f):
+      (⫯S)•(⫯f) ≐ ⫯(S•f).
+#S #f * //
 qed.

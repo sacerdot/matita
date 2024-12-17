@@ -27,7 +27,7 @@ generalize in match HS; -HS
 generalize in match S2; -S2
 generalize in match S1; -S1
 elim Ht -t1 -t2
-[ #p #S1 #S2 #HS //
+[ #S1 #S2 #HS //
 | #b #t1 #t2 #_ #IH #S1 #S2 #HS
   /4 width=1 by term_eq_abst, subst_push_eq_repl/
 | #v1 #v2 #t1 #t2 #_ #_ #IHv #IHt #S1 #S2 #HS

@@ -12,42 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_plus.ma".
-include "explicit_updating/syntax/term.ma".
-include "explicit_updating/notation/functions/sharp_1.ma".
+include "explicit_updating/syntax/substitution_tapp_lref.ma".
+include "explicit_updating/syntax/unwind.ma".
 
-(* WEIGHT FOR TERM **********************************************************)
+(* UNWIND FOR TERM **********************************************************)
 
-rec definition term_weight (t:𝕋) on t : ℕ⁺ ≝
-match t with
-[ unit     ⇒ 𝟏
-| abst b t ⇒ ↑(term_weight t)
-| appl v t ⇒ (term_weight v)+(term_weight t)
-| lift f t ⇒ ↑(term_weight t)
-].
+(* Constructions with term_lref *********************************************)
 
-interpretation
-  "weight (term)"
-  'Sharp t = (term_weight t).
-
-(* Basic constructions ******************************************************)
-
-lemma term_weight_unit:
-      (𝟏) = ♯❨𝛏❩.
+lemma unwind_lref (f) (p):
+      (𝛏❨f＠⧣❨p❩❩) = ▼[f]𝛏❨p❩.
 //
 qed.
 
-lemma term_weight_abst (b) (t):
-      ↑♯❨t❩ = ♯❨𝛌b.t❩.
-//
-qed.
-
-lemma term_weight_appl (v) (t):
-      ♯❨v❩+♯❨t❩ = ♯❨＠v.t❩.
-//
-qed.
-
-lemma term_weight_lift (f) (t):
-      ↑♯❨t❩ = ♯❨𝛗f.t❩.
-//
+lemma unwind_id_lref (p):
+      (𝛏❨p❩) = ▼[𝐢]𝛏❨p❩.
+#p <unwind_lref //
 qed.

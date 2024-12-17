@@ -14,6 +14,6 @@
 
 (* NOTATION FOR EXPLICIT UPDATING *******************************************)
 
-notation "hvbox( ♯❨ term 46 X ❩ )"
+notation "hvbox( ♯❨ break term 46 X ❩ )"
  non associative with precedence 70
  for @{ 'Sharp $X }.

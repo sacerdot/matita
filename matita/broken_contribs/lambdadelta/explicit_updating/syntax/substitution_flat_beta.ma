@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "explicit_updating/syntax/term_flat_lref.ma".
 include "explicit_updating/syntax/substitution_eq.ma".
 include "explicit_updating/syntax/substitution_beta.ma".
 include "explicit_updating/syntax/substitution_flat.ma".

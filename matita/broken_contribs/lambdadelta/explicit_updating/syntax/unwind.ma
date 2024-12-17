@@ -33,14 +33,12 @@ lemma unwind_unfold (f) (t):
 //
 qed.
 
-lemma unwind_lref (f) (p):
-      (𝛏(f＠⧣❨p❩)) = ▼[f](𝛏p).
-#f #p
+lemma unwind_unit (f):
+      ↑*[↓(f＠⧣❨𝟏❩)]𝛏 = ▼[f](𝛏).
 //
 qed.
 
 lemma unwind_appl (f) (v) (t):
       (＠▼[f]v.▼[f]t) = ▼[f](＠v.t).
-#f #v #t
 //
 qed.

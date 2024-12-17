@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "explicit_updating/syntax/substitution_flat_tapp.ma".
+include "explicit_updating/syntax/substitution_flat_unwind.ma".
 include "explicit_updating/syntax/unwind.ma".
 
 (* UNWIND FOR TERM **********************************************************)
@@ -21,5 +22,5 @@ include "explicit_updating/syntax/unwind.ma".
 
 lemma unwind_flat (f) (t):
       ▼[f]♭t ≐ ♭▼[f]t.
-/3 width=3 by subst_flat_tapp, term_eq_trans/
+/4 width=3 by subst_flat_tapp, subst_tapp_eq_repl, term_eq_trans/
 qed.

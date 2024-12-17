@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/arith/pnat.ma".
 include "ground/notation/functions/atsharp_2.ma".
 include "explicit_updating/syntax/term.ma".
 include "explicit_updating/notation/functions/category_s_0.ma".

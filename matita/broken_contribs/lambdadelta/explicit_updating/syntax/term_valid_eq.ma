@@ -22,8 +22,8 @@ include "explicit_updating/syntax/term_valid.ma".
 lemma term_valid_eq_repl_fwd (b):
       replace_1_fwd … term_eq (term_valid b).
 #b #t1 #H0 elim H0 -t1
-[ #p #y #Hy
-  lapply (term_eq_inv_lref_sx … Hy) -Hy #H0 destruct //
+[ #y #Hy
+  lapply (term_eq_inv_unit_sx … Hy) -Hy #H0 destruct //
 | #t1 #_ #IH #y #Hy
   elim (term_eq_inv_abst_sx … Hy) -Hy #t2 #Ht12 #H0 destruct
   /3 width=1 by term_valid_abst/

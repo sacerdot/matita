@@ -18,7 +18,7 @@ include "explicit_updating/syntax/substitution.ma".
 (* PUSH FOR SUBSTITUTION ****************************************************)
 
 definition subst_push (S): 𝕊 ≝
-           psplit … (𝛏𝟏) (λp.↑(S＠⧣❨p❩))
+           psplit … (𝛏) (λp.↑(S＠⧣❨p❩))
 .
 
 interpretation
@@ -28,7 +28,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma subst_push_unit (S):
-      (𝛏𝟏) = (⫯S)＠⧣❨𝟏❩.
+      (𝛏) = (⫯S)＠⧣❨𝟏❩.
 // qed.
 
 lemma subst_push_succ (S) (p):

@@ -13,25 +13,26 @@
 (**************************************************************************)
 
 include "explicit_updating/syntax/substitution_pushs_nexts.ma".
-include "explicit_updating/syntax/beta.ma".
+include "explicit_updating/syntax/beta_lref.ma".
 
 (* β-SUBSTITUTION FOR TERM **************************************************)
 
 (* Constructions with subst_nexts *******************************************)
 
 lemma beta_lref_le (m) (n) (v):
-      m ≤ n → ↑*[m](𝛏𝟏) = ⬕[⁤↑n←v]𝛏↑m.
+      m ≤ n → ↑*[m]𝛏❨𝟏❩ = ⬕[⁤↑n←v]𝛏❨↑m❩.
 /2 width=1 by subst_pushs_dapp_le/
 qed-.
 
 lemma beta_lref_succ (n) (v):
-      ↑*[n]v = ⬕[n←v]𝛏↑n.
+      ↑*[n]v = ⬕[n←v]𝛏❨↑n❩.
 #n #v
-<beta_unfold <subst_tapp_lref //
+<beta_unfold <subst_tapp_lref
+>nrplus_unit_sn <subst_pushs_dapp_gt //
 qed.
 
 lemma beta_lref_gt_succ (p) (n) (v):
-      ↑*[n]𝛏p = ⬕[n←v]𝛏(↑p+n).
+      ↑*[n]𝛏❨p❩ = ⬕[n←v]𝛏❨↑p+n❩.
 #p #n #v
 <beta_unfold <subst_tapp_lref
 <subst_pushs_dapp_gt //

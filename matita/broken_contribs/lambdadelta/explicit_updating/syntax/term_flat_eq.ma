@@ -27,10 +27,10 @@ qed.
 
 (* Inversions with term_eq **************************************************)
 
-lemma term_eq_inv_lref_flat (p) (y):
-      (𝛏p) ≐ ♭y → 𝛏p = y.
-#p #y #Hy
-/3 width=1 by eq_inv_lref_flat, term_eq_inv_lref_sx/
+lemma term_eq_inv_unit_flat (y):
+      (𝛏) ≐ ♭y → 𝛏 = y.
+#y #Hy
+/3 width=1 by eq_inv_unit_flat, term_eq_inv_unit_sx/
 qed-.
 
 lemma term_eq_inv_abst_flat (b1) (t1) (y):
