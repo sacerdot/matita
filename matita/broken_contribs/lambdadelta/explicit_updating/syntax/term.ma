@@ -16,7 +16,6 @@
  * Initial invocation: - Patience on me to gain peace and perfection! -
  *)
 
-include "ground/lib/bool.ma".
 include "ground/relocation/fb/fbr_map.ma".
 include "explicit_updating/notation/functions/category_t_0.ma".
 include "explicit_updating/notation/functions/xi_0.ma".

@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/xoa/ex_3_2.ma".
 include "explicit_updating/syntax/term_eq.ma".
 include "explicit_updating/notation/relations/black_rightarrow_3.ma".
 
@@ -86,9 +85,9 @@ qed-.
 
 (* Basic destructions *******************************************************)
 
-lemma xstep_term_inv_lref_sx (R) (p) (y):
-      (𝛏p) ➡[R] y → R (𝛏p) y.
-#R #p #y @(insert_eq_1 … (𝛏p))
+lemma xstep_term_inv_unit_sx (R) (y):
+      (𝛏) ➡[R] y → R (𝛏) y.
+#R #y @(insert_eq_1 … (𝛏))
 #x * -x -y
 [ #t1 #t2 #Ht #H0 destruct //
 | #b #t1 #t2 #_ #H0 destruct

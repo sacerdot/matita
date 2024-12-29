@@ -1,0 +1,98 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "explicit_updating/syntax/unwind_eq.ma".
+include "explicit_updating/syntax/beta_eq.ma".
+include "explicit_updating/notation/relations/black_rightarrow_parallel_2.ma".
+
+(* P-REDUCTION FOR TERM *****************************************************)
+
+(* Note: exists a subset of parallel β-steps or φ-steps *)
+inductive pstep_term: relation2 … ≝
+
+| pstep_term_refl (t1) (t2):
+  t1 ≐ t2 → pstep_term t1 t2
+
+| pstep_term_unwind (f) (t1) (t2) (x) (y):
+  (𝛗f.t1) ≐ x → ▼[f]t2 ≐ y → pstep_term t1 t2 → pstep_term x y
+
+| pstep_term_beta (v1) (v2) (t1) (t2) (x) (y):
+  ＠v1.𝛌ⓕ.t1 ≐ x → ⬕[𝟎←v2]t2 ≐ y → pstep_term v1 v2 → pstep_term t1 t2 → pstep_term x y
+
+| pstep_term_abst (b) (t1) (t2):
+  pstep_term t1 t2 → pstep_term (𝛌b.t1) (𝛌b.t2)
+
+| pstep_term_appl (v1) (v2) (t1) (t2):
+  pstep_term v1 v2 → pstep_term t1 t2 → pstep_term (＠v1.t1) (＠v2.t2)
+
+| pstep_term_lift (f1) (f2) (t1) (t2):
+  f1 ≐ f2 → pstep_term t1 t2 → pstep_term (𝛗f1.t1) (𝛗f2.t2)
+.
+
+interpretation
+  "p-reduction (term)"
+  'BlackRightArrowParallel t1 t2 = (pstep_term t1 t2).
+
+(* Constructions with term_eq ***********************************************)
+
+lemma pstep_term_eq_repl:
+      replace_2 … term_eq term_eq pstep_term.
+#t1 #t2 #H0 elim H0 -t1 -t2
+[ #t1 #t2 #Ht12 #u1 #Htu1 #u2 #Htu2
+  /3 width=5 by pstep_term_refl, term_eq_repl/
+| #f #t1 #t2 #x #y #Hx #Hy #Ht12 #_ #y1 #H1 #y2 #H2
+  /3 width=7 by pstep_term_unwind, term_eq_trans/
+| #v1 #v2 #t1 #t2 #x #y #Hx #Hy #Hv12 #Ht12 #_ #_ #y1 #H1 #y2 #H2
+  /3 width=8 by pstep_term_beta, term_eq_trans/
+| #b #t1 #t2 #_ #IH #y1 #H1 #y2 #H2
+  elim (term_eq_inv_abst_sx … H1) -H1 #u1 #Htu1 #H0 destruct
+  elim (term_eq_inv_abst_sx … H2) -H2 #u2 #Htu2 #H0 destruct
+  /3 width=1 by pstep_term_abst/
+| #v1 #v2 #t1 #t2 #_ #_ #IHv #IHt #y1 #H1 #y2 #H2
+  elim (term_eq_inv_appl_sx … H1) -H1 #w1 #u1 #Hvw1 #Htu1 #H0 destruct
+  elim (term_eq_inv_appl_sx … H2) -H2 #w2 #u2 #Hvw2 #Htu2 #H0 destruct
+  /3 width=1 by pstep_term_appl/
+| #f1 #f2 #t1 #t2 #Hf12 #_ #IH #y1 #H1 #y2 #H2
+  elim (term_eq_inv_lift_sx … H1) -H1 #g1 #u1 #Hfg1 #Htu1 #H0 destruct
+  elim (term_eq_inv_lift_sx … H2) -H2 #g2 #u2 #Hfg2 #Htu2 #H0 destruct
+  /3 width=5 by pstep_term_lift, fbr_eq_repl/
+]
+qed-.
+
+lemma pstep_term_eq_trans (t) (t1) (t2):
+      t1 ➡∥ t → t ≐ t2 → t1 ➡∥ t2.
+/2 width=5 by pstep_term_eq_repl/
+qed-.
+
+lemma eq_pstep_term_trans (t) (t1) (t2):
+      t1 ≐ t → t ➡∥ t2 → t1 ➡∥ t2.
+/3 width=5 by pstep_term_eq_repl, term_eq_sym/
+qed-.
+
+(* Constructions with term_next *********************************************)
+
+lemma pstep_term_next_bi (t1) (t2):
+      t1 ➡∥ t2 → ↑t1 ➡∥ ↑t2.
+/2 width=1 by pstep_term_lift/
+qed.
+
+(* Constructions with term_nexts ********************************************)
+
+lemma pstep_term_nexts_bi (n) (t1) (t2):
+      t1 ➡∥ t2 → ↑*[n]t1 ➡∥ ↑*[n]t2.
+@nat_ind_succ //
+#n #IH #t1 #t2 #Ht12
+<term_nexts_succ_swap <term_nexts_succ_swap
+/3 width=1 by pstep_term_next_bi/
+qed.

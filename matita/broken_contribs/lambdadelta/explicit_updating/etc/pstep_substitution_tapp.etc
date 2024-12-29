@@ -1,0 +1,51 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "explicit_updating/syntax/substitution_unwind_tapp.ma".
+include "explicit_updating/reduction/pstep_substitution.ma".
+
+(* P-REDUCTION FOR SUBSTITUTION *********************************************)
+
+(* Advanced constructions with subst_tapp ***********************************)
+
+lemma pstep_subst_tapp_bi (t1) (t2):
+      t1 ➡∥ t2 → ∀S1,S2. S1 ➡∥ S2 →
+      S1＠⧣❨t1❩ ➡∥ S2＠⧣❨t2❩.
+#t1 #t2 #Ht12 elim Ht12 -t1 -t2
+[ #t1 #t2 #Ht12 #S1 #S2 #HS12
+  /4 width=5 by pstep_subst_tapp_bi_refl, pstep_term_eq_trans, subst_tapp_eq_repl/
+| #f #t1 #t2 #x #y #Hx #Hy #_ #IH #S1 #S2 #HS12
+  lapply (subst_tapp_eq_repl … S1 S1 … Hx) -Hx // #HS1
+  lapply (subst_tapp_eq_repl … S2 S2 … Hy) -Hy // #HS2
+  @(pstep_term_eq_repl … HS1 … HS2) -x -y
+  /3 width=3 by pstep_term_eq_trans/
+| #v1 #v2 #t1 #t2 #x #y #Hx #Hy #_ #_ #IHv #IHt #S1 #S2 #HS12
+
+  lapply (IHv … HS12)
+  lapply (IHt … (pstep_subst_push_bi … HS12)) #Ht #Hv -HS12 -IHv -IHt
+
+  lapply (subst_tapp_eq_repl … S1 S1 … Hx) -Hx // #HS1
+  lapply (subst_tapp_eq_repl … S2 S2 … Hy) -Hy // #HS2
+  @(pstep_term_eq_repl … HS1 … HS2) -x -y
+
+  <subst_tapp_appl <subst_tapp_abst
+  @(pstep_term_beta … Hv Ht) // -Hv -Ht
+  <beta_unfold <beta_unfold
+
+| #b #t1 #t2 #_ #IH #S1 #S2 #HS12
+  /4 width=1 by pstep_term_abst, pstep_subst_push_bi/
+| #v1 #v2 #t1 #t2 #_ #_ #IHv #IHt #S1 #S2 #HS12
+  /3 width=1 by pstep_term_appl/
+| #f1 #f2 #t1 #t2 #Hf12 #_ #IH #S1 #S2 #HS12
+  /3 width=1 by pstep_subst_after/

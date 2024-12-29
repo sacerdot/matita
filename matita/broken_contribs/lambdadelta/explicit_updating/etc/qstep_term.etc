@@ -1,0 +1,53 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "explicit_updating/reduction/xstep_term.ma".
+include "explicit_updating/notation/relations/black_rightarrow_qm_3.ma".
+
+(* Q-REDUCTION FOR TERM *****************************************************)
+
+(* Note: exists at most one step *)
+inductive qstep_term (R:relation2 …): relation2 … ≝
+| qstep_term_refl (t1) (t2):
+  t1 ≐ t2 → qstep_term R t1 t2
+| qstep_term_step (t1) (t2):
+  t1 ➡[R] t2 → qstep_term R t1 t2
+.
+
+interpretation
+  "q-reduction (term)"
+  'BlackRightArrowQM t1 R t2 = (qstep_term R t1 t2).
+
+(* Constructions with term_eq ***********************************************)
+
+lemma qstep_term_eq_repl (R):
+      replace_2 … term_eq term_eq R →
+      replace_2 … term_eq term_eq (qstep_term R).
+#R #HR #t1 #t2 * -t1 -t2
+[ /3 width=5 by qstep_term_refl, term_eq_repl/
+| /3 width=5 by qstep_term_step, xstep_term_eq_repl/
+]
+qed-.
+
+lemma qstep_term_eq_trans (R) (t) (t1) (t2):
+      replace_2 … term_eq term_eq R →
+      t1 ➡¿[R] t → t ≐ t2 → t1 ➡¿[R] t2.
+/2 width=5 by qstep_term_eq_repl/
+qed-.
+
+lemma eq_qstep_term_trans (R) (t) (t1) (t2):
+      replace_2 … term_eq term_eq R →
+      t1 ≐ t → t ➡¿[R] t2 → t1 ➡¿[R] t2.
+/3 width=5 by qstep_term_eq_repl, term_eq_sym/
+qed-.

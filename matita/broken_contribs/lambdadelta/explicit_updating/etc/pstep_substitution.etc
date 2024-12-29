@@ -1,0 +1,76 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "explicit_updating/reduction/pstep_term.ma".
+
+(* P-REDUCTION FOR SUBSTITUTION *********************************************)
+
+definition pstep_subst: relation2 (𝕊) (𝕊) ≝
+           λS1,S2. ∀p:ℕ⁺. S1＠⧣❨p❩ ➡∥ S2＠⧣❨p❩.
+
+interpretation
+  "p-reduction (substitution)"
+  'BlackRightArrowParallel S1 S2 = (pstep_subst S1 S2).
+
+(* Constructions with subst_eq **********************************************)
+
+lemma pstep_subst_eq_repl:
+      replace_2 … subst_eq subst_eq pstep_subst.
+/2 width=5 by pstep_term_eq_repl/
+qed-.
+
+lemma pstep_subst_eq_trans (S) (S1) (S2):
+      S1 ➡∥ S → S ≐ S2 → S1 ➡∥ S2.
+/2 width=5 by pstep_subst_eq_repl/
+qed-.
+
+lemma eq_pstep_subst_trans (S) (S1) (S2):
+      S1 ≐ S → S ➡∥ S2 → S1 ➡∥ S2.
+/3 width=5 by pstep_subst_eq_repl, subst_eq_sym/
+qed-.
+
+(* Constructions with subst_push ********************************************)
+
+lemma pstep_subst_push_bi (S1) (S2):
+      S1 ➡∥ S2 → ⫯S1 ➡∥ ⫯S2.
+#S1 #S2 #HS12 *
+[ /2 width=1 by pstep_term_refl/
+| /2 width=1 by pstep_term_next_bi/
+]
+qed.
+
+(* Constructions with subst_pushs *******************************************)
+
+lemma pstep_subst_pushs_bi (n) (S1) (S2):
+      S1 ➡∥ S2 → ⫯*[n]S1 ➡∥ ⫯*[n]S2.
+@nat_ind_succ //
+#n #IH #S1 #S2 #HS12
+<subst_pushs_succ_swap <subst_pushs_succ_swap
+/3 width=1 by pstep_subst_push_bi/
+qed.
+
+(* Constructions with subst_after *******************************************)
+
+lemma pstep_subst_after (f1) (f2) (S1) (S2):
+      S1 ➡∥ S2 → f1 ≐ f2 → S1•f1 ➡∥ S2•f2.
+/3 width=5 by pstep_subst_eq_trans, subst_after_eq_repl/
+qed.
+
+(* Constructions with subst_tapp ********************************************)
+
+lemma pstep_subst_tapp_bi_refl_dx (t:𝕋) (S1) (S2):
+      S1 ➡∥ S2 → S1＠⧣❨t❩ ➡∥ S2＠⧣❨t❩.
+#t elim t -t
+/4 width=1 by pstep_term_abst, pstep_term_appl, pstep_subst_push_bi, pstep_subst_after/
+qed.

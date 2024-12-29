@@ -12,20 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/reduction/xbeta1.ma".
-include "explicit_updating/computation/xsteps_substitution.ma".
+include "explicit_updating/syntax/term_lref.ma".
+include "explicit_updating/reduction/xstep_term.ma".
 
-(* X-COMPUTATION FOR SUBSTITUTION *******************************************)
+(* X-REDUCTION FOR TERM *****************************************************)
 
-(* Constructions with xbeta1 ************************************************)
+(* Constructions with term_lref *********************************************)
 
-lemma xsteps_subst_push_unwind (b) (f):
-      (⫯𝐬❨f❩) ➡*[𝛃b] 𝐬❨⫯f❩.
-#b #f * [| #p ]
-[ /2 width=1 by xsteps_term_refl/
-| <subst_push_succ <subst_unwind_dapp <subst_unwind_dapp
-  <term_next_unfold <fbr_dapp_push_dx_succ
-  @xsteps_term_step @xstep_term_step
-  @xbeta1_unwind [3: // | skip | skip ] <unwind_lref //
+lemma xstep_term_inv_lref_sx (R):
+      replace_2 … term_eq term_eq R →
+      (∀p,y. R (𝛏❨p❩) y → R (↑𝛏❨p❩) (↑y)) →
+      ∀p,y. (𝛏❨p❩) ➡[R] y → R (𝛏❨p❩) y.
+#R #H1R #H2R #p elim p -p
+[ /2 width=1 by xstep_term_inv_unit_sx/
+| #p #IH #y <term_lref_succ #Hy
+  elim (xstep_term_inv_lift_sx … Hy) -Hy //
+  * #f #t #Hf #Ht #H0 destruct
+  lapply (H2R … (IH … Ht)) -H2R -IH -Ht #IH
+  /4 width=7 by term_eq_lift, term_eq_sym/
 ]
-qed.
+qed-.

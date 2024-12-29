@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_split.ma".
 include "explicit_updating/syntax/term_lref.ma".
 include "explicit_updating/syntax/substitution.ma".
 include "explicit_updating/notation/functions/element_s_1.ma".

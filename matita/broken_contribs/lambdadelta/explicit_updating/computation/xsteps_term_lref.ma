@@ -12,32 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/term_valid_eq.ma".
-include "explicit_updating/syntax/unwind_valid.ma".
-include "explicit_updating/syntax/beta_valid.ma".
-include "explicit_updating/reduction/xbeta1.ma".
+include "explicit_updating/reduction/xstep_term_lref.ma".
+include "explicit_updating/computation/xsteps_term.ma".
 
-(* MARKED β-REDUCTION STEP **************************************************)
+(* X-COMPUTATION FOR TERM ***************************************************)
 
-(* Constructions with valid_term ********************************************)
+(* Inversions with term_lref ************************************************)
 
-lemma term_valid_xbeta1_trans (c) (b) (t1) (t2):
-      (𝛃b) t1 t2 → c ⊢ t1 → c ⊢ t2.
-#c #b #t1 #t2 * -t1 -t2
-[ #f #t #x #y #Hx #Hy #H0
-  lapply (term_valid_eq_repl_bck  … H0 … Hx) -x #H0
-  @(term_valid_eq_repl_fwd  … Hy) -y
-  lapply (term_valid_inv_lift … H0) -H0 #H0
-  /2 width=1 by unwind_valid/
-| #v #t #x #y #Hx #Hy #H0
-  lapply (term_valid_eq_repl_bck  … H0 … Hx) -x #H0
-  @(term_valid_eq_repl_fwd  … Hy) -y
-  elim (term_valid_inv_appl … H0) -H0 *
-  [ #Hv #H0
-    elim (term_valid_inv_abst … H0) -H0 #Ht #_ -b
-    /2 width=1 by beta_valid/
-  | #x #v #x #H1 #H2 destruct
-    /2 width=1 by beta_valid/
+lemma xsteps_term_inv_lref_sx (R):
+      replace_2 … term_eq term_eq R →
+      (∀p,y. R (𝛏❨p❩) y → R (↑𝛏❨p❩) (↑y)) →
+      ∀p,y. (𝛏p) ➡*[R] y →
+      ∨∨ ∃∃y0. R (𝛏p) y0 & y0 ➡*[R] y
+       | (𝛏p) ≐ y.
+#R #H1R #H2R #p #y #H0 elim H0 -y
+[ /2 width=1 by or_intror/
+| #x #y #_ #Hxy *
+  [ * #y0 #Hy0 #Hy0x
+    /4 width=5 by xsteps_term_dx, ex2_intro, or_introl/
+  | #H0
+    lapply (eq_xstep_term_trans … H1R H0 Hxy) -x #Hxy
+    lapply (xstep_term_inv_lref_sx … H1R H2R … Hxy) -Hxy #Hy
+    /4 width=3 by xsteps_term_refl, ex2_intro, or_introl/
   ]
 ]
-qed.
+qed-.

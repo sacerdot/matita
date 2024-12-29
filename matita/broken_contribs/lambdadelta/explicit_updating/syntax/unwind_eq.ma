@@ -15,7 +15,7 @@
 include "ground/relocation/fb/fbr_uni_plus.ma".
 include "explicit_updating/syntax/substitution_unwind_eq.ma".
 include "explicit_updating/syntax/substitution_tapp_eq.ma".
-include "explicit_updating/syntax/unwind.ma".
+include "explicit_updating/syntax/unwind_lref.ma".
 
 (* UNWIND FOR TERM **********************************************************)
 
@@ -52,5 +52,45 @@ lemma unwind_uni_next (n) (t):
       ▼[𝐮❨⁤↑n❩]t ≐ ▼[𝐮❨n❩](↑t).
 #n #t
 @(term_eq_trans … (unwind_lift …))
+/2 width=1 by unwind_eq_repl/
+qed.
+
+lemma subst_tapp_unwind (t) (f) (S):
+      (S•f)＠⧣❨t❩ ≐ S＠⧣❨▼[f]t❩.
+#t elim t -t
+[ #g #S
+  <subst_tapp_unit >term_lref_unit <unwind_lref <subst_tapp_lref //
+| #b #t #IH #g #S
+  @(term_eq_trans … (subst_tapp_eq_repl S S …))
+  [2: @unwind_abst |3: skip |4: // ]
+  <subst_tapp_abst <subst_tapp_abst
+  @term_eq_abst
+  @(term_eq_trans … (IH … (⫯g) (⫯S))) -IH
+  @subst_tapp_eq_repl [| // ]
+  /2 width=1 by term_eq_sym/
+| #v #t #IHv #IHt #g #S
+  <subst_tapp_appl <unwind_appl <subst_tapp_appl
+  /2 width=1 by term_eq_appl/
+| #f #t #IH #g #S
+  <subst_tapp_lift
+  @(term_eq_repl … (IH (g•f) S))
+  /2 width=1 by subst_tapp_eq_repl/
+]
+qed.
+
+(* Main constructions with term_eq ******************************************)
+
+theorem unwind_after (g) (f) (t):
+        ▼[g•f]t ≐ ▼[g]▼[f]t.
+#g #f #t
+<unwind_unfold <unwind_unfold
+@(term_eq_trans ???? (subst_tapp_unwind …))
+@(subst_tapp_eq_repl … (subst_unwind_after …)) //
+qed.
+
+lemma unwind_id_idem (f) (t):
+      ▼[f]t ≐ ▼[𝐢]▼[f]t.
+#f #t
+@(term_eq_trans … (unwind_after …))
 /2 width=1 by unwind_eq_repl/
 qed.

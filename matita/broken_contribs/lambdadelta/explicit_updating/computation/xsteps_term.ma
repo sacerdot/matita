@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/xoa/ex_4_3.ma".
 include "explicit_updating/reduction/xstep_term.ma".
 include "explicit_updating/notation/relations/black_rightarrow_star_3.ma".
 
@@ -101,5 +102,93 @@ theorem xsteps_term_trans (R):
 #R #HR #t1 #t #Ht1 #t2 #Ht2 elim Ht2 -t2
 [ /2 width=3 by xsteps_term_eq_trans/
 | /2 width=3 by xsteps_term_dx/
+]
+qed-.
+
+(* Advanced inversions ******************************************************)
+
+lemma xsteps_term_inv_unit_sx (R) (y):
+      (𝛏) ➡*[R] y →
+      ∨∨ ∃∃y0. R (𝛏) y0 & y0 ➡*[R] y
+       | (𝛏) = y.
+#R #y #H0 elim H0 -y
+[ #y #H0
+  lapply (term_eq_inv_unit_sx … H0) -H0 #H0 destruct //
+| #x #y #_ #Hxy *
+  [ * #y0 #Hy0 #Hy0x
+    /4 width=5 by xsteps_term_dx, ex2_intro, or_introl/
+  | #H0 destruct
+    lapply (xstep_term_inv_unit_sx … Hxy) -Hxy #Hy
+    /4 width=3 by xsteps_term_refl, ex2_intro, or_introl/
+  ]
+]
+qed-.
+
+lemma xsteps_term_inv_abst_sx (R) (b) (t1) (y):
+      (𝛌b.t1) ➡*[R] y →
+      ∨∨ ∃∃t0,y0. t1 ➡*[R] t0 & R (𝛌b.t0) y0 & y0 ➡*[R] y
+       | ∃∃t2. t1 ➡*[R] t2 & 𝛌b.t2 = y.
+#R #b #t1 #y #H0 elim H0 -y
+[ #y #H0
+  elim (term_eq_inv_abst_sx … H0) -H0 #t2 #Ht12 #H0 destruct
+  /4 width=3 by xsteps_term_refl, ex2_intro, or_intror/
+| #x #y #_ #Hxy *
+  [ * #t0 #y0 #Ht10 #Hy0 #Hy0x
+    /4 width=7 by xsteps_term_dx, ex3_2_intro, or_introl/
+  | * #t2 #Ht12 #H0 destruct
+    elim (xstep_term_inv_abst_sx … Hxy) -Hxy
+    [ #Hy
+      /4 width=5 by xsteps_term_refl, ex3_2_intro, or_introl/
+    | * #t0 #Ht20 #H0 destruct
+      /4 width=3 by xsteps_term_dx, ex2_intro, or_intror/
+    ]
+  ]
+]
+qed-.
+
+lemma xsteps_term_inv_appl_sx (R) (v1) (t1) (y):
+      replace_2 … term_eq term_eq R →
+      (＠v1.t1) ➡*[R] y →
+      ∨∨ ∃∃v0,t0,y0. v1 ➡*[R] v0 & t1 ➡*[R] t0 & R (＠v0.t0) y0 & y0 ➡*[R] y
+       | ∃∃v2,t2. v1 ➡*[R] v2 & t1 ➡*[R] t2 & ＠v2.t2 = y.
+#R #v1 #t1 #y #HR #H0 elim H0 -y
+[ #y #H0
+  elim (term_eq_inv_appl_sx … H0) -H0 #v2 #t2 #Hv12 #Ht12 #H0 destruct
+  /4 width=5 by xsteps_term_refl, ex3_2_intro, or_intror/
+| #x #y #_ #Hxy *
+  [ * #v0 #t0 #y0 #Hv10 #Ht10 #Hy0 #Hy0x
+    /4 width=9 by xsteps_term_dx, or_introl, ex4_3_intro/
+  | * #v2 #t2 #Hv12 #Ht12 #H0 destruct
+    elim (xstep_term_inv_appl_sx … Hxy) -Hxy
+    [ #Hy
+      /4 width=7 by xsteps_term_refl, or_introl, ex4_3_intro/
+    | * #v0 #t0 #Hv20 #Ht20 #H0 destruct
+      /4 width=5 by xsteps_term_eq_trans, xsteps_term_dx, ex3_2_intro, or_intror/
+    | * #v0 #t0 #Hv20 #Ht20 #H0 destruct
+      /4 width=5 by xsteps_term_eq_trans, xsteps_term_dx, ex3_2_intro, or_intror/
+    ]
+  ]
+]
+qed-.
+
+lemma xsteps_term_inv_lift_sx (R) (f1) (t1) (y):
+      (𝛗f1.t1) ➡*[R] y →
+      ∨∨ ∃∃f0,t0,y0. f1 ≐ f0 & t1 ➡*[R] t0 & R (𝛗f0.t0) y0 & y0 ➡*[R] y
+       | ∃∃f2,t2. f1 ≐ f2 & t1 ➡*[R] t2 & 𝛗f2.t2 = y.
+#R #f1 #t1 #y #H0 elim H0 -y
+[ #y #H0
+  elim (term_eq_inv_lift_sx … H0) -H0 #f2 #t2 #Hf12 #Ht12 #H0 destruct
+  /4 width=5 by xsteps_term_refl, ex3_2_intro, or_intror/
+| #x #y #_ #Hxy *
+  [ * #f0 #t0 #y0 #Hf10 #Ht10 #Hy0 #Hy0x
+    /4 width=9 by ex4_3_intro, xsteps_term_dx, or_introl/
+  | * #f2 #t2 #Hf12 #Ht12 #H0 destruct
+    elim (xstep_term_inv_lift_sx … Hxy) -Hxy
+    [ #Hy
+      /4 width=7 by ex4_3_intro, xsteps_term_refl, or_introl/
+    | * #f0 #t0 #Hf20 #Ht20 #H0 destruct
+      /4 width=5 by xsteps_term_dx, fbr_eq_trans, ex3_2_intro, or_intror/
+    ]
+  ]
 ]
 qed-.

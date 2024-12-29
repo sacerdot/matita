@@ -28,3 +28,8 @@ lemma unwind_id_lref (p):
       (𝛏❨p❩) = ▼[𝐢]𝛏❨p❩.
 #p <unwind_lref //
 qed.
+
+lemma unwind_unit_lref (f):
+      (𝛏❨f＠⧣❨𝟏❩❩) = ▼[f]𝛏.
+//
+qed.

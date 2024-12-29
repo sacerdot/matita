@@ -12,8 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_succ_iter.ma".
-include "ground/notation/functions/uparrowstar_2.ma".
 include "explicit_updating/syntax/term_next.ma".
 
 (* ITERATED NEXT FOR TERM ***************************************************)

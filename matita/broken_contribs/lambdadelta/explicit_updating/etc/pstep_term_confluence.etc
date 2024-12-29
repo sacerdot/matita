@@ -1,0 +1,136 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "ground/arith/pnat_lt_plus.ma".
+include "ground/arith/wf1_ind_plt.ma".
+include "explicit_updating/syntax/term_weight_eq.ma".
+include "explicit_updating/reduction/pstep_term.ma".
+
+(* P-REDUCTION FOR TERM *****************************************************)
+
+definition pstep_term_conf_IH: predicate (𝕋) ≝
+           λx.
+           ∀t0. ♯❨t0❩ < ♯❨x❩ →
+           ∀t1,t2. t0 ➡∥ t1 → t0 ➡∥ t2 →
+           ∃∃t. t1 ➡∥ t & t2 ➡∥ t.
+
+lemma pstep_term_conf_IH_eq_repl_bck:
+      replace_1_back … term_eq pstep_term_conf_IH.
+#x2 #IH #x1 #Hx12 #t0 #Hx1 @IH -IH
+<(term_weight_eq_repl … Hx12) -x2 //
+qed-.
+
+lemma pstep_term_conf_refl_bi (t0) (x2) (y2):
+      t0 ≐ x2 → t0 ≐ y2 →
+      ∃∃t. x2 ➡∥t & y2 ➡∥ t.
+/4 width=3 by pstep_term_refl, ex2_intro, term_eq_sym/
+qed.
+
+lemma pstep_term_conf_refl_unwind (f) (x1) (x2) (xb) (y1) (y2):
+      x1 ➡∥ x2 → ▼[f]x2 ≐ xb → 𝛗f.x1 ≐ y1 → y1 ≐ y2 →
+      ∃∃t. xb ➡∥ t & y2 ➡∥ t.
+#f #x1 #x2 #xb #y1 #y2 #Hx12 #Hxa #Hxb #Hy12
+@(ex2_intro … (▼[f]x2))
+[ /3 width=1 by pstep_term_refl, term_eq_sym/
+| /3 width=6 by pstep_term_unwind, term_eq_trans/
+]
+qed.
+
+lemma pstep_term_conf_refl_beta (z1) (z2) (x1) (x2) (xb) (y1) (y2):
+      z1 ➡∥ z2 → x1 ➡∥ x2 → ⬕[𝟎←z2]x2 ≐ xb →
+      ＠z1.𝛌𝗽.x1 ≐ y1 → y1≐y2 →
+      ∃∃t. xb ➡∥ t & y2 ➡∥ t.
+#z1 #z2 #x1 #x2 #xb #y1 #y2 #Hz12 #Hx12 #Hxa #Hxb #Hy12
+@(ex2_intro … (⬕[𝟎←z2]x2))
+[ /3 width=1 by pstep_term_refl, term_eq_sym/
+| /3 width=8 by pstep_term_beta, term_eq_trans/
+]
+qed.
+
+lemma pstep_term_conf_refl_abst (b) (x1) (x2) (y2):
+      x1 ➡∥ x2 → 𝛌b.x1 ≐ y2 →
+      ∃∃t. 𝛌b.x2 ➡∥ t & y2 ➡∥ t.
+#b #x1 #x2 #y2 #Hx12 #Hy2
+@(ex2_intro … (𝛌b.x2))
+[ /2 width=1 by pstep_term_refl/
+| /4 width=3 by eq_pstep_term_trans, pstep_term_abst, term_eq_sym/
+]
+qed.
+
+lemma pstep_term_conf_refl_appl (z1) (z2) (x1) (x2) (y2):
+      z1 ➡∥ z2 → x1 ➡∥ x2 → ＠z1.x1 ≐ y2 →
+      ∃∃t. ＠z2.x2 ➡∥ t & y2 ➡∥ t.
+#z1 #z2 #x1 #x2 #y2 #Hz12 #Hx12 #Hy2
+@(ex2_intro … (＠z2.x2))
+[ /2 width=1 by pstep_term_refl/
+| /4 width=5 by eq_pstep_term_trans, pstep_term_appl, term_eq_sym/
+]
+qed.
+
+lemma pstep_term_conf_refl_lift (f1) (f2) (x1) (x2) (y2):
+      f1 ≐ f2 → x1 ➡∥ x2 → 𝛗f1.x1 ≐ y2 →
+      ∃∃t. 𝛗f2.x2 ➡∥ t & y2 ➡∥ t.
+#f1 #f2 #x1 #x2 #y2 #Hf12 #Hx12 #Hy2
+@(ex2_intro … (𝛗f2.x2))
+[ /2 width=1 by pstep_term_refl/
+| /4 width=5 by eq_pstep_term_trans, pstep_term_lift, term_eq_sym/
+]
+qed.
+
+axiom pstep_term_unwind_bi (f) (t1) (t2):
+      t1 ➡∥ t2 → ▼[f]t1 ➡∥ ▼[f]t2.
+
+lemma pstep_term_conf_unwind_bi (f) (x1) (x2) (xb) (g) (y1) (y2) (ya) (yb):
+      pstep_term_conf_IH ya →
+      x1 ➡∥ x2 → 𝛗f.x1 ≐ ya → ▼[f]x2 ≐ xb →
+      y1 ➡∥ y2 → 𝛗g.y1 ≐ ya → ▼[g]y2 ≐ yb →
+      ∃∃t. xb ➡∥ t & yb ➡∥ t.
+#f #x1 #x2 #xb #g #y1 #y2 #ya #yb #IH #Hx12 #Hxa #Hxb #Hy12 #Hya #Hyb
+lapply (pstep_term_conf_IH_eq_repl_bck … IH … Hxa) -IH #IH
+lapply (term_eq_canc_dx … Hxa … Hya) -ya #H0
+elim (term_eq_inv_lift_bi … H0) -H0 #Hfg #Hxy1
+lapply (eq_pstep_term_trans … Hxy1 Hy12) -y1 #Hy2
+lapply (term_eq_trans … (unwind_eq_repl … Hfg y2 …) … Hyb) -g // #H2b
+elim (IH … Hx12 Hy2) // -x1 #x0 #Hx20 #Hx10
+@(ex2_intro … (▼[f]x0))
+/4 width=3 by pstep_term_unwind_bi, eq_pstep_term_trans, term_eq_sym/
+qed.
+
+theorem pstep_term_conf (t0) (t1) (t2):
+        t0 ➡∥ t1 → t0 ➡∥ t2 →
+        ∃∃t. t1 ➡∥ t & t2 ➡∥ t.
+#t0
+@(wf1_ind_plt … term_weight … t0) -t0 #q #IH #t0 #H0 #x2 #y2
+@(insert_eq_1 … t0) #x1 #Hx #H1
+@(insert_eq_1 … x1) #y1 #Hy
+generalize in match H1; -H1
+cases Hy -y1 -y2
+cases Hx -x1 -x2
+[ #x1 #x2 #Hx12 #y1 #y2 #Hy12 #H1 #H2 destruct -IH
+  /2 width=3 by pstep_term_conf_refl_bi/
+| #f #x1 #x2 #xa #xb #Hxa #Hxb #Hx12 #y1 #y2 #Hy12 #H1 #H2 destruct -IH
+  /2 width=8 by pstep_term_conf_refl_unwind/
+| #z1 #z2 #x1 #x2 #xa #xb #Hxa #Hxb #Hz12 #Hx12 #y1 #y2 #Hy12 #H1 #H2 destruct -IH
+  /2 width=10 by pstep_term_conf_refl_beta/
+| #b #x1 #x2 #Hx12 #y1 #y2 #Hy12 #H1 #H2 destruct -IH
+  /2 width=3 by pstep_term_conf_refl_abst/
+| #z1 #z2 #x1 #x2 #Hz12 #Hx12 #y1 #y2 #Hy12 #H1 #H2 destruct -IH
+  /2 width=5 by pstep_term_conf_refl_appl/
+| #f1 #f2 #x1 #x2 #Hf12 #Hx12 #y1 #y2 #Hy12 #H1 #H2 destruct -IH
+  /2 width=5 by pstep_term_conf_refl_lift/
+| #x1 #x2 #Hx12 #g #y1 #y2 #ya #yb #Hya #Hyb #Hy12 #H1 #H2 destruct -IH
+  /3 width=8 by pstep_term_conf_refl_unwind, ex2_commute/
+| #f #x1 #x2 #xa #xb #Hxa #Hxb #Hx12 #g #y1 #y2 #ya #yb #Hya #Hyb #Hy12 #H1 #H2 destruct
+  /3 width=14 by pstep_term_conf_unwind_bi/
+

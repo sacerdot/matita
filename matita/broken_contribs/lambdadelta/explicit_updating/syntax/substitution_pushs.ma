@@ -12,8 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_succ_iter.ma".
-include "ground/notation/functions/upspoonstar_2.ma".
 include "explicit_updating/syntax/substitution_push.ma".
 
 (* ITERATED PUSH FOR SUBSTITUTION *******************************************)

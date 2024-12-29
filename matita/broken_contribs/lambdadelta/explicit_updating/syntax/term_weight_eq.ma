@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/lib/functions.ma".
 include "explicit_updating/syntax/term_eq.ma".
 include "explicit_updating/syntax/term_weight.ma".
 

@@ -12,31 +12,28 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_dapp_eq.ma".
-include "ground/relocation/fb/fbr_after_dapp.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_after.ma".
-include "explicit_updating/syntax/substitution_push.ma".
+include "explicit_updating/syntax/substitution_tapp.ma".
 
-(* COMPOSITION WITH RELOCATION FOR SUBSTITUTION *****************************)
+(* COMPOSITION FOR SUBSTITUTION *********************************************)
 
-(* Constructions with subst_eq **********************************************)
+definition subst_compose (S:𝕊) (R:𝕊): 𝕊 ≝
+           λp. S＠⧣❨R＠⧣❨p❩❩
+.
 
-lemma subst_after_eq_repl:
-      compatible_3 … subst_eq fbr_eq subst_eq subst_after.
-#S1 #S2 #HS #f1 #f2 #Hf #p
-<subst_after_dapp <subst_after_dapp
-/3 width=1 by subst_dapp_eq_repl, fbr_dapp_eq_repl/
+interpretation
+  "composition with (substitution)"
+  'Compose S R = (subst_compose S R).
+
+(* Basic constructions ******************************************************)
+
+lemma subst_compose_dapp (S) (R:𝕊) (p:ℕ⁺):
+      S＠⧣❨R＠⧣❨p❩❩ = (S•R)＠⧣❨p❩.
+//
 qed.
 
-lemma subst_after_push (S:𝕊) (f):
-      (⫯S)•(⫯f) ≐ ⫯(S•f).
-#S #f * //
-qed.
+(* constructions with subst_after *******************************************)
 
-(* Main constructions with subst_eq *****************************************)
-
-theorem subst_after_after (S:𝕊) (g) (f):
-        S•(g•f) ≐ (S•g)•f.
+lemma subst_compose_after_dx (S) (R:𝕊) (f:𝔽𝔹):
+      (S•R)•f = S•(R•f).
 //
 qed.

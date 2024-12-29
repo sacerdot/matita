@@ -12,16 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/reduction/xbeta1.ma".
-include "explicit_updating/reduction/xbeta.ma".
+include "ground/arith/nat_rplus_succ.ma".
+include "explicit_updating/syntax/term_lref.ma".
 
-(* β-REDUCTION STEP *********************************************************)
+(* VARIABLE REFERENCE BY DEPTH FOR TERM *************************************)
 
-(* Constructions with xbeta1 ************************************************)
+(* Constructions with nat_rplus *********************************************)
 
-alias symbol "subseteq" (instance 1) = "2-relation inclusion".
-lemma xbeta_beta1 (b):
-      (𝛃b) ⊆ (𝛃′).
-#b #t1 #t2 * -t1 -t2
-/2 width=5 by xbeta_unwind, xbeta_beta/
+lemma term_lref_plus (p) (n):
+      ↑*[n]𝛏❨p❩ = 𝛏❨p+n❩.
+#p #n @(nat_ind_succ … n) -n // #n #IH
+<term_nexts_succ <nrplus_succ_dx <term_lref_succ //
 qed.

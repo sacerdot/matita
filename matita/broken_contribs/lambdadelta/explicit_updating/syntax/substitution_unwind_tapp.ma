@@ -12,27 +12,31 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/term_valid_eq.ma".
-include "explicit_updating/reduction/xstep_phi.ma".
+include "explicit_updating/syntax/substitution_tapp_eq.ma".
+include "explicit_updating/syntax/substitution_tapp_lref.ma".
+include "explicit_updating/syntax/substitution_unwind_eq.ma".
 
-(* X-REDUCTION TO ♭-NORMAL FORM FOR TERM ************************************)
+(* SUBSTITUTION FOR UNWIND **************************************************)
 
-(* Constructions with term_eq ***********************************************)
+(* Constructions with subst_tapp and_subst_after ****************************)
 
-lemma xstep_phi_eq_repl:
-      replace_2 … term_eq term_eq xstep_phi.
-#t1 #t2 * #Ht12 #Ht2 #u1 #Htu1 #u2 #Htu2
-lapply (xstep_term_eq_repl … Ht12 … Htu1 … Htu2) -t1
-[ /2 width=5 by xbeta1_eq_repl/ ] #Hu12
-/3 width=3 by xstep_phi_fold, term_valid_eq_repl_fwd/
-qed-.
-
-lemma xstep_phi_eq_trans (t) (t1) (t2):
-      t1 ➡𝛟 t → t ≐ t2 → t1 ➡𝛟 t2.
-/2 width=5 by xstep_phi_eq_repl/
-qed-.
-
-lemma eq_xstep_phi_trans (t) (t1) (t2):
-      t1 ≐ t → t ➡𝛟 t2 → t1 ➡𝛟 t2.
-/3 width=5 by xstep_phi_eq_repl, term_eq_sym/
-qed-.
+lemma subst_after_tapp (t:𝕋) (f) (S):
+      (S•f)＠⧣❨t❩ ≐ S＠⧣❨𝐬❨f❩＠⧣❨t❩❩.
+#t elim t -t
+[ #g #S
+  <subst_tapp_unit <subst_tapp_unit
+  <subst_after_dapp <subst_tapp_lref //
+| #b #t #IH #g #S
+  <subst_tapp_abst <subst_tapp_abst
+  @term_eq_abst
+  @(term_eq_repl … (IH (⫯g) (⫯S))) -IH
+  /3 width=1 by subst_tapp_eq_repl/
+| #v #t #IHv #IHt #g #S
+  <subst_tapp_appl <subst_tapp_appl
+  /2 width=1 by term_eq_appl/
+| #f #t #IH #g #S
+  <subst_tapp_lift <subst_tapp_lift
+  @(term_eq_repl … (IH (g•f) S)) -IH
+  /3 width=1 by subst_tapp_eq_repl/
+]
+qed.

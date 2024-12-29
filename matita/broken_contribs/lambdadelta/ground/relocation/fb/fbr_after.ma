@@ -61,6 +61,10 @@ lemma fbr_after_id_dx (g):
 <fbr_after_next_sn <IH -IH //
 qed.
 
+lemma fbr_after_id_comm (g):
+      𝐢•g = g•𝐢.
+// qed-.
+
 (* Main constructions *******************************************************)
 
 theorem fbr_after_assoc:

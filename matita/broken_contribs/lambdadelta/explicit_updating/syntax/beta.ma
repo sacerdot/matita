@@ -30,16 +30,16 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma beta_unfold (n) (v) (t):
-      (⫯*[n]𝐬❨v❩＠⧣❨t❩) = ⬕[n←v]t.
+      (⫯*[n]𝐬❨v❩)＠⧣❨t❩ = ⬕[n←v]t.
 //
 qed.
 
-lemma beta_zero_lref_unit (v):
+lemma beta_zero_unit (v):
       v = ⬕[𝟎←v]𝛏.
 //
 qed.
 
-lemma beta_succ_lref_unit (n:ℕ) (v):
+lemma beta_succ_unit (n:ℕ) (v):
       (𝛏) = ⬕[⁤↑n←v]𝛏.
 #n #v
 <beta_unfold <subst_pushs_succ //

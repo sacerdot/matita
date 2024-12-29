@@ -1,0 +1,52 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "explicit_updating/syntax/beta_eq.ma".
+include "explicit_updating/reduction/pstep_substitution.ma".
+
+(* P-REDUCTION FOR TERM *****************************************************)
+
+lemma pstep_term_beta_bi_refl_dx (n) (v1) (v2) (t):
+      v1 ➡∥ v2 → ⬕[n←v1]t ➡∥ ⬕[n←v2]t.
+#n #v1 #v2 #t #Hv12
+<beta_unfold <beta_unfold
+@pstep_subst_tapp_bi_refl_dx
+@pstep_subst_pushs_bi
+* // -Hv12 #p
+<subst_beta_dapp_succ <subst_beta_dapp_succ
+/2 width=1 by pstep_term_refl/
+qed.
+
+lemma pstep_term_beta_bi (t1) (t2):
+      t1 ➡∥ t2 → ∀v1,v2. v1 ➡∥ v2 →
+      ∀n. ⬕[n←v1]t1 ➡∥ ⬕[n←v2]t2.
+#t1 #t2 #Ht elim Ht -t1 -t2
+[ #t1 #t2 #Ht12 #v1 #v2 #Hv12 #n
+  @(pstep_term_eq_trans … (pstep_term_beta_bi_refl_dx … Hv12)) -v1
+  /2 width=1 by beta_eq_repl/
+|
+| #v1 #v2 #t1 #t2 #x #y #Hx #Hy #_ #_ #IHv #IHt #w1 #w2 #Hw12 #n
+  lapply (beta_eq_repl … n n … w1 w1 … Hx) -Hx // #Hx
+  lapply (beta_eq_repl … n n … w2 w2 … Hy) -Hy // #Hy
+  @(pstep_term_eq_repl … Hx … Hy) -x -y
+  <beta_appl <beta_abst
+  @pstep_term_beta
+  [1,3,5: //
+  |7: @(IHv … Hw12) |2: skip
+  |8: @(IHt … Hw12) |4: skip
+  ]
+(*
+  @beta_beta_ge
+*)
+|
