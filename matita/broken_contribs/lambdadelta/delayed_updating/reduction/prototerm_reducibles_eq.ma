@@ -12,19 +12,22 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_lt.ma".
-include "ground/subsets/subset_listed.ma".
+include "ground/subsets/subset_eq.ma".
+include "delayed_updating/reduction/prototerm_reducibles.ma".
 
-(* SUBSET WITH LISTED ELEMENTS **********************************************)
+(* SUBSET OF REDEX POINTERS *************************************************)
 
-(* Constructions with subset_nimp and subset_lt *****************************)
+(* Constructions with subset_eq *********************************************)
 
-lemma subset_lt_nimp_single_dx_refl (A) (u) (a):
-      a ϵ u → u⧵❴a:A❵ ⊂ u.
-#A #u #a #Ha
-@subset_lt_mk //
-@(subsets_inh_in … a)
-@subset_in_nimp //
-* #_ #H0
-/2 width=1 by/
+lemma prc_le_repl (t1) (t2):
+      t1 ⊆ t2 → 𝐑❨t1❩ ⊆ 𝐑❨t2❩.
+#t1 #t2 #Ht12 #r
+* #p #b #q #n #Hr #Hb #Hq #Hn destruct
+/3 width=3 by prc_mk, subset_in_le_trans/
+qed.
+
+lemma prc_eq_repl (t1) (t2):
+      t1 ⇔ t2 → 𝐑❨t1❩ ⇔ 𝐑❨t2❩.
+#t1 #t2 * #Ht12 #Ht21
+/3 width=3 by conj, prc_le_repl/
 qed.

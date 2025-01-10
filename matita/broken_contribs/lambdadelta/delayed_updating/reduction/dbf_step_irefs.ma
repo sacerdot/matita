@@ -14,7 +14,6 @@
 
 include "ground/subsets/subset_nimply_and_or_le.ma".
 include "ground/subsets/subset_lt.ma".
-include "ground/subsets/subsets_inhabited_le.ma".
 include "delayed_updating/syntax/path_clear_help.ma".
 include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 include "delayed_updating/syntax/prototerm_clear_eq.ma".

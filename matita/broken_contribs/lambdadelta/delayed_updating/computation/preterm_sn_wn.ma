@@ -13,7 +13,6 @@
 (**************************************************************************)
 
 include "ground/subsets/subsets_wfinite_lt.ma".
-include "delayed_updating/reduction/dbf_step_preterm.ma".
 include "delayed_updating/computation/dbf_steps_normal.ma".
 include "delayed_updating/computation/dbf_steps_irefs.ma".
 include "delayed_updating/computation/dbf_steps_irefs_wfinite.ma".

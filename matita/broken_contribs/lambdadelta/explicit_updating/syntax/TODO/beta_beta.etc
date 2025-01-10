@@ -1,0 +1,29 @@
+include "ground/arith/nat_le_plus.ma".
+include "explicit_updating/syntax/unwind_lref.ma".
+include "explicit_updating/syntax/unwind_eq.ma".
+include "explicit_updating/syntax/beta_nexts.ma".
+include "explicit_updating/syntax/beta_eq.ma".
+(*
+↑*[m]⬕[n←v]t ≐ ⬕[n+m←v]↑*[m]t.
+*)
+
+lemma beta_beta_ge_lref (w) (v) (m) (n) (p):
+      ⬕[m←⬕[n←w]v]⬕[⁤↑(n+m)←w]𝛏❨p❩ ≐ ⬕[n+m←w]⬕[m←v]𝛏❨p❩.
+#w #v #m #n #p
+elim (nat_split_lt_eq_gt m (↓p)) #Hm
+[
+| destruct
+  >(npsucc_pnpred p) in ⊢ (?(???(???%))(???(???%)));
+  <beta_lref_succ <beta_lref_le [| // ]
+  <beta_lref_succ
+
+(* Note: substitution lemma *)
+theorem beta_beta_ge (w) (v) (t) (f) (m) (n):
+        ⬕[m←⬕[n←w]v]⬕[⁤↑(n+m)←w]▼[f]t ≐ ⬕[n+m←w]⬕[m←v]▼[f]t.
+#w #v #t elim t -t
+[ #f #m #n <unwind_unit_lref
+|
+|
+| #f #t #IH #g #m #n
+  @(term_eq_repl … (IH (g•f) m n)) -IH
+  /3 width=1 by beta_eq_repl/
