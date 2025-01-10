@@ -13,11 +13,11 @@
 (**************************************************************************)
 
 include "ground/subsets/subsets_wfinite_lt.ma".
-include "delayed_updating/reduction/dbfr_preterm.ma".
-include "delayed_updating/computation/dbfrs_normal.ma".
-include "delayed_updating/computation/dbfrs_irefs.ma".
-include "delayed_updating/computation/dbfrs_irefs_wfinite.ma".
-include "delayed_updating/computation/dbfrs_confluence.ma".
+include "delayed_updating/reduction/dbf_step_preterm.ma".
+include "delayed_updating/computation/dbf_steps_normal.ma".
+include "delayed_updating/computation/dbf_steps_irefs.ma".
+include "delayed_updating/computation/dbf_steps_irefs_wfinite.ma".
+include "delayed_updating/computation/dbf_steps_confluence.ma".
 include "delayed_updating/computation/prototerm_wn.ma".
 include "delayed_updating/computation/prototerm_sn.ma".
 
@@ -32,13 +32,13 @@ lemma wfinite_pirc_twn_tsn_aux (t1):
 #t1 #Ht1 @(subsets_wfinite_ind_lt … eq_path_dec)
 #u0 #_ #IH #t0 #rs #Ht01 #Ht0 #Hu0
 @tsn_step #t2 #r #Ht02
-elim (dbfrs_conf … Ht0 … Ht01 … t2) -rs
+elim (dbfss_conf … Ht0 … Ht01 … t2) -rs
 [2,3: /2 width=2 by frs_step/ ] #t #ss1 #ss2 #Hs1 #Hs2
-lapply (dbfrs_des_tnf_sn … Hs1) // -ss1 #Hs1
-lapply (dbfrs_eq_canc_dx … Hs2 … Hs1) -t #H1t21
-lapply (dbfr_des_lt_pirc_bi … Ht02) //
-lapply (dbfr_preterm_trans … Ht02) // -r -Ht0 #Ht2 #Ht02
-lapply (dbfrs_des_le_pirc_bi … H1t21) // #H2t21
+lapply (dbfss_des_tnf_sn … Hs1) // -ss1 #Hs1
+lapply (dbfss_eq_canc_dx … Hs2 … Hs1) -t #H1t21
+lapply (dbfs_des_lt_pirc_bi … Ht02) //
+lapply (dbfs_preterm_trans … Ht02) // -r -Ht0 #Ht2 #Ht02
+lapply (dbfss_des_le_pirc_bi … H1t21) // #H2t21
 @(IH (𝐈❨t1❩⧵𝐈❨t2❩) … H1t21) [2,3: // ] -ss2 -IH -Ht1 -Ht2
 @(subset_lt_le_trans … Hu0) -u0
 @subset_lt_nimp_sn_bi // -Ht02
@@ -48,6 +48,6 @@ qed.
 theorem wfinite_pirc_twn_tsn (t):
         t ϵ 𝐓 → 𝐈❨t❩ ϵ 𝐖𝛀 → t ϵ 𝐖𝐍 → t ϵ 𝐒𝐍.
 #t #H1t #H2t * #t0 #rs #H1t0 #H2t0
-lapply (dbfrs_pirc_wfinite_sn … H1t0) // -H2t #H3t0
+lapply (dbfss_pirc_wfinite_sn … H1t0) // -H2t #H3t0
 @(wfinite_pirc_twn_tsn_aux … (𝐈❨t0❩) … H1t0) -rs //
 qed.

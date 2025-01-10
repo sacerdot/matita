@@ -12,17 +12,32 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/prototerm_normal.ma".
-include "delayed_updating/reduction/dbf_step_reducibles.ma".
-include "delayed_updating/computation/prototerm_sn.ma".
+include "explicit_updating/syntax/term_valid_eq.ma".
+include "explicit_updating/syntax/unwind_valid.ma".
+include "explicit_updating/syntax/beta_valid.ma".
+include "explicit_updating/reduction/xbeta1.ma".
 
-(* STRONG NORMALIZATION FOR PROTOTERM ***************************************)
+(* MARKED β-REDUCTION STEP **************************************************)
 
-(* Constructions with normal prototerms *************************************)
+(* Constructions with valid_term ********************************************)
 
-lemma tsn_normal (t):
-      t ϵ 𝐍𝐅 → t ϵ 𝐒𝐍.
-#t1 #Ht1 @tsn_step
-#t2 #r #Hr elim (tnf_inv_gen … Ht1) -Ht1
-/2 width=3 by dbfs_inv_reducuble/
+lemma term_valid_xbeta1_trans (c) (b) (t1) (t2):
+      (𝛃b) t1 t2 → c ⊢ t1 → c ⊢ t2.
+#c #b #t1 #t2 * -t1 -t2
+[ #f #t #x #y #Hx #Hy #H0
+  lapply (term_valid_eq_repl_bck  … H0 … Hx) -x #H0
+  @(term_valid_eq_repl_fwd  … Hy) -y
+  lapply (term_valid_inv_lift … H0) -H0 #H0
+  /2 width=1 by unwind_valid/
+| #v #t #x #y #Hx #Hy #H0
+  lapply (term_valid_eq_repl_bck  … H0 … Hx) -x #H0
+  @(term_valid_eq_repl_fwd  … Hy) -y
+  elim (term_valid_inv_appl … H0) -H0 *
+  [ #Hv #H0
+    elim (term_valid_inv_abst … H0) -H0 #Ht #_ -b
+    /2 width=1 by beta_valid/
+  | #x #v #x #H1 #H2 destruct
+    /2 width=1 by beta_valid/
+  ]
+]
 qed.

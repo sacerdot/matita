@@ -53,6 +53,13 @@ interpretation
   "side branch (label)"
   'EdgeLabelS = (label_S).
 
+(* Basic inversions *********************************************************)
+
+lemma eq_inv_d_bi (n1) (n2):
+      (𝗱n1) = 𝗱n2 → n1 = n2.
+#n1 #n2 #H0 destruct //
+qed-.
+
 (* Advanced destructions ****************************************************)
 
 lemma label_is_d (l):

@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/computation/dbfrs_irefs_wfinite.ma".
+include "delayed_updating/computation/dbf_steps_irefs_wfinite.ma".
 include "delayed_updating/computation/prototerm_originated.ma".
 
 (* SUBSET OF ORIGINATED PROTOTERMS ******************************************)
@@ -22,6 +22,6 @@ include "delayed_updating/computation/prototerm_originated.ma".
 lemma topc_des_pirc_wfinite (t):
       t ϵ 𝐎⁺ → 𝐈❨t❩ ϵ 𝐖𝛀.
 #t2 * #t1 #rs #Ht1 #Ht12
-@(dbfrs_pirc_wfinite_sn … Ht12) -t2 -rs
+@(dbfss_pirc_wfinite_sn … Ht12) -t2 -rs
 /3 width=2 by subsets_wfinite_in/
 qed-.

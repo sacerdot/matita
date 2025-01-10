@@ -89,6 +89,19 @@ qed-.
 
 (* Advanced inversions with list_append *************************************)
 
+lemma eq_inv_list_rcons_append (A) (l) (l1) (l2) (a):
+      l⨭a = l1 ⨁{A} l2 →
+      ∨∨ ∧∧ l⨭a = l1 & ⓔ = l2
+       | ∃∃ m. l = l1 ⨁ m & m⨭a = l2.
+#A #l #l1 #l2 #a @(list_ind_rcons … l2) -l2
+[ <list_append_empty_dx #H0 destruct
+  /3 width=1 by or_introl, conj/
+| #m #b #_ <list_append_rcons_dx #H0
+  elim (eq_inv_list_rcons_bi ????? H0) -H0 #H1 #H2 destruct
+  /3 width=3 by ex2_intro, or_intror/
+]
+qed-.
+
 lemma eq_inv_list_append_dx_dx_refl (A) (l1) (l2):
       l1 = l2⨁{A}l1 → ⓔ = l2.
 #A #l1 @(list_ind_rcons … l1) -l1 [ // ]

@@ -34,7 +34,7 @@ interpretation
 (* Advanced constructions ***************************************************)
 
 lemma pbc_dx (b1) (b2):
-      b1 ϵ 𝐁 → b2 ϵ 𝐁  → b1●𝗔◗b2◖𝗟  ϵ 𝐁.
+      b1 ϵ 𝐁 → b2 ϵ 𝐁 → b1●𝗔◗b2◖𝗟  ϵ 𝐁.
 /3 width=1 by pbc_redex, pbc_after/
 qed.
 
@@ -135,5 +135,83 @@ lemma pbc_inv_gen_sn (b):
   | @or_intror (**) (* full auto fails *)
     @(ex3_2_intro … c1 (c2●(𝗔◗d1◖𝗟)●d2)) //
     /4 width=1 by pbc_redex, pbc_after/
+]
+qed-.
+
+lemma pbc_inv_A_dx (p):
+      p◖𝗔 ⧸ϵ 𝐁.
+#p @(insert_eq_1 … (p◖𝗔))
+#b #Hb generalize in match p; -p
+elim Hb -b
+[ #p #H0 destruct
+| #b #_ #_ #p <list_cons_shift #H0 destruct
+| #b1 #b2 #_ #_ #IH1 #IH2 #p #H0
+  elim (eq_inv_list_lcons_append ????? H0) -H0 *
+  [ #_ #H0 -IH2 destruct /2 width=2 by/
+  | #x #H0 #_ -IH1 destruct /2 width=2 by/
+  ]
+]
+qed-.
+
+lemma pbc_inv_L_sn (q):
+      (𝗟◗q) ⧸ϵ 𝐁.
+#q @(insert_eq_1 … (𝗟◗q))
+#b #Hb generalize in match q; -q
+elim Hb -b
+[ #q #H0 elim (eq_inv_list_rcons_empty ??? H0)
+| #b #_ #_ #q #H0
+  elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
+| #b1 #b2 #_ #_ #IH1 #IH2 #q #H0
+  elim (eq_inv_list_rcons_append ????? H0) -H0 *
+  [ #H0 #_ -IH1 destruct /2 width=2 by/
+  | #x #_ #H0 -IH2 destruct /2 width=2 by/
+  ]
+]
+qed-.
+
+lemma pbc_inv_insert_redex (p) (q):
+      p◖𝗔◖𝗟●q ϵ 𝐁 → p●q ϵ 𝐁.
+#p #q @(insert_eq_1 … (p◖𝗔◖𝗟●q))
+#b #Hb generalize in match q; generalize in match p; -p -q
+elim Hb -b
+[ #p #q #H0
+  elim (eq_inv_list_append_empty … H0) -H0 #_ #H0 destruct
+| #b #Hb #IH #p #q #H0
+  elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 *
+  [ #H1 #H0
+    elim (eq_inv_list_lcons_bi ????? H0) -H0 #_ #H0
+    elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 *
+    [ #_ #H0 destruct //
+    | #x #H0 #_ destruct
+      elim (pbc_inv_A_dx … Hb)
+    ]
+  | #y #H1
+    >list_append_rcons_sn in ⊢ (???%→?);
+    >list_append_rcons_sn in ⊢ (???%→?); #H0
+    elim (eq_inv_list_rcons_append ????? H0) -H0 *
+    [ #H0 #_ -IH -H1
+      elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_ destruct
+      elim (pbc_inv_L_sn … Hb)
+    | #x <list_append_rcons_sn <list_append_rcons_sn #H2 #H3 destruct -Hb
+      /3 width=1 by pbc_redex/
+    ]
+  ]
+| #b1 #b2 #Hb1 #Hb2 #IH1 #IH2 #p #q #H0
+  elim (eq_inv_list_append_bi … H0) -H0 * #z1
+  [ -Hb1 -IH2 #H1 #H2 destruct >list_append_assoc
+    /3 width=1 by pbc_after/
+  | #H0 #H1
+    elim (eq_inv_list_lcons_append ????? H0) -H0 *
+    [ -Hb1 -IH2 #H2 #H3 destruct
+      /3 width=1 by pbc_after/
+    | -Hb2 -IH1 #z2 #H2 #H0
+      elim (eq_inv_list_lcons_append ????? H0) -H0 *
+      [ -IH2 #H3 #H4 destruct
+        elim (pbc_inv_A_dx … Hb1)
+      | #z3 #H3 #H4 destruct <list_append_assoc
+        /3 width=1 by pbc_after/
+      ]
+    ]
+  ]
 ]
 qed-.

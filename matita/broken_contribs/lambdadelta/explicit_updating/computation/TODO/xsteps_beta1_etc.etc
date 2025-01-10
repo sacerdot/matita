@@ -1,0 +1,25 @@
+include "explicit_updating/reduction/xbeta1.ma".
+include "explicit_updating/computation/xsteps_term.ma".
+
+lemma pippo (v) (t1) (t2) (n):
+      (𝛃ⓣ) t1 t2 →
+      ⬕[n←v]t1 ➡*[𝛃ⓣ] ⬕[n←v]t2.
+#v #t1 #t2 #n * -t1 -t2
+[
+| #w #t1 #x #y #Hx #Hy
+  lapply (beta_eq_repl … n n … v v … Hx) -Hx // #Hx
+  lapply (beta_eq_repl … n n … v v … Hy) -Hy // #Hy
+  @(xsteps_term_eq_repl … Hx … Hy) -Hx -Hy
+  [ /2 width=5 by xbeta1_eq_repl/ ]
+  <beta_appl <beta_abst
+  @xsteps_term_trans
+  [ /2 width=5 by xbeta1_eq_repl/ |
+  | @xsteps_term_step
+    @xstep_term_step
+    @xbeta1_beta //
+  
+   … (xstep
+
+
+lemma pippo (b)
+      ↑*[m]⬕[n←v]t ≐ ⬕[n+m←v]↑*[m]t.

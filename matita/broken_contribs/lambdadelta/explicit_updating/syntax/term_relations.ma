@@ -12,29 +12,30 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/prototerm_reducibles.ma".
-include "delayed_updating/reduction/dbf_step.ma".
-include "delayed_updating/notation/relations/white_diamond_3.ma".
+include "explicit_updating/syntax/term.ma".
 
-(* DISJOINT REDEXES *********************************************************)
+(* RELATIONS FOR TERM *******************************************************)
 
-definition path_drc: relation3 (𝕋) (ℙ) (ℙ) ≝
-           λt0,r1,r2.
-           ∧∧ r1 ϵ 𝐑❨t0❩ & r2 ϵ 𝐑❨t0❩ & (
-              ∀t1,t2. t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
-              ∃∃t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] t
-           ).
+definition term_replace_4:
+           relation2 (relation2 (𝕋) (𝕋)) (relation4 (𝕋) (𝕋 ) (𝕋) (𝕋)) ≝
+           λS,R. ∀t1,t2. replace_2 … S S (R t1 t2).
 
-interpretation
-  "disjoint redexes condition (path)"
-  'WhiteDiamond r1 t0 r2 = (path_drc t0 r1 r2).
+definition term_replace_6:
+           relation2 (relation2 (𝕋) (𝕋)) (relation6 (𝕋) (𝕋) (𝕋) (𝕋 ) (𝕋) (𝕋)) ≝
+           λS,R. ∀v1,v2,t1,t2. replace_2 … S S (R v1 v2 t1 t2).
+
+definition lbot_4: relation4 (𝕋) (𝕋 ) (𝕋) (𝕋) ≝
+           λt1,t2,x,y. ⊥.
+
+definition lbot_6: relation6 (𝕋) (𝕋 ) (𝕋) (𝕋 ) (𝕋) (𝕋) ≝
+           λv1,v2,t1,t2,x,y. ⊥.
 
 (* Basic constructions ******************************************************)
 
-lemma path_drc_sym (t0):
-      symmetric … (path_drc t0).
-#t0 #r1 #r2 * #Hr1 #Hr2 #Hr
-@and3_intro // -Hr1 -Hr2 #t2 #t1 #Ht2 #Ht1
-elim (Hr … Ht1 Ht2) -Hr -Ht2 -Ht1 #t #Ht1 #Ht2
-/2 width=3 by ex2_intro/
-qed-.
+lemma lbot_4_repl (S): term_replace_4 S lbot_4.
+#S #t1 #t2 #x #y #H0 elim H0
+qed.
+
+lemma lbot_6_repl (S): term_replace_6 S lbot_6.
+#S #v1 #v2 #t1 #t2 #x #y #H0 elim H0
+qed.

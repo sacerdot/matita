@@ -12,29 +12,27 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/prototerm_reducibles.ma".
-include "delayed_updating/reduction/dbf_step.ma".
-include "delayed_updating/notation/relations/white_diamond_3.ma".
+include "explicit_updating/syntax/term_valid_eq.ma".
+include "explicit_updating/reduction/xstep_phi.ma".
 
-(* DISJOINT REDEXES *********************************************************)
+(* X-REDUCTION TO ♭-NORMAL FORM FOR TERM ************************************)
 
-definition path_drc: relation3 (𝕋) (ℙ) (ℙ) ≝
-           λt0,r1,r2.
-           ∧∧ r1 ϵ 𝐑❨t0❩ & r2 ϵ 𝐑❨t0❩ & (
-              ∀t1,t2. t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
-              ∃∃t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] t
-           ).
+(* Constructions with term_eq ***********************************************)
 
-interpretation
-  "disjoint redexes condition (path)"
-  'WhiteDiamond r1 t0 r2 = (path_drc t0 r1 r2).
+lemma xstep_phi_eq_repl:
+      replace_2 … term_eq term_eq xstep_phi.
+#t1 #t2 * #Ht12 #Ht2 #u1 #Htu1 #u2 #Htu2
+lapply (xstep_term_eq_repl … Ht12 … Htu1 … Htu2) -t1
+[ /2 width=5 by xbeta1_eq_repl/ ] #Hu12
+/3 width=3 by xstep_phi_fold, term_valid_eq_repl_fwd/
+qed-.
 
-(* Basic constructions ******************************************************)
+lemma xstep_phi_eq_trans (t) (t1) (t2):
+      t1 ➡𝛟 t → t ≐ t2 → t1 ➡𝛟 t2.
+/2 width=5 by xstep_phi_eq_repl/
+qed-.
 
-lemma path_drc_sym (t0):
-      symmetric … (path_drc t0).
-#t0 #r1 #r2 * #Hr1 #Hr2 #Hr
-@and3_intro // -Hr1 -Hr2 #t2 #t1 #Ht2 #Ht1
-elim (Hr … Ht1 Ht2) -Hr -Ht2 -Ht1 #t #Ht1 #Ht2
-/2 width=3 by ex2_intro/
+lemma eq_xstep_phi_trans (t) (t1) (t2):
+      t1 ≐ t → t ➡𝛟 t2 → t1 ➡𝛟 t2.
+/3 width=5 by xstep_phi_eq_repl, term_eq_sym/
 qed-.

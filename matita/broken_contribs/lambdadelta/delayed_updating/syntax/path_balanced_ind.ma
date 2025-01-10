@@ -30,3 +30,28 @@ lemma pbc_ind_dx (Q:predicate …):
 elim (pbc_inv_gen_dx … Hb) -Hb [ #H0 | * #b1 #b2 #Hb1 #Hb2 #H0 ] destruct
 /3 width=1 by/
 qed-.
+
+(* Advanced inversions ******************************************************)
+
+lemma pbc_inv_insert_pbc (b):
+      b ϵ 𝐁 → ∀q,p. p●b●q ϵ 𝐁 → p●q ϵ 𝐁.
+#b #Hb @(pbc_ind_dx … Hb) -b //
+#b1 #b2 #_ #_ #IH1 #IH2 #q #p #H9
+lapply (IH1 ((𝗔◗b2◖𝗟)●q) p ?) // -b1 #H0
+lapply (IH2 (𝗟◗q) (p◖𝗔) ?) // -b2 #H0
+/2 width=1 by pbc_inv_insert_redex/
+qed-.
+
+lemma pbc_inv_append_sn (b1) (b2):
+      b1●b2 ϵ 𝐁 → b1 ϵ 𝐁 → b2 ϵ 𝐁.
+#b1 #b2 #Hb12 #Hb1
+>(list_append_empty_dx … b2)
+/2 width=3 by pbc_inv_insert_pbc/
+qed-.
+
+lemma pbc_inv_append_dx (b1) (b2):
+      b1●b2 ϵ 𝐁 → b2 ϵ 𝐁 → b1 ϵ 𝐁.
+#b1 #b2 #Hb12 #Hb2
+>(list_append_empty_sn … b1)
+/2 width=3 by pbc_inv_insert_pbc/
+qed-.

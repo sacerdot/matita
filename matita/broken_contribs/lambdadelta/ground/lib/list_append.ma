@@ -92,7 +92,7 @@ lemma eq_inv_list_lcons_append (A) (l2) (l1) (l) (a):
 #A #l2 #l1 #l #a cases l1 -l1
 [ <list_append_empty_sn #H0 destruct
   /3 width=1 by or_introl, conj/
-| #b #n <list_append_lcons_sn #H0 destruct
+| #b #m <list_append_lcons_sn #H0 destruct
   /3 width=3 by ex2_intro, or_intror/
 ]
 qed-.

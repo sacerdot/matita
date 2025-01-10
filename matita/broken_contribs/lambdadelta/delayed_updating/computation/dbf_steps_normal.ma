@@ -12,29 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/prototerm_reducibles.ma".
-include "delayed_updating/reduction/dbf_step.ma".
-include "delayed_updating/notation/relations/white_diamond_3.ma".
+include "delayed_updating/reduction/dbf_step_normal.ma".
+include "delayed_updating/computation/dbf_steps.ma".
 
-(* DISJOINT REDEXES *********************************************************)
+(* DELAYED BALANCED FOCUSED COMPUTATION *************************************)
 
-definition path_drc: relation3 (𝕋) (ℙ) (ℙ) ≝
-           λt0,r1,r2.
-           ∧∧ r1 ϵ 𝐑❨t0❩ & r2 ϵ 𝐑❨t0❩ & (
-              ∀t1,t2. t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
-              ∃∃t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] t
-           ).
+(* Destructionss with tnf ***************************************************)
 
-interpretation
-  "disjoint redexes condition (path)"
-  'WhiteDiamond r1 t0 r2 = (path_drc t0 r1 r2).
-
-(* Basic constructions ******************************************************)
-
-lemma path_drc_sym (t0):
-      symmetric … (path_drc t0).
-#t0 #r1 #r2 * #Hr1 #Hr2 #Hr
-@and3_intro // -Hr1 -Hr2 #t2 #t1 #Ht2 #Ht1
-elim (Hr … Ht1 Ht2) -Hr -Ht2 -Ht1 #t #Ht1 #Ht2
-/2 width=3 by ex2_intro/
+lemma dbfss_des_tnf_sn (t1) (t2) (rs):
+      t1 ϵ 𝐍𝐅 → t1 ➡*𝐝𝐛𝐟[rs] t2 → t1 ⇔ t2.
+#t1 #t2 #rs #Ht1 #Ht
+@(dbfss_ind_dx … Ht) -t2 -rs //
+[ #t #t2 #_ #Ht2 #Ht12
+  /2 width=3 by subset_eq_canc_dx/
+| #t #t2 #rs #r #_ #Ht2 #Ht1 -rs
+  lapply (eq_dbfs_trans … Ht1 Ht2) -t #Ht12
+  elim (dbfs_inv_tnf_sn …Ht12) -t2 -r //
+]
 qed-.

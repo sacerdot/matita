@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/prototerm_origin.ma".
-include "delayed_updating/computation/dbfrs.ma".
+include "delayed_updating/computation/dbf_steps.ma".
 include "delayed_updating/notation/functions/subset_o_plus_0.ma".
 
 (* SUBSET OF ORIGINATED PROTOTERMS ******************************************)
@@ -38,7 +38,7 @@ lemma toc_topc (t):
 /3 width=4 by frs_refl, topc_mk/
 qed.
 
-lemma topc_dbfrs_trans (t1) (t2) (r):
+lemma topc_dbfss_trans (t1) (t2) (r):
       t1 ϵ 𝐎⁺ → t1 ➡*𝐝𝐛𝐟[r] t2 → t2 ϵ 𝐎⁺.
 #t #t2 #ss * #t1 #rs #Ht1 #Ht #Ht2
 /3 width=7 by frs_trans, topc_mk/
@@ -46,7 +46,7 @@ qed.
 
 (* Advanced properties ******************************************************)
 
-lemma toc_dbfr_trans (t1) (t2) (r):
+lemma toc_dbfs_trans (t1) (t2) (r):
       t1 ϵ 𝐎⁺ → t1 ➡𝐝𝐛𝐟[r] t2 → t2 ϵ 𝐎⁺.
 #t #t2 #s * #t1 #rs #Ht1 #Ht #Ht2
 /3 width=7 by frs_step_dx, topc_mk/

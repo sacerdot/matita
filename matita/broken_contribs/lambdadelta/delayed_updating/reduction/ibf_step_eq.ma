@@ -12,29 +12,25 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/prototerm_reducibles.ma".
-include "delayed_updating/reduction/dbf_step.ma".
-include "delayed_updating/notation/relations/white_diamond_3.ma".
+include "delayed_updating/reduction/ibf_step.ma".
+include "delayed_updating/substitution/fsubst_eq.ma".
+include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
-(* DISJOINT REDEXES *********************************************************)
+(* IMMEDIATE BALANCED FOCUSED REDUCTION *************************************)
 
-definition path_drc: relation3 (𝕋) (ℙ) (ℙ) ≝
-           λt0,r1,r2.
-           ∧∧ r1 ϵ 𝐑❨t0❩ & r2 ϵ 𝐑❨t0❩ & (
-              ∀t1,t2. t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
-              ∃∃t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] t
-           ).
+(* Constructions with subset_eq *********************************************)
 
-interpretation
-  "disjoint redexes condition (path)"
-  'WhiteDiamond r1 t0 r2 = (path_drc t0 r1 r2).
+lemma ibfs_eq_canc_sn (t) (t1) (t2) (r):
+      t ⇔ t1 → t ➡𝐢𝐛𝐟[r] t2 → t1 ➡𝐢𝐛𝐟[r] t2.
+#t #t1 #t2 #r #Ht1
+* #p #b #q #n #Hr #Hb #Hn #Ht #Ht2 destruct
+@(ex5_4_intro … p … Hb Hn) [ // ] -Hb -Hn
+[ /2 width=3 by subset_in_eq_repl_fwd/
+| /6 width=3 by subset_eq_canc_sn, fsubst_eq_repl, pt_append_eq_repl_bi, lift_term_eq_repl_dx, term_grafted_eq_repl/
+]
+qed-.
 
-(* Basic constructions ******************************************************)
-
-lemma path_drc_sym (t0):
-      symmetric … (path_drc t0).
-#t0 #r1 #r2 * #Hr1 #Hr2 #Hr
-@and3_intro // -Hr1 -Hr2 #t2 #t1 #Ht2 #Ht1
-elim (Hr … Ht1 Ht2) -Hr -Ht2 -Ht1 #t #Ht1 #Ht2
-/2 width=3 by ex2_intro/
+lemma ibfs_eq_repl (t1) (t2) (u1) (u2) (r):
+      t1 ⇔ u1 → t2 ⇔ u2 → t1 ➡𝐢𝐛𝐟[r] t2 → u1 ➡𝐢𝐛𝐟[r] u2.
+/3 width=3 by ibfs_eq_canc_sn, ibfs_eq_trans/
 qed-.

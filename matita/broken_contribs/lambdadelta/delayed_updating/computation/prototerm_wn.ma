@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/reduction/prototerm_normal.ma".
-include "delayed_updating/computation/dbfrs.ma".
+include "delayed_updating/computation/dbf_steps.ma".
 include "delayed_updating/notation/functions/subset_wn_0.ma".
 
 (* WEAK NORMALIZATION FOR PROTOTERM *****************************************)
@@ -38,7 +38,7 @@ lemma term_normal_wn (t):
 /3 width=4 by frs_refl, twn_mk/
 qed.
 
-lemma dbfrs_twn_trans (t1) (t2) (rs):
+lemma dbfss_twn_trans (t1) (t2) (rs):
       t1 ➡*𝐝𝐛𝐟[rs] t2 → t2 ϵ 𝐖𝐍 → t1 ϵ 𝐖𝐍.
 #t1 #t #rs #Ht1 * #t2 #ss #Ht2
 /3 width=7 by frs_trans, twn_mk/
@@ -46,7 +46,7 @@ qed.
 
 (* Advanced properties ******************************************************)
 
-lemma dbfr_twn_trans (t1) (t2) (r):
+lemma dbfs_twn_trans (t1) (t2) (r):
       t1 ➡𝐝𝐛𝐟[r] t2 → t2 ϵ 𝐖𝐍 → t1 ϵ 𝐖𝐍.
 #t1 #t #r #Ht1 * #t2 #ss #Ht2
 /3 width=7 by frs_step_sn, twn_mk/

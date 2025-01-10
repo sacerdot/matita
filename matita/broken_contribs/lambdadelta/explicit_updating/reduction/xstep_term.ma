@@ -17,7 +17,7 @@ include "explicit_updating/notation/relations/black_rightarrow_3.ma".
 
 (* X-REDUCTION FOR TERM *****************************************************)
 
-(* Note: exists one step *)
+(* Note: there exists one step *)
 inductive xstep_term (R:relation2 …): relation2 … ≝
 | xstep_term_step (t1) (t2):
   R t1 t2 → xstep_term R t1 t2

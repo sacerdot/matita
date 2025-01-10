@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/notation/functions/subset_sn_0.ma".
-include "delayed_updating/reduction/dbfr.ma".
+include "delayed_updating/reduction/dbf_step.ma".
 
 (* STRONG NORMALIZATION FOR PROTOTERM ***************************************)
 
