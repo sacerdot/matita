@@ -52,3 +52,11 @@ elim (eq_inv_list_append_bi … H0) -H0 * #x
   ]
 ]
 qed-.
+
+(* Inversions with path_structure *******************************************)
+
+axiom path_eq_inv_pbq_pSq_pbc (p2) (p1) (b) (q1) (q2):
+      p1●b●q1 = p2●𝗦◗q2 → ⊗b ϵ 𝐁 →
+      ∨∨ ∃∃m. p1 = p2●𝗦◗m & m●b●q1 = q2
+       | ∃∃m. q1 = m●𝗦◗q2 & p1●b●m = p2
+.

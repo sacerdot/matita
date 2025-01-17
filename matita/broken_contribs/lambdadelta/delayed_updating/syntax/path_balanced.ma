@@ -138,6 +138,22 @@ lemma pbc_inv_gen_sn (b):
 ]
 qed-.
 
+lemma pbc_inv_L_sn (q):
+      (𝗟◗q) ⧸ϵ 𝐁.
+#q @(insert_eq_1 … (𝗟◗q))
+#b #Hb generalize in match q; -q
+elim Hb -b
+[ #q #H0 elim (eq_inv_list_rcons_empty ??? H0)
+| #b #_ #_ #q #H0
+  elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
+| #b1 #b2 #_ #_ #IH1 #IH2 #q #H0
+  elim (eq_inv_list_rcons_append ????? H0) -H0 *
+  [ #H0 #_ -IH1 destruct /2 width=2 by/
+  | #x #_ #H0 -IH2 destruct /2 width=2 by/
+  ]
+]
+qed-.
+
 lemma pbc_inv_A_dx (p):
       p◖𝗔 ⧸ϵ 𝐁.
 #p @(insert_eq_1 … (p◖𝗔))
@@ -153,9 +169,9 @@ elim Hb -b
 ]
 qed-.
 
-lemma pbc_inv_L_sn (q):
-      (𝗟◗q) ⧸ϵ 𝐁.
-#q @(insert_eq_1 … (𝗟◗q))
+lemma pbc_inv_S_sn (q):
+      (𝗦◗q) ⧸ϵ 𝐁.
+#q @(insert_eq_1 … (𝗦◗q))
 #b #Hb generalize in match q; -q
 elim Hb -b
 [ #q #H0 elim (eq_inv_list_rcons_empty ??? H0)
@@ -165,6 +181,21 @@ elim Hb -b
   elim (eq_inv_list_rcons_append ????? H0) -H0 *
   [ #H0 #_ -IH1 destruct /2 width=2 by/
   | #x #_ #H0 -IH2 destruct /2 width=2 by/
+  ]
+]
+qed-.
+
+lemma pbc_inv_S_dx (p):
+      p◖𝗦 ⧸ϵ 𝐁.
+#p @(insert_eq_1 … (p◖𝗦))
+#b #Hb generalize in match p; -p
+elim Hb -b
+[ #p #H0 destruct
+| #b #_ #_ #p <list_cons_shift #H0 destruct
+| #b1 #b2 #_ #_ #IH1 #IH2 #p #H0
+  elim (eq_inv_list_lcons_append ????? H0) -H0 *
+  [ #_ #H0 -IH2 destruct /2 width=2 by/
+  | #x #H0 #_ -IH1 destruct /2 width=2 by/
   ]
 ]
 qed-.

@@ -98,6 +98,40 @@ lemma pcc_inv_L_dx_succ (p) (n):
 elim (pcc_inv_L_dx … H0) -H0 //
 qed-.
 
+lemma pcc_inv_A (p) (q) (n):
+      p●𝗔◗q ϵ 𝐂❨n❩ → p●q ϵ 𝐂❨n❩.
+#p #q elim q -q
+[ /2 width=1 by pcc_inv_A_dx/
+| * [ #k ] #q #IH #n #H0
+  [ lapply (pcc_inv_d_dx … H0) -H0 #H0
+    /3 width=1 by pcc_d_dx/
+  | elim (pcc_inv_L_dx … H0) -H0 #H0 #Hn >Hn -Hn
+    /3 width=1 by pcc_L_dx/
+  | lapply (pcc_inv_A_dx … H0) -H0 #H0
+    /3 width=1 by pcc_A_dx/
+  | lapply (pcc_inv_S_dx … H0) -H0 #H0
+    /3 width=1 by pcc_S_dx/
+  ]
+]
+qed-.
+
+lemma pcc_inv_S (p) (q) (n):
+      p●𝗦◗q ϵ 𝐂❨n❩ → p●q ϵ 𝐂❨n❩.
+#p #q elim q -q
+[ /2 width=1 by pcc_inv_S_dx/
+| * [ #k ] #q #IH #n #H0
+  [ lapply (pcc_inv_d_dx … H0) -H0 #H0
+    /3 width=1 by pcc_d_dx/
+  | elim (pcc_inv_L_dx … H0) -H0 #H0 #Hn >Hn -Hn
+    /3 width=1 by pcc_L_dx/
+  | lapply (pcc_inv_A_dx … H0) -H0 #H0
+    /3 width=1 by pcc_A_dx/
+  | lapply (pcc_inv_S_dx … H0) -H0 #H0
+    /3 width=1 by pcc_S_dx/
+  ]
+]
+qed-.
+
 (* Main constructions with path_append **************************************)
 
 theorem pcc_append_bi (p) (q) (m) (n):
@@ -105,6 +139,99 @@ theorem pcc_append_bi (p) (q) (m) (n):
 #p #q #m #n #Hm #Hm elim Hm -Hm // -Hm
 #p #n [ #k ] #_ #IH [3: <nplus_succ_dx ]
 /2 width=1 by pcc_d_dx, pcc_L_dx, pcc_A_dx, pcc_S_dx/
+qed.
+
+theorem pcc_pcc:
+        ∀b,m. b ϵ 𝐂❨m❩ →
+        ∀p,q,n. p●q ϵ 𝐂❨n❩ → (p●b)●(𝗱m◗q) ϵ 𝐂❨n❩.
+#b #m #Hm #p #q elim q -q
+[ #n #H0 <list_append_assoc
+  /3 width=1 by pcc_append_bi, pcc_d_dx/
+| * [ #k ] #q #IH #n #H0
+  [ lapply (pcc_inv_d_dx … H0) -H0 #H0
+    /3 width=1 by pcc_d_dx/
+  | elim (pcc_inv_L_dx … H0) -H0 #H0 #Hn >Hn -Hn
+    /3 width=1 by pcc_L_dx/
+  | lapply (pcc_inv_A_dx … H0) -H0 #H0
+    /3 width=1 by pcc_A_dx/
+  | lapply (pcc_inv_S_dx … H0) -H0 #H0
+    /3 width=1 by pcc_S_dx/
+  ]
+]
+qed.
+
+(* Advanced constructions ***************************************************)
+
+lemma pcc_d (m1) (m2) (p) (q) (n):
+      p●𝗱m1◗𝗱m2◗q ϵ 𝐂❨n❩ → p●𝗱(m2+m1)◗q ϵ 𝐂❨n❩.
+#m1 #m2 #p #q elim q -q
+[ #n #H0
+  lapply (pcc_inv_d_dx … H0) -H0 #H0
+  lapply (pcc_inv_d_dx … H0) -H0 #H0
+  /2 width=1 by pcc_d_dx/
+| * [ #k ] #q #IH #n #H0
+  [ lapply (pcc_inv_d_dx … H0) -H0 #H0
+    /3 width=1 by pcc_d_dx/
+  | elim (pcc_inv_L_dx … H0) -H0 #H0 #Hn >Hn -Hn
+    /3 width=1 by pcc_L_dx/
+  | lapply (pcc_inv_A_dx … H0) -H0 #H0
+    /3 width=1 by pcc_A_dx/
+  | lapply (pcc_inv_S_dx … H0) -H0 #H0
+    /3 width=1 by pcc_S_dx/
+  ]
+]
+qed.
+
+lemma pcc_L (p) (q) (n):
+      p●q ϵ 𝐂❨n❩ → (p◖𝗟)●𝗱(⁤𝟏)◗q ϵ 𝐂❨n❩.
+#p #q elim q -q
+[ #n #H0 <list_append_rcons_sn
+  /3 width=1 by pcc_L_dx, pcc_d_dx/
+| * [ #k ] #q #IH #n #H0
+  [ lapply (pcc_inv_d_dx … H0) -H0 #H0
+    /3 width=1 by pcc_d_dx/
+  | elim (pcc_inv_L_dx … H0) -H0 #H0 #Hn >Hn -Hn
+    /3 width=1 by pcc_L_dx/
+  | lapply (pcc_inv_A_dx … H0) -H0 #H0
+    /3 width=1 by pcc_A_dx/
+  | lapply (pcc_inv_S_dx … H0) -H0 #H0
+    /3 width=1 by pcc_S_dx/
+  ]
+]
+qed.
+
+lemma pcc_A (p) (q) (n):
+      p●q ϵ 𝐂❨n❩ → (p◖𝗔)●q ϵ 𝐂❨n❩.
+#p #q elim q -q
+[ /2 width=1 by pcc_A_dx/
+| * [ #k ] #q #IH #n #H0
+  [ lapply (pcc_inv_d_dx … H0) -H0 #H0
+    /3 width=1 by pcc_d_dx/
+  | elim (pcc_inv_L_dx … H0) -H0 #H0 #Hn >Hn -Hn
+    /3 width=1 by pcc_L_dx/
+  | lapply (pcc_inv_A_dx … H0) -H0 #H0
+    /3 width=1 by pcc_A_dx/
+  | lapply (pcc_inv_S_dx … H0) -H0 #H0
+    /3 width=1 by pcc_S_dx/
+  ]
+]
+qed.
+
+lemma pcc_S (p) (q) (n):
+      p●q ϵ 𝐂❨n❩ → (p◖𝗦)●q ϵ 𝐂❨n❩.
+#p #q elim q -q
+[ /2 width=1 by pcc_S_dx/
+| * [ #k ] #q #IH #n #H0
+  [ lapply (pcc_inv_d_dx … H0) -H0 #H0
+    /3 width=1 by pcc_d_dx/
+  | elim (pcc_inv_L_dx … H0) -H0 #H0 #Hn >Hn -Hn
+    /3 width=1 by pcc_L_dx/
+  | lapply (pcc_inv_A_dx … H0) -H0 #H0
+    /3 width=1 by pcc_A_dx/
+  | lapply (pcc_inv_S_dx … H0) -H0 #H0
+    /3 width=1 by pcc_S_dx/
+  ]
+]
 qed.
 
 (* Constructions with path_lcons ********************************************)
