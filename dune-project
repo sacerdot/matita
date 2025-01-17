@@ -4,7 +4,7 @@
 (name matita)
 
 ; Remember to change manually also matita/help/C/version.txt.in
-(version 0.99.5)
+(version 0.99.6)
 
 (generate_opam_files true)
 
@@ -40,7 +40,7 @@
    (cairo2 (>= 0.6.4))
    dune-build-info
    dune-site
-   (camlp5 (>= 8.00.04)))
+   (camlp5 (>= 8.03.00)))
  (tags
   ("interactive theorem proving" "calculus of constructions"))
  (sites (share myshare)))

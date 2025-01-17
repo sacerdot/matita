@@ -1,3 +1,6 @@
+0.99.6 - 13/01/2024 - beta version for the 1.x series
+	* ported to camlp5 >= 8.03.00
+
 0.99.5 - 21/02/2022 - beta version for the 1.x series
 	* ported to ocaml 4.14.1
 	* uses sedlex in place of ulex-camlp5

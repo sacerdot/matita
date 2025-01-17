@@ -119,6 +119,7 @@ share_root: [
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/sqrt_1.ma" {"matita/myshare/lib/basics/core_notation/sqrt_1.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/subset_1.ma" {"matita/myshare/lib/basics/core_notation/subset_1.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/subseteq_2.ma" {"matita/myshare/lib/basics/core_notation/subseteq_2.ma"}
+  "_build/install/default/share/matita/myshare/lib/basics/core_notation/times_2.ma" {"matita/myshare/lib/basics/core_notation/times_2.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/uminus_1.ma" {"matita/myshare/lib/basics/core_notation/uminus_1.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/uparrow_1.ma" {"matita/myshare/lib/basics/core_notation/uparrow_1.ma"}
   "_build/install/default/share/matita/myshare/lib/basics/core_notation/vdash_1.ma" {"matita/myshare/lib/basics/core_notation/vdash_1.ma"}
