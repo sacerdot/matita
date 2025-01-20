@@ -58,3 +58,14 @@ lemma path_dbfr_inv_refl (t) (r) (s):
   elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
 ]
 qed-.
+
+lemma path_dbfr_inv_refl_dx (t) (r) (s):
+      r ⧸ϵ s /𝐝𝐛𝐟{t} r.
+#t #r #s * *
+[ /2 width=1 by/
+| #p #b #q #q0 #n #_ #_ #_ #_ #_ -t -s -p -b -q -n
+  >list_append_rcons_sn #H0
+  lapply (eq_inv_list_append_dx_dx_refl … (sym_eq … H0)) -H0 #H0
+  lapply (eq_inv_list_empty_rcons ??? H0) -H0 //
+]
+qed-.

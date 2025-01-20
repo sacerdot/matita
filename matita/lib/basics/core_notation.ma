@@ -186,18 +186,6 @@ notation "hvbox(a break \mod b)"
   left associative with precedence 60
 for @{ 'module $a $b }.
 
-notation < "a \frac b" 
-  non associative with precedence 90
-for @{ 'divide $a $b }.
-
-notation "a \over b" 
-  left associative with precedence 60
-for @{ 'divide $a $b }.
-
-notation "hvbox(a break / b)" 
-  left associative with precedence 60
-for @{ 'divide $a $b }.
-
 (* logical connectives ******************************************************)
 
 notation "hvbox(a break \lor b)" 

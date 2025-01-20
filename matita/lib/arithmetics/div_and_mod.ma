@@ -10,6 +10,7 @@
       V_______________________________________________________________ *)
 
 include "arithmetics/nat.ma".
+include "basics/core_notation/divide_2.ma".
 
 let rec mod_aux p m n: nat ≝
 match p with
