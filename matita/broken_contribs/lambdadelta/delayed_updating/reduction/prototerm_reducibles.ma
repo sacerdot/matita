@@ -12,21 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/xoa/ex_4_4.ma".
+include "ground/xoa/ex_1_4.ma".
+include "delayed_updating/reduction/prototerm_reducible.ma".
 include "delayed_updating/notation/functions/subset_r_1.ma".
-include "delayed_updating/syntax/path_structure.ma".
-include "delayed_updating/syntax/path_clear.ma".
-include "delayed_updating/syntax/path_balanced.ma".
-include "delayed_updating/syntax/path_closed.ma".
 
 (* SUBSET OF REDEX POINTERS *************************************************)
 
-(* Note: redex pointers (active paths) are cleared paths to reducible variables *)
-(* Note: thus we can compare them in computation steps *)
 definition prc (t): 𝒫❨ℙ❩ ≝
-           {r | ∃∃p,b,q,n. ⓪(p●𝗔◗b●𝗟◗q) = r &
-                           ⊗b ϵ 𝐁 & q ϵ 𝐂❨n❩ & (p●𝗔◗b●𝗟◗q)◖𝗱(⁤↑n) ϵ t
-           }
+           {r | ∃∃p,b,q,n. r ϵ 𝐑❨t,p,b,q,n❩}
 .
 
 interpretation
@@ -35,15 +28,21 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma prc_mk (t) (p) (b) (q) (n):
+lemma prc_mk (t) (r) (p) (b) (q) (n):
+      r ϵ 𝐑❨t,p,b,q,n❩ → r ϵ 𝐑❨t❩.
+/2 width=5 by ex1_4_intro/
+qed.
+
+lemma prc_mk_old (t) (p) (b) (q) (n):
       (p●𝗔◗b●𝗟◗q)◖𝗱(⁤↑n) ϵ t → ⊗b ϵ 𝐁 → q ϵ 𝐂❨n❩ →
       (⓪(p●𝗔◗b●𝗟◗q)) ϵ 𝐑❨t❩.
-/2 width=8 by ex4_4_intro/
+/3 width=5 by xprc_mk, prc_mk/
 qed.
 
 (* Basic destructions *******************************************************)
 
 lemma prc_des_clear (t) (r):
       r ϵ 𝐑❨t❩ → ⓪r = r.
-#t #r * #p #b #q #n #H0 #_ #_ #_ destruct //
+#t #r * #p #b #q #n
+/2 width=6 by xprc_des_clear/
 qed-.

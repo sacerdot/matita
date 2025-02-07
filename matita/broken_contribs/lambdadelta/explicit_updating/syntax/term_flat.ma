@@ -33,7 +33,7 @@ interpretation
 
 definition flattenable: relation2 (relation2 …) (relation2 …) ≝
            λR1,R2. ∀t1,t2. R1 t1 t2 → R2 (♭t1) (♭t2)
-. 
+.
 
 (* Basic constructions ******************************************************)
 

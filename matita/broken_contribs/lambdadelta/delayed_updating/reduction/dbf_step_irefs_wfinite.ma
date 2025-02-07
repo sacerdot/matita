@@ -25,9 +25,11 @@ include "delayed_updating/reduction/dbf_step.ma".
 
 (* Inversions with pirc and subsets_wfinite *********************************)
 
+(* UPDATE *)
+
 lemma dbfs_pirc_wfinite_sn (t1) (t2) (r):
       t1 ➡𝐝𝐛𝐟[r] t2 → 𝐈❨t1❩ ϵ 𝐖𝛀 → 𝐈❨t2❩ ϵ 𝐖𝛀.
-#t1 #t2 #r * #p #b #q #n #H0 #_ #_ #Hn * #_ #Ht21 #H2t1 destruct
+#t1 #t2 #r * #p #b #q #n * #H0 #_ #_ #Hn * #_ #Ht21 #H2t1 destruct
 lapply (subset_le_trans … Ht21 … (fsubst_le_sn …)) -Ht21
 [ /2 width=3 by subset_ol_i/ ] -Hn #Ht21
 lapply (subset_le_pirc_bi … Ht21) -Ht21 #Ht21

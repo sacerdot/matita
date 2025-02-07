@@ -12,16 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/term_flat_lref.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_beta.ma".
-include "explicit_updating/syntax/substitution_flat.ma".
+include "ground/subsets/subset_eq.ma".
+include "ground/subsets/subset_listed_le.ma".
+include "delayed_updating/reduction/path_dbf_residuals_le.ma".
 
-(* FLATTENING FOR SUBSTITUTION **********************************************)
+(* RESIDUALS OF A DBF-REDEX POINTER *****************************************)
 
-(* Constructions with subst_beta ********************************************)
+(* Constructions with subset_eq *********************************************)
 
-lemma subst_flat_unwind (t):
-      (𝐬❨♭t❩) ≐ ♭𝐬❨t❩.
-#t * //
+lemma path_dbfr_eq_repl (t1) (t2) (s) (r):
+      t1 ⇔ t2 → (s /𝐝𝐛𝐟{t1} r) ⇔ (s /𝐝𝐛𝐟{t2} r).
+#t1 #t2 #s #r * #Ht12 #Ht21
+/3 width=3 by path_dbfr_le_repl, conj/
+qed.
+
+lemma path_dbfr_refl (t) (r):
+      Ⓕ ⇔ (r /𝐝𝐛𝐟{t} r).
+/3 width=4 by path_dbfr_le_refl, subset_empty_le_sn, conj/
 qed.

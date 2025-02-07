@@ -12,16 +12,16 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/term_flat_lref.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_beta.ma".
-include "explicit_updating/syntax/substitution_flat.ma".
+include "ground/subsets/subset_le.ma".
+include "delayed_updating/reduction/prototerm_reducible.ma".
 
-(* FLATTENING FOR SUBSTITUTION **********************************************)
+(* EXPLICIT REDEX POINTER ***************************************************)
 
-(* Constructions with subst_beta ********************************************)
+(* Constructions with subset_le *********************************************)
 
-lemma subst_flat_unwind (t):
-      (𝐬❨♭t❩) ≐ ♭𝐬❨t❩.
-#t * //
+lemma xprc_le_repl (t1) (t2) (p) (b) (q) (n):
+      t1 ⊆ t2 → 𝐑❨t1,p,b,q,n❩ ⊆ 𝐑❨t2,p,b,q,n❩.
+#t1 #t2 #p #b #q #n #Ht12 #r
+* #Hr #Hb #Hq #Hn destruct
+/3 width=1 by xprc_mk, subset_in_le_trans/
 qed.

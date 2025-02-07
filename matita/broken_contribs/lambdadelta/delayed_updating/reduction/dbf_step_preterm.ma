@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path_balanced_structure.ma".
-include "delayed_updating/syntax/preterm_clear.ma".
+include "delayed_updating/reduction/prototerm_reducible_preterm.ma".
 include "delayed_updating/reduction/dbf_step.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
@@ -25,22 +24,22 @@ axiom dbfs_preterm_trans (t1) (t2) (r):
 
 (* Inversions with preterm **************************************************)
 
-lemma dbfs_preterm_inv_sn (t1) (t2) (p) (b) (q) (n):
-      t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[⓪(p●𝗔◗b●𝗟◗q)] t2 →
-      ⊗b ϵ 𝐁 → q ϵ 𝐂❨n❩ → (p●𝗔◗b●𝗟◗q)◖𝗱(⁤↑n) ϵ t1 →
+lemma dbfs_preterm_inv_sn (t1) (t2) (r) (p) (b) (q) (n):
+      t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 →
+      r ϵ 𝐑❨t1,p,b,q,n❩ →
       ⬕[↑(p●𝗔◗b●𝗟◗q)←(p●𝗔◗(⓪b)●𝗟◗q)●𝛕(⁤↑(♭b+n)).⋔[p◖𝗦]t1]t1 ⇔ t2.
-#t1 #t2 #p1 #b1 #q1 #n1 #Ht1
-* #p2 #b2 #q2 #n2 #H0 #Hb2 #Hq2 #Hn2 #Ht2
-#Hb1 #Hq1 #Hn1
-lapply (term_clear_inj … Ht1 … H0) -H0
-[1,2: /2 width=2 by term_in_root/ ] #H0
-lapply (term_root_post … Ht1 (p1●𝗔◗b1●𝗟◗q1) (𝗱(⁤↑n1)) (⁤↑n2) ??)
-[ <H0 ] [1,2: /2 width=2 by term_in_root/ ] -Ht1 -Hn1 -Hn2 #Hn
-lapply (eq_inv_d_bi … Hn) -Hn #Hn
-lapply (eq_inv_nsucc_bi … Hn) -Hn #Hn destruct
->path_append_pAbLq_5 in H0; >path_append_pAbLq_5 in ⊢ (%→?); #H0
-lapply (pcc_inj_L_sn … Hq1 … Hq2 ?) -Hq1 -Hq2 [ // |2,3: skip ] #Hq destruct 
-lapply (eq_inv_list_append_sn_bi … H0) -H0 #H0
-lapply (path_eq_des_pAb_bi_pbc … Hb2 Hb1 H0) -Hb2 -Hb1 #H1 destruct
-lapply (eq_inv_list_append_sn_bi … H0) -H0 #H0 destruct //
+#t1 #t2 #r #p1 #b1 #q1 #n1 #Ht1
+* #p2 #b2 #q2 #n2 #H2r #Ht12 #H1r
+lapply (subset_ol_i ???? H1r H2r) -H1r -H2r #H0
+elim (xprc_des_ol … Ht1 H0) -H0 #H1 #H2 #H3 #H4 destruct //
+qed-.
+
+(* Main inversions with preterm *********************************************)
+
+theorem dbfs_preterm_mono (t0) (t1) (t2) (r):
+        t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r] t1 → t0 ➡𝐝𝐛𝐟[r] t2 → t1 ⇔ t2.
+#t0 #t1 #t2 #r #Ht0 #Ht01
+* #p #b #q #n #Hr #Ht02
+lapply (dbfs_preterm_inv_sn … Ht0 Ht01 Hr) -Ht0 -Ht01 -Hr #Ht01
+@(subset_eq_canc_sn … Ht01 … Ht02)
 qed-.

@@ -17,7 +17,7 @@ include "explicit_updating/syntax/substitution_push.ma".
 
 (* TERM APPLICATION FOR SUBSTITUTION ****************************************)
 
-(* Source: AUT 55 (de Bruijn, 1978) *) 
+(* Source: AUT 55 (de Bruijn, 1978) *)
 rec definition subst_tapp (S:𝕊) (t:𝕋) on t : 𝕋 ≝
 match t with
 [ unit     ⇒ S＠⧣❨𝟏❩

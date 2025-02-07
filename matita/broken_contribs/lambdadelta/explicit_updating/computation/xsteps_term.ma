@@ -54,7 +54,7 @@ lemma xsteps_term_appl_bi (R) (v1) (v2) (t1) (t2):
   ]
 | /3 width=5 by xstep_term_side, xsteps_term_dx/
 ]
-qed. 
+qed.
 
 lemma xsteps_term_lift_bi (R) (f1) (f2) (t1) (t2):
       f1 ≐ f2 → t1 ➡*[R] t2 → 𝛗f1.t1 ➡*[R] 𝛗f2.t2.

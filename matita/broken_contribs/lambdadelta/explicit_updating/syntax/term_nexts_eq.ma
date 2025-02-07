@@ -40,7 +40,7 @@ lemma term_eq_inv_nexts_unit_bi (n1) (n2):
     elim (term_eq_inv_lift_sx … H0) -H0 #f #x #_ #_
     <term_nexts_zero #H0 destruct
   | #n2 #_ <term_nexts_succ <term_nexts_succ #H0
-    lapply (term_eq_inv_next_bi … H0) -H0 #H0 
+    lapply (term_eq_inv_next_bi … H0) -H0 #H0
     <(IH … H0) -n2 -IH //
   ]
 ]

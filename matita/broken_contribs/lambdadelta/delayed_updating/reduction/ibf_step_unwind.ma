@@ -30,14 +30,16 @@ include "delayed_updating/syntax/path_structure_help.ma".
 
 (* IMMEDIATE BALANCED FOCUSED REDUCTION *************************************)
 
+(* UPDATE *)
+
 (* Constructions with unwind2 ***********************************************)
 
 lemma ibfs_unwind_bi (f) (t1) (t2) (r):
       t1 ϵ 𝐓 →
       t1 ➡𝐢𝐛𝐟[r] t2 → ▼[f]t1 ➡𝐢𝐛𝐟[⊗r] ▼[f]t2.
 #f #t1 #t2 #r #H1t1
-* #p #b #q #n #Hr #Hb #Hn #Ht1 #Ht2 destruct
-@(ex5_4_intro … (⊗p) (⊗b) (⊗q) (♭q))
+* #p #b #q #n * #Hr #Hb #Hn #Ht1 #Ht2 destruct
+@(ex2_4_intro … (⊗p) (⊗b) (⊗q) (♭q)) [ @and4_intro ]
 [ -H1t1 -Hb -Hn -Ht1 -Ht2 //
 | -H1t1 -Hn -Ht1 -Ht2 //
 | -H1t1 -Hb -Ht1 -Ht2 //
@@ -72,7 +74,7 @@ lemma ibfs_inv_unwind2_sn (f) (t1) (u2) (s):
       t1 ϵ 𝐓 → ▼[f]t1 ➡𝐢𝐛𝐟[s] u2 →
       ∃∃t2,r. t1 ➡𝐢𝐛𝐟[r] t2 & ▼[f]t2 ⇔ u2 & ⊗r = s.
 #f #t1 #u2 #s #H1t1
-* #p #b #q #n #Hs #Hb #Hq * #x0 #H2t1 #H0 #Hu2 destruct
+* #p #b #q #n * #Hs #Hb #Hq * #x0 #H2t1 #H0 #Hu2 destruct
 elim (eq_inv_d_dx_unwind2_path … (sym_eq … H0)) -H0 #x1 #n0 #H0 #Hn0 #H1 destruct
 elim (eq_inv_append_structure … H0) -H0 #p0 #x2 #H1 #H0 #H2 destruct
 elim (eq_inv_A_sn_structure … H0) -H0 #xa #x3 #Ha #H0 #H1 destruct
@@ -88,8 +90,9 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
   let v ≝ ((p0●xa●𝗔◗(⓪b0)●(⓪xl)●𝗟◗q0)●🠡[𝐮❨⁤↑(♭b0+⫰n0)❩]⋔[p0●xa◖𝗦]t1) in
   ex3_2_intro … (⬕[↑r←v]t1) (⓪r)
 )
-[ @(ex5_4_intro … (p0●xa) (b0●xl) q0 (⫰n0)) [1,3,4: // ]
-  [ <structure_append <Hl -xl //
+[ @(ex2_4_intro … (p0●xa) (b0●xl) q0 (⫰n0)) [ @and4_intro ]
+  [ 1,3,4: //
+  | <structure_append <Hl -xl //
   | @fsubst_eq_repl [1,2: // ]
     <depth_append_empty_structure_dx [| // ]
     @pt_append_eq_repl_bi [| // ]

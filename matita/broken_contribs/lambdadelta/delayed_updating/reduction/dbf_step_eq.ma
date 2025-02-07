@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/reduction/dbf_step.ma".
+include "delayed_updating/reduction/prototerm_reducible_eq.ma".
 include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 
@@ -23,9 +24,9 @@ include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 lemma dbfs_eq_canc_sn (t) (t1) (t2) (r):
       t ⇔ t1 → t ➡𝐝𝐛𝐟[r] t2 → t1 ➡𝐝𝐛𝐟[r] t2.
 #t #t1 #t2 #r #Ht1
-* #p #b #q #n #Hr #Hb #Hn #Ht #Ht2 destruct
-@(ex5_4_intro … p … Hb Hn) [ // ] -Hb -Hn
-[ /2 width=3 by subset_in_eq_repl_fwd/
+* #p #b #q #n #Hr #Ht2
+@(dbfs_mk … p b q n)
+[ /3 width=3 by xprc_eq_repl, subset_in_eq_repl_fwd/
 | /6 width=3 by subset_eq_canc_sn, fsubst_eq_repl, pt_append_eq_repl_bi, iref_eq_repl_bi, term_grafted_eq_repl/
 ]
 qed-.

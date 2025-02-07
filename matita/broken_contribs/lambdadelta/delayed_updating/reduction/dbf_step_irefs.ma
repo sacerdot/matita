@@ -30,9 +30,11 @@ include "delayed_updating/reduction/dbf_step.ma".
 
 (* Inversions with pirc *****************************************************)
 
+(* UPDATE *)
+
 lemma dbfs_inv_nin_pirc_sn (t1) (t2) (r):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → r ⧸ϵ 𝐈❨t1❩.
-#t1 #t2 #r #H0t1 * #p #b #q #n #Hr #_ #_ #H1t1 #_
+#t1 #t2 #r #H0t1 * #p #b #q #n * #Hr #_ #_ #H1t1 #_
 * #p0 #q0 #n0 #H0 #Hq0 #H2t1 destruct
 lapply (term_clear_inj … H0t1 … H0) -H0
 [1,2: /2 width=2 by term_in_root/ ] #H0 destruct
@@ -47,7 +49,7 @@ qed-.
 
 lemma dbfs_des_in_pirc_dx (t1) (t2) (r):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → r ϵ 𝐈❨t2❩.
-#t1 #t2 #r #H0t1 * #p #b #q #n #Hr #_ #_ #Ht1 #Ht2 destruct
+#t1 #t2 #r #H0t1 * #p #b #q #n * #Hr #_ #_ #Ht1 #Ht2 destruct
 @(subset_in_eq_repl_fwd ????? (subset_eq_pirc_bi … Ht2)) -t2
 @(subset_le_pirc_bi … (fsubst_le_true …))
 [ /2 width=3 by subset_ol_i/ | >path_clear_reduct ]
@@ -56,7 +58,7 @@ qed-.
 
 lemma dbfs_des_le_pirc_bi (t1) (t2) (r):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → 𝐈❨t1❩ ⊆ 𝐈❨t2❩.
-#t1 #t2 #r0 #H0t1 * #p #b #q #n #Hr0 #_ #_ #Ht1 #Ht2 #r #Hr destruct
+#t1 #t2 #r0 #H0t1 * #p #b #q #n * #Hr0 #_ #_ #Ht1 #Ht2 #r #Hr destruct
 lapply (subset_le_pirc_bi ?? (subset_le_or_dx_and_nimp_refl_sn_bi ?? (↑(p●𝗔◗b●𝗟◗q)) …) … Hr) -Hr
 [ /2 width=1 by term_in_slice_dec/ | #Hr ]
 @(subset_in_eq_repl_fwd ????? (subset_eq_pirc_bi … Ht2)) -t2

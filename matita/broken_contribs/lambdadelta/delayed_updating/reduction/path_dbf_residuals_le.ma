@@ -12,16 +12,34 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/term_flat_lref.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_beta.ma".
-include "explicit_updating/syntax/substitution_flat.ma".
+include "delayed_updating/reduction/prototerm_reducible_le.ma".
+include "delayed_updating/reduction/path_dbf_residuals.ma".
 
-(* FLATTENING FOR SUBSTITUTION **********************************************)
+(* RESIDUALS OF A DBF-REDEX POINTER *****************************************)
 
-(* Constructions with subst_beta ********************************************)
+(* Constructions with subset_le *********************************************)
 
-lemma subst_flat_unwind (t):
-      (𝐬❨♭t❩) ≐ ♭𝐬❨t❩.
-#t * //
+lemma path_dbfr_le_repl (t1) (t2) (s) (r):
+      t1 ⊆ t2 → (s /𝐝𝐛𝐟{t1} r) ⊆ (s /𝐝𝐛𝐟{t2} r).
+#t1 #t2 #s #r #Ht12 #x * *
+[ #Hnsr #H0 destruct
+  /2 width=1 by path_dbfr_neq/
+| #p #b #q #q0 #n #Hr #Hs #Hx destruct
+  /3 width=6 by path_dbfr_side, xprc_le_repl/
+]
+qed.
+
+lemma path_dbfr_neq_le (t) (s) (r):
+      s ⧸= r → ❴s❵ ⊆ (s /𝐝𝐛𝐟{t} r).
+#t #s #r #Hs #x #Hx
+>(subset_in_inv_single ??? Hx) -x
+/2 width=1 by path_dbfr_neq/
+qed.
+
+(* Inversions with subset_le ************************************************)
+
+lemma path_dbfr_le_refl (t) (r):
+      (r /𝐝𝐛𝐟{t} r) ⊆ Ⓕ.
+#t #r #s #Hs
+elim (path_dbfr_inv_refl … Hs)
 qed.

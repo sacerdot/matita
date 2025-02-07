@@ -13,18 +13,11 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_eq.ma".
-include "delayed_updating/reduction/prototerm_reducibles.ma".
+include "delayed_updating/reduction/prototerm_reducibles_le.ma".
 
 (* SUBSET OF REDEX POINTERS *************************************************)
 
 (* Constructions with subset_eq *********************************************)
-
-lemma prc_le_repl (t1) (t2):
-      t1 ⊆ t2 → 𝐑❨t1❩ ⊆ 𝐑❨t2❩.
-#t1 #t2 #Ht12 #r
-* #p #b #q #n #Hr #Hb #Hq #Hn destruct
-/3 width=3 by prc_mk, subset_in_le_trans/
-qed.
 
 lemma prc_eq_repl (t1) (t2):
       t1 ⇔ t2 → 𝐑❨t1❩ ⇔ 𝐑❨t2❩.

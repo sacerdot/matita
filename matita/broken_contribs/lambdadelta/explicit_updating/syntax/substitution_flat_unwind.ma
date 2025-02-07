@@ -24,4 +24,4 @@ include "explicit_updating/syntax/substitution_flat.ma".
 lemma subst_flat_unwind (f):
       (𝐬❨f❩) ≐ ♭𝐬❨f❩.
 //
-qed.      
+qed.

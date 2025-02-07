@@ -31,7 +31,7 @@ inductive term_valid (b): predicate (𝕋) ≝
   term_valid b t → term_valid b (𝛗f.t)
 | term_valid_beta (v) (t):
   term_valid b v → term_valid b t → term_valid b (＠v.𝛌b.t)
-. 
+.
 
 interpretation
   "validity (term)"

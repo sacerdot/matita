@@ -12,29 +12,42 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/dbf_step.ma".
+include "delayed_updating/reduction/path_dbf_residuals_le.ma".
 include "delayed_updating/reduction/prototerm_dbf_residuals.ma".
-include "delayed_updating/notation/relations/solidi_black_rightarrow_dbf_3.ma".
 
-(* COMPLETE DEVELOPMENT FOR DELAYED BALANCED FOCUSED REDUCTION **************)
+(* RESIDUALS OF A SUBSET OF DBF-REDEX POINTERS ******************************)
 
-(* Note: the steps of a development can be performed in parallel *)
-(* Note: so a complete development corresponds to a parallel reduction *)
-inductive dbfd: 𝒫❨ℙ❩ → relation2 (𝕋) (𝕋) ≝
-| dbfd_refl (u) (t1) (t2):
-            u ⊆ Ⓕ → t1 ⇔ t2 → dbfd u t1 t2
-| dbfd_step (u) (r) (t0) (t1) (t2):
-            r ϵ u → t1 ➡𝐝𝐛𝐟[r] t0 →
-            dbfd (u /𝐝𝐛𝐟{t1} r) t0 t2 → dbfd u t1 t2
-.
+(* Inversions with subset_le ************************************************)
 
-interpretation
-  "complete development (balanced focused reduction with delayed updating)"
-  'SolidiBlackRightArrowDBF t1 u t2 = (dbfd u t1 t2).
+lemma term_dbfr_inv_empty (t) (r):
+      Ⓕ /𝐝𝐛𝐟{t} r ⊆ Ⓕ.
+#t #r #s * #x #Hx #_
+elim (subset_nin_inv_empty ?? Hx)
+qed.
+
+lemma term_dbfr_inv_single (t) (s) (r):
+      (❴s❵ /𝐝𝐛𝐟{t} r) ⊆ (s /𝐝𝐛𝐟{t} r).
+#t #s #r #p * #x #Hx #Hp
+lapply (subset_in_inv_single ??? Hx) -Hx #H0 destruct //
+qed.
 
 (* Basic constructions ******************************************************)
 
-lemma dbfd_empty (t):
-      t ⫽➡𝐝𝐛𝐟[Ⓕ] t.
-/2 width=1 by dbfd_refl/
+lemma term_dbfr_mk (t) (u) (s) (r):
+      s ϵ u → (s /𝐝𝐛𝐟{t} r) ⊆ (u /𝐝𝐛𝐟{t} r).
+/2 width=3 by ex2_intro/
+qed.
+
+lemma term_dbfr_le_repl (t1) (t2) (u1) (u2) (r):
+      t1 ⊆ t2 → u1 ⊆ u2 → (u1 /𝐝𝐛𝐟{t1} r) ⊆ (u2 /𝐝𝐛𝐟{t2} r).
+#t1 #t2 #u1 #u2 #r #Ht12 #Hu12 #s * #x #Hx #Hs
+lapply (path_dbfr_le_repl … Ht12 … Hs) -Ht12 -Hs #Hs
+@(term_dbfr_mk … Hs) -Hs
+/2 width=1 by/
+qed.
+
+lemma term_dbfr_nin (t) (u) (r):
+      r ⧸ϵ u  → u ⊆ u /𝐝𝐛𝐟{t} r.
+#t #u #r #Hr #s #Hs
+/4 width=3 by term_dbfr_mk, path_dbfr_neq/
 qed.

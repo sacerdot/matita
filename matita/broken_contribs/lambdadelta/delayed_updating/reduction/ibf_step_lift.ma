@@ -27,13 +27,15 @@ include "ground/relocation/fb/fbr_xapp_lapp.ma".
 
 (* IMMEDIATE BALANCED FOCUSED REDUCTION *************************************)
 
+(* UPDATE *)
+
 (* Constructions with lift **************************************************)
 
 theorem ibfs_lift_bi (f) (t1) (t2) (r):
         t1 ➡𝐢𝐛𝐟[r] t2 → 🠡[f]t1 ➡𝐢𝐛𝐟[r] 🠡[f]t2.
 #f #t1 #t2 #r
-* #p #b #q #n #Hr #Hb #Hn #Ht1 #Ht2 destruct
-@(ex5_4_intro … (🠡[f]p) (🠡[🠢[p◖𝗔]f]b) (🠡[🠢[p◖𝗔●b◖𝗟]f]q) n)
+* #p #b #q #n * #Hr #Hb #Hn #Ht1 #Ht2 destruct
+@(ex2_4_intro … (🠡[f]p) (🠡[🠢[p◖𝗔]f]b) (🠡[🠢[p◖𝗔●b◖𝗟]f]q) n) [ @and4_intro ]
 [ -Hb -Hn -Ht1 -Ht2 //
 | -Hn -Ht1 -Ht2 //
 | -Hb -Ht1 -Ht2 <lift_path_closed_des_gen //
@@ -71,7 +73,7 @@ lemma ibfs_inv_lift_sn (f) (t1) (u2) (s):
       (🠡[f]t1) ➡𝐢𝐛𝐟[s] u2 →
       ∃∃t2. t1 ➡𝐢𝐛𝐟[s] t2 & 🠡[f]t2 ⇔ u2.
 #f #t1 #u2 #s
-* #p #b #q #n #Hs #Hb #Hq * #x0 #Ht1 #H0 #Hu2 destruct
+* #p #b #q #n * #Hs #Hb #Hq * #x0 #Ht1 #H0 #Hu2 destruct
 elim (eq_inv_d_dx_lift_path … (sym_eq … H0)) -H0 #x1 #n0 #H0 #H1n0 #H1 destruct
 elim (eq_inv_append_lift_path … H0) -H0 #p0 #x2 #H1 #H0 #H2 destruct
 elim (eq_inv_A_sn_lift_path … H0) -H0 #x3 #H0 #H1 destruct
@@ -89,8 +91,10 @@ lapply (eq_inv_nsucc_bi … H0) -H0 #H0 destruct
   let v ≝ ((p0●𝗔◗(⓪b0)●𝗟◗q0)●🠡[𝐮❨⁤↑(♭b0+⫰n0)❩]⋔[p0◖𝗦]t1) in
   ex2_intro ??? (⬕[↑r←v]t1)
 )
-[ @(ex5_4_intro … p0 b0 q0 (⫰n0)) [1,2,3,4: // ]
-  @subset_eq_refl
+[ @(ex2_4_intro … p0 b0 q0 (⫰n0))
+  [ @and4_intro //
+  | @subset_eq_refl
+  ]
 | @(subset_eq_canc_sn … Hu2) -u2
   @(subset_eq_trans … (lift_term_fsubst …))
   @(subset_eq_canc_sn … (fsubst_and_rc_sn …))

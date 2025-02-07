@@ -12,16 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "explicit_updating/syntax/term_flat_lref.ma".
-include "explicit_updating/syntax/substitution_eq.ma".
-include "explicit_updating/syntax/substitution_beta.ma".
-include "explicit_updating/syntax/substitution_flat.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* FLATTENING FOR SUBSTITUTION **********************************************)
-
-(* Constructions with subst_beta ********************************************)
-
-lemma subst_flat_unwind (t):
-      (𝐬❨♭t❩) ≐ ♭𝐬❨t❩.
-#t * //
-qed.
+notation "hvbox( 𝐑❨ break term 46 t, break term 46 p, break term 46 b, break term 46 q, break term 46 n ❩ )"
+  non associative with precedence 70
+  for @{ 'SubsetR $t $p $b $q $n }.
