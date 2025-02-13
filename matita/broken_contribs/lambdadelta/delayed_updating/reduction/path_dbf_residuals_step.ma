@@ -14,7 +14,6 @@
 
 include "delayed_updating/syntax/path_closed_clear.ma".
 include "delayed_updating/reduction/prototerm_reducibles_eq.ma".
-include "delayed_updating/reduction/dbf_step_preterm.ma".
 include "delayed_updating/reduction/dbf_step_reducibles.ma".
 include "delayed_updating/reduction/path_dbf_residuals.ma".
 

@@ -15,9 +15,8 @@
 include "delayed_updating/syntax/path_clear_help.ma".
 include "delayed_updating/syntax/path_le.ma".
 include "delayed_updating/syntax/prototerm_clear_eq.ma".
-include "delayed_updating/syntax/preterm_clear.ma".
 include "delayed_updating/reduction/prototerm_reducibles.ma".
-include "delayed_updating/reduction/dbf_step.ma".
+include "delayed_updating/reduction/dbf_step_preterm.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 
@@ -26,8 +25,7 @@ include "delayed_updating/reduction/dbf_step.ma".
 lemma dbfs_reducible (t1) (r):
       r ϵ 𝐑❨t1❩ → ∃t2. t1 ➡𝐝𝐛𝐟[r] t2.
 #t1 #r * #p #b #q #n #Hr
-lapply (xprc_des_n … Hr) #Hn
-@ex_intro [| @(dbfs_mk … Hr) // ]
+/2 width=5 by xprc_dbfs/
 qed-.
 
 (* Inversions with prc ******************************************************)
@@ -40,25 +38,14 @@ qed-.
 
 (* Destructions with prc ****************************************************)
 
-(* UPDATE *)
-
 lemma dbfs_des_reducuble_neq (t1) (t2) (r) (s):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 →
       s ⧸= r → s ϵ 𝐑❨t1❩ → s ϵ 𝐑❨t2❩.
-#t1 #t2 #r #s #Ht1 #Ht #Hr * #p #b #q #n * #H0 #Hb #Hq #Hn destruct
-elim (dbfs_inv_reducuble … Ht) #p0 #b0 #q0 #n0 * #H0 #_ #_ #Hn0 destruct
-@(prc_mk_old … Hq) [| // ] -Hb -Hq
-@(dbfs_des_in_comp_neq … Ht) // -t2 #H0
-lapply (term_slice_des_clear_bi … (𝐞) … Ht1 … H0) -H0
-[ /2 width=2 by term_in_root_rcons/
-| /2 width=1 by term_in_comp_root/
-]
-* #s #_ #Hs >Hs in Hn; #Hn
-lapply (term_comp_append … Ht1 Hn0 Hn) -t1 #H0 destruct
-<(list_append_lcons_sn) in Hs; <list_append_empty_sn #H0
-elim (eq_inv_list_lcons_bi ????? H0) -H0 #_ #Hs -n -n0
-/2 width=1 by/
+#t1 #t2 #r #s #Ht1 #Ht #Hr * #p #b #q #n #Hs
+/3 width=10 by prc_mk, dbfs_des_xprc_neq/
 qed-.
+
+(* UPDATE *)
 
 lemma dbfs_des_reduct (t1) (t2) (r) (s):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → s ϵ 𝐑❨t2❩ →

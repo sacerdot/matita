@@ -43,6 +43,14 @@ lemma dbfs_mk (t1) (t2) (r) (p) (b) (q) (n):
 @(ex2_4_intro … Hr Ht12)
 qed.
 
+lemma xprc_dbfs (t1) (r) (p) (b) (q) (n):
+      r ϵ 𝐑❨t1,p,b,q,n❩ →
+      ∃t2. t1 ➡𝐝𝐛𝐟[r] t2.
+#t1 #r #p #b #q #n #Hr
+lapply (xprc_des_n … Hr) #Hn
+@ex_intro [| @(dbfs_mk … Hr) // ]
+qed-.
+
 (* Constructions with subset_eq *********************************************)
 
 lemma dbfs_eq_trans (t) (t1) (t2) (r):

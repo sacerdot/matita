@@ -12,30 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_le.ma".
-include "ground/subsets/subset_ol.ma".
-include "ground/subsets/subset_nimply.ma".
+include "delayed_updating/reduction/path_dbf_residuals_preterm.ma".
+include "delayed_updating/reduction/dbf_devel_eq.ma".
 
-(* DIFFERENCE FOR SUBSETS ***************************************************)
+(* COMPLETE DEVELOPMENT FOR DELAYED BALANCED FOCUSED REDUCTION **************)
 
-(* Constructions with subset_ol and subset_le *******************************)
+(* Constructions with preterm ***********************************************)
 
-lemma subset_le_nimpl_dx_fwd (A) (u) (u1) (u2):
-      u ⊆ u1 → u ⧸≬ u2 → u ⊆ u1 ⧵{A} u2.
-/4 width=3 by subset_in_nimp, subset_ol_i/
-qed.
-
-lemma subset_le_nimpl_dx_bck (A) (u) (u1) (u2):
-      u ⊆ u1 → u2 ⧸≬ u → u ⊆ u1 ⧵{A} u2.
-/4 width=3 by subset_in_nimp, subset_ol_i/
-qed.
-
-lemma subset_le_nimp_dx_refl_sn_fwd (A) (u1) (u2):
-      u1 ⧸≬{A} u2 → u1 ⊆ u1 ⧵ u2.
-/2 width=4 by subset_le_nimpl_dx_fwd/
-qed.
-
-lemma subset_le_nimp_dx_refl_sn_bck (A) (u1) (u2):
-      u2 ⧸≬{A} u1 → u1 ⊆ u1 ⧵ u2.
-/2 width=4 by subset_le_nimpl_dx_bck/
+lemma dbfs_neq_dbfd (t1) (t2) (t) (s) (r) (p) (b) (q) (n):
+      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ →
+      s ⧸= r → s ⧸ϵ ↑(⓪p◖𝗦) →
+      t1 ➡𝐝𝐛𝐟[s] t2 → t1 ⫽➡𝐝𝐛𝐟[s /𝐝𝐛𝐟{t} r] t2.
+#t1 #t2 #t #s #r #p #b #q #n #Ht #Hr #Hnsr #Hns #Ht12
+@(dbfd_step … Ht12) -Ht12
+[ /2 width=1 by path_dbfr_neq/
+| @(dbfd_eq_repl … (Ⓕ) … t2 … t2) [2:|*: // ]
+  @(subset_eq_trans … (path_dbfr_refl t1 s))
+  @(subset_eq_trans … (term_dbfr_single …))
+  @term_dbfr_eq_repl [ // ]
+  /2 width=6 by path_dbfr_neq_eq/
+]
 qed.

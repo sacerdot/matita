@@ -22,6 +22,12 @@ include "ground/subsets/subset_and_ol.ma".
 
 (* Constructions with subset_le *********************************************)
 
+lemma fsubst_le_repl (t1) (t2) (u1) (u2) (v1) (v2):
+      t1 ⊆ t2 → u1 ⇔ u2 → v1 ⊆ v2 → ⬕[u1←v1]t1 ⊆ ⬕[u2←v2]t2.
+#t1 #t2 #u1 #u2 #v1 #v2 #Ht * #H1u #H2u #Hv #r * * #H1 #H2
+/4 width=5 by subset_ol_le_repl, fsubst_in_comp_false, fsubst_in_comp_true/
+qed.
+
 lemma fsubst_le_true (t) (u) (v):
       t ≬ u → v ⊆ ⬕[u←v]t.
 /2 width=1 by fsubst_in_comp_true/
@@ -44,37 +50,23 @@ lemma fsubst_le_sn (t) (u) (v):
 /3 width=1 by subset_or_in_dx, subset_or_in_sn, conj/
 qed.
 
-(* Constructions with subset_eq *********************************************)
-(*
-lemma fsubst_pt_append_refl_sn (t) (p) (u):
-      u ⇔ (p●t)[p⋔←u].
-#t #p #u @conj #r [| * // * ]
-[ /2 width=1 by fsubst_in_comp_true/
-| * #s #_ #H1 #H0 destruct
-  elim H0 -H0 //
+lemma fsubst_and_rc_sn_sn (t) (u) (v):
+      ⬕[t∩u←v]t ⊆ ⬕[u←v]t.
+#t #u #v #r * *
+[ /3 width=1 by fsubst_in_comp_true, subset_ol_inv_and_dx_refl_sn/
+| /4 width=1 by fsubst_in_comp_false, subset_and_in/
 ]
-qed.
+qed-.
 
-lemma fsubst_empty_rc (t) (u):
-      u ⇔ t[𝐞⋔←u].
-#t #u @conj #p [| * // * ]
-[ /2 width=1 by fsubst_in_comp_true/
-| #H1p #H2p elim H2p -H2p //
+lemma fsubst_and_rc_sn_dx (t) (u) (v):
+      ⬕[u←v]t ⊆ ⬕[t∩u←v]t.
+#t #u #v #r * *
+[ /3 width=1 by subset_ol_and_dx_refl_sn, fsubst_in_comp_true/
+| #H1r #H0
+  @fsubst_in_comp_false // -H1r
+  * /2 width=1 by/
 ]
-qed.
-*)
-
-lemma fsubst_le_repl (t1) (t2) (u1) (u2) (v1) (v2):
-      t1 ⊆ t2 → u1 ⇔ u2 → v1 ⊆ v2 → ⬕[u1←v1]t1 ⊆ ⬕[u2←v2]t2.
-#t1 #t2 #u1 #u2 #v1 #v2 #Ht * #H1u #H2u #Hv #r * * #H1 #H2
-/4 width=5 by subset_ol_le_repl, fsubst_in_comp_false, fsubst_in_comp_true/
-qed.
-
-lemma fsubst_eq_repl (t1) (t2) (u1) (u2) (v1) (v2):
-      t1 ⇔ t2 → u1 ⇔ u2 → v1 ⇔ v2 → ⬕[u1←v1]t1 ⇔ ⬕[u2←v2]t2.
-#t1 #t2 #u1 #u2 #v1 #v2 * #H1t #H2t #Hu * #H1v #H2v
-/4 width=7 by conj, fsubst_le_repl, subset_eq_sym/
-qed.
+qed-.
 
 lemma fsubst_le_repl_slice (t) (u1) (u2) (p1) (p2):
       t ⊆ u1 →
@@ -88,10 +80,12 @@ lemma fsubst_le_repl_slice (t) (u1) (u2) (p1) (p2):
 ]
 qed.
 
-lemma fsubst_eq_repl_slice (t) (u1) (u2) (p1) (p2):
-      t ⊆ u1 →
-      ⬕[p1●u1←u2](p1●t) ⇔ ⬕[p2●u1←u2](p2●t).
-/3 width=2 by conj, fsubst_le_repl_slice/
+(* Constructions with subset_eq *********************************************)
+
+lemma fsubst_eq_repl (t1) (t2) (u1) (u2) (v1) (v2):
+      t1 ⇔ t2 → u1 ⇔ u2 → v1 ⇔ v2 → ⬕[u1←v1]t1 ⇔ ⬕[u2←v2]t2.
+#t1 #t2 #u1 #u2 #v1 #v2 * #H1t #H2t #Hu * #H1v #H2v
+/4 width=7 by conj, fsubst_le_repl, subset_eq_sym/
 qed.
 
 lemma fsubst_or (t1) (t2) (u) (v):
@@ -105,6 +99,22 @@ lemma fsubst_or (t1) (t2) (u) (v):
   | /3 width=1 by fsubst_in_comp_false, subset_or_in_dx/
   ]
 ]
+qed.
+
+lemma fsubst_eq (t) (u) (v):
+      t ≬ u → v ∪ (t ⧵ u) ⇔ ⬕[u←v]t.
+/3 width=1 by fsubst_le_sn, fsubst_le_dx, conj/
+qed.
+
+lemma fsubst_and_rc_sn (t) (u) (v):
+      ⬕[t∩u←v]t ⇔ ⬕[u←v]t.
+/3 width=1 by conj, fsubst_and_rc_sn_sn, fsubst_and_rc_sn_dx/
+qed.
+
+lemma fsubst_eq_repl_slice (t) (u1) (u2) (p1) (p2):
+      t ⊆ u1 →
+      ⬕[p1●u1←u2](p1●t) ⇔ ⬕[p2●u1←u2](p2●t).
+/3 width=2 by conj, fsubst_le_repl_slice/
 qed.
 
 lemma fsubst_append (t) (u) (v) (p):
@@ -136,26 +146,21 @@ lemma fsubst_lcons_neq (t) (u) (v) (l1) (l2):
 | * #Hr #_ -u -v -l2 //
 ]
 qed.
-
-lemma fsubst_and_rc_sn_sn (t) (u) (v):
-      ⬕[t∩u←v]t ⊆ ⬕[u←v]t.
-#t #u #v #r * *
-[ /3 width=1 by fsubst_in_comp_true, subset_ol_inv_and_dx_refl_sn/
-| /4 width=1 by fsubst_in_comp_false, subset_and_in/
+(*
+lemma fsubst_pt_append_refl_sn (t) (p) (u):
+      u ⇔ (p●t)[p⋔←u].
+#t #p #u @conj #r [| * // * ]
+[ /2 width=1 by fsubst_in_comp_true/
+| * #s #_ #H1 #H0 destruct
+  elim H0 -H0 //
 ]
-qed-.
-
-lemma fsubst_and_rc_sn_dx (t) (u) (v):
-      ⬕[u←v]t ⊆ ⬕[t∩u←v]t.
-#t #u #v #r * *
-[ /3 width=1 by subset_ol_and_dx_refl_sn, fsubst_in_comp_true/
-| #H1r #H0
-  @fsubst_in_comp_false // -H1r
-  * /2 width=1 by/
-]
-qed-.
-
-lemma fsubst_and_rc_sn (t) (u) (v):
-      ⬕[t∩u←v]t ⇔ ⬕[u←v]t.
-/3 width=1 by conj, fsubst_and_rc_sn_sn, fsubst_and_rc_sn_dx/
 qed.
+
+lemma fsubst_empty_rc (t) (u):
+      u ⇔ t[𝐞⋔←u].
+#t #u @conj #p [| * // * ]
+[ /2 width=1 by fsubst_in_comp_true/
+| #H1p #H2p elim H2p -H2p //
+]
+qed.
+*)

@@ -34,3 +34,11 @@ interpretation
 lemma subset_ol_i (A) (u1) (u2) (a):
       a ϵ u1 → a ϵ u2 → u1 ≬{A} u2.
 /2 width=3 by ex2_intro/ qed.
+
+(* Advanced constructions ***************************************************)
+
+lemma subset_ol_sym (A) (u1) (u2):
+      u2 ≬ u1 → u1 ≬{A} u2.
+#A #u1 #u2 * #p #H1p #H2p
+/2 width=3 by subset_ol_i/
+qed-.

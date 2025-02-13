@@ -42,7 +42,8 @@ qed-.
 
 lemma subset_eq_refl (A):
       reflexive … (subset_eq A).
-/2 width=1 by conj/ qed.
+/2 width=1 by conj/
+qed.
 
 lemma subset_eq_sym (A):
       symmetric … (subset_eq A).
@@ -59,8 +60,15 @@ qed-.
 
 theorem subset_eq_canc_sn (A):
         left_cancellable … (subset_eq A).
-/3 width=3 by subset_eq_trans, subset_eq_sym/ qed-.
+/3 width=3 by subset_eq_trans, subset_eq_sym/
+qed-.
 
 theorem subset_eq_canc_dx (A):
         right_cancellable … (subset_eq A).
-/3 width=3 by subset_eq_trans, subset_eq_sym/ qed-.
+/3 width=3 by subset_eq_trans, subset_eq_sym/
+qed-.
+
+theorem subset_eq_repl (A):
+        replace_2 … (subset_eq …) (subset_eq …) (subset_eq A).
+/3 width=3 by subset_eq_canc_sn, subset_eq_trans/
+qed-.

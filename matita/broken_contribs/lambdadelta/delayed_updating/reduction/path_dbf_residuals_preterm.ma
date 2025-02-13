@@ -12,14 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/subsets/subset_eq.ma".
 include "delayed_updating/reduction/prototerm_reducible_preterm.ma".
-include "delayed_updating/reduction/path_dbf_residuals.ma".
+include "delayed_updating/reduction/path_dbf_residuals_le.ma".
 
 (* RESIDUALS OF A DBF-REDEX POINTER *****************************************)
 
-(* Constructions with prototerm *********************************************)
+(* Destructions with preterm and subset_le **********************************)
 
-lemma path_dbfr_inv_neq_le (t) (s) (r) (p) (b) (q) (n):
+lemma path_dbfr_des_neq_le (t) (s) (r) (p) (b) (q) (n):
       t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → s ⧸ϵ ↑(⓪p◖𝗦) →
       (s /𝐝𝐛𝐟{t} r) ⊆ ❴s❵.
 #t #s #r #p #b #q #n #Ht #Hr #Hs #x * *
@@ -29,4 +30,12 @@ lemma path_dbfr_inv_neq_le (t) (s) (r) (p) (b) (q) (n):
   elim (xprc_des_ol … Ht H0) -H0 #H1 #H2 #H3 #H4 destruct
   elim Hs -Hs //
 ]
+qed.
+
+(* Constructions with preterm and subset_eq *********************************)
+
+lemma path_dbfr_neq_eq (t) (s) (r) (p) (b) (q) (n):
+      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → s ⧸= r → s ⧸ϵ ↑(⓪p◖𝗦) →
+      ❴s❵ ⇔ (s /𝐝𝐛𝐟{t} r).
+/3 width=10 by path_dbfr_des_neq_le, path_dbfr_neq_le, conj/
 qed.

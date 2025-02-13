@@ -39,6 +39,26 @@ lemma dbfd_eq_repl:
 ]
 qed-.
 
+lemma dbfd_eq_trans (t) (t1) (t2) (u):
+      t1 ⫽➡𝐝𝐛𝐟[u] t → t ⇔ t2 → t1 ⫽➡𝐝𝐛𝐟[u] t2.
+/2 width=7 by dbfd_eq_repl/
+qed-.
+
+lemma dbfd_eq_canc_dx (t) (t1) (t2) (u):
+      t1 ⫽➡𝐝𝐛𝐟[u] t → t2 ⇔ t → t1 ⫽➡𝐝𝐛𝐟[u] t2.
+/3 width=3 by dbfd_eq_trans, subset_eq_sym/
+qed-.
+
+lemma dbfd_eq_canc_sn (t) (t1) (t2) (u):
+      t ⇔ t1 → t ⫽➡𝐝𝐛𝐟[u] t2 → t1 ⫽➡𝐝𝐛𝐟[u] t2.
+/2 width=7 by dbfd_eq_repl/
+qed-.
+
+lemma eq_dbfd_trans (t) (t1) (t2) (u):
+      t1 ⇔ t → t ⫽➡𝐝𝐛𝐟[u] t2 → t1 ⫽➡𝐝𝐛𝐟[u] t2.
+/3 width=3 by dbfd_eq_canc_sn, subset_eq_sym/
+qed-.
+
 lemma dbfd_empty (t1) (t2) (t) (r):
       t1 ⇔ t2 → t1 ⫽➡𝐝𝐛𝐟[Ⓕ /𝐝𝐛𝐟{t} r] t2.
 /2 width=7 by dbfd_eq_repl/
@@ -58,14 +78,3 @@ lemma dbfs_dbfd (t1) (t2) (r):
       t1 ➡𝐝𝐛𝐟[r] t2 → t1 ⫽➡𝐝𝐛𝐟[❴r❵] t2.
 /4 width=5 by dbfd_single, dbfd_self, dbfd_step/
 qed.
-(*
-lemma pippo (t1) (t2) (t) (s) (r):
-      s ⧸= r → t1 ➡𝐝𝐛𝐟[s] t2 → t1 ⫽➡𝐝𝐛𝐟[s /𝐝𝐛𝐟{t} r] t2.
-#t1 #t2 #t #s #r #Hnsr #Ht12
-@(dbfd_step … Ht12) -Ht12
-[ /2 width=1 by path_dbfr_neq/
-| @(dbfd_eq_repl … (Ⓕ) … t2 … t2) [2:|*: // ]
-  @(subset_eq_trans … (path_dbfr_refl t1 s))
-  @(subset_eq_trans … (term_dbfr_single …))
-  @term_dbfr_eq_repl //
-*)
