@@ -14,6 +14,7 @@
 
 include "delayed_updating/reduction/dbf_step.ma".
 include "delayed_updating/reduction/ibf_step.ma".
+include "delayed_updating/reduction/preterm_focus_unwind.ma".
 
 include "delayed_updating/unwind/unwind2_prototerm_constructors.ma".
 include "delayed_updating/unwind/unwind2_preterm_fsubst.ma".
@@ -59,7 +60,7 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
 [ @(ex2_4_intro … (p0●xa) (b0●xl) q0 (⫰n0)) [ @and4_intro ]
   [ 1,3,4: //
   | <structure_append <Hl -xl //
-  | @fsubst_eq_repl [1,2: // ]
+  | @fsubst_eq_repl [ // | <brf_unfold // ]
     <depth_append_empty_structure_dx [| // ]
     @pt_append_eq_repl_bi [| // ]
     <path_clear_append //
@@ -107,7 +108,7 @@ theorem dbfs_inv_ibfs (f) (t1) (t2) (r):
         t1 ϵ 𝐓 →
         t1 ➡𝐝𝐛𝐟[r] t2 → ▼[f]t1 ➡𝐢𝐛𝐟[⊗r] ▼[f]t2.
 #f #t1 #t2 #r #H0t1
-* #p #b #q #n * #Hr #Hb #Hn #Ht1 #Ht2 destruct
+* #p #b #q #n #Hr cases Hr #H0 #Hb #Hn #Ht1 #Ht2 destruct
 @(ex2_4_intro … (⊗p) (⊗b) (⊗q) (♭q)) [ @and4_intro ]
 [ -H0t1 -Hb -Hn -Ht1 -Ht2 //
 | -H0t1 -Hn -Ht1 -Ht2 //
@@ -119,7 +120,7 @@ theorem dbfs_inv_ibfs (f) (t1) (t2) (r):
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (unwind2_term_fsubst_and_sn_sn …)) [| // ]
   @(subset_eq_canc_sn … (fsubst_and_rc_sn …))
-  @fsubst_eq_repl [ // | /2 width=2 by unwind2_slice_and_sn/ ]
+  @fsubst_eq_repl [ // | /2 width=3 by brf_unwind/ ]
   @(subset_eq_trans … (unwind2_pt_append_tpc_dx …)) [| // ]
   @pt_append_eq_repl_bi
   [ >path_structure_clear_swap //

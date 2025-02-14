@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/reduction/dbf_step.ma".
+include "delayed_updating/reduction/prototerm_focus_lift.ma".
 
 include "delayed_updating/substitution/fsubst_lift.ma".
 include "delayed_updating/substitution/fsubst_eq.ma".
