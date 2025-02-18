@@ -18,7 +18,6 @@ include "delayed_updating/reduction/preterm_focus_unwind.ma".
 
 include "delayed_updating/unwind/unwind2_prototerm_constructors.ma".
 include "delayed_updating/unwind/unwind2_preterm_fsubst.ma".
-include "delayed_updating/unwind/unwind2_preterm_eq.ma".
 include "delayed_updating/unwind/unwind2_prototerm_lift.ma".
 include "delayed_updating/unwind/unwind2_prototerm_append.ma".
 include "delayed_updating/unwind/unwind2_rmap_crux.ma".
@@ -61,7 +60,7 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
   [ 1,3,4: //
   | <structure_append <Hl -xl //
   | @fsubst_eq_repl [ // | <brf_unfold // ]
-    <depth_append_empty_structure_dx [| // ]
+    <brd_unfold <depth_append_empty_structure_dx [| // ]
     @pt_append_eq_repl_bi [| // ]
     <path_clear_append //
   ]

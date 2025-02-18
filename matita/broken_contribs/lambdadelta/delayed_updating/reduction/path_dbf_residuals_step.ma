@@ -66,7 +66,8 @@ lemma path_dbfr_step (t1) (t2) (s) (r):
     >path_clear_L_sn in H2; >path_clear_append >path_clear_A_sn >path_clear_append #H2
     lapply (term_clear_inj … Ht1 … H2) -Ht1 -H2
     [3: |*: /2 width=2 by term_in_root/ ] #H0 destruct
-    <path_append_pAbLq_10 in Hn; #Hn <path_append_pAbLq_10 <path_append_pAbLqAbLq_1
+    <path_append_pAbLq_10 in Hn; #Hn
+    <brd_unfold <path_append_pAbLq_10 <path_append_pAbLqAbLq_1
     @(prc_mk_old … n2 … Hb2) -Hb2
     [ @fsubst_in_comp_true [ @(brf_ol_sn … Hr) ] -Hr
       <path_append_pAbLqAbLq_2

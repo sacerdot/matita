@@ -12,15 +12,13 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_uni.ma".
 include "ground/xoa/ex_2_4.ma".
-include "delayed_updating/syntax/path_depth.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_clear.ma".
-include "delayed_updating/substitution/lift_prototerm.ma".
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/reduction/prototerm_reducible.ma".
 include "delayed_updating/reduction/prototerm_focus.ma".
+include "delayed_updating/reduction/prototerm_immediate.ma".
 include "delayed_updating/notation/relations/black_rightarrow_ibf_3.ma".
 
 (* IMMEDIATE BALANCED FOCUSED REDUCTION *************************************)
@@ -28,7 +26,7 @@ include "delayed_updating/notation/relations/black_rightarrow_ibf_3.ma".
 definition ibfs (r): relation2 (𝕋) (𝕋) ≝
            λt1,t2.
            ∃∃p,b,q,n. r ϵ 𝐑❨t1,p,b,q,n❩ &
-           ⬕[𝐅❨p,b,q❩←(p●𝗔◗(⓪b)●𝗟◗q)●🠡[𝐮❨⁤↑(♭b+n)❩]⋔[p◖𝗦]t1]t1 ⇔ t2
+           ⬕[𝐅❨p,b,q❩←𝐈❨t1,p,b,q,n❩]t1 ⇔ t2
 .
 
 interpretation
@@ -39,7 +37,7 @@ interpretation
 
 lemma ibfs_mk (t1) (t2) (r) (p) (b) (q) (n):
       r ϵ 𝐑❨t1,p,b,q,n❩ →
-      ⬕[𝐅❨p,b,q❩←(p●𝗔◗(⓪b)●𝗟◗q)●🠡[𝐮❨⁤↑(♭b+n)❩]⋔[p◖𝗦]t1]t1 ⇔ t2 →
+      ⬕[𝐅❨p,b,q❩←𝐈❨t1,p,b,q,n❩]t1 ⇔ t2 →
       t1 ➡𝐢𝐛𝐟[r] t2.
 #t1 #t2 #r #p #b #q #n #Hr #Ht12
 @(ex2_4_intro … Hr Ht12)

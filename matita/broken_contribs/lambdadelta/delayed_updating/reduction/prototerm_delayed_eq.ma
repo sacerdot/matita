@@ -12,31 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/ibf_step.ma".
-include "delayed_updating/reduction/prototerm_immediate_eq.ma".
-include "delayed_updating/reduction/prototerm_reducible_eq.ma".
-include "delayed_updating/substitution/fsubst_eq.ma".
+include "delayed_updating/syntax/prototerm_constructors_eq.ma".
+include "delayed_updating/reduction/prototerm_delayed.ma".
 
-(* IMMEDIATE BALANCED FOCUSED REDUCTION *************************************)
+(* BALANCED REDUCTION DELAYED SUBREDUCT *************************************)
 
 (* Constructions with subset_eq *********************************************)
 
-lemma ibfs_eq_canc_sn (t) (t1) (t2) (r):
-      t ⇔ t1 → t ➡𝐢𝐛𝐟[r] t2 → t1 ➡𝐢𝐛𝐟[r] t2.
-#t #t1 #t2 #r #Ht1
-* #p #b #q #n #Hr #Ht2
-@(ibfs_mk … p b q n)
-[ /3 width=3 by xprc_eq_repl, subset_in_eq_repl_fwd/
-| /4 width=3 by subset_eq_canc_sn, fsubst_eq_repl, bri_eq_repl_fwd/
-]
-qed-.
-
-lemma eq_ibfs_trans (t) (t1) (t2) (r):
-      t1 ⇔ t → t ➡𝐢𝐛𝐟[r] t2 → t1 ➡𝐢𝐛𝐟[r] t2.
-/3 width=3 by ibfs_eq_canc_sn, subset_eq_sym/
-qed-.
-
-lemma ibfs_eq_repl (t1) (t2) (u1) (u2) (r):
-      t1 ⇔ u1 → t2 ⇔ u2 → t1 ➡𝐢𝐛𝐟[r] t2 → u1 ➡𝐢𝐛𝐟[r] u2.
-/3 width=3 by ibfs_eq_canc_sn, ibfs_eq_trans/
-qed-.
+lemma brd_eq_repl_fwd (t1) (t2) (p) (b) (q) (n):
+      t1 ⇔ t2 → 𝐃❨t1,p,b,q,n❩ ⇔ 𝐃❨t2,p,b,q,n❩.
+#t1 #t2 #p #b #q #n
+/4 width=1 by pt_append_eq_repl_bi, iref_eq_repl_bi, term_grafted_eq_repl/
+qed.

@@ -13,13 +13,12 @@
 (**************************************************************************)
 
 include "ground/xoa/ex_2_4.ma".
-include "delayed_updating/syntax/path_depth.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_clear.ma".
-include "delayed_updating/syntax/prototerm_constructors.ma".
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/reduction/prototerm_reducible.ma".
 include "delayed_updating/reduction/prototerm_focus.ma".
+include "delayed_updating/reduction/prototerm_delayed.ma".
 include "delayed_updating/notation/relations/black_rightarrow_dbf_3.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
@@ -27,7 +26,7 @@ include "delayed_updating/notation/relations/black_rightarrow_dbf_3.ma".
 definition dbfs (r): relation2 (𝕋) (𝕋) ≝
            λt1,t2.
            ∃∃p,b,q,n. r ϵ 𝐑❨t1,p,b,q,n❩ &
-           ⬕[𝐅❨p,b,q❩←(p●𝗔◗(⓪b)●𝗟◗q)●𝛕(⁤↑(♭b+n)).⋔[p◖𝗦]t1]t1 ⇔ t2
+           ⬕[𝐅❨p,b,q❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2
 .
 
 interpretation
@@ -38,7 +37,7 @@ interpretation
 
 lemma dbfs_mk (t1) (t2) (r) (p) (b) (q) (n):
       r ϵ 𝐑❨t1,p,b,q,n❩ →
-      ⬕[𝐅❨p,b,q❩←(p●𝗔◗(⓪b)●𝗟◗q)●𝛕(⁤↑(♭b+n)).⋔[p◖𝗦]t1]t1 ⇔ t2 →
+      ⬕[𝐅❨p,b,q❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2 →
       t1 ➡𝐝𝐛𝐟[r] t2.
 #t1 #t2 #r #p #b #q #n #Hr #Ht12
 @(ex2_4_intro … Hr Ht12)
