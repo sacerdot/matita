@@ -12,22 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/notation/functions/subset_f_3.ma".
+include "ground/subsets/subset_and.ma".
+include "delayed_updating/reduction/prototerm_xfocus.ma".
+include "delayed_updating/notation/functions/subset_f_4.ma".
 
 (* BALANCED REDUCTION FOCUS *************************************************)
 
-definition brf (p) (b) (q): 𝒫❨ℙ❩ ≝
-           ↑(p●𝗔◗b●𝗟◗q)
+definition brf (t) (p) (b) (q): 𝒫❨ℙ❩ ≝
+           t ∩ 𝐅❨p,b,q❩
 .
 
 interpretation
   "balanced reduction focus (subset of paths)"
-  'SubsetF p b q = (brf p b q).
+  'SubsetF t p b q = (brf t p b q).
 
 (* Basic constructions ******************************************************)
 
-lemma brf_unfold (p) (b) (q):
-      ↑(p●𝗔◗b●𝗟◗q) = 𝐅❨p,b,q❩.
+lemma brf_unfold (t) (p) (b) (q):
+      t ∩ 𝐅❨p,b,q❩ = 𝐅❨t,p,b,q❩.
 //
 qed.

@@ -1,5 +1,11 @@
 include "delayed_updating/substitution/fsubst_fsubst.ma".
+include "delayed_updating/reduction/prototerm_focus_reducible.ma".
+include "delayed_updating/reduction/preterm_focus_reducible.ma".
+include "delayed_updating/reduction/dbf_step_preterm.ma".
+include "delayed_updating/reduction/dbf_step_focus_preterm.ma".
+(*
 include "delayed_updating/reduction/path_dbf_residuals_step.ma".
+*)
 include "delayed_updating/reduction/dbf_devel_preterm.ma".
 
 (* UPDATE *)
@@ -13,8 +19,8 @@ elim (eq_path_dec r2 r1) #Hnr12 destruct
   /3 width=3 by dbfd_self, ex2_intro/
 | lapply (dbfs_preterm_trans … Ht0 Ht01) #Ht1
   lapply (dbfs_preterm_trans … Ht0 Ht02) #Ht2
-  cases Ht01 #p1 #b1 #q1 #n1 #Hr01
-  cases Ht02 #p2 #b2 #q2 #n2 #Hr02
+  elim (dbfs_inv_brf … Ht01) #p1 #b1 #q1 #n1 #Hr01
+  elim (dbfs_inv_brf … Ht02) #p2 #b2 #q2 #n2 #Hr02
   lapply (dbfs_des_xprc_neq … Ht0 Ht01 Hnr12 Hr02) -Ht01
   lapply (dbfs_des_xprc_neq … Ht0 Ht02 … Hr01) -Ht02 [ /2 width=1 by/ ]
   #Hr21 #Hr12 #Ht02 #Ht01
@@ -26,11 +32,19 @@ elim (eq_path_dec r2 r1) #Hnr12 destruct
   | elim (xprc_dbfs … Hr21) #t4 #Ht24
     elim (xprc_dbfs … Hr12) #t3 #Ht13
     cut (t3 ⇔ t4)
-    [ -Hr01 -Hr02
-      lapply (dbfs_preterm_inv_sn … Ht1 Ht13 Hr12) -Ht13 -Hr12 #Ht13
-      lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) -Ht24 -Hr21 #Ht24
-      @(fsubst_fsubst_nol_inv_eq … Ht01 Ht02 Ht13 Ht24) -t3 -t4
-
+    [ lapply (dbfs_preterm_inv_sn_brf … Ht1 Ht13 Hr12) -Ht13 -Hr12 #Ht13
+      lapply (dbfs_preterm_inv_sn_brf … Ht2 Ht24 Hr21) -Ht24 -Hr21 #Ht24
+      @(fsubst_fsubst_nol_inv_eq ?????????????????????? Ht01 Ht02 Ht13 Ht24)
+      [ /2 width=3 by brf_ol_sn/
+      | /2 width=3 by brf_ol_sn/
+      | /3 width=16 by brf_ninj_xprc_inv_nol/
+      |
+      |
+      |
+      |
+      |
+      |
+      ]
     | #Ht34 -Hr21 -Hr12
       @(ex2_intro … t4)
       [ @(dbfd_eq_trans … Ht34)

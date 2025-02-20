@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path_closed_clear.ma".
-include "delayed_updating/reduction/prototerm_focus_reducible.ma".
+include "delayed_updating/reduction/prototerm_xfocus_reducible.ma".
 include "delayed_updating/reduction/prototerm_reducibles_eq.ma".
 include "delayed_updating/reduction/dbf_step_reducibles.ma".
 include "delayed_updating/reduction/path_dbf_residuals.ma".
@@ -52,7 +52,7 @@ lemma path_dbfr_step (t1) (t2) (s) (r):
     >path_clear_append >path_clear_append >path_clear_append
     <(path_append_pAbLq_8 ?? b2)
     @(prc_mk_old … Hb2 Hq2) -Hb2 -Hq2
-    @fsubst_in_comp_true [ @(brf_ol_sn … Hr) ] -Hr
+    @fsubst_in_comp_true [ @(brxf_ol_sn … Hr) ] -Hr
     >(list_append_rcons_sn ? l) <list_append_assoc >(path_append_pAbLq_9 ?? b2)
     @pt_append_in <list_append_rcons_dx
     @in_comp_iref_hd @term_grafted_gen //
@@ -69,7 +69,7 @@ lemma path_dbfr_step (t1) (t2) (s) (r):
     <path_append_pAbLq_10 in Hn; #Hn
     <brd_unfold <path_append_pAbLq_10 <path_append_pAbLqAbLq_1
     @(prc_mk_old … n2 … Hb2) -Hb2
-    [ @fsubst_in_comp_true [ @(brf_ol_sn … Hr) ] -Hr
+    [ @fsubst_in_comp_true [ @(brxf_ol_sn … Hr) ] -Hr
       <path_append_pAbLqAbLq_2
       @pt_append_in @in_comp_iref_hd @term_grafted_gen //
     | -t1 -p2 -b2 <path_append_pAbLq_11 >nplus_succ_dx >nplus_unit_sn

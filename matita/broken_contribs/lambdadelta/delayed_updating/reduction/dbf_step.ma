@@ -17,7 +17,7 @@ include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_clear.ma".
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/reduction/prototerm_reducible.ma".
-include "delayed_updating/reduction/prototerm_focus.ma".
+include "delayed_updating/reduction/prototerm_xfocus.ma".
 include "delayed_updating/reduction/prototerm_delayed.ma".
 include "delayed_updating/notation/relations/black_rightarrow_dbf_3.ma".
 

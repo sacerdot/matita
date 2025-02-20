@@ -12,19 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_preterm_eq.ma".
-include "delayed_updating/reduction/prototerm_reducible.ma".
-include "delayed_updating/reduction/prototerm_focus.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* BALANCED REDUCTION FOCUS *************************************************)
-
-(* Constructions with unwind ************************************************)
-
-lemma brf_unwind (f) (t) (r) (p) (b) (q) (n):
-      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ →
-      (𝐅❨▼[f]t,⊗p,⊗b,⊗q❩) ⇔ ▼[f](𝐅❨t,p,b,q❩).
-#f #t #r #p #b #q #n #Ht #H0
-lapply (xprc_des_n … H0) -H0 #Hn
-<brf_unfold <brf_unfold <brxf_unfold <brxf_unfold
-/2 width=2 by unwind2_slice_and_sn/
-qed.
+notation "hvbox( 𝐅❨ break term 46 t, break term 46 p, break term 46 b, break term 46 q ❩ )"
+  non associative with precedence 70
+  for @{ 'SubsetF $t $p $b $q }.

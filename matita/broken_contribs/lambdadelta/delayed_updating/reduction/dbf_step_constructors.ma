@@ -85,7 +85,7 @@ lemma dbfs_beta (v) (b) (t) (q) (n):
   /3 width=1 by pt_append_in, in_comp_abst_hd/
 | @subset_eq_canc_dx [3: @fsubst_appl_hd | skip ]
   @fsubst_eq_repl [ // ]
-  [ @subset_eq_canc_dx [3: @term_slice_append | skip ] <brf_unfold //
+  [ @subset_eq_canc_dx [3: @term_slice_append | skip ] <brxf_unfold //
   | @subset_eq_canc_dx [3: @pt_append_assoc | skip ]
     @pt_append_eq_repl_bi [ // ]
     @iref_eq_repl_bi [ // ] >list_cons_comm

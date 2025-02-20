@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/prototerm_reducible_preterm.ma".
+include "delayed_updating/reduction/preterm_reducible.ma".
 include "delayed_updating/reduction/dbf_step.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)

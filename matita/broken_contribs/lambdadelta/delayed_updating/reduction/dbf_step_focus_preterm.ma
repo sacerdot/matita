@@ -12,19 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/unwind/unwind2_preterm_eq.ma".
-include "delayed_updating/reduction/prototerm_reducible.ma".
-include "delayed_updating/reduction/prototerm_focus.ma".
+include "delayed_updating/reduction/preterm_reducible.ma".
+include "delayed_updating/reduction/dbf_step_focus.ma".
 
-(* BALANCED REDUCTION FOCUS *************************************************)
+(* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 
-(* Constructions with unwind ************************************************)
+(* Inversions with brf and preterm ******************************************)
 
-lemma brf_unwind (f) (t) (r) (p) (b) (q) (n):
-      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ →
-      (𝐅❨▼[f]t,⊗p,⊗b,⊗q❩) ⇔ ▼[f](𝐅❨t,p,b,q❩).
-#f #t #r #p #b #q #n #Ht #H0
-lapply (xprc_des_n … H0) -H0 #Hn
-<brf_unfold <brf_unfold <brxf_unfold <brxf_unfold
-/2 width=2 by unwind2_slice_and_sn/
-qed.
+lemma dbfs_preterm_inv_sn_brf (t1) (t2) (r) (p) (b) (q) (n):
+      t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 →
+      r ϵ 𝐑❨t1,p,b,q,n❩ →
+      ⬕[𝐅❨t1,p,b,q❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2.
+#t1 #t2 #r #p1 #b1 #q1 #n1 #Ht1 #Ht12
+elim (dbfs_inv_brf … Ht12) -Ht12 #p2 #b2 #q2 #n2 #H2r #Ht12 #H1r
+lapply (subset_ol_i ???? H1r H2r) -H1r -H2r #H0
+elim (xprc_des_ol … Ht1 H0) -H0 #H1 #H2 #H3 #H4 destruct //
+qed-.

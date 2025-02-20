@@ -20,7 +20,8 @@ include "delayed_updating/reduction/prototerm_focus.ma".
 (* Constructions with lift **************************************************)
 
 lemma brf_lift (f) (t) (p) (b) (q):
-      (🠡[f]t) ∩ 𝐅❨🠡[f]p, 🠡[🠢[p◖𝗔]f]b, 🠡[🠢[(p◖𝗔)●b◖𝗟]f]q❩ ⇔ (🠡[f]t) ∩ 🠡[f]𝐅❨p,b,q❩.
-#t #f #p #b #q
-<brf_unfold <brf_unfold //
+      (𝐅❨🠡[f]t, 🠡[f]p, 🠡[🠢[p◖𝗔]f]b, 🠡[🠢[(p◖𝗔)●b◖𝗟]f]q❩) ⇔ 🠡[f]𝐅❨t,p,b,q❩.
+#f #t #p #b #q
+<brf_unfold <brf_unfold <brxf_unfold <brxf_unfold
+//
 qed.

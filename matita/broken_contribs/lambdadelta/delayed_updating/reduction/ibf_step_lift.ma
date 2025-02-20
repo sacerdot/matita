@@ -48,7 +48,7 @@ theorem ibfs_lift_bi (f) (t1) (t2) (r):
   @(subset_eq_trans … (lift_term_fsubst …))
   @(subset_eq_trans … (fsubst_and_rc_sn …))
   @(subset_eq_canc_sn … (fsubst_and_rc_sn …))
-  @fsubst_eq_repl [ // | // ]
+  @fsubst_eq_repl [ // | @(subset_eq_canc_dx … (lift_term_and …)) // ]
   @(subset_eq_trans … (lift_pt_append …))
   @pt_append_eq_repl_bi
   [ <lift_path_append <lift_path_A_sn

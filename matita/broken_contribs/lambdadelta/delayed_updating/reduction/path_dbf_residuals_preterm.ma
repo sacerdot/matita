@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_eq.ma".
-include "delayed_updating/reduction/prototerm_reducible_preterm.ma".
+include "delayed_updating/reduction/preterm_reducible.ma".
 include "delayed_updating/reduction/path_dbf_residuals_le.ma".
 
 (* RESIDUALS OF A DBF-REDEX POINTER *****************************************)

@@ -93,7 +93,7 @@ lapply (eq_succ_depth_unwind2_rmap_Lq_pcc … H1n0) -H1n0 #H1n0
 [ @(ex2_4_intro … (p0●xa) (b0●xl) q0 (⫰n0)) [ @and4_intro ]
   [ 1,3,4: //
   | <structure_append <Hl -xl //
-  | @fsubst_eq_repl [ // | <brf_unfold // ]
+  | @fsubst_eq_repl [ // | <brxf_unfold // ]
     <bri_unfold <depth_append_empty_structure_dx [| // ]
     @pt_append_eq_repl_bi [| // ]
     <path_clear_append //

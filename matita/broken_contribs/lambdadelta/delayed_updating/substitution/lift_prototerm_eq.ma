@@ -14,6 +14,7 @@
 
 (**) (* reverse include *)
 include "ground/subsets/subset_and_eq.ma".
+include "ground/subsets/subset_and_ext.ma".
 include "ground/subsets/subset_ext_eq.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/substitution/lift_path_eq.ma".
@@ -21,23 +22,11 @@ include "delayed_updating/substitution/lift_prototerm.ma".
 
 (* LIFT FOR PROTOTERM *******************************************************)
 
-(* Constructions with subset_eq *********************************************)
+(* Constructions with subset_le *********************************************)
 
 lemma lift_term_le_repl_dx (f):
       compatible_2_fwd … (subset_le …) (subset_le …) (λt.🠡[f]t).
 /2 width=3 by subset_le_ext_f1_bi/
-qed.
-
-(* Constructions with subset_eq *********************************************)
-
-lemma lift_term_eq_repl_sn (t):
-      compatible_2_fwd … fbr_eq (subset_eq …) (λf.🠡[f]t).
-/3 width=1 by subset_eq_ext_f1_exteq, lift_path_eq_repl/
-qed.
-
-lemma lift_term_eq_repl_dx (f):
-      compatible_2_fwd … (subset_eq …) (subset_eq …) (λt.🠡[f]t).
-/2 width=1 by subset_eq_ext_f1_bi/
 qed.
 
 lemma lift_term_id_sn (t):
@@ -51,11 +40,6 @@ lemma lift_term_id_dx (t):
       (🠡[𝐢]t) ⊆ t.
 #t #p * #q #Hq #H destruct //
 qed-.
-
-lemma lift_term_id (t):
-      t ⇔ 🠡[𝐢]t.
-/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/
-qed.
 
 lemma lift_term_grafted_sn (f) (t) (p):
       (🠡[🠢[p]f]⋔[p]t) ⊆ ⋔[🠡[f]p]🠡[f]t.
@@ -72,6 +56,42 @@ lapply (lift_path_inj … Hp0) -Hp0 #Hp0 destruct
 /2 width=1 by in_comp_lift_bi/
 qed-.
 
+lemma lift_pt_append_sn (f) (p) (u):
+      (🠡[f]p)●(🠡[🠢[p]f]u) ⊆ 🠡[f](p●u).
+#f #p #u #r * #q * #s #Hs #H1 #H2 destruct
+>lift_path_append
+/3 width=1 by in_comp_lift_bi, pt_append_in, subset_in_le_trans/
+qed-.
+
+lemma lift_pt_append_dx (f) (p) (u):
+      (🠡[f](p●u)) ⊆ (🠡[f]p)●(🠡[🠢[p]f]u).
+#f #p #u #r * #q * #s #Hs #H1 #H2 destruct
+<lift_path_append
+/3 width=1 by in_comp_lift_bi, pt_append_in, subset_in_le_trans/
+qed-.
+
+(* Constructions with subset_eq *********************************************)
+
+lemma lift_term_eq_repl_sn (t):
+      compatible_2_fwd … fbr_eq (subset_eq …) (λf.🠡[f]t).
+/3 width=1 by subset_eq_ext_f1_exteq, lift_path_eq_repl/
+qed.
+
+lemma lift_term_eq_repl_dx (f):
+      compatible_2_fwd … (subset_eq …) (subset_eq …) (λt.🠡[f]t).
+/2 width=1 by subset_eq_ext_f1_bi/
+qed.
+
+lemma lift_term_and (f) (t1) (t2):
+      (🠡[f]t1) ∩ (🠡[f]t2) ⇔ 🠡[f](t1 ∩ t2).
+/3 width=2 by subset_and_ext_f1, lift_path_inj/
+qed.
+
+lemma lift_term_id (t):
+      t ⇔ 🠡[𝐢]t.
+/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/
+qed.
+
 lemma lift_term_grafted (f) (t) (p):
       (🠡[🠢[p]f]⋔[p]t) ⇔ ⋔[🠡[f]p]🠡[f]t.
 /3 width=1 by lift_term_grafted_sn, lift_term_grafted_dx, conj/ qed.
@@ -79,20 +99,6 @@ lemma lift_term_grafted (f) (t) (p):
 lemma lift_term_grafted_S (f) (t) (p):
       (🠡[🠢[p]f]⋔[p◖𝗦]t) ⇔ ⋔[(🠡[f]p)◖𝗦](🠡[f]t).
 // qed.
-
-lemma lift_pt_append_sn (f) (p) (u):
-      (🠡[f]p)●(🠡[🠢[p]f]u) ⊆ 🠡[f](p●u).
-#f #p #u #r * #q * #s #Hs #H1 #H2 destruct
->lift_path_append
-/3 width=1 by in_comp_lift_bi, pt_append_in, subset_in_le_trans/
-qed.
-
-lemma lift_pt_append_dx (f) (p) (u):
-      (🠡[f](p●u)) ⊆ (🠡[f]p)●(🠡[🠢[p]f]u).
-#f #p #u #r * #q * #s #Hs #H1 #H2 destruct
-<lift_path_append
-/3 width=1 by in_comp_lift_bi, pt_append_in, subset_in_le_trans/
-qed.
 
 lemma lift_pt_append (f) (p) (u):
       (🠡[f]p)●(🠡[🠢[p]f]u) ⇔ 🠡[f](p●u).
@@ -115,4 +121,10 @@ lemma lift_slice_and_sn (f) (t) (p):
   @subset_le_trans [| @subset_le_and_sn_refl_dx ]
   /2 width=3 by pt_append_le_repl/
 ]
+qed-.
+
+lemma lift_and_slice_dx (f) (t) (p):
+      (🠡[f]t)∩↑🠡[f]p ⇔ 🠡[f](t∩↑p).
+#f #t #p
+@(subset_eq_trans … (lift_slice_and_sn …)) //
 qed.
