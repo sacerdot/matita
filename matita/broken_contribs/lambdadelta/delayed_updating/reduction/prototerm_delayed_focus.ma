@@ -12,29 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/substitution/fsubst_eq.ma".
+include "ground/subsets/subset_le.ma".
+include "delayed_updating/syntax/path_clear_help.ma".
+include "delayed_updating/syntax/prototerm_clear.ma".
 include "delayed_updating/reduction/prototerm_focus.ma".
-include "delayed_updating/reduction/dbf_step.ma".
+include "delayed_updating/reduction/prototerm_delayed.ma".
 
-(* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
+(* BALANCED REDUCTION DELAYED SUBREDUCT *************************************)
 
 (* Constructions with brf ***************************************************)
 
-lemma dbfs_mk_brf (t1) (t2) (r) (p) (b) (q) (n):
-      r ϵ 𝐑❨t1,p,b,q,n❩ →
-      ⬕[𝐅❨t1,p,b,q❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2 →
-      t1 ➡𝐝𝐛𝐟[r] t2.
-#t1 #t2 #r #p #b #q #n #Hr #Ht12
-lapply (subset_eq_canc_sn … (fsubst_and_rc_sn …) … Ht12) -Ht12 #Ht12
-/2 width=6 by dbfs_mk/
+lemma brd_brf (t) (p) (b) (q) (n):
+      ⓪𝐃❨t,p,b,q,n❩ ⊆ ⓪𝐅❨p,b,q❩.
+#t #p #b #q #n #rz * #r <brd_unfold <brxf_unfold #Hr #H0 destruct
+elim Hr -Hr #s #Hs #H0 destruct
+<path_clear_append <path_clear_reduct >path_clear_append
+/2 width=1 by in_comp_term_clear/
 qed.
-
-(* Inversions with brf ******************************************************)
-
-lemma dbfs_inv_brf (t1) (t2) (r):
-      t1 ➡𝐝𝐛𝐟[r] t2 →
-      ∃∃p,b,q,n. r ϵ 𝐑❨t1,p,b,q,n❩ & ⬕[𝐅❨t1,p,b,q❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2.
-#t1 #t2 #r * #p #b #q #n #Hr #Ht12
-lapply (subset_eq_trans … (fsubst_and_rc_sn …) … Ht12) -Ht12 #Ht12
-/2 width=6 by ex2_4_intro/
-qed-.

@@ -12,11 +12,36 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/lib/functions.ma".
+include "ground/subsets/subset_and.ma".
 include "ground/subsets/subset_listed.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_clear.ma".
 
-(* Constructions with equivalence for prototerm *****************************)
+(* CLEARED PROTOTERM ********************************************************)
+
+(* Constructions with subset_le *********************************************)
+
+lemma clear_le_repl:
+      compatible_2_fwd … (subset_le …) (subset_le …) (term_clear).
+#t1 #t2 #Ht12 #zp * #p #Hp #H0 destruct
+/3 width=1 by in_comp_term_clear/
+qed.
+
+(* Note: the other inclusion does not hold as is *)
+lemma clear_and_dx (t1) (t2):
+      ⓪(t1 ∩ t2) ⊆ (⓪t1) ∩ (⓪t2).
+#t1 #t2 #pz * #p * #H1p #H2p #H0 destruct
+/3 width=1 by in_comp_term_clear, subset_and_in/
+qed.
+
+(* Constructions with subset_eq *********************************************)
+
+lemma clear_eq_repl:
+      compatible_2_fwd … (subset_eq …) (subset_eq …) (term_clear).
+#t1 #t2 * #Ht12 #Ht21
+/3 width=3 by clear_le_repl, conj/
+qed.
 
 lemma clear_pt_append (p) (t):
       (⓪p)●(⓪t) ⇔ ⓪(p●t).

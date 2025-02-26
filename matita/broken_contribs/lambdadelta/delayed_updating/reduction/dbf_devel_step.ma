@@ -1,11 +1,10 @@
+
 include "delayed_updating/substitution/fsubst_fsubst.ma".
 include "delayed_updating/reduction/prototerm_focus_reducible.ma".
 include "delayed_updating/reduction/preterm_focus_reducible.ma".
+include "delayed_updating/reduction/preterm_delayed_reducible.ma".
 include "delayed_updating/reduction/dbf_step_preterm.ma".
 include "delayed_updating/reduction/dbf_step_focus_preterm.ma".
-(*
-include "delayed_updating/reduction/path_dbf_residuals_step.ma".
-*)
 include "delayed_updating/reduction/dbf_devel_preterm.ma".
 
 (* UPDATE *)
@@ -38,8 +37,8 @@ elim (eq_path_dec r2 r1) #Hnr12 destruct
       [ /2 width=3 by brf_ol_sn/
       | /2 width=3 by brf_ol_sn/
       | /3 width=16 by brf_ninj_xprc_inv_nol/
-      |
-      |
+      | /2 width=10 by nol_brd_dx_xprc/
+      | /2 width=10 by nol_brd_dx_xprc/
       |
       |
       |
@@ -54,3 +53,6 @@ elim (eq_path_dec r2 r1) #Hnr12 destruct
     ]
   ]
 ]
+
+
+

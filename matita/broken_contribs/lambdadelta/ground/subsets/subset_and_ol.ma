@@ -33,6 +33,12 @@ lemma subset_ol_and_sn_refl_dx (A) (u1) (u2):
 /3 width=4 by subset_and_in, subset_ol_i/
 qed.
 
+lemma subset_ol_and_sx (A) (u) (v1) (v2):
+      (u ∩ v1) ≬ v2 → (u ∩ v1) ≬{A} (u ∩ v2).
+#A #u #v1 #v2 * #a * #Hu #Hv1 #Hv2
+/3 width=4 by subset_ol_i, subset_and_in/
+qed.
+
 (* Inversions with subset_ol ************************************************)
 
 lemma subset_ol_inv_and_dx_refl_sn (A) (u1) (u2):

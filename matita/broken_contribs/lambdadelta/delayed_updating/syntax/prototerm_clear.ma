@@ -48,8 +48,14 @@ qed.
 
 (* Inversions with path_clear ***********************************************)
 
+lemma in_comp_inv_term_empty_clear (t):
+      (𝐞) ϵ ⓪t → (𝐞) ϵ t.
+#t * #p #Hp #H0
+lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct //
+qed-.
+
 lemma term_slice_antisym_clear (p1) (p2):
-      (⓪p1) ϵ ↑⓪p2 → p2 ϵ ↑p1 → p1 = p2.
+      ⓪p1 ϵ ↑⓪p2 → p2 ϵ ↑p1 → p1 = p2.
 #p1 #p2 * #q2 #_ #Hq2 * #q1 #_ #H0 destruct
 <path_clear_append in Hq2; <list_append_assoc #H0
 lapply (eq_inv_list_append_dx_dx_refl … H0) -H0 #H0

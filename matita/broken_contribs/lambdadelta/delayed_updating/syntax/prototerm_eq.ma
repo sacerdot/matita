@@ -101,6 +101,11 @@ qed.
 
 (* Constructions with term_slice ********************************************)
 
+lemma pt_append_slice (t) (p):
+      p●t ⊆ ↑p.
+/2 width=3 by pt_append_le_repl/
+qed.
+
 lemma term_slice_append (p) (q):
       p●↑q ⇔ ↑(p●q).
 #p #q @conj #r * #s
