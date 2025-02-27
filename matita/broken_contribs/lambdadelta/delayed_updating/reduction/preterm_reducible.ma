@@ -13,15 +13,16 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_ol.ma".
+include "delayed_updating/syntax/path_le.ma".
 include "delayed_updating/syntax/path_balanced_structure.ma".
 include "delayed_updating/syntax/preterm_clear.ma".
-include "delayed_updating/reduction/prototerm_reducible.ma".
+include "delayed_updating/reduction/prototerm_reducible_clear.ma".
 
 (* EXPLICIT REDEX POINTER ***************************************************)
 
 (* Main destructions with preterm *******************************************)
 
-theorem xprc_des_ol (t) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
+theorem ol_des_xprc_bi (t) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
         t ϵ 𝐓 → 𝐑❨t,p1,b1,q1,n1❩ ≬ 𝐑❨t,p2,b2,q2,n2❩ →
         ∧∧ p1 = p2 & b1 = b2 & q1 = q2 & n1 = n2.
 #t #p1 #p2 #b1 #b2 #q1 #q2 #n1 #n2 #Ht * #r
@@ -38,4 +39,16 @@ lapply (eq_inv_list_append_sn_bi … H0) -H0 #H0
 lapply (path_eq_des_pAb_bi_pbc … Hb2 Hb1 H0) -Hb2 -Hb1 #H1 destruct
 lapply (eq_inv_list_append_sn_bi … H0) -H0 #H0 destruct
 /2 width=1 by and4_intro/
+qed-.
+
+theorem path_le_des_xprc_bi (t) (r1) (r2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
+        t ϵ 𝐓 →
+        r1 ϵ 𝐑❨t,p1,b1,q1,n1❩ → r2 ϵ 𝐑❨t,p2,b2,q2,n2❩ →
+        r1 ⊑ r2 → r1 = r2.
+#t #r1 #r2 #p1 #p2 #b1 #b2 #q1 #q2 #n1 #n2 #Ht #Hr1 #Hr2 * #s #_ #H0 destruct
+lapply (xprc_des_r_clear … Hr1) -p1 -b1 -q1 -n1 #Hr1
+lapply (xprc_des_r_clear … Hr2) -p2 -b2 -q2 -n2 #Hr2
+lapply (preterm_clear … Ht) -Ht #Ht
+lapply (term_comp_append … Ht Hr1 ?) -Hr1
+[ /2 width=2 by term_in_root/ | skip ] -t #H0 destruct //
 qed-.

@@ -50,7 +50,7 @@ lemma dbfs_preterm_inv_sn (t1) (t2) (r) (p) (b) (q) (n):
 #t1 #t2 #r #p1 #b1 #q1 #n1 #Ht1
 * #p2 #b2 #q2 #n2 #H2r #Ht12 #H1r
 lapply (subset_ol_i ???? H1r H2r) -H1r -H2r #H0
-elim (xprc_des_ol … Ht1 H0) -H0 #H1 #H2 #H3 #H4 destruct //
+elim (ol_des_xprc_bi … Ht1 H0) -H0 #H1 #H2 #H3 #H4 destruct //
 qed-.
 
 (* Main inversions with preterm *********************************************)

@@ -1,0 +1,26 @@
+include "ground/subsets/subset_and_eq.ma".
+
+lemma subst_and_fsubst_dx_nol_dx (t) (u1) (u2) (v):
+      u1 ⧸≬ (t ∩ u2) →
+      (t ∩ u2) ⊆ (⬕[u1←v]t) ∩ u2.
+#t #u1 #u2 #v #Hu #p * #H1p #H2p
+@subset_and_in //
+@fsubst_in_comp_false //
+/4 width=4 by subset_ol_i, subset_and_in/
+qed-.
+
+lemma subst_and_fsubst_dx_nol_sn (t) (u1) (u2) (v):
+      v ⧸≬ u2 →
+      (⬕[u1←v]t) ∩ u2 ⊆ (t ∩ u2).
+#t #u1 #u2 #v #Hv #p * #H1p #H2p
+@subset_and_in //
+elim H1p -H1p * // #_ #H3p
+elim Hv -Hv
+/2 width=3 by subset_ol_i/
+qed-.
+
+lemma subst_and_fsubst_dx_nol (t) (u1) (u2) (v):
+      u1 ⧸≬ (t ∩ u2) → v ⧸≬ u2 →
+      (t ∩ u2) ⇔ (⬕[u1←v]t) ∩ u2.
+/3 width=4 by subst_and_fsubst_dx_nol_sn, subst_and_fsubst_dx_nol_dx, conj/
+qed.

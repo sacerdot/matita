@@ -27,7 +27,7 @@ lemma path_dbfr_des_neq_le (t) (s) (r) (p) (b) (q) (n):
 [ #_ #H0 destruct //
 | #p0 #b0 #q0 #q1 #n0 #H0r #H1 #H2 destruct
   lapply (subset_ol_i ???? Hr H0r) -Hr -H0r #H0
-  elim (xprc_des_ol … Ht H0) -H0 #H1 #H2 #H3 #H4 destruct
+  elim (ol_des_xprc_bi … Ht H0) -H0 #H1 #H2 #H3 #H4 destruct
   elim Hs -Hs //
 ]
 qed.
