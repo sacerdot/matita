@@ -1,11 +1,32 @@
 
 include "delayed_updating/substitution/fsubst_fsubst.ma".
-(* include "delayed_updating/reduction/prototerm_focus_reducible.ma". *)
 include "delayed_updating/reduction/preterm_xfocus_reducible.ma".
 include "delayed_updating/reduction/preterm_delayed_xfocus_reducible.ma".
 include "delayed_updating/reduction/dbf_step_preterm.ma".
-(* include "delayed_updating/reduction/dbf_step_focus_preterm.ma". *)
 include "delayed_updating/reduction/dbf_devel_preterm.ma".
+(*
+lemma pippo0 (t) (q1) (q2):
+      t ϵ 𝐓 → q1 ϵ ▵t → ⓪q1 = ⓪q2 → q2 ϵ ▵t.
+#t #q1 #q2 #Ht #Hq1 #Hq
+lapply (in_comp_term_clear … Hq1) >Hq -q1 #Hq2
+*)
+
+(* t ϵ 𝐓 → *)
+
+lemma pippo1 (t) (r) (s) (p) (b) (q) (n):
+      r ϵ 𝐑❨t,p,b,q,n❩ →
+      s ϵ ▵𝐅❨p,b,q❩ → r ϵ ↑(⓪s).
+#t #r #s #p #b #q #n #Hr * #x #H0
+lapply (xprc_des_r … Hr) -Hr #Hr destruct
+lapply (term_grafted_inv_gen … H0) -H0 #H0
+elim (in_comp_brxf_inv_gen … H0) -H0 #y #H0
+lapply (eq_f ?? path_clear … H0) -H0 #H0
+
+lemma pippo2 (t) (r) (s) (p) (b) (q) (n):
+      r ϵ 𝐑❨t,p,b,q,n❩ →
+      r ⧸ϵ ↑(⓪s◖𝗦) → s◖𝗦 ⧸ϵ ▵𝐅❨p,b,q❩.
+/3 width=7 by pippo1/
+qed-.
 
 (* UPDATE *)
 
@@ -41,8 +62,9 @@ elim (eq_path_dec r2 r1) #Hnr12 destruct
       | /4 width=17 by neq_inv_xprc_bi_brxf_brd, sym_eq/
       | //
       | //
-      |
-      |
+      | @(brd_grafted_fsubst_eq_repl_fwd … Ht01)
+        [ @(pippo2 … Hr01 Hp12) 
+      | @(brd_grafted_fsubst_eq_repl_fwd … Ht02)
       ]
     | #Ht34 -Hr21 -Hr12
       @(ex2_intro … t4)
@@ -53,5 +75,3 @@ elim (eq_path_dec r2 r1) #Hnr12 destruct
     ]
   ]
 ]
-
-

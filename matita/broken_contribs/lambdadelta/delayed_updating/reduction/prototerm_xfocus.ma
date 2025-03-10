@@ -31,3 +31,12 @@ lemma brxf_unfold (p) (b) (q):
       ↑(p●𝗔◗b●𝗟◗q) = 𝐅❨p,b,q❩.
 //
 qed.
+
+(* Basic inversions *********************************************************)
+
+lemma in_comp_brxf_inv_gen (x) (p) (b) (q):
+      x ϵ 𝐅❨p,b,q❩ →
+      ∃y. (p●𝗔◗b●𝗟◗q)●y = x.
+#x #p #b #q * #y #_ #H0 destruct
+/2 width=2 by ex_intro/
+qed-.

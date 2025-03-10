@@ -13,14 +13,30 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/prototerm_constructors_eq.ma".
+include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/reduction/prototerm_delayed.ma".
 
 (* BALANCED REDUCTION DELAYED SUBREDUCT *************************************)
 
 (* Constructions with subset_eq *********************************************)
 
+lemma brd_grafted_eq_repl_fwd (t1) (t2) (p) (b) (q) (n):
+      (⋔[p◖𝗦]t1 ⇔ ⋔[p◖𝗦]t2) → 𝐃❨t1,p,b,q,n❩ ⇔ 𝐃❨t2,p,b,q,n❩.
+#t1 #t2 #p #b #q #n
+/3 width=1 by pt_append_eq_repl_bi, iref_eq_repl_bi/
+qed.
+
 lemma brd_eq_repl_fwd (t1) (t2) (p) (b) (q) (n):
       t1 ⇔ t2 → 𝐃❨t1,p,b,q,n❩ ⇔ 𝐃❨t2,p,b,q,n❩.
 #t1 #t2 #p #b #q #n
-/4 width=1 by pt_append_eq_repl_bi, iref_eq_repl_bi, term_grafted_eq_repl/
+/3 width=1 by brd_grafted_eq_repl_fwd, term_grafted_eq_repl/
+qed.
+
+lemma brd_grafted_fsubst_eq_repl_fwd (t1) (t2) (u) (v) (p) (b) (q) (n):
+      (p◖𝗦) ⧸ϵ ▵u → (p◖𝗦) ⧸ϵ ▵v → ⬕[u←v]t1 ⇔ t2 →
+      (𝐃❨t1,p,b,q,n❩ ⇔ 𝐃❨t2,p,b,q,n❩).
+#t1 #t2 #u #v #p #b #q #n #H1np #H2np #H0
+lapply (term_grafted_eq_repl … (p◖𝗦) H0) -H0 #H0
+lapply (subset_eq_trans … (grafted_fsubst … H1np H2np) … H0) -H0 -H1np -H2np #H0
+/2 width=1 by brd_grafted_eq_repl_fwd/
 qed.

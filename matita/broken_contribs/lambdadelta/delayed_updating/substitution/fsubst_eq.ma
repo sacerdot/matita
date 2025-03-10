@@ -68,6 +68,26 @@ lemma fsubst_and_rc_sn_dx (t) (u) (v):
 ]
 qed-.
 
+lemma grafted_fsubst_dx (t) (u) (v) (p):
+      p ⧸ϵ ▵u → ⋔[p]t ⊆ ⋔[p]⬕[u←v]t.
+#t #u #v #p #Hnp #r #Hr
+lapply (term_grafted_inv_gen … Hr) -Hr #Hpr
+@term_grafted_gen
+@fsubst_in_comp_false // -Hpr
+/3 width=2 by term_in_root/
+qed-.
+
+lemma grafted_fsubst_sn (t) (u) (v) (p):
+      p ⧸ϵ ▵v → ⋔[p]⬕[u←v]t ⊆ ⋔[p]t.
+#t #u #v #p #Hnp #r #Hr
+elim (term_grafted_inv_gen … Hr) -Hr *
+[ #_ #Hpr elim Hnp -Hnp
+  /2 width=2 by term_in_root/
+| #Hpr #_ -Hnp
+  /2 width=1 by term_grafted_gen/
+]
+qed-.
+
 lemma fsubst_le_repl_slice (t) (u1) (u2) (p1) (p2):
       t ⊆ u1 →
       ⬕[p1●u1←u2](p1●t) ⊆ ⬕[p2●u1←u2](p2●t).
@@ -109,6 +129,12 @@ qed.
 lemma fsubst_and_rc_sn (t) (u) (v):
       ⬕[t∩u←v]t ⇔ ⬕[u←v]t.
 /3 width=1 by conj, fsubst_and_rc_sn_sn, fsubst_and_rc_sn_dx/
+qed.
+
+lemma grafted_fsubst (t) (u) (v) (p):
+      p ⧸ϵ ▵u → p ⧸ϵ ▵v →
+      (⋔[p]t) ⇔ ⋔[p]⬕[u←v]t.
+/3 width=4 by grafted_fsubst_sn, grafted_fsubst_dx, conj/
 qed.
 
 lemma fsubst_eq_repl_slice (t) (u1) (u2) (p1) (p2):
