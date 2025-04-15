@@ -13,10 +13,9 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path_clear_help.ma".
-include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_clear.ma".
 include "delayed_updating/reduction/prototerm_reducible.ma".
-include "delayed_updating/reduction/prototerm_delayed.ma".
+include "delayed_updating/reduction/prototerm_delayed_eq.ma".
 
 (* BALANCED REDUCTION DELAYED SUBREDUCT *************************************)
 
@@ -49,3 +48,14 @@ lemma clear_brd_xprc (t1) (t2) (r) (p) (b) (q) (n):
       r● 𝛕𝟎.⓪⋔[p◖𝗦]t2 ⇔ ⓪𝐃❨t2,p,b,q,n❩.
 /3 width=6 by clear_brd_xprc_sx, clear_brd_xprc_dx, conj/
 qed.
+
+(* Destructions with xprc ***************************************************)
+
+lemma term_in_root_brd_des_xprc (t) (r) (s) (p) (b) (q) (n):
+      r ϵ 𝐑❨t,p,b,q,n❩ →
+      s ϵ ▵𝐃❨t,p,b,q,n❩ → r ϵ ⓪▵↑s.
+#t #r #s #p #b #q #n #Hr #Hs
+lapply (xprc_des_r … Hr) -Hr #Hr destruct
+>path_clear_reduct
+/4 width=3 by term_le_root_bi_brd_slice, term_in_root_slice_sym, in_comp_term_clear/
+qed-.

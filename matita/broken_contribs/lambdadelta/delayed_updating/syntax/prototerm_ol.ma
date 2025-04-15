@@ -30,6 +30,12 @@ lemma term_ol_slice_append_dx (u1) (u2) (p):
 /2 width=5 by subset_ol_eq_repl/
 qed.
 
+lemma term_ol_slice_bi (p1) (p2):
+      p1 ϵ ▵↑p2 → ↑p1 ≬ ↑p2.
+#p1 #p2 * #q1 * #q2 #_ #H0
+/2 width=3 by subset_ol_i/
+qed.
+
 (* Inversions with subset_ol ************************************************)
 
 lemma term_ol_inv_append_bi (u1) (u2) (p):
@@ -42,6 +48,12 @@ qed-.
 lemma term_ol_inv_slice_append_dx (u1) (u2) (p):
       u1 ≬ ↑(p●u2) → u1 ≬ (p●↑u2).
 /3 width=5 by subset_ol_eq_repl, subset_eq_sym/ (**) (* slow symmetry *)
+qed-.
+
+lemma term_ol_inv_slice_bi (p1) (p2):
+      ↑p1 ≬ ↑p2 → p1 ϵ ▵↑p2.
+#p1 #p2 * #r * #q1 #_ #H1 * #q2 #_ #H2 destruct
+/2 width=2 by term_in_root/
 qed-.
 
 (* Destructions with subset_ol **********************************************)

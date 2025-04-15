@@ -137,6 +137,15 @@ lemma term_slice_append_sn (p) (q1) (q2):
 #p #q1 #q2 * #r #H0 destruct //
 qed.
 
+(* Note: "p1 ϵ ▵↑p2" is "↑p1 ≬ ↑p2" i.e. "p1 and p2 are initial segments of a path" *)
+(* Note: this proves that the above relation is symmetric *)
+lemma term_in_root_slice_sym (p1) (p2):
+      p1 ϵ ▵↑p2 → p2 ϵ ▵↑p1.
+#p1 #p2 * #q1 #Hq1
+lapply (term_grafted_inv_gen … Hq1) -Hq1 * #q2 #_ #Hq2
+/2 width=2 by term_in_root/
+qed-.
+
 (* Basic destructions *******************************************************)
 
 lemma term_in_comp_pt_append_des_slice (t) (p1) (p2):

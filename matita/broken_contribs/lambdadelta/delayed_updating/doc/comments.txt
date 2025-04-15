@@ -1,0 +1,125 @@
+Hello Rob and Ferruccio,
+
+I read your paper with great interest and I have anumber of
+remarks/questions about it. What I found most interesting is the
+generalization with balanced reduction (jumping over blocks) and
+delayed updating, which culminates in the name-free version where
+there is no updating at all, but the argument term just gets appended
+to the variable leaf of the tree. This is system is called
+T^{fre+}. This is a very interesting system, and I don't yet fully see
+how the binding works here (i.e. which lambda binds which variable)
+and how the update is done by step-wise moving the internal variable
+node towards the leaves. But that's because I haven't studied that
+yet. That you have confluence and a WN-implies-SN result makes the
+system interesting. I was wondering if the following "Preservation of
+normalization" result is also the case:
+
+If M is SN(WN) under normal beta-reduction, then it is SN(WN) under
+df-reduction
+
+
+I have various points that I think would improve the paper. Let me
+summarize them point-wise. See also the scan for some more
+suggestions.
+
+1. I would focus on the T^{fre+} system, explain that, define the
+notions and prove the properties. The system now only comes at the
+very end and that's a pity.
+
+2. What exactly is the motivation to study T^{fre+} (and similarly for
+the other systems). Is it merely a "histrorical study"? I guess
+not. Of course there is a lot to say about generalizing
+beta-reduction, optimizing beta-reduction, questions about complexity
+of lambda-calculus computation etc so the paper clearly has a place
+there.
+
+3. If we want to motivate these systems from the point of view of
+efficiency, substitution should not be global, as it involves copying
+sub-terms in one step. (Which leads to the well-know situation that
+the exponential function can be computed in polynomial number of
+steps, just because we count substitution as one step.) So then one
+would want to add "sharing" to the lambda-terms, and study the
+reductions on term-graphs.  Also there have been various studies on
+this topic, for example [1,2] that should be mentioned and compared
+to.
+[1] Beta reduction is invariant, indeed., by Beniamino Accattoli and Ugo Dal Lago
+Joint Meeting of the Twenty-third EACSL Annual Conference on Computer
+Science Logic (CSL) and the Twenty-Ninth Annual ACM/IEEE Symposium on Logic
+in Computer Science (LICS), CSL-LICS ’14
+[2] Sharing Equality is Linear, by Andrea Condoluci, Beniamino Accattoli, Claudio Sacerdoti Coen
+PPDP'19: Proceedings of the 21st International Symposium on
+Principles and Practice of Declarative Programming
+
+4. There have been quite some studies on explicit updating in De
+Bruijn terms, e.g. by Lescanne and Kesner, and there have also been
+various studies of forms of generalized reduction that is related to
+balanced reduction. I know that danos and egnier call this
+"gamma-reduction" and wrote at least one paper about it.
+I am afraid that a submission of your paper will not be accepted if
+you don't have some comparison or at least a reference to these works.
+
+5. Personally, I found the presentation quite "heavy" with notations
+and notions and definitions that are often non-standard. For many
+definitions I needed to draw a (standard) lambda-term-graph to
+understand what was happening.
+
+* Definition 3.7: I have drawn lambda-term-graphs with lambda and app
+  nodes and numbered leaves with every definition. Later (in Nore 4.2)
+  it is motivated why the present is better, but I didn't get it.  It
+  also doesn't help that the Definitions are not illustrated with
+  graphics, so I needed to draw those myself.
+  
+* Viewing a tree as a set of paths is possible, but it also makes
+  things non-standard (imho) and hard to grasp and heavy in
+  notation. For example Def 3.19 uses substitution, which is defined
+  in Def 3.16, and there are actually 3 kinds of substitutions:
+  path[var:=tree], tree[var:=tree], tree[subtree:=tree].  Then for Def
+  3.19, I wonder whether this really corresponds with "usual beta",
+  because the notions are very non-standard.
+  I would have expected a simpler definition like
+
+    t[x:=u] replacing all variable nodes labelled x in tree t by tree u
+
+    @(L_x u1) u2 →β u1[x := u2]
+
+    if t1 →β t2 , then t[t1]  →β t[t2]
+    where t[t1] denotes that t1 is a subtree of t. This can also be
+    defined explicitly by induction over t (defining →β as the
+    compatible closure)
+
+  If one works with term-graphs this becomes different, as one doesn't
+  copy subtrees, but removes part of the graph and rearranges edges.
+
+* Definition 3.21 defines a generalised beta that can "jump over a
+  block", but also this is hard to grasp. Also, if b is empty, I would
+  expect to get back Def 3.19, but that's not tha case. It seems that
+  Def 3.19 has a typo and should be
+  t →β t[tree(p A Lx) := tree(p A Lx )[x := tree(p S)]].
+
+* The definition of T^{fre+} is interesting, and then it becomes
+  non-trivial to see what L binds what variable end-node.
+  I had expected to have a function that pushes an internal number
+  label down towards the leaves and performing the step-wise
+  update. But maybe that's impossible and is the local information of
+  the number (in the internal node) not enough to do the
+  updating. That would be a pity.
+  As it is defines now, one moves up from the leaf, using teh
+  algorithm described in Def 5.6, to find the L binder. That looks
+  quite inefficient in practice, because to perform the next
+  (generalized) beta-reduction, one first has to find the variables
+  that are bound by an L, which means going through the whole tree (at
+  least once).
+
+* The intuition of Definition 5.6 is lacking for me. It is described
+  operationally, but I don't "get it". Also I was missing a case for p
+  S (0,l) q or does that never happen? (I would think it can occur.)
+  I was displaying it for myself in a graphical way, which was a bit
+  helpful, but I have a eeling that there are some "invariants" being
+  maintained that could be explicit.
+  It might also be affected by the fact that the algorithm does not
+  just search for the L binder but also for the associated A-block if
+  it exists. (Are we interested in this? If we have the L binder, then
+  we can easili find the A-block, right?) So I would write an
+  algorithm that just finds the binder.
+  Also the statement about what the algorithm does is not so clear for
+  me and there is no proof of Lemma 5.8.

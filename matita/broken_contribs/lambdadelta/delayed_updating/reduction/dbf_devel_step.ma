@@ -1,32 +1,26 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
 
 include "delayed_updating/substitution/fsubst_fsubst.ma".
-include "delayed_updating/reduction/preterm_xfocus_reducible.ma".
+include "delayed_updating/reduction/prototerm_delayed_reducible.ma".
 include "delayed_updating/reduction/preterm_delayed_xfocus_reducible.ma".
 include "delayed_updating/reduction/dbf_step_preterm.ma".
 include "delayed_updating/reduction/dbf_devel_preterm.ma".
-(*
-lemma pippo0 (t) (q1) (q2):
-      t ϵ 𝐓 → q1 ϵ ▵t → ⓪q1 = ⓪q2 → q2 ϵ ▵t.
-#t #q1 #q2 #Ht #Hq1 #Hq
-lapply (in_comp_term_clear … Hq1) >Hq -q1 #Hq2
-*)
 
-(* t ϵ 𝐓 → *)
+(* COMPLETE DEVELOPMENT FOR DELAYED BALANCED FOCUSED REDUCTION **************)
 
-lemma pippo1 (t) (r) (s) (p) (b) (q) (n):
-      r ϵ 𝐑❨t,p,b,q,n❩ →
-      s ϵ ▵𝐅❨p,b,q❩ → r ϵ ↑(⓪s).
-#t #r #s #p #b #q #n #Hr * #x #H0
-lapply (xprc_des_r … Hr) -Hr #Hr destruct
-lapply (term_grafted_inv_gen … H0) -H0 #H0
-elim (in_comp_brxf_inv_gen … H0) -H0 #y #H0
-lapply (eq_f ?? path_clear … H0) -H0 #H0
-
-lemma pippo2 (t) (r) (s) (p) (b) (q) (n):
-      r ϵ 𝐑❨t,p,b,q,n❩ →
-      r ⧸ϵ ↑(⓪s◖𝗦) → s◖𝗦 ⧸ϵ ▵𝐅❨p,b,q❩.
-/3 width=7 by pippo1/
-qed-.
+(* Constructions with dbfs **************************************************)
 
 (* UPDATE *)
 
@@ -44,8 +38,8 @@ elim (eq_path_dec r2 r1) #Hnr12 destruct
   lapply (dbfs_des_xprc_neq … Ht0 Ht01 Hnr12 Hr02) -Ht01
   lapply (dbfs_des_xprc_neq … Ht0 Ht02 … Hr01) -Ht02 [ /2 width=1 by/ ]
   #Hr21 #Hr12 #Ht02 #Ht01
-  elim (term_in_slice_dec (⓪p2◖𝗦) r1) #Hp12
-  elim (term_in_slice_dec (⓪p1◖𝗦) r2) #Hp21
+  elim (term_in_comp_clear_root_slice_dec_xprc … (p2◖𝗦) … Hr21) #Hp12
+  elim (term_in_comp_clear_root_slice_dec_xprc … (p1◖𝗦) … Hr12) #Hp21
   [
   |
   |
@@ -63,14 +57,17 @@ elim (eq_path_dec r2 r1) #Hnr12 destruct
       | //
       | //
       | @(brd_grafted_fsubst_eq_repl_fwd … Ht01)
-        [ @(pippo2 … Hr01 Hp12) 
+        [ /3 width=7 by term_in_root_brxf_des_xprc/ | /3 width=7 by term_in_root_brd_des_xprc/ ]
       | @(brd_grafted_fsubst_eq_repl_fwd … Ht02)
+        [ /3 width=7 by term_in_root_brxf_des_xprc/ | /3 width=7 by term_in_root_brd_des_xprc/ ]
       ]
     | #Ht34 -Hr21 -Hr12
       @(ex2_intro … t4)
       [ @(dbfd_eq_trans … Ht34)
-        @(dbfs_neq_dbfd … Ht0 Hr01 Hnr12 Hp21 Ht13)
-      | @(dbfs_neq_dbfd … Ht0 Hr02 … Hp12 Ht24) /2 width=1 by/
+        @(dbfs_neq_dbfd … Ht0 Hr01 Hnr12 … Hp21 Ht13)
+        /2 width=6 by xprc_des_clear/
+      | @(dbfs_neq_dbfd … Ht0 Hr02 … Hp12 Ht24)
+        [ /2 width=1 by/ | /2 width=6 by xprc_des_clear/ ]
       ]
     ]
   ]

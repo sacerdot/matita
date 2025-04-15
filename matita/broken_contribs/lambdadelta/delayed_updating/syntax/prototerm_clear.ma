@@ -62,3 +62,11 @@ lapply (eq_inv_list_append_dx_dx_refl … H0) -H0 #H0
 elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 -q2
 <(eq_inv_path_empty_clear … H0) -q1 //
 qed-.
+
+lemma in_comp_slice_clear_inv_clear_sx (p1) (p2):
+      (⓪p1) ϵ ↑⓪p2 → ⓪p1 ϵ ⓪↑p2.
+#p1 #p2 * #s2 #_ #H0
+elim (eq_inv_path_append_clear … (sym_eq … H0)) -H0 #r2 #s1 #H0 #H1 #H2 destruct
+<path_clear_append <H0 -r2
+/2 width=1 by in_comp_term_clear/
+qed-.

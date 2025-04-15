@@ -12,10 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/prototerm_clear.ma".
+include "delayed_updating/syntax/prototerm_clear_ol_eq.ma".
 include "delayed_updating/reduction/prototerm_reducible.ma".
 
 (* EXPLICIT REDEX POINTER ***************************************************)
+
+(* Constructions with term_clear ********************************************)
+
+lemma term_in_comp_clear_root_slice_dec_xprc (t) (r) (p1) (p2) (b) (q) (n):
+      r ϵ 𝐑❨t,p1,b,q,n❩ →
+      Decidable (r ϵ ⓪▵↑p2).
+#t #r #p1 #p2 #b #q #n #Hr
+<(xprc_des_clear … Hr) -Hr
+@term_in_comp_clear_bi_root_slice_dec
+qed-.
 
 (* Destructions with term_clear *********************************************)
 

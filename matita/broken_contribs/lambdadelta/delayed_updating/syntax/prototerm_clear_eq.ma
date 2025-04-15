@@ -35,6 +35,40 @@ lemma clear_and_dx (t1) (t2):
 /3 width=1 by in_comp_term_clear, subset_and_in/
 qed.
 
+lemma term_le_root_clear (t):
+      (⓪▵t) ⊆ ▵⓪t.
+#t #r * #p * #q #Hq #H0 destruct
+/3 width=2 by in_comp_term_clear, term_in_root/
+qed.
+
+lemma term_le_clear_root (t):
+      ▵⓪t ⊆ ⓪▵t.
+#t #r * #s #H0
+lapply (term_grafted_inv_gen … H0) -H0 * #x #Hx #H0
+elim (eq_inv_path_append_clear … H0) -H0 #p #q #H1 #H2 #H3 destruct
+/3 width=2 by in_comp_term_clear, term_in_root/
+qed.
+
+lemma term_le_clear_slice_clear (p):
+      (⓪↑p) ⊆ ⓪↑⓪p.
+#p #r * #s * #q #_ #H1 #H2 destruct
+>path_clear_idem in ⊢ (???%); <path_clear_append
+/2 width=1 by in_comp_term_clear/
+qed.
+
+lemma term_le_clear_slice (p):
+      (⓪↑⓪p) ⊆ ⓪↑p.
+#p #r * #s * #q #_ #H1 #H2 destruct
+<path_clear_append <path_clear_idem >path_clear_append
+/2 width=1 by in_comp_term_clear/
+qed.
+
+lemma term_le_slice_clear (p):
+      (⓪↑p) ⊆ ↑⓪p.
+#p #r * #s * #q #_ #H1 #H2 destruct
+<path_clear_append //
+qed.
+
 (* Constructions with subset_eq *********************************************)
 
 lemma clear_eq_repl:
@@ -47,6 +81,12 @@ lemma clear_pt_append (p) (t):
       (⓪p)●(⓪t) ⇔ ⓪(p●t).
 #p #t @conj #r * #s * #q #Hq #H1 #H2 destruct
 /3 width=1 by pt_append_in, in_comp_term_clear/
+qed.
+
+lemma term_eq_clear_slice_clear (p):
+      (⓪↑p) ⇔ ⓪↑⓪p.
+#p @conj
+/2 width=1 by term_le_clear_slice_clear, term_le_clear_slice/
 qed.
 
 lemma clear_single (p):

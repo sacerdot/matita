@@ -1,0 +1,28 @@
+(* From: prototerm_delayed_xfocus
+
+include "delayed_updating/syntax/prototerm_eq.ma".
+
+(* Constructions with brxf and prototerm_root *******************************)
+
+lemma root_brd_le_brxf (t) (p) (b) (q) (n):
+      ▵⓪𝐃❨t,p,b,q,n❩ ⊆ ▵⓪𝐅❨p,b,q❩.
+/3 width=3 by brd_le_brxf, term_root_le_repl/
+qed.
+
+(* Inversions with brxf and prototerm_root **********************************)
+
+lemma root_brxf_nin_brd (t) (r) (p) (b) (q) (n):
+      r ⧸ϵ ▵⓪𝐅❨p,b,q❩ → r ⧸ϵ ▵⓪𝐃❨t,p,b,q,n❩.
+/3 width=3 by root_brd_le_brxf/
+qed-.
+*)
+
+(* From: prototerm_xfocus.ma
+
+(* Basic destructions *******************************************************)
+
+lemma in_comp_brxf_dec (x) (p) (b) (q):
+      Decidable (x ϵ 𝐅❨p,b,q❩).
+/2 width=1 by term_in_slice_dec/
+qed-.
+*)

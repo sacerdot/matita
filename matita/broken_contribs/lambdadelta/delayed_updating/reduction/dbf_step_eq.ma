@@ -15,7 +15,6 @@
 include "delayed_updating/reduction/dbf_step.ma".
 include "delayed_updating/reduction/prototerm_delayed_eq.ma".
 include "delayed_updating/reduction/prototerm_reducible_eq.ma".
-include "delayed_updating/substitution/fsubst_eq.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 

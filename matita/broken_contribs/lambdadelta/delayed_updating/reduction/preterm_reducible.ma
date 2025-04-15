@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_ol.ma".
 include "delayed_updating/syntax/path_le.ma".
 include "delayed_updating/syntax/path_balanced_structure.ma".
 include "delayed_updating/syntax/preterm_clear.ma".

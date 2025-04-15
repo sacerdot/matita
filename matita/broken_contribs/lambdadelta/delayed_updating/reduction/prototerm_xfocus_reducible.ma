@@ -46,3 +46,11 @@ elim (eq_inv_list_append_bi … H0) -H0 * #y
 [ #_ #H0 | #H0 #_ ] destruct
 /3 width=1 by path_le_mk, or_introl, or_intror/
 qed-.
+
+lemma term_in_root_brxf_des_xprc (t) (r) (s) (p) (b) (q) (n):
+      r ϵ 𝐑❨t,p,b,q,n❩ →
+      s ϵ ▵𝐅❨p,b,q❩ → r ϵ ⓪▵↑s.
+#t #r #s #p #b #q #n #Hr #Hs
+lapply (xprc_des_r … Hr) -Hr #Hr destruct
+/3 width=1 by in_comp_term_clear, term_in_root_slice_sym/
+qed-.

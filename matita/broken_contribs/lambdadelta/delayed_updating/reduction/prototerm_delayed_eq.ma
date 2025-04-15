@@ -18,6 +18,13 @@ include "delayed_updating/reduction/prototerm_delayed.ma".
 
 (* BALANCED REDUCTION DELAYED SUBREDUCT *************************************)
 
+(* Constructions with subset_le *********************************************)
+
+lemma term_le_root_bi_brd_slice (t) (p) (b) (q) (n):
+      ▵𝐃❨t,p,b,q,n❩ ⊆ ▵↑(p●𝗔◗⓪b●𝗟◗q).
+/3 width=3 by pt_append_slice, term_root_le_repl/
+qed.
+
 (* Constructions with subset_eq *********************************************)
 
 lemma brd_grafted_eq_repl_fwd (t1) (t2) (p) (b) (q) (n):
