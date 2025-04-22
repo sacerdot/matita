@@ -117,7 +117,7 @@ class console ~(buffer: GText.buffer) () =
     method clear () =
       buffer#delete ~start:buffer#start_iter ~stop:buffer#end_iter
     method log_callback (tag: HLog.log_tag) s =
-      let s = Pcre.replace ~pat:"\\[0;3.m([^]+)\\[0m" ~templ:"$1" s in
+      let s = Pcre2.replace ~pat:"\\[0;3.m([^]+)\\[0m" ~templ:"$1" s in
       match tag with
       | `Debug -> self#debug (s ^ "\n")
       | `Error -> self#error (s ^ "\n")
@@ -878,9 +878,9 @@ class gui () =
       let cursor_pos = string_pos `INSERT in
       let locked_pos = string_pos locked in
       let cmd =
-        Pcre.replace ~pat:"%f" ~templ:fname
-          (Pcre.replace ~pat:"%p" ~templ:cursor_pos
-            (Pcre.replace ~pat:"%l" ~templ:locked_pos
+        Pcre2.replace ~pat:"%f" ~templ:fname
+          (Pcre2.replace ~pat:"%p" ~templ:cursor_pos
+            (Pcre2.replace ~pat:"%l" ~templ:locked_pos
               cmd))
       in
       let locked_before = slice locked in

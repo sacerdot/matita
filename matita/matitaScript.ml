@@ -40,25 +40,25 @@ exception ActionCancelled of string
 let safe_substring s i j =
   try String.sub s i j with Invalid_argument _ -> assert false
 
-let heading_nl_RE = Pcre.regexp "^\\s*\n\\s*"
-let heading_nl_RE' = Pcre.regexp "^(\\s*\n\\s*)"
-let only_dust_RE = Pcre.regexp "^(\\s|\n|%%[^\n]*\n)*$"
-let multiline_RE = Pcre.regexp "^\n[^\n]+$"
-let newline_RE = Pcre.regexp "\n"
-let comment_RE = Pcre.regexp "\\(\\*(.|\n)*\\*\\)\n?" ~flags:[`UNGREEDY]
+let heading_nl_RE = Pcre2.regexp "^\\s*\n\\s*"
+let heading_nl_RE' = Pcre2.regexp "^(\\s*\n\\s*)"
+let only_dust_RE = Pcre2.regexp "^(\\s|\n|%%[^\n]*\n)*$"
+let multiline_RE = Pcre2.regexp "^\n[^\n]+$"
+let newline_RE = Pcre2.regexp "\n"
+let comment_RE = Pcre2.regexp "\\(\\*(.|\n)*\\*\\)\n?" ~flags:[`UNGREEDY]
  
 let comment str =
-  if Pcre.pmatch ~rex:multiline_RE str then
-    "\n(** " ^ (Pcre.replace ~rex:newline_RE str) ^ " *)"
+  if Pcre2.pmatch ~rex:multiline_RE str then
+    "\n(** " ^ (Pcre2.replace ~rex:newline_RE str) ^ " *)"
   else
     "\n(**\n" ^ str ^ "\n*)"
 
 let strip_comments str =
-  Pcre.qreplace ~templ:"\n" ~pat:"\n\n" (Pcre.qreplace ~rex:comment_RE str)
+  Pcre2.qreplace ~templ:"\n" ~pat:"\n\n" (Pcre2.qreplace ~rex:comment_RE str)
 ;;
                      
 let first_line s =
-  let s = Pcre.replace ~rex:heading_nl_RE s in
+  let s = Pcre2.replace ~rex:heading_nl_RE s in
   try
     let nl_pos = String.index s '\n' in
     String.sub s 0 nl_pos
@@ -134,8 +134,8 @@ let eval_nmacro _include_paths (_buffer : GText.buffer) status _unparsed_text pa
   | TA.NIntroGuess _loc ->
       let names_ref = ref [] in
       let s = NTactics.intros_tac ~names_ref [] script#status in
-      let rex = Pcre.regexp ~flags:[`MULTILINE] "\\A([\\n\\t\\r ]*).*\\Z" in
-      let nl = Pcre.replace ~rex ~templ:"$1" parsed_text in
+      let rex = Pcre2.regexp ~flags:[`MULTILINE] "\\A([\\n\\t\\r ]*).*\\Z" in
+      let nl = Pcre2.replace ~rex ~templ:"$1" parsed_text in
       [s, nl ^ "#" ^ String.concat " #" !names_ref], "", parsed_text_length
   | TA.NAutoInteractive (_loc, (None,a)) -> 
       let trace_ref = ref [] in
@@ -159,8 +159,8 @@ let eval_nmacro _include_paths (_buffer : GText.buffer) status _unparsed_text pa
                | _ -> None) 
              thms)
       in
-      let rex = Pcre.regexp ~flags:[`MULTILINE] "\\A([\\n\\t\\r ]*).*\\Z" in
-      let nl = Pcre.replace ~rex ~templ:"$1" parsed_text in
+      let rex = Pcre2.regexp ~flags:[`MULTILINE] "\\A([\\n\\t\\r ]*).*\\Z" in
+      let nl = Pcre2.replace ~rex ~templ:"$1" parsed_text in
       [s, nl ^ trace ^ thms ^ "/"], "", parsed_text_length
   | TA.NAutoInteractive (_, (Some _,_)) -> assert false
 
@@ -186,7 +186,7 @@ and eval_statement include_paths (buffer : GText.buffer) status script
   let st,unparsed_text =
     match statement with
     | `Raw text ->
-        if Pcre.pmatch ~rex:only_dust_RE text then raise Margin;
+        if Pcre2.pmatch ~rex:only_dust_RE text then raise Margin;
         let strm =
          GrafiteParser.parsable_statement status
           (Sedlexing.Utf8.from_string text) in
@@ -730,13 +730,13 @@ object (self)
     let lock = buffer#get_iter_at_mark (`MARK locked_mark) in
     let text = buffer#get_text ~start:lock ~stop:buffer#end_iter () in
     buffer#delete ~start:lock ~stop:buffer#end_iter;
-    let text = Pcre.replace ~pat:":=" ~templ:"\\def" text in
-    let text = Pcre.replace ~pat:"->" ~templ:"\\to" text in
-    let text = Pcre.replace ~pat:"=>" ~templ:"\\Rightarrow" text in
+    let text = Pcre2.replace ~pat:":=" ~templ:"\\def" text in
+    let text = Pcre2.replace ~pat:"->" ~templ:"\\to" text in
+    let text = Pcre2.replace ~pat:"=>" ~templ:"\\Rightarrow" text in
     let text = 
-      Pcre.substitute_substrings 
+      Pcre2.substitute_substrings 
         ~subst:(fun str -> 
-           let pristine = Pcre.get_substring str 0 in
+           let pristine = Pcre2.get_substring str 0 in
            let input = 
              if pristine.[0] = ' ' then
                String.sub pristine 1 (String.length pristine -1) 
@@ -961,7 +961,7 @@ object (self)
 
   method eos = 
     let rec is_there_only_comments status s = 
-      if Pcre.pmatch ~rex:only_dust_RE s then raise Margin;
+      if Pcre2.pmatch ~rex:only_dust_RE s then raise Margin;
       let strm =
        GrafiteParser.parsable_statement status
         (Sedlexing.Utf8.from_string s)in

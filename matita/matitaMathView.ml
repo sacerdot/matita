@@ -230,12 +230,12 @@ class cicBrowser_impl ~(history:MatitaTypes.mathViewer_entry MatitaMisc.history)
   ()
 =
   let uri_RE =
-    Pcre.regexp
+    Pcre2.regexp
       "^cic:/([^/]+/)*[^/]+\\.(con|ind|var)(#xpointer\\(\\d+(/\\d+)+\\))?$"
   in
-  let dir_RE = Pcre.regexp "^cic:((/([^/]+/)*[^/]+(/)?)|/|)$" in
-  let is_uri txt = Pcre.pmatch ~rex:uri_RE txt in
-  let is_dir txt = Pcre.pmatch ~rex:dir_RE txt in
+  let dir_RE = Pcre2.regexp "^cic:((/([^/]+/)*[^/]+(/)?)|/|)$" in
+  let is_uri txt = Pcre2.pmatch ~rex:uri_RE txt in
+  let is_dir txt = Pcre2.pmatch ~rex:dir_RE txt in
   let _gui = MatitaMisc.get_gui () in
   let win = new MatitaGeneratedGui.browserWin () in
   let _ = win#browserUri#misc#grab_focus () in

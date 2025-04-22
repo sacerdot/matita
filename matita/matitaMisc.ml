@@ -42,7 +42,7 @@ let is_proof_script _fname = true  (* TODO Zack *)
 let is_proof_object _fname = true  (* TODO Zack *)
 
 let append_phrase_sep s =
-  if not (Pcre.pmatch ~pat:(sprintf "%s$" BuildTimeConf.phrase_sep) s) then
+  if not (Pcre2.pmatch ~pat:(sprintf "%s$" BuildTimeConf.phrase_sep) s) then
     s ^ BuildTimeConf.phrase_sep
   else
     s
@@ -143,7 +143,7 @@ let singleton f =
 
 let image_path n = sprintf "%s/%s" BuildTimeConf.images_dir n
 
-let end_ma_RE = Pcre.regexp "\\.ma$"
+let end_ma_RE = Pcre2.regexp "\\.ma$"
 
 let list_tl_at ?(equality=(==)) e l =
   let rec aux =

@@ -35,7 +35,7 @@ open Http_getter_misc
 
 let version = Http_getter_const.version
 
-let prefix_RE = Pcre.regexp "^\\s*([^\\s]+)\\s+([^\\s]+)\\s*(.*)$"
+let prefix_RE = Pcre2.regexp "^\\s*([^\\s]+)\\s+([^\\s]+)\\s*(.*)$"
 
 let cache_dir  = lazy (normalize_dir (Helm_registry.get "getter.cache_dir"))
 let dtd_dir = lazy (
@@ -43,7 +43,7 @@ let dtd_dir = lazy (
   | None -> None
   | Some dir -> Some (normalize_dir dir))
 let dtd_base_urls  = lazy (
-  let rex = Pcre.regexp "/*$" in
+  let rex = Pcre2.regexp "/*$" in
   let raw_urls =
     match
       Helm_registry.get_list Helm_registry.string "getter.dtd_base_urls"
@@ -51,7 +51,7 @@ let dtd_base_urls  = lazy (
     | [] -> ["http://helm.cs.unibo.it/dtd"; "http://mowgli.cs.unibo.it/dtd"]
     | urls -> urls
   in
-  List.map (Pcre.replace ~rex) raw_urls)
+  List.map (Pcre2.replace ~rex) raw_urls)
 let port            = lazy (
   Helm_registry.get_opt_default Helm_registry.int ~default:58081 "getter.port")
 
@@ -64,13 +64,13 @@ let parse_prefix_attrs s =
       | s ->
           Http_getter_logger.log ("ignoring unknown attribute: " ^ s);
           acc)
-    (Pcre.split s) []
+    (Pcre2.split s) []
 
 let prefixes = lazy (
   let prefixes = Helm_registry.get_list Helm_registry.string "getter.prefix" in
   List.fold_left
     (fun acc prefix ->
-      let subs = Pcre.extract ~rex:prefix_RE prefix in
+      let subs = Pcre2.extract ~rex:prefix_RE prefix in
       try
         (subs.(1), (subs.(2), parse_prefix_attrs subs.(3))) :: acc
       with Invalid_argument _ ->

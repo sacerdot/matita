@@ -62,8 +62,8 @@ let load_root_file rootpath =
   let data = HExtlib.input_file rootpath in
   let lines = Str.split (Str.regexp "\n") data in
   let clean s =
-    Pcre.replace ~pat:"[ \t]+" ~templ:" "
-      (Pcre.replace ~pat:"^ *" (Pcre.replace ~pat:" *$" s))
+    Pcre2.replace ~pat:"[ \t]+" ~templ:" "
+      (Pcre2.replace ~pat:"^ *" (Pcre2.replace ~pat:" *$" s))
   in
   List.map
     (fun l ->
@@ -157,9 +157,9 @@ let find_roots_in_dir dir =
 ;;
 
 (* Scheme uri part as defined in URI Generic Syntax (RFC 3986) *)
-let uri_scheme_rex = Pcre.regexp "^[[:alpha:]][[:alnum:]-+.]*:"
+let uri_scheme_rex = Pcre2.regexp "^[[:alpha:]][[:alnum:]\\-+.]*:"
 
-let is_uri str = Pcre.pmatch ~rex:uri_scheme_rex str
+let is_uri str = Pcre2.pmatch ~rex:uri_scheme_rex str
 
 (* FG: factorized and improved code from matitaEngine
    Relative included paths must be absolutized w.r.t. the root path
