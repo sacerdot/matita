@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/arith/wf3_ind_plt.ma".
 include "static_2/syntax/cl_weight.ma".
 include "static_2/relocation/lifts_weight.ma".
 include "static_2/s_transition/fqu.ma".
@@ -24,7 +25,7 @@ lemma fqu_fwd_fw: ∀b,G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂[b] ❨G2,L2,T2❩ �
                   ♯❨G2,L2,T2❩ < ♯❨G1,L1,T1❩.
 #b #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -G1 -G2 -L1 -L2 -T1 -T2 //
 #I #I1 #I2 #G #L #HI12 normalize in ⊢ (?%%); -I1
-<(lifts_fwd_tw … HI12) /3 width=1 by nlt_plus_bi_sn, nlt_plus_bi_dx/
+<(lifts_fwd_tw … HI12) /3 width=1 by plt_plus_bi_dx/
 qed-.
 
 (* Advanced eliminators *****************************************************)
@@ -33,5 +34,5 @@ lemma fqu_wf_ind: ∀b. ∀Q:relation3 …. (
                      ∀G1,L1,T1. (∀G2,L2,T2. ❨G1,L1,T1❩ ⬂[b] ❨G2,L2,T2❩ → Q G2 L2 T2) →
                                  Q G1 L1 T1
                               ) → ∀G1,L1,T1. Q G1 L1 T1.
-#b #Q #HQ @(wf3_ind_nlt … fw) #x #IHx #G1 #L1 #T1 #H destruct /4 width=2 by fqu_fwd_fw/
+#b #Q #HQ @(wf3_ind_plt … fw) #x #IHx #G1 #L1 #T1 #H destruct /4 width=2 by fqu_fwd_fw/
 qed-.

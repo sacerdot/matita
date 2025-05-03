@@ -22,5 +22,5 @@ include "static_2/s_transition/fquq.ma".
 lemma fquq_fwd_fw: ∀b,G1,G2,L1,L2,T1,T2. ❨G1,L1,T1❩ ⬂⸮[b] ❨G2,L2,T2❩ →
                    ♯❨G2,L2,T2❩ ≤ ♯❨G1,L1,T1❩.
 #b #G1 #G2 #L1 #L2 #T1 #T2 #H elim H -H [2: * ]
-/3 width=2 by fqu_fwd_fw, nlt_des_le/
+/3 width=2 by fqu_fwd_fw, plt_des_le/
 qed-.

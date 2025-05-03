@@ -21,5 +21,5 @@ include "static_2/relocation/lifts.ma".
 
 (* Basic_2A1: includes: lift_fwd_tw *)
 lemma lifts_fwd_tw: ∀f,T1,T2. ⇧*[f] T1 ≘ T2 → ♯❨T1❩ = ♯❨T2❩.
-#f #T1 #T2 #H elim H -f -T1 -T2 normalize //
+#f #T1 #T2 #H elim H -f -T1 -T2 //
 qed-.
