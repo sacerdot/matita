@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/functions/zerozero_0.ma".
-include "ground/notation/functions/zeroone_0.ma".
-include "ground/notation/functions/onezero_0.ma".
+include "ground_2B/notation/functions/zerozero_0.ma".
+include "ground_2B/notation/functions/zeroone_0.ma".
+include "ground_2B/notation/functions/onezero_0.ma".
 include "ground/xoa/ex_1_2.ma".
 include "ground/generated/prod_4.ma".
 include "ground/generated/insert_eq_1.ma".

@@ -13,9 +13,9 @@
 (**************************************************************************)
 
 include "ground/xoa/ex_5_4.ma".
-include "ground/notation/functions/updownarrowstar_1.ma".
 include "ground/arith/nat_max.ma".
-include "ground/counters/rtc.ma".
+include "ground_2B/notation/functions/updownarrowstar_1.ma".
+include "ground_2B/counters/rtc.ma".
 
 (* SHIFT FOR RT-TRANSITION COUNTERS *****************************************)
 

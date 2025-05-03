@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/counters/rtc_ism_shift.ma".
-include "ground/counters/rtc_ism_max.ma".
+include "ground_2B/counters/rtc_ism_shift.ma".
+include "ground_2B/counters/rtc_ism_max.ma".
 
 (* T-BOUND RT-TRANSITION COUNTERS *******************************************)
 

@@ -14,7 +14,7 @@
 
 include "ground/xoa/ex_6_8.ma".
 include "ground/arith/nat_max.ma".
-include "ground/counters/rtc.ma".
+include "ground_2B/counters/rtc.ma".
 
 (* MAXIMUM FOR RT-TRANSITION COUNTERS ***************************************)
 

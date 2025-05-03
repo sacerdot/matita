@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/counters/rtc_shift.ma".
-include "ground/counters/rtc_max.ma".
+include "ground_2B/counters/rtc_shift.ma".
+include "ground_2B/counters/rtc_max.ma".
 
 (* MAXIMUM FOR RT-TRANSITION COUNTERS ***************************************)
 

@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/notation/relations/predicate_t_2.ma".
-include "ground/counters/rtc.ma".
+include "ground_2B/notation/relations/predicate_t_2.ma".
+include "ground_2B/counters/rtc.ma".
 
 (* T-TRANSITION COUNTERS ****************************************************)
 

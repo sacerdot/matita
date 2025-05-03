@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "ground/xoa/ex_3_2.ma".
-include "ground/counters/rtc_plus.ma".
-include "ground/counters/rtc_ism.ma".
+include "ground_2B/counters/rtc_plus.ma".
+include "ground_2B/counters/rtc_ism.ma".
 
 (* T-BOUND RT-TRANSITION COUNTERS *******************************************)
 
