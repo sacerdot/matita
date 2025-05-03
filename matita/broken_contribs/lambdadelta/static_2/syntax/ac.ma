@@ -13,8 +13,7 @@
 (**************************************************************************)
 
 include "ground/arith/nat_le.ma".
-include "static_2/notation/functions/one_0.ma".
-include "static_2/notation/functions/two_0.ma".
+include "ground/notation/functions/two_0.ma".
 include "static_2/notation/functions/omega_0.ma".
 
 (* APPLICABILITY CONDITION **************************************************)
@@ -45,9 +44,11 @@ qed.
 
 definition ac_eq (k): ac ≝ mk_ac (eq … k).
 
+(* Note: we denote "❴𝟏❵", that is "❴𝟎,𝟏❵", with "𝟐" *)
 interpretation "one (applicability domain)"
-  'Two = (ac_eq (nsucc nzero)).
+  'Two = (ac_eq (npos punit)).
 
+(* Note: we denote "❴𝟎❵" with "𝟏" *)
 interpretation "zero (applicability domain)"
   'One = (ac_eq nzero).
 

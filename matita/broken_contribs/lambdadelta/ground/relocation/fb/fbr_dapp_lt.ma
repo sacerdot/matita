@@ -38,6 +38,19 @@ lemma fbr_dapp_le (f) (p):
 /4 width=3 by fbr_dapp_increasing, ple_trans, ple_succ_bi/
 qed.
 
+(* Advanced constructions ***************************************************)
+
+lemma is_fbr_dapp_dec (f) (p2):
+      Decidable (∃p1. p2 = f＠⧣❨p1❩).
+#f #p2
+lapply (dec_plt (λp1. p2 = f＠⧣❨p1❩) … (↑p2)) [| * ]
+[ /2 width=1 by eq_pnat_dec/
+| * /3 width=2 by ex_intro, or_introl/
+| #H0 @or_intror * #i1 #Hi12 destruct
+  /3 width=3 by fbr_dapp_le, plt_succ_dx, ex2_intro/
+]
+qed-.
+
 (* Advanced inversions ******************************************************)
 
 lemma eq_inv_fbr_dapp_bi (f):

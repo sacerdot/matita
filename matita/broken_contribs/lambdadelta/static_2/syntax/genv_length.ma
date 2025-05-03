@@ -12,14 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "basics/core_notation/card_1.ma".
 include "ground/arith/nat_succ.ma".
 include "static_2/syntax/genv.ma".
 
 (* LENGTH OF A GLOBAL ENVIRONMENT *******************************************)
 
 rec definition glength G on G ≝ match G with
-[ GAtom       ⇒ 𝟎
-| GPair G _ _ ⇒ ↑(glength G)
+[ GAtom       ⇒ (𝟎)
+| GPair G _ _ ⇒ (⁤↑(glength G))
 ].
 
 interpretation "length (global environment)"

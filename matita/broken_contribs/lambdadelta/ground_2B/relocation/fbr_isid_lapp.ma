@@ -12,22 +12,24 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/sh_lt.ma".
-include "static_2/syntax/sd_d.ma".
+include "ground/relocation/fb/fbr_lapp.ma".
+include "ground_2B/relocation/fbr_isid_dapp.ma".
 
-(* SORT DEGREE **************************************************************)
+(* IDENTITY CLASS FOR FINITE RELOCATION MAPS WITH BOOLEANS ******************)
 
-(* Properties with sh_lt ****************************************************)
+(* Constructions with fbf_lapp **********************************************)
 
-lemma deg_SO_gt (h): sh_lt h →
-      ∀s1,s2. s1 < s2 → deg_SO h s1 s2 (𝟎).
-#h #Hh #s1 #s2 #Hs12 @deg_SO_zero
-#n @(nat_ind_succ … n) -n
-[ <sh_nexts_zero #H destruct
-  elim (nlt_inv_refl … Hs12)
-| #n #_ <sh_nexts_succ #H
-  lapply (sh_next_lt h Hh (⇡*[h,n]s2)) >H -H #H
-  lapply (nlt_trans … H … Hs12) -s1 #H1
-  /3 width=5 by nlt_ge_false, sh_nexts_le/ (* full auto too slow *)
-]
+lemma fbr_lapp_isid (f):
+      (∀n. n = f＠§❨n❩) → f ϵ 𝐈.
+#f #Hf
+@fbr_dapp_isid #p
+>(npsucc_pnpred … p) <fbr_dapp_succ_lapp <Hf -Hf //
 qed.
+
+(* Inversions with fbr_lapp *************************************************)
+
+lemma fbr_isid_inv_lapp (f) (n):
+      f ϵ 𝐈 → n = f＠§❨n❩.
+#f #n #Hf
+<(fbr_isid_inv_dapp … (↑n) Hf) //
+qed-.

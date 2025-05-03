@@ -31,7 +31,7 @@ lapply (sh_next_lt … Hh (⇡*[h,n]s)) #H
 lapply (nle_nlt_trans … IH H) -IH -H /2 width=2 by nlt_des_le/
 qed.
 
-lemma sh_nexts_lt (h): sh_lt h → ∀s,n. s < ⇡*[h,↑n]s.
+lemma sh_nexts_lt (h): sh_lt h → ∀s,n. s < ⇡*[h,⁤↑n]s.
 #h #Hh #s #n <sh_nexts_succ
 lapply (sh_nexts_le … Hh s n) #H
 @(nle_nlt_trans … H) /2 width=1 by sh_next_lt/
@@ -91,19 +91,19 @@ elim (nat_split_lt_ge s2 s1) #Hs
       /2 width=2 by nlt_inv_refl, nle_inv_succ_bi/
     | /3 width=2 by ex_intro, or_introl/
     ]
-  | -IH @or_introl @(ex_intro … 𝟏) // (**) (* auto fails *)
+  | -IH @or_introl @(ex_intro … (⁤𝟏)) // (**) (* auto fails *)
   | lapply (nlt_trans s1 ??? Hs21) [ /2 width=1 by sh_next_lt/ ] -Hs12 #Hs12
     elim (IH (s2-⇡[h]s1)) -IH
     [3: /3 width=1 by sh_next_lt, nlt_minus_bi_sn/ ]
     <nminus_minus_dx_refl_sn [2,4: /2 width=1 by nlt_des_le/ ] -Hs21
     [ * #n #H destruct
-      @or_introl @(ex_intro … (↑n)) //
+      @or_introl @(ex_intro … (⁤↑n)) //
     | #H1 @or_intror * #n #H2 @H1 -H1 destruct
       generalize in match Hs12; -Hs12
       >(sh_nexts_zero h s1) in ⊢ (?%?→?); #H
       lapply (sh_lt_nexts_inv_lt … Hh … H) -H #H
       >(nlt_des_gen … H) -H
-      @(ex_intro … (↓n)) //
+      @(ex_intro … (⫰n)) //
     ]
   ]
 ]

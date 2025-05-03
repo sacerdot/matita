@@ -12,42 +12,42 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_succ_iter.ma".
-include "static_2/notation/functions/uparrowstar_2_0.ma".
-include "static_2/syntax/sh.ma".
+include "ground/subsets/subset.ma".
+include "ground/relocation/fb/fbr_after_eq.ma".
+include "ground_2B/notation/functions/circledring_2.ma".
 
-(* SORT HIERARCHY ***********************************************************)
+(* COMPOSITION CLASS FOR FINITE RELOCATION MAPS WITH BOOLEANS ***************)
 
-definition sh_nexts (h) (n): nat → nat ≝ ⇡[h]^n.
+definition fbr_isafter (g) (f): 𝒫❨𝔽𝔹❩ ≝
+           {h | h ≐ g•f}.
 
 interpretation
-  "iterated next sort (sort hierarchy)"
-  'UpArrowStar_2_0 h n = (sh_nexts h n).
+  "composition class (finite relocation maps with booleans)"
+  'CircledRing g f = (fbr_isafter g f).
 
-(* Basic constructions *)
+(* Basic constructions ******************************************************)
 
-lemma sh_nexts_zero (h):
-      ∀s. s = ⇡*[h,𝟎]s.
-// qed.
-
-lemma sh_nexts_unit (h):
-      ∀s. ⇡[h]s = ⇡*[h,⁤𝟏]s.
-// qed.
-
-lemma sh_nexts_succ (h) (n):
-      ∀s. ⇡[h](⇡*[h,n]s) = ⇡*[h,⁤↑n]s.
-#h #n #s @(niter_succ … (⇡[h]))
+lemma fbr_isafter_id_sn (f1):
+      f1 ϵ 𝐢 ⊚ f1.
+//
 qed.
 
-(* Advanced constructions ****************************)
-
-lemma sh_nexts_swap (h) (n):
-      ∀s. ⇡[h](⇡*[h,n]s) = ⇡*[h,n](⇡[h]s).
-#h #n #s @(niter_appl … (⇡[h]))
+lemma fbr_isafter_id_dx (f2):
+      f2 ϵ f2 ⊚ 𝐢.
+//
 qed.
 
-(* Helper constructions *****************************************************)
+lemma fbr_isafter_push_bi (f1) (f2) (f):
+      f ϵ f2 ⊚ f1 → ⫯f ϵ ⫯f2 ⊚ ⫯f1.
+/2 width=1 by fbr_eq_rcons_bi/
+qed.
 
-lemma sh_nexts_succ_next (h) (n):
-      ∀s. ⇡*[h,n](⇡[h]s) = ⇡*[h,⁤↑n]s.
-// qed.
+lemma fbr_isafter_push_next (f1) (f2) (f):
+      f ϵ f2 ⊚ f1 → ↑f ϵ ⫯f2 ⊚ ↑f1.
+/2 width=1 by fbr_eq_rcons_bi/
+qed.
+
+lemma fbr_isafter_next_sn (f1) (f2) (f):
+      f ϵ f2 ⊚ f1 → ↑f ϵ ↑f2 ⊚ f1.
+/2 width=1 by fbr_isafter_push_next/
+qed.

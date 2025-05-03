@@ -20,8 +20,8 @@ include "static_2/syntax/term_simple.ma".
 
 rec definition applv Vs T on Vs ≝
 match Vs with
-[ list_nil        ⇒ T
-| list_cons hd tl ⇒ ⓐhd. (applv tl T)
+[ list_empty       ⇒ T
+| list_lcons hd tl ⇒ ⓐhd. (applv tl T)
 ].
 
 interpretation "application to vector (term)"
@@ -29,10 +29,10 @@ interpretation "application to vector (term)"
 
 (* Basic properties *********************************************************)
 
-lemma applv_nil: ∀T. Ⓐⓔ.T = T.
+lemma applv_empty: ∀T. Ⓐⓔ.T = T.
 // qed.
 
-lemma applv_cons: ∀V,Vs,T. ⒶV⨮Vs.T = ⓐV.ⒶVs.T.
+lemma applv_lcons: ∀V,Vs,T. ⒶV⨮Vs.T = ⓐV.ⒶVs.T.
 // qed.
 
 (* Properties with simple terms *********************************************)

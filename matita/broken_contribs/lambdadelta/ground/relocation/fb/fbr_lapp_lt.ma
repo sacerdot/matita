@@ -12,22 +12,17 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/sh_lt.ma".
-include "static_2/syntax/sd_d.ma".
+include "ground/relocation/fb/fbr_lapp.ma".
+include "ground/relocation/fb/fbr_dapp_lt.ma".
 
-(* SORT DEGREE **************************************************************)
+(* LEVEL APPLICATION FOR FINITE RELOCATION MAPS WITH BOOLEANS ***************)
 
-(* Properties with sh_lt ****************************************************)
+(* Advanced constructions ***************************************************)
 
-lemma deg_SO_gt (h): sh_lt h →
-      ∀s1,s2. s1 < s2 → deg_SO h s1 s2 (𝟎).
-#h #Hh #s1 #s2 #Hs12 @deg_SO_zero
-#n @(nat_ind_succ … n) -n
-[ <sh_nexts_zero #H destruct
-  elim (nlt_inv_refl … Hs12)
-| #n #_ <sh_nexts_succ #H
-  lapply (sh_next_lt h Hh (⇡*[h,n]s2)) >H -H #H
-  lapply (nlt_trans … H … Hs12) -s1 #H1
-  /3 width=5 by nlt_ge_false, sh_nexts_le/ (* full auto too slow *)
+lemma is_fbr_lapp_dec (f) (n2):
+      Decidable (∃n1. n2 = f＠§❨n1❩).
+#f #n2 elim (is_fbr_dapp_dec f (↑n2))
+[ * /3 width=2 by ex_intro, or_introl/
+| #H @or_intror * /3 width=2 by ex_intro/
 ]
-qed.
+qed-.

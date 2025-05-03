@@ -12,22 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "static_2/syntax/sh_lt.ma".
-include "static_2/syntax/sd_d.ma".
+include "ground/relocation/fb/fbr_lapp_eq.ma".
+include "ground/relocation/fb/fbr_after_lapp.ma".
+include "ground_2B/relocation/fbr_isafter.ma".
 
-(* SORT DEGREE **************************************************************)
+(* COMPOSITION CLASS FOR FINITE RELOCATION MAPS WITH BOOLEANS ***************)
 
-(* Properties with sh_lt ****************************************************)
+(* Inversions with fbr_lapp *************************************************)
 
-lemma deg_SO_gt (h): sh_lt h →
-      ∀s1,s2. s1 < s2 → deg_SO h s1 s2 (𝟎).
-#h #Hh #s1 #s2 #Hs12 @deg_SO_zero
-#n @(nat_ind_succ … n) -n
-[ <sh_nexts_zero #H destruct
-  elim (nlt_inv_refl … Hs12)
-| #n #_ <sh_nexts_succ #H
-  lapply (sh_next_lt h Hh (⇡*[h,n]s2)) >H -H #H
-  lapply (nlt_trans … H … Hs12) -s1 #H1
-  /3 width=5 by nlt_ge_false, sh_nexts_le/ (* full auto too slow *)
-]
-qed.
+lemma fbr_isafter_inv_lapp (f1) (f2) (f) (n):
+      f ϵ f2 ⊚ f1 → f＠§❨n❩ = f2＠§❨f1＠§❨n❩❩.
+/2 width=1 by fbr_lapp_eq_repl/
+qed-.
+
+(* Destructions with fbr_lapp ***********************************************)
+(*
+lemma pr_after_des_nat_dx (f1) (f2) (f) (n1) (n2):
+      f ϵ f2 ⊚ f1 →
+      f2＠§❨n2❩ = f＠§❨n1❩ → n2 = f1＠§❨n1❩.
+/2 width=6 by pr_after_des_pat_dx/ qed-.
+*)

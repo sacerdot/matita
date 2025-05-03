@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR THE FORMAL SYSTEM λδ ****************************************)
+(* NOTATION FOR GROUND ******************************************************)
 
-notation "𝟏"
- non associative with precedence 46
- for @{ 'One }.
+notation "hvbox( a ⊚ break b )" 
+  left associative with precedence 60
+  for @{ 'CircledRing $a $b }.

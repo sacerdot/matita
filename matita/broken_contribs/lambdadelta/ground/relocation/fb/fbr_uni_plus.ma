@@ -20,7 +20,7 @@ include "ground/relocation/fb/fbr_uni_after.ma".
 (* Constructions with nat_plus **********************************************)
 
 lemma fbr_after_uni_bi (m) (n):
-      (𝐮❨⁤m+n❩) = 𝐮❨n❩•𝐮❨⁤m❩.
+      (𝐮❨m+n❩) = 𝐮❨n❩•𝐮❨m❩.
 #m #n
 <fbr_after_uni_sn >fbr_rconss_plus //
 qed.

@@ -21,26 +21,26 @@ include "static_2/syntax/sd.ma".
 
 (* Basic_2A1: includes: deg_SO_pos *)
 inductive deg_SO (h) (s) (s0): predicate nat ≝
-| deg_SO_succ : ∀n. ⇡*[h,n]s0 = s → deg_SO h s s0 (↑n)
-| deg_SO_zero: (∀n. ⇡*[h,n]s0 = s → ⊥) → deg_SO h s s0 𝟎
+| deg_SO_succ : ∀n. ⇡*[h,n]s0 = s → deg_SO h s s0 (⁤↑n)
+| deg_SO_zero: (∀n. ⇡*[h,n]s0 = s → ⊥) → deg_SO h s s0 (𝟎)
 .
 
 fact deg_SO_inv_succ_aux (h) (s) (s0):
-     ∀n0. deg_SO h s s0 n0 → ∀n. n0 = ↑n → ⇡*[h,n]s0 = s.
+     ∀n0. deg_SO h s s0 n0 → ∀n. n0 = (⁤↑n) → ⇡*[h,n]s0 = s.
 #h #s #s0 #n0 * -n0
-[ #n #Hn #x #H destruct //
-| #_ #x #H elim (eq_inv_zero_nsucc … H)
+[ #n #Hn #x #H <(eq_inv_nsucc_bi … H) -x //
+| #_ #x #H destruct
 ]
 qed-.
 
 (* Basic_2A1: was: deg_SO_inv_pos *)
 lemma deg_SO_inv_succ (h) (s) (s0):
-      ∀n. deg_SO h s s0 (↑n) → ⇡*[h,n]s0 = s.
+      ∀n. deg_SO h s s0 (⁤↑n) → ⇡*[h,n]s0 = s.
 /2 width=3 by deg_SO_inv_succ_aux/ qed-.
 
 lemma deg_SO_refl (h) (s):
-      deg_SO h s s 𝟏.
-#h #s @(deg_SO_succ … 𝟎 ?) //
+      deg_SO h s s (⁤𝟏).
+#h #s @(deg_SO_succ … (𝟎) ?) //
 qed.
 
 definition sd_SO (h) (s):
@@ -67,8 +67,7 @@ lemma sd_SO_props (h) (s):
   [ #n #H destruct
     <npred_succ @(nat_ind_succ … n) -n
     [ @deg_SO_zero #n >sh_nexts_succ_next #H
-      lapply (sh_nexts_inj … Hha … H) -H #H
-      elim (eq_inv_nsucc_zero … H)
+      lapply (sh_nexts_inj … Hha … H) -H #H destruct
     | #n #_ /2 width=1 by deg_SO_succ/
     ]
   | #H0 @deg_SO_zero #n >sh_nexts_succ_next #H destruct
@@ -86,7 +85,7 @@ match d with
 definition sd_d (h) (s) (d): sd ≝
 match d with
 [ nzero  ⇒ sd_O
-| ninj d ⇒ sd_d_pnat h s d
+| npos d ⇒ sd_d_pnat h s d
 ].
 
 lemma sd_d_props (h) (s) (d):
@@ -99,7 +98,7 @@ qed.
 (* Properties with sd_d *****************************************************)
 
 lemma sd_d_SS (h):
-      ∀s,d. sd_d h s (↑↑d) = sd_d h (⇡[h]s) (↑d).
+      ∀s,d. sd_d h s (⁤↑⁤↑d) = sd_d h (⇡[h]s) (⁤↑d).
 // qed.
 
 lemma sd_d_correct (h):
@@ -107,9 +106,9 @@ lemma sd_d_correct (h):
       ∀s,d. deg (sd_d h s d) s d.
 #h #Hhd #Hha @pull_2 * [ // ]
 #d elim d -d [ // ] #d #IH #s
->(npsucc_pred d) in ⊢ (???%);
+>(npsucc_pnpred d) in ⊢ (???%);
 @(deg_inv_pred h)
 [ /2 width=1 by sd_d_props/
-| <nsucc_pnpred //
+| <npsucc_pnpred //
 ]
 qed.

@@ -50,3 +50,7 @@ lemma eq_inv_refl_nsucc (n:ℕ): n = (⁤↑n) → ⊥.
 | #p #H0 /3 width=2 by eq_inv_npos_bi, eq_inv_refl_psucc/
 ]
 qed-.
+
+lemma eq_inv_nsucc_refl (n:ℕ): (⁤↑n) = n → ⊥.
+/2 width=2 by eq_inv_refl_nsucc/
+qed-.
