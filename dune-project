@@ -4,7 +4,7 @@
 (name matita)
 
 ; Remember to change manually also matita/help/C/version.txt.in
-(version 0.99.6)
+(version 0.99.7)
 
 (generate_opam_files true)
 
@@ -28,7 +28,7 @@
  (depends
    (ocaml (and (>= "4.14.1") (< "5.0.0")))
    (ocaml-expat (>= 1.1.0))
-   (pcre (>= 7.5.0))
+   (pcre2 (>= 8.0.3))
    (sedlex (>= 3.0))
    (uutf (>= "1.0.0"))
    (uuseg (>= 15.0.0))

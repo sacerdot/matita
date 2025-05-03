@@ -45,28 +45,28 @@ let stdout_logger tag = print_string (HelmLogger.string_of_html_tag tag)
 
 let not_implemented s = raise (Not_implemented ("Http_getter." ^ s))
 
-let index_line_sep_RE     = Pcre.regexp "[ \t]+"
-let index_sep_RE          = Pcre.regexp "\r\n|\r|\n"
-let trailing_types_RE     = Pcre.regexp "\\.types$"
-let heading_cic_RE        = Pcre.regexp "^cic:"
-let heading_theory_RE     = Pcre.regexp "^theory:"
-let heading_nuprl_RE      = Pcre.regexp "^nuprl:"
-let types_RE              = Pcre.regexp "\\.types$"
-let types_ann_RE          = Pcre.regexp "\\.types\\.ann$"
-let body_RE               = Pcre.regexp "\\.body$"
-let body_ann_RE           = Pcre.regexp "\\.body\\.ann$"
-let proof_tree_RE         = Pcre.regexp "\\.proof_tree$"
-let proof_tree_ann_RE     = Pcre.regexp "\\.proof_tree\\.ann$"
-let theory_RE             = Pcre.regexp "\\.theory$"
-let basepart_RE           = Pcre.regexp
+let index_line_sep_RE     = Pcre2.regexp "[ \t]+"
+let index_sep_RE          = Pcre2.regexp "\r\n|\r|\n"
+let trailing_types_RE     = Pcre2.regexp "\\.types$"
+let heading_cic_RE        = Pcre2.regexp "^cic:"
+let heading_theory_RE     = Pcre2.regexp "^theory:"
+let heading_nuprl_RE      = Pcre2.regexp "^nuprl:"
+let types_RE              = Pcre2.regexp "\\.types$"
+let types_ann_RE          = Pcre2.regexp "\\.types\\.ann$"
+let body_RE               = Pcre2.regexp "\\.body$"
+let body_ann_RE           = Pcre2.regexp "\\.body\\.ann$"
+let proof_tree_RE         = Pcre2.regexp "\\.proof_tree$"
+let proof_tree_ann_RE     = Pcre2.regexp "\\.proof_tree\\.ann$"
+let theory_RE             = Pcre2.regexp "\\.theory$"
+let basepart_RE           = Pcre2.regexp
   "^([^.]*\\.[^.]*)((\\.body)|(\\.proof_tree)|(\\.types))?(\\.ann)?$"
-let slash_RE              = Pcre.regexp "/"
-let pipe_RE               = Pcre.regexp "\\|"
-let til_slash_RE          = Pcre.regexp "^.*/"
-let no_slashes_RE         = Pcre.regexp "^[^/]*$"
-let fix_regexp_RE         = Pcre.regexp ("^" ^ (Pcre.quote "(cic|theory)"))
+let slash_RE              = Pcre2.regexp "/"
+let pipe_RE               = Pcre2.regexp "\\|"
+let til_slash_RE          = Pcre2.regexp "^.*/"
+let no_slashes_RE         = Pcre2.regexp "^[^/]*$"
+let fix_regexp_RE         = Pcre2.regexp ("^" ^ (Pcre2.quote "(cic|theory)"))
 let showable_file_RE      =
-  Pcre.regexp "(\\.con|\\.ind|\\.var|\\.body|\\.types|\\.proof_tree)$"
+  Pcre2.regexp "(\\.con|\\.ind|\\.var|\\.body|\\.types|\\.proof_tree)$"
 
 let xml_suffix = ".xml"
 let theory_suffix = ".theory"
@@ -212,8 +212,8 @@ let (++) (oldann, oldtypes, oldbody, oldtree)
     
 let store_obj tbl o =
 (*   prerr_endline ("Http_getter.store_obj " ^ o); *)
-  if Pcre.pmatch ~rex:showable_file_RE o then begin
-    let basepart = Pcre.replace ~rex:basepart_RE ~templ:"$1" o in
+  if Pcre2.pmatch ~rex:showable_file_RE o then begin
+    let basepart = Pcre2.replace ~rex:basepart_RE ~templ:"$1" o in
     let no_flags = false, No, No, No in
     let oldflags =
       try
@@ -223,19 +223,19 @@ let store_obj tbl o =
     in
     let newflags =
       match o with
-      | s when Pcre.pmatch ~rex:types_RE s          -> (false, Yes, No, No)
-      | s when Pcre.pmatch ~rex:types_ann_RE s      -> (true,  Ann, No, No)
-      | s when Pcre.pmatch ~rex:body_RE s           -> (false, No, Yes, No)
-      | s when Pcre.pmatch ~rex:body_ann_RE s       -> (true,  No, Ann, No)
-      | s when Pcre.pmatch ~rex:proof_tree_RE s     -> (false, No, No, Yes)
-      | s when Pcre.pmatch ~rex:proof_tree_ann_RE s -> (true,  No, No, Ann)
+      | s when Pcre2.pmatch ~rex:types_RE s          -> (false, Yes, No, No)
+      | s when Pcre2.pmatch ~rex:types_ann_RE s      -> (true,  Ann, No, No)
+      | s when Pcre2.pmatch ~rex:body_RE s           -> (false, No, Yes, No)
+      | s when Pcre2.pmatch ~rex:body_ann_RE s       -> (true,  No, Ann, No)
+      | s when Pcre2.pmatch ~rex:proof_tree_RE s     -> (false, No, No, Yes)
+      | s when Pcre2.pmatch ~rex:proof_tree_ann_RE s -> (true,  No, No, Ann)
       | _s -> no_flags
     in
     Hashtbl.replace tbl basepart (oldflags ++ newflags)
   end
   
 let store_dir set_ref d =
-  set_ref := StringSet.add (List.hd (Pcre.split ~rex:slash_RE d)) !set_ref
+  set_ref := StringSet.add (List.hd (Pcre2.split ~rex:slash_RE d)) !set_ref
 
 let collect_ls_items dirs_set objs_tbl =
   let items = ref [] in
@@ -277,7 +277,7 @@ let rec dumb_ls ~local uri_prefix =
         :: !items
     in
     let cic_uri_prefix =
-      Pcre.replace_first ~rex:heading_theory_RE ~templ:"cic:" uri_prefix
+      Pcre2.replace_first ~rex:heading_theory_RE ~templ:"cic:" uri_prefix
     in
     List.iter
       (fun fname ->
@@ -316,7 +316,7 @@ let explode_ls_regexp regexp =
     let choices_str = (* substring between parens, parens excluded *)
       String.sub regexp (lparen_idx + 1) (rparen_idx - lparen_idx - 1)
     in
-    let choices = Pcre.split ~rex:pipe_RE choices_str in
+    let choices = Pcre2.split ~rex:pipe_RE choices_str in
     let prefix = String.sub regexp 0 lparen_idx in
     let suffix = String.sub regexp (rparen_idx + 1) (len - (rparen_idx + 1)) in
     List.map (fun choice -> prefix ^ choice ^ suffix) choices

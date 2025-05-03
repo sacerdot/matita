@@ -36,16 +36,16 @@ let string_of_encoding = function
   | `Normal -> "Normal"
   | `Gzipped -> "GZipped"
 
-let is_cic_obj_uri uri = Pcre.pmatch ~pat:"^cic:" uri
-let is_theory_uri uri = Pcre.pmatch ~pat:"^theory:" uri
+let is_cic_obj_uri uri = Pcre2.pmatch ~pat:"^cic:" uri
+let is_theory_uri uri = Pcre2.pmatch ~pat:"^theory:" uri
 let is_cic_uri uri = is_cic_obj_uri uri || is_theory_uri uri
-let is_nuprl_uri uri = Pcre.pmatch ~pat:"^nuprl:" uri
-let is_rdf_uri uri = Pcre.pmatch ~pat:"^helm:rdf(.*):(.*)//(.*)" uri
-let is_xsl_uri uri = Pcre.pmatch ~pat:"^\\w+\\.xsl" uri
+let is_nuprl_uri uri = Pcre2.pmatch ~pat:"^nuprl:" uri
+let is_rdf_uri uri = Pcre2.pmatch ~pat:"^helm:rdf(.*):(.*)//(.*)" uri
+let is_xsl_uri uri = Pcre2.pmatch ~pat:"^\\w+\\.xsl" uri
 
 let rec uri_of_string = function
   | uri when is_rdf_uri uri ->
-      (match Pcre.split ~pat:"//" uri with
+      (match Pcre2.split ~pat:"//" uri with
       | [ prefix; uri ] ->
           let rest =
             match uri_of_string uri with
@@ -54,16 +54,16 @@ let rec uri_of_string = function
           in
           Rdf_uri (prefix, rest)
       | _ -> raise (Invalid_URI uri))
-  | uri when is_cic_obj_uri uri -> Cic_uri (Cic (Pcre.replace ~pat:"^cic:" uri))
-  | uri when is_nuprl_uri uri -> Nuprl_uri (Pcre.replace ~pat:"^nuprl:" uri)
+  | uri when is_cic_obj_uri uri -> Cic_uri (Cic (Pcre2.replace ~pat:"^cic:" uri))
+  | uri when is_nuprl_uri uri -> Nuprl_uri (Pcre2.replace ~pat:"^nuprl:" uri)
   | uri when is_theory_uri uri ->
-      Cic_uri (Theory (Pcre.replace ~pat:"^theory:" uri))
+      Cic_uri (Theory (Pcre2.replace ~pat:"^theory:" uri))
   | uri -> raise (Invalid_URI uri)
 
 let patch_xsl ?via_http:(_ = true) () =
   fun line ->
     let mk_patch_fun tag line =
-      Pcre.replace
+      Pcre2.replace
         ~pat:(sprintf "%s\\s+href=\"" tag)
         ~templ:(sprintf "%s href=\"%s/getxslt?uri="
           tag (Lazy.force Http_getter_env.my_own_url))
@@ -76,7 +76,7 @@ let patch_xsl ?via_http:(_ = true) () =
 
 let patch_system kind ?(via_http = true) () =
   let rex =
-    Pcre.regexp (sprintf "%s (.*) SYSTEM\\s+\"((%s)/)?" kind
+    Pcre2.regexp (sprintf "%s (.*) SYSTEM\\s+\"((%s)/)?" kind
       (String.concat "|" (Lazy.force Http_getter_env.dtd_base_urls)))
   in
   let templ =
@@ -86,16 +86,16 @@ let patch_system kind ?(via_http = true) () =
     else
       sprintf "%s $1 SYSTEM \"file://%s/" kind (Http_getter_env.get_dtd_dir ())
   in
-  fun line -> Pcre.replace ~rex ~templ line
+  fun line -> Pcre2.replace ~rex ~templ line
 
 let patch_entity = patch_system "ENTITY"
 let patch_doctype = patch_system "DOCTYPE"
 
 let patch_xmlbase =
-  let rex = Pcre.regexp "^(\\s*<\\w[^ ]*)(\\s|>)" in
+  let rex = Pcre2.regexp "^(\\s*<\\w[^ ]*)(\\s|>)" in
   fun xmlbases baseurl baseuri s ->
     let s' =
-      Pcre.replace ~rex
+      Pcre2.replace ~rex
         ~templ:(sprintf "$1 xml:base=\"%s\" helm:base=\"%s\"$2" baseurl baseuri)
         s
     in

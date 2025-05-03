@@ -37,25 +37,25 @@ let index_fname = "INDEX"
 
 (******************************* HELPERS **************************************)
 
-(*let trailing_slash_RE = Pcre.regexp "/$"*)
+(*let trailing_slash_RE = Pcre2.regexp "/$"*)
 let relative_RE_raw = "(^[^/]+(/[^/]+)*/?$)"
-let relative_RE = Pcre.regexp relative_RE_raw
+let relative_RE = Pcre2.regexp relative_RE_raw
 let file_scheme_RE_raw = "(^file://)"
-let extended_file_scheme_RE = Pcre.regexp "(^file:/+)"
-let file_scheme_RE = Pcre.regexp (relative_RE_raw ^ "|" ^ file_scheme_RE_raw)
-let http_scheme_RE = Pcre.regexp "^http://"
-let newline_RE = Pcre.regexp "\\n"
-let cic_scheme_sep_RE = Pcre.regexp ":/"
+let extended_file_scheme_RE = Pcre2.regexp "(^file:/+)"
+let file_scheme_RE = Pcre2.regexp (relative_RE_raw ^ "|" ^ file_scheme_RE_raw)
+let http_scheme_RE = Pcre2.regexp "^http://"
+let newline_RE = Pcre2.regexp "\\n"
+let cic_scheme_sep_RE = Pcre2.regexp ":/"
 let gz_suffix = ".gz"
 let gz_suffix_len = String.length gz_suffix
 
   (* file:///bla -> bla, bla -> bla *)
 let path_of_file_url url =
-  assert (Pcre.pmatch ~rex:file_scheme_RE url);
-  if Pcre.pmatch ~rex:relative_RE url then
+  assert (Pcre2.pmatch ~rex:file_scheme_RE url);
+  if Pcre2.pmatch ~rex:relative_RE url then
     url
   else  (* absolute path, add heading "/" if missing *)
-    "/" ^ (Pcre.replace ~rex:extended_file_scheme_RE url)
+    "/" ^ (Pcre2.replace ~rex:extended_file_scheme_RE url)
 
 let strip_gz_suffix fname =
   if extension fname = gz_suffix then
@@ -76,8 +76,8 @@ let has_rdonly l =  List.exists ((=) `Read_only) l
 let has_legacy l =  List.exists ((=) `Legacy) l
 let is_readwrite attrs = (not (has_legacy attrs) && not (has_rdonly attrs))
 
-let is_file_schema url = Pcre.pmatch ~rex:file_scheme_RE url
-let is_http_schema url = Pcre.pmatch ~rex:http_scheme_RE url
+let is_file_schema url = Pcre2.pmatch ~rex:file_scheme_RE url
+let is_http_schema url = Pcre2.pmatch ~rex:http_scheme_RE url
 
 let is_empty_listing files = 
   List.for_all
@@ -94,7 +94,7 @@ let prefix_map_ref = ref (lazy (
     (fun (uri_prefix, (url_prefix, attrs)) ->
       let uri_prefix = normalize_dir uri_prefix in
       let url_prefix = normalize_dir url_prefix in
-      let regexp = Pcre.regexp ("^(" ^ Pcre.quote uri_prefix ^ ")") in
+      let regexp = Pcre2.regexp ("^(" ^ Pcre2.quote uri_prefix ^ ")") in
       regexp, strip_trailing_slash uri_prefix, url_prefix, attrs)
     (List.rev (Lazy.force Http_getter_env.prefixes))))
 
@@ -117,7 +117,7 @@ let lookup uri =
     HExtlib.filter_map 
       (fun (rex, _, _l, _ as entry) -> 
          try
-           let got = Pcre.extract ~full_match:true ~rex uri in
+           let got = Pcre2.extract ~full_match:true ~rex uri in
            Some (entry, String.length got.(0))
          with Not_found -> None)
       (Lazy.force (prefix_map ())) 
@@ -179,7 +179,7 @@ let ls_http_single ~local _ url_prefix =
   let url = normalize_dir url_prefix ^ index_fname in
   try
     let index = Http_getter_wget.get url in
-    Pcre.split ~rex:newline_RE index
+    Pcre2.split ~rex:newline_RE index
   with Http_client_error _ -> raise (Resource_not_found ("get",url))
 ;;
 
@@ -194,7 +194,7 @@ let get_file _ path =
 let get_http ~local uri url =
   if local then raise Not_found' else
   let scheme, path =
-    match Pcre.split ~rex:cic_scheme_sep_RE uri with
+    match Pcre2.split ~rex:cic_scheme_sep_RE uri with
     | [scheme; path] -> scheme, path
     | _ -> assert false
   in
@@ -242,11 +242,11 @@ let resolve_prefixes n local write exists uri =
         | true ,false, _ -> aux n tl
         | true ,true ,true  
         | false,_ ,true ->
-            let new_uri = (Pcre.replace_first ~rex ~templ:url_prefix uri) in
+            let new_uri = (Pcre2.replace_first ~rex ~templ:url_prefix uri) in
             if exists_test new_uri then new_uri::aux (n-1) tl else aux n tl
         | true ,true ,false
         | false,_ ,false -> 
-            (Pcre.replace_first ~rex ~templ:url_prefix uri) :: (aux (n-1) tl))
+            (Pcre2.replace_first ~rex ~templ:url_prefix uri) :: (aux (n-1) tl))
     | _ -> []
   in
   aux n (lookup uri)
@@ -418,7 +418,7 @@ let is_read_only uri =
   in
   let rec aux found_writable = function
     | (rex, _, url_prefix, attrs)::tl -> 
-        let new_url = (Pcre.replace_first ~rex ~templ:url_prefix uri) in
+        let new_url = (Pcre2.replace_first ~rex ~templ:url_prefix uri) in
         let rdonly = has_legacy attrs || has_rdonly attrs in
         (match rdonly, is_empty_dir new_url, found_writable with
         | true, false, _ -> true

@@ -43,7 +43,7 @@ exception CircularDependency of string
 let debug = false ;;
 let debug_print = if debug then prerr_endline else ignore ;;
 
-let slash_n_RE = Pcre.regexp "\\n" ;;
+let slash_n_RE = Pcre2.regexp "\\n" ;;
 
 let first_line = ref true ;;
 
@@ -135,7 +135,7 @@ let pp_ast_statement status stm ~fname =
   let stm = write_ast_to_file status (fname ^ ".parsed.ma") stm in
   if stm <> "" then
   (
-    let stm = Pcre.replace ~rex:slash_n_RE stm in
+    let stm = Pcre2.replace ~rex:slash_n_RE stm in
     let stm =
       if String.length stm > 50 then String.sub stm 0 50 ^ " ..."
       else stm

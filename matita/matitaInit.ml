@@ -173,7 +173,7 @@ let parse_cmdline init_status =
     ] 
     in
     let absolutize s =
-      if Pcre.pmatch ~pat:"^/" s then s else Sys.getcwd () ^"/"^s
+      if Pcre2.pmatch ~pat:"^/" s then s else Sys.getcwd () ^"/"^s
     in
     let args = ref [] in
     let add_l l = fun s -> l := s :: !l in
@@ -256,7 +256,7 @@ let parse_cmdline init_status =
     HExtlib.set_profiling_printings 
       (fun s -> 
         Helm_registry.get_bool "matita.profile" && 
-        Pcre.pmatch 
+        Pcre2.pmatch 
           ~pat:(Helm_registry.get_opt_default 
                   Helm_registry.string ~default:".*" "matita.profile_only") 
           s);

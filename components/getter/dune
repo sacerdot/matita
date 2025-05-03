@@ -1,6 +1,6 @@
 (library
  (name helm_getter)
- (libraries http unix pcre helm_xml helm_logger helm_ng_kernel helm_registry)
+ (libraries http unix pcre2 helm_xml helm_logger helm_ng_kernel helm_registry)
  (wrapped false)
  (modules (:standard \ test)))
 (env

@@ -334,10 +334,10 @@ let utf8_string_length s =
   Glib.Utf8.length s
 
 let escape_pango_markup text =
-   let text = Pcre.replace ~pat:"&" ~templ:"&amp;" text in
-   let text = Pcre.replace ~pat:"<" ~templ:"&lt;" text in
-   let text = Pcre.replace ~pat:"'" ~templ:"&apos;" text in
-   let text = Pcre.replace ~pat:"\"" ~templ:"&quot;" text in
+   let text = Pcre2.replace ~pat:"&" ~templ:"&amp;" text in
+   let text = Pcre2.replace ~pat:"<" ~templ:"&lt;" text in
+   let text = Pcre2.replace ~pat:"'" ~templ:"&apos;" text in
+   let text = Pcre2.replace ~pat:"\"" ~templ:"&quot;" text in
    text
 ;;
 

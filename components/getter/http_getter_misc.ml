@@ -32,18 +32,18 @@ open Printf
 
 let file_scheme_prefix = "file://"
 
-let trailing_dot_gz_RE = Pcre.regexp "\\.gz$"   (* for g{,un}zip *)
-(*let url_RE = Pcre.regexp "^([\\w.-]+)(:(\\d+))?(/.*)?$"*)
-let http_scheme_RE = Pcre.regexp ~flags:[`CASELESS] "^http://"
-let file_scheme_RE = Pcre.regexp ~flags:[`CASELESS] ("^" ^ file_scheme_prefix)
-let dir_sep_RE = Pcre.regexp "/"
-let heading_slash_RE = Pcre.regexp "^/"
+let trailing_dot_gz_RE = Pcre2.regexp "\\.gz$"   (* for g{,un}zip *)
+(*let url_RE = Pcre2.regexp "^([\\w.-]+)(:(\\d+))?(/.*)?$"*)
+let http_scheme_RE = Pcre2.regexp ~flags:[`CASELESS] "^http://"
+let file_scheme_RE = Pcre2.regexp ~flags:[`CASELESS] ("^" ^ file_scheme_prefix)
+let dir_sep_RE = Pcre2.regexp "/"
+let heading_slash_RE = Pcre2.regexp "^/"
 
 let local_url =
-  let rex = Pcre.regexp ("^(" ^ file_scheme_prefix ^ ")(.*)(.gz)$") in
+  let rex = Pcre2.regexp ("^(" ^ file_scheme_prefix ^ ")(.*)(.gz)$") in
   fun s ->
     try
-      Some ((Pcre.extract ~rex s).(2))
+      Some ((Pcre2.extract ~rex s).(2))
     with Not_found -> None
 
 let bufsiz = 16384  (* for file system I/O *)
@@ -123,8 +123,8 @@ let wget ?output url =
     (sprintf "wgetting %s (output: %s)" url
       (match output with None -> "default" | Some f -> f));
   match url with
-  | url when Pcre.pmatch ~rex:file_scheme_RE url -> (* file:// *)
-      (let src_fname = Pcre.replace ~rex:file_scheme_RE url in
+  | url when Pcre2.pmatch ~rex:file_scheme_RE url -> (* file:// *)
+      (let src_fname = Pcre2.replace ~rex:file_scheme_RE url in
       match output with
       | Some dst_fname -> cp src_fname dst_fname
       | None ->
@@ -133,7 +133,7 @@ let wget ?output url =
             cp src_fname dst_fname
           else  (* src and dst are the same: do nothing *)
             ())
-  | url when Pcre.pmatch ~rex:http_scheme_RE url -> (* http:// *)
+  | url when Pcre2.pmatch ~rex:http_scheme_RE url -> (* http:// *)
       (let oc = 
         open_out (match output with Some f -> f | None -> Filename.basename url)
       in
@@ -163,8 +163,8 @@ let gunzip ?(keep = false) ?output fname =
   let output =
     match output with
     | None ->
-        if (Pcre.pmatch ~rex:trailing_dot_gz_RE fname) then
-          Pcre.replace ~rex:trailing_dot_gz_RE fname
+        if (Pcre2.pmatch ~rex:trailing_dot_gz_RE fname) then
+          Pcre2.replace ~rex:trailing_dot_gz_RE fname
         else
           failwith
             "Http_getter_misc.gunzip: unable to determine output file name"
@@ -202,8 +202,8 @@ let dir_perm = 0o755
 let mkdir ?(parents = false) dirname =
   let mkdirhier () =
     let (pieces, hd) =
-      let split = Pcre.split ~rex:dir_sep_RE dirname in
-      if Pcre.pmatch ~rex:heading_slash_RE dirname then
+      let split = Pcre2.split ~rex:dir_sep_RE dirname in
+      if Pcre2.pmatch ~rex:heading_slash_RE dirname then
         (List.tl split, "/")
       else
         (split, "")
@@ -235,9 +235,9 @@ let string_of_proc_status = function
   | Unix.WSTOPPED sg -> sprintf "[Stopped: %d]" sg
 
 let http_get url =
-  if Pcre.pmatch ~rex:file_scheme_RE url then begin
+  if Pcre2.pmatch ~rex:file_scheme_RE url then begin
       (* file:// URL. Read data from file system *)
-    let fname = Pcre.replace ~rex:file_scheme_RE url in
+    let fname = Pcre2.replace ~rex:file_scheme_RE url in
     try
       let size = (Unix.stat fname).Unix.st_size in
       let buf = Bytes.create size in
@@ -256,9 +256,9 @@ let http_get url =
       None
 
 let is_blank_line =
-  let blank_line_RE = Pcre.regexp "(^#)|(^\\s*$)" in
+  let blank_line_RE = Pcre2.regexp "(^#)|(^\\s*$)" in
   fun line ->
-    Pcre.pmatch ~rex:blank_line_RE line
+    Pcre2.pmatch ~rex:blank_line_RE line
 
 let normalize_dir s =  (* append "/" if missing *)
   let len = String.length s in
