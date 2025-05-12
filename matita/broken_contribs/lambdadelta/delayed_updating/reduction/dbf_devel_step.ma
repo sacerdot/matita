@@ -38,14 +38,15 @@ elim (eq_path_dec r2 r1) #Hnr12 destruct
   lapply (dbfs_des_xprc_neq … Ht0 Ht01 Hnr12 Hr02) -Ht01
   lapply (dbfs_des_xprc_neq … Ht0 Ht02 … Hr01) -Ht02 [ /2 width=1 by/ ]
   #Hr21 #Hr12 #Ht02 #Ht01
+  elim (xprc_dbfs … Hr21) #t4 #Ht24
+  elim (xprc_dbfs … Hr12) #t3 #Ht13
   elim (term_in_comp_clear_root_slice_dec_xprc … (p2◖𝗦) … Hr21) #Hp12
   elim (term_in_comp_clear_root_slice_dec_xprc … (p1◖𝗦) … Hr12) #Hp21
-  [
-  |
-  |
-  | elim (xprc_dbfs … Hr21) #t4 #Ht24
-    elim (xprc_dbfs … Hr12) #t3 #Ht13
-    cut (t3 ⇔ t4)
+  [ lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr01 Hr02 Hp12) [ // ] -Hp12 #Hp12
+    lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr02 Hr01 Hp21) [ // ] -Hp21 #Hp21
+  | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr01 Hr02 Hp12) [ // ] -Hp12 #Hp12
+  | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr02 Hr01 Hp21) [ // ] -Hp21 #Hp21
+  | cut (t3 ⇔ t4)
     [ lapply (dbfs_preterm_inv_sn … Ht1 Ht13 Hr12) -Ht13 -Hr12 #Ht13
       lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) -Ht24 -Hr21 #Ht24
       @(fsubst_fsubst_nol_inv_eq ?????????????????????? Ht01 Ht02 Ht13 Ht24)

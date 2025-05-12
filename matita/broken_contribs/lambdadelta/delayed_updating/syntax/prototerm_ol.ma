@@ -30,9 +30,11 @@ lemma term_ol_slice_append_dx (u1) (u2) (p):
 /2 width=5 by subset_ol_eq_repl/
 qed.
 
-lemma term_ol_slice_bi (p1) (p2):
-      p1 ϵ ▵↑p2 → ↑p1 ≬ ↑p2.
-#p1 #p2 * #q1 * #q2 #_ #H0
+(* Note: the name refers to the case t = ↑… *)
+lemma term_ol_slice_bi (t) (p):
+      p ϵ ▵t → ↑p ≬ t.
+#t #p * #q #H0
+lapply (term_grafted_inv_gen … H0) -H0 #H0
 /2 width=3 by subset_ol_i/
 qed.
 
@@ -50,9 +52,10 @@ lemma term_ol_inv_slice_append_dx (u1) (u2) (p):
 /3 width=5 by subset_ol_eq_repl, subset_eq_sym/ (**) (* slow symmetry *)
 qed-.
 
-lemma term_ol_inv_slice_bi (p1) (p2):
-      ↑p1 ≬ ↑p2 → p1 ϵ ▵↑p2.
-#p1 #p2 * #r * #q1 #_ #H1 * #q2 #_ #H2 destruct
+(* Note: the name refers to the case t = ↑… *)
+lemma term_ol_inv_slice_bi (t) (p):
+      ↑p ≬ t → p ϵ ▵t.
+#t #p * #r * #q #_ #H0 #Hr destruct
 /2 width=2 by term_in_root/
 qed-.
 

@@ -13,6 +13,8 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_ol.ma".
+include "ground/xoa/ex_1_2.ma".
+include "ground/notation/xoa/ex_1_2_typed.ma".
 include "delayed_updating/syntax/prototerm_clear.ma".
 
 (* CLEARED PROTOTERM ********************************************************)
@@ -38,3 +40,13 @@ lemma ol_clear_bi (t1) (t2):
 #t1 #t2 * #s #H1s #H2s
 /3 width=3 by subset_ol_i, in_comp_term_clear/
 qed.
+
+(* Inversions with subset_ol ************************************************)
+
+lemma term_ol_clear_slice_bi_inv_gen (p1) (p2):
+      (⓪↑p1 ≬ ⓪↑p2) →
+      ∃∃q1:ℙ,q2:ℙ. ⓪p1●⓪q1 = ⓪p2●⓪q2.
+#p1 #p2 * #r * #s1 * #q1 #_ #H1 #H2 * #s2 * #q2 #_ #H3 #H4 destruct
+<path_clear_append in H4; <path_clear_append; #H0
+/2 width=3 by ex1_2_intro/
+qed-.
