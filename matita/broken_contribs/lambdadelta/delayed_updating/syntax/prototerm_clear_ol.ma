@@ -21,7 +21,7 @@ include "delayed_updating/syntax/prototerm_clear.ma".
 
 (* Constructions with subset_ol *********************************************)
 
-lemma ol_clear_slice_bi_dec (p1) (p2):
+lemma term_ol_clear_slice_bi_dec (p1) (p2):
       Decidable (⓪↑p1 ≬ ⓪↑p2).
 #p1 #p2
 elim (term_in_slice_dec (⓪p2) (⓪p1)) #Hp12
@@ -35,7 +35,7 @@ elim (term_in_slice_dec (⓪p2) (⓪p1)) #Hp12
 ]
 qed-.
 
-lemma ol_clear_bi (t1) (t2):
+lemma term_ol_clear_bi (t1) (t2):
       t1 ≬ t2 → (⓪t1) ≬ (⓪t2).
 #t1 #t2 * #s #H1s #H2s
 /3 width=3 by subset_ol_i, in_comp_term_clear/

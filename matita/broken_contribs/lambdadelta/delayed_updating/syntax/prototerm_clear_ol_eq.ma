@@ -25,7 +25,7 @@ lemma term_ol_clear_slice_bi (p1) (p2):
 #p1 #p2 * #r1 * #q1 * #q2 #_ #H0 #H1 destruct
 @(subset_ol_le_repl ????? (term_le_clear_slice …) ? (subset_le_refl …)) >H1 -H1
 @(subset_ol_le_repl ????? (term_le_clear_slice_clear …) ? (subset_le_refl …))
-/3 width=3 by ol_clear_bi, subset_ol_i/
+/3 width=3 by term_ol_clear_bi, subset_ol_i/
 qed.
 
 (* Advanved inversions with subset_ol ***************************************)
@@ -42,11 +42,19 @@ lemma term_ol_inv_clear_slice_bi (p1) (p2):
 @term_in_root [| >H0 ] -p1 -q1 //
 qed-.
 
+(* Advanced destructions with subset_ol *************************************)
+
+lemma term_ol_des_clear_slice_bi (p1) (p2):
+      (⓪↑p1) ≬ ⓪↑p2 → ↑⓪p1 ≬ ↑⓪p2.
+#p1 #p2 #H0
+@(subset_ol_le_repl … H0) -H0 //
+qed-.
+
 (* Advanced constructions ***************************************************)
 
 lemma term_in_comp_clear_bi_root_slice_dec (p1) (p2):
       Decidable (⓪p1 ϵ ⓪▵↑p2).
-#p1 #p2 elim (ol_clear_slice_bi_dec p1 p2) #H0
+#p1 #p2 elim (term_ol_clear_slice_bi_dec p1 p2) #H0
 [ /3 width=1 by term_ol_inv_clear_slice_bi, or_introl/
 | /4 width=1 by term_ol_clear_slice_bi, or_intror/
 ]

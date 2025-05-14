@@ -37,3 +37,11 @@ lapply (xprc_des_r … Hr) -Hr #H0 destruct
 >(path_clear_d_dx … (⁤↑n))
 /2 width=1 by in_comp_term_clear/
 qed-.
+
+lemma xprc_des_ol_pA_sn (t1) (t2) (r) (p) (b) (q) (n):
+      r ϵ 𝐑❨t1,p,b,q,n❩ → r ϵ t2 →
+      (⓪↑(p◖𝗔)) ≬ t2.
+#t1 #t2 #r #p #b #q #n #H1r #H2r
+lapply (xprc_des_r … H1r) -H1r #H1r destruct
+/3 width=3 by in_comp_term_clear, subset_ol_i/
+qed-.

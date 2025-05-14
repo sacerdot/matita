@@ -44,8 +44,15 @@ elim (eq_path_dec r2 r1) #Hnr12 destruct
   elim (term_in_comp_clear_root_slice_dec_xprc … (p1◖𝗦) … Hr12) #Hp21
   [ lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr01 Hr02 Hp12) [ // ] -Hp12 #Hp12
     lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr02 Hr01 Hp21) [ // ] -Hp21 #Hp21
+    lapply (xprc_des_ol_pA_sn … Hr01 Hp12) -Hp12 #Hp12
+    lapply (xprc_des_ol_pA_sn … Hr02 Hp21) -Hp21 #Hp21
+    lapply (term_ol_des_clear_slice_bi … Hp12) -Hp12 #Hp12
+    lapply (term_ol_des_clear_slice_bi … Hp21) -Hp21 #Hp21
+    lapply (term_ol_des_slice_rcons_bi … Hp12 Hp21) -p1 -p2 #H0 destruct
   | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr01 Hr02 Hp12) [ // ] -Hp12 #Hp12
+
   | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr02 Hr01 Hp21) [ // ] -Hp21 #Hp21
+
   | cut (t3 ⇔ t4)
     [ lapply (dbfs_preterm_inv_sn … Ht1 Ht13 Hr12) -Ht13 -Hr12 #Ht13
       lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) -Ht24 -Hr21 #Ht24
