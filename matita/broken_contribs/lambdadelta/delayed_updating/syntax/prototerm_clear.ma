@@ -54,6 +54,13 @@ lemma in_comp_inv_term_empty_clear (t):
 lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct //
 qed-.
 
+lemma in_comp_inv_term_clear_slice (r) (p):
+      r ϵ ⓪↑p →
+      ∃∃q. ⓪p●⓪q = r & ⓪q = q.
+#r #p * #x * #q #_ #H1 #H2 destruct
+@(ex2_intro … (⓪q)) //
+qed-.
+
 lemma term_slice_antisym_clear (p1) (p2):
       ⓪p1 ϵ ↑⓪p2 → p2 ϵ ↑p1 → p1 = p2.
 #p1 #p2 * #q2 #_ #Hq2 * #q1 #_ #H0 destruct

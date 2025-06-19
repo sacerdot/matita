@@ -39,6 +39,12 @@ lemma fsubst_le_false (t) (u) (v):
 /2 width=1 by fsubst_in_comp_false/
 qed.
 
+lemma fsubst_le_or_sn_dx (t) (u) (v):
+      ⬕[u←v]t ⊆ t ∪ v.
+#t #u #v #p * *
+/2 width=1 by subset_or_in_dx, subset_or_in_sn/
+qed.
+
 lemma fsubst_le_dx (t) (u) (v):
       t ≬ u → v ∪ (t ⧵ u) ⊆ ⬕[u←v]t.
 /3 width=5 by fsubst_le_true, subset_le_or_sn, fsubst_le_false/

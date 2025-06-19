@@ -27,6 +27,25 @@ lemma term_in_comp_clear_root_slice_dec_xprc (t) (r) (p1) (p2) (b) (q) (n):
 @term_in_comp_clear_bi_root_slice_dec
 qed-.
 
+lemma term_in_comp_clear_root_slice_xprc_gen (t) (r1) (p1) (p2) (x1:ℙ) (x2:ℙ) (b1) (q1) (n1):
+      r1 ϵ 𝐑❨t,p1,b1,q1,n1❩ →
+      r1●⓪x1 = ⓪p2●⓪x2 → r1 ϵ ⓪▵↑p2.
+#t #r1 #p1 #p2 #x1 #x2 #b1 #q1 #n1 #Hr1
+<(xprc_des_clear … Hr1) -Hr1 #H0
+/3 width=3 by term_ol_inv_clear_slice_bi, term_ol_clear_slice_bi_gen/
+qed.
+
+(* Inversions with term_clear ***********************************************)
+
+lemma term_in_comp_clear_root_slice_inv_xprc_gen (t) (r1) (p1) (p2) (b1) (q1) (n1):
+      r1 ϵ 𝐑❨t,p1,b1,q1,n1❩ →
+      r1 ϵ ⓪▵↑p2 →
+      ∃∃x1:ℙ,x2:ℙ. r1●⓪x1 = ⓪p2●⓪x2.
+#t #r1 #p1 #p2 #b1 #q1 #n1 #Hr1
+<(xprc_des_clear … Hr1) -Hr1 #H0
+/3 width=1 by term_ol_clear_slice_bi, term_ol_clear_slice_bi_inv_gen/
+qed-.
+
 (* Destructions with term_clear *********************************************)
 
 lemma xprc_des_r_clear (t) (r) (p) (b) (q) (n):

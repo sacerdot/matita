@@ -41,6 +41,14 @@ lemma term_ol_clear_bi (t1) (t2):
 /3 width=3 by subset_ol_i, in_comp_term_clear/
 qed.
 
+lemma term_ol_clear_slice_bi_gen (p1) (p2) (q1:ℙ) (q2:ℙ):
+      (⓪p1●⓪q1 = ⓪p2●⓪q2) → (⓪↑p1 ≬ ⓪↑p2).
+#p1 #p2 #q1 #q2
+>path_clear_append >path_clear_append #H0
+@(subset_ol_i … (⓪(p2●q2))) [ <H0 ] -H0
+/2 width=1 by in_comp_term_clear/
+qed.
+
 (* Inversions with subset_ol ************************************************)
 
 lemma term_ol_clear_slice_bi_inv_gen (p1) (p2):

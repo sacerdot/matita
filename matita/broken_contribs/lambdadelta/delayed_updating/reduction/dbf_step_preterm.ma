@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "delayed_updating/syntax/preterm_eq.ma".
 include "delayed_updating/reduction/preterm_reducible.ma".
 include "delayed_updating/reduction/dbf_step.ma".
 
@@ -19,8 +20,15 @@ include "delayed_updating/reduction/dbf_step.ma".
 
 (* Destructions with preterm ************************************************)
 
-axiom dbfs_preterm_trans (t1) (t2) (r):
+axiom dbfs_preterm_trans_aux (t) (r) (p) (b) (q) (n):
+      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ →
+      ⬕[𝐅❨p,b,q❩←𝐃❨t,p,b,q,n❩]t ϵ 𝐓.
+
+lemma dbfs_preterm_trans (t1) (t2) (r):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → t2 ϵ 𝐓.
+#t1 #t2 #r #Ht1 * #p #b #q #n #Hr #Ht12
+/3 width=3 by term_eq_repl_fwd, dbfs_preterm_trans_aux/
+qed.
 
 lemma dbfs_des_xprc_neq (t1) (t2) (r) (s) (p) (b) (q) (n):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → s ⧸= r →
