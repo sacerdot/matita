@@ -17,7 +17,6 @@ include "ground/lib/list_append.ma".
 include "ground/subsets/subset.ma".
 include "ground/notation/functions/subset_x_2.ma".
 include "ground/notation/functions/circled_collection_f_1.ma".
-include "ground/notation/functions/curly_2.ma".
 
 (* SUBSET WITH LISTED ELEMENTS **********************************************)
 
@@ -31,10 +30,6 @@ interpretation
 interpretation
   "empty (subset)"
   'CircledCollectionF A = (subset_listed A (list_empty A)).
-
-interpretation
-  "singleton (subset)"
-  'Curly A a = (subset_listed A (list_lcons A a (list_empty A))).
 
 (* Basic constructions ******************************************************)
 
@@ -52,11 +47,6 @@ qed.
 lemma subset_in_listed_lcons_dx (A) (l) (a) (b):
       a ϵ 𝐗❨l❩ → a ϵ{A} 𝐗❨b⨮l❩.
 #A #l #a #b * #l1 #l2 #H0 destruct //
-qed.
-
-lemma subset_in_single (A) (a):
-      a ϵ ❴a:A❵.
-//
 qed.
 
 (* Basic inversions *********************************************************)
@@ -77,18 +67,6 @@ elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 *
 | #l0 #H1 #H2 destruct
   /2 width=1 by or_intror/
 ]
-qed-.
-
-lemma subset_in_inv_single (A) (a) (b):
-      b ϵ ❴a:A❵ → b = a.
-#A #a #b #H0
-elim (subset_in_inv_listed_lcons ???? H0) -H0 //
-#H0 elim (subset_nin_inv_empty ?? H0)
-qed-.
-
-lemma subset_nin_inv_single (A) (a) (b):
-      b ⧸ϵ ❴a:A❵ → b ⧸= a.
-/2 width=1 by/
 qed-.
 
 (* Advanced properties ******************************************************)

@@ -38,10 +38,15 @@ qed.
 
 (* Constructions with term_root *********************************************)
 
+lemma term_root_le_refl (t):
+      t ⊆ ▵t.
+/2 width=1 by term_in_comp_root/
+qed.
+
 lemma term_root_le_repl:
       ∀t1,t2. t1 ⊆ t2 → ▵t1 ⊆ ▵t2.
 #t1 #t2 #Ht #p * #q #Hq
-/3 width=2 by ex_intro/
+/3 width=2 by term_in_root/
 qed.
 
 lemma term_root_eq_repl:

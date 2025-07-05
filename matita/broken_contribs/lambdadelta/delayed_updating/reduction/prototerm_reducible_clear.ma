@@ -35,6 +35,26 @@ lemma term_in_comp_clear_root_slice_xprc_gen (t) (r1) (p1) (p2) (x1:ℙ) (x2:ℙ
 /3 width=3 by term_ol_inv_clear_slice_bi, term_ol_clear_slice_bi_gen/
 qed.
 
+lemma term_in_comp_clear_root_slice_xprc_sn (t) (r1) (p1) (p2) (x1:ℙ) (x2:ℙ) (b1) (q1) (n1):
+      r1 ϵ 𝐑❨t,p1,b1,q1,n1❩ →
+      r1●⓪x1 = ⓪p2●x2 → r1 ϵ ⓪▵↑p2.
+#t #r1 #p1 #p2 #x1 #x2 #b1 #q1 #n1 #Hr1
+<(xprc_des_clear … Hr1) in ⊢ (%→?); >path_clear_append #H0
+elim (eq_inv_path_append_clear … (sym_eq … H0)) #y1 #y2 #_ #Hy2 #_ destruct
+<path_clear_append in H0; >(xprc_des_clear … Hr1) in ⊢ (%→?); #H0
+/2 width=6 by term_in_comp_clear_root_slice_xprc_gen/
+qed.
+
+lemma term_in_comp_clear_root_slice_xprc_dx (t) (r1) (p1) (p2) (x1:ℙ) (x2:ℙ) (b1) (q1) (n1):
+      r1 ϵ 𝐑❨t,p1,b1,q1,n1❩ →
+      r1●x1 = ⓪p2●⓪x2 → r1 ϵ ⓪▵↑p2.
+#t #r1 #p1 #p2 #x1 #x2 #b1 #q1 #n1 #Hr1
+>path_clear_append #H0
+elim (eq_inv_path_append_clear … H0) #y1 #y2 #_ #Hy2 #_ destruct
+<path_clear_append in H0; #H0
+/2 width=6 by term_in_comp_clear_root_slice_xprc_gen/
+qed.
+
 (* Inversions with term_clear ***********************************************)
 
 lemma term_in_comp_clear_root_slice_inv_xprc_gen (t) (r1) (p1) (p2) (b1) (q1) (n1):

@@ -12,35 +12,35 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_listed_1.ma".
-include "delayed_updating/reduction/prototerm_reducible_le.ma".
-include "delayed_updating/reduction/path_dbf_residuals.ma".
+include "ground/subsets/subset_listed.ma".
+include "ground/notation/functions/curly_3.ma".
 
-(* RESIDUALS OF A DBF-REDEX POINTER *****************************************)
+(* SUBSET WITH LISTED ELEMENTS **********************************************)
 
-(* Constructions with subset_le *********************************************)
+interpretation
+  "pair (subset)"
+  'Curly A a1 a2 = (subset_listed A (list_lcons A a2 (list_lcons A a1 (list_empty A)))).
 
-lemma path_dbfr_le_repl (t1) (t2) (s) (r):
-      t1 ⊆ t2 → (s /𝐝𝐛𝐟{t1} r) ⊆ (s /𝐝𝐛𝐟{t2} r).
-#t1 #t2 #s #r #Ht12 #x * *
-[ #Hnsr #H0 destruct
-  /2 width=1 by path_dbfr_neq/
-| #p #b #q #q0 #n #Hr #Hs #Hx destruct
-  /3 width=6 by path_dbfr_side, xprc_le_repl/
-]
+(* Basic constructions ******************************************************)
+
+lemma subset_in_pair_sx (A) (a1) (a2):
+      a1 ϵ ❴a1,a2:A❵.
+//
 qed.
 
-lemma path_dbfr_neq_le (t) (s) (r):
-      s ⧸= r → ❴s❵ ⊆ (s /𝐝𝐛𝐟{t} r).
-#t #s #r #Hs #x #Hx
->(subset_in_inv_single ??? Hx) -x
-/2 width=1 by path_dbfr_neq/
+lemma subset_in_pair_dx (A) (a1) (a2):
+      a2 ϵ ❴a1,a2:A❵.
+//
 qed.
 
-(* Inversions with subset_le ************************************************)
+(* Basic inversion **********************************************************)
 
-lemma path_dbfr_le_refl (t) (r):
-      (r /𝐝𝐛𝐟{t} r) ⊆ Ⓕ.
-#t #r #s #Hs
-elim (path_dbfr_inv_refl … Hs)
-qed.
+lemma subset_in_inv_pair (A) (a1) (a2) (b):
+      b ϵ ❴a1,a2:A❵ → ∨∨ b = a1 | b = a2.
+#A #a1 #a2 #b #H0
+elim (subset_in_inv_listed_lcons ???? H0) -H0
+[ /2 width=1 by or_intror/ ] #H0
+elim (subset_in_inv_listed_lcons ???? H0) -H0
+[ /2 width=1 by or_introl/ ] #H0
+elim (subset_nin_inv_empty ?? H0)
+qed-.

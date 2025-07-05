@@ -14,6 +14,7 @@
 
 include "ground/subsets/subset_nimply_le.ma".
 include "ground/subsets/subset_listed_le.ma".
+include "ground/subsets/subset_listed_1.ma".
 
 (* SUBSET WITH LISTED ELEMENTS **********************************************)
 

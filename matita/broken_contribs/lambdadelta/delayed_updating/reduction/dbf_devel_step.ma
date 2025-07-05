@@ -15,8 +15,7 @@
 include "delayed_updating/substitution/fsubst_fsubst.ma".
 include "delayed_updating/reduction/prototerm_delayed_reducible.ma".
 include "delayed_updating/reduction/preterm_delayed_xfocus_reducible.ma".
-include "delayed_updating/reduction/dbf_step_preterm.ma".
-include "delayed_updating/reduction/dbf_step_reducibles.ma".
+include "delayed_updating/reduction/dbf_step_preterm_main.ma".
 include "delayed_updating/reduction/dbf_devel_preterm.ma".
 
 (* COMPLETE DEVELOPMENT FOR DELAYED BALANCED FOCUSED REDUCTION **************)
@@ -44,7 +43,7 @@ lemma dbf_step_conf_local_nol (t0) (t1) (t2) (r1) (r2) (p1) (p2) (b1) (b2) (q1) 
       t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
       r1 ϵ 𝐑❨t0,p1,b1,q1,n1❩ → r2 ϵ 𝐑❨t0,p2,b2,q2,n2❩ →
       (r2 = r1 → ⊥) → (r1 ϵ ⓪▵↑(p2◖𝗦) → ⊥) → (r2 ϵ ⓪▵↑(p1◖𝗦) → ⊥) →
-      ∃∃t.t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] t.
+      ∃∃t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] t.
 #t0 #t1 #t2 #r1 #r2 #p1 #p2 #b1 #b2 #q1 #q2 #n1 #n2
 #Ht0 #Ht01 #Ht02 #Hr01 #Hr02 #Hnr21 #Hp21 #Hp12
 lapply (dbfs_preterm_trans … Ht0 Ht01) #Ht1
@@ -76,64 +75,71 @@ cut (t3 ⇔ t4)
 ]
 qed-.
 
-lemma in_comp_xprc_side (t) (p1) (p2) (b1) (q1) (s2) (n1):
-      (⓪(p2◖𝗦)●⓪s2) ϵ 𝐑❨t,p1,b1,q1,n1❩ →
-      ∨∨ (⓪p2) ϵ ⓪↑(p1◖𝗔)
-       | (⓪p1) ϵ ⓪↑(p2◖𝗦).
-#t #p1 #p2 #b1 #q1 #s1 #n1 #H0
-lapply (xprc_des_r … H0) -H0
-<path_clear_append #H0
-elim (eq_inv_list_append_bi … H0) -H0 * #s
-[ <path_clear_A_sn <path_clear_S_dx #H1 #H2
-  elim (eq_inv_list_lcons_append ????? H2) -H2 *
-  [ /3 width=1 by in_comp_slice_clear_inv_clear_sx, or_intror/ ]
-  #s0 #H0 #H2 destruct
-  elim (eq_inv_list_rcons_append ????? H1) -H1 *
-  [ #_ #H0 destruct ] #s #_ #H1
-  lapply (sym_eq ??? H1) -H1 #H1
-  elim (eq_inv_list_lcons_append ????? H1) -H1 *
-  [ #_ #H0 destruct ] #s1 #H0 #H1 destruct
-  <list_append_rcons_sn in H2; >path_clear_A_dx
-  /3 width=1 by in_comp_slice_clear_inv_clear_sx, or_introl/
-| /3 width=1 by in_comp_slice_clear_inv_clear_sx, or_intror/
-]
-qed-.
-
-lemma dbf_step_conf_local_le (t0) (t1) (t2) (r1) (r2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
+lemma dbf_step_conf_local_le (t0) (t1) (t2) (r1) (r2) (p1) (p2) (x) (b1) (b2) (q1) (q2) (n1) (n2):
       t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
       r1 ϵ 𝐑❨t0,p1,b1,q1,n1❩ → r2 ϵ 𝐑❨t0,p2,b2,q2,n2❩ →
-      (r2 = r1 → ⊥) → r1 ϵ ⓪▵↑(p2◖𝗦) → (r2 ϵ ⓪▵↑(p1◖𝗦) → ⊥) →
-      ∃∃t.t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] t.
-#t0 #t1 #t2 #r1 #r2 #p1 #p2 #b1 #b2 #q1 #q2 #n1 #n2
-#Ht0 #Ht01 #Ht02 #Hr01 #Hr02 #Hnr21 #Hp21 #Hp12
+      (r2 = r1 → ⊥) → (r2 ϵ ⓪▵↑(p1◖𝗦) → ⊥) →
+      x◖𝗱⁤↑n1 ϵ ⋔[p2◖𝗦]t0 → ⓪(p2◖𝗦)●⓪x=r1 →
+      ∃∃u,t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] u & u ➡𝐝𝐛𝐟[r2◖𝗱𝟎●⓪x] t.
+#t0 #t1 #t2 #r1 #r2 #p1 #p2 #x #b1 #b2 #q1 #q2 #n1 #n2
+#Ht0 #Ht01 #Ht02 #Hr01 #Hr02 #Hnr21 #Hp12 #Hx #H0 destruct
 lapply (dbfs_preterm_trans … Ht0 Ht02) #Ht2
-lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr01 Hr02 Hp21) [ // ] -Hp21 #Hp21
-elim (in_comp_inv_term_clear_slice … Hp21) -Hp21 #s2 #H0 #_ destruct
+lapply (dbfs_des_xprc_neq … Ht0 Ht01 Hnr21 Hr02) #Hr12
+elim (xprc_dbfs … Hr12) #t3 #Ht13
 lapply (dbfs_des_xprc_neq … Ht0 Ht02 … Hr01) [ /2 width=1 by/ ] #Hr21
 elim (xprc_dbfs … Hr21) #t4 #Ht24
-lapply (dbfs_des_reducible_side … (⓪s2) … Ht0 Ht02 Hr02 ?)
-[ /2 width=2 by dbfs_inv_reducuble/ ] * #p3 #b3 #q3 #n3 #Hs2
-elim (xprc_dbfs … Hs2) #t6 #Ht26
-elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hs2 …) -Ht24 -Ht26
-[|*: #H0 ]
-[
-| elim (term_in_comp_clear_root_slice_inv_xprc_gen … Hs2 H0) -H0 #x1 #x2
-  >list_append_rcons_sn <list_append_assoc >(path_clear_d_sn … (𝟎)) >path_clear_append #H0
-  /3 width=6 by term_in_comp_clear_root_slice_xprc_gen/
-| lapply (term_in_comp_clear_root_slice_inv_xprc … Ht2 Hr21 … H0)
-  [ /2 width=5 by xprc_des_S/ ] -H0 #H0
-  elim (in_comp_xprc_side … Hr21) -Hr21 #Hp
-  [ (* argument not moved: p3 begins with (p2◖A) *)
-
-  | (* argument moved *)
-  ]
-| lapply (eq_inv_list_append_sn_bi … H0) -H0 <path_clear_S_dx #H0 destruct
+elim (dbfs_inv_reducible_side … Ht0 Ht02 Hr02 Hx Hr01)
+* #y #H1 #H2 destruct #Hy
+elim (xprc_dbfs … Hy) #t6 #Ht26
+elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy) (* -Ht24 -Ht26 *)
+[1,5: |*: #H0 ]
+[|
+| -Ht0 -Ht02 -Ht2 -Hx -Ht01 -Hnr21 -Hr01 -Hr21
+  elim (term_in_comp_clear_root_slice_inv_xprc_gen … Hy H0) -Hy -H0 #x1 #x2
+  >list_append_rcons_sn <list_append_assoc #H0
+  /3 width=6 by term_in_comp_clear_root_slice_xprc_dx/
+| -Ht0 -Ht02 -Hp12 -Ht2 -Hr02 -Hx -Ht01 -Hnr21 -Hr01 -Hr21 -Hy
+  >path_clear_append in H0; #H0
+  lapply (term_ol_clear_slice_bi … H0) -H0 #H0
+  elim (term_ol_clear_slice_bi_inv_gen … H0) -H0 #x1 #x2
+  <path_clear_append <list_append_assoc <path_clear_S_dx >list_append_rcons_sn
+  <path_append_pAbLq_1 <list_append_assoc <path_clear_S_dx
+  >list_append_rcons_sn in ⊢ ((???%)→?);
+  <path_clear_append in ⊢ ((???%)→?); <list_append_assoc in ⊢ ((???%)→?);
+  <path_clear_A_dx >list_append_rcons_sn in ⊢ ((???%)→?); #H0
+  lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0
+  elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
+| -Ht02 -Hp12 -Ht2 -Hx -Ht01 -Hnr21 -Hr01 -Hr21 -Hy
+  >list_append_rcons_sn in H0; #H0
+  lapply (term_in_comp_clear_root_slice_xprc_dx … Hr02 H0) -H0 #H0
+  /2 width=9 by rp_nin_root_side/
+| -Ht0 -Ht02 -Hp12 -Hr02 -Hx -Ht01 -Hnr21 -Hr01 -Hr21
+  /2 width=9 by rp_nin_root_side/
+| -Ht0 -Ht02 -Hp12 -Ht2 -Hr02 -Hx -Ht01 -Hnr21 -Hr01 -Hr21 -Hy
+  >path_clear_append in H0; #H0
+  lapply (term_ol_clear_slice_bi … H0) -H0 #H0
+  elim (term_ol_clear_slice_bi_inv_gen … H0) -H0 #x1 #x2
+  <path_append_pAbLq_1 <path_clear_append <list_append_assoc
+  <path_clear_S_dx >list_append_rcons_sn <path_clear_append <list_append_assoc
+  <path_clear_A_dx <path_clear_S_dx
+  >list_append_rcons_sn >list_append_rcons_sn in ⊢ ((???%)→?); #H0
+  lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0
+  elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct  
+| -Ht0 -Ht02 -Hp12 -Ht2 -Hr02 -Hx -Ht01 -Hnr21 -Hr01 -Hr21 -Hy
+  lapply (eq_inv_list_append_sn_bi … H0) -H0
+  <path_clear_S_dx #H0 destruct
 ]
+#t5 #Ht45 #Ht65
+cut (t3 ⇔ t5)
+[2,4:
+  #Ht35
+  @(ex3_2_intro … Ht13 Ht24)
+  /2 width=4 by dbfs_eq_canc_dx/
+| (* argument moved *)
 
-HR02 → r2 ϵ ⓪↑(p2◖𝗔)
-Hs2  → (r2◖𝗱𝟎) ϵ ⓪↑(p3◖𝗔) → r2 ϵ ⓪↑(p3◖𝗔)
+| (* argument not moved *)
 
-
+(*
 lemma dbf_step_conf_local (t0) (t1) (t2) (r1) (r2):
       t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
       ∃∃t. t1 ⫽➡𝐝𝐛𝐟[r2 /𝐝𝐛𝐟{t0} r1] t & t2 ⫽➡𝐝𝐛𝐟[r1 /𝐝𝐛𝐟{t0} r2] t.
@@ -147,10 +153,19 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
   elim (term_in_comp_clear_root_slice_dec_xprc … (p1◖𝗦) … Hr02) #Hp12
   [ elim (dbf_step_conf_local_ol … Ht0 Ht01 Ht02 Hr01 Hr02 Hp21 Hp12)
   | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr01 Hr02 Hp21) [ // ] -Hp21 #Hp21
+    elim (xprc_des_clear_slice … Hr01 Hp21) -Hp21
+    [ #x #Hx #H0 | /2 width=5 by xprc_des_side/ | // ]
+    elim (dbf_step_conf_local_le … Ht0 Ht01 Ht02 Hr01 Hr02 … Hx H0)
+    [ -Ht0 -Ht01 -Ht02 -Hr01 -Hr02 -Hnr21 -Hp12 -Hx -H0 #u #t #Ht10 #Ht2u0 #Hut0 |*: /2 width=1 by/ ]
 
   | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr02 Hr01 Hp12) [ // ] -Hp12 #Hp12
+    elim (xprc_des_clear_slice … Hr02 Hp12) -Hp12
+    [ #x #Hx #H0 | /2 width=5 by xprc_des_side/ | // ]
+    elim (dbf_step_conf_local_le … Ht0 Ht02 Ht01 Hr02 Hr01 … Hx H0)
+    [ -Ht0 -Ht01 -Ht02 -Hr01 -Hr02 -Hnr21 -Hp21 -Hx -H0 #u #t #Ht20 #Ht1u0 #Hut0 |*: /2 width=1 by/ ]
 
   | elim (dbf_step_conf_local_nol … Ht0 Ht01 Ht02 Hr01 Hr02 Hnr21 Hp21 Hp12) #t #Ht1 #Ht2
     /4 width=6 by dbfs_neq_dbfd, xprc_des_clear, ex2_intro/
   ]
 ]
+*)

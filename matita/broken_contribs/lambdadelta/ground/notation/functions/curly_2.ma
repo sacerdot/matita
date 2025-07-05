@@ -14,10 +14,10 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation < "hvbox( ❴ term 19 a ❵ )"
+notation < "hvbox( ❴ term 19 a1 ❵ )"
   non associative with precedence 70
-  for @{ 'Curly $S $a }.
+  for @{ 'Curly $S $a1 }.
 
-notation > "hvbox( ❴ term 19 a opt ( : break term 19 S ) ❵ )"
+notation > "hvbox( ❴ term 19 a1 opt ( : break term 19 S ) ❵ )"
   non associative with precedence 70
-  for @{ 'Curly ${default @{$S}@{?}} $a }.
+  for @{ 'Curly ${default @{$S}@{?}} $a1 }.

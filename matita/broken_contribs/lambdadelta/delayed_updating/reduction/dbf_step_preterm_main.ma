@@ -41,9 +41,9 @@ qed-.
 
 (* UPDATE *)
 
-theorem dbfs_d_reducible_side (t1) (t2) (r) (p1) (p) (x) (b1) (b) (q1) (q) (n1) (n):
+theorem dbfs_inv_reducible_side (t1) (t2) (r) (p1) (p) (x) (b1) (b) (q1) (q) (n1) (n):
         t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → r ϵ 𝐑❨t1,p1,b1,q1,n1❩ →
-        x ϵ ⋔[p1◖𝗦]t1 → ⓪p1◖𝗦●⓪x ϵ 𝐑❨t1,p,b,q,n❩ →
+        x◖𝗱(⁤↑n) ϵ ⋔[p1◖𝗦]t1 → ⓪p1◖𝗦●⓪x ϵ 𝐑❨t1,p,b,q,n❩ →
         dbfs_inv_reducible_side_th r p1 p x b1 b q1 q n1 n t2.
 #t1 #t2 #r #p1 #p #x #b1 #b #q1 #q #n1 #n
 #Ht1 #Ht12 #Hr #Hx #H0x

@@ -14,7 +14,7 @@
 
 include "ground/lib/functions.ma".
 include "ground/subsets/subset_eq.ma".
-include "ground/subsets/subset_listed.ma".
+include "ground/subsets/subset_listed_1.ma".
 include "ground/subsets/subsets_inhabited.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/syntax/prototerm_irefs.ma".

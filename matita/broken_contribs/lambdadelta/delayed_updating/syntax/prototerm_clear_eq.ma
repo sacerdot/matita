@@ -14,7 +14,7 @@
 
 include "ground/lib/functions.ma".
 include "ground/subsets/subset_and.ma".
-include "ground/subsets/subset_listed.ma".
+include "ground/subsets/subset_listed_1.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_clear.ma".
 
@@ -33,6 +33,11 @@ lemma clear_and_dx (t1) (t2):
       ⓪(t1 ∩ t2) ⊆ (⓪t1) ∩ (⓪t2).
 #t1 #t2 #pz * #p * #H1p #H2p #H0 destruct
 /3 width=1 by in_comp_term_clear, subset_and_in/
+qed.
+
+lemma term_clear_root_le_refl (t):
+      (⓪t) ⊆ ⓪▵t.
+/3 width=3 by clear_le_repl, term_root_le_refl/
 qed.
 
 lemma term_le_root_clear (t):

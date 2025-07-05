@@ -30,12 +30,6 @@ lemma subset_listed_le_lcons_dx (A) (l) (a):
 /2 width=1 by subset_in_listed_lcons_dx/
 qed.
 
-lemma subset_single_le_sn (A) (u) (a):
-      a ϵ u → ❴a:A❵ ⊆ u.
-#A #u #a #Ha #b #Hb
-lapply (subset_in_inv_single ??? Hb) -Hb #H0 destruct //
-qed.
-
 lemma subset_listed_le_append_dx (A) (l1) (l2):
       (𝐗❨l1❩) ⊆ 𝐗{A}❨l1⨁l2❩.
 #A #l1 #l2 #a * #x1 #x2 #H0 destruct //
@@ -64,12 +58,6 @@ lemma subset_le_inv_listed_lcons_sn (A) (u) (l) (a):
 #H0 elim (subset_le_inv_listed_append_sn … H0) -H0 #Ha #Hu
 @conj // -Hu
 @(subset_in_le_trans ????? Ha) -Ha //
-qed-.
-
-lemma subset_le_inv_single_sn (A) (u) (a):
-      ❴a:A❵ ⊆ u → a ϵ u.
-#A #u #a #Ha
-elim (subset_le_inv_listed_lcons_sn ???? Ha) -Ha #Ha #_ //
 qed-.
 
 lemma subset_le_inv_listed_lcons_dx_nin (A) (u) (l) (a):

@@ -66,11 +66,45 @@ qed-.
 
 (* Destructions with preterm ************************************************)
 
-lemma xprc_des_S (t) (r) (p) (b) (q) (n):
+lemma xprc_des_side (t) (r) (p) (b) (q) (n):
       t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → p◖𝗦 ϵ ▵t.
 #t #r #p #b #q #n #Ht #Hr
 lapply (xprc_des_n … Hr) -Hr #Hn
 /3 width=2 by term_full_A_post, term_in_root/
+qed-.
+
+lemma xprc_des_clear_slice (t) (r) (p1) (p2) (b1) (q1) (n1):
+      t ϵ 𝐓 → r ϵ 𝐑❨t,p1,b1,q1,n1❩ → r ϵ ⓪↑p2 → p2 ϵ ▵t →
+      ∃∃q2. q2◖𝗱(⁤↑n1) ϵ ⋔[p2]t & ⓪p2●⓪q2 = r.
+#t #r #p1 #p2 #b1 #q1 #n1 #Ht #H1r #H2r #Hp2
+elim (in_comp_inv_term_clear_slice … H2r) -H2r #q0 #H0 #_ destruct
+lapply (xprc_des_n … H1r) #Hn1
+lapply (xprc_des_r … H1r) -H1r #Hr
+lapply (in_comp_term_clear_d_dx … Hn1) >Hr * #x #Hx #H0
+elim (eq_inv_path_d_dx_clear … H0) -H0 #x1 #n0 #H0 #_ #H1 destruct
+elim (eq_inv_path_append_clear … H0) -H0 #y2 #y0 #Hy2 #Hy0 #H0 destruct
+lapply (term_clear_inj … Ht Hp2 … Hy2) -Hp2 -Hy2
+[ /2 width=2 by term_in_root/ ] #H0 destruct
+>Hy0 in Hr; -q0 >path_clear_append #Hr
+lapply (term_clear_inj … Ht … Hr) -Ht -Hr
+[1,2: /2 width=2 by term_in_root/ ] -n0 #H0
+>H0 in Hn1; -p1 -b1 -q1 #Hn1 <path_clear_append
+/2 width=3 by ex2_intro/
+qed-.
+
+(* Advanced inversions with preterm *****************************************)
+
+lemma rp_nin_root_side (t) (r) (p) (b) (q) (n):
+      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → r ⧸ϵ ⓪▵↑(p◖𝗦).
+#t #r #p #b #q #n #Ht #Hr #Hnr
+lapply (term_in_comp_clear_root_slice_inv_xprc … Ht Hr … Hnr) -Hnr
+[ /2 width=5 by xprc_des_side/ ] #Hnr
+lapply (xprc_des_ol_pA_sn … Hr Hnr) -t -r -b -q -n #H0
+elim (term_ol_clear_slice_bi_inv_gen … H0) -H0 #q1 #q2
+<path_clear_A_dx <path_clear_S_dx
+>list_append_rcons_sn >list_append_rcons_sn in ⊢ ((???%)→?); #H0
+lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0
+elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
 qed-.
 
 (* Main destructions with preterm *******************************************)
@@ -110,5 +144,5 @@ theorem term_in_comp_clear_root_slice_inv_xprc_bi (t) (r1) (r2) (p1) (p2) (b1) (
         t ϵ 𝐓 →
         r1 ϵ 𝐑❨t,p1,b1,q1,n1❩ → r2 ϵ 𝐑❨t,p2,b2,q2,n2❩ →
         r1 ϵ ⓪▵↑(p2◖𝗦) → r1 ϵ ⓪↑(p2◖𝗦).
-/3 width=13 by term_in_comp_clear_root_slice_inv_xprc, xprc_des_S/
+/3 width=13 by term_in_comp_clear_root_slice_inv_xprc, xprc_des_side/
 qed-.

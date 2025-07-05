@@ -18,7 +18,7 @@ include "delayed_updating/notation/functions/tau_2.ma".
 include "delayed_updating/notation/functions/lamda_1.ma".
 include "delayed_updating/notation/functions/at_2.ma".
 include "ground/subsets/subset_or.ma".
-include "ground/subsets/subset_listed.ma".
+include "ground/subsets/subset_listed_1.ma".
 
 (* CONSTRUCTORS FOR PROTOTERM ***********************************************)
 

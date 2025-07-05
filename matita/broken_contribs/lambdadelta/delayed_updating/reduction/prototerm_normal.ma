@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_le.ma".
-include "ground/subsets/subset_listed.ma".
+include "ground/subsets/subset_listed_1.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/reduction/prototerm_reducibles.ma".
 include "delayed_updating/notation/functions/subset_nf_0.ma".

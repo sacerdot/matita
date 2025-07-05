@@ -14,7 +14,7 @@
 
 include "ground/subsets/subset_le.ma".
 include "ground/subsets/subset_or.ma".
-include "ground/subsets/subset_listed.ma".
+include "ground/subsets/subset_listed_1.ma".
 include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/syntax/prototerm_lrefs.ma".
 include "delayed_updating/syntax/prototerm_irefs.ma".

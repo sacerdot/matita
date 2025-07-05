@@ -18,7 +18,7 @@ include "ground/lib/list_length.ma".
 include "ground/subsets/subset_or_lt.ma".
 include "ground/subsets/subset_nimply_ol_le.ma".
 include "ground/subsets/subset_nimply_or_le.ma".
-include "ground/subsets/subset_listed_ol.ma".
+include "ground/subsets/subset_listed_ol_1.ma".
 include "ground/subsets/subset_listed_inhabited.ma".
 
 (* SUBSET WITH LISTED ELEMENTS **********************************************)

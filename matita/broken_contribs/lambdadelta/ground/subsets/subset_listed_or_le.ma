@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_or_le.ma".
-include "ground/subsets/subset_listed_le.ma".
+include "ground/subsets/subset_listed_le_1.ma".
 
 (* SUBSET WITH LISTED ELEMENTS **********************************************)
 
