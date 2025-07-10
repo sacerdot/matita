@@ -178,21 +178,46 @@ lemma fsubst_lcons_neq (t) (u) (v) (l1) (l2):
 | * #Hr #_ -u -v -l2 //
 ]
 qed.
-(*
-lemma fsubst_pt_append_refl_sn (t) (p) (u):
-      u ⇔ (p●t)[p⋔←u].
-#t #p #u @conj #r [| * // * ]
-[ /2 width=1 by fsubst_in_comp_true/
-| * #s #_ #H1 #H0 destruct
-  elim H0 -H0 //
-]
-qed.
 
-lemma fsubst_empty_rc (t) (u):
-      u ⇔ t[𝐞⋔←u].
-#t #u @conj #p [| * // * ]
-[ /2 width=1 by fsubst_in_comp_true/
-| #H1p #H2p elim H2p -H2p //
+(* Main inversions with subset_eq *******************************************)
+
+theorem fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (u1) (u2) (v1) (v2) (x1) (x2) (y1) (y2):
+        ⬕[u1←v1]⬕[u2←v2]t0 ⇔ ⬕[u2←v2]⬕[u1←v1]t0 →
+        u1 ⇔ x1 → u2 ⇔ x2 → v1 ⇔ y1 → v2 ⇔ y2 →
+        ⬕[u2←v2]t0 ⇔ t1 → ⬕[u1←v1]t0 ⇔ t2 →
+        ⬕[x1←y1]t1 ⇔ t3 → ⬕[x2←y2]t2 ⇔ t4 →
+        t3 ⇔ t4.
+#t0 #t1 #t2 #t3 #t4 #u1 #u2 #v1 #v2 #x1 #x2 #y1 #y2
+#Ht0 #Hux1 #Hux2 #Hvy1 #Hvy2 #Ht1 #Ht2 #Ht3 #Ht4
+@(subset_eq_repl … Ht3 … Ht4) -t3 -t4
+@(subset_eq_repl … Ht0) -Ht0
+/2 width=1 by fsubst_eq_repl/
+qed-.
+
+theorem fsubst_fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (t5) (u1) (u2) (U5) (x1) (x2) (v1) (v2) (w1) (y2) (V5):
+        ⬕[u1←v1]⬕[u2←v2]t0 ⇔ ⬕[U5←V5]⬕[u2←v2]⬕[u1←w1]t0 →
+        u1 ⇔ x1 → u2 ⇔ x2 → v2 ⇔ y2 →
+        ⬕[u2←v2]t0 ⇔ t1 → ⬕[u1←w1]t0 ⇔ t2 →
+        ⬕[x1←v1]t1 ⇔ t3 → ⬕[x2←y2]t2 ⇔ t4 → ⬕[U5←V5]t4 ⇔ t5 →
+        t3 ⇔ t5.
+#t0 #t1 #t2 #t3 #t4 #t5 #u1 #u2 #U5 #x1 #x2 #v1 #v2 #w1 #y2 #V5
+#Ht0 #Hux1 #Hux2 #Hvy2 #Ht01 #Ht02 #Ht13 #Ht24 #Ht45
+@(subset_eq_repl … Ht13 … Ht45) -t3 -t5
+@(subset_eq_repl … Ht0) -Ht0
+[ /2 width=1 by fsubst_eq_repl/
+| @fsubst_eq_repl [|*: // ] -U5 -V5
+  @(subset_eq_trans … Ht24) -t4
+  /2 width=1 by fsubst_eq_repl/
 ]
-qed.
+qed-.  
+
+(*
+u2 = 𝐅❨p2●𝗦◗y,b1,q1❩        x2 = 𝐅❨p2●𝗦◗y,b1,q1❩         
+v2 = 𝐃❨t0,p2●𝗦◗y,b1,q1,n1❩  y2 = 𝐃❨t2,p2●𝗦◗y,b1,q1,n1❩
+
+x1 = 𝐅❨p2,b2,q2❩            u1 = 𝐅❨p2,b2,q2❩      
+w1 = 𝐃❨t0,p2,b2,q2,n2❩	    v1 = 𝐃❨t1,p2,b2,q2,n2❩
+
+U5 = 𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1❩
+V5 = 𝐃❨t4,(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1,n1❩
 *)

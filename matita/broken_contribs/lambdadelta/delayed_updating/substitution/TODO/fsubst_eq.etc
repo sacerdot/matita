@@ -1,0 +1,16 @@
+lemma fsubst_pt_append_refl_sn (t) (p) (u):
+      u ⇔ (p●t)[p⋔←u].
+#t #p #u @conj #r [| * // * ]
+[ /2 width=1 by fsubst_in_comp_true/
+| * #s #_ #H1 #H0 destruct
+  elim H0 -H0 //
+]
+qed.
+
+lemma fsubst_empty_rc (t) (u):
+      u ⇔ t[𝐞⋔←u].
+#t #u @conj #p [| * // * ]
+[ /2 width=1 by fsubst_in_comp_true/
+| #H1p #H2p elim H2p -H2p //
+]
+qed.
