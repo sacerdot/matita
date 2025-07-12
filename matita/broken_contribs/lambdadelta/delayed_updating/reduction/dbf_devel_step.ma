@@ -71,9 +71,9 @@ cut (t3 ⇔ t4)
     ]
   | //
   | //
-  | @(brd_grafted_fsubst_eq_repl_fwd … Ht01)
+  | @(brd_fsubst_false_eq_repl_fwd … Ht01)
     [ /3 width=7 by term_in_root_brxf_des_xprc/ | /3 width=7 by term_in_root_brd_des_xprc/ ]
-  | @(brd_grafted_fsubst_eq_repl_fwd … Ht02)
+  | @(brd_fsubst_false_eq_repl_fwd … Ht02)
     [ /3 width=7 by term_in_root_brxf_des_xprc/ | /3 width=7 by term_in_root_brd_des_xprc/ ]
   ]
 | #Ht34
@@ -148,10 +148,11 @@ cut (t3 ⇔ t5)
   lapply (dbfs_preterm_inv_sn … Ht1 Ht13 Hr12) -Ht13 -Hr12 #Ht13
   lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) -Ht24 -Hr21 #Ht24
   lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Ht45
-  @(fsubst_fsubst_fsubst_inv_eq ???????????????????? Ht01 Ht02 Ht13 Ht24 Ht45) -t3 -t5
+  @(fsubst_fsubst_fsubst_inv_eq ????????????????????? Ht01 Ht02 Ht13 Ht24 Ht45) -t3 -t5
   [
-  |2,3,6,7: //
-  |4,8: @(brd_grafted_fsubst_eq_repl_fwd … Ht02)
+  |2,3,7,8: //
+  |4,9: @(brd_fsubst_false_eq_repl_fwd … Ht01)
+  |5,10: @(brd_fsubst_false_eq_repl_fwd … Ht02)
     [ /2 width=5 by nin_root_brxf_side/
     | /2 width=7 by nin_root_brd_side/
     | /2 width=5 by nin_root_brxf_side_trunk/
@@ -164,6 +165,35 @@ cut (t3 ⇔ t5)
 
 | (* argument not moved *)
 
+(*
+t0 : 𝕋
+ t1 : 𝕋
+ t2 : 𝕋
+ r2 : ℙ
+ p2 : ℙ
+ b1 : ℙ
+ b2 : ℙ
+ q1 : ℙ
+ q2 : ℙ
+ n1 : ℕ
+ n2 : ℕ
+ Ht0 : (t0ϵ𝐓)
+ Ht2 : (t2ϵ𝐓)
+ t4 : 𝕋
+ y : ℙ
+ Hp12 : (r2ϵ⓪▵↑(p2●𝗦◗y◖𝗦)→⊥)
+ Hx : ((y◖𝗔)●b1●𝗟◗q1◖𝗱⁤↑n1ϵ⋔[p2◖𝗦]t0)
+ Hnr21 : (r2=⓪(p2◖𝗦)●⓪((y◖𝗔)●b1●𝗟◗q1)→⊥)
+ t6 : 𝕋
+ Ht1 : (t1ϵ𝐓)
+ Ht4 : (t4ϵ𝐓)
+ Ht01 : (⬕[𝐅❨p2●𝗦◗y,b1,q1❩←𝐃❨t0,p2●𝗦◗y,b1,q1,n1❩]t0⇔t1)
+ Ht02 : (⬕[𝐅❨p2,b2,q2❩←𝐃❨t0,p2,b2,q2,n2❩]t0⇔t2)
+ Ht24 : (⬕[𝐅❨p2●𝗦◗y,b1,q1❩←𝐃❨t2,p2●𝗦◗y,b1,q1,n1❩]t2⇔t4)
+ ---------------------------
+  
+ (𝐃❨t0,p2,b2,q2,n2❩⇔𝐃❨t1,p2,b2,q2,n2❩)
+*)
 
 (*
 lemma dbf_step_conf_local (t0) (t1) (t2) (r1) (r2):

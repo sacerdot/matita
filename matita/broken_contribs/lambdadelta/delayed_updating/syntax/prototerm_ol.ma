@@ -77,6 +77,12 @@ lemma term_ol_des_lcons_bi (t1) (t2) (l1) (l2):
 elim (eq_inv_list_rcons_bi ????? H2) -H2 #_ //
 qed-.
 
+lemma term_ol_des_grafted_bi (t1) (t2) (p):
+      (⋔[p]t1) ≬ ⋔[p]t2 → t1 ≬ t2.
+#t1 #t2 #p * #r #H1r #H2r
+/2 width=3 by subset_ol_i/
+qed-.
+
 (* Main destructions with subset_ol *****************************************)
 
 theorem term_ol_des_slice_rcons_bi (p1) (p2) (l1) (l2):

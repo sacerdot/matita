@@ -74,7 +74,7 @@ lemma fsubst_and_rc_sn_dx (t) (u) (v):
 ]
 qed-.
 
-lemma grafted_fsubst_dx (t) (u) (v) (p):
+lemma grafted_fsubst_false_dx (t) (u) (v) (p):
       p ⧸ϵ ▵u → ⋔[p]t ⊆ ⋔[p]⬕[u←v]t.
 #t #u #v #p #Hnp #r #Hr
 lapply (term_grafted_inv_gen … Hr) -Hr #Hpr
@@ -83,7 +83,7 @@ lapply (term_grafted_inv_gen … Hr) -Hr #Hpr
 /3 width=2 by term_in_root/
 qed-.
 
-lemma grafted_fsubst_sn (t) (u) (v) (p):
+lemma grafted_fsubst_false_sn (t) (u) (v) (p):
       p ⧸ϵ ▵v → ⋔[p]⬕[u←v]t ⊆ ⋔[p]t.
 #t #u #v #p #Hnp #r #Hr
 elim (term_grafted_inv_gen … Hr) -Hr *
@@ -91,6 +91,23 @@ elim (term_grafted_inv_gen … Hr) -Hr *
   /2 width=2 by term_in_root/
 | #Hpr #_ -Hnp
   /2 width=1 by term_grafted_gen/
+]
+qed-.
+
+lemma grafted_fsubst_true_dx (t) (u) (v) (p):
+      ⬕[⋔[p]u←⋔[p]v]⋔[p]t ⊆ ⋔[p]⬕[u←v]t.
+#t #u #v #p #r * *
+[ /4 width=2 by fsubst_in_comp_true, term_ol_des_grafted_bi, term_grafted_gen/
+| /4 width=1 by fsubst_in_comp_false, term_grafted_gen/
+]
+qed-.
+
+lemma grafted_fsubst_true_sn (t) (u) (v) (p):
+      (⋔[p]t) ≬ ⋔[p]u → ⋔[p]⬕[u←v]t ⊆ ⬕[⋔[p]u←⋔[p]v]⋔[p]t.
+#t #u #v #p #Hp #r #Hr
+elim (term_grafted_inv_gen … Hr) -Hr *
+[ /2 width=1 by fsubst_in_comp_true/
+| /3 width=1 by fsubst_in_comp_false/
 ]
 qed-.
 
@@ -137,10 +154,16 @@ lemma fsubst_and_rc_sn (t) (u) (v):
 /3 width=1 by conj, fsubst_and_rc_sn_sn, fsubst_and_rc_sn_dx/
 qed.
 
-lemma grafted_fsubst (t) (u) (v) (p):
+lemma grafted_fsubst_false (t) (u) (v) (p):
       p ⧸ϵ ▵u → p ⧸ϵ ▵v →
       (⋔[p]t) ⇔ ⋔[p]⬕[u←v]t.
-/3 width=4 by grafted_fsubst_sn, grafted_fsubst_dx, conj/
+/3 width=4 by grafted_fsubst_false_sn, grafted_fsubst_false_dx, conj/
+qed.
+
+lemma grafted_fsubst_true (t) (u) (v) (p):
+      (⋔[p]t) ≬ ⋔[p]u →
+      ⬕[⋔[p]u←⋔[p]v]⋔[p]t ⇔ ⋔[p]⬕[u←v]t.
+/3 width=4 by grafted_fsubst_true_sn, grafted_fsubst_true_dx, conj/
 qed.
 
 lemma fsubst_eq_repl_slice (t) (u1) (u2) (p1) (p2):
@@ -194,14 +217,14 @@ theorem fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (u1) (u2) (v1) (v2) (x1) (
 /2 width=1 by fsubst_eq_repl/
 qed-.
 
-theorem fsubst_fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (t5) (u1) (u2) (U5) (x1) (x2) (v1) (v2) (w1) (y2) (V5):
-        ⬕[u1←v1]⬕[u2←v2]t0 ⇔ ⬕[U5←V5]⬕[u2←v2]⬕[u1←w1]t0 →
-        u1 ⇔ x1 → u2 ⇔ x2 → v2 ⇔ y2 →
-        ⬕[u2←v2]t0 ⇔ t1 → ⬕[u1←w1]t0 ⇔ t2 →
-        ⬕[x1←v1]t1 ⇔ t3 → ⬕[x2←y2]t2 ⇔ t4 → ⬕[U5←V5]t4 ⇔ t5 →
+theorem fsubst_fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (t5) (u1) (u2) (U5) (x1) (x2) (v1) (v2) (y1) (y2) (V5):
+        ⬕[u1←v1]⬕[u2←v2]t0 ⇔ ⬕[U5←V5]⬕[u2←v2]⬕[u1←v1]t0 →
+        u1 ⇔ x1 → u2 ⇔ x2 → v1 ⇔ y1 → v2 ⇔ y2 →
+        ⬕[u2←v2]t0 ⇔ t1 → ⬕[u1←v1]t0 ⇔ t2 →
+        ⬕[x1←y1]t1 ⇔ t3 → ⬕[x2←y2]t2 ⇔ t4 → ⬕[U5←V5]t4 ⇔ t5 →
         t3 ⇔ t5.
-#t0 #t1 #t2 #t3 #t4 #t5 #u1 #u2 #U5 #x1 #x2 #v1 #v2 #w1 #y2 #V5
-#Ht0 #Hux1 #Hux2 #Hvy2 #Ht01 #Ht02 #Ht13 #Ht24 #Ht45
+#t0 #t1 #t2 #t3 #t4 #t5 #u1 #u2 #U5 #x1 #x2 #v1 #v2 #y1 #y2 #V5
+#Ht0 #Hux1 #Hux2 #Hvy1 #Hvy2 #Ht01 #Ht02 #Ht13 #Ht24 #Ht45
 @(subset_eq_repl … Ht13 … Ht45) -t3 -t5
 @(subset_eq_repl … Ht0) -Ht0
 [ /2 width=1 by fsubst_eq_repl/
@@ -212,11 +235,11 @@ theorem fsubst_fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (t5) (u1) (u2) (U5)
 qed-.  
 
 (*
-u2 = 𝐅❨p2●𝗦◗y,b1,q1❩        x2 = 𝐅❨p2●𝗦◗y,b1,q1❩         
-v2 = 𝐃❨t0,p2●𝗦◗y,b1,q1,n1❩  y2 = 𝐃❨t2,p2●𝗦◗y,b1,q1,n1❩
+u2 = 𝐅❨p2●𝗦◗y,b1,q1❩        x2 = 𝐅❨p2●𝗦◗y,b1,q1❩         x         
+v2 = 𝐃❨t0,p2●𝗦◗y,b1,q1,n1❩  y2 = 𝐃❨t2,p2●𝗦◗y,b1,q1,n1❩   x
 
-x1 = 𝐅❨p2,b2,q2❩            u1 = 𝐅❨p2,b2,q2❩      
-w1 = 𝐃❨t0,p2,b2,q2,n2❩	    v1 = 𝐃❨t1,p2,b2,q2,n2❩
+x1 = 𝐅❨p2,b2,q2❩            u1 = 𝐅❨p2,b2,q2❩             x
+y1 = 𝐃❨t0,p2,b2,q2,n2❩	    v1 = 𝐃❨t1,p2,b2,q2,n2❩
 
 U5 = 𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1❩
 V5 = 𝐃❨t4,(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1,n1❩
