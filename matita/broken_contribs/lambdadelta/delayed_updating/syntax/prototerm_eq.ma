@@ -99,6 +99,23 @@ lemma pt_append_assoc (p) (q) (t:𝕋):
 /3 width=1 by conj, pt_append_assoc_sn, pt_append_assoc_dx/
 qed.
 
+lemma term_grafted_pt_append_dx (t) (p):
+      t ⊆ ⋔[p](p●t).
+#t #p #q #Hq
+/2 width=1 by pt_append_in/
+qed.
+
+lemma term_grafted_pt_append_sx (t) (p):
+      (⋔[p](p●t)) ⊆ t.
+#t #p #q #H0
+/3 width=2 by term_grafted_inv_gen, append_in_comp_inv_bi/
+qed.
+
+lemma term_grafted_pt_append (t) (p):
+      t ⇔ ⋔[p](p●t).
+/3 width=2 by conj, term_grafted_pt_append_dx, term_grafted_pt_append_sx/
+qed.
+
 lemma term_le_pt_append_grafted_refl (t) (p):
       p●⋔[p]t ⊆ t.
 #t #p #r * #q #Hq #H0 destruct //

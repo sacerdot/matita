@@ -86,13 +86,13 @@ elim (path_eq_inv_pbq_pSq_pbc … H0) -H0 [3: // ] * #m0
   >path_clear_L_sn in H2; >path_clear_append >path_clear_A_sn >path_clear_append #H2
   lapply (term_clear_inj … Ht1 … H2) -Ht1 -H2
   [3: |*: /2 width=2 by term_in_root/ ] #H0 destruct
-  <path_append_pAbLq_10 in Hn; #Hn
-  <brd_unfold <path_append_pAbLq_10 <path_append_pAbLqAbLq_1
+  <path_append_pAbLqAbLq_1 in Hn; #Hn
+  <brd_unfold <path_append_pAbLqAbLq_1 <path_append_pAbLqAbLq_2
   @(prc_mk_old … n0 … Hb0) -Hb0
   [ @fsubst_in_comp_true [ @(brxf_ol_sn … Hr) ] -Hr
-    <path_append_pAbLqAbLq_2
+    <path_append_pAbLqAbLq_3
     @pt_append_in @in_comp_iref_hd @term_grafted_gen //
-  | -t1 -p0 -b0 <path_append_pAbLq_11 >nplus_succ_dx >nplus_unit_sn
+  | -t1 -p0 -b0 <path_append_pAbLq_10 >nplus_succ_dx >nplus_unit_sn
     lapply (pcc_inv_S … Hq0) -Hq0 #Hq0
     @pcc_d @pcc_d @(pcc_pcc … Hq) @pcc_L -Hq
     @(pcc_pcc (⓪b) (♭b)) [ // ] @pcc_A //

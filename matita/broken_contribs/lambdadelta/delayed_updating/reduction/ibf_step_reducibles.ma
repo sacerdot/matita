@@ -24,7 +24,7 @@ lemma ibfs_reducible (t1) (r):
       r ϵ 𝐑❨t1❩ → ∃t2. t1 ➡𝐢𝐛𝐟[r] t2.
 #t1 #r * #p #b #q #n #Hr
 lapply (xprc_des_n … Hr) #Hn
-@ex_intro [| @(ibfs_mk … Hr) // ]
+@ex_intro [| @(ibfs_mk … Hr) @subset_eq_refl ]
 qed-.
 
 (* Inversions with prc ******************************************************)

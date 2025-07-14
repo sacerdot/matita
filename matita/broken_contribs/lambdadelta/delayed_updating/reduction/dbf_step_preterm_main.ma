@@ -103,12 +103,12 @@ elim (path_eq_inv_pbq_pSq_pbc … H0) -H0 [3: // ] * #m0
 
   @or_intror @ex3_intro [2,3: // | skip ]
   >path_clear_reduct >(path_clear_d_dx … (⁤↑(♭b1+n1))) >path_clear_append
-  <brd_unfold <path_append_pAbLq_10 <path_append_pAbLqAbLq_1
+  <brd_unfold <path_append_pAbLqAbLq_1 <path_append_pAbLqAbLq_2
   @(xprc_mk … n … Hb) -Hb
   [ @fsubst_in_comp_true [ /2 width=3 by subset_ol_i/ ]
-    <path_append_pAbLqAbLq_2
+    <path_append_pAbLqAbLq_3
     @pt_append_in @in_comp_iref_hd @term_grafted_gen //
-  | -t1 -p -b <path_append_pAbLq_11 >nplus_succ_dx >nplus_unit_sn
+  | -t1 -p -b <path_append_pAbLq_10 >nplus_succ_dx >nplus_unit_sn
     lapply (pcc_inv_S … Hq) -Hq #Hq
     @pcc_d @pcc_d @(pcc_pcc … Hq1) -Hq1
     @pcc_L @(pcc_pcc (⓪b1) (♭b1)) [ // ] @pcc_A //

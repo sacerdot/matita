@@ -48,7 +48,7 @@ lemma xprc_dbfs (t1) (r) (p) (b) (q) (n):
       ∃t2. t1 ➡𝐝𝐛𝐟[r] t2.
 #t1 #r #p #b #q #n #Hr
 lapply (xprc_des_n … Hr) #Hn
-@ex_intro [| @(dbfs_mk … Hr) // ]
+@ex_intro [| @(dbfs_mk … Hr) @subset_eq_refl ]
 qed-.
 
 (* Constructions with subset_eq *********************************************)

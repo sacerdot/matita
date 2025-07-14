@@ -217,12 +217,13 @@ theorem fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (u1) (u2) (v1) (v2) (x1) (
 /2 width=1 by fsubst_eq_repl/
 qed-.
 
-theorem fsubst_fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (t5) (u1) (u2) (U5) (x1) (x2) (v1) (v2) (y1) (y2) (V5):
+axiom fsubst_fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (t5) (u1) (u2) (U5) (U6) (x1) (x2) (v1) (v2) (y1) (y2) (V5) (V6):
         ⬕[u1←v1]⬕[u2←v2]t0 ⇔ ⬕[U5←V5]⬕[u2←v2]⬕[u1←v1]t0 →
-        u1 ⇔ x1 → u2 ⇔ x2 → v1 ⇔ y1 → v2 ⇔ y2 →
+        u1 ⇔ x1 → u2 ⇔ x2 → ⬕[U6←V6] v1 ⇔ y1 → v2 ⇔ y2 → U5 ⇔ U6 → V6 ⇔ V6 → 
         ⬕[u2←v2]t0 ⇔ t1 → ⬕[u1←v1]t0 ⇔ t2 →
         ⬕[x1←y1]t1 ⇔ t3 → ⬕[x2←y2]t2 ⇔ t4 → ⬕[U5←V5]t4 ⇔ t5 →
         t3 ⇔ t5.
+(*
 #t0 #t1 #t2 #t3 #t4 #t5 #u1 #u2 #U5 #x1 #x2 #v1 #v2 #y1 #y2 #V5
 #Ht0 #Hux1 #Hux2 #Hvy1 #Hvy2 #Ht01 #Ht02 #Ht13 #Ht24 #Ht45
 @(subset_eq_repl … Ht13 … Ht45) -t3 -t5
@@ -233,7 +234,7 @@ theorem fsubst_fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (t5) (u1) (u2) (U5)
   /2 width=1 by fsubst_eq_repl/
 ]
 qed-.  
-
+*)
 (*
 u2 = 𝐅❨p2●𝗦◗y,b1,q1❩        x2 = 𝐅❨p2●𝗦◗y,b1,q1❩         x         
 v2 = 𝐃❨t0,p2●𝗦◗y,b1,q1,n1❩  y2 = 𝐃❨t2,p2●𝗦◗y,b1,q1,n1❩   x
@@ -243,4 +244,7 @@ y1 = 𝐃❨t0,p2,b2,q2,n2❩	    v1 = 𝐃❨t1,p2,b2,q2,n2❩
 
 U5 = 𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1❩
 V5 = 𝐃❨t4,(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1,n1❩
+
+U6 = 𝐃❨𝐅❨p2●𝗦◗y,b1,q1❩,p2,b2,q2,n2❩
+V6 = 𝐃❨𝐃❨t0,p2●𝗦◗y,b1,q1,n1❩,p2,b2,q2,n2❩
 *)
