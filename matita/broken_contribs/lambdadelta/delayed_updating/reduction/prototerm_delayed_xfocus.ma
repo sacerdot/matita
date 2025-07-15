@@ -30,7 +30,8 @@ elim Hr -Hr #s #Hs #H0 destruct
 qed.
 
 lemma brd_brxf_append_p (p1) (p2) (b1) (b2) (q1) (q2) (n2):
-      (𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●p1,b1,q1❩) ⇔ 𝐃❨𝐅❨p2●𝗦◗p1,b1,q1❩,p2,b2,q2,n2❩.
+      (𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●p1,b1,q1❩) ⇔
+      (𝐃❨𝐅❨p2●𝗦◗p1,b1,q1❩,p2,b2,q2,n2❩).
 #p1 #p2 #b1 #b2 #q1 #q2 #n2
 <brxf_unfold >(list_append_rcons_sn … p1) <list_append_assoc
 @(subset_eq_canc_sn … (term_slice_append …))
@@ -42,7 +43,8 @@ lemma brd_brxf_append_p (p1) (p2) (b1) (b2) (q1) (q2) (n2):
 qed.
 
 lemma brd_brxf_append_q (p1) (b1) (b2) (q11) (q12) (q2) (n2):
-      (𝐅❨p1,b1,q11●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗q12❩) ⇔ 𝐃❨𝐅❨p1,b1,q11●𝗦◗q12❩,p1●𝗔◗b1●𝗟◗q11,b2,q2,n2❩.
+      (𝐅❨p1,b1,q11●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗q12❩) ⇔
+      (𝐃❨𝐅❨p1,b1,q11●𝗦◗q12❩,p1●𝗔◗b1●𝗟◗q11,b2,q2,n2❩).
 #p1 #b1 #b2 #q11 #q12 #q2 #n2
 <brxf_unfold <path_append_pAbLqAbLq_4
 @(subset_eq_canc_sn … (term_slice_append …))
