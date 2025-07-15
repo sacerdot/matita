@@ -26,7 +26,7 @@ lemma brxf_append_p (p2) (p1) (b1) (q1):
 qed.
 
 lemma grafted_brxf_append_p (p2) (p1) (b1) (q1):
-     (𝐅❨p1,b1,q1❩)⇔⋔[p2]𝐅❨p2●p1,b1,q1❩.
+      (𝐅❨p1,b1,q1❩)⇔⋔[p2]𝐅❨p2●p1,b1,q1❩.
 #p2 #p1 #b1 #q1
 @(subset_eq_trans … (term_grafted_pt_append … p2))
 @term_grafted_eq_repl

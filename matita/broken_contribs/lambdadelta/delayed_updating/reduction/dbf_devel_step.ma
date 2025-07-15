@@ -130,7 +130,7 @@ elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy) (* -Ht24 -Ht26 *)
   <path_clear_A_dx <path_clear_S_dx
   >list_append_rcons_sn >list_append_rcons_sn in ⊢ ((???%)→?); #H0
   lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0
-  elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct  
+  elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
 | -Ht0 -Ht02 -Hp12 -Ht2 -Hr02 -Hx -Ht01 -Hnr21 -Hr01 -Hr21 -Hy
   lapply (eq_inv_list_append_sn_bi … H0) -H0
   <path_clear_S_dx #H0 destruct
@@ -148,7 +148,7 @@ cut (t3 ⇔ t5)
   lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) -Ht24 -Hr21 #Ht24
   lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Ht45
   @(fsubst_fsubst_fsubst_inv_eq ????????????????????? ???? Ht01 Ht02 Ht13 Ht24 Ht45) -t3 -t5
-  [4,5,9,13,14,18: @subset_eq_refl
+  [4,5,13,14: @subset_eq_refl
   |6,15: @(brd_fsubst_true_eq_repl_fwd … Ht01)
 
   |1,2,10,11: skip
@@ -159,6 +159,8 @@ cut (t3 ⇔ t5)
     | /2 width=7 by nin_root_brd_side_trunk/
     ]
   |8: @brd_brxf_append_p |17: @brd_brxf_append_q
+  |9: @brd_brd_append_p
+  |18:
   ]
 ]
 [
@@ -179,7 +181,8 @@ cut (t3 ⇔ t5)
  Ht02 : (⬕[𝐅❨p2,b2,q2❩←𝐃❨t0,p2,b2,q2,n2❩]t0⇔t2)
  Ht24 : (⬕[𝐅❨p2●𝗦◗y,b1,q1❩←𝐃❨t2,p2●𝗦◗y,b1,q1,n1❩]t2⇔t4)
  ---------------------------
-
+(𝐃❨t4,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩⇔
+  𝐃❨𝐃❨t0,p1,b1,y●𝗦◗x,n1❩,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩)
 
 *)
 

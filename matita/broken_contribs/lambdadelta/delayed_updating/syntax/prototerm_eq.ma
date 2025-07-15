@@ -17,7 +17,7 @@ include "ground/subsets/subset_eq.ma".
 
 (* EQUIVALENCE FOR PROTOTERM ************************************************)
 
-(* Constructions with prototerm_grafted *************************************)
+(* Constructions with term_grafted ******************************************)
 
 lemma term_grafted_empty_dx (t):
       t ⇔ ⋔[𝐞]t.
@@ -34,6 +34,13 @@ lemma term_grafted_eq_repl (t1) (t2) (p):
       t1 ⇔ t2 → ⋔[p]t1 ⇔ ⋔[p]t2.
 #t1 #t2 #p * #H1t #H2t
 /3 width=1 by conj, term_grafted_le_repl/
+qed.
+
+(* Main constructions with term_grafted *************************************)
+
+theorem term_grafted_append (t) (p1) (p2):
+        (⋔[p1]⋔[p2]t) ⇔ ⋔[p2●p1]t.
+/2 width=1 by conj/
 qed.
 
 (* Constructions with term_root *********************************************)

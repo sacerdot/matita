@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/preterm_eq.ma".
 include "delayed_updating/reduction/dbf_step_preterm.ma".
 include "delayed_updating/computation/dbf_steps.ma".
 
