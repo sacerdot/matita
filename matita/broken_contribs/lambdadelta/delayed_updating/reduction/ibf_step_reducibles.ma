@@ -20,7 +20,7 @@ include "delayed_updating/reduction/ibf_step.ma".
 
 (* Constructions with prc ***************************************************)
 
-lemma ibfs_reducible (t1) (r):
+lemma ibfs_prc (t1) (r):
       r ϵ 𝐑❨t1❩ → ∃t2. t1 ➡𝐢𝐛𝐟[r] t2.
 #t1 #r * #p #b #q #n #Hr
 lapply (xprc_des_n … Hr) #Hn
@@ -29,7 +29,7 @@ qed-.
 
 (* Inversions with prc ******************************************************)
 
-lemma ibfs_inv_reducuble (t1) (t2) (r):
+lemma ibfs_inv_prc (t1) (t2) (r):
       t1 ➡𝐢𝐛𝐟[r] t2 → r ϵ 𝐑❨t1❩.
 #t1 #t2 #r * #p #b #q #n #Hr #_
 /2 width=5 by prc_mk/
@@ -39,11 +39,11 @@ qed-.
 
 (* UPDATE *)
 
-lemma ibfs_des_reducuble_neq (t1) (t2) (r) (s):
+lemma ibfs_des_prc_neq (t1) (t2) (r) (s):
       t1 ϵ 𝐓 → t1 ➡𝐢𝐛𝐟[r] t2 →
       s ⧸= r → s ϵ 𝐑❨t1❩ → s ϵ 𝐑❨t2❩.
 #t1 #t2 #r #s #Ht1 #Ht #Hr * #p #b #q #n * #H0 #Hb #Hq #Hn destruct
-elim (ibfs_inv_reducuble … Ht) #p0 #b0 #q0 #n0 * #H0 #_ #_ #Hn0 destruct
+elim (ibfs_inv_prc … Ht) #p0 #b0 #q0 #n0 * #H0 #_ #_ #Hn0 destruct
 @(prc_mk_old … Hq) [| // ] - Hb -Hq
 @(ibfs_des_in_comp_neq … Ht) // -t2 #H0
 lapply (term_slice_des_clear_bi … (𝐞) … Ht1 … H0) -H0

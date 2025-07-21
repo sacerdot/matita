@@ -24,5 +24,5 @@ lemma tsn_normal (t):
       t ϵ 𝐍𝐅 → t ϵ 𝐒𝐍.
 #t1 #Ht1 @tsn_step
 #t2 #r #Hr elim (tnf_inv_gen … Ht1) -Ht1
-/2 width=3 by dbfs_inv_reducuble/
+/2 width=3 by dbfs_inv_prc/
 qed.

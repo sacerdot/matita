@@ -1,0 +1,18 @@
+include "delayed_updating/syntax/path_help.ma".
+
+
+lemma path_append_pAbLq_12 (p) (b) (q) (l):
+      p●𝗔◗b●𝗟◗(q◖l) = (p●𝗔◗b●𝗟◗q)◖l.
+// qed.
+
+theorem pippo (t) (r1) (r2) (p) (b1) (b2) (q1) (q2) (n1) (n2):
+        t ϵ 𝐓 → r1 ϵ 𝐑❨t,p,b1,q1,n1❩ → r2 ϵ 𝐑❨t,p,b2,q2,n2❩ → b1 = b2.
+#t #r1 #r2 #p #b1 #b2 #q1 #q2 #n1 #n2 #Ht #Hr1 #Hr2
+lapply (xprc_des_b … Hr1) #Hb1
+lapply (xprc_des_b … Hr2) #Hb2
+lapply (xprc_des_n … Hr1) -r1
+lapply (xprc_des_n … Hr2) -r2
+<path_append_pAbLq_12 <path_append_pAbLq_12 #Hn1 #Hn2
+/2 width=7 by pippo1/
+qed-.
+

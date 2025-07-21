@@ -116,7 +116,7 @@ theorem ol_des_xprc_bi (t) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
 * #Hr #Hb1 #Hq1 #Hn1 * #H0 #Hb2 #Hq2 #Hn2 destruct
 lapply (term_clear_inj … Ht … H0) -H0
 [1,2: /2 width=2 by term_in_root/ ] #H0
-lapply (term_root_post … Ht (p1●𝗔◗b1●𝗟◗q1) (𝗱(⁤↑n1)) (⁤↑n2) ??)
+lapply (term_root_d_post … Ht (p1●𝗔◗b1●𝗟◗q1) (𝗱(⁤↑n1)) (⁤↑n2) ??)
 [ <H0 ] [1,2: /2 width=2 by term_in_root/ ] -Ht -Hn1 -Hn2 #Hn
 lapply (eq_inv_d_bi … Hn) -Hn #Hn
 lapply (eq_inv_nsucc_bi … Hn) -Hn #Hn destruct

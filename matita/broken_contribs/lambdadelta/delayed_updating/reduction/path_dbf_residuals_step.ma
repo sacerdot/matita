@@ -26,8 +26,8 @@ lemma path_dbfr_step (t1) (t2) (s) (r):
       s ϵ 𝐑❨t1❩ → s /𝐝𝐛𝐟{t1} r ⊆ 𝐑❨t2❩.
 #t1 #t2 #s #r #Ht1 #Ht12 #Hs #x * *
 [ #Hnrs #H0 destruct
-  /2 width=6 by dbfs_des_reducuble_neq/
+  /2 width=6 by dbfs_des_prc_neq/
 | #p #b #q #q0 #n #Hr #H1 #H2 destruct
-  /2 width=9 by dbfs_des_reducible_side/
+  /2 width=9 by dbfs_des_prc_side/
 ]
 qed.

@@ -193,6 +193,14 @@ lemma eq_inv_empty_structure_singleton (l):
 ]
 qed-.
 
+lemma eq_inv_empty_structure_lcons (p) (l):
+      (𝐞) =⊗(l◗p) →
+      ∧∧ ∃k. 𝗱k = l & (𝐞) =⊗p.
+#p #l <(structure_append ? p) #H0
+elim (eq_inv_list_empty_append … H0) -H0 #Hp #H0
+/3 width=1 by eq_inv_empty_structure_singleton, conj/
+qed-.
+
 (* Main inversions **********************************************************)
 
 theorem eq_inv_append_structure (p) (q) (r):

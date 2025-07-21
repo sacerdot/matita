@@ -20,7 +20,7 @@ include "delayed_updating/reduction/dbf_step_preterm.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 
-definition dbfs_inv_reducible_side_th (r) (p1) (p) (x) (b1) (b) (q1) (q) (n1) (n): predicate (𝕋) ≝
+definition dbfs_inv_prc_side_th (r) (p1) (p) (x) (b1) (b) (q1) (q) (n1) (n): predicate (𝕋) ≝
   λt. ∨∨ ∃∃y. p1●𝗦◗y = p & (y◖𝗔)●b●𝗟◗q = x &
               r◖𝗱𝟎●⓪x ϵ 𝐑❨t,(p1●𝗔◗⓪b1●𝗟◗q1◖𝗱(⁤↑(♭b1+n1)))●y,b,q,n❩
        | ∃∃y. p●𝗔◗b●𝗟◗y = p1 & y●𝗦◗x = q &
@@ -28,8 +28,8 @@ definition dbfs_inv_reducible_side_th (r) (p1) (p) (x) (b1) (b) (q1) (q) (n1) (n
 .
 (* Auxiliary constructions **************************************************)
 
-lemma dbfs_inv_reducible_side_th_eq_repl_fwd (r) (p1) (p) (x) (b1) (b) (q1) (q) (n1) (n):
-      replace_1_fwd … (subset_eq …) (dbfs_inv_reducible_side_th r p1 p x b1 b q1 q n1 n).
+lemma dbfs_inv_prc_side_th_eq_repl_fwd (r) (p1) (p) (x) (b1) (b) (q1) (q) (n1) (n):
+      replace_1_fwd … (subset_eq …) (dbfs_inv_prc_side_th r p1 p x b1 b q1 q n1 n).
 #r #p1 #p #x #b1 #b #q1 #q #n1 #n #t1 * *
 #y #H1 #H2 #Hr #t2 #Ht12
 [ @or_introl | @or_intror ]
@@ -37,18 +37,18 @@ lemma dbfs_inv_reducible_side_th_eq_repl_fwd (r) (p1) (p) (x) (b1) (b) (q1) (q) 
 /3 width=3 by xprc_eq_repl, subset_in_eq_repl_fwd/
 qed-.
 
-(* Main inversions with preterm *********************************************)
+(* Advanced inversions with preterm *****************************************)
 
 (* UPDATE *)
 
-theorem dbfs_inv_reducible_side (t1) (t2) (r) (p1) (p) (x) (b1) (b) (q1) (q) (n1) (n):
-        t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → r ϵ 𝐑❨t1,p1,b1,q1,n1❩ →
-        x◖𝗱(⁤↑n) ϵ ⋔[p1◖𝗦]t1 → ⓪p1◖𝗦●⓪x ϵ 𝐑❨t1,p,b,q,n❩ →
-        dbfs_inv_reducible_side_th r p1 p x b1 b q1 q n1 n t2.
+lemma dbfs_inv_prc_side (t1) (t2) (r) (p1) (p) (x) (b1) (b) (q1) (q) (n1) (n):
+      t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → r ϵ 𝐑❨t1,p1,b1,q1,n1❩ →
+      x◖𝗱(⁤↑n) ϵ ⋔[p1◖𝗦]t1 → ⓪p1◖𝗦●⓪x ϵ 𝐑❨t1,p,b,q,n❩ →
+      dbfs_inv_prc_side_th r p1 p x b1 b q1 q n1 n t2.
 #t1 #t2 #r #p1 #p #x #b1 #b #q1 #q #n1 #n
 #Ht1 #Ht12 #Hr #Hx #H0x
 lapply (dbfs_preterm_inv_sn … Ht1 Ht12 Hr) -Ht12 #Ht12
-@(dbfs_inv_reducible_side_th_eq_repl_fwd … Ht12) -t2
+@(dbfs_inv_prc_side_th_eq_repl_fwd … Ht12) -t2
 lapply (term_grafted_inv_gen … Hx) -Hx >list_append_rcons_sn #Hx
 cases Hr -Hr #H0 #Hb1 #Hq1 #Hn1 destruct
 cases H0x -H0x

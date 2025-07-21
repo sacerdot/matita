@@ -23,7 +23,6 @@ definition brd (t) (p) (b) (q) (n): 𝒫❨ℙ❩ ≝
            (p●𝗔◗(⓪b)●𝗟◗q)●𝛕(⁤↑(♭b+n)).⋔[p◖𝗦]t
 .
 
-
 interpretation
   "balanced reduction delayed subreduct (subset of paths)"
   'SubsetD t p b q n = (brd t p b q n).
@@ -33,4 +32,11 @@ interpretation
 lemma brd_unfold (t) (p) (b) (q) (n):
       (p●𝗔◗(⓪b)●𝗟◗q)●𝛕(⁤↑(♭b+n)).⋔[p◖𝗦]t = 𝐃❨t,p,b,q,n❩.
 //
+qed.
+
+lemma brd_intro (t) (p) (x) (b) (q) (n):
+      x ϵ ⋔[p◖𝗦]t →
+      (p●𝗔◗(⓪b)●𝗟◗q)●𝗱(⁤↑(♭b+n))◗x ϵ 𝐃❨t,p,b,q,n❩.
+#t #p  #x #b #q #n #Hx <brd_unfold
+/3 width=1 by pt_append_in/
 qed.

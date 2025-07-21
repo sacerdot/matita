@@ -22,7 +22,7 @@ include "delayed_updating/reduction/dbf_step_preterm.ma".
 
 (* Constructions with prc ***************************************************)
 
-lemma dbfs_reducible (t1) (r):
+lemma dbfs_prc (t1) (r):
       r ϵ 𝐑❨t1❩ → ∃t2. t1 ➡𝐝𝐛𝐟[r] t2.
 #t1 #r * #p #b #q #n #Hr
 /2 width=5 by xprc_dbfs/
@@ -30,7 +30,7 @@ qed-.
 
 (* Inversions with prc ******************************************************)
 
-lemma dbfs_inv_reducuble (t1) (t2) (r):
+lemma dbfs_inv_prc (t1) (t2) (r):
       t1 ➡𝐝𝐛𝐟[r] t2 → r ϵ 𝐑❨t1❩.
 #t1 #t2 #r * #p #b #q #n #Hr #_
 /2 width=5 by prc_mk/
@@ -38,7 +38,7 @@ qed-.
 
 (* Destructions with prc ****************************************************)
 
-lemma dbfs_des_reducuble_neq (t1) (t2) (r) (s):
+lemma dbfs_des_prc_neq (t1) (t2) (r) (s):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 →
       s ⧸= r → s ϵ 𝐑❨t1❩ → s ϵ 𝐑❨t2❩.
 #t1 #t2 #r #s #Ht1 #Ht #Hr * #p #b #q #n #Hs
@@ -47,7 +47,7 @@ qed-.
 
 (* UPDATE *)
 
-lemma dbfs_des_reducible_side (t1) (t2) (r) (x) (p) (b) (q) (n):
+lemma dbfs_des_prc_side (t1) (t2) (r) (x) (p) (b) (q) (n):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → r ϵ 𝐑❨t1,p,b,q,n❩ →
       (⓪p●𝗦◗x) ϵ 𝐑❨t1❩ → r◖𝗱𝟎●x ϵ 𝐑❨t2❩.
 #t1 #t2 #r #x #p #b #q #n #Ht1 #Ht12 #Hr #Hx
@@ -120,7 +120,7 @@ elim (subset_in_eq_repl_back ??? Hn0 ? Ht2) -t2 * #H1 #H2
 qed-.
 
 (*
-lemma dbfs_inv_reducuble_eq (t1) (t2) (r):
+lemma dbfs_inv_prc_eq (t1) (t2) (r):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 →
       r ⧸ϵ 𝐑❨t2❩.
 #t1 #t2 #r #Ht1

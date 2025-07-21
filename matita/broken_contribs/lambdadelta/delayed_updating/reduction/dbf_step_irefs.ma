@@ -38,7 +38,7 @@ lemma dbfs_inv_nin_pirc_sn (t1) (t2) (r):
 * #p0 #q0 #n0 #H0 #Hq0 #H2t1 destruct
 lapply (term_clear_inj … H0t1 … H0) -H0
 [1,2: /2 width=2 by term_in_root/ ] #H0 destruct
-lapply (term_root_post … H0t1 (p●𝗔◗b●𝗟◗q) (𝗱n0) (⁤↑n) ??)
+lapply (term_root_d_post … H0t1 (p●𝗔◗b●𝗟◗q) (𝗱n0) (⁤↑n) ??)
 [1,2: /2 width=2 by term_in_root/ ] #H0 destruct
 lapply (term_complete_post … H0t1 … H2t1 H1t1 ?) -t1 // #H0
 lapply (eq_inv_list_append_dx_dx_refl … (sym_eq … H0)) -H0 #H0 destruct

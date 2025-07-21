@@ -21,6 +21,16 @@ include "ground/arith/nat_lt_plus.ma".
 
 (* Advanced eliminators *****************************************************)
 
+lemma pbc_ind_sn (Q:predicate …):
+      Q (𝐞) →
+      (∀b1,b2. b1 ϵ 𝐁 → b2 ϵ 𝐁 → Q b1 → Q b2 → Q (𝗔◗b1◖𝗟●b2)) →
+      ∀b. b ϵ 𝐁 → Q b.
+#Q #IH1 #IH2 @(wf1_ind_nlt ? depth)
+#n #IH #b #Hn #Hb destruct
+elim (pbc_inv_gen_sn … Hb) -Hb [ #H0 | * #b1 #b2 #Hb1 #Hb2 #H0 ] destruct
+/3 width=1 by/
+qed-.
+
 lemma pbc_ind_dx (Q:predicate …):
       Q (𝐞) →
       (∀b1,b2. b1 ϵ 𝐁 → b2 ϵ 𝐁 → Q b1 → Q b2 → Q (b1●𝗔◗b2◖𝗟)) →

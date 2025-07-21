@@ -36,7 +36,7 @@ generalize in match p; -p
 #H0 #p #Hq1 #Hq2 #Hq destruct
 elim (label_is_d l1)
 [ * #k1 #H0 destruct
-  lapply (term_root_post t … p l2 k1 ??)
+  lapply (term_root_d_post t … p l2 k1 ??)
   [4:|*: /2 width=2 by term_in_root_append_des_sn/ ]
   #H0 destruct
   <structure_d_sn in Hq; <structure_d_sn #Hq
@@ -45,7 +45,7 @@ elim (label_is_d l1)
 ]
 elim (label_is_d l2)
 [ * #k2 #H0 destruct
-  lapply (term_root_post t … p l1 k2 ??)
+  lapply (term_root_d_post t … p l1 k2 ??)
   [4:|*: /2 width=2 by term_in_root_append_des_sn/ ]
   #H0 destruct
   <structure_d_sn in Hq; <structure_d_sn #Hq
@@ -76,6 +76,23 @@ qed-.
 
 (* Inversions with path_structure *******************************************)
 
+lemma term_root_eq_inv_structure_L_bi (t) (p) (q1) (q2):
+      t ϵ 𝐓 → p●q1◖𝗟 ϵ ▵t → p●q2◖𝗟 ϵ ▵t →
+      ⊗q1 = ⊗q2 → q1 = q2.
+#t #p #q1 #q2 #Ht #Hq1 #Hq2 #Hq
+elim (term_root_eq_des_structure_bi … p q1 q2 Ht)
+[3: // | 4,5: @(term_in_root_append_des_sn … (𝐞◖𝗟)) // ] -Hq *
+#r @(list_ind_rcons … r) -r [2,4: #r #l #_ ] #Hq #Hr //
+elim (eq_inv_empty_structure_lcons … Hr) -Hr * #k #H0 #_ destruct
+[ lapply (term_root_d_post … Ht (p●q2) (𝗟) k ??)
+| lapply (term_root_d_post … Ht (p●q1) (𝗟) k ??)
+]
+[1,4: @(term_in_root_append_des_sn … (r◖𝗟)) //
+|2,5: //
+|3,6: -Hq1 -Hq2 #H0 destruct
+]
+qed-.
+
 lemma term_root_eq_inv_structure_bi (t) (q1) (q2):
       t ϵ 𝐓 → q1 ϵ ▵t → q2 ϵ ▵t → ❘q1❘ = ❘q2❘ →
       ⊗q1 = ⊗q2 → q1 = q2.
@@ -93,7 +110,7 @@ elim (term_slice_des_structure_bi … q1 q2 Ht …) // -Hq
 lapply (term_complete_post … Ht … H0) -Ht -H0 //
 qed-.
 
-(* Note: a generalization of term_root_post *)
+(* Note: a generalization of term_root_d_post *)
 lemma term_comp_inv (t) (q1) (q2) (p):
       t ϵ 𝐓 → p●q1 ϵ t → p●q2 ϵ t →
       (𝐞) = ⊗q2 → q1 = q2.
@@ -107,7 +124,7 @@ lemma term_comp_inv (t) (q1) (q2) (p):
 | <structure_append in Hq; #H0
   elim (eq_inv_list_empty_append … H0) -H0 #Hq #H0
   elim (eq_inv_empty_structure_singleton … H0) -H0 #k2 #H0 destruct
-  lapply (term_root_post … Ht p l1 k2 ? ?)
+  lapply (term_root_d_post … Ht p l1 k2 ? ?)
   [1,2: /2 width=2 by term_in_root/ ] #H0 destruct
   <list_append_rcons_sn in Hq1; #Hq1
   <list_append_rcons_sn in Hq2; #Hq2

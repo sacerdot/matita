@@ -18,7 +18,8 @@ include "delayed_updating/reduction/prototerm_xfocus_ol.ma".
 include "delayed_updating/reduction/prototerm_delayed_ol.ma".
 include "delayed_updating/reduction/prototerm_delayed_reducible.ma".
 include "delayed_updating/reduction/preterm_delayed_xfocus_reducible.ma".
-include "delayed_updating/reduction/dbf_step_preterm_main.ma".
+include "delayed_updating/reduction/dbf_step_preterm_inv.ma".
+include "delayed_updating/reduction/dbf_step_preterm_post.ma".
 include "delayed_updating/reduction/dbf_devel_preterm.ma".
 
 (* COMPLETE DEVELOPMENT FOR DELAYED BALANCED FOCUSED REDUCTION **************)
@@ -85,7 +86,7 @@ lemma dbf_step_conf_local_le (t0) (t1) (t2) (r1) (r2) (p1) (p2) (x) (b1) (b2) (q
       t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
       r1 ϵ 𝐑❨t0,p1,b1,q1,n1❩ → r2 ϵ 𝐑❨t0,p2,b2,q2,n2❩ →
       (r2 = r1 → ⊥) → (r2 ϵ ⓪▵↑(p1◖𝗦) → ⊥) →
-      x◖𝗱⁤↑n1 ϵ ⋔[p2◖𝗦]t0 → ⓪(p2◖𝗦)●⓪x=r1 →
+      x◖𝗱⁤↑n1 ϵ ⋔[p2◖𝗦]t0 → ⓪(p2◖𝗦)●⓪x = r1 →
       ∃∃u,t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] u & u ➡𝐝𝐛𝐟[r2◖𝗱𝟎●⓪x] t.
 #t0 #t1 #t2 #r1 #r2 #p1 #p2 #x #b1 #b2 #q1 #q2 #n1 #n2
 #Ht0 #Ht01 #Ht02 #Hr01 #Hr02 #Hnr21 #Hp12 #Hx #H0 destruct
@@ -94,10 +95,13 @@ lapply (dbfs_des_xprc_neq … Ht0 Ht01 Hnr21 Hr02) #Hr12
 elim (xprc_dbfs … Hr12) #t3 #Ht13
 lapply (dbfs_des_xprc_neq … Ht0 Ht02 … Hr01) [ /2 width=1 by/ ] #Hr21
 elim (xprc_dbfs … Hr21) #t4 #Ht24
-elim (dbfs_inv_reducible_side … Ht0 Ht02 Hr02 Hx Hr01)
-* #y #H1 #H2 destruct #Hy
+elim (dbfs_inv_prc_side … Ht0 Ht02 Hr02 Hx Hr01)
+* #y #H1 #H2 #Hy destruct
 elim (xprc_dbfs … Hy) #t6 #Ht26
-elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy) (* -Ht24 -Ht26 *)
+[ elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
+| elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
+  
+] (* -Ht24 -Ht26 *)
 [1,5: |*: #H0 ]
 [|
 | -Ht0 -Ht02 -Ht2 -Hx -Ht01 -Hnr21 -Hr01 -Hr21
@@ -135,36 +139,42 @@ elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy) (* -Ht24 -Ht26 *)
   lapply (eq_inv_list_append_sn_bi … H0) -H0
   <path_clear_S_dx #H0 destruct
 ]
-#t5 #Ht45 #_ #_ #Hr45
+#t5 #Ht45 #_ #_ #Hr45 -t6
 cut (t3 ⇔ t5)
 [2,4: #Ht35
   @(ex3_2_intro … Ht13 Ht24) /2 width=4 by dbfs_eq_canc_dx/
-|*: -Hy -Ht26
-  lapply (dbfs_preterm_trans … Ht0 Ht01) #Ht1
-  lapply (dbfs_preterm_trans … Ht2 Ht24) #Ht4
-  lapply (dbfs_preterm_inv_sn … Ht0 Ht01 Hr01) -Ht01 -Hr01 #Ht01
-  lapply (dbfs_preterm_inv_sn … Ht0 Ht02 Hr02) -Ht02 -Hr02 #Ht02
-  lapply (dbfs_preterm_inv_sn … Ht1 Ht13 Hr12) -Ht13 -Hr12 #Ht13
-  lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) -Ht24 -Hr21 #Ht24
-  lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Ht45
-  @(fsubst_fsubst_fsubst_inv_eq ????????????????????? ???? Ht01 Ht02 Ht13 Ht24 Ht45) -t3 -t5
-  [4,5,13,14: @subset_eq_refl
-  |6,15: @(brd_fsubst_true_eq_repl_fwd … Ht01)
-
-  |1,2,10,11: skip
-  |7,16: @(brd_fsubst_false_eq_repl_fwd … Ht02)
-    [ /2 width=5 by nin_root_brxf_side/
-    | /2 width=7 by nin_root_brd_side/
-    | /2 width=5 by nin_root_brxf_side_trunk/
-    | /2 width=7 by nin_root_brd_side_trunk/
-    ]
-  |8: @brd_brxf_append_p |17: @brd_brxf_append_q
-  |9: @brd_brd_append_p
-  |18:
-
-  |3: (* argument moved *)
-  |12: (* argument not moved *)
+|1:|3:
+  lapply (dbfs_des_xprc_chain_b … Ht2 Ht24 Hr21 Hr45) #H0b
+(* Note: alternative
+  lapply (dbfs_des_xprc_chain_p … Ht0 Ht01 Hr01 Hr12) #H0b
+*)
+]
+lapply (dbfs_preterm_trans … Ht0 Ht01) #Ht1
+lapply (dbfs_preterm_trans … Ht2 Ht24) #Ht4
+lapply (dbfs_preterm_inv_sn … Ht0 Ht01 Hr01) -Ht01 -Hr01 #Ht01
+lapply (dbfs_preterm_inv_sn … Ht0 Ht02 Hr02) -Ht02 -Hr02 #Ht02
+lapply (dbfs_preterm_inv_sn … Ht1 Ht13 Hr12) -Ht13 -Hr12 #Ht13
+lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) -Ht24 -Hr21 #Ht24
+lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Ht45
+@(fsubst_fsubst_fsubst_inv_eq ????????????????????? ???? Ht01 Ht02 Ht13 Ht24 Ht45) -t3 -t5
+[4,5,13,14: @subset_eq_refl
+|6,15: @(brd_fsubst_true_eq_repl_fwd … Ht01)
+(* two premises left *)
+|1,2,10,11: skip
+|7,16: @(brd_fsubst_false_eq_repl_fwd … Ht02)
+  [ /2 width=5 by nin_root_brxf_side/
+  | /2 width=7 by nin_root_brd_side/
+  | /2 width=5 by nin_root_brxf_side_trunk/
+  | /2 width=7 by nin_root_brd_side_trunk/
   ]
+|8: @brd_brxf_append_p |17: @brd_brxf_append_q
+|9: @brd_brd_append_p (* one premise left *)
+|18: <H0b in ⊢ (???(??%???));
+  @brd_brd_append_q (* one premise left *)
+|3: (* argument moved *)
+(* one premise left *)
+|12: (* argument not moved *)
+(* one premise left *)
 ]
 
 (*
@@ -196,4 +206,16 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
     /4 width=6 by dbfs_neq_dbfd, xprc_des_clear, ex2_intro/
   ]
 ]
+*)
+
+(*
+In t1. Hr01: 𝐑❨t0,p1,b1,y●𝗦◗x,n1❩
+Hr12: 𝐑❨t1,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩ to t3 (⓪ on b1)
+
+In t2. Hr02 :𝐑❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩
+Hr21: 𝐑❨t2,p1,b1,y●𝗦◗x,n1❩ to t4                    (⓪ after fork)
+Hy: 𝐑❨t2,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩ to t6 (⓪ ok)
+
+In t4. Hr21: 𝐑❨t2,p1,b1,y●𝗦◗x,n1❩
+Hr45: 𝐑❨t4,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩ to t5 (⓪ on b1)
 *)

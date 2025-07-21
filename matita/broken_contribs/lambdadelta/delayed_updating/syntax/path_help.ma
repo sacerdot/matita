@@ -76,6 +76,18 @@ lemma path_append_pAbLq_11 (p) (b) (q1) (q2):
       (p●𝗔◗b●𝗟◗q1)●q2 = p●𝗔◗b●𝗟◗q1●q2.
 // qed.
 
+lemma path_append_pAbLq_12 (p) (b1) (b2) (q):
+      p●𝗔◗(b1◖𝗟●b2●𝗟◗q) = p●(𝗔◗(b1◖𝗟)●b2)●𝗟◗q.
+// qed.
+
+lemma path_append_pAbLq_13 (p) (b1) (b2) (q):
+      (p◖𝗔)●b1●𝗟◗(b2●𝗟◗q) = p●(𝗔◗(b1◖𝗟)●b2)●𝗟◗q.
+// qed.
+
+lemma path_append_pAbLq_14 (p) (b1) (b2) (q):
+      (p●𝗔◗b1◖𝗟)●b2●𝗟◗q = (p◖𝗔)●b1●𝗟◗(b2●𝗟◗q).
+// qed.
+
 lemma path_append_pAbLqAbLq_1 (p) (b1) (b2) (q1) (q):
       p●𝗔◗b1●𝗟◗q1●𝗔◗b2●𝗟◗q =
       (p●𝗔◗b1●𝗟◗q1)●𝗔◗b2●𝗟◗q.
@@ -95,7 +107,7 @@ lemma path_append_pAbLqAbLq_4 (p) (b1) (b2) (q1) (q2) (q3):
       (p●𝗔◗b1●𝗟◗q1●𝗔◗b2●𝗟◗q2)●q3 = p●𝗔◗b1●𝗟◗q1●𝗔◗b2●𝗟◗q2●q3.
 // qed.
 
-lemma path_append_pAbLqAbLq_5 (p) (b1) (b2) (q1) (q2) (q3:ℙ) (l):
+lemma path_append_pAbLqAbLq_5 (p) (b1) (b2) (q1) (q2) (q3) (l):
       (p●𝗔◗b1●𝗟◗q1)◖l●(q2●𝗔◗b2●𝗟◗q3) = ((p●𝗔◗b1●𝗟◗q1◖l)●q2)●𝗔◗b2●𝗟◗q3.
 // qed.
 
