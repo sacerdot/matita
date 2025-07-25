@@ -40,3 +40,11 @@ lemma grafted_brxf_append_q (p) (b) (q1) (q2):
 @(subset_eq_trans … (term_grafted_pt_append … (p●𝗔◗b●𝗟◗q1)))
 /2 width=1 by term_grafted_eq_repl/
 qed.
+
+lemma grafted_brxf_full (p) (b) (q):
+      ↑𝐞 ⇔ ⋔[p●𝗔◗b●𝗟◗q]𝐅❨p,b,q❩.
+#p #b #q <brxf_unfold
+@(subset_eq_trans … (term_grafted_pt_append …))
+[2: @term_grafted_eq_repl | skip ]
+@(subset_eq_trans … (term_slice_append …)) //
+qed.

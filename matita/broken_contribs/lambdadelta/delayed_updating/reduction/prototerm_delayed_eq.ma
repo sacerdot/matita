@@ -84,6 +84,14 @@ lapply (subset_eq_trans … (grafted_fsubst_true … Htu) … H0) -H0 -Htu #H0
 /2 width=1 by brd_fsubst_grafted_eq_repl_fwd/
 qed.
 
+lemma grafted_brd_full (t) (p) (b) (q) (n):
+      (⋔[p◖𝗦]t) ⇔ ⋔[p●𝗔◗⓪b●𝗟◗q◖𝗱⁤↑(♭b+n)]𝐃❨t,p,b,q,n❩.
+#t #p #b #q #n <brd_unfold
+@(subset_eq_trans ????? (term_grafted_eq_repl …))
+[2: @(subset_eq_sym … (pt_append_assoc …)) |3: skip ]
+@term_grafted_pt_append
+qed.
+
 (* Main constructions with term_eq ******************************************)
 
 theorem brd_brd_append_p (t1) (t2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):

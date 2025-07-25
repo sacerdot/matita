@@ -34,7 +34,7 @@ lapply (xprc_des_n … Hr1) #Hn1
 elim (term_full_A_post … Ht1 p) [| /2 width=2 by term_in_root/ ] #x #Hx
 lapply (dbfs_preterm_trans … Ht1 … Ht12) #Ht2
 lapply (dbfs_preterm_inv_sn … Ht1 Ht12 Hr1) -Ht1 -Ht12 -Hr1 #Ht12
-lapply (brd_intro t1 p x b1 q1 n1 Hx) -Hx #Hx
+lapply (in_comp_brd t1 p x b1 q1 n1 Hx) -Hx #Hx
 lapply (subset_in_eq_repl_fwd ????? Ht12) -Ht12
 [ @(fsubst_in_comp_true … Hx) /2 width=3 by subset_ol_i/ | skip ] -t1
 <(list_append_rcons_sn … (𝗔)) #Hx

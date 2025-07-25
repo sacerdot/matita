@@ -34,9 +34,19 @@ lemma brd_unfold (t) (p) (b) (q) (n):
 //
 qed.
 
-lemma brd_intro (t) (p) (x) (b) (q) (n):
-      x ϵ ⋔[p◖𝗦]t →
-      (p●𝗔◗(⓪b)●𝗟◗q)●𝗱(⁤↑(♭b+n))◗x ϵ 𝐃❨t,p,b,q,n❩.
-#t #p  #x #b #q #n #Hx <brd_unfold
+lemma in_comp_brd (t) (p) (y) (b) (q) (n):
+      y ϵ ⋔[p◖𝗦]t →
+      (p●𝗔◗(⓪b)●𝗟◗q)●𝗱(⁤↑(♭b+n))◗y ϵ 𝐃❨t,p,b,q,n❩.
+#t #p  #y #b #q #n #Hx <brd_unfold
 /3 width=1 by pt_append_in/
 qed.
+
+(* Basic inversions *********************************************************)
+
+lemma in_comp_brd_inv_gen (t) (p) (x) (b) (q) (n):
+      x ϵ 𝐃❨t,p,b,q,n❩ →
+      ∃∃y. y ϵ ⋔[p◖𝗦]t & (p●𝗔◗(⓪b)●𝗟◗q)●𝗱(⁤↑(♭b+n))◗y = x.
+#t #p #x #b #q #n <brd_unfold
+* #z * #y #Hy #H1 #H2 destruct
+/2 width=5 by ex2_intro/
+qed-.

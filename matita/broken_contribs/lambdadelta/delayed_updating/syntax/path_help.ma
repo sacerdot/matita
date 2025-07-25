@@ -88,6 +88,10 @@ lemma path_append_pAbLq_14 (p) (b1) (b2) (q):
       (p●𝗔◗b1◖𝗟)●b2●𝗟◗q = (p◖𝗔)●b1●𝗟◗(b2●𝗟◗q).
 // qed.
 
+lemma path_append_pAbLq_15 (p) (b) (q) (l):
+      (p●𝗔◗b●𝗟◗q)◖l = p●𝗔◗b●𝗟◗q◖l.
+// qed.
+
 lemma path_append_pAbLqAbLq_1 (p) (b1) (b2) (q1) (q):
       p●𝗔◗b1●𝗟◗q1●𝗔◗b2●𝗟◗q =
       (p●𝗔◗b1●𝗟◗q1)●𝗔◗b2●𝗟◗q.

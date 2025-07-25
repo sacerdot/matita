@@ -20,7 +20,7 @@ include "delayed_updating/syntax/prototerm_eq.ma".
 
 (* PROTOTERM ****************************************************************)
 
-(* Constructionswith subset_ol **********************************************)
+(* Construction swith subset_ol *********************************************)
 
 lemma term_ol_append_bi (u1) (u2) (p):
       u1 ≬ u2 → (p●u1) ≬ (p●u2).
@@ -33,11 +33,16 @@ lemma term_ol_slice_append_dx (u1) (u2) (p):
 /2 width=5 by subset_ol_eq_repl/
 qed.
 
-(* Note: the name refers to the case t = ↑… *)
-lemma term_ol_slice_bi (t) (p):
+lemma term_ol_slice_sx (t) (p):
       p ϵ ▵t → ↑p ≬ t.
 #t #p * #q #H0
 lapply (term_grafted_inv_gen … H0) -H0 #H0
+/2 width=3 by subset_ol_i/
+qed.
+
+lemma term_ol_slice_bi (p1) (p2) (q1:ℙ) (q2:ℙ):
+      p1●q1 = p2●q2 → ↑p1 ≬ ↑p2.
+#p1 #p2 #q1 #q2 #H0
 /2 width=3 by subset_ol_i/
 qed.
 
@@ -52,7 +57,9 @@ qed-.
 
 lemma term_ol_inv_slice_append_dx (u1) (u2) (p):
       u1 ≬ ↑(p●u2) → u1 ≬ (p●↑u2).
-/3 width=5 by subset_ol_eq_repl, subset_eq_sym/ (**) (* slow symmetry *)
+#u1 #u2 #p #H0
+@(subset_ol_eq_repl … H0) -H0
+[ @subset_eq_refl | @subset_eq_sym // ]
 qed-.
 
 lemma term_ol_inv_slice_sx (t) (p):
@@ -66,7 +73,7 @@ lemma term_ol_inv_slice_bi (p1) (p2):
       ∃∃q1:ℙ,q2:ℙ. p1●q1 = p2●q2.
 #p1 #p2 * #r * #q1 #_ #H1 * #q2 #_ #H2 destruct
 /2 width=3 by ex1_2_intro/
-qed.
+qed-.
 
 (* Destructions with subset_ol **********************************************)
 
