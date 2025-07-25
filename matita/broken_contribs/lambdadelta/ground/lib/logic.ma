@@ -36,6 +36,20 @@ interpretation
   "negated leibnitz's equality (logic)"
   'NotEq S a b = (negation (eq S a b)).
 
+(* Main constructions with eq ***********************************************)
+
+theorem canc_sn_eq (A) (x) (y) (z:A):
+        y = x → y = z → x = z.
+// qed-.
+
+theorem canc_dx_eq (A) (x) (y) (z:A):
+        x = y → z = y → x = z.
+// qed-.
+
+theorem repl_eq (A) (x1) (x2) (y1) (y2:A):
+        x1 = y1 → x2 = y2 → x1 = x2 → y1 = y2.
+// qed-.
+
 (* Constructions with land **************************************************)
 
 lemma commutative_and (A) (B):

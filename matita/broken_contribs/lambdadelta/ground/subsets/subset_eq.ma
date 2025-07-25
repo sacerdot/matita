@@ -38,6 +38,11 @@ lemma subset_in_eq_repl_fwd (A) (a:A):
 /2 width=1 by/
 qed-.
 
+lemma subset_in_eq_repl (A):
+      replace_2 … (eq …) (subset_eq A) (λa,u. aϵu).
+/2 width=3 by subset_in_eq_repl_fwd/
+qed-.
+
 (* Basic constructions ******************************************************)
 
 lemma subset_eq_refl (A):
