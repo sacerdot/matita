@@ -91,6 +91,7 @@ lemma dbf_step_conf_local_le (t0) (t1) (t2) (r1) (r2) (p1) (p2) (x) (b1) (b2) (q
       ∃∃u,t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] u & u ➡𝐝𝐛𝐟[r2◖𝗱𝟎●⓪x] t.
 #t0 #t1 #t2 #r1 #r2 #p1 #p2 #x #b1 #b2 #q1 #q2 #n1 #n2
 #Ht0 #Ht01 #Ht02 #Hr01 #Hr02 #Hnr21 #Hp12 #Hx #H0 destruct
+lapply (xprc_des_n … Hr01) #Hn01
 lapply (dbfs_preterm_trans … Ht0 Ht02) #Ht2
 lapply (dbfs_des_xprc_neq … Ht0 Ht01 Hnr21 Hr02) #Hr12
 elim (xprc_dbfs … Hr12) #t3 #Ht13
@@ -101,7 +102,6 @@ elim (dbfs_inv_prc_side … Ht0 Ht02 Hr02 Hx Hr01)
 elim (xprc_dbfs … Hy) #t6 #Ht26
 [ elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
 | elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
-  
 ] (* -Ht24 -Ht26 *)
 [1,5: |*: #H0 ]
 [|
@@ -159,8 +159,14 @@ lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) (* -Ht24 -Hr21 *) #Hs24
 lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
 @(fsubst_fsubst_fsubst_inv_eq ????????????????????? ???? Hs01 Hs02 Hs13 Hs24 Hs45) -t3 -t5
 [4,5,13,14: @subset_eq_refl
-|6,15: @(brd_fsubst_true_eq_repl_fwd … Hs01)
-(* two premises left *)
+|6,15:
+   @(brd_fsubst_true_eq_repl_fwd … Hs01)
+   @term_ol_grafted_bi [2,5: // |1,4: skip ] <brxf_unfold
+(* Note: ** unification failure if we apply subset_in_eq_repl to term_slice_in *)
+   @(subset_in_eq_repl ????? (subset_eq_refl …))
+   [2,5: @term_slice_in |1,4: skip ]
+(* Note: ** explicit value for metavariable *)
+   [1,2: @(𝐞◖𝗱(⁤↑n1)) |*: <list_append_lcons_sn // ]
 |1,2,10,11: skip
 |7,16: @(brd_fsubst_false_eq_repl_fwd … Hs02)
   [ /2 width=5 by nin_root_brxf_side/

@@ -22,6 +22,11 @@ include "delayed_updating/syntax/prototerm_eq.ma".
 
 (* Construction swith subset_ol *********************************************)
 
+lemma term_ol_grafted_bi (t1) (t2) (p) (q):
+      p●q ϵ t1 → p●q ϵ t2 → ⋔[p]t1 ≬ ⋔[p]t2.
+/2 width=3 by subset_ol_i/
+qed.
+
 lemma term_ol_append_bi (u1) (u2) (p):
       u1 ≬ u2 → (p●u1) ≬ (p●u2).
 #u1 #u2 #p * #r #H1r #H2r
