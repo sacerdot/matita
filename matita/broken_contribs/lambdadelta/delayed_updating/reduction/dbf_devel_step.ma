@@ -63,8 +63,8 @@ elim (xprc_dbfs … Hr21) #t4 #Ht24
 cut (t3 ⇔ t4)
 [ lapply (dbfs_preterm_inv_sn … Ht1 Ht13 Hr12) -Ht13 -Hr12 #Ht13
   lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) -Ht24 -Hr21 #Ht24
-  @(fsubst_fsubst_inv_eq ?????????????????? Ht01 Ht02 Ht13 Ht24) -t3 -t4
-  [ @fsubst_fsubst_nol_eq
+  @(fsubst_2_inv_eq ?????????????????? Ht01 Ht02 Ht13 Ht24) -t3 -t4
+  [ @fsubst_2_nol_eq
     [ /2 width=3 by brxf_ol_sn/
     | /2 width=3 by brxf_ol_sn/
     | /3 width=16 by neq_inv_xprc_bi_brxf/
@@ -91,7 +91,6 @@ lemma dbf_step_conf_local_le (t0) (t1) (t2) (r1) (r2) (p1) (p2) (x) (b1) (b2) (q
       ∃∃u,t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] u & u ➡𝐝𝐛𝐟[r2◖𝗱𝟎●⓪x] t.
 #t0 #t1 #t2 #r1 #r2 #p1 #p2 #x #b1 #b2 #q1 #q2 #n1 #n2
 #Ht0 #Ht01 #Ht02 #Hr01 #Hr02 #Hnr21 #Hp12 #Hx #H0 destruct
-lapply (xprc_des_n … Hr01) #Hn01
 lapply (dbfs_preterm_trans … Ht0 Ht02) #Ht2
 lapply (dbfs_des_xprc_neq … Ht0 Ht01 Hnr21 Hr02) #Hr12
 elim (xprc_dbfs … Hr12) #t3 #Ht13
@@ -143,7 +142,8 @@ elim (xprc_dbfs … Hy) #t6 #Ht26
 #t5 #Ht45 #_ #_ #Hr45 -t6
 cut (t3 ⇔ t5)
 [2,4: #Ht35
-  @(ex3_2_intro … Ht13 Ht24) /2 width=4 by dbfs_eq_canc_dx/
+  @(ex3_2_intro … Ht13 Ht24)
+  @(dbfs_eq_canc_dx … Ht45) //
 |1:|3:
   lapply (dbfs_des_xprc_chain_b … Ht2 Ht24 Hr21 Hr45) #H0b
 (* Note: alternative
@@ -152,14 +152,14 @@ cut (t3 ⇔ t5)
 ]
 lapply (dbfs_preterm_trans … Ht0 Ht01) #Ht1
 lapply (dbfs_preterm_trans … Ht2 Ht24) #Ht4
-lapply (dbfs_preterm_inv_sn … Ht0 Ht01 Hr01) -Ht01 -Hr01 #Hs01
+lapply (dbfs_preterm_inv_sn … Ht0 Ht01 Hr01) -Ht01 (* -Hr01 *) #Hs01
 lapply (dbfs_preterm_inv_sn … Ht0 Ht02 Hr02) (* -Ht02 -Hr02 *) #Hs02
 lapply (dbfs_preterm_inv_sn … Ht1 Ht13 Hr12) -Ht13 -Hr12 #Hs13
 lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) (* -Ht24 -Hr21 *) #Hs24
 lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
-@(fsubst_fsubst_fsubst_inv_eq ????????????????????? ???? Hs01 Hs02 Hs13 Hs24 Hs45) -t3 -t5
+@(fsubst_3_inv_eq ????????????????????????? Hs01 Hs02 Hs13 Hs24 Hs45) -t3 -t5
 [4,5,13,14: @subset_eq_refl
-|6,15:
+|7,16:
    @(brd_fsubst_true_eq_repl_fwd … Hs01)
    @term_ol_grafted_bi [2,5: // |1,4: skip ] <brxf_unfold
 (* Note: ** unification failure if we apply subset_in_eq_repl to term_slice_in *)
@@ -168,13 +168,13 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
 (* Note: ** explicit value for metavariable *)
    [1,2: @(𝐞◖𝗱(⁤↑n1)) |*: <list_append_lcons_sn // ]
 |1,2,10,11: skip
-|7,16: @(brd_fsubst_false_eq_repl_fwd … Hs02)
+|8,17: @(brd_fsubst_false_eq_repl_fwd … Hs02)
   [ /2 width=5 by nin_root_brxf_side/
   | /2 width=7 by nin_root_brd_side/
   | /2 width=5 by nin_root_brxf_side_trunk/
   | /2 width=7 by nin_root_brd_side_trunk/
   ]
-|8: @brd_brxf_append_p |17: @brd_brxf_append_q
+|6: @brd_brxf_append_p |15: @brd_brxf_append_q
 |9:
   @brd_brd_append_p
   @(subset_eq_canc_sn … (dbfs_des_grafted_nol … Ht2 Ht24 Hr21 …))
@@ -200,11 +200,26 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
   [ >(list_append_lcons_sn … (𝗔)) // |3: // |2,4: skip ] #H0
   elim (eq_inv_list_rcons_bi ????? (trans_eq … H0)) -H0
   [4: // |2,3: skip ] #_ #H0 destruct
-|3: (* argument moved *)
-(* one premise left *)
-|12: (* argument not moved *)
-(* one premise left *)
+|3,12:
+  @fsubst_3_le_eq
+  [1,2,7,8: /2 width=3 by brxf_ol_sn/
+  |3,9: /3 width=16 by neq_inv_xprc_bi_brxf/
+  |4,10: /3 width=17 by neq_inv_xprc_bi_brxf_brd/
+  |5,11: /4 width=17 by neq_inv_xprc_bi_brxf_brd, sym_eq/
+  |6,12:
+  ]
 ]
+qed-.
+
+(* we need ⓪b2 = b2
+
+(* argument moved *)
+6: 𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1❩ ⊆ 𝐅❨p2,b2,q2❩
+
+(* argument not moved *)
+12: 𝐅❨p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x❩ ⊆ 𝐅❨p1●𝗔◗b1●𝗟◗y,b2,q2❩
+
+*)
 
 (*
 lemma dbf_step_conf_local (t0) (t1) (t2) (r1) (r2):

@@ -14,6 +14,8 @@
 
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/syntax/prototerm_ol.ma".
+include "ground/subsets/subset_nimply_ol.ma".
+include "ground/subsets/subset_nimply_le.ma".
 include "ground/subsets/subset_or_le.ma".
 include "ground/subsets/subset_or_ol.ma".
 include "ground/subsets/subset_and_ol.ma".
@@ -136,7 +138,7 @@ lemma fsubst_or (t1) (t2) (u) (v):
 #t1 #t2 #u #v @conj
 [ @subset_le_or_sn @fsubst_le_repl // (**) (* auto fails *)
 | #r * * [ #H0 | * ]
-  [ elim (subset_ol_or_inv_sn … H0) -H0 #H0 #Hu
+  [ elim (subset_ol_inv_or_sn … H0) -H0 #H0 #Hu
     /3 width=1 by fsubst_in_comp_true, subset_or_in_dx, subset_or_in_sn/
   | /3 width=1 by fsubst_in_comp_false, subset_or_in_sn/
   | /3 width=1 by fsubst_in_comp_false, subset_or_in_dx/
@@ -204,7 +206,8 @@ qed.
 
 (* Main inversions with subset_eq *******************************************)
 
-theorem fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (u1) (u2) (v1) (v2) (x1) (x2) (y1) (y2):
+theorem fsubst_2_inv_eq (t0) (t1) (t2) (t3) (t4)
+          (u1) (u2) (v1) (v2) (x1) (x2) (y1) (y2):
         ⬕[u1←v1]⬕[u2←v2]t0 ⇔ ⬕[u2←v2]⬕[u1←v1]t0 →
         u1 ⇔ x1 → u2 ⇔ x2 → v1 ⇔ y1 → v2 ⇔ y2 →
         ⬕[u2←v2]t0 ⇔ t1 → ⬕[u1←v1]t0 ⇔ t2 →
@@ -217,35 +220,46 @@ theorem fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (u1) (u2) (v1) (v2) (x1) (
 /2 width=1 by fsubst_eq_repl/
 qed-.
 
-axiom fsubst_fsubst_fsubst_inv_eq (t0) (t1) (t2) (t3) (t4) (t5) (u1) (u2) (U5) (U6) (x1) (x2) (v1) (v2) (y1) (y2) (V5) (V6):
-        ⬕[u1←v1]⬕[u2←v2]t0 ⇔ ⬕[U5←V5]⬕[u2←v2]⬕[u1←v1]t0 →
-        u1 ⇔ x1 → u2 ⇔ x2 → ⬕[U6←V6] v1 ⇔ y1 → v2 ⇔ y2 → U5 ⇔ U6 → V5 ⇔ V6 →
+theorem fsubst_3_inv_eq (t0) (t1) (t2) (t3) (t4) (t5)
+          (u1) (u2) (u3) (v1) (v2) (v3) (x1) (x2) (x3) (y1) (y2) (y3):
+        ⬕[u1←⬕[u3←v3]v1]⬕[u2←v2]t0 ⇔ ⬕[u3←v3]⬕[u2←v2]⬕[u1←v1]t0 →
+        u1 ⇔ x1 → u2 ⇔ x2 → u3 ⇔ x3 →
+        ⬕[x3←y3] v1 ⇔ y1 → v2 ⇔ y2 → v3 ⇔ y3 →
         ⬕[u2←v2]t0 ⇔ t1 → ⬕[u1←v1]t0 ⇔ t2 →
-        ⬕[x1←y1]t1 ⇔ t3 → ⬕[x2←y2]t2 ⇔ t4 → ⬕[U5←V5]t4 ⇔ t5 →
+        ⬕[x1←y1]t1 ⇔ t3 → ⬕[x2←y2]t2 ⇔ t4 →
+        ⬕[u3←v3]t4 ⇔ t5 →
         t3 ⇔ t5.
-(*
-#t0 #t1 #t2 #t3 #t4 #t5 #u1 #u2 #U5 #x1 #x2 #v1 #v2 #y1 #y2 #V5
-#Ht0 #Hux1 #Hux2 #Hvy1 #Hvy2 #Ht01 #Ht02 #Ht13 #Ht24 #Ht45
+#t0 #t1 #t2 #t3 #t4 #t5 #u1 #u2 #u3 #v1 #v2 #v3 #x1 #x2 #x3 #y1 #y2 #y3
+#Ht0 #Hux1 #Hux2 #Hux3 #Hvy1 #Hvy2 #Hvy3 #Ht01 #Ht02 #Ht13 #Ht24 #Ht45
 @(subset_eq_repl … Ht13 … Ht45) -t3 -t5
-@(subset_eq_repl … Ht0) -Ht0
-[ /2 width=1 by fsubst_eq_repl/
-| @fsubst_eq_repl [|*: // ] -U5 -V5
-  @(subset_eq_trans … Ht24) -t4
-  /2 width=1 by fsubst_eq_repl/
-]
+lapply (subset_eq_trans … (fsubst_eq_repl … Hux3 Hvy3) … Hvy1)
+[2: @subset_eq_refl | skip ] -x3 -y3 #Hvy1
+@(subset_eq_canc_sn … (fsubst_eq_repl … Ht01 Hux1 Hvy1)) -x1 -y1 -t1
+@(subset_eq_trans … Ht0) -Ht0
+@fsubst_eq_repl [2,3: @subset_eq_refl ] -u3 -v3
+@(subset_eq_trans … Ht24) -t4
+@(fsubst_eq_repl … Ht02 Hux2 Hvy2)
 qed-.
-*)
-(*
-u2 = 𝐅❨p2●𝗦◗y,b1,q1❩        x2 = 𝐅❨p2●𝗦◗y,b1,q1❩         x
-v2 = 𝐃❨t0,p2●𝗦◗y,b1,q1,n1❩  y2 = 𝐃❨t2,p2●𝗦◗y,b1,q1,n1❩   x
 
-x1 = 𝐅❨p2,b2,q2❩            u1 = 𝐅❨p2,b2,q2❩             x
-y1 = 𝐃❨t0,p2,b2,q2,n2❩       v1 = 𝐃❨t1,p2,b2,q2,n2❩
+(* Constructions with subset_ol *********************************************)
 
-U5 = 𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1❩
-V5 = 𝐃❨t4,(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1,n1❩
+lemma subset_ol_fsubst_sn (t) (u1) (u2) (v1):
+      t ≬ u1 → v1 ≬ u2 → ⬕[u1←v1]t ≬ u2.
+#t #u1 #u2 #v1 #Hu1 #Hv1
+@(subset_ol_eq_repl … (fsubst_eq … Hu1) … (subset_eq_refl …)) -Hu1
+/2 width=1 by subset_ol_or_sn_sn/
+qed.
 
-U6 = 𝐃❨𝐅❨p2●𝗦◗y,b1,q1❩,p2,b2,q2,n2❩
-V6 = 𝐃❨𝐃❨t0,p2●𝗦◗y,b1,q1,n1❩,p2,b2,q2,n2❩
-*)
+(* Inversions with subset_ol ************************************************)
 
+lemma subset_ol_inv_fsubst_sn (t) (u1) (u2) (v1):
+      t ≬ u1 → u2 ⊆ u1 →
+      ⬕[u1←v1]t ≬ u2 → v1 ≬ u2.
+#t #u1 #u2 #v1 #Hu1 #Hu21 #H0
+lapply (subset_ol_eq_repl … H0 … (subset_eq_sym …) … (subset_eq_refl …)) -H0
+[ @fsubst_eq // | skip ] -Hu1 #H0
+elim (subset_ol_inv_or_sn … H0) -H0 // #H0
+lapply (subset_ol_le_repl … H0 … (subset_le_nimp_bi … Hu21) … (subset_le_refl …)) -H0
+[2: @subset_le_refl | skip ] -Hu21 #H0
+elim (subset_nol_nimp_sn_refl_dx … H0)
+qed-.
