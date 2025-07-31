@@ -32,3 +32,11 @@ lemma subset_nol_nimp_sn_refl_dx (A) (u1) (u2):
 #A #u1 #u2 * #a * #_ #Hnu2 #Hu2 -u1
 /2 width=1 by/
 qed-.
+
+(* Destructions with subset_ol ***********************************************)
+
+lemma subset_nol_nimp_sn (A) (u1) (u2) (v1):
+      u1 ⧸≬{A} u2 → u1 ⧵ v1 ⧸≬{A} u2.
+#A #u1 #u2 #v1 #Hnu12 * #a * #H1a #_ #H2a
+/3 width=3 by subset_ol_i/
+qed-.

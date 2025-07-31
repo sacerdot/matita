@@ -20,6 +20,12 @@ include "ground/subsets/subset_nimply.ma".
 
 (* Constructions with subset_or and subset_eq *******************************)
 
+lemma subset_nimp_or_sn (A) (u1) (u2) (u):
+      (u1 ⧵ u) ∪ (u2 ⧵ u) ⇔ (u1 ∪ u2) ⧵{A} u.
+#A #u1 #u2 #u @conj #a * * #H1a #H2a
+/3 width=1 by subset_in_nimp, subset_or_in_dx, subset_or_in_sn/
+qed.
+
 lemma subset_eq_or_dx (A) (u) (u1) (u2):
       u2 ⊆ u1 → (∀a:A.Decidable (aϵu2)) →
       u1 ⧵{A} u2 ⇔ u → u1 ⇔ u2 ∪ u.
