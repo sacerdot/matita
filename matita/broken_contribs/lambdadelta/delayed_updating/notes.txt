@@ -8,3 +8,78 @@ lemma pr_pat_after_uni_tls (i2) (i1):
 266D;MUSIC FLAT SIGN;So;0;ON;;;;;N;FLAT;;;;
 266E;MUSIC NATURAL SIGN;So;0;ON;;;;;N;NATURAL;;;;
 266F;MUSIC SHARP SIGN;Sm;0;ON;;;;;N;SHARP;;;;
+
+(* auxiliary substitution lemma
+   u3 ⊆ u1 holds if u1:t0 exists in t2 ≈ t4, but by r2 u1 is removed in t2
+
+u2:t0 = 𝐅❨p1,b1,y●𝗦◗x❩             = x2:t2  
+u1:t0 = 𝐅❨p1●𝗔◗b1●𝗟◗y,b2,q2❩       = x1:t1
+u3:t4 = 𝐅❨p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱…◗x❩ = x3:t2 = 𝐃❨u2,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩
+
+v1:t2 = 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩        
+                              ⬕[x3←y3] v1 = y1:t3 = 𝐃❨t1,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩
+v2:t1 = 𝐃❨t0,p1,b1,y●𝗦◗x,n1❩              = y2:t4 = 𝐃❨t2,p1,b1,y●𝗦◗x,n1❩
+v3:t5 = 𝐃❨t4,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱…◗x,n1❩  = y3:t3 = 𝐃❨v2,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩
+
+*)
+
+(* path matches for ⓪
+
+In t0.
+Hr01: 𝐑❨t0,p1,b1,y●𝗦◗x,n1❩ to t1
+* u2  (O) 𝐅❨p1,b1,y●𝗦◗x❩          p1 A b1 L y S
+
+Hr02: 𝐑❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩ to t2
+* u1  (O) 𝐅❨p1●𝗔◗b1●𝗟◗y,b2,q2❩    p1 A b1 L y A
+
+In t1.
+Hr01: 𝐑❨t0,p1,b1,y●𝗦◗x,n1❩ from t0
+* v2  (I) 𝐃❨t0,p1,b1,y●𝗦◗x,n1❩          p1 A ⓪b1 L y S
+Hr12: 𝐑❨t1,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩ to t3
+* x1  (I,O) 𝐅❨p1●𝗔◗b1●𝗟◗y,b2,q2❩        p1 A b1   L y A          
+⓪ on b1
+
+in t3.
+Hr12: 𝐑❨t1,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩ from t1
+* y1  (I) 𝐃❨t1,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩  p1 A b1  L y A ⓪b2 L
+    : (I) 𝐃❨t0,p1,b1,y●𝗦◗x,n1❩        p1 A ⓪b1 L y S 
+⓪ on b1
+* y3  (I) 𝐃❨v2,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩
+
+In t2.
+Hr02: 𝐑❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩ from t0
+* v1  (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩  p1 A b1 L y A ⓪b2 L 
+Hr21: 𝐑❨t2,p1,b1,y●𝗦◗x,n1❩ to t4
+* x2  (I,O) 𝐅❨p1,b1,y●𝗦◗x❩            p1 A b1 L y S
+Hy  : 𝐑❨t2,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩ to t6
+* x3  (O) 𝐅❨p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱…◗x❩  p1 A b1 L y A ⓪b2 L
+
+In t4.
+Hr21: 𝐑❨t2,p1,b1,y●𝗦◗x,n1❩ from t2
+* y2  (I) 𝐃❨t2,p1,b1,y●𝗦◗x,n1❩          p1 A ⓪b1 L y S
+Hr45: 𝐑❨t4,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩ to t5
+* u3  (I,O) 𝐅❨p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱…◗x❩ p1 A   b1 L y A ⓪b2 L
+    : (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩    p1 A   b1 L y A ⓪b2 L
+⓪ on b1
+
+In t6.
+Hy  : 𝐑❨t2,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩ to t2
+      (I) 𝐃❨t2,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱…◗x,n1❩ p1 A ⓪b1 L y A ⓪b2 L
+Hr65: 𝐑❨t6,p1,b1,y●𝗦◗x,n1❩ to t5
+      (O) 𝐅❨p1,b1,y●𝗦◗x❩                    p1 A   b1 L y S     
+    : (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩        p1 A   b1 L y A ⓪b2 L
+⓪ on b1
+
+In t5.
+Hr45: 𝐑❨t4,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩ from t4
+* v3  (I) 𝐃❨t4,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱…◗x,n1❩ p1 A ⓪b1 L y A ⓪b2 L
+Hr65: 𝐑❨t6,p1,b1,y●𝗦◗x,n1❩ from t6
+      (I) 𝐃❨t6,p1,b1,y●𝗦◗x,n1❩              p1 A ⓪b1 L y S
+from t4:
+    : (I) 𝐃❨t2,p1,b1,y●𝗦◗x,n1❩              p1 A ⓪b1 L y S
+    : (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩        p1 A   b1 L y A ⓪b2 L
+from t6:
+    : (I) 𝐃❨t2,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱…◗x,n1❩ p1 A ⓪b1 L y A ⓪b2 L
+    : (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩        p1 A   b1 L y A ⓪b2 L
+⓪ on b1
+*)

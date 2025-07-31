@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/subsets/subset_nimply_le.ma".
 include "delayed_updating/syntax/prototerm_wfinite.ma".
 include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 include "delayed_updating/syntax/prototerm_irefs_or.ma".

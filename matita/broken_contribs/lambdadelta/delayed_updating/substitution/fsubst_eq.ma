@@ -14,8 +14,6 @@
 
 include "delayed_updating/substitution/fsubst.ma".
 include "delayed_updating/syntax/prototerm_ol.ma".
-include "ground/subsets/subset_nimply_ol.ma".
-include "ground/subsets/subset_nimply_le.ma".
 include "ground/subsets/subset_or_le.ma".
 include "ground/subsets/subset_or_ol.ma".
 include "ground/subsets/subset_and_ol.ma".
@@ -253,13 +251,10 @@ qed.
 (* Inversions with subset_ol ************************************************)
 
 lemma subset_ol_inv_fsubst_sn (t) (u1) (u2) (v1):
-      t ≬ u1 → u2 ⊆ u1 →
+      t ≬ u1 → (t ⧵ u1) ⧸≬ u2 →
       ⬕[u1←v1]t ≬ u2 → v1 ≬ u2.
 #t #u1 #u2 #v1 #Hu1 #Hu21 #H0
 lapply (subset_ol_eq_repl … H0 … (subset_eq_sym …) … (subset_eq_refl …)) -H0
 [ @fsubst_eq // | skip ] -Hu1 #H0
-elim (subset_ol_inv_or_sn … H0) -H0 // #H0
-lapply (subset_ol_le_repl … H0 … (subset_le_nimp_bi … Hu21) … (subset_le_refl …)) -H0
-[2: @subset_le_refl | skip ] -Hu21 #H0
-elim (subset_nol_nimp_sn_refl_dx … H0)
+/2 width=3 by subset_ol_inv_or_sn_nol_dx/
 qed-.

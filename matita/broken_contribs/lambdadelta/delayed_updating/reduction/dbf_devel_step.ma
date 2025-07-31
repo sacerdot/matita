@@ -64,7 +64,7 @@ cut (t3 ⇔ t4)
 [ lapply (dbfs_preterm_inv_sn … Ht1 Ht13 Hr12) -Ht13 -Hr12 #Ht13
   lapply (dbfs_preterm_inv_sn … Ht2 Ht24 Hr21) -Ht24 -Hr21 #Ht24
   @(fsubst_2_inv_eq ?????????????????? Ht01 Ht02 Ht13 Ht24) -t3 -t4
-  [ @fsubst_2_nol_eq
+  [ @fsubst_2_swap_eq
     [ /2 width=3 by brxf_ol_sn/
     | /2 width=3 by brxf_ol_sn/
     | /3 width=16 by neq_inv_xprc_bi_brxf/
@@ -98,10 +98,8 @@ lapply (dbfs_des_xprc_neq … Ht0 Ht02 … Hr01) [ /2 width=1 by/ ] #Hr21
 elim (xprc_dbfs … Hr21) #t4 #Ht24
 elim (dbfs_inv_prc_side … Ht0 Ht02 Hr02 Hx Hr01)
 * #y #H1 #H2 #Hy destruct
-elim (xprc_dbfs … Hy) #t6 #Ht26
-[ elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
-| elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
-] (* -Ht24 -Ht26 *)
+elim (xprc_dbfs … Hy) #t6 #Ht26 (* -Ht24 -Ht26 *)
+elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
 [1,5: |*: #H0 ]
 [|
 | -Ht0 -Ht02 -Ht2 -Hx -Ht01 -Hnr21 -Hr01 -Hr21
@@ -201,24 +199,28 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
   elim (eq_inv_list_rcons_bi ????? (trans_eq … H0)) -H0
   [4: // |2,3: skip ] #_ #H0 destruct
 |3,12:
-  @fsubst_3_le_eq
-  [1,2,7,8: /2 width=3 by brxf_ol_sn/
-  |3,9: /3 width=16 by neq_inv_xprc_bi_brxf/
-  |4,10: /3 width=17 by neq_inv_xprc_bi_brxf_brd/
-  |5,11: /4 width=17 by neq_inv_xprc_bi_brxf_brd, sym_eq/
-  |6,12:
+  @fsubst_3_distr_eq
+  [1,2,8,9: /2 width=3 by brxf_ol_sn/
+  |3,10: /3 width=16 by neq_inv_xprc_bi_brxf/
+  |4,11: /3 width=17 by neq_inv_xprc_bi_brxf_brd/
+  |5,12: /4 width=17 by neq_inv_xprc_bi_brxf_brd, sym_eq/
+  |6,13:
+    @subset_nol_nimp_sn
+  |7,14:
+    @subset_nol_nimp_sn
+    @subset_nol_nimp_sn
   ]
 ]
+
+(*
 qed-.
 
-(* we need ⓪b2 = b2
-
 (* argument moved *)
-6: 𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1❩ ⊆ 𝐅❨p2,b2,q2❩
-
+ 6: 𝐃❨t0,p2●𝗦◗y,b1,q1,n1❩ ⧸≬ 𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1❩
+ 7: t0 ⧸≬ 𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1❩
 (* argument not moved *)
-12: 𝐅❨p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x❩ ⊆ 𝐅❨p1●𝗔◗b1●𝗟◗y,b2,q2❩
-
+13: 𝐃❨t0,p1,b1,y●𝗦◗x,n1❩ ⧸≬ 𝐅❨p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x❩
+14: t0 ⧸≬ 𝐅❨p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x❩
 *)
 
 (*
@@ -250,16 +252,4 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
     /4 width=6 by dbfs_neq_dbfd, xprc_des_clear, ex2_intro/
   ]
 ]
-*)
-
-(*
-In t1. Hr01: 𝐑❨t0,p1,b1,y●𝗦◗x,n1❩
-Hr12: 𝐑❨t1,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩ to t3 (⓪ on b1)
-
-In t2. Hr02 :𝐑❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩
-Hr21: 𝐑❨t2,p1,b1,y●𝗦◗x,n1❩ to t4                    (⓪ after fork)
-Hy: 𝐑❨t2,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩ to t6 (⓪ ok)
-
-In t4. Hr21: 𝐑❨t2,p1,b1,y●𝗦◗x,n1❩
-Hr45: 𝐑❨t4,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩ to t5 (⓪ on b1)
 *)
