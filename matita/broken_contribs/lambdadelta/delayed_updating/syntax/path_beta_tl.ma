@@ -17,10 +17,12 @@ include "delayed_updating/syntax/path_beta.ma".
 
 (* PATHS FOR β-REDUCTION ****************************************************)
 
-(* Destructions with list_tl ************************************************)
+(* Inversions with list_tl **************************************************)
 
-lemma path_eq_des_xSy_q_beta (x) (y) (q) (n):
-      x◖𝗦●y = 𝐫❨q,n❩ → x◖𝗦●⇂y = q.
+lemma path_eq_inv_xSy_q_beta (x) (y) (q) (n):
+      x◖𝗦●y = 𝐫❨q,n❩ →
+      ∧∧ (⇂y)◖𝗱n = y & x◖𝗦●⇂y = q.
 #x * [| #l #y ] #q #n <path_qbeta_unfold
-[ <list_append_empty_sn | <list_append_lcons_sn ] #H0 destruct //
-qed-. 
+[ <list_append_empty_sn | <list_append_lcons_sn ] #H0 destruct
+/2 width=1 by conj/
+qed-.

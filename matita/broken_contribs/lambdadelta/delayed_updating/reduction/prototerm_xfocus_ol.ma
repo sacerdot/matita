@@ -48,5 +48,5 @@ lemma grafted_brxf_nol (p1) (p2) (b) (q) (n):
 elim (term_in_slice_inv_gen … Hx) -Hx #y #H0
 elim Hp12 -Hp12
 @(term_ol_slice_bi … (trans_eq … H0)) -H0
-[2: <path_beta_unfold_b <list_append_assoc // | skip ] (* ** UNFOLD *) 
+[2: <path_beta_unfold_b <list_append_assoc // | skip ] (* ** UNFOLD *)
 qed.

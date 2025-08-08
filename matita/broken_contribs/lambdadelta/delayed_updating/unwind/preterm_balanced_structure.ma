@@ -35,7 +35,7 @@ theorem term_in_comp_structure_pbc_L_inj (t) (p) (b1) (b2) (q1) (q2):
 lapply (in_comp_unwind2_bi (𝐢) … H1t)
 lapply (in_comp_unwind2_bi (𝐢) … H2t)
 <unwind2_path_help_pbLq <unwind2_path_help_pbLq #H4t #H3t
-lapply (term_in_comp_pbc_L_inj … Hb1 … Hb2 … H3t H4t) -Hb1 -Hb2 -H3t -H4t 
+lapply (term_in_comp_pbc_L_inj … Hb1 … Hb2 … H3t H4t) -Hb1 -Hb2 -H3t -H4t
 [ /2 width=1 by unwind2_preterm/ ] #H0
 @(term_root_eq_inv_structure_L_bi … p … Ht … H0)
 /2 width=2 by term_in_root/

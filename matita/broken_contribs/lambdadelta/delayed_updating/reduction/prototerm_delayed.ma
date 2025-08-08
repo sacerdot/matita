@@ -34,7 +34,7 @@ lemma brd_unfold (t) (p) (b) (q) (n):
 //
 qed.
 
-(* REPLACED by pt_append_in 
+(* REPLACED by pt_append_in
 lemma term_in_brd (t) (p) (y) (b) (q) (n):
       y ϵ ⋔[p◖𝗦]t →
       (𝐫❨p,⓪b,q,⁤↑(♭b+n)❩)●y ϵ 𝐃❨t,p,b,q,n❩.

@@ -171,7 +171,7 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
   | /2 width=8 by nin_root_brd_side_trunk/
   ]
 |6: @brd_brxf_append_p
-|15: <(path_eq_des_xSy_q_beta … H2) -q1 @brd_brxf_append_q
+|15: elim (path_eq_inv_xSy_q_beta … H2) -H2 #_ * -q1 @brd_brxf_append_q
 |9:
   @brd_brd_append_p
   @(subset_eq_canc_sn … (dbfs_des_grafted_nol … Ht2 Ht24 Hr21 …))
@@ -181,8 +181,8 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
   ]
   @(subset_eq_sym … (dbfs_des_grafted_full … Ht0 Ht02 Hr02))
 |18:
-  <H0b in ⊢ (???(??%???)); <(path_eq_des_xSy_q_beta … H2) -H2
-  @brd_brd_append_q
+  <H0b in ⊢ (???(??%???));
+  elim (path_eq_inv_xSy_q_beta … H2) -H2 #_ * @brd_brd_append_q
   @(subset_eq_canc_sn … (dbfs_des_grafted_nol … Ht2 Ht24 Hr21 …))
   [ #H0 elim (term_ol_inv_slice_bi … H0) #z1 #z2 #H0
     lapply (eq_inv_list_append_dx_bi … p1 (repl_eq … H0)) -H0
@@ -197,13 +197,20 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
   @fsubst_3_distr_eq
   [1,2,8,9: /2 width=3 by brxf_ol_sn/
   |3,10: /3 width=16 by neq_inv_xprc_bi_brxf/
-  |4,11: /3 width=17 by neq_inv_xprc_bi_brxf_brd/ 
+  |4,11: /3 width=17 by neq_inv_xprc_bi_brxf_brd/
   |5,12: /4 width=17 by neq_inv_xprc_bi_brxf_brd, sym_eq/
   |6,13:
     @subset_nol_nimp_sn
+    [
+    | elim (path_eq_inv_xSy_q_beta … H2) -H2 #_ * -q1
+      <H0b in ⊢ (?(???%));
+    ]
   |7,14:
     @subset_nol_nimp_sn
     @subset_nol_nimp_sn
+    [ <path_clear_beta in Hy; >(path_pbeta_rcons_d (⓪y)) #Hy
+    | elim (path_eq_inv_xSy_q_beta … H2) -H2 #H0 #_ <H0 in Hy; -H0 #Hy
+    ] /2 width=17 by preterm_nol_brxf/
   ]
 ]
 
@@ -212,10 +219,8 @@ qed-.
 
 (* argument moved *)
  6: 𝐃❨t0,(p2◖𝗦)●y,b1,q1,n1❩ ⧸≬ 𝐅❨𝐫❨p2,⓪b2,q2,⁤↑(♭b2+n2)❩●y,b1,q1,n1❩
- 7: t0 ⧸≬ 𝐅❨𝐫❨p2,⓪b2,q2,⁤↑(♭b2+n2)❩●y,b1,q1,n1❩
 (* argument not moved *)
-13: 𝐃❨t0,p1,b1,q1,n1❩ ⧸≬ 𝐅❨p1,b1,𝐫❨y,⓪b2,q2,⁤↑(♭b2+n2)❩●⇂x,n1❩
-14: t0 ⧸≬ 𝐅❨p1,b1,𝐫❨y,⓪b2,q2,⁤↑(♭b2+n2)❩●⇂x,n1❩
+13: 𝐃❨t0,p1,b1,(y◖𝗦)●⇂x,n1❩ ⧸≬ 𝐅❨p1,⓪b1,𝐫❨y,⓪b2,q2,⁤↑(♭b2+n2)❩●⇂x,n1❩
 *)
 
 (*

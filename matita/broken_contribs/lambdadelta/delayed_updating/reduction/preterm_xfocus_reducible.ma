@@ -37,6 +37,25 @@ lemma neq_inv_xprc_bi_brxf (t) (r1) (r2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2)
 /4 width=13 by ol_des_clear_brxf_xprc_bi, term_ol_clear_bi/
 qed-.
 
+lemma preterm_nol_brxf (t1) (t2) (r) (x) (p1) (p2) (b1) (b2) (q1) (q2) (l) (n1) (n2):
+      t1 ϵ 𝐓 →
+      r ϵ 𝐑❨t1, p1, b1, q1, n1❩ →
+      r●(x◖l) ϵ 𝐑❨t2, p2, b2, q2, n2❩ →
+      t1 ⧸≬ 𝐅❨p2, b2, q2, n2❩.
+#t1 #t2 #r #x #p1 #p2 #b1 #b2 #q1 #q2 #l #n1 #n2 #Ht1 #Hr #Hx
+* #y #H1y #H2y
+elim (term_in_slice_inv_gen … H2y) -H2y #z #H0 destruct
+lapply (xprc_des_r … Hr) #H0 destruct
+lapply (xprc_des_n … Hr) -Hr #Hr
+lapply (xprc_des_r … Hx) -t2 #Hx
+lapply (preterm_clear … Ht1) -Ht1 #Ht1
+lapply (in_comp_term_clear … Hr) -Hr #Hr
+lapply (in_comp_term_clear … H1y) -H1y
+<path_clear_append >Hx <list_append_assoc #Hy -p2 -b2 -q2 -n2
+lapply (term_complete_append … Ht1 Hr Hy) -t1 -p1 -b1 -q1 -n1 #H0
+elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 -z destruct
+qed-.
+
 (* Constructions with xprc and preterm **************************************)
 
 (* Note: this uses term_root_L_post *)
