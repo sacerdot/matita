@@ -77,3 +77,10 @@ elim (eq_inv_path_append_clear … (sym_eq … H0)) -H0 #r2 #s1 #H0 #H1 #H2 dest
 <path_clear_append <H0 -r2
 /2 width=1 by in_comp_term_clear/
 qed-.
+
+lemma term_in_clear_root_slice_inv_append_dx_refl (p) (q0):
+      (⓪p)●q0 ϵ ⓪▵↑p → (⓪p)●q0 ϵ ⓪↑p.
+#p #q0 * #x * #x0 #_ #H0 -x0
+elim (eq_inv_path_append_clear … H0) -H0 #y #q #_ #H0 #_ destruct -x -y
+/2 width=1 by in_comp_term_clear/
+qed-.

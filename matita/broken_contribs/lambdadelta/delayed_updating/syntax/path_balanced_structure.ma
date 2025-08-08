@@ -30,9 +30,8 @@ lemma pbc_des_structure (b):
 qed-.
 
 lemma path_eq_des_pAb_bi_pbc (p1) (p2) (b1) (b2):
-      ⊗b1 ϵ 𝐁 → ⊗b2 ϵ 𝐁 → p1●𝗔◗b1 = p2●𝗔◗b2 → b1 = b2.
-#p1 #p2 #b1 #b2 #Hb1 #Hb2
-<list_append_rcons_sn <list_append_rcons_sn #H0
+      ⊗b1 ϵ 𝐁 → ⊗b2 ϵ 𝐁 → p1◖𝗔●b1 = p2◖𝗔●b2 → b1 = b2.
+#p1 #p2 #b1 #b2 #Hb1 #Hb2 #H0
 elim (eq_inv_list_append_bi … H0) -H0 * #x
 [ #H0 #Hx destruct
   elim (eq_inv_list_lcons_append ????? Hx) -Hx *
@@ -56,7 +55,7 @@ qed-.
 (* Inversions with path_structure *******************************************)
 
 axiom path_eq_inv_pbq_pSq_pbc (p2) (p1) (b) (q1) (q2):
-      p1●b●q1 = p2●𝗦◗q2 → ⊗b ϵ 𝐁 →
-      ∨∨ ∃∃m. p1 = p2●𝗦◗m & m●b●q1 = q2
-       | ∃∃m. q1 = m●𝗦◗q2 & p1●b●m = p2
+      (p1●b)●q1 = p2◖𝗦●q2 → ⊗b ϵ 𝐁 →
+      ∨∨ ∃∃m. p1 = p2◖𝗦●m & (m●b)●q1 = q2
+       | ∃∃m. q1 = m◖𝗦●q2 & (p1●b)●m = p2
 .

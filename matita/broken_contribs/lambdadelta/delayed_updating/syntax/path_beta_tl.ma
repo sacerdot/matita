@@ -12,35 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_listed_1.ma".
-include "delayed_updating/reduction/prototerm_reducible_le.ma".
-include "delayed_updating/reduction/path_dbf_residuals.ma".
+include "ground/lib/list_tl.ma".
+include "delayed_updating/syntax/path_beta.ma".
 
-(* RESIDUALS OF A DBF-REDEX POINTER *****************************************)
+(* PATHS FOR β-REDUCTION ****************************************************)
 
-(* Constructions with subset_le *********************************************)
+(* Destructions with list_tl ************************************************)
 
-lemma path_dbfr_le_repl (t1) (t2) (s) (r):
-      t1 ⊆ t2 → (s /𝐝𝐛𝐟{t1} r) ⊆ (s /𝐝𝐛𝐟{t2} r).
-#t1 #t2 #s #r #Ht12 #x * *
-[ #Hnsr #H0 destruct
-  /2 width=1 by path_dbfr_neq/
-| #p #b #q #q0 #n #Hr #Hq0 #Hs #Hx destruct
-  /3 width=6 by path_dbfr_side, xprc_le_repl/
-]
-qed.
-
-lemma path_dbfr_neq_le (t) (s) (r):
-      s ⧸= r → ❴s❵ ⊆ (s /𝐝𝐛𝐟{t} r).
-#t #s #r #Hs #x #Hx
->(subset_in_inv_single ??? Hx) -x
-/2 width=1 by path_dbfr_neq/
-qed.
-
-(* Inversions with subset_le ************************************************)
-
-lemma path_dbfr_le_refl (t) (r):
-      (r /𝐝𝐛𝐟{t} r) ⊆ Ⓕ.
-#t #r #s #Hs
-elim (path_dbfr_inv_refl … Hs)
-qed.
+lemma path_eq_des_xSy_q_beta (x) (y) (q) (n):
+      x◖𝗦●y = 𝐫❨q,n❩ → x◖𝗦●⇂y = q.
+#x * [| #l #y ] #q #n <path_qbeta_unfold
+[ <list_append_empty_sn | <list_append_lcons_sn ] #H0 destruct //
+qed-. 

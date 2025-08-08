@@ -12,31 +12,34 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/arith/nat_psucc.ma".
+include "delayed_updating/syntax/path_beta.ma".
 include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/notation/functions/subset_f_3.ma".
+include "delayed_updating/notation/functions/subset_f_4.ma".
 
 (* BALANCED REDUCTION EXTENDED FOCUS ****************************************)
 
-definition brxf (p) (b) (q): 𝒫❨ℙ❩ ≝
-           ↑(p●𝗔◗b●𝗟◗q)
-.
+definition brxf (p) (b) (q) (n:ℕ): 𝒫❨ℙ❩ ≝
+           ↑𝐫❨p,b,q,⁤↑n❩.
 
 interpretation
   "balanced reduction extended focus (subset of paths)"
-  'SubsetF p b q = (brxf p b q).
+  'SubsetF p b q n = (brxf p b q n).
 
 (* Basic constructions ******************************************************)
 
-lemma brxf_unfold (p) (b) (q):
-      ↑(p●𝗔◗b●𝗟◗q) = 𝐅❨p,b,q❩.
+lemma brxf_unfold (p) (b) (q) (n):
+      ↑𝐫❨p,b,q,⁤↑n❩ = 𝐅❨p,b,q,n❩.
 //
 qed.
 
 (* Basic inversions *********************************************************)
 
-lemma in_comp_brxf_inv_gen (x) (p) (b) (q):
-      x ϵ 𝐅❨p,b,q❩ →
-      ∃y. (p●𝗔◗b●𝗟◗q)●y = x.
-#x #p #b #q * #y #_ #H0 destruct
+(* REPLACED by term_in_slice_inv_gen
+lemma in_comp_brxf_inv_gen (x) (p) (b) (q) (n):
+      x ϵ 𝐅❨p,b,q,n❩ →
+      ∃y. 𝐫❨p,b,q,⁤↑n❩●y = x.
+#x #p #b #q #n #H0 * #y #_ #H0 destruct
 /2 width=2 by ex_intro/
 qed-.
+*)

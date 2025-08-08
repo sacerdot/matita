@@ -12,8 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/path_clear_help.ma".
-include "delayed_updating/syntax/prototerm_clear.ma".
+include "delayed_updating/syntax/prototerm_clear_eq.ma".
 include "delayed_updating/reduction/prototerm_reducible.ma".
 include "delayed_updating/reduction/prototerm_delayed_eq.ma".
 
@@ -21,32 +20,13 @@ include "delayed_updating/reduction/prototerm_delayed_eq.ma".
 
 (* Constructions with xprc **************************************************)
 
-lemma clear_brd_xprc_dx (t1) (t2) (r) (p) (b) (q) (n):
-      r ϵ 𝐑❨t1,p,b,q,n❩ →
-      r● 𝛕𝟎.⓪⋔[p◖𝗦]t2 ⊆ ⓪𝐃❨t2,p,b,q,n❩.
-#t1 #t2 #r #p #b #q #n #Hr #s1 #Hs1
-lapply ((pt_append_assoc_sn …) … Hs1) -Hs1
->path_clear_empty >(path_clear_d_dx … (⁤↑(♭b+n))) #Hs1
-lapply (xprc_des_r … Hr) -Hr >path_clear_reduct #H0 destruct
->path_clear_append in Hs1; * #s2 * #s #Hs #H2 #H1 destruct
->path_clear_append <list_append_assoc <brd_unfold
-/4 width=1 by in_comp_term_clear, in_comp_iref_hd, pt_append_in/
-qed-.
-
-lemma clear_brd_xprc_sx (t1) (t2) (r) (p) (b) (q) (n):
-      r ϵ 𝐑❨t1,p,b,q,n❩ →
-      ⓪𝐃❨t2,p,b,q,n❩ ⊆ r● 𝛕𝟎.⓪⋔[p◖𝗦]t2.
-#t1 #t2 #r #p #b #q #n #Hr #sz * #sd * #si #Hsi #H2 #H1 destruct
-elim (in_comp_inv_iref … Hsi) -Hsi #s #H0 #Hs destruct
-<path_clear_append <path_clear_d_sn
-lapply (xprc_des_r … Hr) -Hr >path_clear_reduct #H0 destruct
-/4 width=1 by in_comp_term_clear, in_comp_iref_hd, pt_append_in/
-qed-.
-
 lemma clear_brd_xprc (t1) (t2) (r) (p) (b) (q) (n):
       r ϵ 𝐑❨t1,p,b,q,n❩ →
-      r● 𝛕𝟎.⓪⋔[p◖𝗦]t2 ⇔ ⓪𝐃❨t2,p,b,q,n❩.
-/3 width=6 by clear_brd_xprc_sx, clear_brd_xprc_dx, conj/
+      r●⓪⋔[p◖𝗦]t2 ⇔ ⓪𝐃❨t2,p,b,q,n❩.
+#t1 #t2 #r #p #b #q #n #Hr
+lapply (xprc_des_r … Hr) -Hr >(path_clear_beta_b ???? (⁤↑(♭b+n))) #H0 destruct
+@(subset_eq_trans … (clear_pt_append …))
+@clear_eq_repl @subset_eq_refl (* ** auto too slow *)
 qed.
 
 (* Destructions with xprc ***************************************************)
@@ -56,6 +36,6 @@ lemma term_in_root_brd_des_xprc (t) (r) (s) (p) (b) (q) (n):
       s ϵ ▵𝐃❨t,p,b,q,n❩ → r ϵ ⓪▵↑s.
 #t #r #s #p #b #q #n #Hr #Hs
 lapply (xprc_des_r … Hr) -Hr #Hr destruct
->path_clear_reduct
+>(path_clear_beta_b ???? (⁤↑(♭b+n)))
 /4 width=3 by term_le_root_bi_brd_slice, term_in_root_slice_sym, in_comp_term_clear/
 qed-.

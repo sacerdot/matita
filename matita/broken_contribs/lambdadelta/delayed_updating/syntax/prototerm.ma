@@ -60,6 +60,12 @@ lemma term_grafted_inv_gen (t) (p) (q):
       q ϵ ⋔[p]t → p●q ϵ t.
 // qed-.
 
+lemma term_in_append_inv_gen (t) (p) (x):
+      x ϵ p●t → ∃∃q. qϵt & p●q = x.
+#t #p #x * #q #Hq #H0 destruct
+/2 width=3 by ex2_intro/
+qed-.
+
 lemma append_in_comp_inv_bi (p) (q) (t):
       p●q ϵ p●t → q ϵ t.
 #p #q #t * #r #Hr #H0
@@ -74,6 +80,12 @@ lemma append_in_comp_inv_lcons_bi (t) (p) (l1) (l2):
 elim (eq_inv_list_rcons_bi ??? … H0) -H0
 #H1 #H2 destruct
 /2 width=1 by conj/
+qed-.
+
+lemma term_in_slice_inv_gen (p1) (p2):
+      p1 ϵ ↑p2 → ∃q2. p2●q2 = p1.
+#p1 #p2 * #q2 #_ #H0 destruct
+/2 width=2 by ex_intro/
 qed-.
 
 lemma term_slice_inv_lcons_bi (p1) (p2) (l1) (l2):

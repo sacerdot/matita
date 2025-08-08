@@ -43,40 +43,19 @@ interpretation
   "preterm (prototerm)"
   'SubsetT = (preterm_posts).
 
-(* Basic destructions *******************************************************)
-
-(* Note: rename *)
-lemma term_comp_append (t) (p) (q) (n):
-      t ϵ 𝐓 → p◖𝗱n ϵ t → p●q ϵ t →
-      (𝐞)◖𝗱n = q.
-#t #p #q #n #Ht #Hn cases q -q
-[| #l #q @(list_ind_rcons … q) -q ]
-[ <list_append_empty_sn #Hp
-  lapply (term_complete_post … Ht … Hn Hp ?) -t // #H0
-  elim (eq_inv_list_lcons_refl ??? H0)
-| #Hl
-  lapply (term_root_d_post … Ht p l n ??)
-  [ /2 width=1 by term_in_comp_root/
-  | /2 width=1 by term_in_comp_root/
-  | #H0 destruct //
-  ]
-| #q #l0 #_ #Hq
-  lapply (term_root_d_post … Ht p l0 n ??)
-  [ /2 width=1 by term_in_comp_root/
-  | /2 width=2 by term_in_root/
-  | #H0 destruct
-    lapply (term_complete_post … Ht … Hq Hn ?) -t //
-    <list_append_lcons_sn <list_append_rcons_sn >list_append_lcons_sn #H0
-    lapply (eq_inv_list_append_dx_dx_refl … (sym_eq … H0)) -p #H0 destruct
-  ]
-]
-qed-.
-
 (* Basic constructions ******************************************************)
 
-lemma term_le_and_sn_single_dx (t) (p) (n):
-      t ϵ 𝐓 → p◖𝗱n ϵ t → t ∩ ↑p ⊆ ❴p◖𝗱n❵.
-#t #p #k #Ht #Hp #r * #Hr * #q #_ #H0 destruct
-lapply (term_comp_append ???? Ht Hp Hr) -t #H0 destruct
-/2 width=5 by pt_append_in/
+lemma term_le_and_sn_single_dx (t) (p):
+      t ϵ 𝐓 → p ϵ t → t ∩ ↑p ⊆ ❴p❵.
+#t #p #Ht #Hp #r * #H1r #H2r
+lapply (term_complete_post … Ht … H2r) //
 qed.
+
+(* Basic destructions *******************************************************)
+
+lemma term_complete_append (t) (p) (q):
+      t ϵ 𝐓 → p ϵ t → p●q ϵ t → (𝐞) = q.
+#t #p #q #Ht #Hp #Hq
+lapply (term_complete_post … Ht … Hq Hp ?) -t [ // ] #H0
+@(eq_inv_list_append_dx_dx_refl … (sym_eq … H0))
+qed-.

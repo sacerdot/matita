@@ -99,7 +99,7 @@ elim (pcc_inv_L_dx … H0) -H0 //
 qed-.
 
 lemma pcc_inv_A (p) (q) (n):
-      p●𝗔◗q ϵ 𝐂❨n❩ → p●q ϵ 𝐂❨n❩.
+      p◖𝗔●q ϵ 𝐂❨n❩ → p●q ϵ 𝐂❨n❩.
 #p #q elim q -q
 [ /2 width=1 by pcc_inv_A_dx/
 | * [ #k ] #q #IH #n #H0
@@ -116,7 +116,7 @@ lemma pcc_inv_A (p) (q) (n):
 qed-.
 
 lemma pcc_inv_S (p) (q) (n):
-      p●𝗦◗q ϵ 𝐂❨n❩ → p●q ϵ 𝐂❨n❩.
+      p◖𝗦●q ϵ 𝐂❨n❩ → p●q ϵ 𝐂❨n❩.
 #p #q elim q -q
 [ /2 width=1 by pcc_inv_S_dx/
 | * [ #k ] #q #IH #n #H0
@@ -278,11 +278,10 @@ qed-.
 
 theorem pcc_inj_L_sn (p1) (p2) (q1) (n):
         q1 ϵ 𝐂❨n❩ → ∀q2. q2 ϵ 𝐂❨n❩ →
-        p1●𝗟◗q1 = p2●𝗟◗q2 → q1 = q2.
+        p1◖𝗟●q1 = p2◖𝗟●q2 → q1 = q2.
 #p1 #p2 #q1 #n #Hq1 elim Hq1 -q1 -n
 [|*: #q1 #n1 [ #k1 ] #_ #IH ] * //
-[1,3,5,7,9,11: #l2 #q2 ] #Hq2
-<list_append_lcons_sn <list_append_lcons_sn #H0
+[1,3,5,7,9,11: #l2 #q2 ] #Hq2 #H0
 elim (eq_inv_list_lcons_bi ????? H0) -H0 #H0 #H1 destruct
 [ elim (pcc_inv_L_dx_zero … Hq2)
 | lapply (pcc_inv_d_dx … Hq2) -Hq2 #Hq2

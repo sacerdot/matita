@@ -12,23 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_and.ma".
-include "delayed_updating/reduction/prototerm_xfocus.ma".
-include "delayed_updating/notation/functions/subset_f_5.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* BALANCED REDUCTION FOCUS *************************************************)
-
-definition brf (t) (p) (b) (q) (n): 𝒫❨ℙ❩ ≝
-           t ∩ 𝐅❨p,b,q,n❩
-.
-
-interpretation
-  "balanced reduction focus (subset of paths)"
-  'SubsetF t p b q n = (brf t p b q n).
-
-(* Basic constructions ******************************************************)
-
-lemma brf_unfold (t) (p) (b) (q) (n):
-      t ∩ 𝐅❨p,b,q,n❩ = 𝐅❨t,p,b,q,n❩.
-//
-qed.
+notation "hvbox( 𝐅❨ break term 46 t, break term 46 p, break term 46 b, break term 46 q, break term 46 n ❩ )"
+  non associative with precedence 70
+  for @{ 'SubsetF $t $p $b $q $n }.

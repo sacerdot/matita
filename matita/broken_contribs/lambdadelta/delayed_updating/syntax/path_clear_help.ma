@@ -13,20 +13,12 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path_clear_structure.ma".
-
+(*
+include "delayed_updating/syntax/path_predex.ma".
+*)
 (* CLEAR FOR PATH ***********************************************************)
 
 (* Helper constructions *****************************************************)
-
-lemma path_clear_reduct (p) (b) (q):
-      (⓪(p●𝗔◗b●𝗟◗q)) = ⓪(p●𝗔◗⓪b●𝗟◗q).
-#p #b #q
-<path_clear_append <path_clear_A_sn
-<path_clear_append <path_clear_L_sn
-<path_clear_append <path_clear_A_sn
-<path_clear_append <path_clear_L_sn
-//
-qed.
 
 (* Helper constructions with structure **************************************)
 
@@ -43,3 +35,4 @@ qed.
 lemma path_clear_structure_pAbLq (p) (b) (q):
       ⊗p●𝗔◗⊗b●𝗟◗⊗q = ⓪(⊗p●𝗔◗⊗b●𝗟◗⊗q).
 // qed.
+

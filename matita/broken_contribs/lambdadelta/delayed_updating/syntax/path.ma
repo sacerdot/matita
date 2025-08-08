@@ -73,3 +73,14 @@ lemma is_path_append_sn_dec (p) (r):
   ]
 ]
 qed-.
+
+(* Helper inversions ********************************************************)
+
+lemma path_neq_prefix (p) (q1) (q2) (l1) (l2):
+      l1 ⧸= l2 → p◖l1●q1 ⧸= p◖l2●q2.
+#p #q1 #q2 #l1 #l2 #Hl12 #H0
+lapply (eq_inv_list_append_dx_bi ??? p (repl_eq ??????? H0)) -H0
+[1,3: // |2,4: skip ] #H0
+elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
+/2 width=1 by/
+qed-.

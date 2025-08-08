@@ -22,25 +22,19 @@ include "delayed_updating/reduction/prototerm_reducible_clear.ma".
 (* Inversions with preterm **************************************************)
 
 lemma term_in_comp_inv_xprc_append_dx (t) (r) (x) (p) (b) (q) (n):
-      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → r●x ϵ ⓪t → 𝐞◖𝗱𝟎 = x.
+      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → r●x ϵ ⓪t → 𝐞 = x.
 #t #r #x #p #b #q #n #Ht #Hr #Hx
 lapply (xprc_des_n … Hr) #Hn
 lapply (xprc_des_r … Hr) -Hr #H0 destruct
-/4 width=5 by preterm_clear, term_comp_append, in_comp_term_clear_d_dx/
+/3 width=5 by preterm_clear, in_comp_term_clear, term_complete_append/
 qed-.
 
 lemma term_in_root_inv_xprc_append_dx (t) (r) (x) (p) (b) (q) (n):
-      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → r●x ϵ ▵⓪t →
-      ∨∨ 𝐞 = x | 𝐞◖𝗱𝟎 = x.
+      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → r●x ϵ ▵⓪t → 𝐞 = x.
 #t #r #x #p #b #q #n #Ht #Hr * #y #Hy
 lapply (term_grafted_inv_gen … Hy) -Hy <list_append_assoc #Hy
-lapply (term_in_comp_inv_xprc_append_dx … Ht Hr Hy) #H0 -t -r -p -b -q -n
-elim (eq_inv_list_lcons_append ????? H0) -H0 *
-[ #_ #H0 /2 width=1 by or_intror/
-| #z #_ #H0
-  elim (eq_inv_list_empty_append … H0) -H0 #_ #H0
-  /2 width=1 by or_introl/
-]
+lapply (term_in_comp_inv_xprc_append_dx … Ht Hr Hy) -t #H0
+elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 //
 qed-.
 
 lemma term_in_comp_clear_root_slice_inv_xprc (t) (r) (p1) (p2) (b) (q) (n):
@@ -55,11 +49,9 @@ elim (eq_inv_list_append_bi … H0) -H0 * #x #H1x #H2x
   >(xprc_des_clear … Hr) in H2x; #H2x
   lapply (in_comp_term_clear … Hp2) -Hp2 #Hp2
   lapply (term_le_root_clear … Hp2) -Hp2 >H2x #Hp2
-  elim (term_in_root_inv_xprc_append_dx … Ht Hr Hp2) -Ht -Hr -Hp2 #H0 destruct
-  [ <list_append_empty_sn in H2x; #H0 destruct
-    /2 width=1 by in_comp_term_clear/
-  | <list_append_lcons_sn in H2x; <list_append_empty_sn <path_clear_S_dx #H0 destruct
-  ]
+  lapply (term_in_root_inv_xprc_append_dx … Ht Hr Hp2) -Ht -Hr -Hp2 #H0 destruct
+  <list_append_empty_sn in H2x; #H0 destruct
+  /2 width=1 by in_comp_term_clear/
 | /2 width=1 by in_comp_slice_clear_inv_clear_sx/
 ]
 qed-.
@@ -70,25 +62,21 @@ lemma xprc_des_side (t) (r) (p) (b) (q) (n):
       t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → p◖𝗦 ϵ ▵t.
 #t #r #p #b #q #n #Ht #Hr
 lapply (xprc_des_n … Hr) -Hr #Hn
-/3 width=2 by term_full_A_post, term_in_root/
+/3 width=4 by term_full_A_post, path_beta_pA_in_root/
 qed-.
 
 lemma xprc_des_clear_slice (t) (r) (p1) (p2) (b1) (q1) (n1):
       t ϵ 𝐓 → r ϵ 𝐑❨t,p1,b1,q1,n1❩ → r ϵ ⓪↑p2 → p2 ϵ ▵t →
-      ∃∃q2. q2◖𝗱(⁤↑n1) ϵ ⋔[p2]t & ⓪p2●⓪q2 = r.
+      ∃∃q2. q2 ϵ ⋔[p2]t & ⓪p2●⓪q2 = r.
 #t #r #p1 #p2 #b1 #q1 #n1 #Ht #H1r #H2r #Hp2
 elim (in_comp_inv_term_clear_slice … H2r) -H2r #q0 #H0 #_ destruct
 lapply (xprc_des_n … H1r) #Hn1
 lapply (xprc_des_r … H1r) -H1r #Hr
-lapply (in_comp_term_clear_d_dx … Hn1) >Hr * #x #Hx #H0
-elim (eq_inv_path_d_dx_clear … H0) -H0 #x1 #n0 #H0 #_ #H1 destruct
-elim (eq_inv_path_append_clear … H0) -H0 #y2 #y0 #Hy2 #Hy0 #H0 destruct
-lapply (term_clear_inj … Ht Hp2 … Hy2) -Hp2 -Hy2
+lapply (sym_eq ??? Hr) -Hr #H0
+elim (eq_inv_path_append_clear … H0) -H0 #y2 #y0 #Hy2 #Hy0 #Hy
+lapply (term_clear_inj … Ht Hp2 … Hy2) -Ht -Hp2 -Hy2
 [ /2 width=2 by term_in_root/ ] #H0 destruct
->Hy0 in Hr; -q0 >path_clear_append #Hr
-lapply (term_clear_inj … Ht … Hr) -Ht -Hr
-[1,2: /2 width=2 by term_in_root/ ] -n0 #H0
->H0 in Hn1; -p1 -b1 -q1 #Hn1 <path_clear_append
+>Hy0 <Hy in Hn1; -p1 -b1 -q1 -q0 #Hy
 /2 width=3 by ex2_intro/
 qed-.
 
@@ -116,15 +104,14 @@ theorem ol_des_xprc_bi (t) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
 * #Hr #Hb1 #Hq1 #Hn1 * #H0 #Hb2 #Hq2 #Hn2 destruct
 lapply (term_clear_inj … Ht … H0) -H0
 [1,2: /2 width=2 by term_in_root/ ] #H0
-lapply (term_root_d_post … Ht (p1●𝗔◗b1●𝗟◗q1) (𝗱(⁤↑n1)) (⁤↑n2) ??)
-[ <H0 ] [1,2: /2 width=2 by term_in_root/ ] -Ht -Hn1 -Hn2 #Hn
-lapply (eq_inv_d_bi … Hn) -Hn #Hn
-lapply (eq_inv_nsucc_bi … Hn) -Hn #Hn destruct
->path_append_pAbLq_5 in H0; >path_append_pAbLq_5 in ⊢ (%→?); #H0
-lapply (pcc_inj_L_sn … Hq1 … Hq2 ?) -Hq1 -Hq2 [ // |2,3: skip ] #Hq destruct
-lapply (eq_inv_list_append_sn_bi … H0) -H0 #H0
-lapply (path_eq_des_pAb_bi_pbc … Hb2 Hb1 H0) -Hb2 -Hb1 #H1 destruct
-lapply (eq_inv_list_append_sn_bi … H0) -H0 #H0 destruct
+elim (eq_inv_list_lcons_bi ????? H0) -H0 #H2 #H1
+lapply (eq_inv_d_bi … H2) -H2 #H2
+lapply (eq_inv_nsucc_bi … H2) -H2 #H2 destruct
+lapply (pcc_inj_L_sn … Hq2 … Hq1 H1) -Hq1 -Hq2 #H0 destruct
+lapply (eq_inv_list_append_sn_bi … H1) -H1 #H1
+elim (eq_inv_list_lcons_bi ????? H1) -H1 #_ #H1
+lapply (path_eq_des_pAb_bi_pbc … Hb2 Hb1 H1) -Hb2 -Hb1 #H0 destruct
+lapply (eq_inv_list_append_sn_bi … H1) -H1 #H destruct
 /2 width=1 by and4_intro/
 qed-.
 
@@ -136,7 +123,7 @@ theorem path_le_des_xprc_bi (t) (r1) (r2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2
 lapply (xprc_des_r_clear … Hr1) -p1 -b1 -q1 -n1 #Hr1
 lapply (xprc_des_r_clear … Hr2) -p2 -b2 -q2 -n2 #Hr2
 lapply (preterm_clear … Ht) -Ht #Ht
-lapply (term_comp_append … Ht Hr1 ?) -Hr1
+lapply (term_complete_append … Ht Hr1 ?) -Hr1
 [ /2 width=2 by term_in_root/ | skip ] -t #H0 destruct //
 qed-.
 

@@ -24,9 +24,8 @@ lemma path_dbfr_des_neq_le (t) (s) (r) (p) (b) (q) (n):
       (s /𝐝𝐛𝐟{t} r) ⊆ ❴s❵.
 #t #s #r #p #b #q #n #Ht #Hr * #Hs #x * *
 [ #_ #H0 destruct //
-| #p0 #b0 #q0 #q1 #n0 #H0r #H0s #H0 destruct
+| #p0 #b0 #q0 #q1 #n0 #H0r #Hq1 >path_clear_S_dx #H0s #H0 destruct
   elim (eq_inv_path_append_clear … H0s) -H0s #x #y #Hx #Hy #H0 destruct
-  elim (eq_inv_path_S_sn_clear … Hy) -Hy #z #H1 #H2 destruct
   lapply (subset_ol_i ???? Hr H0r) -Hr -H0r #H0
   elim (ol_des_xprc_bi … Ht H0) -Ht -H0 #H1 #H2 #H3 #H4 destruct
   elim Hs -Hs <path_clear_append <Hx -x >path_clear_append

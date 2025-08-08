@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 include "delayed_updating/substitution/fsubst_eq.ma".
 include "delayed_updating/reduction/prototerm_delayed.ma".
 
@@ -21,8 +20,9 @@ include "delayed_updating/reduction/prototerm_delayed.ma".
 (* Constructions with term_le ***********************************************)
 
 lemma term_le_root_bi_brd_slice (t) (p) (b) (q) (n):
-      ▵𝐃❨t,p,b,q,n❩ ⊆ ▵↑(p●𝗔◗⓪b●𝗟◗q).
-/3 width=3 by pt_append_slice, term_root_le_repl/
+      ▵𝐃❨t,p,b,q,n❩ ⊆ ▵↑𝐫❨p,⓪b,q,⁤↑(♭b+n)❩.
+#t #p #b #q #n
+/3 width=3 by term_root_le_repl, pt_append_slice/
 qed.
 
 (* Constructions with term_eq ***********************************************)
@@ -30,7 +30,7 @@ qed.
 lemma brd_grafted_eq_repl_fwd (t1) (t2) (p) (b) (q) (n):
       (⋔[p◖𝗦]t1 ⇔ ⋔[p◖𝗦]t2) → 𝐃❨t1,p,b,q,n❩ ⇔ 𝐃❨t2,p,b,q,n❩.
 #t1 #t2 #p #b #q #n
-/3 width=1 by pt_append_eq_repl_bi, iref_eq_repl_bi/
+/2 width=1 by pt_append_eq_repl_bi/
 qed.
 
 lemma brd_eq_repl_fwd (t1) (t2) (p) (b) (q) (n):
@@ -39,21 +39,32 @@ lemma brd_eq_repl_fwd (t1) (t2) (p) (b) (q) (n):
 /3 width=1 by brd_grafted_eq_repl_fwd, term_grafted_eq_repl/
 qed.
 
-lemma grafted_brd_append_p (t) (p1) (p2) (b) (q) (n):
-      (p1●𝗔◗(⓪b)●𝗟◗q)●𝛕(⁤↑(♭b+n)).⋔[(p2●p1)◖𝗦]t ⇔ ⋔[p2]𝐃❨t,p2●p1,b,q,n❩.
+lemma brd_append_p (t) (p1) (p2) (b) (q) (n):
+      p2●(𝐫❨p1,⓪b,q,⁤↑(♭b+n)❩●⋔[(p2●p1)◖𝗦]t) ⇔ 𝐃❨t,p2●p1,b,q,n❩.
 #t #p1 #p2 #b #q #n
-<brd_unfold <(list_append_assoc ?? p1)
-@(subset_eq_trans … (term_grafted_pt_append … p2))
-/2 width=1 by term_grafted_eq_repl/
+<brd_unfold <path_beta_append_p //
+qed.
+
+lemma grafted_brd_append_p (t) (p1) (p2) (b) (q) (n):
+      (𝐫❨p1,⓪b,q,⁤↑(♭b+n)❩)●⋔[(p2●p1)◖𝗦]t ⇔ ⋔[p2]𝐃❨t,p2●p1,b,q,n❩.
+#t #p1 #p2 #b #q #n
+@(subset_eq_trans … (term_grafted_eq_repl …))
+[| @brd_append_p | skip ]
+@term_grafted_pt_append
+qed.
+
+lemma brd_append_q (t) (p) (b) (q1) (q2) (n):
+      (𝐫❨p,⓪b,q1❩)●(𝐫❨q2,⁤↑(♭b+n)❩●⋔[p◖𝗦]t) ⇔ 𝐃❨t,p,b,q1●q2,n❩.
+#t #p #b #q1 #q2 #n
+<brd_unfold <path_beta_append_q //
 qed.
 
 lemma grafted_brd_append_q (t) (p) (b) (q1) (q2) (n):
-      q2●𝛕(⁤↑(♭b+n)).⋔[p◖𝗦]t ⇔ ⋔[p●𝗔◗⓪b●𝗟◗q1]𝐃❨t,p,b,q1●q2,n❩.
+      (𝐫❨q2,⁤↑(♭b+n)❩)●⋔[p◖𝗦]t ⇔ ⋔[𝐫❨p,⓪b,q1❩]𝐃❨t,p,b,q1●q2,n❩.
 #t #p #b #q1 #q2 #n
-<brd_unfold <path_append_pAbLq_11
-@(subset_eq_trans … (term_grafted_pt_append … (p●𝗔◗⓪b●𝗟◗q1)))
-@term_grafted_eq_repl
-@pt_append_assoc
+@(subset_eq_trans … (term_grafted_eq_repl …))
+[| @brd_append_q | skip ]
+@term_grafted_pt_append
 qed.
 
 lemma brd_fsubst_grafted_eq_repl_fwd (t1) (t2) (u) (v) (p) (b) (q) (n):
@@ -61,9 +72,7 @@ lemma brd_fsubst_grafted_eq_repl_fwd (t1) (t2) (u) (v) (p) (b) (q) (n):
       ⬕[𝐃❨u,p,b,q,n❩←𝐃❨v,p,b,q,n❩]𝐃❨t1,p,b,q,n❩ ⇔ 𝐃❨t2,p,b,q,n❩.
 #t1 #t2 #u #v #p #b #q #n #H0
 @(subset_eq_canc_sn … (fsubst_append …))
-@pt_append_eq_repl_bi [ // ]
-@(subset_eq_canc_sn … (fsubst_append …))
-/2 width=1 by iref_eq_repl_bi/
+@pt_append_eq_repl_bi //
 qed.
 
 lemma brd_fsubst_false_eq_repl_fwd (t1) (t2) (u) (v) (p) (b) (q) (n):
@@ -84,45 +93,32 @@ lapply (subset_eq_trans … (grafted_fsubst_true … Htu) … H0) -H0 -Htu #H0
 /2 width=1 by brd_fsubst_grafted_eq_repl_fwd/
 qed.
 
-lemma grafted_brd_full (t) (p) (b) (q) (n):
-      (⋔[p◖𝗦]t) ⇔ ⋔[p●𝗔◗⓪b●𝗟◗q◖𝗱⁤↑(♭b+n)]𝐃❨t,p,b,q,n❩.
-#t #p #b #q #n <brd_unfold
-@(subset_eq_trans ????? (term_grafted_eq_repl …))
-[2: @(subset_eq_sym … (pt_append_assoc …)) |3: skip ]
-@term_grafted_pt_append
-qed.
+(* Note: grafted_brd_full REPLACED by term_grafted_pt_append *)
 
 (* Main constructions with term_eq ******************************************)
 
 theorem brd_brd_append_p (t1) (t2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
-        (⋔[p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2)]t2) ⇔ ⋔[p2◖𝗦]t1 →
-        (𝐃❨t2,(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●p1,b1,q1,n1❩) ⇔
-        (𝐃❨𝐃❨t1,p2●𝗦◗p1,b1,q1,n1❩,p2,b2,q2,n2❩).
+        (⋔[𝐫❨p2,⓪b2,q2,⁤↑(♭b2+n2)❩]t2) ⇔ ⋔[p2◖𝗦]t1 →
+        (𝐃❨t2,𝐫❨p2,⓪b2,q2,⁤↑(♭b2+n2)❩●p1,b1,q1,n1❩) ⇔
+        (𝐃❨𝐃❨t1,p2◖𝗦●p1,b1,q1,n1❩,p2,b2,q2,n2❩).
 #t1 #t2 #p1 #p2 #b1 #b2 #q1 #q2 #n1 #n2 #Ht12
-<brd_unfold <path_append_pAbLqAbLq_5 >list_append_rcons_sn
-@(subset_eq_canc_sn … (pt_append_assoc …))
+@(subset_eq_canc_sn … (brd_append_p …))
 @pt_append_eq_repl_bi [ // ]
-@(subset_eq_canc_sn … (pt_append_assoc …))
-@pt_append_eq_repl_bi [ // ] <(list_append_rcons_sn … (𝗦))
 @(subset_eq_trans ????? (grafted_brd_append_p …))
 @pt_append_eq_repl_bi [ // ]
-@pt_append_eq_repl_bi [ // ]
->list_append_lcons_sn >list_append_lcons_sn
+>(list_append_lcons_sn … (𝗦)) >(list_append_lcons_sn … (𝗦))
 @subset_eq_repl [4,5: @(term_grafted_append …) |1,2: skip ]
 /2 width=1 by term_grafted_eq_repl/
 qed.
 
 theorem brd_brd_append_q (t1) (t2) (p) (b1) (b2) (q11) (q12) (q2) (n1) (n2):
         (⋔[p◖𝗦]t1) ⇔ ⋔[p◖𝗦]t2 →
-        (𝐃❨t1,p,b1,q11●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗q12,n1❩) ⇔
-        (𝐃❨𝐃❨t2,p,b1,q11●𝗦◗q12,n1❩,p●𝗔◗⓪b1●𝗟◗q11,b2,q2,n2❩).
+        (𝐃❨t1,p,b1,𝐫❨q11,⓪b2,q2,⁤↑(♭b2+n2)❩●q12,n1❩) ⇔
+        (𝐃❨𝐃❨t2,p,b1,q11◖𝗦●q12,n1❩,𝐫❨p,⓪b1,q11❩,b2,q2,n2❩).
 #t1 #t2 #p #b1 #b2 #q11 #q12 #q2 #n1 #n2 #Ht
-<brd_unfold <path_append_pAbLqAbLq_4
-@(subset_eq_canc_sn … (pt_append_assoc …))
+@(subset_eq_canc_sn … (brd_append_q …)) >path_beta_swap_pq
 @pt_append_eq_repl_bi [ // ]
-@(subset_eq_canc_sn … (pt_append_assoc …))
-@pt_append_eq_repl_bi [ // ] <(list_append_rcons_sn … (𝗦))
-@(subset_eq_trans ????? (grafted_brd_append_q …))
-@pt_append_eq_repl_bi [ // ]
-@pt_append_eq_repl_bi //
+@(subset_eq_trans … (pt_append_eq_repl_bi … Ht)) -Ht [ @refl | skip ]
+@(subset_eq_trans … (grafted_brd_append_q …))
+[| @term_grafted_eq_repl_bi [ // | @subset_eq_refl ]
 qed-.

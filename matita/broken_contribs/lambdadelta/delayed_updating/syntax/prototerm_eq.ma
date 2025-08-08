@@ -30,10 +30,18 @@ lemma term_grafted_le_repl (t1) (t2) (p):
 /2 width=1 by/
 qed.
 
+(* REMOVE *)
 lemma term_grafted_eq_repl (t1) (t2) (p):
       t1 ⇔ t2 → ⋔[p]t1 ⇔ ⋔[p]t2.
 #t1 #t2 #p * #H1t #H2t
 /3 width=1 by conj, term_grafted_le_repl/
+qed.
+
+(* RENAME *)
+lemma term_grafted_eq_repl_bi (t1) (t2) (p1) (p2):
+      p1 = p2 → t1 ⇔ t2 → ⋔[p1]t1 ⇔ ⋔[p2]t2.
+#t1 #t2 #p1 #p2 #Hp destruct
+/2 width=1 by term_grafted_eq_repl/
 qed.
 
 (* Main constructions with term_grafted *************************************)
@@ -82,6 +90,7 @@ lemma pt_append_le_repl (t1) (t2) (p) :
 /3 width=1 by pt_append_in/
 qed.
 
+(* RENAME *)
 lemma pt_append_eq_repl_bi (t1) (t2) (p1) (p2):
       p1 = p2 → t1 ⇔ t2 → p1●t1 ⇔ p2●t2.
 #t1 #t2 #p1 #p2 #p * #H1 #H2
@@ -129,6 +138,11 @@ lemma term_le_pt_append_grafted_refl (t) (p):
 qed.
 
 (* Constructions with term_slice ********************************************)
+
+lemma term_slice_eq_repl (p1) (p2):
+      p1 = p2 → ↑p1 ⇔ ↑p2.
+//
+qed.
 
 lemma pt_append_slice (t) (p):
       p●t ⊆ ↑p.

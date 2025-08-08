@@ -34,8 +34,8 @@ lemma prc_mk (t) (r) (p) (b) (q) (n):
 qed.
 
 lemma prc_mk_old (t) (p) (b) (q) (n):
-      (p●𝗔◗b●𝗟◗q)◖𝗱(⁤↑n) ϵ t → ⊗b ϵ 𝐁 → q ϵ 𝐂❨n❩ →
-      (⓪(p●𝗔◗b●𝗟◗q)) ϵ 𝐑❨t❩.
+      (𝐫❨p,b,q,⁤↑n❩) ϵ t → ⊗b ϵ 𝐁 → q ϵ 𝐂❨n❩ →
+      (⓪𝐫❨p,b,q,⁤↑n❩) ϵ 𝐑❨t❩.
 /3 width=5 by xprc_mk, prc_mk/
 qed.
 

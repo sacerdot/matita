@@ -1,0 +1,8 @@
+include "delayed_updating/syntax/prototerm_constructors_eq.ma".
+
+lemma brd_unfold_iref (t) (p) (b) (q) (n):
+      (p●𝗔◗(⓪b)●𝗟◗q)●𝛕(⁤↑(♭b+n)).⋔[p◖𝗦]t ⇔ 𝐃❨t,p,b,q,n❩.
+#t #p #b #q #n
+@(subset_eq_canc_dx … (pt_append_assoc …))
+@pt_append_eq_repl_bi //
+qed.

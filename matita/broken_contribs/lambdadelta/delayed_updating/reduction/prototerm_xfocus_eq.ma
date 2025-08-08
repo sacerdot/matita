@@ -20,30 +20,39 @@ include "delayed_updating/reduction/prototerm_xfocus.ma".
 
 (* Constructions with term_eq ***********************************************)
 
-lemma brxf_append_p (p2) (p1) (b1) (q1):
-      p2●𝐅❨p1,b1,q1❩ ⇔ 𝐅❨p2●p1,b1,q1❩.
-#p2 #p1 #b1 #q1 //
+lemma brxf_append_p (p2) (p1) (b) (q) (n):
+      p2●𝐅❨p1,b,q,n❩ ⇔ 𝐅❨p2●p1,b,q,n❩.
+#p2 #p1 #b #q #n
+<brxf_unfold <brxf_unfold <path_beta_append_p //
 qed.
 
-lemma grafted_brxf_append_p (p2) (p1) (b1) (q1):
-      (𝐅❨p1,b1,q1❩)⇔⋔[p2]𝐅❨p2●p1,b1,q1❩.
-#p2 #p1 #b1 #q1
-@(subset_eq_trans … (term_grafted_pt_append … p2))
-@term_grafted_eq_repl
-@brxf_append_p
+lemma brxf_append_q (p) (b) (q1) (q2) (n):
+      (𝐫❨p,b,q1❩)●↑𝐫❨q2,⁤↑n❩ ⇔ 𝐅❨p,b,q1●q2,n❩.
+#p #b #q1 #q2 #n
+<brxf_unfold <path_beta_append_q
+@(subset_eq_trans … (term_slice_append …))
+@subset_eq_refl
 qed.
 
-lemma grafted_brxf_append_q (p) (b) (q1) (q2):
-      ↑q2 ⇔ ⋔[p●𝗔◗b●𝗟◗q1]𝐅❨p,b,q1●q2❩.
-#p #b #q1 #q2
-<brxf_unfold <path_append_pAbLq_11
-@(subset_eq_trans … (term_grafted_pt_append … (p●𝗔◗b●𝗟◗q1)))
-/2 width=1 by term_grafted_eq_repl/
+lemma grafted_brxf_append_p (p2) (p1) (b1) (q1) (n1):
+      (𝐅❨p1,b1,q1,n1❩)⇔⋔[p2]𝐅❨p2●p1,b1,q1,n1❩.
+#p2 #p1 #b1 #q1 #n1
+@(subset_eq_trans … (term_grafted_eq_repl …))
+[| @brxf_append_p | skip ]
+@term_grafted_pt_append
 qed.
 
-lemma grafted_brxf_full (p) (b) (q):
-      ↑𝐞 ⇔ ⋔[p●𝗔◗b●𝗟◗q]𝐅❨p,b,q❩.
-#p #b #q <brxf_unfold
+lemma grafted_brxf_append_q (p) (b) (q1) (q2) (n):
+      ↑𝐫❨q2,⁤↑n❩ ⇔ ⋔[𝐫❨p,b,q1❩]𝐅❨p,b,q1●q2,n❩.
+#p #b #q1 #q2 #n
+@(subset_eq_trans … (term_grafted_eq_repl …))
+[| @brxf_append_q | skip ]
+@term_grafted_pt_append
+qed.
+
+lemma grafted_brxf_full (p) (b) (q) (n):
+      ↑𝐞 ⇔ ⋔[𝐫❨p,b,q,⁤↑n❩]𝐅❨p,b,q,n❩.
+#p #b #q #n <brxf_unfold
 @(subset_eq_trans … (term_grafted_pt_append …))
 [2: @term_grafted_eq_repl | skip ]
 @(subset_eq_trans … (term_slice_append …)) //

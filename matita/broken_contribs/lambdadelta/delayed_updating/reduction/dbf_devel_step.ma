@@ -13,6 +13,7 @@
 (**************************************************************************)
 
 include "ground/xoa/ex_4_1.ma".
+include "delayed_updating/syntax/path_beta_tl.ma".
 include "delayed_updating/substitution/fsubst_fsubst.ma".
 include "delayed_updating/reduction/prototerm_delayed_reducible.ma".
 include "delayed_updating/reduction/preterm_delayed_xfocus_reducible.ma".
@@ -87,8 +88,8 @@ lemma dbf_step_conf_local_le (t0) (t1) (t2) (r1) (r2) (p1) (p2) (x) (b1) (b2) (q
       t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
       r1 ϵ 𝐑❨t0,p1,b1,q1,n1❩ → r2 ϵ 𝐑❨t0,p2,b2,q2,n2❩ →
       (r2 = r1 → ⊥) → (r2 ϵ ⓪▵↑(p1◖𝗦) → ⊥) →
-      x◖𝗱⁤↑n1 ϵ ⋔[p2◖𝗦]t0 → ⓪(p2◖𝗦)●⓪x = r1 →
-      ∃∃u,t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] u & u ➡𝐝𝐛𝐟[r2◖𝗱𝟎●⓪x] t.
+      x ϵ ⋔[p2◖𝗦]t0 → ⓪(p2◖𝗦)●⓪x = r1 →
+      ∃∃u,t. t1 ➡𝐝𝐛𝐟[r2] t & t2 ➡𝐝𝐛𝐟[r1] u & u ➡𝐝𝐛𝐟[r2●⓪x] t.
 #t0 #t1 #t2 #r1 #r2 #p1 #p2 #x #b1 #b2 #q1 #q2 #n1 #n2
 #Ht0 #Ht01 #Ht02 #Hr01 #Hr02 #Hnr21 #Hp12 #Hx #H0 destruct
 lapply (dbfs_preterm_trans … Ht0 Ht02) #Ht2
@@ -110,15 +111,11 @@ elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
   >path_clear_append in H0; #H0
   lapply (term_ol_clear_slice_bi … H0) -H0 #H0
   elim (term_ol_clear_slice_bi_inv_gen … H0) -H0 #x1 #x2
-  <path_clear_append <list_append_assoc <path_clear_S_dx >list_append_rcons_sn
-  <path_append_pAbLq_1 <list_append_assoc <path_clear_S_dx
-  >list_append_rcons_sn in ⊢ ((???%)→?);
-  <path_clear_append in ⊢ ((???%)→?); <list_append_assoc in ⊢ ((???%)→?);
-  <path_clear_A_dx >list_append_rcons_sn in ⊢ ((???%)→?); #H0
-  lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0
-  elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
+  <path_clear_append <list_append_assoc <path_clear_S_dx
+  <path_clear_S_dx >list_append_rcons_sn in ⊢ ((???%)→?);
+  <path_clear_append <list_append_assoc <path_clear_beta in ⊢ ((???%)→?); #H0
+  @(path_neq_p_beta … H0)
 | -Ht02 -Hp12 -Ht2 -Hx -Ht01 -Hnr21 -Hr01 -Hr21 -Hy
-  >list_append_rcons_sn in H0; #H0
   lapply (term_in_comp_clear_root_slice_xprc_dx … Hr02 H0) -H0 #H0
   /2 width=9 by rp_nin_root_side/
 | -Ht0 -Ht02 -Hp12 -Hr02 -Hx -Ht01 -Hnr21 -Hr01 -Hr21
@@ -127,15 +124,14 @@ elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
   >path_clear_append in H0; #H0
   lapply (term_ol_clear_slice_bi … H0) -H0 #H0
   elim (term_ol_clear_slice_bi_inv_gen … H0) -H0 #x1 #x2
-  <path_append_pAbLq_1 <path_clear_append <list_append_assoc
-  <path_clear_S_dx >list_append_rcons_sn <path_clear_append <list_append_assoc
-  <path_clear_A_dx <path_clear_S_dx
-  >list_append_rcons_sn >list_append_rcons_sn in ⊢ ((???%)→?); #H0
-  lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0
-  elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
+  <path_clear_append <list_append_assoc
+  <path_clear_S_dx >list_append_rcons_sn <path_clear_pbeta
+  <path_clear_S_dx #H0
+  @(path_neq_p_pbeta … (sym_eq … H0))
 | -Ht0 -Ht02 -Hp12 -Ht2 -Hr02 -Hx -Ht01 -Hnr21 -Hr01 -Hr21 -Hy
   lapply (eq_inv_list_append_sn_bi … H0) -H0
   <path_clear_S_dx #H0 destruct
+  elim (path_rcons_in_xprc_des_r … Hr12) -Hr12 #_ #H0 destruct
 ]
 #t5 #Ht45 #_ #_ #Hr45 -t6
 cut (t3 ⇔ t5)
@@ -158,33 +154,34 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
 @(fsubst_3_inv_eq ????????????????????????? Hs01 Hs02 Hs13 Hs24 Hs45) -t3 -t5
 [4,5,13,14: @subset_eq_refl
 |7,16:
-   @(brd_fsubst_true_eq_repl_fwd … Hs01)
-   @term_ol_grafted_bi [2,5: // |1,4: skip ] <brxf_unfold
+  @(brd_fsubst_true_eq_repl_fwd … Hs01)
+  @term_ol_grafted_bi [2,5: // |1,4: skip ] <brxf_unfold
 (* Note: ** unification failure if we apply subset_in_eq_repl to term_slice_in *)
-   @(subset_in_eq_repl ????? (subset_eq_refl …))
-   [2,5: @term_slice_in |1,4: skip ]
-(* Note: ** explicit value for metavariable *)
-   [1,2: @(𝐞◖𝗱(⁤↑n1)) |*: <list_append_lcons_sn // ]
+  @(subset_in_eq_repl ????? (subset_eq_refl …))
+  [2,5: @term_slice_in |1,4: skip ]
+  [3: <path_beta_append_p //
+  |4: >path_pbeta_rcons >path_pbeta_append_q >H2 in ⊢ (???%); -H2 //
+  |*: skip
+  ]
 |1,2,10,11: skip
 |8,17: @(brd_fsubst_false_eq_repl_fwd … Hs02)
-  [ /2 width=5 by nin_root_brxf_side/
+  [ /2 width=6 by nin_root_brxf_side/
   | /2 width=7 by nin_root_brd_side/
-  | /2 width=5 by nin_root_brxf_side_trunk/
-  | /2 width=7 by nin_root_brd_side_trunk/
+  | /2 width=7 by nin_root_brxf_side_trunk/
+  | /2 width=8 by nin_root_brd_side_trunk/
   ]
-|6: @brd_brxf_append_p |15: @brd_brxf_append_q
+|6: @brd_brxf_append_p
+|15: <(path_eq_des_xSy_q_beta … H2) -q1 @brd_brxf_append_q
 |9:
   @brd_brd_append_p
   @(subset_eq_canc_sn … (dbfs_des_grafted_nol … Ht2 Ht24 Hr21 …))
-  [ #H0 elim (term_ol_inv_slice_bi … H0) #z1 #z2 #H0
-    lapply (eq_inv_list_append_dx_bi … p2 (repl_eq … H0)) -H0
-    [ >(list_append_lcons_sn … (𝗔)) // |3: // |2,4: skip ] #H0
-    elim (eq_inv_list_rcons_bi ????? (repl_eq … H0)) -H0
-    [6,7: // |2,3,4,5: skip ] #_ #H0 destruct
+  [ #H0 elim (term_ol_inv_slice_bi … H0) #z1 #z2
+    >list_append_lcons_sn <list_append_assoc #H0
+    @(path_neq_p_beta … H0)
   ]
-@(subset_eq_sym … (dbfs_des_grafted_full … Ht0 Ht02 Hr02))
+  @(subset_eq_sym … (dbfs_des_grafted_full … Ht0 Ht02 Hr02))
 |18:
-  <H0b in ⊢ (???(??%???));
+  <H0b in ⊢ (???(??%???)); <(path_eq_des_xSy_q_beta … H2) -H2
   @brd_brd_append_q
   @(subset_eq_canc_sn … (dbfs_des_grafted_nol … Ht2 Ht24 Hr21 …))
   [ #H0 elim (term_ol_inv_slice_bi … H0) #z1 #z2 #H0
@@ -192,17 +189,15 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
     [1,3: // |2,4: skip ] #H0
     elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
   ]
-  @(subset_eq_sym … (dbfs_des_grafted_nol … Ht0 Ht02 Hr02 …))
-  #H0 elim (term_ol_inv_slice_bi … H0) #z1 #z2 #H0
-  lapply (eq_inv_list_append_dx_bi … p1 (repl_eq … H0)) -H0
-  [ >(list_append_lcons_sn … (𝗔)) // |3: // |2,4: skip ] #H0
-  elim (eq_inv_list_rcons_bi ????? (trans_eq … H0)) -H0
-  [4: // |2,3: skip ] #_ #H0 destruct
+  @(subset_eq_sym … (dbfs_des_grafted_nol … Ht0 Ht02 Hr02 …)) #H0
+  elim (term_ol_inv_slice_bi … H0) -H0 #z1 #z2
+  >list_append_rcons_sn #H0
+  @(path_neq_p_pbeta … (sym_eq … H0))
 |3,12:
   @fsubst_3_distr_eq
   [1,2,8,9: /2 width=3 by brxf_ol_sn/
   |3,10: /3 width=16 by neq_inv_xprc_bi_brxf/
-  |4,11: /3 width=17 by neq_inv_xprc_bi_brxf_brd/
+  |4,11: /3 width=17 by neq_inv_xprc_bi_brxf_brd/ 
   |5,12: /4 width=17 by neq_inv_xprc_bi_brxf_brd, sym_eq/
   |6,13:
     @subset_nol_nimp_sn
@@ -216,11 +211,11 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
 qed-.
 
 (* argument moved *)
- 6: 𝐃❨t0,p2●𝗦◗y,b1,q1,n1❩ ⧸≬ 𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1❩
- 7: t0 ⧸≬ 𝐅❨(p2●𝗔◗⓪b2●𝗟◗q2◖𝗱⁤↑(♭b2+n2))●y,b1,q1❩
+ 6: 𝐃❨t0,(p2◖𝗦)●y,b1,q1,n1❩ ⧸≬ 𝐅❨𝐫❨p2,⓪b2,q2,⁤↑(♭b2+n2)❩●y,b1,q1,n1❩
+ 7: t0 ⧸≬ 𝐅❨𝐫❨p2,⓪b2,q2,⁤↑(♭b2+n2)❩●y,b1,q1,n1❩
 (* argument not moved *)
-13: 𝐃❨t0,p1,b1,y●𝗦◗x,n1❩ ⧸≬ 𝐅❨p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x❩
-14: t0 ⧸≬ 𝐅❨p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x❩
+13: 𝐃❨t0,p1,b1,q1,n1❩ ⧸≬ 𝐅❨p1,b1,𝐫❨y,⓪b2,q2,⁤↑(♭b2+n2)❩●⇂x,n1❩
+14: t0 ⧸≬ 𝐅❨p1,b1,𝐫❨y,⓪b2,q2,⁤↑(♭b2+n2)❩●⇂x,n1❩
 *)
 
 (*

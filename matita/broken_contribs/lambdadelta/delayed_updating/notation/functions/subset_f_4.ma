@@ -14,6 +14,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( 𝐅❨ break term 46 t, break term 46 p, break term 46 b, break term 46 q ❩ )"
+notation "hvbox( 𝐅❨ break term 46 p, break term 46 b, break term 46 q, break term 46 n ❩ )"
   non associative with precedence 70
-  for @{ 'SubsetF $t $p $b $q }.
+  for @{ 'SubsetF $p $b $q $n }.

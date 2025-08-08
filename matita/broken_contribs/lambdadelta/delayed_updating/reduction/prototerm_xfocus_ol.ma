@@ -20,37 +20,33 @@ include "delayed_updating/reduction/prototerm_xfocus.ma".
 
 (* Advanced inversions ******************************************************)
 
-lemma nin_root_brxf_side (p) (b) (q1) (q2):
-      p●𝗦◗q1 ⧸ϵ ▵𝐅❨p,b,q2❩.
-#p #b #q1 #q2 #H0
+lemma nin_root_brxf_side (p) (b) (q1) (q2) (n):
+      p◖𝗦●q1 ⧸ϵ ▵𝐅❨p,b,q2,n❩.
+#p #b #q1 #q2 #n #H0
 lapply (term_ol_slice_sx … H0) -H0 #H0
 elim (term_ol_inv_slice_bi … H0) -H0 #y1 #y2
-<list_append_assoc <list_append_assoc
-<list_append_assoc <list_append_assoc #H0
-lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0
-elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
+<list_append_assoc #H0
+/2 width=7 by path_neq_p_beta/
 qed-.
 
-lemma nin_root_brxf_side_trunk (p1) (p2) (b) (q):
-      p1◖𝗦 ⧸ϵ ▵𝐅❨p1●𝗔◗p2,b,q❩.
-#p1 #p2 #b #q #H0
+lemma nin_root_brxf_side_trunk (p1) (b1) (b2) (q1) (q2) (n2):
+      p1◖𝗦 ⧸ϵ ▵𝐅❨𝐫❨p1,b1,q1❩,b2,q2,n2❩.
+#p1 #b1 #b2 #q1 #q2 #n2 #H0
 lapply (term_ol_slice_sx … H0) -H0 #H0
 elim (term_ol_inv_slice_bi … H0) -H0 #y1 #y2
->list_append_rcons_sn
-<list_append_assoc <list_append_assoc
-<list_append_assoc #H0
-lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0
-elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
+<path_beta_swap_pq #H0
+@(path_neq_p_beta … H0)
 qed-.
 
 (* Constructions with subset_ol ****************************************)
 
-lemma grafted_brxf_nol (p1) (p2) (b) (q):
+lemma grafted_brxf_nol (p1) (p2) (b) (q) (n):
       ↑(p1◖𝗔) ⧸≬ ↑p2 →
-      (Ⓕ) ⇔ ⋔[p2]𝐅❨p1,b,q❩.
-#p1 #p2 #b #q #Hp12
+      (Ⓕ) ⇔ ⋔[p2]𝐅❨p1,b,q,n❩.
+#p1 #p2 #b #q #n #Hp12
 @conj [ /2 width=1 by subset_empty_le_sn/ ] #x #Hx
-elim (in_comp_brxf_inv_gen … Hx) -Hx #y #H0
+elim (term_in_slice_inv_gen … Hx) -Hx #y #H0
 elim Hp12 -Hp12
-@(term_ol_slice_bi … (trans_eq … H0)) -H0 //
+@(term_ol_slice_bi … (trans_eq … H0)) -H0
+[2: <path_beta_unfold_b <list_append_assoc // | skip ] (* ** UNFOLD *) 
 qed.
