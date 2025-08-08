@@ -24,7 +24,7 @@ lemma subset_eq_empty_nimp (A) (u1) (u2):
 #A #u1 #u2 #Hu @conj [ // ]
 #a * #H1a #H2a elim H2a -H2a
 /2 width=1/
-qed. 
+qed.
 
 lemma subset_eq_nimp_dx_refl_empty (A) (u1):
       u1 ⇔ u1 ⧵{A} Ⓕ.
