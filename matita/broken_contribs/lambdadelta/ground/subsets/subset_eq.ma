@@ -26,14 +26,14 @@ interpretation
 
 (* Basic destructions *******************************************************)
 
-lemma subset_in_eq_repl_back (A) (a:A):
-      ∀u1. a ϵ u1 → ∀u2. u2 ⇔ u1 → a ϵ u2.
+lemma subset_in_eq_repl_back (A) (a):
+      ∀u1. a ϵ u1 → ∀u2. u2 ⇔ u1 → a ϵ{A} u2.
 #A #a #u1 #Hu1 #u2 *
 /2 width=1 by/
 qed-.
 
-lemma subset_in_eq_repl_fwd (A) (a:A):
-      ∀u1. a ϵ u1 → ∀u2. u1 ⇔ u2 → a ϵ u2.
+lemma subset_in_eq_repl_fwd (A) (a):
+      ∀u1. a ϵ u1 → ∀u2. u1 ⇔ u2 → a ϵ{A} u2.
 #A #a #u1 #Hu1 #u2 *
 /2 width=1 by/
 qed-.
@@ -76,4 +76,12 @@ qed-.
 theorem subset_eq_repl (A):
         replace_2 … (subset_eq …) (subset_eq …) (subset_eq A).
 /3 width=3 by subset_eq_canc_sn, subset_eq_trans/
+qed-.
+
+(* Main constructions with subset_le ****************************************)
+
+theorem subset_le_eq_repl (A):
+        replace_2 … (subset_eq …) (subset_eq …) (subset_le A).
+#A #u1 #v1 #Huv1 #u2 * #_ #H21 #v2 * #Hv12 #_
+/3 width=5 by subset_le_trans/
 qed-.
