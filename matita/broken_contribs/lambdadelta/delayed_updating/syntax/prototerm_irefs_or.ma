@@ -29,5 +29,5 @@ qed.
 lemma subset_le_pirc_or (t1) (t2):
       (𝐈❨t1 ∪ t2❩) ⊆ 𝐈❨t1❩ ∪ 𝐈❨t2❩.
 #t1 #t2 #r * #p #q #n #Hr #Hp * #Ht destruct
-/3 width=4 by in_comp_pirc, subset_or_in_sn, subset_or_in_dx/
+/3 width=4 by path_in_pirc, subset_or_in_sn, subset_or_in_dx/
 qed.

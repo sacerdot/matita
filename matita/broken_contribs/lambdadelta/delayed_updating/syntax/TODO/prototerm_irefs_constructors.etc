@@ -20,8 +20,8 @@ include "delayed_updating/syntax/prototerm_irefs.ma".
 
 (* Constructions with prototerm_constructors ********************************)
 
-lemma pirc_mk_iref (t) (p) (n):
-      t ≬ 𝐏 → ⓪p ϵ 𝐈❨p●𝛕n.t❩.
+lemma path_in_pirc_iref (t) (p) (n):
+      t ≬ 𝐏 → ⓪p◖𝗱𝟎 ϵ 𝐈❨p●𝛕n.t❩.
 #t #p #n * #q #H1q #H2q
-/4 width=4 by in_comp_pirc, pt_append_in/
+/4 width=4 by path_in_pirc, pt_append_in/
 qed.

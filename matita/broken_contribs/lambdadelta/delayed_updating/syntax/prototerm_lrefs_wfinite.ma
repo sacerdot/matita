@@ -27,12 +27,12 @@ elim (eq_inv_list_append_empty … H0) -H0 #_ #H0 destruct
 qed.
 
 lemma subset_le_plrc_single_rcons_sn (p) (l):
-      (𝐋❨❴p◖l❵❩) ⊆ 𝐋❨❴p❵❩ ∪ ❴⓪p❵.
+      (𝐋❨❴p◖l❵❩) ⊆ 𝐋❨❴p❵❩ ∪ ❴(⓪p)◖𝗱𝟎❵.
 #p #l #r * #s1 #s2 #k #H0 #Hs destruct
 lapply (subset_in_inv_single ??? Hs) -Hs #H0
-elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 * [| #s ] #H1 #h2 destruct
+elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 * [| #s ] #H1 #H2 destruct
 [ /2 width=1 by subset_or_in_dx/
-| /3 width=3 by in_comp_plrc, subset_or_in_sn/
+| /3 width=3 by path_in_plrc, subset_or_in_sn/
 ]
 qed.
 

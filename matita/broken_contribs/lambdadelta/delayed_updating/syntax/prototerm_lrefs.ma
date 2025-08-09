@@ -22,7 +22,7 @@ include "delayed_updating/notation/functions/subset_l_1.ma".
 (* Note: we identify local references with cleared paths to them *)
 (* Note: thus we can compare these paths in computation steps *)
 definition plrc (t): 𝒫❨ℙ❩ ≝
-           {r | ∃∃p,q,k. ⓪p = r & p◖𝗱k●q ϵ t}
+           {r | ∃∃p,q,k. ⓪p◖𝗱𝟎 = r & p◖𝗱k●q ϵ t}
 .
 
 interpretation
@@ -31,7 +31,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma in_comp_plrc (t) (p) (q) (k):
-      p◖𝗱k●q ϵ t → ⓪p ϵ 𝐋❨t❩.
+lemma path_in_plrc (t) (p) (q) (k):
+      p◖𝗱k●q ϵ t → ⓪p◖𝗱𝟎 ϵ 𝐋❨t❩.
 /2 width=5 by ex2_3_intro/
 qed.

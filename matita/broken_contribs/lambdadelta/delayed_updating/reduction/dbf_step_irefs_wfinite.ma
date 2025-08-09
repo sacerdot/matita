@@ -14,7 +14,6 @@
 
 include "ground/subsets/subset_nimply_le.ma".
 include "delayed_updating/syntax/prototerm_wfinite.ma".
-include "delayed_updating/syntax/prototerm_constructors_eq.ma".
 include "delayed_updating/syntax/prototerm_irefs_or.ma".
 include "delayed_updating/syntax/prototerm_irefs_lrefs.ma".
 include "delayed_updating/syntax/prototerm_lrefs_wfinite.ma".
@@ -36,9 +35,7 @@ lapply (subset_le_pirc_bi … Ht21) -Ht21 #Ht21
 @(subsets_wfinite_le_trans … Ht21) -t2
 @(subsets_wfinite_le_trans … (subset_le_pirc_or …))
 @subsets_wfinite_or
-[ @subsets_wfinite_le_trans
-  [| @(subset_le_pirc_bi … (term_le_pt_append_bi_iref_sn …)) ]
-  @(subsets_wfinite_le_trans … (pirc_pt_append_sn …))
+[ @(subsets_wfinite_le_trans … (pirc_pt_append_sn …))
   @subsets_wfinite_or //
   @term_pt_append_wfinite
   @(subsets_wfinite_le_trans … (term_le_pirc_grafted_sn …))

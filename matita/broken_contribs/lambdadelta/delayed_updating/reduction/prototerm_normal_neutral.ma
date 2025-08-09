@@ -26,13 +26,13 @@ lemma tnf_A_sn (t):
 #t #H1t #H2t #r * #p
 @(list_ind_rcons … p) -p
 [ #b #q #n * #_ #Hb #_
-  <list_append_empty_dx >list_append_lcons_sn #Hn
+  <path_beta_unfold_dx <list_append_empty_dx #Hn (* ** UNFOLD *)
   elim (append_in_comp_inv_lcons_bi … Hn) -Hn #_ #H0
   elim (H1t … H0 …) -t //
 | #p #l0 #_ #b #q #n * #Hr #Hb #Hq
-  <list_append_rcons_dx >list_append_lcons_sn #Hn
+  <path_beta_append_p #Hn
   elim (append_in_comp_inv_lcons_bi … Hn) -Hn #H0 #Hn destruct
-  elim (tnf_inv_gen … (⓪(p●𝗔◗b●𝗟◗q)) H2t) -H2t
+  elim (tnf_inv_gen … (⓪𝐫❨p,b,q,⁤↑n❩) H2t) -H2t
   /2 width=3 by prc_mk_old/
 ]
 qed.
