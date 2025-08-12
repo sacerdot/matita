@@ -201,9 +201,10 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
   |5,12: /4 width=17 by neq_inv_xprc_bi_brxf_brd, sym_eq/
   |6,13:
     @subset_nol_nimp_sn
-    [
+    [ @brd_nol_brxf_p
     | elim (path_eq_inv_xSy_q_beta … H2) -H2 #_ * -q1
       <H0b in ⊢ (?(???%));
+      @brd_nol_brxf_q 
     ]
   |7,14:
     @subset_nol_nimp_sn
@@ -213,24 +214,15 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
     ] /2 width=17 by preterm_nol_brxf/
   ]
 ]
-
-(*
 qed-.
 
-(* argument moved *)
- 6: 𝐃❨t0,(p2◖𝗦)●y,b1,q1,n1❩ ⧸≬ 𝐅❨𝐫❨p2,⓪b2,q2,⁤↑(♭b2+n2)❩●y,b1,q1,n1❩
-(* argument not moved *)
-13: 𝐃❨t0,p1,b1,(y◖𝗦)●⇂x,n1❩ ⧸≬ 𝐅❨p1,⓪b1,𝐫❨y,⓪b2,q2,⁤↑(♭b2+n2)❩●⇂x,n1❩
-*)
-
-(*
 lemma dbf_step_conf_local (t0) (t1) (t2) (r1) (r2):
       t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
       ∃∃t. t1 ⫽➡𝐝𝐛𝐟[r2 /𝐝𝐛𝐟{t0} r1] t & t2 ⫽➡𝐝𝐛𝐟[r1 /𝐝𝐛𝐟{t0} r2] t.
 #t0 #t1 #t2 #r1 #r2 #Ht0 #Ht01 #Ht02
 elim (eq_path_dec r2 r1) #Hnr21 destruct
 [ lapply (dbfs_preterm_mono … Ht0 Ht01 Ht02) -Ht0 -Ht01 -Ht02 #Ht12
-  /3 width=3 by dbfd_self, ex2_intro/
+  @(ex2_intro … t2) @dbfd_self //
 | cases Ht01 #p1 #b1 #q1 #n1 #Hr01 #_
   cases Ht02 #p2 #b2 #q2 #n2 #Hr02 #_
   elim (term_in_comp_clear_root_slice_dec_xprc … (p2◖𝗦) … Hr01) #Hp21
@@ -240,16 +232,21 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
     elim (xprc_des_clear_slice … Hr01 Hp21) -Hp21
     [ #x #Hx #H0 | /2 width=5 by xprc_des_side/ | // ]
     elim (dbf_step_conf_local_le … Ht0 Ht01 Ht02 Hr01 Hr02 … Hx H0)
-    [ -Ht0 -Ht01 -Ht02 -Hr01 -Hr02 -Hnr21 -Hp12 -Hx -H0 #u #t #Ht10 #Ht2u0 #Hut0 |*: /2 width=1 by/ ]
-
+    [ -Ht01 -Ht02 -Hr02 -Hx -H0 #u #t #Ht10 #Ht2u0 #Hut0 |*: /2 width=1 by/ ]
+    @(ex2_intro … t)
+    [ @(dbfs_neq_dbfd … Ht0 Hr01 Hnr21 Hp12 Ht10)
+    |
+    ]
   | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr02 Hr01 Hp12) [ // ] -Hp12 #Hp12
     elim (xprc_des_clear_slice … Hr02 Hp12) -Hp12
     [ #x #Hx #H0 | /2 width=5 by xprc_des_side/ | // ]
     elim (dbf_step_conf_local_le … Ht0 Ht02 Ht01 Hr02 Hr01 … Hx H0)
-    [ -Ht0 -Ht01 -Ht02 -Hr01 -Hr02 -Hnr21 -Hp21 -Hx -H0 #u #t #Ht20 #Ht1u0 #Hut0 |*: /2 width=1 by/ ]
-
+    [ -Ht01 -Ht02 -Hr01 -Hx -H0 #u #t #Ht20 #Ht1u0 #Hut0 |*: /2 width=1 by/ ]
+    @(ex2_intro … t)
+    [
+    | @(dbfs_neq_dbfd … Ht0 Hr02 ? Hp21 Ht20) /2 width=1 by/ 
+    ]
   | elim (dbf_step_conf_local_nol … Ht0 Ht01 Ht02 Hr01 Hr02 Hnr21 Hp21 Hp12) #t #Ht1 #Ht2
     /4 width=6 by dbfs_neq_dbfd, xprc_des_clear, ex2_intro/
   ]
 ]
-*)

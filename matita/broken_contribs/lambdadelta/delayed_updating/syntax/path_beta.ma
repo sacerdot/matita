@@ -129,6 +129,17 @@ qed.
 
 (* Basic inversions *********************************************************)
 
+lemma path_eq_inv_beta_append_dx_bi_q (x1) (x2) (p) (b) (q1) (q2) (n1) (n2): 
+      (𝐫❨p,b,q1,n1❩)●x1 = 𝐫❨p,b,q2,n2❩●x2 →
+      (𝐫❨q1,n1❩)●x1 = 𝐫❨q2,n2❩●x2.
+#x1 #x2 #p #b #q1 #q2 #n1 #n2
+<path_beta_unfold_b <list_append_assoc
+<path_beta_unfold_b <list_append_assoc in ⊢ ((???%)→?); #H0
+lapply (eq_inv_list_append_dx_bi … H0) -H0
+<list_append_rcons_dx <list_append_rcons_dx #H0
+elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_ //
+qed-.
+
 lemma path_neq_p_beta (p) (b) (q) (q1) (q2) (n):
       (p◖𝗦)●q1 ⧸= 𝐫❨p,b,q,n❩●q2.
 #p #b #q #q1 #q2 #n

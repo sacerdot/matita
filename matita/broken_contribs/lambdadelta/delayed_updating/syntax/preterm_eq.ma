@@ -19,12 +19,24 @@ include "delayed_updating/syntax/preterm.ma".
 
 (* Constructions with subset_eq *********************************************)
 
-lemma term_grafted_comp (t) (p):
+lemma term_grafted_complete (t) (p):
       t ϵ 𝐓 → p ϵ t → ❴𝐞❵ ⇔ ⋔[p]t.
 #t #p #Ht #Hp @conj #q #Hq
 [ >(subset_in_inv_single ??? Hq) -q //
 | lapply (term_complete_post … Ht … Hq Hp ?) -t [ // ] #H0
   <(eq_inv_list_append_dx_dx_refl … (sym_eq … H0)) -p -q //
+]
+qed.
+
+lemma term_slice_complete (t) (p):
+      t ϵ 𝐓 → p ϵ t → ❴p❵ ⇔ t∩↑p.
+#t #p #Ht #Hp @conj #x
+[ #H0
+  >(subset_in_inv_single ??? H0) -x
+  /2 width=1 by subset_and_in/
+| * #Hx #H0
+  elim (term_in_slice_inv_gen … H0) -H0 #y #H0 destruct
+  <(term_complete_append … Ht Hp Hx) -y //
 ]
 qed.
 

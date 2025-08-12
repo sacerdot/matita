@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/subsets/subset_ol.ma".
 include "delayed_updating/syntax/path_beta_clear.ma".
 include "delayed_updating/syntax/prototerm_clear.ma".
 include "delayed_updating/reduction/prototerm_xfocus_eq.ma".
@@ -47,3 +48,26 @@ lemma brd_brxf_append_q (p1) (b1) (b2) (q11) (q12) (q2) (n1) (n2):
 @(subset_eq_trans … (grafted_brxf_append_q …))
 [4: @term_grafted_eq_repl_bi [| @subset_eq_refl ] |1,2,3: skip ] //
 qed.
+
+(* Inversions with brxf *****************************************************)
+
+lemma brd_nol_brxf_p (t) (p) (x) (b1) (b2) (q1) (q2) (n1) (n2):
+      (𝐃❨t,(p◖𝗦)●x,b1,q1,n1❩) ⧸≬ 𝐅❨𝐫❨p,⓪b2,q2,n2❩●x,b1,q1,n1❩.
+#t #p #x #b1 #b2 #q1 #q2 #n1 #n2 * #z #H1z #H2z
+elim (term_in_append_inv_gen … H1z) -H1z #z1 #_ #H0 destruct
+elim (term_in_slice_inv_gen … H2z) -H2z #z2
+<path_beta_append_p <list_append_assoc
+<path_beta_append_p <list_append_assoc #H0
+@(path_neq_p_beta … (sym_eq … H0))
+qed-.
+
+lemma brd_nol_brxf_q (t) (p) (x) (b1) (b2) (q1) (q2) (n1) (n2):
+      (𝐃❨t,p,b1,(x◖𝗦)●q1,n1❩) ⧸≬ 𝐅❨p,⓪b1,𝐫❨x,⓪b2,q2,n2❩●q1,n1❩.
+#t #p #x #b1 #b2 #q1 #q2 #n1 #n2 * #z #H1z #H2z
+elim (term_in_append_inv_gen … H1z) -H1z #z1 #_ #H0 destruct
+elim (term_in_slice_inv_gen … H2z) -H2z #z2 #H0
+lapply (path_eq_inv_beta_append_dx_bi_q … H0) -H0
+<path_qbeta_append <list_append_assoc
+<path_qbeta_append <list_append_assoc #H0
+@(path_neq_p_beta … (sym_eq … H0))
+qed-.

@@ -68,6 +68,12 @@ qed-.
 
 (* Basic destructions *******************************************************)
 
+lemma dbfs_des_clear_r (t1) (t2) (r):
+      t1 ➡𝐝𝐛𝐟[r] t2 → ⓪r = r.
+#t1 #t2 #r * #p #b #q #n #Hr #_
+/2 width=6 by xprc_des_clear/
+qed-.
+
 lemma dbfs_des_in_comp_neq (t1) (t2) (r) (s):
       t1 ➡𝐝𝐛𝐟[r] t2 → ⓪s ⧸ϵ ↑r →
       s ϵ t1 → s ϵ t2.
