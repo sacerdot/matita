@@ -204,7 +204,7 @@ lapply (dbfs_preterm_inv_sn … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
     [ @brd_nol_brxf_p
     | elim (path_eq_inv_xSy_q_beta … H2) -H2 #_ * -q1
       <H0b in ⊢ (?(???%));
-      @brd_nol_brxf_q 
+      @brd_nol_brxf_q
     ]
   |7,14:
     @subset_nol_nimp_sn
@@ -244,7 +244,7 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
     [ -Ht01 -Ht02 -Hr01 -Hx -H0 #u #t #Ht20 #Ht1u0 #Hut0 |*: /2 width=1 by/ ]
     @(ex2_intro … t)
     [
-    | @(dbfs_neq_dbfd … Ht0 Hr02 ? Hp21 Ht20) /2 width=1 by/ 
+    | @(dbfs_neq_dbfd … Ht0 Hr02 ? Hp21 Ht20) /2 width=1 by/
     ]
   | elim (dbf_step_conf_local_nol … Ht0 Ht01 Ht02 Hr01 Hr02 Hnr21 Hp21 Hp12) #t #Ht1 #Ht2
     /4 width=6 by dbfs_neq_dbfd, xprc_des_clear, ex2_intro/
