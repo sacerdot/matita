@@ -42,7 +42,7 @@ elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 destruct -q
 /2 width=1 by ppc_inv_empty/
 qed.
 
-lemma tpc_pt_append_sn (p) (t):
+lemma tpc_pt_append_sx (p) (t):
       t ⊆ 𝐏 → p●t ⊆ 𝐏.
 #p #t #Hp
 @tpc_in * #q #Hq #H0

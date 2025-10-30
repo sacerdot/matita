@@ -19,6 +19,6 @@ include "ground/relocation/fb/fbr_uni_ctls.ma".
 
 (* Constructions with map_uni ***********************************************)
 
-lemma lift_path_d_sn_pos_uni (p) (n) (k):
+lemma lift_path_d_sx_pos_uni (p) (n) (k):
       (𝗱((⁤k)+n)◗p) = 🠡[𝐮❨n❩](𝗱(⁤k)◗p).
 // qed.

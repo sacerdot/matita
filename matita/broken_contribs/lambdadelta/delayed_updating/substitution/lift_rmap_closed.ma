@@ -39,7 +39,7 @@ lemma ctls_succ_plus_lift_rmap_append_clear_L_closed_dx (f) (b) (q) (n):
       q ϵ 𝐂❨n❩ → f = ⫰*[⁤↑(♭b+n)]🠢[⓪b●𝗟◗q]f.
 #f #b #q #n #Hq
 >nplus_succ_dx
-/4 width=1 by ctls_lift_rmap_closed, pcc_append_bi, pcc_L_sn/
+/4 width=1 by ctls_lift_rmap_closed, pcc_append_bi, pcc_L_sx/
 qed-.
 
 lemma lift_rmap_closed_xapp_le (f) (q) (n) (m):
@@ -53,14 +53,14 @@ lemma lift_rmap_append_L_closed_dx_xapp_succ (f) (p) (q) (n):
       q ϵ 𝐂❨n❩ → (⁤↑n) = (🠢[p●𝗟◗q]f)＠❨⁤↑n❩.
 #f #p #q #n #Hq
 <lift_rmap_append <lift_rmap_closed_xapp_le
-/2 width=3 by pcc_L_sn, nle_refl/
+/2 width=3 by pcc_L_sx, nle_refl/
 qed-.
 
 lemma lift_rmap_append_clear_L_closed_dx_xapp_succ_plus (f) (b) (q) (n):
       q ϵ 𝐂❨n❩ → (⁤↑(♭b+n)) = (🠢[⓪b●𝗟◗q]f)＠❨⁤↑(♭b+n)❩.
 #f #b #q #n #Hq
 @lift_rmap_closed_xapp_le
-[1,2: /3 width=3 by pcc_append_bi, pcc_L_sn/
+[1,2: /3 width=3 by pcc_append_bi, pcc_L_sx/
 | //
 ]
 qed-.

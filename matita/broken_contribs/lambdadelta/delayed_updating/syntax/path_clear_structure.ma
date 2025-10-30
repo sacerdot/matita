@@ -46,12 +46,12 @@ lemma eq_inv_path_clear_structure (p1) (p2):
   elim (eq_inv_d_dx_structure … H0)
 | <path_clear_L_dx #H0
   elim (eq_inv_L_dx_structure … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
-  <structure_append <structure_L_sn <(IH … Hr1) <Hr2 -IH -r1 -r2 //
+  <structure_append <structure_L_sx <(IH … Hr1) <Hr2 -IH -r1 -r2 //
 | <path_clear_A_dx #H0
   elim (eq_inv_A_dx_structure … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
-  <structure_append <structure_A_sn <(IH … Hr1) <Hr2 -IH -r1 -r2 //
+  <structure_append <structure_A_sx <(IH … Hr1) <Hr2 -IH -r1 -r2 //
 | <path_clear_S_dx #H0
   elim (eq_inv_S_dx_structure … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
-  <structure_append <structure_S_sn <(IH … Hr1) <Hr2 -IH -r1 -r2 //
+  <structure_append <structure_S_sx <(IH … Hr1) <Hr2 -IH -r1 -r2 //
 ]
 qed-.

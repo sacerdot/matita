@@ -20,7 +20,7 @@ include "delayed_updating/substitution/lift_prototerm_eq.ma".
 
 (* Constructions with lift for preterm **************************************)
 
-lemma lift_term_fsubst_sn (f) (t) (u1) (u2):
+lemma lift_term_fsubst_sx (f) (t) (u1) (u2):
       ⬕[🠡[f]u1←🠡[f]u2]🠡[f]t ⊆ 🠡[f]⬕[u1←u2]t.
 #f #t #u1 #u2 #r * *
 [ /4 width=3 by fsubst_in_comp_true, term_ol_inv_lift_bi, lift_term_le_repl_dx/
@@ -41,5 +41,5 @@ qed-.
 
 lemma lift_term_fsubst (f) (t) (u1) (u2):
       ⬕[🠡[f]u1←🠡[f]u2]🠡[f]t ⇔ 🠡[f]⬕[u1←u2]t.
-/3 width=1 by lift_term_fsubst_sn, conj, lift_term_fsubst_dx/
+/3 width=1 by lift_term_fsubst_sx, conj, lift_term_fsubst_dx/
 qed.

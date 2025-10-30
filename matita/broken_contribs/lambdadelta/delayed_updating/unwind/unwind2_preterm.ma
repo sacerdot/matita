@@ -33,7 +33,7 @@ lemma in_comp_inv_unwind2_bi (f) (t1) (t2) (p):
       ▼[f]p ϵ ▼[f]t2 → p ϵ t2.
 #f #t1 #t2 #p #Ht #Hp * #r #Hr #H0
 <(unwind2_path_inj … Ht … H0) -H0
-/2 width=1 by subset_or_in_dx, subset_or_in_sn/
+/2 width=1 by subset_or_in_dx, subset_or_in_sx/
 qed-.
 
 (* Constructions with preterm and term_slice ********************************)
@@ -43,7 +43,7 @@ lemma in_comp_slice_unwind2_bi (f) (t) (p) (r) (l):
       r ϵ ↑p → ▼[f]r ϵ ↑⊗p.
 #f #t #p #r #l #Ht #Hp #Hr * #s #_ #H0 destruct
 <unwind2_path_append_ppc_dx //
-/2 width=8 by term_in_comp_path_append_des_sn_rcons/
+/2 width=8 by term_in_comp_path_append_des_sx_rcons/
 qed.
 
 (****************************************************************************)

@@ -20,7 +20,7 @@ include "ground/xoa/ex_4_2.ma".
 
 (* Constructions with pic ***************************************************)
 
-lemma path_split_pic_sn (r):
+lemma path_split_pic_sx (r):
       ∃∃p,q. p ϵ 𝐈 & 𝐞 = ⊗q & p●q = r.
 #r elim r -r [| * [ #k ] #r * #p #q #Hp #Hq #H0 ] destruct
 [ /2 width=5 by pic_empty, ex3_2_intro/
@@ -62,7 +62,7 @@ theorem eq_inv_append_structure_pic (p) (q) (r):
         ∃∃r1,r2. r1 ϵ 𝐈 & p = ⊗r1 & q = ⊗r2 & r1●r2 = r.
 #p #q #r #H0
 elim (eq_inv_append_structure … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
-elim (path_split_pic_sn r1) #p1 #q1 #Hp1 #Hq1 #H0 destruct
+elim (path_split_pic_sx r1) #p1 #q1 #Hp1 #Hq1 #H0 destruct
 <structure_append <list_append_assoc
 @(ex4_2_intro … p1 (q1●r2)) //
 <structure_append //

@@ -27,7 +27,7 @@ lapply (subset_in_inv_single ??? H1) -H1 #H1 destruct
 /2 width=1 by in_comp_lift_bi/
 qed.
 
-lemma lift_term_iref_xapp_sn (f) (t:𝕋) (k):
+lemma lift_term_iref_xapp_sx (f) (t:𝕋) (k):
       (𝛕f＠❨k❩.🠡[⫰*[k]f]t) ⊆ 🠡[f]𝛕k.t.
 #f #t #k #p * #q * #s #Hs #H1 #H2 destruct
 /3 width=1 by in_comp_lift_bi, in_comp_iref_hd/
@@ -37,13 +37,13 @@ lemma lift_term_iref_xapp_dx (f) (t) (k):
       (🠡[f]𝛕k.t) ⊆ 𝛕f＠❨k❩.🠡[⫰*[k]f]t.
 #f #t #k #p * #q #Hq #H0 destruct
 elim (in_comp_inv_iref … Hq) -Hq #p #H0 #Hp destruct
-<lift_path_d_sn
+<lift_path_d_sx
 /3 width=1 by in_comp_iref_hd, in_comp_lift_bi/
 qed-.
 
 lemma lift_term_iref_xapp (f) (t) (k):
       (𝛕f＠❨k❩.🠡[⫰*[k]f]t) ⇔ 🠡[f](𝛕k.t).
-/3 width=1 by conj, lift_term_iref_xapp_sn, lift_term_iref_xapp_dx/
+/3 width=1 by conj, lift_term_iref_xapp_sx, lift_term_iref_xapp_dx/
 qed.
 
 lemma lift_term_iref_pos_uni (t) (n) (k):

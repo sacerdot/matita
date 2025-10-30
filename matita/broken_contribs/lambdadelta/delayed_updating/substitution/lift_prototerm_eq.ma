@@ -29,7 +29,7 @@ lemma lift_term_le_repl_dx (f):
 /2 width=3 by subset_le_ext_f1_bi/
 qed.
 
-lemma lift_term_id_sn (t):
+lemma lift_term_id_sx (t):
       t ⊆ 🠡[𝐢]t.
 #t #p #Hp
 >(lift_path_id p)
@@ -41,7 +41,7 @@ lemma lift_term_id_dx (t):
 #t #p * #q #Hq #H destruct //
 qed-.
 
-lemma lift_term_grafted_sn (f) (t) (p):
+lemma lift_term_grafted_sx (f) (t) (p):
       (🠡[🠢[p]f]⋔[p]t) ⊆ ⋔[🠡[f]p]🠡[f]t.
 #f #t #p #q * #r #Hr #H0 destruct
 /2 width=3 by ex2_intro/
@@ -56,7 +56,7 @@ lapply (lift_path_inj … Hp0) -Hp0 #Hp0 destruct
 /2 width=1 by in_comp_lift_bi/
 qed-.
 
-lemma lift_pt_append_sn (f) (p) (u):
+lemma lift_pt_append_sx (f) (p) (u):
       (🠡[f]p)●(🠡[🠢[p]f]u) ⊆ 🠡[f](p●u).
 #f #p #u #r * #q * #s #Hs #H1 #H2 destruct
 >lift_path_append
@@ -72,7 +72,7 @@ qed-.
 
 (* Constructions with subset_eq *********************************************)
 
-lemma lift_term_eq_repl_sn (t):
+lemma lift_term_eq_repl_sx (t):
       compatible_2_fwd … fbr_eq (subset_eq …) (λf.🠡[f]t).
 /3 width=1 by subset_eq_ext_f1_exteq, lift_path_eq_repl/
 qed.
@@ -89,12 +89,12 @@ qed.
 
 lemma lift_term_id (t):
       t ⇔ 🠡[𝐢]t.
-/3 width=2 by lift_term_id_dx, lift_term_id_sn, conj/
+/3 width=2 by lift_term_id_dx, lift_term_id_sx, conj/
 qed.
 
 lemma lift_term_grafted (f) (t) (p):
       (🠡[🠢[p]f]⋔[p]t) ⇔ ⋔[🠡[f]p]🠡[f]t.
-/3 width=1 by lift_term_grafted_sn, lift_term_grafted_dx, conj/ qed.
+/3 width=1 by lift_term_grafted_sx, lift_term_grafted_dx, conj/ qed.
 
 lemma lift_term_grafted_S (f) (t) (p):
       (🠡[🠢[p]f]⋔[p◖𝗦]t) ⇔ ⋔[(🠡[f]p)◖𝗦](🠡[f]t).
@@ -102,10 +102,10 @@ lemma lift_term_grafted_S (f) (t) (p):
 
 lemma lift_pt_append (f) (p) (u):
       (🠡[f]p)●(🠡[🠢[p]f]u) ⇔ 🠡[f](p●u).
-/3 width=1 by conj, lift_pt_append_sn, lift_pt_append_dx/
+/3 width=1 by conj, lift_pt_append_sx, lift_pt_append_dx/
 qed.
 
-lemma lift_slice_and_sn (f) (t) (p):
+lemma lift_slice_and_sx (f) (t) (p):
       (🠡[f]t)∩↑🠡[f]p ⇔ (🠡[f]t)∩🠡[f]↑p.
 #f #t #p
 @subset_eq_trans
@@ -118,7 +118,7 @@ lemma lift_slice_and_sn (f) (t) (p):
   <(lift_path_inj … H1) -r1
   /3 width=1 by pt_append_in, in_comp_lift_bi/
 | @subset_le_and_dx //
-  @subset_le_trans [| @subset_le_and_sn_refl_dx ]
+  @subset_le_trans [| @subset_le_and_sx_refl_dx ]
   /2 width=3 by pt_append_le_repl/
 ]
 qed-.
@@ -126,5 +126,5 @@ qed-.
 lemma lift_and_slice_dx (f) (t) (p):
       (🠡[f]t)∩↑🠡[f]p ⇔ 🠡[f](t∩↑p).
 #f #t #p
-@(subset_eq_trans … (lift_slice_and_sn …)) //
+@(subset_eq_trans … (lift_slice_and_sx …)) //
 qed.

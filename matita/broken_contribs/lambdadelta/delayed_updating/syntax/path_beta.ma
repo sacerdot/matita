@@ -50,7 +50,7 @@ qed.
 lemma path_beta_unfold_dx (p) (b) (q) (n):
       p●𝗔◗(b●(𝗟◗(q◖𝗱n))) = 𝐫❨p,b,q,n❩.
 #p #b #q #n
-<list_append_rcons_sn //
+<list_append_rcons_sx //
 qed.
 
 lemma path_beta_unfold_b (p) (b) (q) (n):
@@ -66,7 +66,7 @@ qed.
 lemma path_pbeta_unfold_dx (p) (b) (q):
       p●𝗔◗(b●(𝗟◗q)) = 𝐫❨p,b,q❩.
 #p #b #q
-<list_append_rcons_sn //
+<list_append_rcons_sx //
 qed.
 
 lemma path_pbeta_unfold_b (p) (b) (q):
@@ -143,13 +143,13 @@ qed-.
 lemma path_neq_p_beta (p) (b) (q) (q1) (q2) (n):
       (p◖𝗦)●q1 ⧸= 𝐫❨p,b,q,n❩●q2.
 #p #b #q #q1 #q2 #n
-<path_beta_unfold_dx <list_append_rcons_sn <list_append_assoc #H0
+<path_beta_unfold_dx <list_append_rcons_sx <list_append_assoc #H0
 @(path_neq_prefix … H0) -p -b -q -q1 -q2 -n #H0 destruct
 qed-.
 
 lemma path_neq_p_pbeta (p) (b) (q) (q1) (q2):
       (p◖𝗦)●q1 ⧸= 𝐫❨p,b,q❩●q2.
 #p #b #q #q1 #q2
-<path_pbeta_unfold_dx <list_append_rcons_sn <list_append_assoc #H0
+<path_pbeta_unfold_dx <list_append_rcons_sx <list_append_assoc #H0
 @(path_neq_prefix … H0) -p -b -q -q1 -q2 #H0 destruct
 qed-.

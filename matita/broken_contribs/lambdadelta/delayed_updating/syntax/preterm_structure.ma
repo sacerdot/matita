@@ -32,31 +32,31 @@ generalize in match p; -p
 [ /3 width=3 by ex2_intro, or_intror/ ]
 #q1 #l1 #_ #q2 @(list_ind_rcons … q2) -q2
 [ /3 width=3 by ex2_intro, or_introl/ ]
-#q2 #l2 #_ <list_weight_2_rcons_sn <list_weight_2_rcons_dx
+#q2 #l2 #_ <list_weight_2_rcons_sx <list_weight_2_rcons_dx
 #H0 #p #Hq1 #Hq2 #Hq destruct
 elim (label_is_d l1)
 [ * #k1 #H0 destruct
   lapply (term_root_d_post t … p l2 k1 ??)
-  [4:|*: /2 width=2 by term_in_root_append_des_sn/ ]
+  [4:|*: /2 width=2 by term_in_root_append_des_sx/ ]
   #H0 destruct
-  <structure_d_sn in Hq; <structure_d_sn #Hq
+  <structure_d_sx in Hq; <structure_d_sx #Hq
   elim (IH ??? (p◖𝗱k1) … Hq) -IH -Hq //
-  /3 width=1 by term_slice_append_sn, or_introl, or_intror/
+  /3 width=1 by term_slice_append_sx, or_introl, or_intror/
 ]
 elim (label_is_d l2)
 [ * #k2 #H0 destruct
   lapply (term_root_d_post t … p l1 k2 ??)
-  [4:|*: /2 width=2 by term_in_root_append_des_sn/ ]
+  [4:|*: /2 width=2 by term_in_root_append_des_sx/ ]
   #H0 destruct
-  <structure_d_sn in Hq; <structure_d_sn #Hq
+  <structure_d_sx in Hq; <structure_d_sx #Hq
   elim (IH ??? (p◖𝗱k2) … Hq) -IH -Hq //
-  /3 width=1 by term_slice_append_sn, or_introl, or_intror/
+  /3 width=1 by term_slice_append_sx, or_introl, or_intror/
 ]
 #Hl2 #Hl1
 <(structure_lcons_inner … Hl1) in Hq; <(structure_lcons_inner … Hl2) #Hq
 elim (term_slice_inv_lcons_bi … Hq) -Hq -Hl1 -Hl2 #H0 #Hq destruct
 elim (IH ??? (p◖l2) … Hq) -IH -Hq //
-/3 width=1 by term_slice_append_sn, or_introl, or_intror/
+/3 width=1 by term_slice_append_sx, or_introl, or_intror/
 qed-.
 
 lemma term_root_eq_des_structure_bi (t) (p) (q1) (q2):
@@ -81,13 +81,13 @@ lemma term_root_eq_inv_structure_L_bi (t) (p) (q1) (q2):
       ⊗q1 = ⊗q2 → q1 = q2.
 #t #p #q1 #q2 #Ht #Hq1 #Hq2 #Hq
 elim (term_root_eq_des_structure_bi … p q1 q2 Ht)
-[3: // | 4,5: @(term_in_root_append_des_sn … (𝐞◖𝗟)) // ] -Hq *
+[3: // | 4,5: @(term_in_root_append_des_sx … (𝐞◖𝗟)) // ] -Hq *
 #r @(list_ind_rcons … r) -r [2,4: #r #l #_ ] #Hq #Hr //
 elim (eq_inv_empty_structure_lcons … Hr) -Hr * #k #H0 #_ destruct
 [ lapply (term_root_d_post … Ht (p●q2) (𝗟) k ??)
 | lapply (term_root_d_post … Ht (p●q1) (𝗟) k ??)
 ]
-[1,4: @(term_in_root_append_des_sn … (r◖𝗟)) //
+[1,4: @(term_in_root_append_des_sx … (r◖𝗟)) //
 |2,5: //
 |3,6: -Hq1 -Hq2 #H0 destruct
 ]
@@ -126,8 +126,8 @@ lemma term_comp_inv (t) (q1) (q2) (p):
   elim (eq_inv_empty_structure_singleton … H0) -H0 #k2 #H0 destruct
   lapply (term_root_d_post … Ht p l1 k2 ? ?)
   [1,2: /2 width=2 by term_in_root/ ] #H0 destruct
-  <list_append_rcons_sn in Hq1; #Hq1
-  <list_append_rcons_sn in Hq2; #Hq2
+  <list_append_rcons_sx in Hq1; #Hq1
+  <list_append_rcons_sx in Hq2; #Hq2
   <(IH … Hq1 Hq2) -IH -Hq1 -Hq2 //
 | //
 | lapply (term_complete_post … Ht … Hq1 Hq2 ?) -t -Hq // #H0

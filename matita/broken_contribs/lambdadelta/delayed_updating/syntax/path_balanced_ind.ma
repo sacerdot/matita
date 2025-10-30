@@ -21,13 +21,13 @@ include "ground/arith/nat_lt_plus.ma".
 
 (* Advanced eliminators *****************************************************)
 
-lemma pbc_ind_sn (Q:predicate …):
+lemma pbc_ind_sx (Q:predicate …):
       Q (𝐞) →
       (∀b1,b2. b1 ϵ 𝐁 → b2 ϵ 𝐁 → Q b1 → Q b2 → Q (𝗔◗b1◖𝗟●b2)) →
       ∀b. b ϵ 𝐁 → Q b.
 #Q #IH1 #IH2 @(wf1_ind_nlt ? depth)
 #n #IH #b #Hn #Hb destruct
-elim (pbc_inv_gen_sn … Hb) -Hb [ #H0 | * #b1 #b2 #Hb1 #Hb2 #H0 ] destruct
+elim (pbc_inv_gen_sx … Hb) -Hb [ #H0 | * #b1 #b2 #Hb1 #Hb2 #H0 ] destruct
 /3 width=1 by/
 qed-.
 
@@ -52,7 +52,7 @@ lapply (IH2 (𝗟◗q) (p◖𝗔) ?) // -b2 #H0
 /2 width=1 by pbc_inv_insert_redex/
 qed-.
 
-lemma pbc_inv_append_sn (b1) (b2):
+lemma pbc_inv_append_sx (b1) (b2):
       b1●b2 ϵ 𝐁 → b1 ϵ 𝐁 → b2 ϵ 𝐁.
 #b1 #b2 #Hb12 #Hb1
 >(list_append_empty_dx … b2)
@@ -62,6 +62,6 @@ qed-.
 lemma pbc_inv_append_dx (b1) (b2):
       b1●b2 ϵ 𝐁 → b2 ϵ 𝐁 → b1 ϵ 𝐁.
 #b1 #b2 #Hb12 #Hb2
->(list_append_empty_sn … b1)
+>(list_append_empty_sx … b1)
 /2 width=3 by pbc_inv_insert_pbc/
 qed-.

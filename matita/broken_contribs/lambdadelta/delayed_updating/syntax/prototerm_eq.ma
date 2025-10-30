@@ -97,7 +97,7 @@ lemma pt_append_eq_repl_bi (t1) (t2) (p1) (p2):
 /3 width=3 by conj, pt_append_le_repl/
 qed.
 
-lemma pt_append_assoc_sn (p) (q) (t:𝕋):
+lemma pt_append_assoc_sx (p) (q) (t:𝕋):
       p●(q●t) ⊆ (p●q)●t.
 #p #q #t #r * #s1 * #s2 #Hs2 #H2 #H1 destruct
 /3 width=1 by pt_append_in/
@@ -112,7 +112,7 @@ qed.
 lemma pt_append_assoc (p) (q) (t:𝕋):
       p●(q●t) ⇔ (p●q)●t.
 #p #q #t
-/3 width=1 by conj, pt_append_assoc_sn, pt_append_assoc_dx/
+/3 width=1 by conj, pt_append_assoc_sx, pt_append_assoc_dx/
 qed.
 
 lemma term_grafted_pt_append_dx (t) (p):

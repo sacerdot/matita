@@ -19,7 +19,7 @@ include "delayed_updating/syntax/path_proper.ma".
 
 (* Constructions with proper condition for path *****************************)
 
-lemma pic_ppc_append_sn (p) (q):
+lemma pic_ppc_append_sx (p) (q):
       q ϵ 𝐈 → q ϵ 𝐏 → p●q ϵ 𝐈.
 #p #q * // #H0
 elim (ppc_inv_empty … H0)

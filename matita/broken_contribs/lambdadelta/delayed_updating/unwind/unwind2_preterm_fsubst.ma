@@ -23,7 +23,7 @@ include "delayed_updating/syntax/preterm_eq.ma".
 
 (* Constructions with fsubst ************************************************)
 
-lemma unwind2_term_fsubst_sn (f) (t) (u1) (u2):
+lemma unwind2_term_fsubst_sx (f) (t) (u1) (u2):
       t ∪ u1 ϵ 𝐓 →
       ⬕[▼[f]u1←▼[f]u2]▼[f]t ⊆ ▼[f]⬕[u1←u2]t.
 #f #t #u1 #u2 #Htu1 #r * *
@@ -47,16 +47,16 @@ qed-.
 lemma unwind2_term_fsubst (f) (t) (u1) (u2):
       t ∪ u1 ϵ 𝐓 →
       ⬕[▼[f]u1←▼[f]u2]▼[f]t ⇔ ▼[f]⬕[u1←u2]t.
-/3 width=1 by unwind2_term_fsubst_sn, unwind2_term_fsubst_dx, conj/ qed.
+/3 width=1 by unwind2_term_fsubst_sx, unwind2_term_fsubst_dx, conj/ qed.
 
-lemma unwind2_term_fsubst_and_sn_sn (f) (t) (u1) (u2):
+lemma unwind2_term_fsubst_and_sx_sx (f) (t) (u1) (u2):
       t ϵ 𝐓 →
       ⬕[▼[f](t∩u1)←▼[f]u2]▼[f]t ⇔ ▼[f]⬕[u1←u2]t.
 #f #t #u1 #u2 #Ht
 @subset_eq_trans
-[3: @(unwind2_term_eq_repl_dx …(fsubst_and_rc_sn …)) | skip ]
+[3: @(unwind2_term_eq_repl_dx …(fsubst_and_rc_sx …)) | skip ]
 @(subset_eq_trans … (unwind2_term_fsubst …)) //
 @(term_eq_repl_fwd … Ht) -f -Ht (**) (* auto fails *)
 @conj //
-@subset_le_or_sn_refl_sn //
+@subset_le_or_sx_refl_sx //
 qed.

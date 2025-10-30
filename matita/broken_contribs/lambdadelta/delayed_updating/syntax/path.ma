@@ -51,7 +51,7 @@ lemma eq_path_dec (p1) (p2):
 /3 width=1 by eq_label_dec, eq_list_dec/
 qed-.
 
-lemma is_path_append_sn_dec (p) (r):
+lemma is_path_append_sx_dec (p) (r):
       Decidable (∃q. r = p●q).
 #p @(list_ind_rcons … p) -p [| #p #lp #IH ] #r
 [ /3 width=3 by ex_intro, or_introl/

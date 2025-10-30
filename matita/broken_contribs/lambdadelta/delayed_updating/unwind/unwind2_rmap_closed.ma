@@ -30,7 +30,7 @@ include "ground/arith/nat_le_pred.ma".
 lemma eq_succ_depth_unwind2_rmap_Lq_pcc (f) (q) (n):
       ♭q = ▶[𝗟◗q]f＠§❨n❩ →
       q ϵ 𝐂❨n❩.
-#f #q <unwind2_rmap_L_sn elim q -q
+#f #q <unwind2_rmap_L_sx elim q -q
 [ #n
   <depth_empty <unwind2_rmap_empty #H0
   <(eq_inv_zero_fbr_lapp_push … H0) -H0 //
@@ -77,7 +77,7 @@ lemma unwind2_rmap_append_closed_Lq_dx_lapp (f) (p) (q) (n):
       q ϵ 𝐂❨n❩ →
       (▶[𝗟◗q]f)＠§❨n❩ = (▶[p●𝗟◗q]f)＠§❨n❩.
 #f #p #q #n #Hq
-lapply (pcc_L_sn … Hq) -Hq #Hq
+lapply (pcc_L_sx … Hq) -Hq #Hq
 lapply (unwind2_rmap_append_closed_dx_xapp_le f p … Hq (⁤↑n) ?) -Hq //
 <fbr_xapp_succ_lapp <fbr_xapp_succ_lapp #Hq
 /2 width=1 by eq_inv_nsucc_bi/
@@ -106,7 +106,7 @@ lemma ctls_succ_plus_unwind2_rmap_push_closed (f) (q) (n):
 #f #q #n #Hq elim Hq -q -n //
 #q #n [ #k ] #_ #IH #m
 [ <ctls_unwind2_rmap_d_dx >IH -IH
-  <nplus_assoc <nplus_succ_sn //
+  <nplus_assoc <nplus_succ_sx //
 | <unwind2_rmap_L_dx <fbr_ctls_succ
   <nplus_succ_dx //
 ]
@@ -131,6 +131,6 @@ theorem ctls_succ_plus_unwind2_rmap_append_closed_Lq_dx (f) (p) (q) (m) (n):
         q ϵ 𝐂❨n❩ →
         (⫰*[m]▶[p]f) = ⫰*[⁤↑(m+n)]▶[p●𝗟◗q]f.
 #f #p #q #m #n #Hn
-<nplus_comm >nplus_succ_sn <fbr_ctls_plus
+<nplus_comm >nplus_succ_sx <fbr_ctls_plus
 <ctls_succ_unwind2_rmap_append_closed_Lq_dx //
 qed-.

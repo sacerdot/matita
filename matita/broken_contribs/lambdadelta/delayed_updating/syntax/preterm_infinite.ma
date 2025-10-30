@@ -50,7 +50,7 @@ qed.
 
 (* Basic destructions *******************************************************)
 
-lemma eq_inv_append_bi_path_y_sn (q1:ℙ) (q2:ℙ) (n1) (n2):
+lemma eq_inv_append_bi_path_y_sx (q1:ℙ) (q2:ℙ) (n1) (n2):
       (path_y n1)●q1 = (path_y n2)●q2 → n1 = n2.
 #q1 #q2 @nat_ind_succ [| #n1 #IH ]
 @nat_ind_succ [2,4: #n2 #_ ]
@@ -74,8 +74,8 @@ theorem preterm_y:
         term_y ϵ 𝐓.
 @mk_preterm_posts
 [ #p1 #p2 * #n1 #H1 * #n2 #H2 * #q2 #_
-  >(list_append_empty_sn … p1) in ⊢ (%→?); #H0 destruct
-  <(eq_inv_append_bi_path_y_sn … H0) -n2 //
+  >(list_append_empty_sx … p1) in ⊢ (%→?); #H0 destruct
+  <(eq_inv_append_bi_path_y_sx … H0) -n2 //
 | #p #l1 #k2 * #q1 * #n1 #H1 * #q2 * #n2 #H2
 
 

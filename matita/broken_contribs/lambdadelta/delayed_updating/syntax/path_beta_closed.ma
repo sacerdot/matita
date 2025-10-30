@@ -23,9 +23,9 @@ lemma path_beta_in_brd_pcc (b1) (q1) (n1) (n) (z1) (y):
       q1 ϵ 𝐂❨n1❩ → y◖𝗦●z1 ϵ 𝐂❨n❩ →
       (𝐫❨y,⓪b1,q1,⁤↑(♭b1+n1)❩)●z1 ϵ 𝐂❨n❩.
 #b1 #q1 #n1 #n #z1 #y #Hq1 #Hq
->nplus_succ_dx >nplus_unit_sn
+>nplus_succ_dx >nplus_unit_sx
 lapply (pcc_inv_S … Hq) -Hq #Hq
-<path_beta_unfold_sx >list_append_rcons_sn
+<path_beta_unfold_sx >list_append_rcons_sx
 @pcc_d @pcc_d @(pcc_pcc … Hq1) -Hq1
 @pcc_L @(pcc_pcc (⓪b1) (♭b1)) [ // ] @pcc_A //
 qed.

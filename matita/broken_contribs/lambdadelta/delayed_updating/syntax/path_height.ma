@@ -60,7 +60,7 @@ lemma height_S_dx (p):
 theorem height_append (p) (q):
         ♯p+♯q = ♯(p●q).
 #p #q elim q -q //
-* [ #k ] #q #IH <list_append_lcons_sn
+* [ #k ] #q #IH <list_append_lcons_sx
 [ <height_d_dx <height_d_dx //
 | <height_L_dx <height_L_dx //
 | <height_A_dx <height_A_dx //
@@ -70,18 +70,18 @@ qed.
 
 (* Constructions with path_lcons ********************************************)
 
-lemma height_d_sn (p) (k):
+lemma height_d_sx (p) (k):
       k+♯p = ♯(𝗱k◗p).
 // qed.
 
-lemma height_L_sn (p):
+lemma height_L_sx (p):
       ♯p = ♯(𝗟◗p).
 // qed.
 
-lemma height_A_sn (p):
+lemma height_A_sx (p):
       ♯p = ♯(𝗔◗p).
 // qed.
 
-lemma height_S_sn (p):
+lemma height_S_sx (p):
       ♯p = ♯(𝗦◗p).
 // qed.

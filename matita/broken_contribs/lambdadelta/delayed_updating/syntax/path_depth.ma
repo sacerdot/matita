@@ -60,7 +60,7 @@ lemma depth_S_dx (p):
 theorem depth_append (p) (q):
         (♭p)+(♭q) = ♭(p●q).
 #p #q elim q -q //
-* [ #k ] #q #IH <list_append_lcons_sn
+* [ #k ] #q #IH <list_append_lcons_sx
 [ <depth_d_dx <depth_d_dx //
 | <depth_L_dx <depth_L_dx //
 | <depth_A_dx <depth_A_dx //
@@ -70,18 +70,18 @@ qed.
 
 (* Constructions with path_lcons ********************************************)
 
-lemma depth_d_sn (p) (k):
+lemma depth_d_sx (p) (k):
       ♭p = ♭(𝗱k◗p).
 // qed.
 
-lemma depth_L_sn (p):
+lemma depth_L_sx (p):
       (⁤↑♭p) = ♭(𝗟◗p).
 // qed.
 
-lemma depth_A_sn (p):
+lemma depth_A_sx (p):
       ♭p = ♭(𝗔◗p).
 // qed.
 
-lemma depth_S_sn (p):
+lemma depth_S_sx (p):
       ♭p = ♭(𝗦◗p).
 // qed.

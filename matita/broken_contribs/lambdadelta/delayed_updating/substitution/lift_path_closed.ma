@@ -45,7 +45,7 @@ lemma lift_path_inv_closed (f) (q) (n):
   [ /3 width=1 by pcc_d_dx/ |5,6: skip |
   | /2 width=1 by/ | skip
   ]
-  /2 width=1 by nle_plus_dx_sn/
+  /2 width=1 by nle_plus_dx_sx/
 | <lift_path_L_dx #H0
   elim (pcc_inv_L_dx … H0) -H0 #H1 #H2 >H2 -H2
   /3 width=1 by pcc_L_dx/

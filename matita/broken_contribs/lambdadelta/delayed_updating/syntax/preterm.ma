@@ -45,7 +45,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma term_le_and_sn_single_dx (t) (p):
+lemma term_le_and_sx_single_dx (t) (p):
       t ϵ 𝐓 → p ϵ t → t ∩ ↑p ⊆ ❴p❵.
 #t #p #Ht #Hp #r * #H1r #H2r
 lapply (term_complete_post … Ht … H2r) //

@@ -29,11 +29,11 @@ lemma subset_le_pirc_bi:
 /3 width=4 by path_in_pirc/
 qed.
 
-lemma term_le_pirc_grafted_sn (t) (p):
+lemma term_le_pirc_grafted_sx (t) (p):
       (𝐈❨⋔[p]t❩) ⊆ ⋔[⓪p]𝐈❨t❩.
 #t #p #r * #s1 #s2 #k #H0 #Hs2 #Hs destruct
 lapply (term_grafted_inv_gen … Hs) -Hs #Hs
-@term_grafted_gen <list_append_lcons_sn >path_clear_append
+@term_grafted_gen <list_append_lcons_sx >path_clear_append
 @(path_in_pirc … Hs2) -Hs2 //
 qed.
 
@@ -43,7 +43,7 @@ lemma pirc_le_single_append (t) (p):
 elim (subsets_inh_inv_in … Ht) -Ht #q #Hq
 elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 *
 [ #H1 #H0 destruct
-  /3 width=6 by path_in_pirc, ex2_intro, in_comp_ppc_append_sn/
+  /3 width=6 by path_in_pirc, ex2_intro, in_comp_ppc_append_sx/
 | -q #q #_ #H0 -q1 -Hs2
   elim (eq_inv_list_empty_append … H0) #_ #H0 -q destruct
 ]

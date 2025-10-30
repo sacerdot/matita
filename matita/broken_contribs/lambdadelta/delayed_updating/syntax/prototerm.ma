@@ -125,8 +125,8 @@ qed.
 lemma term_in_root_rcons (t) (p) (l):
       p◖l ϵ t → p ϵ ▵t.
 #t #p #l
->(list_append_empty_sn … p) in ⊢ (%→?);
->list_append_lcons_sn
+>(list_append_empty_sx … p) in ⊢ (%→?);
+>list_append_lcons_sx
 /2 width=2 by term_in_root/
 qed.
 
@@ -144,7 +144,7 @@ lemma term_slice_refl (p):
       p ϵ ↑p.
 // qed.
 
-lemma term_slice_append_sn (p) (q1) (q2):
+lemma term_slice_append_sx (p) (q1) (q2):
       q1 ϵ ↑q2 → p●q1 ϵ ↑(p●q2).
 #p #q1 #q2 * #r #H0 destruct //
 qed.
@@ -165,7 +165,7 @@ lemma term_in_comp_pt_append_des_slice (t) (p1) (p2):
 #t #p1 #p2 * #q2 #_ #H0 destruct -t //
 qed-.
 
-lemma term_in_root_append_des_sn (t) (p) (q):
+lemma term_in_root_append_des_sx (t) (p) (q):
       p●q ϵ ▵t → p ϵ ▵t.
 #t #p #q * #r #Hr
 /2 width=2 by ex_intro/
@@ -174,14 +174,14 @@ qed-.
 lemma term_slice_des_rcons_bi (p1) (p2) (l1) (l2):
       p1◖l1 ϵ ↑(p2◖l2) → p1 ϵ ↑p2.
 #p1 #p2 #l1 #l2 * * [| #l0 #q ] #_
-[ <list_append_empty_sn #H0 destruct //
-| <list_append_lcons_sn #H0 destruct //
+[ <list_append_empty_sx #H0 destruct //
+| <list_append_lcons_sx #H0 destruct //
 ]
 qed-.
 
 lemma term_in_slice_dec (p) (r):
       Decidable (r ϵ ↑p).
-#p #r elim (is_path_append_sn_dec p r)
+#p #r elim (is_path_append_sx_dec p r)
 [ * #q #H0 destruct
   /2 width=1 by or_introl/
 | #Hnq @or_intror * #q #_ #H0 destruct

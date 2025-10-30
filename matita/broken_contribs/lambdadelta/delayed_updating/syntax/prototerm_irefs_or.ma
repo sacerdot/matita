@@ -22,12 +22,12 @@ include "delayed_updating/syntax/prototerm_irefs_eq.ma".
 lemma subset_le_or_pirc (t1) (t2):
       (𝐈❨t1❩) ∪ 𝐈❨t2❩ ⊆ 𝐈❨t1 ∪ t2❩.
 #t1 #t2
-@subset_le_or_sn
+@subset_le_or_sx
 @subset_le_pirc_bi // (**) (* auto fails *)
 qed.
 
 lemma subset_le_pirc_or (t1) (t2):
       (𝐈❨t1 ∪ t2❩) ⊆ 𝐈❨t1❩ ∪ 𝐈❨t2❩.
 #t1 #t2 #r * #p #q #n #Hr #Hp * #Ht destruct
-/3 width=4 by path_in_pirc, subset_or_in_sn, subset_or_in_dx/
+/3 width=4 by path_in_pirc, subset_or_in_sx, subset_or_in_dx/
 qed.

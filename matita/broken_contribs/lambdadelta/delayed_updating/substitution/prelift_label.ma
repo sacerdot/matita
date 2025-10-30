@@ -57,7 +57,7 @@ qed.
 
 (* Basic inversions *********************************************************)
 
-lemma prelift_label_inv_d_sn (f) (l) (k1):
+lemma prelift_label_inv_d_sx (f) (l) (k1):
       (𝗱k1) = 🠡[f]l →
       ∃∃k2. k1 = f＠❨k2❩ & 𝗱k2 = l.
 #f * [ #k ] #k1
@@ -69,7 +69,7 @@ lemma prelift_label_inv_d_sn (f) (l) (k1):
 /2 width=3 by ex2_intro/
 qed-.
 
-lemma prelift_label_inv_L_sn (f) (l):
+lemma prelift_label_inv_L_sx (f) (l):
       (𝗟) = 🠡[f]l → 𝗟 = l.
 #f * [ #k ]
 [ <prelift_label_d
@@ -79,7 +79,7 @@ lemma prelift_label_inv_L_sn (f) (l):
 ] #H0 destruct //
 qed-.
 
-lemma prelift_label_inv_A_sn (f) (l):
+lemma prelift_label_inv_A_sx (f) (l):
       (𝗔) = 🠡[f]l → 𝗔 = l.
 #f * [ #k ]
 [ <prelift_label_d
@@ -89,7 +89,7 @@ lemma prelift_label_inv_A_sn (f) (l):
 ] #H0 destruct //
 qed-.
 
-lemma prelift_label_inv_S_sn (f) (l):
+lemma prelift_label_inv_S_sx (f) (l):
       (𝗦) = 🠡[f]l → 𝗦 = l.
 #f * [ #k ]
 [ <prelift_label_d
@@ -104,10 +104,10 @@ qed-.
 theorem prelift_label_inj (f) (l1) (l2):
         (🠡[f]l1) = 🠡[f]l2 → l1 = l2.
 #f * [ #k1 ] #l2 #Hl
-[ elim (prelift_label_inv_d_sn … Hl) -Hl #k2 #Hk #H0 destruct
+[ elim (prelift_label_inv_d_sx … Hl) -Hl #k2 #Hk #H0 destruct
   <(eq_inv_fbr_xapp_bi … Hk) -Hk //
-| <(prelift_label_inv_L_sn … Hl) -l2 //
-| <(prelift_label_inv_A_sn … Hl) -l2 //
-| <(prelift_label_inv_S_sn … Hl) -l2 //
+| <(prelift_label_inv_L_sx … Hl) -l2 //
+| <(prelift_label_inv_A_sx … Hl) -l2 //
+| <(prelift_label_inv_S_sx … Hl) -l2 //
 ]
 qed-.

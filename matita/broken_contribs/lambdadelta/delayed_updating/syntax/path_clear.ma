@@ -69,27 +69,27 @@ theorem path_clear_append (p) (q):
         ⓪p●⓪q = ⓪(p●q).
 #p #q elim q -q //
 * [ #k ] #q #IH
-<list_append_lcons_sn //
+<list_append_lcons_sx //
 qed.
 
 (* Constructions with path_lcons ********************************************)
 
-lemma path_clear_d_sn (p) (k):
+lemma path_clear_d_sx (p) (k):
       (𝗱(𝟎)◗⓪p) = ⓪(𝗱k◗p).
 #p #k <path_clear_append //
 qed.
 
-lemma path_clear_L_sn (p):
+lemma path_clear_L_sx (p):
       (𝗟◗⓪p) = ⓪(𝗟◗p).
 #p <path_clear_append //
 qed.
 
-lemma path_clear_A_sn (p):
+lemma path_clear_A_sx (p):
       (𝗔◗⓪p) = ⓪(𝗔◗p).
 #p <path_clear_append //
 qed.
 
-lemma path_clear_S_sn (p):
+lemma path_clear_S_sx (p):
       (𝗦◗⓪p) = ⓪(𝗦◗p).
 #p <path_clear_append //
 qed.
@@ -166,21 +166,21 @@ theorem eq_inv_path_append_clear (p) (q) (x):
         p●q = ⓪x →
         ∃∃r,s. p = ⓪r & q = ⓪s & r●s = x.
 #p #q elim q -q [| * [ #k ] #q #IH ] #x
-[ <list_append_empty_sn #H0 destruct
+[ <list_append_empty_sx #H0 destruct
   /2 width=5 by ex3_2_intro/
-| <list_append_lcons_sn #H0
+| <list_append_lcons_sx #H0
   elim (eq_inv_path_d_dx_clear … H0) -H0 #r0 #n #H0 #H1 #H2 destruct
   elim (IH … H0) -IH -H0 #r #s #H1 #H2 #H3 destruct
   /2 width=5 by ex3_2_intro/
-| <list_append_lcons_sn #H0
+| <list_append_lcons_sx #H0
   elim (eq_inv_path_L_dx_clear … H0) -H0 #r0 #H0 #H1 destruct
   elim (IH … H0) -IH -H0 #r #s #H1 #H2 #H3 destruct
   /2 width=5 by ex3_2_intro/
-| <list_append_lcons_sn #H0
+| <list_append_lcons_sx #H0
   elim (eq_inv_path_A_dx_clear … H0) -H0 #r0 #H0 #H1 destruct
   elim (IH … H0) -IH -H0 #r #s #H1 #H2 #H3 destruct
   /2 width=5 by ex3_2_intro/
-| <list_append_lcons_sn #H0
+| <list_append_lcons_sx #H0
   elim (eq_inv_path_S_dx_clear … H0) -H0 #r0 #H0 #H1 destruct
   elim (IH … H0) -IH -H0 #r #s #H1 #H2 #H3 destruct
   /2 width=5 by ex3_2_intro/
@@ -189,7 +189,7 @@ qed-.
 
 (* Basic inversions with path_lcons *****************************************)
 
-lemma eq_inv_path_d_sn_clear (x) (q) (k):
+lemma eq_inv_path_d_sx_clear (x) (q) (k):
       (𝗱k◗q) = ⓪x →
       ∃∃s,n. q = ⓪s & k = 𝟎 & 𝗱n◗s = x.
 #x #q #k #H0
@@ -199,7 +199,7 @@ lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct
 /2 width=5 by ex3_2_intro/
 qed-.
 
-lemma eq_inv_path_L_sn_clear (x) (q):
+lemma eq_inv_path_L_sx_clear (x) (q):
       (𝗟◗q) = ⓪x →
       ∃∃s. q = ⓪s & 𝗟◗s = x.
 #x #q #H0
@@ -209,7 +209,7 @@ lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct
 /2 width=3 by ex2_intro/
 qed-.
 
-lemma eq_inv_path_A_sn_clear (x) (q):
+lemma eq_inv_path_A_sx_clear (x) (q):
       (𝗔◗q) = ⓪x →
       ∃∃s. q = ⓪s & 𝗔◗s = x.
 #x #q #H0
@@ -219,7 +219,7 @@ lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct
 /2 width=3 by ex2_intro/
 qed-.
 
-lemma eq_inv_path_S_sn_clear (x) (q):
+lemma eq_inv_path_S_sx_clear (x) (q):
       (𝗦◗q) = ⓪x →
       ∃∃s. q = ⓪s & 𝗦◗s = x.
 #x #q #H0

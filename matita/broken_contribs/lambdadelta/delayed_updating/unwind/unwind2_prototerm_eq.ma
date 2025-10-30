@@ -28,7 +28,7 @@ qed.
 
 (* Constructions with subset_eq *********************************************)
 
-lemma unwind2_term_eq_repl_sn (t):
+lemma unwind2_term_eq_repl_sx (t):
       compatible_2_fwd … fbr_eq (subset_eq …) (λf.▼[f]t).
 /3 width=1 by subset_eq_ext_f1_exteq, unwind2_path_eq_repl/
 qed.

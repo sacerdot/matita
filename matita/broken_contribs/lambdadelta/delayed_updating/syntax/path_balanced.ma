@@ -59,7 +59,7 @@ elim Hb -b
   | -IH #r #H1 #H2 destruct
     elim (eq_inv_list_empty_append ??? H2) -H2 #H1 #H2 destruct
     /3 width=1 by pbc_dx, pbc_empty/
-  | -IH #H1 #H2 destruct <list_append_empty_sn
+  | -IH #H1 #H2 destruct <list_append_empty_sx
     /3 width=1 by pbc_after_redex, pbc_redex, pbc_empty/
   | -Hb #r #H1 #H2 destruct
     lapply (IH ???) -IH [ // | skip | skip ] #Hb
@@ -69,7 +69,7 @@ elim Hb -b
   elim (eq_inv_list_append_bi … H0) -H0 * #b #H1 #H2 destruct
   [ >list_append_assoc -IH2 -Hb1
     /3 width=4 by pbc_after/
-  | >list_append_lcons_sn >list_append_lcons_sn
+  | >list_append_lcons_sx >list_append_lcons_sx
     <list_append_assoc -IH1 -Hb2
     /3 width=4 by pbc_after/
   ]
@@ -112,7 +112,7 @@ lemma pbc_inv_gen_dx (b):
 ]
 qed-.
 
-lemma pbc_inv_gen_sn (b):
+lemma pbc_inv_gen_sx (b):
       b ϵ 𝐁 →
       ∨∨ 𝐞 = b
        | ∃∃b1,b2. b1 ϵ 𝐁 & b2 ϵ 𝐁 & 𝗔◗b1◖𝗟●b2 = b.
@@ -138,7 +138,7 @@ lemma pbc_inv_gen_sn (b):
 ]
 qed-.
 
-lemma pbc_inv_L_sn (q):
+lemma pbc_inv_L_sx (q):
       (𝗟◗q) ⧸ϵ 𝐁.
 #q @(insert_eq_1 … (𝗟◗q))
 #b #Hb generalize in match q; -q
@@ -169,7 +169,7 @@ elim Hb -b
 ]
 qed-.
 
-lemma pbc_inv_S_sn (q):
+lemma pbc_inv_S_sx (q):
       (𝗦◗q) ⧸ϵ 𝐁.
 #q @(insert_eq_1 … (𝗦◗q))
 #b #Hb generalize in match q; -q
@@ -217,13 +217,13 @@ elim Hb -b
       elim (pbc_inv_A_dx … Hb)
     ]
   | #y #H1
-    >list_append_rcons_sn in ⊢ (???%→?);
-    >list_append_rcons_sn in ⊢ (???%→?); #H0
+    >list_append_rcons_sx in ⊢ (???%→?);
+    >list_append_rcons_sx in ⊢ (???%→?); #H0
     elim (eq_inv_list_rcons_append ????? H0) -H0 *
     [ #H0 #_ -IH -H1
       elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_ destruct
-      elim (pbc_inv_L_sn … Hb)
-    | #x <list_append_rcons_sn <list_append_rcons_sn #H2 #H3 destruct -Hb
+      elim (pbc_inv_L_sx … Hb)
+    | #x <list_append_rcons_sx <list_append_rcons_sx #H2 #H3 destruct -Hb
       /3 width=1 by pbc_redex/
     ]
   ]

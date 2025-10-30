@@ -33,7 +33,7 @@ lemma fsubst_2_swap_le (t) (u1) (u2) (v1) (v2):
 | #_ #Hp #Hnp
   @fsubst_in_comp_true [| // ]
   @(subset_ol_eq_repl … u2 … (fsubst_eq …)) [|*: // ]
-  /3 width=1 by subset_ol_or_sn_dx, subset_ol_nimp_sn/
+  /3 width=1 by subset_ol_or_sx_dx, subset_ol_nimp_sx/
 | #H1p #Hnp #H2p
   /3 width=1 by fsubst_in_comp_false/
 ]
@@ -45,7 +45,7 @@ lemma fsubst_2_distr_le (t) (u1) (u2) (v1) (v2):
 #t #u1 #u2 #v1 #v2 #Hnu12 #p * *
 [ #Hu1 * *
   [ #Hv1 #p -Hnu12
-    /3 width=1 by subset_ol_fsubst_sn, fsubst_in_comp_true/
+    /3 width=1 by subset_ol_fsubst_sx, fsubst_in_comp_true/
   | #Hp #Hnp -Hnu12
     /3 width=1 by fsubst_in_comp_false, fsubst_in_comp_true/
   ]
@@ -63,7 +63,7 @@ lemma fsubst_2_distr_ge (t) (u1) (u2) (v1) (v2):
       ⬕[u2←v2]⬕[u1←v1]t ⊆ ⬕[u1←⬕[u2←v2]v1]t.
 #t #u1 #u2 #v1 #v2 #Hu1 #Hnu12 #p * * [| * * ]
 [ #H0 #Hp
-  /4 width=5 by subset_ol_inv_fsubst_sn, fsubst_in_comp_true/
+  /4 width=5 by subset_ol_inv_fsubst_sx, fsubst_in_comp_true/
 | #_ #Hp #Hnp
   /3 width=1 by fsubst_in_comp_false, fsubst_in_comp_true/
 | #Hp #Hnp #_
@@ -94,10 +94,10 @@ theorem fsubst_3_distr_eq (t) (u1) (u2) (u3) (v1) (v2) (v3):
 @(subset_eq_trans ????? (fsubst_eq_repl …))
 [ @fsubst_2_distr_eq [| #H0 ]
   [ @(subset_ol_eq_repl … (fsubst_eq … Hu2) … (subset_eq_refl …))
-    /5 width=1 by subset_ol_nimp_sn, subset_ol_or_sn_dx, subset_ol_sym/
-  | @(subset_nol_or_sn … H1u3 H2u3) -H1u3 -H2u3
+    /5 width=1 by subset_ol_nimp_sx, subset_ol_or_sx_dx, subset_ol_sym/
+  | @(subset_nol_or_sx … H1u3 H2u3) -H1u3 -H2u3
     @(subset_ol_eq_repl … H0) -H0 [| // ]
-    @(subset_eq_canc_dx … (subset_nimp_or_sn …))
+    @(subset_eq_canc_dx … (subset_nimp_or_sx …))
     @subset_nimp_eq_repl
     /3 width=1 by fsubst_eq, subset_eq_sym/
   ]

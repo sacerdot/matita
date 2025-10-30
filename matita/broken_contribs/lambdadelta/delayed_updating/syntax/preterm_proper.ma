@@ -39,12 +39,12 @@ qed.
 
 (* Destructions with ppc ****************************************************)
 
-lemma term_in_comp_path_append_des_sn_rcons (t) (p) (q) (l):
+lemma term_in_comp_path_append_des_sx_rcons (t) (p) (q) (l):
       t ϵ 𝐓 → p◖l ϵ t → p●q ϵ t → q ϵ 𝐏.
 #t #p #q #l #Ht #H1p #H2p #H0 destruct
 lapply (term_complete_post … Ht … H1p H2p ?) -t // #H1
 lapply (eq_inv_list_append_dx_dx_refl ? p (𝐞◖l) ?)
-[ <list_append_lcons_sn //
+[ <list_append_lcons_sx //
 | #H0 destruct
 ]
 qed-.

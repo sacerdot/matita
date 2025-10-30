@@ -23,5 +23,5 @@ lemma term_grafted_or (t1) (t2) (p):
       (⋔[p]t1)∪(⋔[p]t2) ⇔ ⋔[p](t1∪t2).
 #t1 #t2 #p
 @conj #q * #Hq
-/2 width=1 by subset_or_in_dx, subset_or_in_sn/
+/2 width=1 by subset_or_in_dx, subset_or_in_sx/
 qed.

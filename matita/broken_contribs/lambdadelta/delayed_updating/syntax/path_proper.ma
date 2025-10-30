@@ -73,7 +73,7 @@ qed-.
 
 (* Advanced constructions ***************************************************)
 
-lemma in_comp_ppc_append_sn (p) (q):
+lemma in_comp_ppc_append_sx (p) (q):
       p ϵ 𝐏 → p●q ϵ 𝐏.
 #p #q #Hp #H0
 elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 destruct

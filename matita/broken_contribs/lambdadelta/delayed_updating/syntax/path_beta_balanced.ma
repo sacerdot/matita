@@ -27,8 +27,8 @@ lemma path_eq_inv_beta_balanced_pSq (p1) (p2) (b1) (q1) (q2) (n1):
 #p1 #p2 #b1 #q1 #q2 #n1 #Hb1 <path_beta_unfold_b #H0
 elim (path_eq_inv_pbq_pSq_pbc … H0 Hb1) -H0 -Hb1 * #m
 [ elim m -m [| #l #x #_ ]
-  [ <list_append_empty_sn #H1 #_ destruct
-  | <list_append_lcons_sn #H1 #H0
+  [ <list_append_empty_sx #H1 #_ destruct
+  | <list_append_lcons_sx #H1 #H0
     elim (eq_inv_list_lcons_bi ????? H1) -H1 #H1 #H2 destruct
     >path_beta_unfold_b /3 width=3 by ex2_intro, or_introl/
   ]

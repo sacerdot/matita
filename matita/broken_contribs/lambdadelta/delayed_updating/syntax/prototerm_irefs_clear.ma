@@ -28,7 +28,7 @@ lemma term_le_pirc_bi_clear_dx (t):
 /3 width=4 by path_in_pirc, in_comp_term_clear, path_clear_ppc/
 qed.
 
-lemma term_le_pirc_bi_clear_sn (t):
+lemma term_le_pirc_bi_clear_sx (t):
       (𝐈❨⓪t❩) ⊆ 𝐈❨t❩.
 #t #r * #p #q #n #H1 #Hq * #s #Hs #H2 destruct
 elim (eq_inv_path_append_clear … H2) -H2 #p0 #x0 #H0 #H1 #H2 destruct

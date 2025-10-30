@@ -24,5 +24,5 @@ lemma term_slice_eq_inv_length_bi (p1) (p2):
 #p1 #p2 * #q #_ #H0 #Hp destruct
 <list_length_append in Hp; #Hp
 lapply (nplus_refl_dx … (sym_eq … Hp)) -Hp #Hq
-<(list_length_inv_zero_sn … Hq) -q //
+<(list_length_inv_zero_sx … Hq) -q //
 qed-.

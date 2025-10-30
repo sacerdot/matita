@@ -27,5 +27,5 @@ lemma term_ol_inv_unwind_bi (f) (t1) (t2):
 #f #t1 #t2 #Ht * #r * #s1 #Hs1 #H1 * #s2 #Hs2 #H2 destruct
 lapply (eq_des_unwind2_path_bi_structure … H2) -H2 #H2
 lapply (term_structure_inj … Ht … H2) -H2 [3: #H0 destruct ]
-/2 width=3 by subset_or_in_dx, subset_or_in_sn, subset_ol_i/
+/2 width=3 by subset_or_in_dx, subset_or_in_sx, subset_ol_i/
 qed-.

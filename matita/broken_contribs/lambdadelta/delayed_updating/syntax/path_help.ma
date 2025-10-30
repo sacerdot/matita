@@ -127,11 +127,11 @@ elim (eq_inv_list_lcons_append ????? Hq1) -Hq1 *
   elim (eq_inv_list_lcons_append ????? Hq2) -Hq2 *
   [ #_ #H0 -q2
     elim (eq_inv_list_lcons_bi ????? H0) -H0 #_
-    >list_append_rcons_sn #H0
+    >list_append_rcons_sx #H0
     lapply (eq_inv_list_append_dx_dx_refl … H0) -H0 #H0
     elim (eq_inv_list_empty_rcons ??? H0)
   | #q1 #_ -q2
-    >list_append_lcons_sn <list_append_assoc >list_append_rcons_sn #H0
+    >list_append_lcons_sx <list_append_assoc >list_append_rcons_sx #H0
     lapply (eq_inv_list_append_dx_dx_refl … H0) -H0 #H0
     elim (eq_inv_list_empty_rcons ??? H0)
   ]
@@ -154,7 +154,7 @@ elim (eq_inv_list_lcons_append ????? Hq1) -Hq1 *
       elim (eq_inv_list_lcons_append ????? H2q) -H2q *
       [ #_ -q2 #H0 destruct //
       | #r0 #_ -q1 -q2
-        >list_append_rcons_sn #H0
+        >list_append_rcons_sx #H0
         lapply (eq_inv_list_append_dx_dx_refl … H0) -H0 #H0
         elim (eq_inv_list_empty_rcons ??? H0)
       ]
@@ -162,7 +162,7 @@ elim (eq_inv_list_lcons_append ????? Hq1) -Hq1 *
       elim (eq_inv_list_lcons_append ????? H1q) -H1q *
       [ #_ -q2 #H0 destruct //
       | #r0 #_ -q2
-        >list_append_rcons_sn #H0
+        >list_append_rcons_sx #H0
         lapply (eq_inv_list_append_dx_dx_refl … H0) -H0 #H0
         elim (eq_inv_list_empty_rcons ??? H0)
       ]

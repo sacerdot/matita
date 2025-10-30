@@ -23,7 +23,7 @@ include "delayed_updating/syntax/prototerm_eq.ma".
 lemma term_pt_append_inv_wfinite (t) (p):
       p●t ϵ 𝐖𝛀 → t ϵ 𝐖𝛀.
 #t #p * #ss2 #Hss2
-elim (in_inv_path_append_sn_listed p ss2) #ss1 #Hss1
+elim (in_inv_path_append_sx_listed p ss2) #ss1 #Hss1
 @(subsets_wfinite_in … ss1) #q #Hq
 /4 width=1 by pt_append_in/
 qed-.
@@ -34,7 +34,7 @@ lemma term_pt_append_wfinite (t) (p):
       t ϵ 𝐖𝛀 → p●t ϵ 𝐖𝛀.
 #t #p * #ss1 #Hss1
 lapply (pt_append_le_repl … p Hss1) -Hss1 #Hss1
-elim (in_path_append_sn_listed p ss1) #ss2 #Hss2
+elim (in_path_append_sx_listed p ss1) #ss2 #Hss2
 @(subsets_wfinite_in … ss2)
 @(subset_le_trans … Hss1) -Hss1
 #r * #q #Hq #H0 destruct

@@ -61,7 +61,7 @@ lemma lift_path_append (f) (p) (q):
 #f #p #q elim q -q //
 #l #q #IH
 <lift_path_rcons <lift_path_rcons
-<list_append_lcons_sn //
+<list_append_lcons_sx //
 qed.
 
 (* Constructions with path_lcons ********************************************)
@@ -72,19 +72,19 @@ lemma lift_path_lcons (f) (p) (l):
 <lift_path_append //
 qed.
 
-lemma lift_path_d_sn (f) (p) (k):
+lemma lift_path_d_sx (f) (p) (k):
       (𝗱(f＠❨k❩)◗🠡[⫰*[k]f]p) = 🠡[f](𝗱k◗p).
 // qed.
 
-lemma lift_path_L_sn (f) (p):
+lemma lift_path_L_sx (f) (p):
       (𝗟◗🠡[⫯f]p) = 🠡[f](𝗟◗p).
 // qed.
 
-lemma lift_path_A_sn (f) (p):
+lemma lift_path_A_sx (f) (p):
       (𝗔◗🠡[f]p) = 🠡[f](𝗔◗p).
 // qed.
 
-lemma lift_path_S_sn (f) (p):
+lemma lift_path_S_sx (f) (p):
       (𝗦◗🠡[f]p) = 🠡[f](𝗦◗p).
 // qed.
 
@@ -120,7 +120,7 @@ lemma eq_inv_d_dx_lift_path (f) (p2) (q1) (k1):
       ∃∃q2,k2. q1 = 🠡[f]q2 & k1 = 🠢[q2]f＠❨k2❩ & q2◖𝗱k2 = p2.
 #f #p2 #q1 #k1 #H0
 elim (eq_inv_rcons_lift_path … H0) -H0 #q2 #l2 #H1 #H0 #H2 destruct
-elim (prelift_label_inv_d_sn … H0) -H0 #k2 #H1 #H2 destruct
+elim (prelift_label_inv_d_sx … H0) -H0 #k2 #H1 #H2 destruct
 /2 width=5 by ex3_2_intro/
 qed-.
 
@@ -129,7 +129,7 @@ lemma eq_inv_L_dx_lift_path (f) (p2) (q1):
       ∃∃q2. q1 = 🠡[f]q2 & q2◖𝗟 = p2.
 #f #p2 #q1 #H0
 elim (eq_inv_rcons_lift_path … H0) -H0 #q2 #l2 #H1 #H0 #H2 destruct
-lapply (prelift_label_inv_L_sn … H0) -H0 #H0 destruct
+lapply (prelift_label_inv_L_sx … H0) -H0 #H0 destruct
 /2 width=3 by ex2_intro/
 qed-.
 
@@ -138,7 +138,7 @@ lemma eq_inv_A_dx_lift_path (f) (p2) (q1):
       ∃∃q2. q1 = 🠡[f]q2 & q2◖𝗔 = p2.
 #f #p2 #q1 #H0
 elim (eq_inv_rcons_lift_path … H0) -H0 #q2 #l2 #H1 #H0 #H2 destruct
-lapply (prelift_label_inv_A_sn … H0) -H0 #H0 destruct
+lapply (prelift_label_inv_A_sx … H0) -H0 #H0 destruct
 /2 width=3 by ex2_intro/
 qed-.
 
@@ -147,7 +147,7 @@ lemma eq_inv_S_dx_lift_path (f) (p2) (q1):
       ∃∃q2. q1 = 🠡[f]q2 & q2◖𝗦 = p2.
 #f #p2 #q1 #H0
 elim (eq_inv_rcons_lift_path … H0) -H0 #q2 #l2 #H1 #H0 #H2 destruct
-lapply (prelift_label_inv_S_sn … H0) -H0 #H0 destruct
+lapply (prelift_label_inv_S_sx … H0) -H0 #H0 destruct
 /2 width=3 by ex2_intro/
 qed-.
 
@@ -157,9 +157,9 @@ lemma eq_inv_append_lift_path (f) (q1) (r1) (p2):
       q1●r1 = 🠡[f]p2 →
       ∃∃q2,r2. q1 = 🠡[f]q2 & r1 = 🠡[🠢[q2]f]r2 & q2●r2 = p2.
 #f #q1 #r1 elim r1 -r1 [| #l1 #r1 #IH ] #p2
-[ <list_append_empty_sn #H0 destruct
+[ <list_append_empty_sx #H0 destruct
   /2 width=5 by ex3_2_intro/
-| <list_append_lcons_sn #H0
+| <list_append_lcons_sx #H0
   elim (eq_inv_rcons_lift_path … H0) -H0 #x2 #l2 #H0 #H1 #H2 destruct
   elim (IH … H0) -IH -H0 #q2 #r2 #H1 #H2 #H3 destruct
   /2 width=5 by ex3_2_intro/
@@ -186,39 +186,39 @@ lapply (eq_inv_empty_lift_path … H0) -H0 #H0 destruct
 /2 width=5 by ex3_2_intro/
 qed-.
 
-lemma eq_inv_d_sn_lift_path (f) (p2) (q1) (k1):
+lemma eq_inv_d_sx_lift_path (f) (p2) (q1) (k1):
       (𝗱k1)◗q1 = 🠡[f]p2 →
       ∃∃q2,k2. k1 = f＠❨k2❩ & q1 = 🠡[⫰*[k2]f]q2 & 𝗱k2◗q2 = p2.
 #f #p2 #q1 #k1 #H0
 elim (eq_inv_lcons_lift_path … H0) -H0 #q2 #l2 #H0 #H1 #H2 destruct
-elim (prelift_label_inv_d_sn … H0) -H0 #k2 #H1 #H2 destruct
+elim (prelift_label_inv_d_sx … H0) -H0 #k2 #H1 #H2 destruct
 /2 width=5 by ex3_2_intro/
 qed-.
 
-lemma eq_inv_L_sn_lift_path (f) (p2) (q1):
+lemma eq_inv_L_sx_lift_path (f) (p2) (q1):
       (𝗟)◗q1 = 🠡[f]p2 →
       ∃∃q2. q1 = 🠡[⫯f]q2 & 𝗟◗q2 = p2.
 #f #p2 #q1 #H0
 elim (eq_inv_lcons_lift_path … H0) -H0 #q2 #l2 #H0 #H1 #H2 destruct
-lapply (prelift_label_inv_L_sn … H0) -H0 #H0 destruct
+lapply (prelift_label_inv_L_sx … H0) -H0 #H0 destruct
 /2 width=3 by ex2_intro/
 qed-.
 
-lemma eq_inv_A_sn_lift_path (f) (p2) (q1):
+lemma eq_inv_A_sx_lift_path (f) (p2) (q1):
       (𝗔)◗q1 = 🠡[f]p2 →
       ∃∃q2. q1 = 🠡[f]q2 & 𝗔◗q2 = p2.
 #f #p2 #q1 #H0
 elim (eq_inv_lcons_lift_path … H0) -H0 #q2 #l2 #H0 #H1 #H2 destruct
-lapply (prelift_label_inv_A_sn … H0) -H0 #H0 destruct
+lapply (prelift_label_inv_A_sx … H0) -H0 #H0 destruct
 /2 width=3 by ex2_intro/
 qed-.
 
-lemma eq_inv_S_sn_lift_path (f) (p2) (q1):
+lemma eq_inv_S_sx_lift_path (f) (p2) (q1):
       (𝗦)◗q1 = 🠡[f]p2 →
       ∃∃q2. q1 = 🠡[f]q2 & 𝗦◗q2 = p2.
 #f #p2 #q1 #H0
 elim (eq_inv_lcons_lift_path … H0) -H0 #q2 #l2 #H0 #H1 #H2 destruct
-lapply (prelift_label_inv_S_sn … H0) -H0 #H0 destruct
+lapply (prelift_label_inv_S_sx … H0) -H0 #H0 destruct
 /2 width=3 by ex2_intro/
 qed-.
 

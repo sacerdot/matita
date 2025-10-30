@@ -36,13 +36,13 @@ theorem term_in_comp_pbc_L_inj:
         ∀t. t ϵ 𝐓 → ∀b1. b1 ϵ 𝐁 → ∀b2. b2 ϵ 𝐁 →
         ∀p,q1,q2. p●b1●𝗟◗q1 ϵ t → p●b2●𝗟◗q2 ϵ t →
         b1 = b2.
-#t #Ht #b1 #Hb1 @(pbc_ind_sn … Hb1) -b1
+#t #Ht #b1 #Hb1 @(pbc_ind_sx … Hb1) -b1
 [ #b2 #Hb2 #p #q1 #q2 #H1 #H2
-  elim (pbc_inv_gen_sn … Hb2) -Hb2 [ // ] *
+  elim (pbc_inv_gen_sx … Hb2) -Hb2 [ // ] *
   #c3 #c4 #_ #_ #H0 destruct
   elim (term_in_comp_pbc_L_inj_aux … Ht H1 H2)
 | #c1 #c2 #_ #_ #IH1 #IH2 #b2 #Hb2 #p #q1 #q2 #H1 #H2
-  elim (pbc_inv_gen_sn … Hb2) -Hb2
+  elim (pbc_inv_gen_sx … Hb2) -Hb2
   [ #H0 destruct -IH1 -IH2
     elim (term_in_comp_pbc_L_inj_aux … Ht H2 H1)
   | * #c3 #c4 #Hc3 #Hc4 #H0 destruct
