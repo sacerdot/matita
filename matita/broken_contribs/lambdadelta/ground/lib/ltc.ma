@@ -24,7 +24,7 @@ inductive ltc (A:Type[0]) (f) (B) (R:relation3 A B B): relation3 A B B ≝
 
 (* Basic constructions ******************************************************)
 
-lemma ltc_sn (A) (f) (B) (R):
+lemma ltc_sx (A) (f) (B) (R):
       ∀a1,b1,b. R a1 b1 b →
       ∀a2,b2. ltc A f B R a2 b b2 → ltc … f … R (f a1 a2) b1 b2.
 /3 width=3 by ltc_rc, ltc_trans/ qed.
@@ -36,7 +36,7 @@ lemma ltc_dx (A) (f) (B) (R):
 
 (* Basic eliminations *******************************************************)
 
-lemma ltc_ind_sn (A) (f) (B) (R) (Q:relation2 A B) (b2):
+lemma ltc_ind_sx (A) (f) (B) (R) (Q:relation2 A B) (b2):
       associative … f →
       (∀a,b1. R a b1 b2 → Q a b1) →
       (∀a1,a2,b1,b. R a1 b1 b → ltc … f … R a2 b b2 → Q a2 b → Q (f a1 a2) b1) →
@@ -62,13 +62,13 @@ qed-.
 
 (* Advanced eliminations (with reflexivity) *********************************)
 
-lemma ltc_ind_sn_refl (A) (i) (f) (B) (R) (Q:relation2 A B) (b2):
+lemma ltc_ind_sx_refl (A) (i) (f) (B) (R) (Q:relation2 A B) (b2):
       associative … f → right_identity … f i → reflexive B (R i) →
       Q i b2 →
       (∀a1,a2,b1,b. R a1 b1 b → ltc … f … R a2 b b2 → Q a2 b → Q (f a1 a2) b1) →
       ∀a,b1. ltc … f … R a b1 b2 → Q a b1.
 #A #i #f #B #R #Q #b2 #H1f #H2f #HR #IH1 #IH2 #a #b1 #H
-@(ltc_ind_sn … R … H1f … IH2 … H) -a -b1 -H1f #a #b1 #Hb12
+@(ltc_ind_sx … R … H1f … IH2 … H) -a -b1 -H1f #a #b1 #Hb12
 >(H2f a) -H2f /3 width=4 by ltc_rc/
 qed-.
 

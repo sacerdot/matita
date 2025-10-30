@@ -35,11 +35,11 @@ qed.
 
 (* Advanced constructions ***************************************************)
 
-lemma pminus_pred_sn (p) (q): ⫰(p - q) = ⫰p - q.
+lemma pminus_pred_sx (p) (q): ⫰(p - q) = ⫰p - q.
 #p #q @(piter_appl … ppred)
 qed.
 
-lemma pminus_unit_sn (q): 𝟏 = 𝟏 - q.
+lemma pminus_unit_sx (q): 𝟏 = 𝟏 - q.
 #q elim q -q //
 qed.
 
@@ -47,14 +47,14 @@ lemma pminus_succ_bi (p) (q): p - q = ↑p - ↑q.
 #p #q elim q -q //
 qed.
 
-lemma pminus_succ_dx_pred_sn (p) (q): ⫰p - q = p - ↑q.
+lemma pminus_succ_dx_pred_sx (p) (q): ⫰p - q = p - ↑q.
 // qed-.
 
 lemma pminus_refl (p): 𝟏 = p - p.
 #p elim p -p //
 qed.
 
-lemma pminus_succ_sn_refl (p): 𝟏 = ↑p - p.
+lemma pminus_succ_sx_refl (p): 𝟏 = ↑p - p.
 #p elim p -p //
 qed.
 

@@ -19,7 +19,7 @@ include "ground/relocation/fb/fbr_ctl_dapp.ma".
 
 (* Constructions with fbr_dapp **********************************************)
 
-lemma fbr_dapp_succ_sn (q) (f):
+lemma fbr_dapp_succ_sx (q) (f):
       (⫰*[⁤q]f)＠⧣❨𝟏❩+f＠⧣❨q❩ = f＠⧣❨↑q❩.
 #q elim q -q //
 #q #IH #f
@@ -32,5 +32,5 @@ lemma fbr_dapp_plus (f) (q) (p):
 #f #q elim q -q //
 #q #IH #p
 <pplus_succ_shift <IH -IH
-<fbr_dapp_succ_sn <fbr_dapp_succ_dx >fbr_ctls_succ //
+<fbr_dapp_succ_sx <fbr_dapp_succ_dx >fbr_ctls_succ //
 qed.

@@ -19,7 +19,7 @@ include "ground/lib/list_weight_2.ma".
 
 (* Constructions with list_rcons ********************************************)
 
-lemma list_weight_2_rcons_sn (A) (B) (l1) (l2) (a):
+lemma list_weight_2_rcons_sx (A) (B) (l1) (l2) (a):
       (⁤↑(list_weight_2 … l1 l2)) = list_weight_2 A B (l1⨭a) l2.
 #A #B #l1 #l2 #a1
 <list_weight_2_unfold <list_weight_2_unfold //

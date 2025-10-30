@@ -53,13 +53,13 @@ qed.
 
 (* Basic destructions *******************************************************)
 
-lemma zle_des_succ_sn (z1) (z2):
+lemma zle_des_succ_sx (z1) (z2):
       ↑z1 ≤ z2 → z1 ≤ z2.
 #z1 #z2 #H0 elim H0 -z2
 /2 width=1 by zle_succ_dx/
 qed-.
 
-lemma zle_des_pos_sn (p) (z):
+lemma zle_des_pos_sx (p) (z):
      (⁤p) ≤ z →
      ∃q. (⁤q) = z.
 #p #z #H0 elim H0 -z
@@ -74,7 +74,7 @@ qed-.
 lemma zle_inv_pos_zero (p):
       (⁤p) ≤ 𝟎 → ⊥.
 #p #H0
-elim (zle_des_pos_sn … H0) -H0 #q #H0 destruct
+elim (zle_des_pos_sx … H0) -H0 #q #H0 destruct
 qed-.
 
 (* Main constructions ******************************************************)
@@ -82,5 +82,5 @@ qed-.
 (*** transitive_le *)
 theorem zle_trans: Transitive … zle.
 #z1 #z2 #H0 elim H0 -z2
-/3 width=1 by zle_des_succ_sn/
+/3 width=1 by zle_des_succ_sx/
 qed-.

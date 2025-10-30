@@ -63,7 +63,7 @@ theorem subset_eq_trans (A):
 /3 width=5 by subset_le_trans, conj/
 qed-.
 
-theorem subset_eq_canc_sn (A):
+theorem subset_eq_canc_sx (A):
         left_cancellable … (subset_eq A).
 /3 width=3 by subset_eq_trans, subset_eq_sym/
 qed-.
@@ -75,7 +75,7 @@ qed-.
 
 theorem subset_eq_repl (A):
         replace_2 … (subset_eq …) (subset_eq …) (subset_eq A).
-/3 width=3 by subset_eq_canc_sn, subset_eq_trans/
+/3 width=3 by subset_eq_canc_sx, subset_eq_trans/
 qed-.
 
 (* Main constructions with subset_le ****************************************)

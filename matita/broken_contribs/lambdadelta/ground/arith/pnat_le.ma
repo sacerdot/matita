@@ -49,7 +49,7 @@ qed-.
 
 (* Basic destructions *******************************************************)
 
-lemma ple_des_succ_sn (p) (q): ↑p ≤ q → p ≤ q.
+lemma ple_des_succ_sx (p) (q): ↑p ≤ q → p ≤ q.
 #p #q #H elim H -q /2 width=1 by ple_succ_dx/
 qed-.
 
@@ -60,7 +60,7 @@ lemma ple_inv_succ_bi (p) (q): ↑p ≤ ↑q → p ≤ q.
 #x * -x
 [ #H destruct //
 | #o #Ho #H destruct
-  /2 width=1 by ple_des_succ_sn/
+  /2 width=1 by ple_des_succ_sx/
 ]
 qed-.
 
@@ -79,7 +79,7 @@ lemma ple_inv_succ_unit (p): ↑p ≤ 𝟏 → ⊥.
 lapply (ple_inv_unit_dx … H) -H #H destruct
 qed-.
 
-lemma ple_inv_succ_sn_refl (p): ↑p ≤ p → ⊥.
+lemma ple_inv_succ_sx_refl (p): ↑p ≤ p → ⊥.
 #p elim p -p [| #p #IH ] #H
 [ /2 width=2 by ple_inv_succ_unit/
 | /3 width=1 by ple_inv_succ_bi/
@@ -89,9 +89,9 @@ qed-.
 theorem ple_antisym (p) (q): p ≤ q → q ≤ p → p = q.
 #p #q #H elim H -q //
 #q #_ #IH #Hq
-lapply (ple_des_succ_sn … Hq) #H
+lapply (ple_des_succ_sx … Hq) #H
 lapply (IH H) -IH -H #H destruct
-elim (ple_inv_succ_sn_refl … Hq)
+elim (ple_inv_succ_sx_refl … Hq)
 qed-.
 
 (* Advanced eliminations ****************************************************)
@@ -109,7 +109,7 @@ qed-.
 (* Advanced constructions ***************************************************)
 
 theorem ple_trans: Transitive … ple.
-#p #q #H elim H -q /3 width=1 by ple_des_succ_sn/
+#p #q #H elim H -q /3 width=1 by ple_des_succ_sx/
 qed-.
 
 lemma ple_dec (p) (q): Decidable … (p ≤ q).

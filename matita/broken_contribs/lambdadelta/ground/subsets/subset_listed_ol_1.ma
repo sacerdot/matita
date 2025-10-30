@@ -19,15 +19,15 @@ include "ground/subsets/subset_listed_1.ma".
 
 (* Inversions with subset_ol ************************************************)
 
-lemma subset_ol_inv_single_sn (A) (a) (u):
+lemma subset_ol_inv_single_sx (A) (a) (u):
       ❴a❵ ≬{A} u → a ϵ u.
 #A #a #u * #b #H0 #Hb
 <(subset_in_inv_single ??? H0) -a //
 qed-.
 
-lemma subset_nol_inv_single_sn (A) (a) (u):
+lemma subset_nol_inv_single_sx (A) (a) (u):
       a ⧸ϵ u → ❴a❵ ⧸≬{A} u.
-/3 width=1 by subset_ol_inv_single_sn/
+/3 width=1 by subset_ol_inv_single_sx/
 qed-.
 
 lemma subset_ol_inv_single_dx (A) (a) (u):

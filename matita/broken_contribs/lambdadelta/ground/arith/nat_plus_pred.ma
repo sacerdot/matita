@@ -19,7 +19,7 @@ include "ground/arith/nat_plus.ma".
 
 (* Constructions with npred *************************************************)
 
-lemma nplus_pred_sn (m) (n):
+lemma nplus_pred_sx (m) (n):
       m ϵ 𝐏 → ⫰(m+n) = (⫰m)+n.
 #m #n #Hm @(nat_ind_succ … n) -n //
 #n #IH
@@ -31,19 +31,19 @@ lemma nispos_plus_dx (m) (n):
       m ϵ 𝐏 → m+n ϵ 𝐏.
 #m #n #Hm
 @nispos_intro
->nplus_pred_sn //
+>nplus_pred_sx //
 qed.
 
 (* Inversions with npred ****************************************************)
 
-(*** plus_inv_S3_sn *)
-lemma eq_inv_succ_nplus_sn (o) (m) (n):
+(*** plus_inv_S3_sx *)
+lemma eq_inv_succ_nplus_sx (o) (m) (n):
       (⁤↑o) = m + n →
       ∨∨ ∧∧ 𝟎 = m & n = (⁤↑o)
        | ∧∧ m ϵ 𝐏 & o = ⫰m + n.
 #o #m @(nat_ind_succ … m) -m
 [ /3 width=1 by or_introl, conj/
-| #m #_ #n <nplus_succ_sn <npred_succ
+| #m #_ #n <nplus_succ_sx <npred_succ
   /4 width=1 by eq_inv_nsucc_bi, or_intror, conj/
 ]
 qed-.
@@ -55,7 +55,7 @@ lemma eq_inv_succ_nplus_dx (o) (m) (n):
        | ∧∧ n ϵ 𝐏 & o = m + ⫰n.
 #o #m #n @(nat_ind_succ … n) -n
 [ /3 width=1 by or_introl, conj/
-| #n #_ <nplus_succ_sn <npred_succ
+| #n #_ <nplus_succ_sx <npred_succ
   /4 width=1 by eq_inv_nsucc_bi, or_intror, conj/
 ]
 qed-.

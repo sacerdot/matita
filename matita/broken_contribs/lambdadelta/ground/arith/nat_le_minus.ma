@@ -20,14 +20,14 @@ include "ground/arith/nat_le_pred.ma".
 (* Constructions with nminus ************************************************)
 
 (*** minus_le *)
-lemma nle_minus_sn_refl_sn (m) (n): m - n ≤ m.
+lemma nle_minus_sx_refl_sx (m) (n): m - n ≤ m.
 #m #n @(nat_ind_succ … n) -n //
 #n #IH /2 width=3 by nle_trans/
 qed.
 
-lemma nle_minus_succ_sn (m) (n): (⁤↑n) - m ≤ (⁤↑(n - m)).
+lemma nle_minus_succ_sx (m) (n): (⁤↑n) - m ≤ (⁤↑(n - m)).
 #m #n
-@nle_inv_pred_sn >nminus_pred_sn //
+@nle_inv_pred_sx >nminus_pred_sx //
 qed.
 
 (*** inv_eq_minus_O *)
@@ -44,13 +44,13 @@ lemma nle_minus_bi_dx (m) (n) (o): m ≤ n → m-o ≤ n-o.
 qed.
 
 (*** monotonic_le_minus_r *)
-lemma nle_minus_bi_sn (m) (n) (o): m ≤ n → o-n ≤ o-m.
+lemma nle_minus_bi_sx (m) (n) (o): m ≤ n → o-n ≤ o-m.
 #m #n #o #H elim H -n //
 #n #_ #IH /2 width=3 by nle_trans/
 qed.
 
-(*** minus_le_trans_sn *)
-lemma nle_minus_sn (o) (m) (n): m ≤ n → m - o ≤ n.
+(*** minus_le_trans_sx *)
+lemma nle_minus_sx (o) (m) (n): m ≤ n → m - o ≤ n.
 /2 width=3 by nle_trans/ qed.
 
 (* Inversions with nminus ***************************************************)
@@ -63,13 +63,13 @@ qed-.
 (* Destructions with nminus *************************************************)
 
 (*** minus_Sn_m *)
-lemma nminus_succ_sn (m) (n): m ≤ n → (⁤↑(n-m)) = (⁤↑n) - m.
+lemma nminus_succ_sx (m) (n): m ≤ n → (⁤↑(n-m)) = (⁤↑n) - m.
 #m #n #H @(nle_ind_alt … H) -m -n //
 qed-.
 
 (*** minus_minus_m_m *)
-lemma nminus_minus_dx_refl_sn (m) (n): m ≤ n → m = n - (n - m).
+lemma nminus_minus_dx_refl_sx (m) (n): m ≤ n → m = n - (n - m).
 #m #n #H elim H -n //
-#n #Hmn #IH <(nminus_succ_sn … Hmn) -Hmn
+#n #Hmn #IH <(nminus_succ_sx … Hmn) -Hmn
 <nminus_succ_bi //
 qed-.

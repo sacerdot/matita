@@ -48,7 +48,7 @@ lemma fbr_width_next_dx (f):
 theorem fbr_width_append (f) (g):
         (↕f+↕g) = ↕(f●g).
 #f #g elim g -g //
-* #g #IH <list_append_lcons_sn
+* #g #IH <list_append_lcons_sx
 [ <fbr_width_next_dx <fbr_width_next_dx //
 | <fbr_width_push_dx <fbr_width_push_dx //
 ]
@@ -56,10 +56,10 @@ qed.
 
 (* Constructions with fbr_lcons *********************************************)
 
-lemma fbr_width_push_sn (f):
+lemma fbr_width_push_sx (f):
       ↕f = ↕(𝗽◗f).
 // qed.
 
-lemma fbr_width_next_sn (f):
+lemma fbr_width_next_sx (f):
       (⁤↑↕f) = ↕(𝗻◗f).
 // qed.

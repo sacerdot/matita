@@ -19,14 +19,14 @@ include "ground/arith/nat_plus.ma".
 
 (* Constructions with nrplus and npsucc *************************************)
 
-lemma nrplus_npsucc_sn (m:ℕ) (n):
+lemma nrplus_npsucc_sx (m:ℕ) (n):
       ↑(m + n) = (↑m) + n.
 #m @(nat_ind_succ … m) -m //
 qed.
 
 (* Constructions with nrplus ************************************************)
 
-lemma nplus_pos_sn (p) (n):
+lemma nplus_pos_sx (p) (n):
       (⁤(p + n)) = (⁤p) + n.
 #p #n @(nat_ind_succ … n) -n //
 qed.

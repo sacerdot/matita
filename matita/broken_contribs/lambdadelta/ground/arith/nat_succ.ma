@@ -43,7 +43,7 @@ lemma eq_inv_nsucc_bi (n1) (n2):
 /3 width=1 by eq_inv_npsucc_bi, eq_inv_npos_bi/
 qed-.
 
-(*** succ_inv_refl_sn *)
+(*** succ_inv_refl_sx *)
 lemma eq_inv_refl_nsucc (n:ℕ): n = (⁤↑n) → ⊥.
 *
 [ #H0 destruct

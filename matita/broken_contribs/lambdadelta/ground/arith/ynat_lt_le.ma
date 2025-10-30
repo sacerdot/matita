@@ -106,7 +106,7 @@ lemma ynat_ind_lt (Q:predicate …):
 #Q #IH #y @(ynat_split_nat_inf … y) -y
 [ /4 width=1 by ynat_ind_lt_inj/
 | @IH #x #H
-  elim (ylt_des_gen_sn … H) -H #m #H destruct
+  elim (ylt_des_gen_sx … H) -H #m #H destruct
   /4 width=1 by ynat_ind_lt_inj/
 ]
 qed-.

@@ -56,7 +56,7 @@ qed-.
 
 (* Basic destructions *******************************************************)
 
-lemma nle_des_succ_sn (m) (n): (⁤↑m) ≤ n → m ≤ n.
+lemma nle_des_succ_sx (m) (n): (⁤↑m) ≤ n → m ≤ n.
 #m #n #H elim H -n /2 width=1 by nle_succ_dx/
 qed-.
 
@@ -68,7 +68,7 @@ lemma nle_inv_succ_bi (m) (n): (⁤↑m) ≤ (⁤↑n) → m ≤ n.
 #x * -x
 [ #H >(eq_inv_nsucc_bi … H) -n //
 | #o #Ho #H >(eq_inv_nsucc_bi … H) -n
-  /2 width=1 by nle_des_succ_sn/
+  /2 width=1 by nle_des_succ_sx/
 ]
 qed-.
 
@@ -88,7 +88,7 @@ lemma nle_inv_succ_zero (m): (⁤↑m) ≤ 𝟎 → ⊥.
 /3 width=2 by nle_inv_zero_dx, eq_inv_zero_npos/
 qed-.
 
-lemma nle_inv_succ_sn_refl (m): (⁤↑m) ≤ m → ⊥.
+lemma nle_inv_succ_sx_refl (m): (⁤↑m) ≤ m → ⊥.
 #m @(nat_ind_succ … m) -m [| #m #IH ] #H
 [ /2 width=2 by nle_inv_succ_zero/
 | /3 width=1 by nle_inv_succ_bi/
@@ -99,9 +99,9 @@ qed-.
 theorem nle_antisym (m) (n): m ≤ n → n ≤ m → m = n.
 #m #n #H elim H -n //
 #n #_ #IH #Hn
-lapply (nle_des_succ_sn … Hn) #H
+lapply (nle_des_succ_sx … Hn) #H
 lapply (IH H) -IH -H #H destruct
-elim (nle_inv_succ_sn_refl … Hn)
+elim (nle_inv_succ_sx_refl … Hn)
 qed-.
 
 (* Advanced eliminations ****************************************************)
@@ -121,7 +121,7 @@ qed-.
 
 (*** transitive_le *)
 theorem nle_trans: Transitive … nle.
-#m #n #H elim H -n /3 width=1 by nle_des_succ_sn/
+#m #n #H elim H -n /3 width=1 by nle_des_succ_sx/
 qed-.
 
 (*** decidable_le le_dec *)

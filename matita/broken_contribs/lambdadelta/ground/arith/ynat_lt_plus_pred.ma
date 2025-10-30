@@ -27,19 +27,19 @@ lemma eq_inv_succ_yplus_lt_dx (z) (x) (y):  𝟎 < y → ⫯z = x + y → z = x 
 /2 width=1 by eq_inv_ysucc_bi/
 qed-.
 
-(*** yplus_inv_succ_lt_sn *)
-lemma eq_inv_succ_yplus_lt_sn (z) (x) (y): 𝟎 < x → ⫯z = x + y → z = ⫰x + y.
+(*** yplus_inv_succ_lt_sx *)
+lemma eq_inv_succ_yplus_lt_sx (z) (x) (y): 𝟎 < x → ⫯z = x + y → z = ⫰x + y.
 /2 width=1 by eq_inv_succ_yplus_lt_dx/ qed-.
 
 (* Destructions with yplus and ypred ****************************************)
 
 (*** yplus_pred1 *)
-lemma yplus_pred_sn (x) (y): 𝟎 < x → ⫰(x+y) = ⫰x + y.
+lemma yplus_pred_sx (x) (y): 𝟎 < x → ⫰(x+y) = ⫰x + y.
 #x #y #Hx >(ylt_des_gen_dx … Hx) -Hx
-<yplus_succ_sn <ypred_succ <ypred_succ //
+<yplus_succ_sx <ypred_succ <ypred_succ //
 qed-.
 
 (*** yplus_pred2 *)
 lemma yplus_pred_dx (x) (y): 𝟎 < y → x + ⫰y = ⫰(x+y).
-/2 width=1 by yplus_pred_sn/ qed-.
+/2 width=1 by yplus_pred_sx/ qed-.
 

@@ -50,28 +50,28 @@ lemma arith_i: ∀x,y,z. y < x → x+z-y-(⁤𝟏) = x-y-(⁤𝟏)+z.
 
 (* Constructions ************************************************************)
 
-fact le_repl_sn_conf_aux: ∀x,y,z:ℕ. x ≤ z → x = y → y ≤ z.
+fact le_repl_sx_conf_aux: ∀x,y,z:ℕ. x ≤ z → x = y → y ≤ z.
 // qed-.
 
-fact le_repl_sn_trans_aux: ∀x,y,z:ℕ. x ≤ z → y = x → y ≤ z.
+fact le_repl_sx_trans_aux: ∀x,y,z:ℕ. x ≤ z → y = x → y ≤ z.
 // qed-.
 
 lemma monotonic_le_minus_l2: ∀x1,x2,y,z. x1 ≤ x2 → x1 - y - z ≤ x2 - y - z.
 /3 width=1 by nle_minus_bi_dx/ qed.
 
 lemma arith_j: ∀x,y,z. x-y-(⁤𝟏) ≤ x-(y-z)-(⁤𝟏).
-/3 width=1 by nle_minus_bi_dx, nle_minus_bi_sn/ qed.
+/3 width=1 by nle_minus_bi_dx, nle_minus_bi_sx/ qed.
 
-lemma arith_k_sn: ∀z,x,y,n. z < x → x+n ≤ y → x-z-(⁤𝟏)+n ≤ y-z-(⁤𝟏).
+lemma arith_k_sx: ∀z,x,y,n. z < x → x+n ≤ y → x-z-(⁤𝟏)+n ≤ y-z-(⁤𝟏).
 #z #x #y #n #Hzx #Hxny
->nminus_plus_comm_23 [2: /2 width=1 by nle_minus_dx_sn/ ]
+>nminus_plus_comm_23 [2: /2 width=1 by nle_minus_dx_sx/ ]
 >nminus_plus_comm_23 [2: /2 width=1 by nlt_des_le/ ]
 /2 width=1 by monotonic_le_minus_l2/
 qed.
 
 lemma arith_k_dx: ∀z,x,y,n. z < x → y ≤ x+n → y-z-(⁤𝟏) ≤ x-z-(⁤𝟏)+n.
 #z #x #y #n #Hzx #Hyxn
->nminus_plus_comm_23 [2: /2 width=1 by nle_minus_dx_sn/ ]
+>nminus_plus_comm_23 [2: /2 width=1 by nle_minus_dx_sx/ ]
 >nminus_plus_comm_23 [2: /2 width=1 by nlt_des_le/ ]
 /2 width=1 by monotonic_le_minus_l2/
 qed.

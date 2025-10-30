@@ -21,10 +21,10 @@ include "ground/arith/ynat_lminus_succ.ma".
 (* Constructions with yplus *************************************************)
 
 (*** yplus_minus *)
-lemma ylminus_plus_sn_refl_sn (x) (n):
+lemma ylminus_plus_sx_refl_sx (x) (n):
       x = x + yinj_nat n - n.
 #x @(ynat_split_nat_inf … x) -x //
-#n <yplus_inf_sn //
+#n <yplus_inf_sx //
 qed.
 
 (*** yminus_plus2 *)

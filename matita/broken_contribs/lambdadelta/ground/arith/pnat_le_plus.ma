@@ -23,7 +23,7 @@ lemma ple_plus_bi_dx (p) (q1) (q2): q1 ≤ q2 → q1 + p ≤ q2 + p.
 #p #q1 #q2 #H elim H -q2 /2 width=3 by ple_trans/
 qed.
 
-lemma ple_plus_bi_sn (p) (q1) (q2): q1 ≤ q2 → p + q1 ≤ p + q2.
+lemma ple_plus_bi_sx (p) (q1) (q2): q1 ≤ q2 → p + q1 ≤ p + q2.
 #p #q1 #q2 #H <pplus_comm <pplus_comm in ⊢ (??%);
 /2 width=1 by ple_plus_bi_dx/
 qed.

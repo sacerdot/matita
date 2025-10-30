@@ -32,7 +32,7 @@ lemma subset_le_ext_f1_bi (A1) (A0) (f) (u1) (v1):
 /3 width=3 by subset_in_ext_f1_dx/
 qed.
 
-lemma subset_le_ext_f1_compose_sn (A0) (A1) (A2) (f1) (f2) (u):
+lemma subset_le_ext_f1_compose_sx (A0) (A1) (A2) (f1) (f2) (u):
       subset_ext_f1 A1 A2 f2 (subset_ext_f1 A0 A1 f1 u) ⊆ subset_ext_f1 A0 A2 (f2∘f1) u.
 #A0 #A1 #A2 #f1 #f2 #u #a2 * #a1 * #a0 #Ha0 #H1 #H2 destruct
 /2 width=1 by subset_in_ext_f1_dx/

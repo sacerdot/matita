@@ -26,5 +26,5 @@ lemma ple_nrminus_dx (n) (p) (q):
 #n #IH #p #q
 <nrplus_succ_shift <nrminus_succ_dx #Hn
 lapply (IH … Hn) -IH -Hn #Hn
-elim (ple_inv_succ_sn … Hn) -Hn #Hn #_ //
+elim (ple_inv_succ_sx … Hn) -Hn #Hn #_ //
 qed.

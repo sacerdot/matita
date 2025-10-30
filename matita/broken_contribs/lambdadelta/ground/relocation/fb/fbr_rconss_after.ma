@@ -27,7 +27,7 @@ lemma fbr_after_pushs_rconss (b) (g) (f) (n):
 <fbr_rconss_succ <fbr_rconss_succ //
 qed.
 
-lemma fbr_after_nexts_sn (g) (f) (n):
+lemma fbr_after_nexts_sx (g) (f) (n):
       ↑*[n](g•f) = (↑*[n]g)•f.
 #g #f #n @(nat_ind_succ … n) -n //
 #n #IH <fbr_rconss_succ //

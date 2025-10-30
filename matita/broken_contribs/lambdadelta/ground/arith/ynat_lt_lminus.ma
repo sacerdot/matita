@@ -24,7 +24,7 @@ include "ground/arith/ynat_lt.ma".
 lemma ylt_zero_lminus (m) (y):
       yinj_nat m < y → 𝟎 < y - m.
 #m #y @(ynat_split_nat_inf … y) -y //
-#n #Hmn <ylminus_inj_sn >yinj_nat_zero >(nminus_refl m)
+#n #Hmn <ylminus_inj_sx >yinj_nat_zero >(nminus_refl m)
 /4 width=1 by ylt_inj, ylt_inv_inj_bi, nlt_minus_bi_dx/
 qed.
 
@@ -34,7 +34,7 @@ qed.
 lemma ylt_inv_zero_lminus (m) (y):
       (𝟎) < y - m → yinj_nat m < y.
 #m #y @(ynat_split_nat_inf … y) -y //
-#n <ylminus_inj_sn >yinj_nat_zero >(nminus_refl m) #Hmm
+#n <ylminus_inj_sx >yinj_nat_zero >(nminus_refl m) #Hmm
 /4 width=2 by ylt_inv_inj_bi, ylt_inj, nlt_inv_minus_bi_dx/
 qed-.
 
@@ -45,6 +45,6 @@ lemma ylminus_pred_bi (x:ynat) (n):
       (𝟎) < x → 𝟎 < n → x - n = ⫰x - ⫰n.
 #x @(ynat_split_nat_inf … x) -x //
 #m #n >yinj_nat_zero
-#Hm #Hn <ylminus_inj_sn <ypred_inj <ylminus_inj_sn
+#Hm #Hn <ylminus_inj_sx <ypred_inj <ylminus_inj_sx
 <nminus_pred_bi /2 width=1 by ylt_inv_inj_bi/
 qed-.

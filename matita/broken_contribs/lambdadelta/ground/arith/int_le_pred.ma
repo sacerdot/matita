@@ -19,7 +19,7 @@ include "ground/arith/int_le.ma".
 
 (* Advanced constructions ***************************************************)
 
-lemma zle_pred_sn (z1) (z2):
+lemma zle_pred_sx (z1) (z2):
       z1 ≤ z2 → ↓z1 ≤ z2.
 #z1 #z2 #Hz elim Hz -z2
 /2 width=1 by zle_succ_dx/
@@ -28,7 +28,7 @@ qed.
 lemma zle_neg_zero (p):
       −p ≤ 𝟎.
 #p elim p -p
-/2 width=1 by zle_pred_sn/
+/2 width=1 by zle_pred_sx/
 qed.
 
 lemma int_split_le_ge_zero (z):
@@ -74,7 +74,7 @@ lemma zle_inv_pred_bi (z1) (z2):
 /2 width=1 by zle_succ_bi/
 qed-.
 
-lemma zle_inv_pred_sn (z1) (z2):
+lemma zle_inv_pred_sx (z1) (z2):
       ↓z1 ≤ z2 → z1 ≤ ↑z2.
 /2 width=1 by zle_succ_bi/
 qed-.
@@ -84,7 +84,7 @@ lemma zle_inv_pred_dx (z1) (z2):
 /2 width=1 by zle_succ_bi/
 qed-.
 
-lemma zle_inv_succ_sn (z1) (z2):
+lemma zle_inv_succ_sx (z1) (z2):
       ↑z1 ≤ z2 → z1 ≤ ↓z2.
 /2 width=1 by zle_pred_bi/
 qed-.
@@ -115,7 +115,7 @@ theorem zle_antisym (z1) (z2):
         z1 ≤ z2 → z2 ≤ z1 → z1 = z2.
 #z1 #z2 #H elim H -z2 //
 #z2 #_ #IH #Hz
-lapply (zle_des_succ_sn … Hz) #H0
+lapply (zle_des_succ_sx … Hz) #H0
 lapply (IH H0) -IH -H0 #H0 destruct
 elim (zle_inv_succ_self … Hz)
 qed-.
@@ -131,10 +131,10 @@ lemma zle_ind_steps (Q: relation2 …):
 #Q #IH1 #IH2 #IH3 #IH4
 @int_ind_steps
 [ #z1 #IH4 #z2 #Hz elim Hz -z2
-  /5 width=1 by zle_inv_pred_sn, zle_succ_dx/
+  /5 width=1 by zle_inv_pred_sx, zle_succ_dx/
 | * /2 width=1 by/
   #p #H0 elim (zle_inv_zero_neg … H0)
 | #z1 #IH4 #z2 #Hz elim Hz -z2
-  /4 width=1 by zle_des_succ_sn/
+  /4 width=1 by zle_des_succ_sx/
 ]
 qed-.

@@ -35,7 +35,7 @@ lemma list_cons_shift (A):
 (* Advanced constructions ***************************************************)
 
 (* Note: this is list_append_lcons_dx *)
-lemma list_append_rcons_sn (A):
+lemma list_append_rcons_sx (A):
       ∀l1,l2,a. l1 ⨁ (a ⨮ l2) = (l1 ⨭ a) ⨁{A} l2.
 // qed.
 
@@ -63,13 +63,13 @@ lemma eq_inv_list_rcons_bi (A):
       ∀a1,a2,l1,l2. l1 ⨭{A} a1 = l2 ⨭ a2 →
       ∧∧ l1 = l2 & a1 = a2.
 #A #a1 #a2 #l1 elim l1 -l1 [| #b1 #l1 #IH ] *
-[ <list_append_empty_sn <list_append_empty_sn #H destruct
+[ <list_append_empty_sx <list_append_empty_sx #H destruct
   /2 width=1 by conj/
-| #b2 #l2 <list_append_empty_sn <list_append_lcons_sn #H destruct -H
+| #b2 #l2 <list_append_empty_sx <list_append_lcons_sx #H destruct -H
   elim (eq_inv_list_empty_rcons ??? e0)
-| <list_append_lcons_sn <list_append_empty_sn #H destruct -H
+| <list_append_lcons_sx <list_append_empty_sx #H destruct -H
   elim (eq_inv_list_empty_rcons ??? (sym_eq … e0))
-| #b2 #l2 <list_append_lcons_sn <list_append_lcons_sn #H destruct -H
+| #b2 #l2 <list_append_lcons_sx <list_append_lcons_sx #H destruct -H
   elim (IH … e0) -IH -e0 #H1 #H2 destruct
   /2 width=1 by conj/
 ]

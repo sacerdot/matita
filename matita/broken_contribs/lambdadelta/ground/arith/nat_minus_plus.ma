@@ -20,13 +20,13 @@ include "ground/arith/nat_minus.ma".
 (* Constructions with nplus *************************************************)
 
 (*** minus_plus_m_m *)
-lemma nminus_plus_sn_refl_sn (m) (n): m = m + n - n.
+lemma nminus_plus_sx_refl_sx (m) (n): m = m + n - n.
 #m #n @(nat_ind_succ … n) -n // (* FIXME *)
 #n #IH <nplus_succ_dx <nminus_succ_bi //
 qed.
 
 (*** minus_plus_m_m_commutative *)
-lemma nminus_plus_sn_refl_dx (m) (n): m = n + m - n.
+lemma nminus_plus_sx_refl_dx (m) (n): m = n + m - n.
 #m #n <nplus_comm //
 qed.
 
@@ -48,21 +48,21 @@ lemma nminus_plus_dx (o) (m) (n): o = m+n → n = o-m.
 #o #m #n #H destruct //
 qed-.
 
-lemma nminus_plus_sn (o) (m) (n): o = m+n → m = o-n.
+lemma nminus_plus_sx (o) (m) (n): o = m+n → m = o-n.
 #o #m #n #H destruct //
 qed-.
 
 (* Inversions with nplus ****************************************************)
 
 (*** discr_plus_xy_minus_xz *)
-lemma eq_inv_plus_nminus_refl_sn (m) (n) (o):
+lemma eq_inv_plus_nminus_refl_sx (m) (n) (o):
       m + o = m - n →
       ∨∨ ∧∧ 𝟎 = m & 𝟎 = o
        | ∧∧ 𝟎 = n & 𝟎 = o.
 #m #n @(nat_ind_2_succ … m n) -m -n
 [ /3 width=1 by or_introl, conj/
 | #m #_ #o #Ho
-  lapply (eq_inv_nplus_bi_sn … (𝟎) Ho) -Ho
+  lapply (eq_inv_nplus_bi_sx … (𝟎) Ho) -Ho
   /3 width=1 by or_intror, conj/
 | #m #n #IH #o
   <nminus_succ_bi >nplus_succ_shift #Ho
@@ -72,8 +72,8 @@ lemma eq_inv_plus_nminus_refl_sn (m) (n) (o):
 qed-.
 
 (*** discr_minus_x_xy *)
-lemma eq_inv_nminus_refl_sn (m) (n): m = m - n → ∨∨ 𝟎 = m | 𝟎 = n.
+lemma eq_inv_nminus_refl_sx (m) (n): m = m - n → ∨∨ 𝟎 = m | 𝟎 = n.
 #m #n #Hmn
-elim (eq_inv_plus_nminus_refl_sn … (𝟎) Hmn) -Hmn * #H1 #H2
+elim (eq_inv_plus_nminus_refl_sx … (𝟎) Hmn) -Hmn * #H1 #H2
 /2 width=1 by or_introl, or_intror/
 qed-.

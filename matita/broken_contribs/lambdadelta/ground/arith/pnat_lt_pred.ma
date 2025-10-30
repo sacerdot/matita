@@ -27,10 +27,10 @@ qed-.
 (* Inversions with ppred ****************************************************)
 
 lemma plt_inv_gen (p) (q): p < q → ∧∧ p ≤ ⫰q & q = ↑⫰q.
-/2 width=1 by ple_inv_succ_sn/ qed-.
+/2 width=1 by ple_inv_succ_sx/ qed-.
 
-lemma plt_inv_succ_sn (p) (q): ↑p < q → ∧∧ p < ⫰q & q = ↑⫰q.
-/2 width=1 by ple_inv_succ_sn/ qed-.
+lemma plt_inv_succ_sx (p) (q): ↑p < q → ∧∧ p < ⫰q & q = ↑⫰q.
+/2 width=1 by ple_inv_succ_sx/ qed-.
 
 lemma plt_inv_pred_dx (p) (q): p < ⫰q → ↑p < q.
 #p #q #H >(plt_des_gen (𝟏) q)
@@ -45,7 +45,7 @@ qed-.
 
 (* Constructions with ppred *************************************************)
 
-lemma plt_unit_sn (q): q = ↑⫰q → 𝟏 < q.
+lemma plt_unit_sx (q): q = ↑⫰q → 𝟏 < q.
 // qed.
 
 lemma plt_pred_bi (p) (q): 𝟏 < p → p < q → ⫰p < ⫰q.

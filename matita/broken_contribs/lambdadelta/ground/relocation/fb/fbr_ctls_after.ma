@@ -24,7 +24,7 @@ lemma fbr_ctl_after (g) (f):
       (⫰*[⁤(f＠⧣❨𝟏❩)]g)•(⫰f) = ⫰(g•f).
 #g elim g -g //
 * #g #IH
-[ #f <fbr_after_next_sn <fbr_ctl_next <IH -IH //
+[ #f <fbr_after_next_sx <fbr_ctl_next <IH -IH //
 | * [| * #f <fbr_after_push_rcons ]
   [ <fbr_dapp_id <fbr_after_id_dx //
   | <fbr_ctl_next <fbr_ctl_next <fbr_dapp_next_dx >npsucc_pos //

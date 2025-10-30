@@ -22,7 +22,7 @@ include "ground/lib/list_times_append.ma".
 lemma list_times_succ_rcons (A) (a) (n):
       a×n ⨭ a = a×{A}(⁤↑n).
 #A #a #n
->nplus_unit_sn >list_times_append //
+>nplus_unit_sx >list_times_append //
 qed.
 
 lemma list_times_cons_shift (A) (a) (n):

@@ -38,11 +38,11 @@ qed.
 
 (* Advanced constructions ***************************************************)
 
-lemma nrminus_pred_sn (p) (n): ⫰(p-n) = ⫰p - n.
+lemma nrminus_pred_sx (p) (n): ⫰(p-n) = ⫰p - n.
 #p #n @(niter_appl … ppred)
 qed.
 
-lemma nrminus_unit_sn (n): 𝟏 = 𝟏 - n.
+lemma nrminus_unit_sx (n): 𝟏 = 𝟏 - n.
 #n @(nat_ind_succ … n) -n //
 qed.
 

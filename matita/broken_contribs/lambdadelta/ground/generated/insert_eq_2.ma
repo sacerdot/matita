@@ -12,18 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/relocation/fb/fbr_ctls_dapp.ma".
-include "ground/relocation/fb/fbr_xapp.ma".
-include "ground/arith/nat_plus_rplus.ma".
-include "ground/arith/nat_rplus_pplus.ma".
+include "basics/relations.ma".
 
-(* ITERATED COARSE TAIL FOR FINITE RELOCATION MAPS WITH BOOLEANS ************)
+(* GENERATED LIBRARY ********************************************************)
 
-(* Constructions with fbr_xapp **********************************************)
-
-lemma fbr_xapp_plus (f) (m) (n):
-      (⫰*[n]f)＠❨m❩+f＠❨n❩ = f＠❨m+n❩.
-#f * // #p * // #q
-<nplus_pos_sx <nplus_pos_sx <nrplus_pos_dx
->fbr_dapp_plus //
-qed.
+lemma insert_eq_2 (T1) (T2) (a1) (a2) (Q1,Q2:relation2 T1 T2):
+      (∀b1,b2. Q1 b1 b2 → a1 = b1 → a2 = b2 → Q2 b1 b2) → Q1 a1 a2 → Q2 a1 a2.
+/2 width=1 by/ qed-.

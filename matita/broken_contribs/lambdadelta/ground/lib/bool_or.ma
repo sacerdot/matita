@@ -26,7 +26,7 @@ lemma orb_true_dx (b):
       (b ∨ ⓣ) = ⓣ.
 * // qed.
 
-lemma orb_true_sn (b):
+lemma orb_true_sx (b):
       (ⓣ ∨ b) = ⓣ.
 // qed.
 

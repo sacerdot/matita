@@ -61,21 +61,21 @@ lemma zplus_pred_dx (z1) (z2):
 <zplus_pos_succ_dx <zpred_succ //
 qed.
 
-lemma zplus_zero_sn (z):
+lemma zplus_zero_sx (z):
       z = 𝟎 +z.
 #z @(int_ind_psucc … z) -z //
 #z #H0
 
 qed.
 
-lemma zplus_succ_sn (z1) (z2):
+lemma zplus_succ_sx (z1) (z2):
       ↑(z1 + z2) = ↑z1 + z2.
 #z1 @int_ind_psucc // #p2 #IH
 <zplus_neg_succ_dx <zplus_neg_succ_dx
 <IH -IH <zpred_succ <zsucc_pred //
 qed.
 
-lemma zplus_pred_sn (z1) (z2):
+lemma zplus_pred_sx (z1) (z2):
       ↓(z1 + z2) = ↓z1 + z2.
 #z1 @int_ind_psucc // #p2 #IH
 <zplus_pos_succ_dx <zplus_pos_succ_dx

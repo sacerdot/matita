@@ -39,7 +39,7 @@ qed.
 (*** ylt_succ2_refl *)
 lemma ylt_succ_dx_refl (x) (y): x < y → x < ⫯x.
 #x #y #H
-elim (ylt_des_gen_sn … H) -y #n #H destruct
+elim (ylt_des_gen_sx … H) -y #n #H destruct
 /2 width=1 by ylt_inj/
 qed.
 
@@ -47,7 +47,7 @@ qed.
 
 lemma ylt_inv_succ_inf (x): ⫯x < ∞ → x < ∞.
 #x #H
-elim (ylt_des_gen_sn … H) -H #m0 #H
+elim (ylt_des_gen_sx … H) -H #m0 #H
 elim (eq_inv_ysucc_inj … H) -H #m #H1 #H2 destruct //
 qed-.
 

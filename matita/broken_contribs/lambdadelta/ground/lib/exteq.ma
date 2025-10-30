@@ -42,7 +42,7 @@ lemma exteq_trans (A) (B):
       Transitive … (exteq A B).
 /2 width=1 by exteq_repl/ qed-.
 
-lemma exteq_canc_sn (A) (B):
+lemma exteq_canc_sx (A) (B):
       left_cancellable … (exteq A B).
 /2 width=1 by exteq_repl/ qed-.
 
@@ -63,15 +63,15 @@ lemma compose_repl_bak_dx (A) (B) (C) (g) (f1) (f2):
 /3 width=1 by compose_repl_fwd_dx, exteq_sym/
 qed.
 
-lemma compose_repl_fwd_sn (A) (B) (C) (g1) (g2) (f):
+lemma compose_repl_fwd_sx (A) (B) (C) (g1) (g2) (f):
       g1 ⊜{B,C} g2 → g1 ∘ f ⊜{A,C} g2 ∘ f.
 #A #B #C #g1 #g2 #f #Hg12 #a
 whd in ⊢ (??%%); //
 qed.
 
-lemma compose_repl_bak_sn (A) (B) (C) (g1) (g2) (f):
+lemma compose_repl_bak_sx (A) (B) (C) (g1) (g2) (f):
       g1 ⊜{B,C} g2 → g2 ∘ f ⊜{A,C} g1 ∘ f.
-/3 width=1 by compose_repl_fwd_sn, exteq_sym/
+/3 width=1 by compose_repl_fwd_sx, exteq_sym/
 qed.
 
 lemma compose_assoc (A1) (A2) (A3) (A4) (f3:A3→A4) (f2:A2→A3) (f1:A1→A2):

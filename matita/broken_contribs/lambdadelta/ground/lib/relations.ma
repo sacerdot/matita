@@ -102,16 +102,16 @@ lemma NF_to_SN (A) (R) (S): ∀a. NF A R S a → SN A R S a.
 elim HSa12 -HSa12 /2 width=1 by/
 qed.
 
-definition NF_sn (A): relation A → relation A → predicate A ≝
+definition NF_sx (A): relation A → relation A → predicate A ≝
            λR,S,a2. ∀a1. R a1 a2 → S a1 a2.
 
-inductive SN_sn (A) (R,S:relation A): predicate A ≝
-| SN_sn_intro: ∀a2. (∀a1. R a1 a2 → (S a1 a2 → ⊥) → SN_sn … R S a1) → SN_sn … R S a2
+inductive SN_sx (A) (R,S:relation A): predicate A ≝
+| SN_sx_intro: ∀a2. (∀a1. R a1 a2 → (S a1 a2 → ⊥) → SN_sx … R S a1) → SN_sx … R S a2
 .
 
-lemma NF_to_SN_sn (A) (R) (S): ∀a. NF_sn A R S a → SN_sn A R S a.
+lemma NF_to_SN_sx (A) (R) (S): ∀a. NF_sx A R S a → SN_sx A R S a.
 #A #R #S #a2 #Ha2
-@SN_sn_intro #a1 #HRa12 #HSa12
+@SN_sx_intro #a1 #HRa12 #HSa12
 elim HSa12 -HSa12 /2 width=1 by/
 qed.
 
@@ -149,7 +149,7 @@ interpretation
 
 (* Main constructions with eq ***********************************************)
 
-theorem canc_sn_eq (A):
+theorem canc_sx_eq (A):
         left_cancellable A (eq …).
 // qed-.
 

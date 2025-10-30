@@ -20,15 +20,15 @@ include "ground/arith/ynat_le.ma".
 
 (* Constructions with ypred *************************************************)
 
-(*** yle_pred_sn *)
-lemma yle_pred_sn_trans (x) (y): x ≤ y → ⫰x ≤ y.
+(*** yle_pred_sx *)
+lemma yle_pred_sx_trans (x) (y): x ≤ y → ⫰x ≤ y.
 #x #y * -x -y
 /3 width=3 by yle_inj, nle_trans/
 qed.
 
-(*** yle_refl_pred_sn *)
-lemma yle_pred_sn_refl (x): ⫰x ≤ x.
-/2 width=1 by yle_pred_sn_trans, yle_refl/ qed.
+(*** yle_refl_pred_sx *)
+lemma yle_pred_sx_refl (x): ⫰x ≤ x.
+/2 width=1 by yle_pred_sx_trans, yle_refl/ qed.
 
 (*** yle_pred *)
 lemma yle_pred_bi (x) (y): x ≤ y → ⫰x ≤ ⫰y.

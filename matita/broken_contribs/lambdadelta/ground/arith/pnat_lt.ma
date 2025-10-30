@@ -83,7 +83,7 @@ lemma plt_inv_succ_bi (p) (q): ↑p < ↑q → p < q.
 /2 width=1 by ple_inv_succ_bi/ qed-.
 
 lemma plt_ge_false (p) (q): p < q → q ≤ p → ⊥.
-/3 width=4 by ple_inv_succ_sn_refl, plt_ple_trans/ qed-.
+/3 width=4 by ple_inv_succ_sx_refl, plt_ple_trans/ qed-.
 
 lemma plt_inv_refl (p): p < p → ⊥.
 /2 width=4 by plt_ge_false/ qed-.
@@ -96,7 +96,7 @@ lemma plt_inv_unit_dx (p): p < 𝟏 → ⊥.
 lemma plt_des_le (p) (q): p < q → p ≤ q.
 /2 width=3 by ple_trans/ qed-.
 
-lemma plt_des_lt_unit_sn (p) (q): p < q → 𝟏 < q.
+lemma plt_des_lt_unit_sx (p) (q): p < q → 𝟏 < q.
 /3 width=3 by ple_plt_trans/ qed-.
 
 (* Main constructions *******************************************************)

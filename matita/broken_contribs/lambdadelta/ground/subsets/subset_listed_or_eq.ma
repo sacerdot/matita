@@ -33,11 +33,11 @@ qed.
 lemma subset_eq_or_dx_empty_refl (A) (u2):
       u2 ⇔ Ⓕ{A} ∪ u2.
 #A #u2 @conj [ // ]
-@subset_le_or_sn //
+@subset_le_or_sx //
 qed.
 
 lemma subset_eq_or_dx_refl_empty (A) (u1):
       u1 ⇔ u1 ∪ Ⓕ{A}.
 #A #u2 @conj [ // ]
-@subset_le_or_sn //
+@subset_le_or_sx //
 qed.

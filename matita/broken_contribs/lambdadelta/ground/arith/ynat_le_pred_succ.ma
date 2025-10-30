@@ -26,12 +26,12 @@ lemma yle_succ_pred_dx_refl (x): x ≤ ⫯⫰x.
 qed.
 
 (*** yle_inv_succ2 *)
-lemma yle_pred_sn (x) (y): x ≤ ⫯y → ⫰x ≤ y.
+lemma yle_pred_sx (x) (y): x ≤ ⫯y → ⫰x ≤ y.
 #x #y0 @(insert_eq_1 … (⫯y0))
 #y * -x -y
 [ #m #n0 #Hmn #H
   elim (eq_inv_ysucc_inj … H) -H #n #H1 #H2 destruct
-  /3 width=1 by yle_inj, nle_pred_sn/
+  /3 width=1 by yle_inj, nle_pred_sx/
 | #x0 #H <(eq_inv_ysucc_inf … H) -y0 //
 ]
 qed.
@@ -39,21 +39,21 @@ qed.
 (* Inversions with ypred and ysucc ******************************************)
 
 (*** yle_succ2 *)
-lemma yle_inv_pred_sn (x) (y): ⫰x ≤ y → x ≤ ⫯y.
+lemma yle_inv_pred_sx (x) (y): ⫰x ≤ y → x ≤ ⫯y.
 #x0 #y @(insert_eq_1 … (⫰x0))
 #x * -x -y // #m0 #n #Hmn #H
 elim (eq_inv_ypred_inj … H) -H #m #H1 #H2 destruct
-/3 width=1 by yle_inj, nle_inv_pred_sn/
+/3 width=1 by yle_inj, nle_inv_pred_sx/
 qed-.
 
 (*** yle_inv_succ1 *)
-lemma yle_inv_succ_sn (x) (y):
+lemma yle_inv_succ_sx (x) (y):
       (⫯x) ≤ y → ∧∧ x ≤ ⫰y & y = ⫯⫰y.
 #x0 #y @(insert_eq_1 … (⫯x0))
 #x * -x -y
 [ #m0 #n #Hmn #H
   elim (eq_inv_ysucc_inj … H) -H #m #H1 #H2 destruct
-  elim (nle_inv_succ_sn … Hmn) -Hmn #Hmn #Hn
+  elim (nle_inv_succ_sx … Hmn) -Hmn #Hmn #Hn
   /3 width=1 by yle_inj, conj/
 | /2 width=1 by yle_inf, conj/
 ]

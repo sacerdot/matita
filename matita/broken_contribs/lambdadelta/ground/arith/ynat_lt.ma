@@ -30,7 +30,7 @@ interpretation
 (* Basic destructions *******************************************************)
 
 (*** ylt_fwd_gen ylt_inv_Y2 *)
-lemma ylt_des_gen_sn (x) (y):
+lemma ylt_des_gen_sx (x) (y):
       x < y → ∃m. x = yinj_nat m.
 #x #y * -x -y
 /2 width=2 by ex_intro/
@@ -38,13 +38,13 @@ qed-.
 
 lemma ylt_des_lt_inf_dx (x) (y): x < y → x < ∞.
 #x #y #H
-elim (ylt_des_gen_sn … H) -y #m #H destruct //
+elim (ylt_des_gen_sx … H) -y #m #H destruct //
 qed-.
 
 (*** ylt_fwd_lt_O1 *)
-lemma ylt_des_lt_zero_sn (x) (y): x < y → 𝟎 < y.
+lemma ylt_des_lt_zero_sx (x) (y): x < y → 𝟎 < y.
 #x #y * -x -y
-/3 width=2 by ylt_inf, ylt_inj, nlt_des_lt_zero_sn/
+/3 width=2 by ylt_inf, ylt_inj, nlt_des_lt_zero_sx/
 qed-.
 
 (* Basic inversions *********************************************************)
@@ -69,14 +69,14 @@ lemma ylt_inv_inj_bi (m) (n):
 qed-.
 
 (*** ylt_inv_Y1 *)
-lemma ylt_inv_inf_sn (y): ∞ < y → ⊥.
-#y #H elim (ylt_des_gen_sn … H) -H
+lemma ylt_inv_inf_sx (y): ∞ < y → ⊥.
+#y #H elim (ylt_des_gen_sx … H) -H
 #n #H elim (eq_inv_inf_yinj_nat … H)
 qed-.
 
 lemma ylt_inv_refl (x): x < x → ⊥.
 #x @(ynat_split_nat_inf … x) -x
-/3 width=2 by ylt_inv_inf_sn, ylt_inv_inj_bi, nlt_inv_refl/
+/3 width=2 by ylt_inv_inf_sx, ylt_inv_inj_bi, nlt_inv_refl/
 qed-.
 
 (* Main constructions *******************************************************)
@@ -86,7 +86,7 @@ theorem ylt_trans: Transitive … ylt.
 #x #y * -x -y
 [ #m #n #Hxy #z @(ynat_split_nat_inf … z) -z
   /4 width=3 by ylt_inv_inj_bi, ylt_inj, nlt_trans/
-| #m #z #H elim (ylt_inv_inf_sn … H)
+| #m #z #H elim (ylt_inv_inf_sx … H)
 ]
 qed-.
 

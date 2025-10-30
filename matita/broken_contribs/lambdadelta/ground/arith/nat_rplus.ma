@@ -31,6 +31,6 @@ lemma nrplus_zero_dx (p): p = p + 𝟎.
 lemma nrplus_unit_dx (p): ↑p = p + ⁤𝟏.
 // qed.
 
-lemma nrplus_succ_sn (p) (n): ↑(p+n) = ↑p + n.
+lemma nrplus_succ_sx (p) (n): ↑(p+n) = ↑p + n.
 #p #n @(niter_appl … psucc)
 qed.

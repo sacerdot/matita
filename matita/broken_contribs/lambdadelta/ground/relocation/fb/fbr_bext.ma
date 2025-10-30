@@ -42,14 +42,14 @@ lemma fbr_bext_id_bi (f):
 cases (f (ⓕ) (ⓣ)) //
 qed.
 
-lemma fbr_bext_id_sn_false (f) (f2):
+lemma fbr_bext_id_sx_false (f) (f2):
       ⓕ = f (ⓕ) (ⓣ) →
       (𝐢) = 𝐛𝐱[f]❨𝐢,f2❩.
 #f #f2 #H0
 normalize <H0 -H0 //
 qed.
 
-lemma fbr_bext_id_sn_true (f) (f2):
+lemma fbr_bext_id_sx_true (f) (f2):
       ⓣ = f (ⓕ) (ⓣ) →
       f2 = 𝐛𝐱[f]❨𝐢,f2❩.
 #f #f2 #H0

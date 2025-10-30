@@ -51,6 +51,6 @@ lemma fr2_plus_inv_lcons_dx (n) (d) (h) (f2) (f):
 #n #d #h #f2 *
 [ normalize #H destruct
 | #d1 #h1 #f1 whd in ⊢ (??%?→?); #H destruct
-  <nminus_plus_sn_refl_sn /2 width=3 by ex2_intro/
+  <nminus_plus_sx_refl_sx /2 width=3 by ex2_intro/
 ]
 qed-.

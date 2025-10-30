@@ -37,7 +37,7 @@ lemma npred_pos (p): ↓p = ⫰(⁤p).
 
 (* Basic inversions *********************************************************)
 
-(*** pred_inv_fix_sn *)
+(*** pred_inv_fix_sx *)
 lemma eq_inv_refl_npred (n): n = ⫰n → 𝟎 = n.
 * // #p #H0 elim (eq_inv_refl_pnpred … H0)
 qed-.

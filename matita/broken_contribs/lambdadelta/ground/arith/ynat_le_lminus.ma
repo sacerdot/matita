@@ -20,8 +20,8 @@ include "ground/arith/ynat_le.ma".
 
 (* Constructions with ylminus ***********************************************)
 
-(*** yle_minus_sn *)
-lemma yle_lminus_sn_refl_sn (x) (n): x - n ≤ x.
+(*** yle_minus_sx *)
+lemma yle_lminus_sx_refl_sx (x) (n): x - n ≤ x.
 #x @(ynat_split_nat_inf … x) -x //
 #m #n /2 width=1 by yle_inj/
 qed.
@@ -36,9 +36,9 @@ qed.
 (*** yminus_to_le *)
 lemma yle_eq_zero_lminus (x) (n): 𝟎 = x - n → x ≤ yinj_nat n.
 #x @(ynat_split_nat_inf … x) -x
-[ #m #n <ylminus_inj_sn >yinj_nat_zero #H
+[ #m #n <ylminus_inj_sx >yinj_nat_zero #H
   /4 width=1 by nle_eq_zero_minus, yle_inj, eq_inv_yinj_nat_bi/
-| #n <ylminus_inf_sn #H destruct
+| #n <ylminus_inf_sx #H destruct
 ]
 qed.
 
@@ -48,10 +48,10 @@ qed.
 lemma yle_inv_eq_zero_lminus (x) (n):
       x ≤ yinj_nat n → 𝟎 = x - n.
 #x @(ynat_split_nat_inf … x) -x
-[ #m #n #H <ylminus_inj_sn
+[ #m #n #H <ylminus_inj_sx
   <nle_inv_eq_zero_minus /2 width=1 by yle_inv_inj_bi/
 | #n #H
-  lapply (yle_inv_inf_sn … H) -H #H
+  lapply (yle_inv_inf_sx … H) -H #H
   elim (eq_inv_inf_yinj_nat … H)
 ]
 qed-.

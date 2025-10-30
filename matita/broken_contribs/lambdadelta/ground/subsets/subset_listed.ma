@@ -38,10 +38,10 @@ lemma subset_in_listed (A) (l1) (l2) (a):
 /2 width=3 by ex1_2_intro/
 qed.
 
-lemma subset_in_listed_lcons_sn (A) (l) (a):
+lemma subset_in_listed_lcons_sx (A) (l) (a):
       a ϵ{A} 𝐗❨a ⨮ l❩.
 #A #l #a
->(list_append_empty_sn … (a⨮l)) //
+>(list_append_empty_sx … (a⨮l)) //
 qed.
 
 lemma subset_in_listed_lcons_dx (A) (l) (a) (b):

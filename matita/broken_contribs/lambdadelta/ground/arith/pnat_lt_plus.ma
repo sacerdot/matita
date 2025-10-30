@@ -21,21 +21,21 @@ include "ground/arith/pnat_lt.ma".
 
 lemma plt_plus_bi_dx (p) (q1) (q2): q1 < q2 → q1 + p < q2 + p.
 #p #q1 #q2 #H
-@plt_i >pplus_succ_sn /2 width=1 by ple_plus_bi_dx/
+@plt_i >pplus_succ_sx /2 width=1 by ple_plus_bi_dx/
 qed.
 
-lemma plt_plus_bi_sn (p) (q1) (q2): q1 < q2 → p + q1 < p + q2.
+lemma plt_plus_bi_sx (p) (q1) (q2): q1 < q2 → p + q1 < p + q2.
 #p #q1 #q2 #H
-@plt_i >pplus_succ_dx /2 width=1 by ple_plus_bi_sn/
+@plt_i >pplus_succ_dx /2 width=1 by ple_plus_bi_sx/
 qed.
 
 lemma plt_plus_dx_dx_refl (p) (q): p < p + q.
-/2 width=1 by ple_plus_bi_sn/ qed.
+/2 width=1 by ple_plus_bi_sx/ qed.
 
-lemma plt_plus_dx_sn_refl (p) (q): p < q + p.
+lemma plt_plus_dx_sx_refl (p) (q): p < q + p.
 /2 width=1 by ple_plus_bi_dx/ qed.
 
-lemma plt_plus_dx_sn (r) (p) (q): q ≤ p → q < r + p.
+lemma plt_plus_dx_sx (r) (p) (q): q ≤ p → q < r + p.
 /2 width=3 by ple_plt_trans/ qed.
 
 lemma plt_plus_dx_dx (r) (p) (q): q ≤ p → q < p + r.

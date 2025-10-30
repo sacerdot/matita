@@ -42,7 +42,7 @@ lemma ysucc_inf: ∞ = ⫯∞.
 
 (* Inversions ***************************************************************)
 
-(*** ysucc_inv_inj_sn *)
+(*** ysucc_inv_inj_sx *)
 lemma eq_inv_inj_ysucc (n1) (x2:ynat):
       yinj_nat n1 = ⫯x2 →
       ∃∃n2. yinj_nat n2 = x2 & (⁤↑n2) = n1.
@@ -58,7 +58,7 @@ lemma eq_inv_ysucc_inj (x1) (n2):
       ∃∃n1. yinj_nat n1 = x1 & (⁤↑n1) = n2.
 /2 width=1 by eq_inv_inj_ysucc/ qed-.
 
-(*** ysucc_inv_Y_sn *)
+(*** ysucc_inv_Y_sx *)
 lemma eq_inv_inf_ysucc (x2): ∞ = ⫯x2 → ∞ = x2.
 #x2 @(ynat_split_nat_inf … x2) -x2 //
 #n1 <ysucc_inj #H elim (eq_inv_inf_yinj_nat … H)
@@ -86,7 +86,7 @@ lapply (eq_inv_yinj_nat_bi … H) -H #H
 elim (eq_inv_refl_nsucc … H)
 qed-.
 
-(*** ysucc_inv_O_sn *)
+(*** ysucc_inv_O_sx *)
 lemma eq_inv_zero_ysucc (x): 𝟎 = ⫯x → ⊥.
 #x #H
 elim (eq_inv_inj_ysucc (𝟎) ? H) -H #n #_ #H

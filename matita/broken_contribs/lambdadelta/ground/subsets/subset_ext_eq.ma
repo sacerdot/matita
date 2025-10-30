@@ -39,5 +39,5 @@ qed.
 
 lemma subset_le_ext_f1_compose (A0) (A1) (A2) (f1) (f2) (u):
       subset_ext_f1 A1 A2 f2 (subset_ext_f1 A0 A1 f1 u) ⇔ subset_ext_f1 A0 A2 (f2∘f1) u.
-/3 width=1 by subset_le_ext_f1_compose_dx, subset_le_ext_f1_compose_sn, conj/
+/3 width=1 by subset_le_ext_f1_compose_dx, subset_le_ext_f1_compose_sx, conj/
 qed.

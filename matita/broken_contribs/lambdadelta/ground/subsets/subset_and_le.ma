@@ -20,7 +20,7 @@ include "ground/subsets/subset_and.ma".
 
 (* Inversions with subset_le ************************************************)
 
-lemma subset_le_and_inv_dx_sn (A) (u1) (u2) (v:𝒫❨A❩): (**)
+lemma subset_le_and_inv_dx_sx (A) (u1) (u2) (v:𝒫❨A❩): (**)
       v ⊆ u1 ∩ u2 → v ⊆ u1.
 #A #u1 #u2 #v #Hv #r #Hr
 elim (Hv … Hr) -Hv -Hr //
@@ -40,12 +40,12 @@ lemma subset_le_and_dx (A) (u1) (u2) (v:𝒫❨A❩): (**)
 /3 width=1 by subset_and_in/
 qed.
 
-lemma subset_le_and_sn_refl_sn (A) (u1) (u2:𝒫❨A❩): (**)
+lemma subset_le_and_sx_refl_sx (A) (u1) (u2:𝒫❨A❩): (**)
       u1 ∩ u2 ⊆ u1.
-/2 width=4 by subset_le_and_inv_dx_sn/
+/2 width=4 by subset_le_and_inv_dx_sx/
 qed.
 
-lemma subset_le_and_sn_refl_dx (A) (u1:𝒫❨A❩) (u2): (**)
+lemma subset_le_and_sx_refl_dx (A) (u1:𝒫❨A❩) (u2): (**)
       u1 ∩ u2 ⊆ u2.
 /2 width=4 by subset_le_and_inv_dx_dx/
 qed.

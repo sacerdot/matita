@@ -38,7 +38,7 @@ interpretation
 
 (* Main constructions with eq ***********************************************)
 
-theorem canc_sn_eq (A) (x) (y) (z:A):
+theorem canc_sx_eq (A) (x) (y) (z:A):
         y = x → y = z → x = z.
 // qed-.
 

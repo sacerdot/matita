@@ -20,11 +20,11 @@ include "ground/arith/ynat_lt_le_lminus.ma".
 (* Constructions with yle and ylminus and yplus *****************************)
 
 (*** ylt_plus2_to_minus_inj2 *)
-lemma ylt_plus_dx_dx_lminus_sn (o) (x) (y):
+lemma ylt_plus_dx_dx_lminus_sx (o) (x) (y):
       yinj_nat o ≤ x → x < y + yinj_nat o → x - o < y.
 /2 width=1 by ylt_lminus_bi_dx/ qed.
 
 (*** ylt_plus2_to_minus_inj1 *)
-lemma ylt_plus_dx_sn_lminus_sn (o) (x) (y):
+lemma ylt_plus_dx_sx_lminus_sx (o) (x) (y):
       yinj_nat o ≤ x → x < yinj_nat o + y → x - o < y.
-/2 width=1 by ylt_plus_dx_dx_lminus_sn/ qed.
+/2 width=1 by ylt_plus_dx_dx_lminus_sx/ qed.

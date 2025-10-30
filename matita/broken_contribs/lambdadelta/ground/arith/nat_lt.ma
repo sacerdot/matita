@@ -96,7 +96,7 @@ lemma nlt_inv_succ_bi (m) (n): (⁤↑m) < (⁤↑n) → m < n.
 
 (*** lt_to_not_le lt_le_false *)
 lemma nlt_ge_false (m) (n): m < n → n ≤ m → ⊥.
-/3 width=4 by nle_inv_succ_sn_refl, nlt_nle_trans/ qed-.
+/3 width=4 by nle_inv_succ_sx_refl, nlt_nle_trans/ qed-.
 
 (*** lt_to_not_eq lt_refl_false *)
 lemma nlt_inv_refl (m): m < m → ⊥.
@@ -106,7 +106,7 @@ lemma nlt_inv_refl (m): m < m → ⊥.
 lemma nlt_inv_zero_dx (m): m < 𝟎 → ⊥.
 /2 width=4 by nlt_ge_false/ qed-.
 
-lemma nlt_inv_zero_sn_pos (n):
+lemma nlt_inv_zero_sx_pos (n):
       (𝟎) < n → ∃p. (⁤p) = n.
 *
 [ #H0 elim (nlt_inv_refl … H0)
@@ -121,7 +121,7 @@ lemma nlt_des_le (m) (n): m < n → m ≤ n.
 /2 width=3 by nle_trans/ qed-.
 
 (*** ltn_to_ltO *)
-lemma nlt_des_lt_zero_sn (m) (n): m < n → 𝟎 < n.
+lemma nlt_des_lt_zero_sx (m) (n): m < n → 𝟎 < n.
 /3 width=3 by nle_nlt_trans/ qed-.
 
 (* Main constructions *******************************************************)

@@ -84,7 +84,7 @@ lemma fbr_eq_inv_id_dx (x1):
 ]
 qed-.
 
-lemma fbr_eq_inv_next_sn (f1) (x2):
+lemma fbr_eq_inv_next_sx (f1) (x2):
       ↑f1 ≐ x2 →
       ∃∃f2. f1 ≐ f2 & ↑f2 = x2.
 #g1 #x2
@@ -98,7 +98,7 @@ lemma fbr_eq_inv_next_sn (f1) (x2):
 ]
 qed-.
 
-lemma fbr_eq_inv_push_sn (f1) (x2):
+lemma fbr_eq_inv_push_sx (f1) (x2):
       (⫯f1) ≐ x2 →
       ∨∨ ∃∃f2. f1 ≐ f2 & ⫯f2 = x2
        | ∧∧ f1 ≐ (𝐢) & (𝐢) = x2.
@@ -114,7 +114,7 @@ lemma fbr_eq_inv_push_sn (f1) (x2):
 ]
 qed-.
 
-lemma fbr_eq_inv_id_sn (x2):
+lemma fbr_eq_inv_id_sx (x2):
       (𝐢) ≐ x2 →
       ∨∨ ∃∃f2. (𝐢) ≐ f2 & ⫯f2 = x2
        | (𝐢) = x2.
@@ -141,7 +141,7 @@ qed-.
 lemma fbr_eq_inv_next_push (f1) (f2):
       ↑f1 ≐ ⫯f2 → ⊥.
 #f1 #f2 #Hf
-elim (fbr_eq_inv_next_sn … Hf) -Hf
+elim (fbr_eq_inv_next_sx … Hf) -Hf
 #g1 #_ #H0 destruct
 qed-.
 
@@ -155,7 +155,7 @@ qed-.
 lemma fbr_eq_inv_next_id (f1):
       ↑f1 ≐ (𝐢) → ⊥.
 #f1 #Hf
-elim (fbr_eq_inv_next_sn … Hf) -Hf
+elim (fbr_eq_inv_next_sx … Hf) -Hf
 #g1 #_ #H0 destruct
 qed-.
 
@@ -169,7 +169,7 @@ qed-.
 lemma fbr_eq_inv_push_bi (f1) (f2):
       (⫯f1) ≐ ⫯f2 → f1 ≐ f2.
 #f1 #f2 #Hf
-elim (fbr_eq_inv_push_sn … Hf) -Hf *
+elim (fbr_eq_inv_push_sx … Hf) -Hf *
 [ #g1 #Hg #H0 destruct //
 | #_ #H0 destruct
 ]
@@ -187,7 +187,7 @@ qed-.
 lemma fbr_eq_inv_push_id (f1):
       (⫯f1) ≐ (𝐢) → f1 ≐ (𝐢).
 #f1 #Hf
-elim (fbr_eq_inv_push_sn … Hf) -Hf *
+elim (fbr_eq_inv_push_sx … Hf) -Hf *
 [ #g2 #_ #H0 destruct
 | #Hg #_ //
 ]
@@ -206,12 +206,12 @@ theorem fbr_eq_repl:
         replace_2 … fbr_eq fbr_eq fbr_eq.
 #f1 #f2 #Hf elim Hf -f1 -f2
 [ * #f1 #f2 #_ #IH #x1 #Hx1 #x2 #Hx2
-  [ elim (fbr_eq_inv_next_sn … Hx1) -Hx1
-    elim (fbr_eq_inv_next_sn … Hx2) -Hx2
+  [ elim (fbr_eq_inv_next_sx … Hx1) -Hx1
+    elim (fbr_eq_inv_next_sx … Hx2) -Hx2
     #g2 #Hfg2 #H2 #g1 #Hfg1 #H1 destruct
     /3 width=1 by fbr_eq_rcons_bi/
-  | elim (fbr_eq_inv_push_sn … Hx1) -Hx1 *
-    elim (fbr_eq_inv_push_sn … Hx2) -Hx2 *
+  | elim (fbr_eq_inv_push_sx … Hx1) -Hx1 *
+    elim (fbr_eq_inv_push_sx … Hx2) -Hx2 *
     [ #g2 #Hfg2 #H2 #g1 #Hfg1 #H1 destruct
       /3 width=1 by fbr_eq_rcons_bi/
     | #Hf2 #H2 #g1 #Hfg1 #H1 destruct
@@ -222,8 +222,8 @@ theorem fbr_eq_repl:
     ]
   ]
 | #f2 #_ #IH #x1 #Hx1 #x2 #Hx2
-  elim (fbr_eq_inv_id_sn … Hx1) -Hx1
-  elim (fbr_eq_inv_push_sn … Hx2) -Hx2 *
+  elim (fbr_eq_inv_id_sx … Hx1) -Hx1
+  elim (fbr_eq_inv_push_sx … Hx2) -Hx2 *
   [ #g2 #Hfg2 #H2 * #g1 #Hg1 #H1 destruct
     /3 width=1 by fbr_eq_rcons_bi/
   | #Hf2 #H2 * #g1 #Hg1 #H1 destruct
@@ -233,8 +233,8 @@ theorem fbr_eq_repl:
   | #Hf2 #H2 #H1 destruct //
   ]
 | #f1 #_ #IH #x1 #Hx1 #x2 #Hx2
-  elim (fbr_eq_inv_push_sn … Hx1) -Hx1 *
-  elim (fbr_eq_inv_id_sn … Hx2) -Hx2
+  elim (fbr_eq_inv_push_sx … Hx1) -Hx1 *
+  elim (fbr_eq_inv_id_sx … Hx2) -Hx2
   [ * #g2 #Hg2 #H2 #g1 #Hfg1 #H1 destruct
     /3 width=1 by fbr_eq_rcons_bi/
   | #H2 #g1 #Hfg1 #H1 destruct
@@ -247,8 +247,8 @@ theorem fbr_eq_repl:
   generalize in match Hx1; -Hx1
   @(wf2_ind_nlt … (λx1,x2.❘x1❘+❘x2❘) … x1 x2) -x1 -x2
   #n #IH #x1 #x2 #Hn #Hx1 #Hx2 destruct
-  elim (fbr_eq_inv_id_sn … Hx1) -Hx1
-  elim (fbr_eq_inv_id_sn … Hx2) -Hx2
+  elim (fbr_eq_inv_id_sx … Hx1) -Hx1
+  elim (fbr_eq_inv_id_sx … Hx2) -Hx2
   [ * #g2 #Hg2 #H2 * #g1 #Hg1 #H1 destruct
     /3 width=1 by fbr_eq_rcons_bi/
   | #H2 * #g1 #Hg1 #H1 destruct
@@ -272,7 +272,7 @@ lemma fbr_eq_trans:
 /2 width=5 by fbr_eq_repl/
 qed-.
 
-lemma fbr_eq_canc_sn:
+lemma fbr_eq_canc_sx:
       left_cancellable … fbr_eq.
 /2 width=5 by fbr_eq_repl/
 qed-.
@@ -292,14 +292,14 @@ lemma fbr_id_push_id:
 /2 width=1 by fbr_eq_id_push, fbr_eq_id_bi/
 qed.
 
-lemma fbr_append_eq_repl_sn (f):
+lemma fbr_append_eq_repl_sx (f):
       compatible_2_fwd … fbr_eq fbr_eq (λg.g●f).
 #f elim f -f //
 #b #f #IH #g1 #g2 #Hg
 /3 width=1 by fbr_eq_rcons_bi/
 qed.
 
-lemma fbr_push_sn_eq_repl:
+lemma fbr_push_sx_eq_repl:
       compatible_2_fwd … fbr_eq fbr_eq (λf.𝗽◗f).
 #f1 #f2 #Hf elim Hf -f1 -f2 //
 [ /2 width=1 by fbr_eq_rcons_bi/

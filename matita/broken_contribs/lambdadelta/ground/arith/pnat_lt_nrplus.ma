@@ -22,6 +22,6 @@ include "ground/arith/pnat_lt.ma".
 lemma plt_nrplus_bi_dx (n) (p1) (p2):
       p1 < p2 → p1+n < p2+n.
 #n #p1 #p2 #Hp
-@plt_i >nrplus_succ_sn
+@plt_i >nrplus_succ_sx
 /2 width=1 by ple_nrplus_bi_dx/
 qed.

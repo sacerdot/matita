@@ -23,8 +23,8 @@ include "ground/subsets/subset_sum.ma".
 theorem subset_sum_le_repl (A1) (A2):
         compatible_3 … (subset_le …) (subset_le …) (subset_le …) (subset_sum A1 A2).
 #A1 #A2 #u1 #u2 #Hu #v1 #v2 #Hv * #a #H0
-[ lapply (subset_in_inv_sum_sn ????? H0)
+[ lapply (subset_in_inv_sum_sx ????? H0)
 | lapply (subset_in_inv_sum_dx ????? H0)
 ] -H0 #Ha
-/3 width=1 by subset_in_sum_dx, subset_in_sum_sn/
+/3 width=1 by subset_in_sum_dx, subset_in_sum_sx/
 qed.

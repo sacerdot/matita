@@ -42,12 +42,12 @@ qed.
 
 (* Advanced constructions ***************************************************)
 
-lemma nminus_pred_sn (m) (n): ⫰(m - n) = ⫰m - n.
+lemma nminus_pred_sx (m) (n): ⫰(m - n) = ⫰m - n.
 #m #n @(niter_appl … npred)
 qed.
 
 (*** minus_O_n *)
-lemma nminus_zero_sn (n): 𝟎 = 𝟎 - n.
+lemma nminus_zero_sx (n): 𝟎 = 𝟎 - n.
 #n @(nat_ind_succ … n) -n //
 qed.
 
@@ -57,7 +57,7 @@ lemma nminus_succ_bi (m) (n): m - n = (⁤↑m) - (⁤↑n).
 <nminus_succ_dx <nminus_zero_dx <nminus_zero_dx //
 qed.
 
-lemma nminus_succ_dx_pred_sn (m) (n): ⫰m - n = m - (⁤↑n).
+lemma nminus_succ_dx_pred_sx (m) (n): ⫰m - n = m - (⁤↑n).
 // qed-.
 
 (*** minus_n_n *)
@@ -66,7 +66,7 @@ lemma nminus_refl (m): 𝟎 = m - m.
 qed.
 
 (*** minus_Sn_n *)
-lemma nminus_succ_sn_refl (m): (⁤𝟏) = (⁤↑m) - m.
+lemma nminus_succ_sx_refl (m): (⁤𝟏) = (⁤↑m) - m.
 #m @(nat_ind_succ … m) -m //
 qed.
 

@@ -25,7 +25,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma subset_or_in_sn (A) (u1) (u2) (p):
+lemma subset_or_in_sx (A) (u1) (u2) (p):
       p ϵ u1 → p ϵ{A} u1 ∪ u2.
 /2 width=1 by or_introl/
 qed.

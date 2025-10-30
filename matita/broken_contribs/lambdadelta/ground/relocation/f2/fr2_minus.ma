@@ -41,7 +41,7 @@ interpretation
 (* Basic inversions *********************************************************)
 
 (*** minuss_inv_nil1 *)
-lemma fr2_minus_inv_empty_sn (f2) (i):
+lemma fr2_minus_inv_empty_sx (f2) (i):
       𝐞 ▭ i ≘ f2 → f2 = 𝐞.
 #f2 #i @(insert_eq_1 … (𝐞))
 #f1 * -f1 -f2 -i
@@ -52,7 +52,7 @@ lemma fr2_minus_inv_empty_sn (f2) (i):
 qed-.
 
 (*** minuss_inv_cons1 *)
-lemma fr2_minus_inv_lcons_sn (f1) (f2) (d) (h) (i):
+lemma fr2_minus_inv_lcons_sx (f1) (f2) (d) (h) (i):
       ❨d, h❩◗f1 ▭ i ≘ f2 →
       ∨∨ ∧∧ d ≤ i & f1 ▭ h+i ≘ f2
        | ∃∃f. i < d & f1 ▭ i ≘ f & f2 = ❨d-i,h❩◗f.
@@ -65,18 +65,18 @@ lemma fr2_minus_inv_lcons_sn (f1) (f2) (d) (h) (i):
 qed-.
 
 (*** minuss_inv_cons1_ge *)
-lemma fr2_minus_inv_lcons_sn_ge (f1) (f2) (d) (h) (i):
+lemma fr2_minus_inv_lcons_sx_ge (f1) (f2) (d) (h) (i):
       ❨d, h❩◗f1 ▭ i ≘ f2 → d ≤ i → f1 ▭ h+i ≘ f2.
 #f1 #f2 #d #h #i #H
-elim (fr2_minus_inv_lcons_sn … H) -H * // #f #Hid #_ #_ #Hdi
+elim (fr2_minus_inv_lcons_sx … H) -H * // #f #Hid #_ #_ #Hdi
 elim (nlt_ge_false … Hid Hdi)
 qed-.
 
 (*** minuss_inv_cons1_lt *)
-lemma fr2_minus_inv_lcons_sn_lt (f1) (f2) (d) (h) (i):
+lemma fr2_minus_inv_lcons_sx_lt (f1) (f2) (d) (h) (i):
       ❨d, h❩◗f1 ▭ i ≘ f2 → i < d →
       ∃∃f. f1 ▭ i ≘ f & f2 = ❨d-i,h❩◗f.
-#f1 #f2 #d #h #i #H elim (fr2_minus_inv_lcons_sn … H) -H *
+#f1 #f2 #d #h #i #H elim (fr2_minus_inv_lcons_sx … H) -H *
 [ #Hdi #_ #Hid elim (nlt_ge_false … Hid Hdi)
 | /2 width=3 by ex2_intro/
 ]

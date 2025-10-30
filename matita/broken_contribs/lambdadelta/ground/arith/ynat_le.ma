@@ -60,7 +60,7 @@ elim (yle_inv_inj_dx ? (𝟎) H) -H #m #Hm #H destruct
 qed-.
 
 (*** yle_inv_Y1 *)
-lemma yle_inv_inf_sn (y): ∞ ≤ y → ∞ = y.
+lemma yle_inv_inf_sx (y): ∞ ≤ y → ∞ = y.
 #y @(insert_eq_1 … (∞))
 #x #H elim H -x -y //
 #m #n #_ #H
@@ -73,14 +73,14 @@ lemma yle_antisym (x) (y):
 #x #y #H elim H -x -y
 [ #m #n #Hmn #Hnm
   <(nle_antisym … Hmn) -Hmn /2 width=1 by yle_inv_inj_bi/
-| /2 width=1 by yle_inv_inf_sn/
+| /2 width=1 by yle_inv_inf_sx/
 ]
 qed-.
 
 (* Basic constructions ******************************************************)
 
 (*** le_O1 *)
-lemma yle_zero_sn (y): 𝟎 ≤ y.
+lemma yle_zero_sx (y): 𝟎 ≤ y.
 #y @(ynat_split_nat_inf … y) -y
 /2 width=1 by yle_inj/
 qed.
@@ -109,6 +109,6 @@ theorem yle_trans: Transitive … yle.
 #x #y * -x -y
 [ #m #n #Hxy #z @(ynat_split_nat_inf … z) -z //
   /4 width=3 by yle_inv_inj_bi, nle_trans, yle_inj/
-| #x #z #H <(yle_inv_inf_sn … H) -H //
+| #x #z #H <(yle_inv_inf_sx … H) -H //
 ]
 qed-.

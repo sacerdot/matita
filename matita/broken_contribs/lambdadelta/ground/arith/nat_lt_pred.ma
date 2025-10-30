@@ -29,11 +29,11 @@ qed-.
 
 (*** lt_inv_gen *)
 lemma nlt_inv_gen (m) (n): m < n → ∧∧ m ≤ ⫰n & n ϵ 𝐏.
-/2 width=1 by nle_inv_succ_sn/ qed-.
+/2 width=1 by nle_inv_succ_sx/ qed-.
 
 (*** lt_inv_S1 *)
-lemma nlt_inv_succ_sn (m) (n): (⁤↑m) < n → ∧∧ m < ⫰n & n ϵ 𝐏.
-/2 width=1 by nle_inv_succ_sn/ qed-.
+lemma nlt_inv_succ_sx (m) (n): (⁤↑m) < n → ∧∧ m < ⫰n & n ϵ 𝐏.
+/2 width=1 by nle_inv_succ_sx/ qed-.
 
 lemma nlt_inv_pred_dx (m) (n): m < ⫰n → (⁤↑m) < n.
 #m #n #H >(nlt_des_gen (𝟎) n)
@@ -49,7 +49,7 @@ qed-.
 
 (* Constructions with npred *************************************************)
 
-lemma nlt_zero_sn (n): n ϵ 𝐏 → 𝟎 < n.
+lemma nlt_zero_sx (n): n ϵ 𝐏 → 𝟎 < n.
 // qed.
 
 (*** monotonic_lt_pred *)

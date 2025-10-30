@@ -25,21 +25,21 @@ lemma nle_plus_bi_dx (m) (n1) (n2): n1 ≤ n2 → n1 + m ≤ n2 + m.
 qed.
 
 (*** monotonic_le_plus_r *)
-lemma nle_plus_bi_sn (m) (n1) (n2): n1 ≤ n2 → m + n1 ≤ m + n2.
+lemma nle_plus_bi_sx (m) (n1) (n2): n1 ≤ n2 → m + n1 ≤ m + n2.
 #m #n1 #n2 #H <nplus_comm <nplus_comm in ⊢ (??%);
 /2 width=1 by nle_plus_bi_dx/
 qed.
 
 (*** le_plus_n_r *)
 lemma nle_plus_dx_dx_refl (m) (n): m ≤ m + n.
-/2 width=1 by nle_plus_bi_sn/ qed.
+/2 width=1 by nle_plus_bi_sx/ qed.
 
 (*** le_plus_n *)
-lemma nle_plus_dx_sn_refl (m) (n): m ≤ n + m.
-/2 width=1 by nle_plus_bi_sn/ qed.
+lemma nle_plus_dx_sx_refl (m) (n): m ≤ n + m.
+/2 width=1 by nle_plus_bi_sx/ qed.
 
 (*** le_plus_a *)
-lemma nle_plus_dx_sn (o) (m) (n): n ≤ m → n ≤ o + m.
+lemma nle_plus_dx_sx (o) (m) (n): n ≤ m → n ≤ o + m.
 /2 width=3 by nle_trans/ qed.
 
 (*** le_plus_b *)
@@ -51,12 +51,12 @@ lemma nle_plus_dx_dx (o) (m) (n): n ≤ m → n ≤ m + o.
 (*** le_plus *)
 theorem nle_plus_bi (m1) (m2) (n1) (n2):
         m1 ≤ m2 → n1 ≤ n2 → m1 + n1 ≤ m2 + n2.
-/3 width=3 by nle_plus_bi_dx, nle_plus_bi_sn, nle_trans/ qed.
+/3 width=3 by nle_plus_bi_dx, nle_plus_bi_sx, nle_trans/ qed.
 
 (* Inversions with nplus ****************************************************)
 
 (*** le_plus_b *)
-lemma nle_inv_plus_sn_dx (m) (n) (o): n + o ≤ m → n ≤ m.
+lemma nle_inv_plus_sx_dx (m) (n) (o): n + o ≤ m → n ≤ m.
 /2 width=3 by nle_trans/ qed.
 
 (*** plus_le_0 *)
@@ -69,33 +69,33 @@ lemma nle_inv_plus_bi_dx (o) (m) (n): n + o ≤ m + o → n ≤ m.
 qed-.
 
 (*** le_plus_to_le *)
-lemma nle_inv_plus_bi_sn (o) (m) (n): o + n ≤ o + m → n ≤ m.
+lemma nle_inv_plus_bi_sx (o) (m) (n): o + n ≤ o + m → n ≤ m.
 /2 width=2 by nle_inv_plus_bi_dx/ qed-.
 
 (* Destructions with nplus **************************************************)
 
-(*** plus2_le_sn_sn *)
-lemma nplus_2_des_le_sn_sn (m1) (m2) (n1) (n2):
+(*** plus2_le_sx_sx *)
+lemma nplus_2_des_le_sx_sx (m1) (m2) (n1) (n2):
       m1 + n1 = m2 + n2 → m1 ≤ m2 → n2 ≤ n1.
 #m1 #m2 #n1 #n2 #H #Hm
 lapply (nle_plus_bi_dx n1 … Hm) -Hm >H -H
-/2 width=2 by nle_inv_plus_bi_sn/
+/2 width=2 by nle_inv_plus_bi_sx/
 qed-.
 
-(*** plus2_le_sn_dx *)
-lemma nplus_2_des_le_sn_dx (m1) (m2) (n1) (n2):
+(*** plus2_le_sx_dx *)
+lemma nplus_2_des_le_sx_dx (m1) (m2) (n1) (n2):
       m1 + n1 = n2 + m2 → m1 ≤ m2 → n2 ≤ n1.
 #m1 #m2 #n1 #n2 <nplus_comm in ⊢ (???%→?);
-/2 width=4 by nplus_2_des_le_sn_sn/ qed-.
+/2 width=4 by nplus_2_des_le_sx_sx/ qed-.
 
-(*** plus2_le_dx_sn *)
-lemma nplus_2_des_le_dx_sn (m1) (m2) (n1) (n2):
+(*** plus2_le_dx_sx *)
+lemma nplus_2_des_le_dx_sx (m1) (m2) (n1) (n2):
       n1 + m1 = m2 + n2 → m1 ≤ m2 → n2 ≤ n1.
 #m1 #m2 #n1 #n2 <nplus_comm in ⊢ (??%?→?);
-/2 width=4 by nplus_2_des_le_sn_sn/ qed-.
+/2 width=4 by nplus_2_des_le_sx_sx/ qed-.
 
 (*** plus2_le_dx_dx *)
 lemma nplus_2_des_le_dx_dx (m1) (m2) (n1) (n2):
       n1 + m1 = n2 + m2 → m1 ≤ m2 → n2 ≤ n1.
 #m1 #m2 #n1 #n2 <nplus_comm in ⊢ (??%?→?);
-/2 width=4 by nplus_2_des_le_sn_dx/ qed-.
+/2 width=4 by nplus_2_des_le_sx_dx/ qed-.

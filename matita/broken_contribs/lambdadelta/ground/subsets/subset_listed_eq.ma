@@ -19,7 +19,7 @@ include "ground/subsets/subset_listed_le.ma".
 
 (* Constructions with subset_eq *********************************************)
 
-lemma subset_eq_empty_sn (A) (u):
+lemma subset_eq_empty_sx (A) (u):
       u ⊆ Ⓕ → Ⓕ{A} ⇔ u.
 #A #u @conj //
 qed.

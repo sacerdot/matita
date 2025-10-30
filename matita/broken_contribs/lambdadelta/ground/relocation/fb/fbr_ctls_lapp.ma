@@ -27,10 +27,10 @@ lemma fbr_lapp_plus_dx_xapp (f) (m) (n):
 <fbr_xapp_succ_lapp <nplus_succ_dx //
 qed.
 
-lemma fbr_lapp_plus_sn_xapp (f) (m) (n):
+lemma fbr_lapp_plus_sx_xapp (f) (m) (n):
       (⫰*[n]f)＠§❨m❩+f＠❨n❩ = f＠§❨m+n❩.
 #f #m #n
 <fbr_lapp_xapp in ⊢ (???%);
->nplus_succ_sn <fbr_xapp_plus
-<fbr_xapp_succ_lapp <nplus_succ_sn //
+>nplus_succ_sx <fbr_xapp_plus
+<fbr_xapp_succ_lapp <nplus_succ_sx //
 qed.

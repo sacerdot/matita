@@ -19,7 +19,7 @@ include "ground/subsets/subset_listed_1.ma".
 
 (* Constructions with subset_le *********************************************)
 
-lemma subset_single_le_sn (A) (u) (a):
+lemma subset_single_le_sx (A) (u) (a):
       a ϵ u → ❴a:A❵ ⊆ u.
 #A #u #a #Ha #b #Hb
 lapply (subset_in_inv_single ??? Hb) -Hb #H0 destruct //
@@ -27,8 +27,8 @@ qed.
 
 (* Inversions with subset_le ************************************************)
 
-lemma subset_le_inv_single_sn (A) (u) (a):
+lemma subset_le_inv_single_sx (A) (u) (a):
       ❴a:A❵ ⊆ u → a ϵ u.
 #A #u #a #Ha
-elim (subset_le_inv_listed_lcons_sn ???? Ha) -Ha #Ha #_ //
+elim (subset_le_inv_listed_lcons_sx ???? Ha) -Ha #Ha #_ //
 qed-.

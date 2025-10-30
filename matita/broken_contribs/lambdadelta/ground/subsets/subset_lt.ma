@@ -53,7 +53,7 @@ qed.
 
 (* Constructions with subset_nimply *****************************************)
 
-lemma subset_lt_nimp_sn_bi (A) (u) (v1) (v2):
+lemma subset_lt_nimp_sx_bi (A) (u) (v1) (v2):
       v2 ⧵{A} v1 ⊆ u → v1 ⊂ v2 → u ⧵ v2 ⊂ u ⧵ v1.
 #A #u #v1 #v2 #Hu * #Hv #H0
 elim (subsets_inh_inv_in … H0) -H0 #a #Ha

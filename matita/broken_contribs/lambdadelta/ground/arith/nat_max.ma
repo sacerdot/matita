@@ -27,7 +27,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 (*** max_O1 *)
-lemma nmax_zero_sn (n2): n2 = (𝟎 ∨ n2).
+lemma nmax_zero_sx (n2): n2 = (𝟎 ∨ n2).
 * //
 qed.
 

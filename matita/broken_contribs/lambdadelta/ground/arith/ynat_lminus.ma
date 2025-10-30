@@ -17,7 +17,7 @@ include "ground/arith/ynat_pred.ma".
 
 (* LEFT SUBTRACTION FOR NON-NEGATIVE INTEGERS WITH INFINITY *****************)
 
-(*** yminus_sn *)
+(*** yminus_sx *)
 definition ylminus (x) (n): ynat ≝
            (ypred^n) x.
 
@@ -32,7 +32,7 @@ lemma ylminus_zero_dx (x:ynat): x = x - 𝟎 .
 // qed.
 
 (*** yminus_pred1 *)
-lemma yminus_pred_sn (x) (n): ⫰(x-n) = ⫰x - n.
+lemma yminus_pred_sx (x) (n): ⫰(x-n) = ⫰x - n.
 #x #n @(niter_appl … ypred)
 qed.
 
@@ -46,14 +46,14 @@ lemma ylminus_unit_dx (x): ⫰x = x - (⁤𝟏).
 // qed.
 
 (*** yminus_Y_inj *)
-lemma ylminus_inf_sn (n): ∞ = ∞ - n.
+lemma ylminus_inf_sx (n): ∞ = ∞ - n.
 #n @(nat_ind_succ … n) -n //
 qed.
 
 (* Constructions with nminus ************************************************)
 
 (*** yminus_inj *)
-lemma ylminus_inj_sn (m) (n): yinj_nat (m - n) = yinj_nat m - n.
+lemma ylminus_inj_sx (m) (n): yinj_nat (m - n) = yinj_nat m - n.
 #m #n
 @(niter_compose ???? yinj_nat)
 @ypred_inj
@@ -62,7 +62,7 @@ qed.
 (* Advanced constructions ***************************************************)
 
 (*** yminus_O1 *)
-lemma ylminus_zero_sn (n): 𝟎 = 𝟎 - n.
+lemma ylminus_zero_sx (n): 𝟎 = 𝟎 - n.
 // qed.
 
 (*** yminus_refl *)

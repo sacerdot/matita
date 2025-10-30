@@ -58,7 +58,7 @@ lemma yplus_succ_dx (x1) (x2): ⫯(x1 + x2) = x1 + ⫯x2.
 qed.
 
 (*** yplus_succ1 *)
-lemma yplus_succ_sn (x1) (x2): ⫯(x1 + x2) = ⫯x1 + x2.
+lemma yplus_succ_sx (x1) (x2): ⫯(x1 + x2) = ⫯x1 + x2.
 #x1 #x2 @(ynat_split_nat_inf … x2) -x2 //
 #n2 <yplus_inj_dx <yplus_inj_dx
 @niter_appl
@@ -81,12 +81,12 @@ qed.
 (* Advanced constructions ***************************************************)
 
 (*** ysucc_iter_Y yplus_Y1 *)
-lemma yplus_inf_sn (x): ∞ = ∞ + x.
+lemma yplus_inf_sx (x): ∞ = ∞ + x.
 #x @(ynat_ind_succ … x) -x //
 qed.
 
 (*** yplus_O1 *)
-lemma yplus_zero_sn (x): x = 𝟎 + x.
+lemma yplus_zero_sx (x): x = 𝟎 + x.
 #x @(ynat_split_nat_inf … x) -x //
 qed.
 
@@ -102,7 +102,7 @@ lemma yplus_assoc: associative … yplus.
 #x1 #x2 @(ynat_split_nat_inf … x2) -x2 //
 #n2 #x3 @(ynat_split_nat_inf … x3) -x3 //
 #n3 @(ynat_split_nat_inf … x1) -x1 //
-<yplus_inf_sn //
+<yplus_inf_sx //
 qed.
 
 (*** yplus_comm_23 *)
@@ -146,13 +146,13 @@ lemma eq_inv_plus_inf (x) (y):
 /2 width=1 by eq_inv_inf_plus/ qed-.
 
 (*** discr_yplus_x_xy discr_yplus_xy_x *)
-lemma yplus_refl_sn (x) (y):
+lemma yplus_refl_sx (x) (y):
       x = x + y → ∨∨ ∞ = x | 𝟎 = y.
 #x @(ynat_split_nat_inf … x) -x /2 width=1 by or_introl/
 #m #y @(ynat_split_nat_inf … y) -y /2 width=1 by or_introl/
 #n <yplus_inj_bi #H
 lapply (eq_inv_yinj_nat_bi … H) -H #H
-<(nplus_refl_sn … H) -n //
+<(nplus_refl_sx … H) -n //
 qed-.
 
 (*** yplus_inv_monotonic_dx_inj *)
@@ -163,7 +163,7 @@ lemma eq_inv_yplus_bi_dx_inj (o) (x) (y):
 /3 width=1 by eq_inv_ysucc_bi/
 qed-.
 
-lemma eq_inv_yplus_bi_sn_inj (o) (x) (y):
+lemma eq_inv_yplus_bi_sx_inj (o) (x) (y):
       yinj_nat o + x = yinj_nat o + y → x = y.
 /2 width=2 by eq_inv_yplus_bi_dx_inj/ qed-.
 
@@ -174,7 +174,7 @@ lemma eq_inv_inj_yplus (o) (x) (y):
       yinj_nat o = x + y →
       ∃∃m,n. o = m + n & x = yinj_nat m & y = yinj_nat n.
 #o #x @(ynat_split_nat_inf … x) -x
-[| #y <yplus_inf_sn #H elim (eq_inv_yinj_nat_inf … H) ]
+[| #y <yplus_inf_sx #H elim (eq_inv_yinj_nat_inf … H) ]
 #m #y @(ynat_split_nat_inf … y) -y
 [| #H elim (eq_inv_yinj_nat_inf … H) ]
 #n <yplus_inj_bi #H

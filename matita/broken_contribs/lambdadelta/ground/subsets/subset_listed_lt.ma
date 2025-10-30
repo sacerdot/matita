@@ -35,7 +35,7 @@ lemma subset_lt_listed_lcons_bi (A) (a) (l1) (l2):
 #A #a #l1 #l2 #Ha #Hl
 @(subset_le_lt_trans … (subset_le_listed_lcons_or …))
 @(subset_lt_le_trans … (subset_le_or_listed_lcons …))
-/3 width=5 by subset_nol_inv_single_sn, subset_lt_or_bi_sn/
+/3 width=5 by subset_nol_inv_single_sx, subset_lt_or_bi_sx/
 qed.
 
 (* Inversions with subset_lt ************************************************)
@@ -72,20 +72,20 @@ elim l2 -l2 [ #u #_ #H1b #_ | #a #l2 #IH #u #H1u #H1b #H2b ]
     | /4 width=5 by subset_lt_listed_lcons_dx, ex3_intro/
     ]
   | elim (subset_in_listed_dec … a l2) [3: // ] #Ha
-    [ lapply (subset_le_trans … H1u … (subset_le_listed_lcons_sn …)) -H1u [ // ] #H1u
-      lapply (subset_in_le_trans ???? H1b (subset_le_listed_lcons_sn …)) -H1b [ // ] #H1b
+    [ lapply (subset_le_trans … H1u … (subset_le_listed_lcons_sx …)) -H1u [ // ] #H1u
+      lapply (subset_in_le_trans ???? H1b (subset_le_listed_lcons_sx …)) -H1b [ // ] #H1b
       elim (IH … H1u H1b H2b) -b -H1u #l1 #Hl1 #H1l #H2l
       /4 width=4 by subset_listed_le_lcons_dx, subset_lt_le_trans, nlt_succ_dx_trans, ex3_intro/
-    | lapply (subset_single_le_sn ??? H1b) -H1b #H1b
+    | lapply (subset_single_le_sx ??? H1b) -H1b #H1b
       lapply (subset_le_trans … H1u … (subset_le_listed_lcons_or …)) -H1u #H1u
       lapply (subset_le_trans … H1b … (subset_le_listed_lcons_or …)) -H1b #H1b
       lapply (subset_le_nimp_bi ?? (❴a❵) ? (❴a❵) H1u ?) -H1u // #H1u
       lapply (subset_le_nimp_bi ?? (❴a❵) ? (❴a❵) H1b ?) -H1b // #H1b
-      lapply (subset_le_trans … H1u … (subset_le_nimp_or_sn_refl_sn …)) -H1u #H1u
-      lapply (subset_le_trans … H1b … (subset_le_nimp_or_sn_refl_sn …)) -H1b #H1b
-      lapply (subset_le_trans ??? (subset_le_nimp_dx_refl_sn_bck ????) ? H1b) -H1b
+      lapply (subset_le_trans … H1u … (subset_le_nimp_or_sx_refl_sx …)) -H1u #H1u
+      lapply (subset_le_trans … H1b … (subset_le_nimp_or_sx_refl_sx …)) -H1b #H1b
+      lapply (subset_le_trans ??? (subset_le_nimp_dx_refl_sx_bck ????) ? H1b) -H1b
       [ /3 width=5 by subset_nol_inv_single_bi/ ] #H1b
-      lapply (subset_le_inv_single_sn ??? H1b) -H1b #H1b
+      lapply (subset_le_inv_single_sx ??? H1b) -H1b #H1b
       elim (IH … H1u H1b …) -IH -H1u -H1b
       [ -b | @(subset_nin_ge_trans ???? H2b) -H2b // ] #l1 #Hl1 #H1l #H2l
       lapply (subset_or_le_repl A (❴a❵) (❴a❵) … Hl1) [ // ] -Hl1 #Hl1

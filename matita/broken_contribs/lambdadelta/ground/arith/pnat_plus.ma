@@ -35,12 +35,12 @@ lemma pplus_succ_dx (p) (q):
 
 (* Advanced constructions (semigroup properties) ****************************)
 
-lemma pplus_succ_sn (p) (q):
+lemma pplus_succ_sx (p) (q):
       ↑(p+q) = ↑p + q.
 #p #q @(piter_appl … psucc)
 qed.
 
-lemma pplus_unit_sn (p):
+lemma pplus_unit_sx (p):
       ↑p = 𝟏 + p.
 #p elim p -p //
 qed.
@@ -82,7 +82,7 @@ lemma eq_inv_pplus_bi_dx (r) (p) (q):
 #r elim r -r /3 width=1 by eq_inv_psucc_bi/
 qed-.
 
-lemma eq_inv_pplus_bi_sn (r) (p) (q):
+lemma eq_inv_pplus_bi_sx (r) (p) (q):
       r + p = r + q → p = q.
 #r #p #q <pplus_comm <pplus_comm in ⊢ (???%→?);
 /2 width=2 by eq_inv_pplus_bi_dx/

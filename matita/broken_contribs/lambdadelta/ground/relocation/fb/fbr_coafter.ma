@@ -37,7 +37,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma fbr_coafter_id_sn (f):
+lemma fbr_coafter_id_sx (f):
       f = 𝐢~•f.
 // qed.
 
@@ -49,7 +49,7 @@ lemma fbr_coafter_push_rcons (g) (f) (b):
       (g~•f)◖b = (⫯g)~•(f◖b).
 // qed.
 
-lemma fbr_coafter_next_sn (g) (f):
+lemma fbr_coafter_next_sx (g) (f):
       (⫯(g~•f)) = (↑g)~•f.
 // qed.
 
@@ -59,9 +59,9 @@ lemma fbr_coafter_inj_dx (g):
       injective_2_fwd … (eq …) (eq …) (λf.g~•f).
 #g elim g -g
 [ #f1 #f2
-  <fbr_coafter_id_sn <fbr_coafter_id_sn //
+  <fbr_coafter_id_sx <fbr_coafter_id_sx //
 | * #g #IH #f1 #f2
-  [ <fbr_coafter_next_sn <fbr_coafter_next_sn
+  [ <fbr_coafter_next_sx <fbr_coafter_next_sx
   | cases f1 -f1 [| #b1 #f1 ] cases f2 [2,4: #b2 #f2 ] //
     [ <fbr_coafter_push_id <fbr_coafter_push_rcons
     | <fbr_coafter_push_rcons <fbr_coafter_push_rcons

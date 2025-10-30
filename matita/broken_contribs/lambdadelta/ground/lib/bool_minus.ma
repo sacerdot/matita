@@ -26,7 +26,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma bninus_false_sn (b):
+lemma bninus_false_sx (b):
       ⓕ = ⓕ ↛ b.
 // qed.
 

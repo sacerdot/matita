@@ -31,7 +31,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma subset_in_sum_sn (A1) (A2) (u1) (u2) (a):
+lemma subset_in_sum_sx (A1) (A2) (u1) (u2) (a):
       a ϵ u1 → in_1_2 A1 A2 a ϵ u1 ⊔ u2.
 #A1 #A2 #u1 #u2 #a #Ha //
 qed.
@@ -43,7 +43,7 @@ qed.
 
 (* Basic inversions *********************************************************)
 
-lemma subset_in_inv_sum_sn (A1) (A2) (u1) (u2) (a1):
+lemma subset_in_inv_sum_sx (A1) (A2) (u1) (u2) (a1):
       in_1_2 A1 A2 a1 ϵ u1 ⊔ u2 → a1 ϵ u1.
 // qed-.
 

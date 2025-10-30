@@ -47,20 +47,20 @@ lemma niter_plus (A) (f) (n1) (n2):
 #A #f #n1 #n2 @(nat_ind_succ … n2) -n2 //
 #n2 #IH <nplus_succ_dx
 @(exteq_trans … (niter_succ …))
-@(exteq_canc_sn ?????? (compose_repl_fwd_dx … IH)) -IH
+@(exteq_canc_sx ?????? (compose_repl_fwd_dx … IH)) -IH
 @(exteq_trans … (compose_assoc …))
-/2 width=1 by compose_repl_fwd_sn/
+/2 width=1 by compose_repl_fwd_sx/
 qed.
 
 (* Advanced constructions (semigroup properties) ****************************)
 
 (*** plus_S1 *)
-lemma nplus_succ_sn (m) (n): (⁤↑(m+n)) = (⁤↑m) + n.
+lemma nplus_succ_sx (m) (n): (⁤↑(m+n)) = (⁤↑m) + n.
 #m #n @(niter_appl … (npos∘npsucc))
 qed.
 
 (*** plus_O_n *)
-lemma nplus_zero_sn (m): m = 𝟎 + m.
+lemma nplus_zero_sx (m): m = 𝟎 + m.
 #m @(nat_ind_succ … m) -m //
 qed.
 
@@ -76,8 +76,8 @@ qed.
 
 (* Helper constructions *****************************************************)
 
-(*** plus_SO_sn *)
-lemma nplus_unit_sn (n): (⁤↑n) = (⁤𝟏) + n.
+(*** plus_SO_sx *)
+lemma nplus_unit_sx (n): (⁤↑n) = (⁤𝟏) + n.
 #n <nplus_comm // qed.
 
 lemma nplus_succ_shift (m) (n): (⁤↑m) + n = m + (⁤↑n).
@@ -114,13 +114,13 @@ lemma eq_inv_nplus_bi_dx (o) (m) (n): m + o = n + o → m = n.
 qed-.
 
 (*** injective_plus_r *)
-lemma eq_inv_nplus_bi_sn (o) (m) (n): o + m = o + n → m = n.
+lemma eq_inv_nplus_bi_sx (o) (m) (n): o + m = o + n → m = n.
 #o #m #n <nplus_comm <nplus_comm in ⊢ (???%→?);
 /2 width=2 by eq_inv_nplus_bi_dx/
 qed-.
 
 (*** plus_xSy_x_false *)
-lemma succ_nplus_refl_sn (m) (n): m = (⁤↑(m + n)) → ⊥.
+lemma succ_nplus_refl_sx (m) (n): m = (⁤↑(m + n)) → ⊥.
 #m @(nat_ind_succ … m) -m
 [ /2 width=2 by eq_inv_zero_npos/
 | #m #IH #n #H
@@ -135,7 +135,7 @@ lemma nplus_refl_dx (m) (n): n = m + n → 𝟎 = m.
 qed-.
 
 (*** discr_plus_x_xy *)
-lemma nplus_refl_sn (m) (n): m = m + n → 𝟎 = n.
+lemma nplus_refl_sx (m) (n): m = m + n → 𝟎 = n.
 #m #n <nplus_comm
 /2 width=2 by nplus_refl_dx/
 qed-.

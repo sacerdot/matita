@@ -23,6 +23,6 @@ lemma fbr_after_pushs_uni (g) (n):
       ↑*[n]g = ⫯*[n]g•𝐮❨n❩.
 // qed.
 
-lemma fbr_after_uni_sn (f) (n):
+lemma fbr_after_uni_sx (f) (n):
       ↑*[n]f = 𝐮❨n❩•f.
 // qed.

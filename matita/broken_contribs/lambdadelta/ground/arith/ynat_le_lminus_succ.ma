@@ -20,10 +20,10 @@ include "ground/arith/ynat_le_lminus.ma".
 (* Constructions with ylminus and ysucc *************************************)
 
 (*** yminus_succ1_inj *)
-lemma ylminus_succ_sn (x) (n):
+lemma ylminus_succ_sx (x) (n):
       yinj_nat n ≤ x → ⫯(x - n) = ⫯x - n.
 #x @(ynat_split_nat_inf … x) -x //
 #m #n #Hnm
-<ylminus_inj_sn <ysucc_inj <ysucc_inj <ylminus_inj_sn
-<nminus_succ_sn /2 width=1 by yle_inv_inj_bi/
+<ylminus_inj_sx <ysucc_inj <ysucc_inj <ylminus_inj_sx
+<nminus_succ_sx /2 width=1 by yle_inv_inj_bi/
 qed-.

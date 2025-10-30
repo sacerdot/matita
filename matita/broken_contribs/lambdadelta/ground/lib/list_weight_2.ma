@@ -26,7 +26,7 @@ lemma list_weight_2_unfold (A) (B) (l1) (l2):
       ❘l1❘+❘l2❘ = list_weight_2 A B l1 l2.
 // qed-.
 
-lemma list_weight_2_lcons_sn (A) (B) (l1) (l2) (a):
+lemma list_weight_2_lcons_sx (A) (B) (l1) (l2) (a):
       (⁤↑(list_weight_2 … l1 l2)) = list_weight_2 A B (a⨮l1) l2.
 #A #B #l1 #l2 #a1
 <list_weight_2_unfold <list_weight_2_unfold //

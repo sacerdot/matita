@@ -31,7 +31,7 @@ lemma xorb_false_dx (b):
       b = b ⊻ ⓕ.
 * // qed.
 
-lemma xorb_false_sn (b):
+lemma xorb_false_sx (b):
       b = ⓕ ⊻ b.
 // qed.
 

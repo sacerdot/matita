@@ -26,9 +26,9 @@ lemma subset_le_nimp_refl_empty (A) (u): (**)
 elim Hna -Hna //
 qed.
 
-lemma subset_le_nimp_empty_sn_empty (A) (u): (**)
+lemma subset_le_nimp_empty_sx_empty (A) (u): (**)
       (Ⓕ) ⧵ u ⊆ Ⓕ{A}.
-/2 width=2 by subset_le_nimp_sn_refl_sn/
+/2 width=2 by subset_le_nimp_sx_refl_sx/
 qed.
 
 lemma subset_le_nimp_empty (A) (u1) (u2): (**)

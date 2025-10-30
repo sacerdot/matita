@@ -23,7 +23,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma fbr_minus_id_sn (f2):
+lemma fbr_minus_id_sx (f2):
       (𝐢) = 𝐢-f2.
 // qed.
 

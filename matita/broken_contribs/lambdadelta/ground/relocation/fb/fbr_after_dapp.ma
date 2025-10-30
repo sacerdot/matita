@@ -24,7 +24,7 @@ lemma fbr_dapp_after (g) (f) (p):
 #g elim g -g //
 * #g #IH
 [ #f #p
-  <fbr_after_next_sn <fbr_dapp_next_dx //
+  <fbr_after_next_sx <fbr_dapp_next_dx //
 | * // * #f [ #p | * [| #p ]] //
   <fbr_after_push_rcons <fbr_dapp_push_dx_succ //
 ]

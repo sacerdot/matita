@@ -20,15 +20,15 @@ include "ground/arith/nat_lt_minus.ma".
 (* Constructions with nminus and nplus **************************************)
 
 (*** lt_plus_to_minus *)
-lemma nlt_minus_sn (o) (m) (n): m ≤ n → n < o + m → n - m < o.
+lemma nlt_minus_sx (o) (m) (n): m ≤ n → n < o + m → n - m < o.
 #o #m #n #Hmn #Ho
-lapply (nle_minus_sn_sn … Ho) -Ho
-<nminus_succ_sn //
+lapply (nle_minus_sx_sx … Ho) -Ho
+<nminus_succ_sx //
 qed.
 
 (*** lt_plus_to_minus_r *)
 lemma nlt_minus_dx (o) (m) (n): m + o < n → m < n - o.
-/2 width=1 by nle_minus_dx_sn/ qed.
+/2 width=1 by nle_minus_dx_sx/ qed.
 
 (*** lt_inv_plus_l *)
 lemma nlt_minus_dx_full (o) (m) (n): m + o < n → ∧∧ o < n & m < n - o.
@@ -37,9 +37,9 @@ lemma nlt_minus_dx_full (o) (m) (n): m + o < n → ∧∧ o < n & m < n - o.
 (* Inversions with nminus and nplus *****************************************)
 
 (*** lt_minus_to_plus *)
-lemma nlt_inv_minus_sn (o) (m) (n): m - o < n → m < n + o.
+lemma nlt_inv_minus_sx (o) (m) (n): m - o < n → m < n + o.
 #o #m #n #Ho
-@nle_inv_minus_sn
+@nle_inv_minus_sx
 @(nle_trans … Ho) -Ho //
 qed-.
 

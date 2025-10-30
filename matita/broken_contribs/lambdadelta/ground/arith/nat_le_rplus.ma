@@ -20,7 +20,7 @@ include "ground/arith/nat_le.ma".
 
 (* Constructions with nrplus and ple ****************************************)
 
-lemma ple_nrplus_bi_sn (p) (n1) (n2):
+lemma ple_nrplus_bi_sx (p) (n1) (n2):
       n1 ≤ n2 → p + n1 ≤ p + n2.
 #p #n1 #n2 #Hn elim Hn -Hn //
 #n #Hn #IH <nrplus_succ_dx
@@ -29,7 +29,7 @@ qed.
 
 lemma ple_nrplus_dx_dx_refl (p) (n):
       p ≤ p + n.
-/2 width=1 by ple_nrplus_bi_sn/ qed.
+/2 width=1 by ple_nrplus_bi_sx/ qed.
 
 lemma ple_nrplus_dx_dx (n) (p) (q):
       p ≤ q → p ≤ q + n.

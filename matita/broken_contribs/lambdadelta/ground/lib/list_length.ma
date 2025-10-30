@@ -45,7 +45,7 @@ lemma list_length_inv_zero_dx (A) (l):
 elim (eq_inv_npos_zero … H)
 qed-.
 
-lemma list_length_inv_zero_sn (A) (l):
+lemma list_length_inv_zero_sx (A) (l):
       (𝟎) = ❘l❘ → ⓔ{A} = l.
 /2 width=1 by list_length_inv_zero_dx/ qed-.
 
@@ -60,7 +60,7 @@ lemma list_length_inv_succ_dx (A) (l) (x):
 ]
 qed-.
 
-lemma list_length_inv_succ_sn (A) (l) (x):
+lemma list_length_inv_succ_sx (A) (l) (x):
       (⁤↑x) ={ℕ} ❘l❘{A} →
       ∃∃tl,a. ❘tl❘ = x & a⨮tl = l.
 /2 width=1 by list_length_inv_succ_dx/ qed-.

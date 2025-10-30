@@ -36,7 +36,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma fbr_after_id_sn (f):
+lemma fbr_after_id_sx (f):
       f = 𝐢•f.
 // qed.
 
@@ -48,7 +48,7 @@ lemma fbr_after_push_rcons (g) (f) (b):
       (g•f)◖b = (⫯g)•(f◖b).
 // qed.
 
-lemma fbr_after_next_sn (g) (f):
+lemma fbr_after_next_sx (g) (f):
       ↑(g•f) = (↑g)•f.
 // qed.
 
@@ -58,7 +58,7 @@ lemma fbr_after_id_dx (g):
       g = g•𝐢.
 #g elim g -g //
 * #g #IH //
-<fbr_after_next_sn <IH -IH //
+<fbr_after_next_sx <IH -IH //
 qed.
 
 lemma fbr_after_id_comm (g):
@@ -72,11 +72,11 @@ theorem fbr_after_assoc:
 #f3 elim f3 -f3 //
 * #f3 #IH
 [ #f2 #f1
-  <fbr_after_next_sn <fbr_after_next_sn //
+  <fbr_after_next_sx <fbr_after_next_sx //
 | * // * #f2 * // [|*: #b3 #f3 ]
   <fbr_after_push_rcons
-  [ <fbr_after_next_sn <fbr_after_id_dx <fbr_after_id_dx //
-  | <fbr_after_next_sn <fbr_after_next_sn <fbr_after_push_rcons //
+  [ <fbr_after_next_sx <fbr_after_id_dx <fbr_after_id_dx //
+  | <fbr_after_next_sx <fbr_after_next_sx <fbr_after_push_rcons //
   | <fbr_after_push_rcons //
   ]
 ]

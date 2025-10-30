@@ -25,8 +25,8 @@ theorem subset_sum_lt_le_repl (A1) (A2):
 elim (subsets_inh_inv_in … H0) -H0 #a * #Ha #Hna
 @subset_lt_mk [ /2 width=5 by subset_sum_le_repl/ ]
 @(subsets_inh_in … (in_1_2 … a))
-@subset_in_nimp [ /2 width=1 by subset_in_sum_sn/ ] #H0
-lapply (subset_in_inv_sum_sn ????? H0) -H0
+@subset_in_nimp [ /2 width=1 by subset_in_sum_sx/ ] #H0
+lapply (subset_in_inv_sum_sx ????? H0) -H0
 /2 width=1 by/
 qed.
 

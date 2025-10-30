@@ -20,10 +20,10 @@ include "ground/arith/nat_plus_rplus.ma".
 lemma nplus_pos_bi (p) (q):
       (⁤(p+q)) = (⁤p)+(⁤q).
 #p #q
->nrplus_pos_dx <nplus_pos_sn //
+>nrplus_pos_dx <nplus_pos_sx //
 qed.
 
-lemma nplus_pnpred_sn (p) (q):
+lemma nplus_pnpred_sx (p) (q):
       ↓(p+q) = (↓p) + (⁤q).
 #p #q
 <pplus_comm >nplus_comm >nrplus_pnpred_dx //
