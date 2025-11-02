@@ -12,16 +12,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_and_ol.ma".
-include "delayed_updating/reduction/prototerm_xfocus_reducible.ma".
-include "delayed_updating/reduction/prototerm_focus.ma".
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-(* BALANCED REDUCTION FOCUS *************************************************)
+notation "hvbox( t1 Ꟈ➡*𝐝𝐛𝐟[ break term 46 u1, break term 46 u2 ] break term 46 t2 )"
+  non associative with precedence 45
+  for @{ 'DStrokeBlackRightArrowStarDBF $t1 $u1 $u2 $t2 }.
 
-(* Constructions with xprc **************************************************)
 
-lemma brf_ol_sx (t) (r) (p) (b) (q) (n):
-      r ϵ 𝐑❨t,p,b,q,n❩ → t ≬ 𝐅❨t,p,b,q❩.
-#t #r #p #b #q #n #Hr
-/3 width=3 by brxf_ol_sx, subset_ol_and_dx_refl_sx/
-qed.

@@ -28,17 +28,17 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma pnc_A_sn (p):
+lemma pnc_A_sx (p):
       p ϵ 𝐍 → 𝗔◗p ϵ 𝐍.
 #p #H1p #b #q #Hb #H2p
-elim (pbc_inv_gen_sn … Hb) -Hb
+elim (pbc_inv_gen_sx … Hb) -Hb
 [ #Hb
-  elim (eq_inv_path_A_sn_append_flat_sn … H2p) -H2p // -Hb #H0
+  elim (eq_inv_path_A_sx_append_flat_sx … H2p) -H2p // -Hb #H0
   elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
 | * #b1 #b2 #Hb1 #_ #H0
-  elim (eq_inv_A_sn_structure … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
+  elim (eq_inv_A_sx_structure … H0) -H0 #r1 #r2 #Hr1 #Hr2 #H0 destruct
   <path_append_pAbLq_7 in H2p; #H0
-  elim (eq_inv_path_A_sn_append_flat_sn … H0) -H0 // -Hr1 #H0 #_
+  elim (eq_inv_path_A_sx_append_flat_sx … H0) -H0 // -Hr1 #H0 #_
   elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_ destruct
   elim (eq_inv_append_structure … Hr2) -Hr2 #r3 #r4 #Hr3 #Hr4 #H0 destruct
   elim (eq_inv_L_dx_structure … Hr3) -Hr3 #r5 #r6 #Hr5 #_ #H0 destruct

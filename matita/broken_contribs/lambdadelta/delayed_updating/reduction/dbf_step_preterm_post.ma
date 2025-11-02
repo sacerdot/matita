@@ -33,7 +33,7 @@ lapply (xprc_des_b … Hr1) >path_structure_clear #Hb1
 lapply (xprc_des_n … Hr1) #Hn1
 elim (term_full_A_post … Ht1 p) [| /2 width=4 by path_beta_pA_in_root/ ] #x #Hx
 lapply (dbfs_preterm_trans … Ht1 … Ht12) #Ht2
-lapply (dbfs_preterm_inv_sn … Ht1 Ht12 Hr1) -Ht1 -Ht12 -Hr1 #Ht12
+lapply (dbfs_preterm_inv_sx … Ht1 Ht12 Hr1) -Ht1 -Ht12 -Hr1 #Ht12
 lapply (subset_in_eq_repl_fwd ????? Ht12) -Ht12
 [ @(fsubst_in_comp_true … (pt_append_in … Hx)) /2 width=3 by subset_ol_i/ | skip
 ] -t1 #Hx

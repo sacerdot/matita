@@ -12,31 +12,32 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/ibf_step.ma".
-include "delayed_updating/reduction/prototerm_immediate_eq.ma".
-include "delayed_updating/reduction/prototerm_reducible_eq.ma".
-include "delayed_updating/substitution/fsubst_eq.ma".
+include "delayed_updating/reduction/prototerm_dbf_residuals_eq.ma".
+include "delayed_updating/reduction/dbf_step_eq.ma".
+include "delayed_updating/reduction/dbf_dstep.ma".
 
-(* IMMEDIATE BALANCED FOCUSED REDUCTION *************************************)
+(* DELAYED BALANCED FOCUSED REDUCTION IN A DEVELOPMENT **********************)
 
 (* Constructions with subset_eq *********************************************)
 
-lemma ibfs_eq_canc_sx (t) (t1) (t2) (r):
-      t ⇔ t1 → t ➡𝐢𝐛𝐟[r] t2 → t1 ➡𝐢𝐛𝐟[r] t2.
-#t #t1 #t2 #r #Ht1
-* #p #b #q #n #Hr #Ht2
-@(ibfs_mk … p b q n)
-[ /3 width=3 by xprc_eq_repl, subset_in_eq_repl_fwd/
-| /4 width=3 by subset_eq_canc_sx, fsubst_eq_repl, bri_eq_repl_fwd/
+lemma dbfds_eq_canc_sx (t) (t1) (t2) (u) (u1) (u2):
+      t ⇔ t1 → u ⇔ u1 → t Ꟈ➡𝐝𝐛𝐟[u,u2] t2 → t1 Ꟈ➡𝐝𝐛𝐟[u1,u2] t2.
+#t #t1 #t2 #u #u1 #u2 #Ht1 #Hu1
+* #r #Hr #Ht2 #Hu2
+@(dbfds_mk … r)
+[ /2 width=3 by subset_in_eq_repl_fwd/
+| /2 width=3 by dbfs_eq_canc_sx/
+| /3 width=3 by subset_eq_canc_sx, term_dbfr_eq_repl/
 ]
 qed-.
 
-lemma eq_ibfs_trans (t) (t1) (t2) (r):
-      t1 ⇔ t → t ➡𝐢𝐛𝐟[r] t2 → t1 ➡𝐢𝐛𝐟[r] t2.
-/3 width=3 by ibfs_eq_canc_sx, subset_eq_sym/
+lemma eq_dbfds_trans (t) (t1) (t2) (u) (u1) (u2):
+      t1 ⇔ t → u1 ⇔ u → t Ꟈ➡𝐝𝐛𝐟[u,u2] t2 → t1 Ꟈ➡𝐝𝐛𝐟[u1,u2] t2.
+/3 width=5 by dbfds_eq_canc_sx, subset_eq_sym/
 qed-.
 
-lemma ibfs_eq_repl (t1) (t2) (u1) (u2) (r):
-      t1 ⇔ u1 → t2 ⇔ u2 → t1 ➡𝐢𝐛𝐟[r] t2 → u1 ➡𝐢𝐛𝐟[r] u2.
-/3 width=3 by ibfs_eq_canc_sx, ibfs_eq_trans/
+lemma dbfds_eq_repl (t1) (t2) (u1) (u2) (v1) (v2) (w1) (w2):
+      t1 ⇔ u1 → t2 ⇔ u2 → v1 ⇔ w1 → v2 ⇔ w2 →
+      t1 Ꟈ➡𝐝𝐛𝐟[v1,v2] t2 → u1 Ꟈ➡𝐝𝐛𝐟[w1,w2] u2.
+/3 width=5 by dbfds_eq_canc_sx, dbfds_eq_trans/
 qed-.

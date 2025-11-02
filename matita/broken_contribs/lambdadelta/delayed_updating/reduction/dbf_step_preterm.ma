@@ -47,7 +47,7 @@ qed-.
 
 (* Inversions with preterm **************************************************)
 
-lemma dbfs_preterm_inv_sn (t1) (t2) (r) (p) (b) (q) (n):
+lemma dbfs_preterm_inv_sx (t1) (t2) (r) (p) (b) (q) (n):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 →
       r ϵ 𝐑❨t1,p,b,q,n❩ →
       ⬕[𝐅❨p,b,q,n❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2.
@@ -63,6 +63,6 @@ theorem dbfs_preterm_mono (t0) (t1) (t2) (r):
         t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r] t1 → t0 ➡𝐝𝐛𝐟[r] t2 → t1 ⇔ t2.
 #t0 #t1 #t2 #r #Ht0 #Ht01
 * #p #b #q #n #Hr #Ht02
-lapply (dbfs_preterm_inv_sn … Ht0 Ht01 Hr) -Ht0 -Ht01 -Hr #Ht01
-@(subset_eq_canc_sn … Ht01 … Ht02)
+lapply (dbfs_preterm_inv_sx … Ht0 Ht01 Hr) -Ht0 -Ht01 -Hr #Ht01
+@(subset_eq_canc_sx … Ht01 … Ht02)
 qed-.

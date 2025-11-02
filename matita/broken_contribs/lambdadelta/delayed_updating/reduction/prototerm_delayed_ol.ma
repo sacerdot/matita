@@ -53,7 +53,7 @@ lemma grafted_brd_nol (t) (p1) (p2) (b) (q) (n):
       ↑(p1◖𝗔) ⧸≬ ↑p2 →
       (Ⓕ) ⇔ ⋔[p2]𝐃❨t,p1,b,q,n❩.
 #t #p1 #p2 #b #q #n #Hp12
-@conj [ /2 width=1 by subset_empty_le_sn/ ] #x #Hx
+@conj [ /2 width=1 by subset_empty_le_sx/ ] #x #Hx
 elim (term_in_append_inv_gen … Hx) -Hx #y #_ #H0
 elim Hp12 -Hp12
 @(term_ol_slice_bi … (trans_eq … H0)) -H0

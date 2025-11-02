@@ -12,16 +12,14 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_and_ol.ma".
-include "delayed_updating/reduction/prototerm_xfocus_reducible.ma".
+include "ground/subsets/subset_and_le.ma".
 include "delayed_updating/reduction/prototerm_focus.ma".
 
-(* BALANCED REDUCTION FOCUS *************************************************)
+(* BALANCED REDUCTION EXTENDED FOCUS ****************************************)
 
-(* Constructions with xprc **************************************************)
+(* Constructions with term_le ***********************************************)
 
-lemma brf_ol_sx (t) (r) (p) (b) (q) (n):
-      r ϵ 𝐑❨t,p,b,q,n❩ → t ≬ 𝐅❨t,p,b,q❩.
-#t #r #p #b #q #n #Hr
-/3 width=3 by brxf_ol_sx, subset_ol_and_dx_refl_sx/
+lemma term_focus_le (t) (p) (b) (q) (n):
+      (𝐅❨t,p,b,q,n❩) ⊆ t.
+/2 width=2 by subset_le_and_sx_refl_sx/
 qed.

@@ -26,7 +26,7 @@ include "delayed_updating/notation/relations/black_rightarrow_ibf_3.ma".
 definition ibfs (r): relation2 (𝕋) (𝕋) ≝
            λt1,t2.
            ∃∃p,b,q,n. r ϵ 𝐑❨t1,p,b,q,n❩ &
-           ⬕[𝐅❨p,b,q❩←𝐈❨t1,p,b,q,n❩]t1 ⇔ t2
+           ⬕[𝐅❨p,b,q,n❩←𝐈❨t1,p,b,q,n❩]t1 ⇔ t2
 .
 
 interpretation
@@ -37,7 +37,7 @@ interpretation
 
 lemma ibfs_mk (t1) (t2) (r) (p) (b) (q) (n):
       r ϵ 𝐑❨t1,p,b,q,n❩ →
-      ⬕[𝐅❨p,b,q❩←𝐈❨t1,p,b,q,n❩]t1 ⇔ t2 →
+      ⬕[𝐅❨p,b,q,n❩←𝐈❨t1,p,b,q,n❩]t1 ⇔ t2 →
       t1 ➡𝐢𝐛𝐟[r] t2.
 #t1 #t2 #r #p #b #q #n #Hr #Ht12
 @(ex2_4_intro … Hr Ht12)

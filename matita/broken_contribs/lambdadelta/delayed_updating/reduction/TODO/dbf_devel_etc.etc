@@ -1,0 +1,24 @@
+(*
+lemma in_comp_xprc_side (t) (p1) (p2) (b1) (q1) (s2) (n1):
+      (⓪(p2◖𝗦)●⓪s2) ϵ 𝐑❨t,p1,b1,q1,n1❩ →
+      ∨∨ (⓪p2) ϵ ⓪↑(p1◖𝗔)
+       | (⓪p1) ϵ ⓪↑(p2◖𝗦).
+#t #p1 #p2 #b1 #q1 #s1 #n1 #H0
+lapply (xprc_des_r … H0) -H0
+<path_clear_append #H0
+elim (eq_inv_list_append_bi … H0) -H0 * #s
+[ <path_clear_A_sx <path_clear_S_dx #H1 #H2
+  elim (eq_inv_list_lcons_append ????? H2) -H2 *
+  [ /3 width=1 by in_comp_slice_clear_inv_clear_sx, or_intror/ ]
+  #s0 #H0 #H2 destruct
+  elim (eq_inv_list_rcons_append ????? H1) -H1 *
+  [ #_ #H0 destruct ] #s #_ #H1
+  lapply (sym_eq ??? H1) -H1 #H1
+  elim (eq_inv_list_lcons_append ????? H1) -H1 *
+  [ #_ #H0 destruct ] #s1 #H0 #H1 destruct
+  <list_append_rcons_sx in H2; >path_clear_A_dx
+  /3 width=1 by in_comp_slice_clear_inv_clear_sx, or_introl/
+| /3 width=1 by in_comp_slice_clear_inv_clear_sx, or_intror/
+]
+qed-.
+*)

@@ -12,16 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_and_ol.ma".
-include "delayed_updating/reduction/prototerm_xfocus_reducible.ma".
-include "delayed_updating/reduction/prototerm_focus.ma".
+include "delayed_updating/syntax/path_structure.ma".
+include "delayed_updating/syntax/path_beta.ma".
 
-(* BALANCED REDUCTION FOCUS *************************************************)
+(* PATHS FOR β-REDUCTION ****************************************************)
 
-(* Constructions with xprc **************************************************)
+(* Constructions with structure *********************************************)
 
-lemma brf_ol_sx (t) (r) (p) (b) (q) (n):
-      r ϵ 𝐑❨t,p,b,q,n❩ → t ≬ 𝐅❨t,p,b,q❩.
-#t #r #p #b #q #n #Hr
-/3 width=3 by brxf_ol_sx, subset_ol_and_dx_refl_sx/
+lemma path_structure_beta (p) (b) (q) (n):
+      (𝐫❨⊗p,⊗b,⊗q❩) = ⊗𝐫❨p,b,q,n❩.
+#p #b #q #n
+<path_beta_unfold_sx <path_pbeta_unfold_sx //
 qed.

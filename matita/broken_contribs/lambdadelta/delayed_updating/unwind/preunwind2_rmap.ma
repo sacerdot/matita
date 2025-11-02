@@ -32,6 +32,7 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
+(* Note: this is: f • 𝐮❨n❩ = ▶[𝗱k]f *)
 lemma preunwind2_rmap_d (f) (k):
       (⮤*[k]f) = ▶[𝗱k]f.
 // qed.

@@ -22,7 +22,7 @@ include "delayed_updating/reduction/prototerm_xfocus.ma".
 
 (* Constructions with xprc **************************************************)
 
-lemma brxf_ol_sn (t) (r) (p) (b) (q) (n):
+lemma brxf_ol_sx (t) (r) (p) (b) (q) (n):
       r ϵ 𝐑❨t,p,b,q,n❩ → t ≬ 𝐅❨p,b,q,n❩.
 #t #r #p #b #q #n #Hr
 lapply (xprc_des_n … Hr) -Hr #Hn

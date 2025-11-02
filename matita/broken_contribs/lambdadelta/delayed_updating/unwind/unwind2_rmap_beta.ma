@@ -13,22 +13,33 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/path_beta.ma".
-include "delayed_updating/syntax/prototerm.ma".
+include "delayed_updating/unwind/unwind2_rmap_closed.ma".
 
-(* PROTOTERM ****************************************************************)
+(* TAILED UNWIND FOR RELOCATION MAP *****************************************)
 
 (* Constructions with path_beta *********************************************)
 
-lemma path_beta_in_slice_pA (p) (b) (q) (n):
-      (𝐫❨p,b,q,n❩) ϵ ↑(p◖𝗔).
-#p #b #q #n
-<path_beta_unfold_b //
+lemma unwind2_rmap_beta_bLq (f) (p) (b) (q) (n):
+      ▶[b●𝗟◗q]▶[p]f • 𝐮❨n❩ = ▶[𝐫❨p,b,q,n❩]f.
+#f #p #b #q #n
+<unwind2_rmap_d_dx >unwind2_rmap_A_sx >unwind2_rmap_append //
 qed.
 
-(* Destructions with path_beta **********************************************)
+(* Constructions with path_beta and pcc *************************************)
 
-lemma path_beta_pA_in_root (t) (p) (b) (q) (n):
-      (𝐫❨p,b,q,n❩) ϵ t → p◖𝗔 ϵ ▵t.
-#t #p #b #q #n <path_beta_unfold_b #Ht
-/2 width=2 by term_in_root/
+lemma eq_depth_unwind2_rmap_pbeta_lapp_pcc (f) (p) (b) (q) (n):
+      ♭q = ▶[𝐫❨p,b,q❩]f＠§❨n❩ →
+      q ϵ 𝐂❨n❩.
+#f #p #b #q #n #Hq
+@(eq_depth_unwind2_rmap_Lq_lapp_pcc … (▶[(p◖𝗔)●b]f))
+>unwind2_rmap_append >Hq -Hq //
+qed.
+
+(* Inversions with path_beta and pcc ****************************************)
+
+lemma pcc_eq_depth_unwind2_rmap_pbeta_lapp (f) (p) (b) (q) (n):
+      q ϵ 𝐂❨n❩  →
+      ♭q = ▶[𝐫❨p,b,q❩]f＠§❨n❩.
+#f #p #b #q #n #Hq
+>(unwind2_rmap_append_closed_Lq_dx_lapp_depth f (p●𝗔◗b) … Hq) -Hq //
 qed-.

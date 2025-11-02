@@ -26,11 +26,11 @@ lemma dbfs_abst_hd (t1) (t2) (r):
       t1 ➡𝐝𝐛𝐟[r] t2 → 𝛌.t1 ➡𝐝𝐛𝐟[𝗟◗r] 𝛌.t2.
 #t1 #t2 #r *
 #p #b #q #n * #Hr #Hb #Hn #Ht1 #Ht2 destruct
->path_clear_L_sn >path_beta_append_p
+>path_clear_L_sx >path_beta_append_p
 @(dbfs_mk … (xprc_mk …  Hb Hn) …) -Hb -Hn
 [| <brd_unfold ]
 [ -Ht2 /2 width=1 by in_comp_abst_hd/
-| @subset_eq_canc_sn [|| @(abst_eq_repl … Ht2) ] -Ht1 -Ht2
+| @subset_eq_canc_sx [|| @(abst_eq_repl … Ht2) ] -Ht1 -Ht2
   @subset_eq_trans [| @fsubst_abst_hd ]
   @fsubst_eq_repl [ // | // ]
   @subset_eq_trans [| @pt_append_assoc ]
@@ -43,11 +43,11 @@ lemma dbfs_appl_hd (v) (t1) (t2) (r):
       t1 ➡𝐝𝐛𝐟[r] t2 → ＠v.t1 ➡𝐝𝐛𝐟[𝗔◗r] ＠v.t2.
 #v #t1 #t2 #r *
 #p #b #q #n * #Hr #Hb #Hn #Ht1 #Ht2 destruct
->path_clear_A_sn >path_beta_append_p
+>path_clear_A_sx >path_beta_append_p
 @(dbfs_mk … (xprc_mk …  Hb Hn) …) -Hb -Hn
 [| <brd_unfold ]
 [ -Ht2 /2 width=1 by in_comp_appl_hd/
-| @subset_eq_canc_sn [|| @(appl_eq_repl … Ht2) // ] -Ht1 -Ht2
+| @subset_eq_canc_sx [|| @(appl_eq_repl … Ht2) // ] -Ht1 -Ht2
   @subset_eq_trans [| @fsubst_appl_hd ]
   @fsubst_eq_repl [ // | // ]
   @subset_eq_trans [| @pt_append_assoc ]
@@ -60,11 +60,11 @@ lemma dbfs_appl_sd (v1) (v2) (t) (r):
       v1 ➡𝐝𝐛𝐟[r] v2 → ＠v1.t ➡𝐝𝐛𝐟[𝗦◗r] ＠v2.t.
 #v1 #v2 #t #r *
 #p #b #q #n * #Hr #Hb #Hn #Hv1 #Hv2 destruct
->path_clear_S_sn >path_beta_append_p
+>path_clear_S_sx >path_beta_append_p
 @(dbfs_mk … (xprc_mk …  Hb Hn) …) -Hb -Hn
 [| <brd_unfold ]
 [ -Hv2 /2 width=1 by in_comp_appl_sd/
-| @subset_eq_canc_sn [|| @(appl_eq_repl … Hv2) // ] -Hv1 -Hv2
+| @subset_eq_canc_sx [|| @(appl_eq_repl … Hv2) // ] -Hv1 -Hv2
   @subset_eq_trans [| @fsubst_appl_sd ]
   @fsubst_eq_repl [ // | // ]
   @subset_eq_trans [| @pt_append_assoc ]
@@ -87,7 +87,7 @@ lemma dbfs_beta (v) (b) (t) (q) (n):
   | @subset_eq_canc_dx [3: @pt_append_assoc | skip ]
     @pt_append_eq_repl_bi [ <path_beta_unfold_dx <list_append_empty_dx // ]
     >list_cons_comm
-    @subset_eq_canc_sn [| @term_grafted_appl_sd ]
+    @subset_eq_canc_sx [| @term_grafted_appl_sd ]
     @subset_eq_sym //
   ]
 ]

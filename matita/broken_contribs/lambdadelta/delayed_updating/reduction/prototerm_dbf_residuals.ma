@@ -16,8 +16,9 @@ include "delayed_updating/reduction/path_dbf_residuals.ma".
 
 (* RESIDUALS OF A SUBSET OF DBF-REDEX POINTERS ******************************)
 
+(* Note: residuals of u with resprct to r ϵ 𝐑❨t❩ *)
 definition term_dbfr (t) (r) (u): 𝒫❨ℙ❩ ≝
-           {s | ∃∃x. x ϵ u & s ϵ x /𝐝𝐛𝐟{t} r}.
+           {y | ∃∃s. s ϵ u & y ϵ s /𝐝𝐛𝐟{t} r}.
 
 interpretation
   "residuals of a subset of dbf-redex pointers (subset of paths)"

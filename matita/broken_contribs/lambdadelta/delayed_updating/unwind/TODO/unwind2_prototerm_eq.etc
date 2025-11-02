@@ -1,0 +1,6 @@
+(* Note: the other inclusion does not hold *)
+lemma unwind2_term_and (f) (u1) (u2):
+      ▼[f](u1 ∩ u2) ⊆ ▼[f]u1 ∩ ▼[f]u2.
+#f #u1 #u2
+@subset_and_ext_f1
+#p1 #p2 #Hp1 #Hp2 #Hp

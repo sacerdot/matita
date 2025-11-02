@@ -37,6 +37,7 @@ lemma unwind2_rmap_rcons (f) (p) (l):
       ▶[l]▶[p]f = ▶[p◖l]f.
 // qed.
 
+(* Note: this is: ▶[p]f • 𝐮❨n❩ = ▶[p◖𝗱k]f *)
 lemma unwind2_rmap_d_dx (f) (p) (k):
       (⮤*[k]▶[p]f) = ▶[p◖𝗱k]f.
 // qed.

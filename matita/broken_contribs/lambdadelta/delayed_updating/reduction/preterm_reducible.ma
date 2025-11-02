@@ -50,7 +50,7 @@ elim (eq_inv_list_append_bi … H0) -H0 * #x #H1x #H2x
   lapply (in_comp_term_clear … Hp2) -Hp2 #Hp2
   lapply (term_le_root_clear … Hp2) -Hp2 >H2x #Hp2
   lapply (term_in_root_inv_xprc_append_dx … Ht Hr Hp2) -Ht -Hr -Hp2 #H0 destruct
-  <list_append_empty_sn in H2x; #H0 destruct
+  <list_append_empty_sx in H2x; #H0 destruct
   /2 width=1 by in_comp_term_clear/
 | /2 width=1 by in_comp_slice_clear_inv_clear_sx/
 ]
@@ -87,10 +87,10 @@ lemma rp_nin_root_side (t) (r) (p) (b) (q) (n):
 #t #r #p #b #q #n #Ht #Hr #Hnr
 lapply (term_in_comp_clear_root_slice_inv_xprc … Ht Hr … Hnr) -Hnr
 [ /2 width=5 by xprc_des_side/ ] #Hnr
-lapply (xprc_des_ol_pA_sn … Hr Hnr) -t -r -b -q -n #H0
+lapply (xprc_des_ol_pA_sx … Hr Hnr) -t -r -b -q -n #H0
 elim (term_ol_clear_slice_bi_inv_gen … H0) -H0 #q1 #q2
 <path_clear_A_dx <path_clear_S_dx
->list_append_rcons_sn >list_append_rcons_sn in ⊢ ((???%)→?); #H0
+>list_append_rcons_sx >list_append_rcons_sx in ⊢ ((???%)→?); #H0
 lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0
 elim (eq_inv_list_rcons_bi ????? H0) -H0 #_ #H0 destruct
 qed-.
@@ -107,11 +107,11 @@ lapply (term_clear_inj … Ht … H0) -H0
 elim (eq_inv_list_lcons_bi ????? H0) -H0 #H2 #H1
 lapply (eq_inv_d_bi … H2) -H2 #H2
 lapply (eq_inv_nsucc_bi … H2) -H2 #H2 destruct
-lapply (pcc_inj_L_sn … Hq2 … Hq1 H1) -Hq1 -Hq2 #H0 destruct
-lapply (eq_inv_list_append_sn_bi … H1) -H1 #H1
+lapply (pcc_inj_L_sx … Hq2 … Hq1 H1) -Hq1 -Hq2 #H0 destruct
+lapply (eq_inv_list_append_sx_bi … H1) -H1 #H1
 elim (eq_inv_list_lcons_bi ????? H1) -H1 #_ #H1
 lapply (path_eq_des_pAb_bi_pbc … Hb2 Hb1 H1) -Hb2 -Hb1 #H0 destruct
-lapply (eq_inv_list_append_sn_bi … H1) -H1 #H destruct
+lapply (eq_inv_list_append_sx_bi … H1) -H1 #H destruct
 /2 width=1 by and4_intro/
 qed-.
 

@@ -19,7 +19,7 @@ include "delayed_updating/reduction/dbf_step_reducibles.ma".
 
 (* Inversions with tnf ******************************************************)
 
-lemma dbfs_inv_tnf_sn (t1) (t2) (r):
+lemma dbfs_inv_tnf_sx (t1) (t2) (r):
       t1 ϵ 𝐍𝐅 → t1 ➡𝐝𝐛𝐟[r] t2 → ⊥.
 #t1 #t2 #r #Ht1 #Ht12
 /4 width=3 by dbfs_inv_prc, subset_nin_inv_empty/

@@ -13,6 +13,8 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_listed_1.ma".
+include "ground/subsets/subset_listed_2.ma".
+include "delayed_updating/syntax/path_clear_proper.ma".
 include "delayed_updating/reduction/prototerm_reducible_le.ma".
 include "delayed_updating/reduction/path_dbf_residuals.ma".
 
@@ -35,6 +37,19 @@ lemma path_dbfr_neq_le (t) (s) (r):
 #t #s #r #Hs #x #Hx
 >(subset_in_inv_single ??? Hx) -x
 /2 width=1 by path_dbfr_neq/
+qed.
+
+lemma path_dbfr_side_le (t) (x) (r) (p) (b) (q) (n):
+      r ϵ 𝐑❨t,p,b,q,n❩ → x ϵ 𝐏 →
+      let s ≝ (⓪p)◖𝗦●(⓪x) in
+      ❴s,r●⓪x❵ ⊆ (s /𝐝𝐛𝐟{t} r).
+#t #x #r #p #b #q #n #Hr #Hx #y #H0
+elim (subset_in_inv_pair ???? H0) -H0 #H0 destruct
+[ lapply (xprc_des_r … Hr) -Hr #H0 destruct
+  @path_dbfr_neq_le [| // ] <path_clear_beta
+  @(path_neq_p_beta ???? (𝐞))
+| /3 width=4 by path_dbfr_side, path_clear_ppc/
+]
 qed.
 
 (* Inversions with subset_le ************************************************)

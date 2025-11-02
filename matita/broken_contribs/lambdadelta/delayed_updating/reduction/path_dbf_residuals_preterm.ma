@@ -19,7 +19,7 @@ include "delayed_updating/reduction/path_dbf_residuals_le.ma".
 
 (* Destructions with preterm and subset_le **********************************)
 
-lemma path_dbfr_des_neq_le (t) (s) (r) (p) (b) (q) (n):
+lemma path_dbfr_neq_ge (t) (s) (r) (p) (b) (q) (n):
       t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → ⓪s = s → s ⧸ϵ ⓪▵↑(p◖𝗦) →
       (s /𝐝𝐛𝐟{t} r) ⊆ ❴s❵.
 #t #s #r #p #b #q #n #Ht #Hr * #Hs #x * *
@@ -33,10 +33,30 @@ lemma path_dbfr_des_neq_le (t) (s) (r) (p) (b) (q) (n):
 ]
 qed.
 
+lemma path_dbfr_side_ge (t) (x) (r) (p) (b) (q) (n):
+      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ →
+      let s ≝ (⓪p)◖𝗦●(⓪x) in
+      (s /𝐝𝐛𝐟{t} r) ⊆ ❴s,r●⓪x❵.
+#t #x #r #p #b #q #n #Ht #Hr #y * *
+[ #_ #H0 destruct //
+| #p0 #b0 #q0 #x0 #n0 #Hr0 #_ #H0 #H1 destruct
+  lapply (subset_ol_i ???? Hr0 … Hr) -Hr0 -Hr #H1
+  elim (ol_des_xprc_bi … Ht H1) -t #H1 #_ #_ #_ destruct -b -b0 -q -q0 -n -n0
+  lapply (eq_inv_list_append_dx_bi … H0) -H0 #H0 destruct //
+]
+qed.
+
 (* Constructions with preterm and subset_eq *********************************)
 
 lemma path_dbfr_neq_eq (t) (s) (r) (p) (b) (q) (n):
       t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → s ⧸= r → ⓪s = s → s ⧸ϵ ⓪▵↑(p◖𝗦) →
       ❴s❵ ⇔ (s /𝐝𝐛𝐟{t} r).
-/3 width=10 by path_dbfr_des_neq_le, path_dbfr_neq_le, conj/
+/3 width=10 by path_dbfr_neq_ge, path_dbfr_neq_le, conj/
+qed.
+
+lemma path_dbfr_side_eq (t) (x) (r) (p) (b) (q) (n):
+      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → x ϵ 𝐏 →
+      let s ≝ (⓪p)◖𝗦●(⓪x) in
+      ❴s,r●⓪x❵ ⇔ (s /𝐝𝐛𝐟{t} r).
+/3 width=7 by path_dbfr_side_ge, path_dbfr_side_le, conj/
 qed.

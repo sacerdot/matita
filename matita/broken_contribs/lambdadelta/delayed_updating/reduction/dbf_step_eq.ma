@@ -20,22 +20,22 @@ include "delayed_updating/reduction/prototerm_reducible_eq.ma".
 
 (* Constructions with subset_eq *********************************************)
 
-lemma dbfs_eq_canc_sn (t) (t1) (t2) (r):
+lemma dbfs_eq_canc_sx (t) (t1) (t2) (r):
       t ⇔ t1 → t ➡𝐝𝐛𝐟[r] t2 → t1 ➡𝐝𝐛𝐟[r] t2.
 #t #t1 #t2 #r #Ht1
 * #p #b #q #n #Hr #Ht2
 @(dbfs_mk … p b q n)
 [ /3 width=3 by xprc_eq_repl, subset_in_eq_repl_fwd/
-| /4 width=3 by subset_eq_canc_sn, fsubst_eq_repl, brd_eq_repl_fwd/
+| /4 width=3 by subset_eq_canc_sx, fsubst_eq_repl, brd_eq_repl_fwd/
 ]
 qed-.
 
 lemma eq_dbfs_trans (t) (t1) (t2) (r):
       t1 ⇔ t → t ➡𝐝𝐛𝐟[r] t2 → t1 ➡𝐝𝐛𝐟[r] t2.
-/3 width=3 by dbfs_eq_canc_sn, subset_eq_sym/
+/3 width=3 by dbfs_eq_canc_sx, subset_eq_sym/
 qed-.
 
 lemma dbfs_eq_repl (t1) (t2) (u1) (u2) (r):
       t1 ⇔ u1 → t2 ⇔ u2 → t1 ➡𝐝𝐛𝐟[r] t2 → u1 ➡𝐝𝐛𝐟[r] u2.
-/3 width=3 by dbfs_eq_canc_sn, dbfs_eq_trans/
+/3 width=3 by dbfs_eq_canc_sx, dbfs_eq_trans/
 qed-.

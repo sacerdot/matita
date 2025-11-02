@@ -21,7 +21,7 @@ include "delayed_updating/reduction/prototerm_normal.ma".
 
 (* UPDATE *)
 
-lemma tnf_A_sn (t):
+lemma tnf_A_sx (t):
       t ⊆ 𝐍 → t ϵ 𝐍𝐅 → 𝗔◗t ϵ 𝐍𝐅.
 #t #H1t #H2t #r * #p
 @(list_ind_rcons … p) -p

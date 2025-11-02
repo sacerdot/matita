@@ -47,12 +47,10 @@ elim (ibfs_inv_prc … Ht) #p0 #b0 #q0 #n0 * #H0 #_ #_ #Hn0 destruct
 @(prc_mk_old … Hq) [| // ] - Hb -Hq
 @(ibfs_des_in_comp_neq … Ht) // -t2 #H0
 lapply (term_slice_des_clear_bi … (𝐞) … Ht1 … H0) -H0
-[ /2 width=2 by term_in_root_rcons/
+[ /2 width=2 by term_in_comp_root/
 | /2 width=1 by term_in_comp_root/
 ]
 * #s #_ #Hs >Hs in Hn; #Hn
-lapply (term_comp_append … Ht1 Hn0 Hn) -t1 #H0 destruct
-<(list_append_lcons_sn) in Hs; <list_append_empty_sn #H0
-elim (eq_inv_list_lcons_bi ????? H0) -H0 #_ #Hs -n -n0
+lapply (term_complete_append … Ht1 Hn0 Hn) -t1 #H0 destruct
 /2 width=1 by/
 qed-.

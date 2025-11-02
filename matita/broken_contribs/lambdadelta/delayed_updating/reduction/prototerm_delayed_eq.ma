@@ -71,7 +71,7 @@ lemma brd_fsubst_grafted_eq_repl_fwd (t1) (t2) (u) (v) (p) (b) (q) (n):
       ⬕[⋔[p◖𝗦]u←⋔[p◖𝗦]v]⋔[p◖𝗦]t1 ⇔ ⋔[p◖𝗦]t2 →
       ⬕[𝐃❨u,p,b,q,n❩←𝐃❨v,p,b,q,n❩]𝐃❨t1,p,b,q,n❩ ⇔ 𝐃❨t2,p,b,q,n❩.
 #t1 #t2 #u #v #p #b #q #n #H0
-@(subset_eq_canc_sn … (fsubst_append …))
+@(subset_eq_canc_sx … (fsubst_append …))
 @pt_append_eq_repl_bi //
 qed.
 
@@ -102,11 +102,11 @@ theorem brd_brd_append_p (t1) (t2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
         (𝐃❨t2,𝐫❨p2,⓪b2,q2,⁤↑(♭b2+n2)❩●p1,b1,q1,n1❩) ⇔
         (𝐃❨𝐃❨t1,p2◖𝗦●p1,b1,q1,n1❩,p2,b2,q2,n2❩).
 #t1 #t2 #p1 #p2 #b1 #b2 #q1 #q2 #n1 #n2 #Ht12
-@(subset_eq_canc_sn … (brd_append_p …))
+@(subset_eq_canc_sx … (brd_append_p …))
 @pt_append_eq_repl_bi [ // ]
 @(subset_eq_trans ????? (grafted_brd_append_p …))
 @pt_append_eq_repl_bi [ // ]
->(list_append_lcons_sn … (𝗦)) >(list_append_lcons_sn … (𝗦))
+>(list_append_lcons_sx … (𝗦)) >(list_append_lcons_sx … (𝗦))
 @subset_eq_repl [4,5: @(term_grafted_append …) |1,2: skip ]
 /2 width=1 by term_grafted_eq_repl/
 qed.
@@ -116,7 +116,7 @@ theorem brd_brd_append_q (t1) (t2) (p) (b1) (b2) (q11) (q12) (q2) (n1) (n2):
         (𝐃❨t1,p,b1,𝐫❨q11,⓪b2,q2,⁤↑(♭b2+n2)❩●q12,n1❩) ⇔
         (𝐃❨𝐃❨t2,p,b1,q11◖𝗦●q12,n1❩,𝐫❨p,⓪b1,q11❩,b2,q2,n2❩).
 #t1 #t2 #p #b1 #b2 #q11 #q12 #q2 #n1 #n2 #Ht
-@(subset_eq_canc_sn … (brd_append_q …)) >path_beta_swap_pq
+@(subset_eq_canc_sx … (brd_append_q …)) >path_beta_swap_pq
 @pt_append_eq_repl_bi [ // ]
 @(subset_eq_trans … (pt_append_eq_repl_bi … Ht)) -Ht [ @refl | skip ]
 @(subset_eq_trans … (grafted_brd_append_q …))

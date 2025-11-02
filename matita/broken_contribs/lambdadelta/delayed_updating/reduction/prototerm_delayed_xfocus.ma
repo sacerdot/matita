@@ -34,16 +34,16 @@ lemma brd_brxf_append_p (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
       (𝐅❨𝐫❨p2,⓪b2,q2,⁤↑(♭b2+n2)❩●p1,b1,q1,n1❩) ⇔
       (𝐃❨𝐅❨p2◖𝗦●p1,b1,q1,n1❩,p2,b2,q2,n2❩).
 #p1 #p2 #b1 #b2 #q1 #q2 #n1 #n2
-@(subset_eq_canc_sn … (brxf_append_p …))
+@(subset_eq_canc_sx … (brxf_append_p …))
 @pt_append_eq_repl_bi [ // ]
-@(subset_eq_canc_sn … (grafted_brxf_append_p …)) //
+@(subset_eq_canc_sx … (grafted_brxf_append_p …)) //
 qed.
 
 lemma brd_brxf_append_q (p1) (b1) (b2) (q11) (q12) (q2) (n1) (n2):
       (𝐅❨p1,b1,𝐫❨q11,⓪b2,q2,⁤↑(♭b2+n2)❩●q12,n1❩) ⇔
       (𝐃❨𝐅❨p1,b1,q11◖𝗦●q12,n1❩,𝐫❨p1,b1,q11❩,b2,q2,n2❩).
 #p1 #b1 #b2 #q11 #q12 #q2 #n1 #n2
-@(subset_eq_canc_sn … (brxf_append_q …)) >path_beta_swap_pq
+@(subset_eq_canc_sx … (brxf_append_q …)) >path_beta_swap_pq
 @pt_append_eq_repl_bi [ // ]
 @(subset_eq_trans … (grafted_brxf_append_q …))
 [4: @term_grafted_eq_repl_bi [| @subset_eq_refl ] |1,2,3: skip ] //

@@ -49,14 +49,12 @@ lemma unwind2_term_fsubst (f) (t) (u1) (u2):
       ⬕[▼[f]u1←▼[f]u2]▼[f]t ⇔ ▼[f]⬕[u1←u2]t.
 /3 width=1 by unwind2_term_fsubst_sx, unwind2_term_fsubst_dx, conj/ qed.
 
-lemma unwind2_term_fsubst_and_sx_sx (f) (t) (u1) (u2):
-      t ϵ 𝐓 →
-      ⬕[▼[f](t∩u1)←▼[f]u2]▼[f]t ⇔ ▼[f]⬕[u1←u2]t.
-#f #t #u1 #u2 #Ht
-@subset_eq_trans
-[3: @(unwind2_term_eq_repl_dx …(fsubst_and_rc_sx …)) | skip ]
-@(subset_eq_trans … (unwind2_term_fsubst …)) //
-@(term_eq_repl_fwd … Ht) -f -Ht (**) (* auto fails *)
+lemma unwind2_term_fsubst_le (f) (t) (u1) (u2):
+      t ϵ 𝐓 → u1 ⊆ t →
+      ⬕[▼[f]u1←▼[f]u2]▼[f]t ⇔ ▼[f]⬕[u1←u2]t.
+#f #t #u1 #u2 #Ht #Hu1
+@unwind2_term_fsubst
+@(term_eq_repl_fwd … Ht)
 @conj //
-@subset_le_or_sx_refl_sx //
+/2 width=3 by subset_le_or_sx_refl_sx/
 qed.

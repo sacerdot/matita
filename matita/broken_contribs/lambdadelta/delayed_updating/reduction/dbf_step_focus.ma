@@ -22,10 +22,10 @@ include "delayed_updating/reduction/dbf_step.ma".
 
 lemma dbfs_mk_brf (t1) (t2) (r) (p) (b) (q) (n):
       r ϵ 𝐑❨t1,p,b,q,n❩ →
-      ⬕[𝐅❨t1,p,b,q❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2 →
+      ⬕[𝐅❨t1,p,b,q,n❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2 →
       t1 ➡𝐝𝐛𝐟[r] t2.
 #t1 #t2 #r #p #b #q #n #Hr #Ht12
-lapply (subset_eq_canc_sn … (fsubst_and_rc_sn …) … Ht12) -Ht12 #Ht12
+lapply (subset_eq_canc_sx … (fsubst_and_rc_sx …) … Ht12) -Ht12 #Ht12
 /2 width=6 by dbfs_mk/
 qed.
 
@@ -33,8 +33,8 @@ qed.
 
 lemma dbfs_inv_brf (t1) (t2) (r):
       t1 ➡𝐝𝐛𝐟[r] t2 →
-      ∃∃p,b,q,n. r ϵ 𝐑❨t1,p,b,q,n❩ & ⬕[𝐅❨t1,p,b,q❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2.
+      ∃∃p,b,q,n. r ϵ 𝐑❨t1,p,b,q,n❩ & ⬕[𝐅❨t1,p,b,q,n❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2.
 #t1 #t2 #r * #p #b #q #n #Hr #Ht12
-lapply (subset_eq_trans … (fsubst_and_rc_sn …) … Ht12) -Ht12 #Ht12
+lapply (subset_eq_trans … (fsubst_and_rc_sx …) … Ht12) -Ht12 #Ht12
 /2 width=6 by ex2_4_intro/
 qed-.

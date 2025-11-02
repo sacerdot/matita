@@ -27,7 +27,7 @@ include "ground/arith/nat_le_pred.ma".
 (* Constructions with pcc ***************************************************)
 
 (* Note: arithmetic miracle in the case of label "𝗱"! *)
-lemma eq_succ_depth_unwind2_rmap_Lq_pcc (f) (q) (n):
+lemma eq_depth_unwind2_rmap_Lq_lapp_pcc (f) (q) (n):
       ♭q = ▶[𝗟◗q]f＠§❨n❩ →
       q ϵ 𝐂❨n❩.
 #f #q <unwind2_rmap_L_sx elim q -q

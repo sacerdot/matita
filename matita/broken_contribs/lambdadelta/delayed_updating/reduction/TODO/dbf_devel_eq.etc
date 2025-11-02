@@ -28,12 +28,12 @@ lemma dbfd_eq_repl:
 [ #u #t1 #t2 #Hu #Ht12 #v * #_ #Huv #w1 #Htw1 #w2 #Htw2
   @dbfd_refl
   [ /2 width=5 by subset_le_trans/
-  | /3 width=3 by subset_eq_canc_sn, subset_eq_trans/
+  | /3 width=3 by subset_eq_canc_sx, subset_eq_trans/
   ]
 | #u #r #t0 #t1 #t2 #Hr #Ht10 #_ #IH #v #Huv #w1 #Htw1 #w2 #Htw2
   @(dbfd_step … r t0)
   [ /2 width=3 by subset_in_eq_repl_fwd/
-  | /2 width=3 by dbfs_eq_canc_sn/
+  | /2 width=3 by dbfs_eq_canc_sx/
   | /3 width=1 by term_dbfr_eq_repl/
   ]
 ]
@@ -49,14 +49,14 @@ lemma dbfd_eq_canc_dx (t) (t1) (t2) (u):
 /3 width=3 by dbfd_eq_trans, subset_eq_sym/
 qed-.
 
-lemma dbfd_eq_canc_sn (t) (t1) (t2) (u):
+lemma dbfd_eq_canc_sx (t) (t1) (t2) (u):
       t ⇔ t1 → t ⫽➡𝐝𝐛𝐟[u] t2 → t1 ⫽➡𝐝𝐛𝐟[u] t2.
 /2 width=7 by dbfd_eq_repl/
 qed-.
 
 lemma eq_dbfd_trans (t) (t1) (t2) (u):
       t1 ⇔ t → t ⫽➡𝐝𝐛𝐟[u] t2 → t1 ⫽➡𝐝𝐛𝐟[u] t2.
-/3 width=3 by dbfd_eq_canc_sn, subset_eq_sym/
+/3 width=3 by dbfd_eq_canc_sx, subset_eq_sym/
 qed-.
 
 lemma dbfd_empty (t1) (t2) (t) (r):

@@ -33,7 +33,7 @@ lemma dbfs_des_grafted_nol (t1) (t2) (r) (p1) (p2) (b) (q) (n):
       ↑(p1◖𝗔) ⧸≬ ↑p2 → ⋔[p2]t1 ⇔ ⋔[p2]t2.
 #t1 #t2 #r #p1 #p2 #b #q #n #Ht1 #Ht12 #Hr #Hp12
 lapply (xprc_des_n … Hr) #Hn
-lapply (dbfs_preterm_inv_sn … Ht1 Ht12 Hr) -r -Ht1 #Ht12
+lapply (dbfs_preterm_inv_sx … Ht1 Ht12 Hr) -r -Ht1 #Ht12
 lapply (subset_eq_trans … (fsubst_eq …) … Ht12) -Ht12
 [ /2 width=3 by subset_ol_i/ ] -Hn #Ht12
 @(subset_eq_trans … (term_grafted_eq_repl … Ht12)) -t2
@@ -52,7 +52,7 @@ lemma dbfs_des_grafted_full (t1) (t2) (r) (p) (b) (q) (n):
 #t1 #t2 #r #p #b #q #n #Ht1 #Ht12 #Hr
 lapply (xprc_des_b … Hr) #Hb
 lapply (xprc_des_n … Hr) #Hn
-lapply (dbfs_preterm_inv_sn … Ht1 Ht12 Hr) #Ht12
+lapply (dbfs_preterm_inv_sx … Ht1 Ht12 Hr) #Ht12
 lapply (subset_eq_trans … (fsubst_eq …) … Ht12) -Ht12
 [ /2 width=3 by subset_ol_i/ ] -Hn #Ht12
 @(subset_eq_trans … (term_grafted_eq_repl … Ht12)) -t2

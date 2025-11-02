@@ -44,7 +44,7 @@ lemma grafted_brxf_nol (p1) (p2) (b) (q) (n):
       ↑(p1◖𝗔) ⧸≬ ↑p2 →
       (Ⓕ) ⇔ ⋔[p2]𝐅❨p1,b,q,n❩.
 #p1 #p2 #b #q #n #Hp12
-@conj [ /2 width=1 by subset_empty_le_sn/ ] #x #Hx
+@conj [ /2 width=1 by subset_empty_le_sx/ ] #x #Hx
 elim (term_in_slice_inv_gen … Hx) -Hx #y #H0
 elim Hp12 -Hp12
 @(term_ol_slice_bi … (trans_eq … H0)) -H0

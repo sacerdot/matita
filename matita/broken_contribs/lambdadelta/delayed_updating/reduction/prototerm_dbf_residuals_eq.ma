@@ -28,7 +28,7 @@ qed.
 lemma term_dbfr_empty (t) (r):
       Ⓕ ⇔ Ⓕ /𝐝𝐛𝐟{t} r.
 #t #r
-/3 width=3 by term_dbfr_inv_empty, subset_empty_le_sn, conj/
+/3 width=3 by term_dbfr_inv_empty, subset_empty_le_sx, conj/
 qed.
 
 lemma term_dbfr_single (t) (s) (r):

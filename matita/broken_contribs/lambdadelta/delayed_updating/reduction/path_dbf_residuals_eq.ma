@@ -28,5 +28,5 @@ qed.
 
 lemma path_dbfr_refl (t) (r):
       Ⓕ ⇔ (r /𝐝𝐛𝐟{t} r).
-/3 width=4 by path_dbfr_le_refl, subset_empty_le_sn, conj/
+/3 width=4 by path_dbfr_le_refl, subset_empty_le_sx, conj/
 qed.

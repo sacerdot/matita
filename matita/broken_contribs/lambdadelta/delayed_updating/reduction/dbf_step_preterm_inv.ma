@@ -49,7 +49,7 @@ lemma dbfs_inv_prc_side (t1) (t2) (r) (p1) (p) (x) (b1) (b) (q1) (q) (n1) (n):
       dbfs_inv_prc_side_th r p1 p x b1 b q1 q n1 n t2.
 #t1 #t2 #r #p1 #p #x #b1 #b #q1 #q #n1 #n
 #Ht1 #Ht12 #Hr #Hx #H0x
-lapply (dbfs_preterm_inv_sn … Ht1 Ht12 Hr) -Ht12 #Ht12
+lapply (dbfs_preterm_inv_sx … Ht1 Ht12 Hr) -Ht12 #Ht12
 @(dbfs_inv_prc_side_th_eq_repl_fwd … Ht12) -t2
 lapply (term_grafted_inv_gen … Hx) -Hx #Hx
 cases Hr -Hr #H0 #Hb1 #Hq1 #Hn1 destruct
@@ -61,7 +61,7 @@ elim (path_eq_inv_beta_balanced_pSq … H0) -H0 [3: // ] * #y0
   elim (eq_inv_path_append_clear … (sym_eq … H1)) -H1 #z #y #Hz #Hy #H0 destruct
   elim (eq_inv_path_S_dx_clear … Hz) -Hz #z1 #Hz1 #H0 destruct
   lapply (term_clear_inj … Ht1 … Hz1) -Hz1
-  [ >list_append_rcons_sn in Hn; <path_beta_append_p #Hn
+  [ >list_append_rcons_sx in Hn; <path_beta_append_p #Hn
     /2 width=2 by term_in_root/
   | /2 width=2 by term_in_root/
   ] #H0 destruct
@@ -91,7 +91,7 @@ elim (path_eq_inv_beta_balanced_pSq … H0) -H0 [3: // ] * #y0
   >path_clear_pbeta in H2; #H2
   lapply (term_clear_inj … Ht1 … H2) -H2
   [ /2 width=2 by term_in_root/
-  | >list_append_rcons_sn in Hn; <path_beta_append_q #Hn
+  | >list_append_rcons_sx in Hn; <path_beta_append_q #Hn
     /2 width=2 by term_in_root/
   ] #H0 destruct
 
@@ -109,7 +109,7 @@ elim (path_eq_inv_beta_balanced_pSq … H0) -H0 [3: // ] * #y0
   @(xprc_mk … n … Hb) -Hb
   [ @fsubst_in_comp_true [ /2 width=3 by subset_ol_i/ ]
     <path_beta_append_q /2 width=1 by pt_append_in/
-  | -t1 -p -b <list_tl_lcons >nplus_succ_dx >nplus_unit_sn
+  | -t1 -p -b <list_tl_lcons >nplus_succ_dx >nplus_unit_sx
     /2 width=1 by path_beta_in_brd_pcc/
   ]
 ]

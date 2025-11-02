@@ -30,13 +30,11 @@ qed.
 
 lemma term_slice_complete (t) (p):
       t ϵ 𝐓 → p ϵ t → ❴p❵ ⇔ t∩↑p.
-#t #p #Ht #Hp @conj #x
-[ #H0
+#t #p #Ht #Hp @conj
+[ #x #H0
   >(subset_in_inv_single ??? H0) -x
   /2 width=1 by subset_and_in/
-| * #Hx #H0
-  elim (term_in_slice_inv_gen … H0) -H0 #y #H0 destruct
-  <(term_complete_append … Ht Hp Hx) -y //
+| /2 width=4 by term_le_and_sx_single_dx/
 ]
 qed.
 

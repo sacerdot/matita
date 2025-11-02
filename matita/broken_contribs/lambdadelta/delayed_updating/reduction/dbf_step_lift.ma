@@ -45,13 +45,13 @@ theorem dbfs_lift_bi (f) (t1) (t2) (r):
 | lapply (lift_term_eq_repl_dx f … Ht2) -Ht2 #Ht2 -Ht1
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (lift_term_fsubst …))
-  @(subset_eq_trans … (fsubst_and_rc_sn …))
-  @(subset_eq_canc_sn … (fsubst_and_rc_sn …))
+  @(subset_eq_trans … (fsubst_and_rc_sx …))
+  @(subset_eq_canc_sx … (fsubst_and_rc_sx …))
   @fsubst_eq_repl [ // | @(subset_eq_canc_dx … (lift_term_and …)) // ]
   @(subset_eq_trans … (lift_pt_append …))
   @pt_append_eq_repl_bi
-  [ <lift_path_append <lift_path_A_sn
-    <lift_path_append <lift_path_L_sn
+  [ <lift_path_append <lift_path_A_sx
+    <lift_path_append <lift_path_L_sx
     <(lift_path_closed_des_gen … Hn) <(lift_path_closed_des_gen … Hn) //
   | @(subset_eq_trans … (lift_term_iref_xapp …))
 (* Note: crux of the proof begins *)
@@ -59,7 +59,7 @@ theorem dbfs_lift_bi (f) (t1) (t2) (r):
     <(lift_rmap_append_clear_L_closed_dx_xapp_succ_plus … Hn)
     <(ctls_succ_plus_lift_rmap_append_clear_L_closed_dx … Hn)
     @iref_eq_repl_bi [ // ]
-    @(subset_eq_canc_sn … (lift_term_grafted_S …)) //
+    @(subset_eq_canc_sx … (lift_term_grafted_S …)) //
 (* Note: crux of the proof ends *)
   ]
 ]
@@ -67,16 +67,16 @@ qed.
 
 (* Inversions with lift *****************************************************)
 
-lemma dbfs_inv_lift_sn (f) (t1) (u2) (s):
+lemma dbfs_inv_lift_sx (f) (t1) (u2) (s):
       (🠡[f]t1) ➡𝐝𝐛𝐟[s] u2 →
       ∃∃t2. t1 ➡𝐝𝐛𝐟[s] t2 & 🠡[f]t2 ⇔ u2.
 #f #t1 #u2 #s
 * #p #b #q #n * #Hs #Hb #Hq * #x0 #Ht1 #H0 #Hu2 destruct
 elim (eq_inv_d_dx_lift_path … (sym_eq … H0)) -H0 #x1 #n0 #H0 #H1n0 #H1 destruct
 elim (eq_inv_append_lift_path … H0) -H0 #p0 #x2 #H1 #H0 #H2 destruct
-elim (eq_inv_A_sn_lift_path … H0) -H0 #x3 #H0 #H1 destruct
+elim (eq_inv_A_sx_lift_path … H0) -H0 #x3 #H0 #H1 destruct
 elim (eq_inv_append_lift_path … H0) -H0 #b0 #x4 #H1 #H0 #H2 destruct
-elim (eq_inv_L_sn_lift_path … H0) -H0 #q0 #H0 #H1 destruct
+elim (eq_inv_L_sx_lift_path … H0) -H0 #q0 #H0 #H1 destruct
 lapply (lift_path_inv_closed … Hq) -Hq #Hq0
 elim (eq_inv_succ_fbr_xapp … H1n0) #_ #H2n0 >H2n0 in H1n0;
 >(lift_rmap_append_L_closed_dx_xapp_succ f (p0●𝗔◗b0) … Hq0)
@@ -93,26 +93,26 @@ lapply (eq_inv_nsucc_bi … H0) -H0 #H0 destruct
   [ 1,2,3,4: //
   | @subset_eq_refl
   ]
-| @(subset_eq_canc_sn … Hu2) -u2
+| @(subset_eq_canc_sx … Hu2) -u2
   @(subset_eq_trans … (lift_term_fsubst …))
-  @(subset_eq_canc_sn … (fsubst_and_rc_sn …))
-  @(subset_eq_canc_sn ????? (fsubst_and_rc_sn …))
+  @(subset_eq_canc_sx … (fsubst_and_rc_sx …))
+  @(subset_eq_canc_sx ????? (fsubst_and_rc_sx …))
   @fsubst_eq_repl
   [ @subset_eq_refl
-  | @(subset_eq_canc_sn … (lift_slice_and_sn …)) <lift_path_pAbLq
+  | @(subset_eq_canc_sx … (lift_slice_and_sx …)) <lift_path_pAbLq
     @subset_eq_refl
   ]
-  @(subset_eq_canc_sn … (lift_pt_append …))
+  @(subset_eq_canc_sx … (lift_pt_append …))
   @pt_append_eq_repl_bi
   [ <lift_path_pAbLq >lift_path_clear_swap
     <(lift_path_closed_des_gen … Hq0) <(lift_path_closed_des_gen … Hq0) //
-  | @(subset_eq_canc_sn … (lift_term_iref_xapp …))
+  | @(subset_eq_canc_sx … (lift_term_iref_xapp …))
 (* Note: crux of the proof begins *)
     <path_append_pAbLq_1 <lift_rmap_append
     <(lift_rmap_append_clear_L_closed_dx_xapp_succ_plus … Hq0)
     <(ctls_succ_plus_lift_rmap_append_clear_L_closed_dx … Hq0)
     @iref_eq_repl_bi [ // ]
-    @(subset_eq_canc_sn … (lift_term_grafted_S …)) //
+    @(subset_eq_canc_sx … (lift_term_grafted_S …)) //
 (* Note: crux of the proof ends *)
   ]
 ]
