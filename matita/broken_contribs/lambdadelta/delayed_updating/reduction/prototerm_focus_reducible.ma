@@ -21,7 +21,7 @@ include "delayed_updating/reduction/prototerm_focus.ma".
 (* Constructions with xprc **************************************************)
 
 lemma brf_ol_sx (t) (r) (p) (b) (q) (n):
-      r ϵ 𝐑❨t,p,b,q,n❩ → t ≬ 𝐅❨t,p,b,q❩.
+      r ϵ 𝐑❨t,p,b,q,n❩ → t ≬ 𝐅❨t,p,b,q,n❩.
 #t #r #p #b #q #n #Hr
 /3 width=3 by brxf_ol_sx, subset_ol_and_dx_refl_sx/
 qed.

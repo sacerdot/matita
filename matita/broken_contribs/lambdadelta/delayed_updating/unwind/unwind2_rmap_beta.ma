@@ -25,6 +25,12 @@ lemma unwind2_rmap_beta_bLq (f) (p) (b) (q) (n):
 <unwind2_rmap_d_dx >unwind2_rmap_A_sx >unwind2_rmap_append //
 qed.
 
+lemma unwind2_rmap_pbeta_bLq (f) (p) (b) (q):
+      ▶[b●𝗟◗q]▶[p]f = ▶[𝐫❨p,b,q❩]f.
+#f #p #b #q
+>unwind2_rmap_A_sx >unwind2_rmap_append //
+qed.
+
 (* Constructions with path_beta and pcc *************************************)
 
 lemma eq_depth_unwind2_rmap_pbeta_lapp_pcc (f) (p) (b) (q) (n):
