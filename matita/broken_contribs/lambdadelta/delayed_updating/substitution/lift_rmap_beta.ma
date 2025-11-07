@@ -14,6 +14,7 @@
 
 include "ground/relocation/fb/fbr_lapp_lt.ma".
 include "ground/relocation/fb/fbr_xapp_lapp.ma".
+include "ground/relocation/fb/fbr_uni_ctls.ma".
 include "delayed_updating/syntax/path_beta.ma".
 include "delayed_updating/substitution/lift_rmap_closed.ma".
 
@@ -47,4 +48,13 @@ lemma pcc_inv_lift_rmap_p3beta_lapp (f) (p) (b) (q) (n):
 #f #p #b #q #n #Hq
 lapply (pcc_lift_rmap_p3beta_lapp f p b … Hq) #H0
 lapply (eq_inv_fbr_lapp_bi … H0) -H0 #H0 destruct //
+qed-.
+
+lemma pcc_lift_rmap_p3beta_after_uni (f) (p) (b) (q) (n):
+      q ϵ 𝐂❨n❩ →
+      (𝐮❨⁤↑(♭b+n)❩•🠢[p]f) = 🠢[𝐫❨p,⓪b,q❩]f•𝐮❨⁤↑(♭b+n)❩.
+#f #p #b #q #n #Hq
+<fbr_after_uni_dx <(pcc_lift_rmap_p3beta_xapp_immediate … Hq)
+<path_p3beta_unfold_dx <lift_rmap_append <lift_rmap_A_sx
+<(ctls_succ_plus_lift_rmap_append_clear_L_closed_dx … Hq) //
 qed-.

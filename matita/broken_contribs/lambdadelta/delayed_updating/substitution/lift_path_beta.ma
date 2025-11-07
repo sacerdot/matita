@@ -26,6 +26,12 @@ lemma lift_path_beta (f) (p) (b) (q) (n):
 <lift_path_d_dx <lift_path_append <lift_path_L_dx <lift_path_append //
 qed.
 
+lemma lift_path_p3beta (f) (p) (b) (q):
+      (𝐫❨🠡[f]p,🠡[🠢[p]f]b,🠡[🠢[𝐫❨p,b❩]f]q❩) = 🠡[f]𝐫❨p,b,q❩.
+#f #p #b #q
+<lift_path_append <lift_path_L_dx <lift_path_append //
+qed.
+
 (* Inversions with path_beta ************************************************)
 
 lemma eq_inv_lift_path_beta (f) (x) (p2) (b2) (q2) (n2):

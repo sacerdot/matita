@@ -40,7 +40,7 @@ theorem dbfs_lift_bi (f) (t1) (t2) (r):
 | lapply (lift_term_eq_repl_dx f … Ht2) -Ht2 #Ht2 -Ht1
   @(subset_eq_trans … Ht2) -t2
   @(subset_eq_trans … (lift_term_fsubst …))
-  @fsubst_eq_repl [ // | /2 width=1 by brf_lift/ | /2 width=1 by brd_lift/
+  @fsubst_eq_repl [ // | /2 width=1 by brf_lift/ | /2 width=1 by brd_lift/ ]
 ]
 qed.
 
