@@ -41,7 +41,7 @@ qed.
 
 lemma eq_inv_fbr_xapp_bi (f):
       injective_2_fwd … (eq …) (eq …) (λn.f＠❨n❩).
-#f #n1 #n2 #Hp
+#f #n1 #n2 #Hn
 elim (nat_split_lt_eq_gt n1 n2) // #H0
 lapply (fbr_xapp_increasing f … H0) -H0 #H0
 elim (nlt_ge_false … H0) -H0 //
