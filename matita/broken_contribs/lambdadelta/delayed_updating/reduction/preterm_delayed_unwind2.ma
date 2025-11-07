@@ -34,7 +34,7 @@ lemma brd_unwind2 (f) (t) (p) (b) (q) (n):
       t ϵ 𝐓 → 𝐫❨p,b,q,⁤↑n❩ ϵ t → ♭q = (▶[𝐫❨p,b,q❩]f)＠§❨n❩ →
       (𝐈❨▼[f]t,⊗p,⊗b,⊗q,♭q❩) ⇔ ▼[f](𝐃❨t,p,b,q,n❩).
 #f #t #p #b #q #n #Ht #Hn #Hq
-lapply (eq_depth_unwind2_rmap_pbeta_lapp_pcc … Hq) -Hq #Hq
+lapply (eq_depth_unwind2_rmap_p3beta_lapp_pcc … Hq) -Hq #Hq
 @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
 [| /2 width=6 by term_le_grafted_S_dx_proper/ ]
 <path_structure_beta <path_structure_clear_swap

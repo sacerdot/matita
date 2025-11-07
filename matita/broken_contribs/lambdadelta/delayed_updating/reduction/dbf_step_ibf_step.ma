@@ -40,7 +40,7 @@ elim (eq_inv_succ_fbr_xapp … Hn) -Hn #Hq0 #Hn0
 @(ex3_2_intro … (⬕[𝐅❨t1,p0,b0,q0,⫰n0❩←𝐃❨t1,p0,b0,q0,⫰n0❩]t1) (⓪𝐫❨p0,b0,q0,⫰n0❩))
 [ @(dbfs_mk_brf … p0 b0 q0 (⫰n0))
   [ @xprc_mk [1,2: // ]
-    @(eq_depth_unwind2_rmap_pbeta_lapp_pcc … Hq0)
+    @(eq_depth_unwind2_rmap_p3beta_lapp_pcc … Hq0)
   | //
   ]
 | @(subset_eq_canc_sx … Hu2) -u2
@@ -60,7 +60,7 @@ theorem dbfs_inv_ibfs (f) (t1) (t2) (r):
         ▼[f]t1 ➡𝐢𝐛𝐟[▼[f]r] ▼[f]t2.
 #f #t1 #t2 #r #H0t1 #H0 elim (dbfs_inv_brf … H0) -H0
 #p #b #q #n #Hr cases Hr #H0 #Hb #Hq #Ht1 #Ht2 destruct
-lapply (pcc_eq_depth_unwind2_rmap_pbeta_lapp f p b … Hq) #Hn
+lapply (pcc_eq_depth_unwind2_rmap_p3beta_lapp f p b … Hq) #Hn
 @(ibfs_mk_brf … (⊗p) (⊗b) (⊗q) (♭q)) [ @and4_intro ]
 [ <path_clear_beta <path_clear_beta <unwind2_path_beta //
 | // | //

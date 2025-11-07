@@ -88,7 +88,7 @@ elim (path_eq_inv_beta_balanced_pSq … H0) -H0 [3: // ] * #y0
   elim (eq_inv_path_d_dx_clear … H1z0) -H1z0 #z #n0 #Hz #_ #H0 destruct
   elim (eq_inv_path_append_clear … (sym_eq … H2z0)) -H2z0 #y1 #z1 #Hy1 #Hz1 #H0 destruct
   elim (eq_inv_path_S_dx_clear … Hy1) -Hy1 #y #Hy #H0 destruct
-  >path_clear_pbeta in H2; #H2
+  >path_clear_p3beta in H2; #H2
   lapply (term_clear_inj … Ht1 … H2) -H2
   [ /2 width=2 by term_in_root/
   | >list_append_rcons_sx in Hn; <path_beta_append_q #Hn
@@ -108,7 +108,8 @@ elim (path_eq_inv_beta_balanced_pSq … H0) -H0 [3: // ] * #y0
   >path_clear_append <path_beta_swap_pq >path_beta_append_q
   @(xprc_mk … n … Hb) -Hb
   [ @fsubst_in_comp_true [ /2 width=3 by subset_ol_i/ ]
-    <path_beta_append_q /2 width=1 by pt_append_in/
+    <path_beta_append_q >path_beta_swap_pq
+    /2 width=1 by pt_append_in/
   | -t1 -p -b <list_tl_lcons >nplus_succ_dx >nplus_unit_sx
     /2 width=1 by path_beta_in_brd_pcc/
   ]

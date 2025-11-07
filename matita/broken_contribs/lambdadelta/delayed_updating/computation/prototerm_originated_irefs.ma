@@ -22,6 +22,6 @@ include "delayed_updating/computation/prototerm_originated.ma".
 lemma topc_des_pirc_wfinite (t):
       t ϵ 𝐎⁺ → 𝐈❨t❩ ϵ 𝐖𝛀.
 #t2 * #t1 #rs #Ht1 #Ht12
-@(dbfss_pirc_wfinite_sn … Ht12) -t2 -rs
+@(dbfss_pirc_wfinite_sx … Ht12) -t2 -rs
 /3 width=2 by subsets_wfinite_in/
 qed-.

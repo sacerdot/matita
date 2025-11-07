@@ -19,7 +19,7 @@ include "delayed_updating/computation/dbf_steps.ma".
 
 (* Destructionss with tnf ***************************************************)
 
-lemma dbfss_des_tnf_sn (t1) (t2) (rs):
+lemma dbfss_des_tnf_sx (t1) (t2) (rs):
       t1 ϵ 𝐍𝐅 → t1 ➡*𝐝𝐛𝐟[rs] t2 → t1 ⇔ t2.
 #t1 #t2 #rs #Ht1 #Ht
 @(dbfss_ind_dx … Ht) -t2 -rs //
@@ -27,6 +27,6 @@ lemma dbfss_des_tnf_sn (t1) (t2) (rs):
   /2 width=3 by subset_eq_canc_dx/
 | #t #t2 #rs #r #_ #Ht2 #Ht1 -rs
   lapply (eq_dbfs_trans … Ht1 Ht2) -t #Ht12
-  elim (dbfs_inv_tnf_sn …Ht12) -t2 -r //
+  elim (dbfs_inv_tnf_sx …Ht12) -t2 -r //
 ]
 qed-.

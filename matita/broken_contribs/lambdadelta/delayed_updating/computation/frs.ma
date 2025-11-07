@@ -29,10 +29,10 @@ inductive frs (R:relation3 (ℙ) (𝕋) (𝕋)): relation3 ( ℙ* ) (𝕋) (𝕋
 
 (* Advanced constructions ***************************************************)
 
-lemma frs_step_sn (R) (t) (t1) (t2) (ss) (r):
+lemma frs_step_sx (R) (t) (t1) (t2) (ss) (r):
       R r t1 t → frs R ss t t2 → frs R (r◗ss) t1 t2.
 #R #t #t1 #t2 #ss #r #Ht1 #Ht2
->(list_append_empty_sn … ss) >list_append_lcons_sn
+>(list_append_empty_sx … ss) >list_append_lcons_sx
 /3 width=3 by frs_step, frs_trans/
 qed.
 
@@ -108,13 +108,13 @@ qed-.
 
 (* Advanced inversions ******************************************************)
 
-lemma frs_inv_step_sn (R) (t1) (t2) (ss) (r):
+lemma frs_inv_step_sx (R) (t1) (t2) (ss) (r):
       (∀t,t1,t2,r. t1 ⇔ t → R r t t2 → R r t1 t2) →
       (∀t,t1,t2,r. R r t1 t → t ⇔ t2 → R r t1 t2) →
       frs R (r◗ss) t1 t2 →
       ∃∃t. R r t1 t & frs R ss t t2.
 #R #t1 #t2 #ss #r #H1R #H2R
->(list_append_empty_sn … ss) >list_append_lcons_sn #Ht
+>(list_append_empty_sx … ss) >list_append_lcons_sx #Ht
 elim (frs_inv_trans … Ht) -Ht #t #Ht1 #Ht2
 lapply (frs_inv_step … H1R H2R … Ht1) -H1R -H2R -Ht1 #Ht1
 /2 width=3 by ex2_intro/
@@ -133,7 +133,7 @@ qed-.
 
 (* Advanced eliminators *****************************************************)
 
-lemma frs_ind_sn (R) (t2) (Q:relation2 …):
+lemma frs_ind_sx (R) (t2) (Q:relation2 …):
       (∀t,t1,t2,r. t1 ⇔ t → R r t t2 → R r t1 t2) →
       (∀t,t1,t2,r. R r t1 t → t ⇔ t2 → R r t1 t2) →
       (∀t1,t2,rs. t1 ⇔ t2 → Q t2 rs → Q t1 rs) →
@@ -145,7 +145,7 @@ generalize in match t1; -t1
 elim rs -rs [| #r #rs #IH ] #t1 #Ht
 [ lapply (frs_inv_empty … Ht) -Ht #Ht
   /3 width=3 by/
-| elim (frs_inv_step_sn … H1R H2R … Ht) -Ht #t #Ht1 #Ht2
+| elim (frs_inv_step_sx … H1R H2R … Ht) -Ht #t #Ht1 #Ht2
   /3 width=4 by/
 ]
 qed-.

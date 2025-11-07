@@ -25,7 +25,7 @@ lemma unwind2_rmap_beta_bLq (f) (p) (b) (q) (n):
 <unwind2_rmap_d_dx >unwind2_rmap_A_sx >unwind2_rmap_append //
 qed.
 
-lemma unwind2_rmap_pbeta_bLq (f) (p) (b) (q):
+lemma unwind2_rmap_p3beta_bLq (f) (p) (b) (q):
       ▶[b●𝗟◗q]▶[p]f = ▶[𝐫❨p,b,q❩]f.
 #f #p #b #q
 >unwind2_rmap_A_sx >unwind2_rmap_append //
@@ -33,7 +33,7 @@ qed.
 
 (* Constructions with path_beta and pcc *************************************)
 
-lemma eq_depth_unwind2_rmap_pbeta_lapp_pcc (f) (p) (b) (q) (n):
+lemma eq_depth_unwind2_rmap_p3beta_lapp_pcc (f) (p) (b) (q) (n):
       ♭q = ▶[𝐫❨p,b,q❩]f＠§❨n❩ →
       q ϵ 𝐂❨n❩.
 #f #p #b #q #n #Hq
@@ -43,7 +43,7 @@ qed.
 
 (* Inversions with path_beta and pcc ****************************************)
 
-lemma pcc_eq_depth_unwind2_rmap_pbeta_lapp (f) (p) (b) (q) (n):
+lemma pcc_eq_depth_unwind2_rmap_p3beta_lapp (f) (p) (b) (q) (n):
       q ϵ 𝐂❨n❩  →
       ♭q = ▶[𝐫❨p,b,q❩]f＠§❨n❩.
 #f #p #b #q #n #Hq

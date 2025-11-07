@@ -47,7 +47,7 @@ lemma tnf_null: ❴𝐞❵ ϵ 𝐍𝐅.
 #r * #p #b #q #n #Hr
 lapply (xprc_des_n … Hr) -Hr #Hn
 lapply (subset_in_inv_single ??? Hn) -Hn
->path_pbeta_rcons_d #Hn destruct
+>path_p3beta_rcons_d #Hn destruct
 qed.
 
 (* UPDATE *)

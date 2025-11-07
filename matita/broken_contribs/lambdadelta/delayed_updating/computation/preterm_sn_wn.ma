@@ -33,20 +33,20 @@ lemma wfinite_pirc_twn_tsn_aux (t1):
 @tsn_step #t2 #r #Ht02
 elim (dbfss_conf … Ht0 … Ht01 … t2) -rs
 [2,3: /2 width=2 by frs_step/ ] #t #ss1 #ss2 #Hs1 #Hs2
-lapply (dbfss_des_tnf_sn … Hs1) // -ss1 #Hs1
+lapply (dbfss_des_tnf_sx … Hs1) // -ss1 #Hs1
 lapply (dbfss_eq_canc_dx … Hs2 … Hs1) -t #H1t21
 lapply (dbfs_des_lt_pirc_bi … Ht02) //
 lapply (dbfs_preterm_trans … Ht02) // -r -Ht0 #Ht2 #Ht02
 lapply (dbfss_des_le_pirc_bi … H1t21) // #H2t21
 @(IH (𝐈❨t1❩⧵𝐈❨t2❩) … H1t21) [2,3: // ] -ss2 -IH -Ht1 -Ht2
 @(subset_lt_le_trans … Hu0) -u0
-@subset_lt_nimp_sn_bi // -Ht02
+@subset_lt_nimp_sx_bi // -Ht02
 @(subset_le_trans ????? H2t21) //
 qed.
 
 theorem wfinite_pirc_twn_tsn (t):
         t ϵ 𝐓 → 𝐈❨t❩ ϵ 𝐖𝛀 → t ϵ 𝐖𝐍 → t ϵ 𝐒𝐍.
 #t #H1t #H2t * #t0 #rs #H1t0 #H2t0
-lapply (dbfss_pirc_wfinite_sn … H1t0) // -H2t #H3t0
+lapply (dbfss_pirc_wfinite_sx … H1t0) // -H2t #H3t0
 @(wfinite_pirc_twn_tsn_aux … (𝐈❨t0❩) … H1t0) -rs //
 qed.

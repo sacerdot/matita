@@ -72,7 +72,7 @@ lemma path_rcons_in_xprc_des_r (t) (x) (p) (b) (q) (l) (n):
       ∧∧ (⓪𝐫❨p,b,q❩) = x & 𝗱𝟎 = l.
 #t #x #p #b #q #l #n #H0
 lapply (xprc_des_r … H0) -H0
-<path_clear_beta <path_clear_pbeta
->path_pbeta_rcons_d #H0 destruct
+<path_clear_beta <path_clear_p3beta
+>path_p3beta_rcons_d #H0 destruct
 /2 width=1 by conj/
 qed-.

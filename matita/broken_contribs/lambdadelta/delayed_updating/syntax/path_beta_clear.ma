@@ -27,7 +27,7 @@ lemma path_clear_beta (p) (b) (q) (n):
 <path_clear_A_dx //
 qed.
 
-lemma path_clear_pbeta (p) (b) (q):
+lemma path_clear_p3beta (p) (b) (q):
       (𝐫❨⓪p,⓪b,⓪q❩) = ⓪𝐫❨p,b,q❩.
 #p #b #q
 <path_clear_append

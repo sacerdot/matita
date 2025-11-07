@@ -34,10 +34,10 @@ lemma bri_unwind2 (f) (t) (p) (b) (q) (n):
       t ϵ 𝐓 → 𝐫❨p,b,q,⁤↑n❩ ϵ t → ♭q = (▶[𝐫❨p,b,q❩]f)＠§❨n❩ →
       (𝐈❨▼[f]t,⊗p,⊗b,⊗q,♭q❩) ⇔ ▼[f](𝐈❨t,p,b,q,n❩).
 #f #t #p #b #q #n #Ht #Hn #Hq
-lapply (eq_depth_unwind2_rmap_pbeta_lapp_pcc … Hq) -Hq #Hq
+lapply (eq_depth_unwind2_rmap_p3beta_lapp_pcc … Hq) -Hq #Hq
 @(subset_eq_trans … (unwind2_pt_append_tpc_dx …))
 [| @lift_term_proper /2 width=6 by term_le_grafted_S_dx_proper/ ]
-<path_structure_pbeta <path_structure_clear_swap
+<path_structure_p3beta <path_structure_clear_swap
 @pt_append_eq_repl_bi [ // ] <depth_structure
 @(subset_eq_canc_sx … (lift_term_eq_repl_dx …))
 [ @unwind2_term_grafted_S_dx [ // ]
@@ -48,6 +48,6 @@ lapply (eq_depth_unwind2_rmap_pbeta_lapp_pcc … Hq) -Hq #Hq
 @(subset_eq_canc_dx … (unwind2_lift_term_after …))
 @unwind2_term_eq_repl_sx
 (* Note: crux of the proof begins *)
-<unwind2_rmap_pbeta_bLq <unwind2_rmap_uni_crux //
+<unwind2_rmap_p3beta_bLq <unwind2_rmap_uni_crux //
 (* Note: crux of the proof ends *)
 qed.

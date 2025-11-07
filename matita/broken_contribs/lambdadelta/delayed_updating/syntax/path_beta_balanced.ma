@@ -38,7 +38,7 @@ elim (path_eq_inv_pbq_pSq_pbc … H0 Hb1) -H0 -Hb1 * #m
   | #H1 #H0
     elim (eq_inv_list_rcons_bi ????? (repl_eq … H1 …)) -H1
     [6,7 : // |2,3,4,5: skip ] #H1 #H2 destruct
-    >path_pbeta_unfold_b /3 width=3 by ex2_intro, or_intror/
+    >path_p3beta_unfold_b /3 width=3 by ex2_intro, or_intror/
   ]
 ]
 qed-.

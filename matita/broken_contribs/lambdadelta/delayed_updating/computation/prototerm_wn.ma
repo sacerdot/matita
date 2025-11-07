@@ -49,5 +49,5 @@ qed.
 lemma dbfs_twn_trans (t1) (t2) (r):
       t1 ➡𝐝𝐛𝐟[r] t2 → t2 ϵ 𝐖𝐍 → t1 ϵ 𝐖𝐍.
 #t1 #t #r #Ht1 * #t2 #ss #Ht2
-/3 width=7 by frs_step_sn, twn_mk/
+/3 width=7 by frs_step_sx, twn_mk/
 qed.
