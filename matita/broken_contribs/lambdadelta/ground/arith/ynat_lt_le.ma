@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/arith/nat_lt_le.ma".
 include "ground/arith/ynat_le.ma".
 include "ground/arith/ynat_lt.ma".
 

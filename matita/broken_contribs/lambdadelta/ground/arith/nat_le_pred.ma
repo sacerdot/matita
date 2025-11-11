@@ -27,7 +27,7 @@ qed-.
 (*** le_inv_S1 *)
 lemma nle_inv_succ_sx (m) (n):
       (⁤↑m) ≤ n → ∧∧ m ≤ ⫰n & n ϵ 𝐏.
-#m #n * -n
+#m #n #H0 @(nle_ind … H0) -n
 [ /2 width=3 by nle_refl, conj/
 | #n #Hn /3 width=1 by nle_des_succ_sx, conj/
 ]
@@ -54,7 +54,7 @@ qed.
 
 (*** monotonic_pred *)
 lemma nle_pred_bi (m) (n): m ≤ n → ⫰m ≤ ⫰n.
-#m #n #H elim H -n //
+#m #n #H0 @(nle_ind … H0) -n //
 /2 width=3 by nle_trans/
 qed.
 

@@ -40,3 +40,11 @@ lemma eq_inv_npsucc_bi: injective … npsucc.
 | //
 ]
 qed-.
+
+lemma eq_inv_unit_npsucc (n): (𝟏) = ↑n → 𝟎 = n.
+* // #p <npsucc_pos #H0 destruct
+qed-.
+
+lemma eq_inv_npsucc_unit (n): ↑n = 𝟏 → n = 𝟎 .
+* // #p <npsucc_pos #H0 destruct
+qed-.

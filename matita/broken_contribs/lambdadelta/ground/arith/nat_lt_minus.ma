@@ -23,6 +23,7 @@ include "ground/arith/nat_lt_pred.ma".
 (*** monotonic_lt_minus_l *)
 lemma nlt_minus_bi_dx (o) (m) (n): o ≤ m → m < n → m - o < n - o.
 #o #m #n #Hom #Hmn
+lapply (nlt_inv_le … Hmn) -Hmn #Hmn
 lapply (nle_minus_bi_dx … o Hmn) -Hmn
 <(nminus_succ_sx … Hom) //
 qed.
@@ -30,10 +31,12 @@ qed.
 (*** monotonic_lt_minus_r *)
 lemma nlt_minus_bi_sx (o) (m) (n):
       m < o -> m < n → o-n < o-m.
-#o #m #n #Ho #H
-lapply (nle_minus_bi_sx … o H) -H #H
-@(nle_nlt_trans … H) -n
-@nlt_i >(nminus_succ_sx … Ho) //
+#o #m #n #Hmo #Hmn
+lapply (nlt_inv_le … Hmo) -Hmo #Hmo
+lapply (nlt_inv_le … Hmn) -Hmn #Hmn
+lapply (nle_minus_bi_sx … o Hmn) -Hmn #H0
+@(nle_nlt_trans … H0) -n
+@nlt_le >(nminus_succ_sx … Hmo) //
 qed.
 
 (* Inversions with nminus ***************************************************)

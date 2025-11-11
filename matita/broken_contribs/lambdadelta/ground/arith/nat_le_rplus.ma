@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_le.ma".
 include "ground/arith/nat_rplus_succ.ma".
 include "ground/arith/nat_le.ma".
 
@@ -22,7 +21,7 @@ include "ground/arith/nat_le.ma".
 
 lemma ple_nrplus_bi_sx (p) (n1) (n2):
       n1 ≤ n2 → p + n1 ≤ p + n2.
-#p #n1 #n2 #Hn elim Hn -Hn //
+#p #n1 #n2 #H0 @(nle_ind … H0) -H0 //
 #n #Hn #IH <nrplus_succ_dx
 @(ple_trans … IH) -IH //
 qed.

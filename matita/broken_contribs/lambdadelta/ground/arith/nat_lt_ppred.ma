@@ -19,6 +19,19 @@ include "ground/arith/nat_lt.ma".
 
 (* Constructions with pnpred ************************************************)
 
+lemma nlt_ppred_bi (p) (q):
+      p < q → ↓p < ↓q.
+//
+qed.
+
 lemma nlt_pos_ppred (p):
       ↓p < (⁤p).
-// qed.
+//
+qed.
+
+(* Inversions with pnpred ***************************************************)
+
+lemma nlt_inv_ppred_bi (p) (q):
+      ↓p < ↓q → p < q.
+//
+qed-.

@@ -14,14 +14,15 @@
 
 include "ground/arith/pnat_two.ma".
 include "ground/arith/nat_le_minus_plus.ma".
-include "ground/arith/nat_lt.ma".
+include "ground/arith/nat_lt_le.ma".
 
 (* ARITHMETICAL PROPERTIES FOR λδ-2A ****************************************)
 
 (* Equalities ***************************************************************)
 
 lemma plus_n_2: ∀n. n + (⁤𝟐) = n + (⁤𝟏) + (⁤𝟏).
-// qed.
+//
+qed.
 
 lemma arith_b1: ∀a,b,c1. c1 ≤ b → a - c1 - (b - c1) = a - b.
 #a #b #c1 #H >nminus_comm_21 <nminus_assoc_comm_23 //
@@ -46,7 +47,8 @@ lemma arith_h1: ∀a1,a2,b,c1. c1 ≤ a1 → c1 ≤ b →
 qed-.
 
 lemma arith_i: ∀x,y,z. y < x → x+z-y-(⁤𝟏) = x-y-(⁤𝟏)+z.
-/2 width=1 by nminus_plus_comm_23/ qed-.
+/3 width=1 by nlt_inv_le, nminus_plus_comm_23/
+qed-.
 
 (* Constructions ************************************************************)
 
@@ -64,14 +66,14 @@ lemma arith_j: ∀x,y,z. x-y-(⁤𝟏) ≤ x-(y-z)-(⁤𝟏).
 
 lemma arith_k_sx: ∀z,x,y,n. z < x → x+n ≤ y → x-z-(⁤𝟏)+n ≤ y-z-(⁤𝟏).
 #z #x #y #n #Hzx #Hxny
->nminus_plus_comm_23 [2: /2 width=1 by nle_minus_dx_sx/ ]
+>nminus_plus_comm_23 [2: /3 width=1 by nlt_inv_le, nle_minus_dx_sx/ ]
 >nminus_plus_comm_23 [2: /2 width=1 by nlt_des_le/ ]
 /2 width=1 by monotonic_le_minus_l2/
 qed.
 
 lemma arith_k_dx: ∀z,x,y,n. z < x → y ≤ x+n → y-z-(⁤𝟏) ≤ x-z-(⁤𝟏)+n.
 #z #x #y #n #Hzx #Hyxn
->nminus_plus_comm_23 [2: /2 width=1 by nle_minus_dx_sx/ ]
+>nminus_plus_comm_23 [2: /3 width=1 by nlt_inv_le, nle_minus_dx_sx/ ]
 >nminus_plus_comm_23 [2: /2 width=1 by nlt_des_le/ ]
 /2 width=1 by monotonic_le_minus_l2/
 qed.
@@ -79,7 +81,7 @@ qed.
 (* Inversions ***************************************************************)
 
 lemma lt_plus_SO_to_le: ∀x,y. x < y + (⁤𝟏) → x ≤ y.
-/2 width=1 by nle_inv_succ_bi/ qed-.
+/3 width=1 by nlt_inv_le, nle_inv_succ_bi/ qed-.
 
 (* Iterators ****************************************************************)
 

@@ -45,7 +45,7 @@ qed.
 
 (*** monotonic_le_minus_r *)
 lemma nle_minus_bi_sx (m) (n) (o): m ≤ n → o-n ≤ o-m.
-#m #n #o #H elim H -n //
+#m #n #o #H0 @(nle_ind … H0) -n //
 #n #_ #IH /2 width=3 by nle_trans/
 qed.
 
@@ -57,7 +57,7 @@ lemma nle_minus_sx (o) (m) (n): m ≤ n → m - o ≤ n.
 
 (*** eq_minus_O *)
 lemma nle_inv_eq_zero_minus (m) (n): m ≤ n → 𝟎 = m - n.
-#m #n #H elim H -n //
+#m #n #H0 @(nle_ind … H0) -n //
 qed-.
 
 (* Destructions with nminus *************************************************)
@@ -69,7 +69,7 @@ qed-.
 
 (*** minus_minus_m_m *)
 lemma nminus_minus_dx_refl_sx (m) (n): m ≤ n → m = n - (n - m).
-#m #n #H elim H -n //
+#m #n #H0 @(nle_ind … H0) -n //
 #n #Hmn #IH <(nminus_succ_sx … Hmn) -Hmn
 <nminus_succ_bi //
 qed-.

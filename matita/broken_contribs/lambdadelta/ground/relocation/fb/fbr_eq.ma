@@ -16,7 +16,7 @@ include "ground/relocation/fb/fbr_map.ma".
 include "ground/lib/list_length.ma".
 include "ground/lib/functions.ma".
 include "ground/arith/wf2_ind_nlt.ma".
-include "ground/arith/nat_plus.ma".
+include "ground/arith/nat_lt_plus.ma".
 include "ground/notation/relations/doteq_2.ma".
 
 (* EQUIVALENCE FOR FINITE RELOCATION MAPS WITH BOOLEANS *********************)

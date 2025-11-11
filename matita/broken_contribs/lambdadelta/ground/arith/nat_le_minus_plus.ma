@@ -58,7 +58,7 @@ lemma nle_minus_dx_full (o) (m) (n): m + o ≤ n → ∧∧ m ≤ n - o & o ≤ 
 
 (*** plus_minus_m_m *)
 lemma nplus_minus_sx_refl_sx (m) (n): m ≤ n → n = n - m + m.
-#m #n #H elim H -n //
+#m #n #H0 @(nle_ind … H0) -n //
 #n #Hn #IH <(nminus_succ_sx … Hn) -Hn
 <nplus_succ_sx //
 qed-.
@@ -71,7 +71,11 @@ qed-.
 
 (*** le_minus_to_plus *)
 lemma nle_inv_minus_sx (o) (m) (n): m - o ≤ n → m ≤ n + o.
-/3 width=3 by nle_plus_bi_dx, nle_trans/ qed-.
+#o #m #n #H0
+@nle_trans (**) (* auto fails *)
+[2: @(nle_plus_minus_sx_refl_sx o) | skip ]
+/2 width=1 by nle_plus_bi_dx/
+qed-.
 
 (*** le_minus_to_plus_r *)
 lemma nle_inv_minus_dx (o) (m) (n): o ≤ n → m ≤ n - o → m + o ≤ n.
@@ -85,7 +89,7 @@ qed-.
 (*** plus_minus le_plus_minus_comm *)
 lemma nminus_plus_comm_23 (o) (m) (n):
       m ≤ n → n - m + o = n + o - m.
-#o #m #n #H elim H -n //
+#o #m #n #H0 @(nle_ind … H0) -n //
 #n #Hn #IH <(nminus_succ_sx … Hn)
 <nplus_succ_sx <nplus_succ_sx <nminus_succ_sx //
 /2 width=3 by nle_trans/

@@ -15,7 +15,7 @@
 include "ground/relocation/fb/fbr_rconss.ma".
 include "ground/relocation/fb/fbr_dapp.ma".
 include "ground/arith/nat_rplus_succ.ma".
-include "ground/arith/nat_lt.ma".
+include "ground/arith/nat_lt_le.ma".
 
 (* ITERATED RCONS FOR FINITE RELOCATION MAPS WITH BOOLEANS ******************)
 
@@ -34,7 +34,7 @@ lemma fbr_dapp_pushs_le (p) (n) (f):
 @(nat_ind_succ … n) -n [| #n #IH ] #f #H0
 [ lapply (nle_inv_zero_dx … H0) -H0 #H0 destruct
 | elim (nle_split_lt_eq … H0) -H0 #H0 destruct //
-  lapply (nlt_inv_succ_dx … H0) -H0 #H0
+  lapply (nlt_inv_succ_dx_le … H0) -H0 #H0
   <fbr_rconss_succ_swap <IH -IH //
 ]
 qed-.

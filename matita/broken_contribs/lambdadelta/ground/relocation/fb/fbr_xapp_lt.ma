@@ -14,8 +14,7 @@
 
 include "ground/relocation/fb/fbr_xapp.ma".
 include "ground/relocation/fb/fbr_dapp_lt.ma".
-include "ground/arith/nat_lt_psucc_plt.ma".
-include "ground/arith/nat_lt_plt.ma".
+include "ground/arith/nat_lt_le.ma".
 
 (* EXTENDED DEPTH APPLICATION FOR FINITE RELOCATION MAPS WITH BOOLEANS ******)
 
@@ -26,7 +25,7 @@ lemma fbr_xapp_increasing (f) (n1) (n2):
 #f #n1 #n2 #Hn
 @(nlt_ind_alt … Hn) -n1 -n2 //
 #n1 #n2 #Hn #_
-/4 width=1 by fbr_dapp_increasing, plt_npsucc_bi, nlt_pos_bi/
+/3 width=1 by fbr_dapp_increasing, nlt_pos_bi/
 qed.
 
 (* Constructions with nle ***************************************************)

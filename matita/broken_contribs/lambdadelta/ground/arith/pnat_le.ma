@@ -55,12 +55,20 @@ qed-.
 
 (* Basic inversions *********************************************************)
 
-lemma ple_inv_succ_bi (p) (q): ↑p ≤ ↑q → p ≤ q.
+lemma ple_inv_succ_dx (p) (q):
+      p ≤ ↑q → ∨∨ p = ↑q | p ≤ q.
 #p #q @(insert_eq_1 … (↑q))
 #x * -x
-[ #H destruct //
-| #o #Ho #H destruct
-  /2 width=1 by ple_des_succ_sx/
+[ /2 width=1 by or_introl/
+| #q0 #Hq0 #H0 destruct
+  /2 width=1 by or_intror/
+]
+qed-.
+
+lemma ple_inv_succ_bi (p) (q): ↑p ≤ ↑q → p ≤ q.
+#p #q #H0 elim (ple_inv_succ_dx … H0) -H0
+[ #H0 destruct //
+| /2 width=1 by ple_des_succ_sx/
 ]
 qed-.
 

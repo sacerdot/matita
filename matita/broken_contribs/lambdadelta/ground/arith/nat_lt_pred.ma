@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/arith/nat_le_pred.ma".
-include "ground/arith/nat_lt.ma".
+include "ground/arith/nat_lt_le.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
 
@@ -29,11 +29,16 @@ qed-.
 
 (*** lt_inv_gen *)
 lemma nlt_inv_gen (m) (n): m < n → ∧∧ m ≤ ⫰n & n ϵ 𝐏.
-/2 width=1 by nle_inv_succ_sx/ qed-.
+/3 width=1 by nlt_inv_le, nle_inv_succ_sx/
+qed-.
 
 (*** lt_inv_S1 *)
 lemma nlt_inv_succ_sx (m) (n): (⁤↑m) < n → ∧∧ m < ⫰n & n ϵ 𝐏.
-/2 width=1 by nle_inv_succ_sx/ qed-.
+#m #n #H0
+lapply (nlt_inv_le … H0) -H0 #H0
+elim (nle_inv_succ_sx … H0) -H0 #H0 #Hn
+/3 width=1 by nlt_le, conj/
+qed-.
 
 lemma nlt_inv_pred_dx (m) (n): m < ⫰n → (⁤↑m) < n.
 #m #n #H >(nlt_des_gen (𝟎) n)
@@ -50,12 +55,15 @@ qed-.
 (* Constructions with npred *************************************************)
 
 lemma nlt_zero_sx (n): n ϵ 𝐏 → 𝟎 < n.
-// qed.
+//
+qed.
 
 (*** monotonic_lt_pred *)
 lemma nlt_pred_bi (m) (n): 𝟎 < m → m < n → ⫰m < ⫰n.
 #m #n #Hm #Hmn
+@nlt_le
 @nle_inv_succ_bi
 <(nlt_des_gen … Hm) -Hm
-<(nlt_des_gen … Hmn) //
+<(nlt_des_gen … Hmn)
+/2 width=1 by nlt_inv_le/
 qed.

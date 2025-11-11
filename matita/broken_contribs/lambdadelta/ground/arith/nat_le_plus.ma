@@ -21,7 +21,7 @@ include "ground/arith/nat_le.ma".
 
 (*** monotonic_le_plus_l *)
 lemma nle_plus_bi_dx (m) (n1) (n2): n1 ≤ n2 → n1 + m ≤ n2 + m.
-#m #n1 #n2 #H elim H -n2 /2 width=3 by nle_trans/
+#m #n1 #n2 #H0 @(nle_ind … H0) -n2 /2 width=3 by nle_trans/
 qed.
 
 (*** monotonic_le_plus_r *)

@@ -30,7 +30,7 @@ lemma ylt_le_succ_sx (x) (y):
 lemma ylt_inv_le_succ_sx (x) (y):
       x < y → ∧∧ x < ∞ & ⫯x ≤ y.
 #x #y * -x -y
-/3 width=1 by yle_inj, conj/
+/4 width=1 by nlt_inv_le, yle_inj, conj/
 qed-.
 
 (* Destructions with yle and ysucc ******************************************)
@@ -46,5 +46,5 @@ lemma ylt_des_succ_dx (x) (y): x < ⫯y → x ≤ y.
 #x #y @(ynat_split_nat_inf … y) -y //
 #n <ysucc_inj #H
 elim (ylt_inv_inj_dx … H) -H #m #Hm #H destruct
-/3 width=1 by yle_inj, nlt_inv_succ_dx/
+/3 width=1 by yle_inj, nlt_inv_succ_dx_le/
 qed-.

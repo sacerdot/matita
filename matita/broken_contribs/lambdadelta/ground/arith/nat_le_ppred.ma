@@ -12,20 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/pnat_lt.ma".
-include "ground/arith/nat_le_ple.ma".
-include "ground/arith/nat_lt.ma".
+include "ground/arith/nat_le.ma".
+include "ground/arith//nat_ppred_psucc.ma".
 
-(* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
+(* ORDER FOR NON-NEGATIVE INTEGERS ******************************************)
 
-(* Constructions with plt ***************************************************)
+(* Constructions with pnpred ************************************************)
 
-lemma nlt_pos_bi (p1) (p2):
-      p1 < p2 → (⁤p1) < (⁤p2).
-/2 width=1 by nle_pos_bi/
+lemma nle_ppred_bi (p1) (p2):
+      p1 ≤ p2 → ↓p1 ≤ ↓p2.
+//
 qed.
 
-lemma nlt_zero_pos (p):
-      (𝟎) < (⁤p).
-/2 width=1 by nle_pos_bi/
-qed.
+(* Inversions with pnpred ***************************************************)
+
+lemma nle_inv_ppred_bi (p1) (p2):
+      ↓p1 ≤ ↓p2 → p1 ≤ p2.
+//
+qed-.      

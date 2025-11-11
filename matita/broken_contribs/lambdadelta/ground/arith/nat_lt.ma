@@ -12,99 +12,45 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/xoa/or_3.ma".
-include "ground/arith/nat_le.ma".
+include "ground/arith/pnat_lt.ma".
+include "ground/arith/nat_succ.ma".
 
 (* STRICT ORDER FOR NON-NEGATIVE INTEGERS ***********************************)
 
+(* Note: includes: plt_npsucc_bi *)
 (*** lt *)
 definition nlt: relation2 (ℕ) (ℕ) ≝
-           λm,n. (⁤↑m) ≤ n.
+           λn1,n2. ↑n1 < ↑n2.
 
 interpretation
   "less (non-negative integers)"
   'lt m n = (nlt m n).
 
-(* Basic constructions ******************************************************)
-
-lemma nlt_i (m) (n): (⁤↑m) ≤ n → m < n.
-// qed.
-
-lemma nlt_refl_succ (n): n < (⁤↑n).
-// qed.
-
-lemma nlt_succ_dx (m) (n): m ≤ n → m < (⁤↑n).
-/2 width=1 by nle_succ_bi/ qed.
-
-(*** lt_S *)
-lemma nlt_succ_dx_trans (m) (n): m < n → m < (⁤↑n).
-/2 width=1 by nle_succ_dx/ qed.
-
-(*** lt_O_S *)
-lemma nlt_zero_succ (m): 𝟎 < (⁤↑m).
-/2 width=1 by nle_succ_bi/ qed.
-
-(*** lt_S_S *)
-lemma nlt_succ_bi (m) (n): m < n → (⁤↑m) < (⁤↑n).
-/2 width=1 by nle_succ_bi/ qed.
-
-(*** le_to_or_lt_eq *)
-lemma nle_split_lt_eq (m) (n): m ≤ n → ∨∨ m < n | m = n.
-#m #n * -n /3 width=1 by nle_succ_bi, or_introl/
-qed-.
-
-(*** eq_or_gt *)
-lemma nat_split_zero_gt (n): ∨∨ 𝟎 = n | 𝟎 < n.
-#n elim (nle_split_lt_eq (𝟎) n ?)
-/2 width=1 by or_introl, or_intror/
-qed-.
-
-(*** lt_or_ge *)
-lemma nat_split_lt_ge (m) (n): ∨∨ m < n | n ≤ m.
-#m #n elim (nat_split_le_ge m n) /2 width=1 by or_intror/
-#H elim (nle_split_lt_eq … H) -H /2 width=1 by nle_refl, or_introl, or_intror/
-qed-.
-
-(*** lt_or_eq_or_gt *)
-lemma nat_split_lt_eq_gt (m) (n): ∨∨ m < n | n = m | n < m.
-#m #n elim (nat_split_lt_ge m n) /2 width=1 by or3_intro0/
-#H elim (nle_split_lt_eq … H) -H /2 width=1 by or3_intro1, or3_intro2/
-qed-.
-
-(*** not_le_to_lt *)
-lemma le_false_nlt (m) (n): (n ≤ m → ⊥) → m < n.
-#m #n elim (nat_split_lt_ge m n) [ // ]
-#H #Hn elim Hn -Hn //
-qed.
-
-(*** lt_to_le_to_lt *)
-lemma nlt_nle_trans (o) (m) (n): m < o → o ≤ n → m < n.
-/2 width=3 by nle_trans/ qed-.
-
-(*** le_to_lt_to_lt *)
-lemma nle_nlt_trans (o) (m) (n): m ≤ o → o < n → m < n.
-/3 width=3 by nle_succ_bi, nle_trans/ qed-.
-
 (* Basic inversions *********************************************************)
-
-lemma nlt_inv_succ_dx (m) (n): m < (⁤↑n) → m ≤ n.
-/2 width=1 by nle_inv_succ_bi/ qed-.
 
 (*** lt_S_S_to_lt *)
 lemma nlt_inv_succ_bi (m) (n): (⁤↑m) < (⁤↑n) → m < n.
-/2 width=1 by nle_inv_succ_bi/ qed-.
+/2 width=1 by plt_inv_succ_bi/
+qed-.
 
-(*** lt_to_not_le lt_le_false *)
-lemma nlt_ge_false (m) (n): m < n → n ≤ m → ⊥.
-/3 width=4 by nle_inv_succ_sx_refl, nlt_nle_trans/ qed-.
+lemma nlt_inv_succ_dx (m) (n): m < (⁤↑n) → ∨∨ m = n | m < n.
+#m #n #H0
+lapply (plt_inv_succ_dx … H0) -H0 #H0
+elim (ple_split_lt_eq … H0) -H0
+[ /2 width=1 by or_intror/
+| /3 width=1 by eq_inv_npsucc_bi, or_introl/
+]
+qed-.
 
 (*** lt_to_not_eq lt_refl_false *)
 lemma nlt_inv_refl (m): m < m → ⊥.
-/2 width=4 by nlt_ge_false/ qed-.
+/2 width=4 by plt_inv_refl/
+qed-.
 
 (*** lt_zero_false *)
 lemma nlt_inv_zero_dx (m): m < 𝟎 → ⊥.
-/2 width=4 by nlt_ge_false/ qed-.
+/2 width=4 by plt_inv_unit_dx/
+qed-.
 
 lemma nlt_inv_zero_sx_pos (n):
       (𝟎) < n → ∃p. (⁤p) = n.
@@ -114,37 +60,93 @@ lemma nlt_inv_zero_sx_pos (n):
 ]
 qed-.
 
-(* Basic destructions *******************************************************)
+lemma nlt_inv_pos_bi (p1) (p2):
+      (⁤p1) < (⁤p2) → p1 < p2.
+/2 width=1 by plt_inv_succ_bi/
+qed-.
 
-(*** lt_to_le *)
-lemma nlt_des_le (m) (n): m < n → m ≤ n.
-/2 width=3 by nle_trans/ qed-.
+(* Basic constructions ******************************************************)
+
+lemma nlt_unfold (n1:ℕ) (n2:ℕ):
+      (↑n1 < ↑n2) = (n1 < n2).
+//
+qed.
+
+lemma nlt_refl_succ (n): n < (⁤↑n).
+//
+qed.
+
+(*** lt_S *)
+lemma nlt_succ_dx_trans (m) (n): m < n → m < (⁤↑n).
+/2 width=1 by plt_succ_dx_trans/
+qed.
+
+(*** lt_O_S *)
+lemma nlt_zero_succ (m): 𝟎 < (⁤↑m).
+//
+qed.
+
+(*** lt_S_S *)
+lemma nlt_succ_bi (m) (n): m < n → (⁤↑m) < (⁤↑n).
+/2 width=1 by plt_succ_bi/
+qed.
+
+(*** eq_or_gt *)
+lemma nat_split_zero_gt (n): ∨∨ 𝟎 = n | 𝟎 < n.
+#n elim (pnat_split_unit_gt (↑n))
+[ #H0 <(eq_inv_unit_npsucc … H0) -H0
+  /2 width=1 by or_introl/
+| /3 width=1 by nlt_inv_succ_bi, or_intror/
+]
+qed-.
+
+(*** lt_or_eq_or_gt *)
+lemma nat_split_lt_eq_gt (m) (n): ∨∨ m < n | n = m | n < m.
+#m #n elim (pnat_split_lt_eq_gt (↑m) (↑n))
+[ /3 width=1 by nlt_inv_succ_bi, or3_intro0/
+| /3 width=1 by eq_inv_npsucc_bi, or3_intro1/
+| /3 width=1 by nlt_inv_succ_bi, or3_intro2/
+]
+qed-.
+
+lemma nlt_zero_pos (p):
+      (𝟎) < (⁤p).
+//
+qed.
+
+lemma nlt_pos_bi (p1) (p2):
+      p1 < p2 → (⁤p1) < (⁤p2).
+/2 width=1 by plt_succ_bi/
+qed.
+
+(* Basic destructions *******************************************************)
 
 (*** ltn_to_ltO *)
 lemma nlt_des_lt_zero_sx (m) (n): m < n → 𝟎 < n.
-/3 width=3 by nle_nlt_trans/ qed-.
+/3 width=2 by plt_des_lt_unit_sx, nlt_inv_succ_bi/
+qed-.
 
 (* Main constructions *******************************************************)
 
 (*** transitive_lt *)
 theorem nlt_trans: Transitive … nlt.
-/3 width=3 by nlt_des_le, nlt_nle_trans/ qed-.
+/2 width=3 by plt_trans/
+qed-.
 
 (* Advanced eliminations ****************************************************)
-
-lemma nat_ind_lt_le (Q:predicate …):
-      (∀n. (∀m. m < n → Q m) → Q n) → ∀n,m. m ≤ n → Q m.
-#Q #H1 #n @(nat_ind_succ … n) -n
-[ #m #H <(nle_inv_zero_dx … H) -m
-  @H1 -H1 #o #H elim (nlt_inv_zero_dx … H)
-| /5 width=3 by nlt_nle_trans, nle_inv_succ_bi/
-]
-qed-.
 
 (*** nat_elim1 *)
 lemma nat_ind_lt (Q:predicate …):
       (∀n. (∀m. m < n → Q m) → Q n) → ∀n. Q n.
-/4 width=2 by nat_ind_lt_le/ qed-.
+#Q #IHQ *
+[ @IHQ #m #H0 elim (nlt_inv_zero_dx … H0)
+| #q @(pnat_ind_lt … q) -q #q #IH
+  @IHQ *
+  [ #_ @IHQ #m #H0 elim (nlt_inv_zero_dx … H0)
+  | /3 width=1 by nlt_inv_pos_bi/
+  ]
+]  
+qed-.
 
 (*** lt_elim *)
 lemma nlt_ind_alt (Q: relation2 … (ℕ)):
@@ -170,9 +172,8 @@ lemma dec_nlt (R:predicate …):
 | #H0 elim (HR n) -HR
   [ /3 width=3 by or_introl, ex2_intro/
   | #Hn @or_intror * #m #Hmn #Hm
-    elim (nle_split_lt_eq … Hmn) -Hmn #H destruct [ -Hn | -H0 ]
-    [ /4 width=3 by nlt_inv_succ_bi, ex2_intro/
-    | lapply (eq_inv_nsucc_bi … H) -H /2 width=1 by/
+    elim (nlt_inv_succ_dx … Hmn) -Hmn #H0 destruct
+    /3 width=3 by ex2_intro/
   ]
 ]
 qed-.
