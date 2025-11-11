@@ -20,11 +20,11 @@ include "delayed_updating/reduction/preterm_delayed_xfocus_reducible.ma".
 include "delayed_updating/reduction/dbf_step_preterm_inv.ma".
 include "delayed_updating/reduction/dbf_step_preterm_post.ma".
 include "delayed_updating/reduction/dbf_step_preterm_adv.ma".
-include "delayed_updating/reduction/dbf_devel_preterm.ma".
+include "delayed_updating/computation/dbf_dsteps_preterm.ma".
 
-include "delayed_updating/reduction/prova.ma".
+include "delayed_updating/computation/prova.ma".
 
-(* COMPLETE DEVELOPMENT FOR DELAYED BALANCED FOCUSED REDUCTION **************)
+(* DELAYED BALANCED FOCUSED COMPUTATION IN A DEVELOPMENT ********************)
 
 (* Constructions with dbfs **************************************************)
 
@@ -125,9 +125,9 @@ elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
   lapply (term_ol_clear_slice_bi … H0) -H0 #H0
   elim (term_ol_clear_slice_bi_inv_gen … H0) -H0 #x1 #x2
   <path_clear_append <list_append_assoc
-  <path_clear_S_dx >list_append_rcons_sx <path_clear_pbeta
+  <path_clear_S_dx >list_append_rcons_sx <path_clear_p3beta
   <path_clear_S_dx #H0
-  @(path_neq_p_pbeta … (sym_eq … H0))
+  @(path_neq_p_p3beta … (sym_eq … H0))
 | -Ht0 -Ht02 -Hp12 -Ht2 -Hr02 -Hx -Ht01 -Hnr21 -Hr01 -Hr21 -Hy
   lapply (eq_inv_list_append_sx_bi … H0) -H0
   <path_clear_S_dx #H0 destruct
@@ -160,7 +160,7 @@ lapply (dbfs_preterm_inv_sx … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
   @(subset_in_eq_repl ????? (subset_eq_refl …))
   [2,5: @term_slice_in |1,4: skip ]
   [3: <path_beta_append_p //
-  |4: >path_pbeta_rcons >path_pbeta_append_q >H2 in ⊢ (???%); -H2 //
+  |4: >path_p3beta_rcons >path_p3beta_append_q >H2 in ⊢ (???%); -H2 //
   |*: skip
   ]
 |1,2,10,11: skip
@@ -192,7 +192,7 @@ lapply (dbfs_preterm_inv_sx … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
   @(subset_eq_sym … (dbfs_des_grafted_nol … Ht0 Ht02 Hr02 …)) #H0
   elim (term_ol_inv_slice_bi … H0) -H0 #z1 #z2
   >list_append_rcons_sx #H0
-  @(path_neq_p_pbeta … (sym_eq … H0))
+  @(path_neq_p_p3beta … (sym_eq … H0))
 |3,12:
   @fsubst_3_distr_eq
   [1,2,8,9: /2 width=3 by brxf_ol_sx/
@@ -209,7 +209,7 @@ lapply (dbfs_preterm_inv_sx … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
   |7,14:
     @subset_nol_nimp_sx
     @subset_nol_nimp_sx
-    [ <path_clear_beta in Hy; >(path_pbeta_rcons_d (⓪y)) #Hy
+    [ <path_clear_beta in Hy; >(path_p3beta_rcons_d (⓪y)) #Hy
     | elim (path_eq_inv_xSy_q_beta … H2) -H2 #H0 #_ <H0 in Hy; -H0 #Hy
     ] /2 width=17 by preterm_nol_brxf/
   ]
@@ -218,11 +218,11 @@ qed-.
 
 lemma dbf_step_conf_local (t0) (t1) (t2) (r1) (r2):
       t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
-      ∃∃t. t1 ⫽➡𝐝𝐛𝐟[r2 /𝐝𝐛𝐟{t0} r1] t & t2 ⫽➡𝐝𝐛𝐟[r1 /𝐝𝐛𝐟{t0} r2] t.
+      ∃∃t. t1 Ꟈ➡*𝐝𝐛𝐟[r2 /𝐝𝐛𝐟{t0} r1, Ⓕ] t & t2 Ꟈ➡*𝐝𝐛𝐟[r1 /𝐝𝐛𝐟{t0} r2, Ⓕ] t.
 #t0 #t1 #t2 #r1 #r2 #Ht0 #Ht01 #Ht02
 elim (eq_path_dec r2 r1) #Hnr21 destruct
 [ lapply (dbfs_preterm_mono … Ht0 Ht01 Ht02) -Ht0 -Ht01 -Ht02 #Ht12
-  @(ex2_intro … t2) @dbfd_self //
+  @(ex2_intro … t2) @dbfdss_self //
 | cases Ht01 #p1 #b1 #q1 #n1 #Hr01 #_
   cases Ht02 #p2 #b2 #q2 #n2 #Hr02 #_
   elim (term_in_comp_clear_root_slice_dec_xprc … (p2◖𝗦) … Hr01) #Hp21
@@ -234,7 +234,7 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
     elim (dbf_step_conf_local_le … Ht0 Ht01 Ht02 Hr01 Hr02 … Hx H0)
     [ -Ht01 -Ht02 -Hr02 -Hx -H0 #u #t #Ht10 #Ht2u0 #Hut0 |*: /2 width=1 by/ ]
     @(ex2_intro … t)
-    [ @(dbfs_neq_dbfd … Ht0 Hr01 Hnr21 Hp12 Ht10)
+    [ @(dbfs_neq_dbfdss … Ht0 Hr01 Hnr21 Hp12 Ht10)
     |
     ]
   | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr02 Hr01 Hp12) [ // ] -Hp12 #Hp12
@@ -244,9 +244,9 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
     [ -Ht01 -Ht02 -Hr01 -Hx -H0 #u #t #Ht20 #Ht1u0 #Hut0 |*: /2 width=1 by/ ]
     @(ex2_intro … t)
     [
-    | @(dbfs_neq_dbfd … Ht0 Hr02 ? Hp21 Ht20) /2 width=1 by/
+    | @(dbfs_neq_dbfdss … Ht0 Hr02 ? Hp21 Ht20) /2 width=1 by/
     ]
   | elim (dbf_step_conf_local_nol … Ht0 Ht01 Ht02 Hr01 Hr02 Hnr21 Hp21 Hp12) #t #Ht1 #Ht2
-    /4 width=6 by dbfs_neq_dbfd, xprc_des_clear, ex2_intro/
+    /4 width=6 by dbfs_neq_dbfdss, xprc_des_clear, ex2_intro/
   ]
 ]

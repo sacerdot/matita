@@ -43,6 +43,18 @@ lemma dbfdss_eq_repl (t1) (t2) (u1) (u2) (v1) (v2) (w1) (w2):
 /3 width=5 by dbfdss_eq_canc_sx, dbfdss_eq_trans/
 qed-.
 
+(* Advanced constructions ***************************************************)
+
+lemma dbfdss_empty (t1) (t2) (t) (r):
+      t1 ⇔ t2 → t1 Ꟈ➡*𝐝𝐛𝐟[Ⓕ /𝐝𝐛𝐟{t} r, Ⓕ] t2.
+/3 width=1 by dbfdss_refl, subset_eq_sym/
+qed.
+
+lemma dbfdss_self (t1) (t2) (t) (r):
+      t1 ⇔ t2 → t1 Ꟈ➡*𝐝𝐛𝐟[r /𝐝𝐛𝐟{t} r, Ⓕ] t2.
+/3 width=1 by dbfdss_refl, subset_eq_sym/
+qed.
+
 (* Advanved inversions ******************************************************)
 
 lemma dbfdss_inv_step_sx (t1) (t2) (u1) (u2):

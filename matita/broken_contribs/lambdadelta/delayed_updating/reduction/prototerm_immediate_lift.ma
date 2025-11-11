@@ -13,12 +13,11 @@
 (**************************************************************************)
 
 include "delayed_updating/substitution/lift_rmap_beta.ma".
-include "delayed_updating/substitution/lift_prototerm_after.ma".
 include "delayed_updating/substitution/lift_path_depth.ma".
 include "delayed_updating/substitution/lift_path_clear.ma".
 include "delayed_updating/substitution/lift_path_closed.ma".
 include "delayed_updating/substitution/lift_path_beta.ma".
-include "delayed_updating/substitution/lift_prototerm_eq.ma".
+include "delayed_updating/substitution/lift_prototerm_after.ma".
 include "delayed_updating/reduction/prototerm_immediate.ma".
 
 (* BALANCED REDUCTION IMMEDIATE SUBREDUCT ***********************************)
