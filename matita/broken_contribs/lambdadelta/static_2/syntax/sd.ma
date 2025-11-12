@@ -51,7 +51,7 @@ lemma deg_inv_pred (h) (o): sd_props h o →
 elim (deg_total … Ho s) #d0 #H0
 lapply (deg_next … Ho … H0) #H2
 lapply (deg_mono … Ho … H1 H2) -H1 -H2 #H >H <nlt_des_gen
-/2 width=2 by nlt_des_lt_zero_sn/
+/2 width=2 by nlt_des_lt_zero_sx/
 qed-.
 
 lemma deg_inv_prec (h) (o): sd_props h o →

@@ -12,6 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "ground/arith/nat_lt_le.ma".
 include "ground/arith/nat_lt_minus.ma".
 include "static_2/syntax/sh_props.ma".
 
@@ -80,7 +81,7 @@ lemma sh_lt_dec (h): sh_lt h → sh_decidable h.
 elim (nat_split_lt_ge s2 s1) #Hs
 [ @or_intror * #n #H destruct
   @(nlt_ge_false … Hs) /2 width=1 by sh_nexts_le/ (**) (* full auto too slow *)
-| @(nle_ind_sn … Hs) -s1 -s2 #s1 #s2 #IH #Hs12
+| @(nle_ind_sx … Hs) -s1 -s2 #s1 #s2 #IH #Hs12
   elim (nat_split_lt_eq_gt s2 (⇡[h]s1)) #Hs21 destruct
   [ elim (nle_split_lt_eq … Hs12) -Hs12 #Hs12 destruct
     [ -IH @or_intror * #n #H destruct
@@ -88,14 +89,14 @@ elim (nat_split_lt_ge s2 s1) #Hs
       >sh_nexts_unit #H
       lapply (sh_lt_nexts_inv_lt … Hh … H) -H #H
       <(nle_inv_zero_dx n) in Hs12;
-      /2 width=2 by nlt_inv_refl, nle_inv_succ_bi/
+      /2 width=2 by nlt_inv_succ_dx_le, nlt_inv_refl/
     | /3 width=2 by ex_intro, or_introl/
     ]
   | -IH @or_introl @(ex_intro … (⁤𝟏)) // (**) (* auto fails *)
   | lapply (nlt_trans s1 ??? Hs21) [ /2 width=1 by sh_next_lt/ ] -Hs12 #Hs12
     elim (IH (s2-⇡[h]s1)) -IH
-    [3: /3 width=1 by sh_next_lt, nlt_minus_bi_sn/ ]
-    <nminus_minus_dx_refl_sn [2,4: /2 width=1 by nlt_des_le/ ] -Hs21
+    [3: /3 width=1 by sh_next_lt, nlt_minus_bi_sx/ ]
+    <nminus_minus_dx_refl_sx [2,4: /2 width=1 by nlt_des_le/ ] -Hs21
     [ * #n #H destruct
       @or_introl @(ex_intro … (⁤↑n)) //
     | #H1 @or_intror * #n #H2 @H1 -H1 destruct

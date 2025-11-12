@@ -12,7 +12,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/arith/nat_le_plus.ma".
 include "ground/relocation/fb/fbr_lapp_eq.ma".
 include "ground/relocation/fb/fbr_lapp_lt.ma".
 include "ground/relocation/fb/fbr_uni_lapp.ma".

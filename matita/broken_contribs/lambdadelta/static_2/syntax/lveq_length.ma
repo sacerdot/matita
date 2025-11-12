@@ -48,7 +48,7 @@ lemma lveq_fwd_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2 →
 | #I1 #I2 #K1 #K2 #_ #IH >length_bind >length_bind //
 ]
 #K1 #K2 #n #_ * #H1 #H2 destruct
->length_bind <nminus_succ_dx <nminus_succ_sn
+>length_bind <nminus_succ_dx <nminus_succ_sx
 /2 width=1 by nle_eq_zero_minus, conj/
 qed-.
 
@@ -102,8 +102,8 @@ lemma lveq_inv_void_dx_length: ∀L1,L2,n1,n2. L1 ≋ⓧ*[n1,n2] L2.ⓧ → |L1|
                                ∃∃m2. L1 ≋ ⓧ*[n1,m2] L2 & 𝟎 = n1 & (⁤↑m2) = n2.
 #L1 #L2 #n1 #n2 #H #HL12
 lapply (lveq_fwd_length_plus … H) >length_bind >nplus_succ_shift #H0
-lapply (nplus_2_des_le_sn_sn … H0 HL12) -H0 -HL12 #H0
-elim (nle_inv_succ_sn … H0) -H0 #_ #H0 >H0 in H; -H0 #H
+lapply (nplus_2_des_le_sx_sx … H0 HL12) -H0 -HL12 #H0
+elim (nle_inv_succ_sx … H0) -H0 #_ #H0 >H0 in H; -H0 #H
 elim (lveq_inv_void_succ_dx … H) -H /2 width=3 by ex3_intro/
 qed-.
 

@@ -25,7 +25,7 @@ lemma rtc_ist_plus (n1) (n2) (c1) (c2): 𝐓❨n1,c1❩ → 𝐓❨n2,c2❩ → 
 qed.
 
 lemma rtc_ist_plus_zero_sn (n) (c1) (c2): 𝐓❨𝟎,c1❩ → 𝐓❨n,c2❩ → 𝐓❨n,c1+c2❩.
-#n #c1 #c2 #H1 #H2 >(nplus_zero_sn n)
+#n #c1 #c2 #H1 #H2 >(nplus_zero_sx n)
 /2 width=1 by rtc_ist_plus/
 qed.
 

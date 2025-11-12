@@ -43,7 +43,7 @@ theorem lveq_inj_void_sn_ge: ∀K1,K2. |K2| ≤ |K1| →
 elim (lveq_fwd_length … Hn) -Hn #H1 #H2 destruct
 elim (lveq_fwd_length … Hm) -Hm #H1 #H2 destruct
 >length_bind <nminus_succ_dx
-<(nminus_succ_sn … HL) <(nle_inv_eq_zero_minus … HL)
+<(nminus_succ_sx … HL) <(nle_inv_eq_zero_minus … HL)
 /2 width=1 by and3_intro/
 qed-.
 

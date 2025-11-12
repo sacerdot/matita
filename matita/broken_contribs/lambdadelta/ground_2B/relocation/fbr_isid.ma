@@ -63,7 +63,7 @@ qed-.
 
 theorem fbr_isid_inv_eq_repl (f1) (f2):
         f1 ϵ 𝐈 → f2 ϵ 𝐈 → f1 ≐ f2.
-/3 width=3 by fbr_isid_inv_eq_id_sn, fbr_eq_canc_sn/
+/3 width=3 by fbr_isid_inv_eq_id_sn, fbr_eq_canc_sx/
 qed-.
 
 (* Basic constructions ******************************************************)

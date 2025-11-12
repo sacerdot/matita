@@ -76,11 +76,11 @@ lemma append_inj_length_dx: ∀K1,K2,L1,L2. L1 + K1 = L2 + K2 → |L1| = |L2| �
 [ * /2 width=1 by conj/
   #K2 #I2 #L1 #L2 >append_atom >append_bind #H destruct
   >length_bind >append_length #H
-  elim (succ_nplus_refl_sn (|L2|) (|K2|) ?) //
+  elim (succ_nplus_refl_sx (|L2|) (|K2|) ?) //
 | #K1 #I1 #IH *
   [ #L1 #L2 >append_bind >append_atom #H destruct
     >length_bind >append_length #H
-    elim (succ_nplus_refl_sn … H)
+    elim (succ_nplus_refl_sx … H)
   | #K2 #I2 #L1 #L2 >append_bind >append_bind #H1 #H2
     elim (destruct_lbind_lbind_aux … H1) -H1 #H1 #H3 destruct (**) (* destruct lemma needed *)
     elim (IH … H1) -IH -H1 /2 width=1 by conj/

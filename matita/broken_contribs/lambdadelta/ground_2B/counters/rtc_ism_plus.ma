@@ -26,7 +26,7 @@ lemma rtc_ism_plus (n1) (n2) (c1) (c2):  𝐌❨n1,c1❩ → 𝐌❨n2,c2❩ →
 qed.
 
 lemma rtc_ism_plus_zero_sn (n) (c1) (c2): 𝐌❨𝟎,c1❩ → 𝐌❨n,c2❩ → 𝐌❨n,c1+c2❩.
-#n #c1 #c2 #H1 #H2 >(nplus_zero_sn n) /2 width=1 by rtc_ism_plus/
+#n #c1 #c2 #H1 #H2 >(nplus_zero_sx n) /2 width=1 by rtc_ism_plus/
 qed.
 
 lemma rtc_ism_plus_zero_dx (n) (c1) (c2): 𝐌❨n,c1❩ → 𝐌❨𝟎,c2❩ → 𝐌❨n,c1+c2❩.

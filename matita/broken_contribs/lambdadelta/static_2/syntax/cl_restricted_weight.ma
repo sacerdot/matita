@@ -28,16 +28,16 @@ lemma rfw_unfold (L) (T): ♯❨L❩ + ♯❨T❩ = ♯❨L,T❩.
 
 (* Basic_1: was: flt_shift *)
 lemma rfw_shift: ∀p,I,K,V,T. ♯❨K.ⓑ[I]V,T❩ < ♯❨K,ⓑ[p,I]V.T❩.
-/2 width=1 by plt_plus_bi_sn/ qed.
+/2 width=1 by plt_plus_bi_sx/ qed.
 
 lemma rfw_clear: ∀p,I1,I2,K,V,T. ♯❨K.ⓤ[I1],T❩ < ♯❨K,ⓑ[p,I2]V.T❩.
-/2 width=1 by plt_plus_bi_sn/ qed.
+/2 width=1 by plt_plus_bi_sx/ qed.
 
 lemma rfw_tpair_sn: ∀I,L,V,T. ♯❨L,V❩ < ♯❨L,②[I]V.T❩.
-/2 width=1 by plt_plus_bi_sn/ qed.
+/2 width=1 by plt_plus_bi_sx/ qed.
 
 lemma rfw_tpair_dx: ∀I,L,V,T. ♯❨L,T❩ < ♯❨L,②[I]V.T❩.
-/2 width=1 by plt_plus_bi_sn/ qed.
+/2 width=1 by plt_plus_bi_sx/ qed.
 
 lemma rfw_lpair_sn: ∀I,L,V,T. ♯❨L,V❩ < ♯❨L.ⓑ[I]V,T❩.
 // qed.

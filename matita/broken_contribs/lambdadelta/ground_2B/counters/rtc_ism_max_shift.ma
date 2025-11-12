@@ -23,6 +23,6 @@ lemma rtc_ism_inv_max_shift_sn (n) (c1) (c2): 𝐌❨n,↕*c1 ∨ c2❩ →
       ∧∧ 𝐌❨𝟎,c1❩ & 𝐌❨n,c2❩.
 #n #c1 #c2 #H
 elim (rtc_ism_inv_max … H) -H #n1 #n2 #Hc1 #Hc2 #H destruct
-elim (rtc_ism_inv_shift … Hc1) -Hc1 #Hc1 * -n1 <nmax_zero_sn
+elim (rtc_ism_inv_shift … Hc1) -Hc1 #Hc1 * -n1 <nmax_zero_sx
 /2 width=1 by conj/
 qed-.

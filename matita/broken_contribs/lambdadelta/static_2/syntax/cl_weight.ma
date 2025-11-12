@@ -30,16 +30,16 @@ lemma fw_unfold (G) (L) (T): ♯❨L❩ + ♯❨T❩ = ♯❨G,L,T❩.
 
 (* Basic_1: was: flt_shift *)
 lemma fw_shift: ∀p,I,G,K,V,T. ♯❨G,K.ⓑ[I]V,T❩ < ♯❨G,K,ⓑ[p,I]V.T❩.
-/2 width=1 by plt_plus_bi_sn/ qed.
+/2 width=1 by plt_plus_bi_sx/ qed.
 
 lemma fw_clear: ∀p,I1,I2,G,K,V,T. ♯❨G,K.ⓤ[I1],T❩ < ♯❨G,K,ⓑ[p,I2]V.T❩.
-/2 width=1 by plt_plus_bi_sn/ qed.
+/2 width=1 by plt_plus_bi_sx/ qed.
 
 lemma fw_tpair_sn: ∀I,G,L,V,T. ♯❨G,L,V❩ < ♯❨G,L,②[I]V.T❩.
-/2 width=1 by plt_plus_bi_sn/ qed.
+/2 width=1 by plt_plus_bi_sx/ qed.
 
 lemma fw_tpair_dx: ∀I,G,L,V,T. ♯❨G,L,T❩ < ♯❨G,L,②[I]V.T❩.
-/2 width=1 by plt_plus_bi_sn/ qed.
+/2 width=1 by plt_plus_bi_sx/ qed.
 
 lemma fw_lpair_sn: ∀I,G,L,V,T. ♯❨G,L,V❩ < ♯❨G,L.ⓑ[I]V,T❩.
 // qed.
