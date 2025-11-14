@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_le.ma".
-include "ground/notation/relations/arroweq_2.ma".
+include "ground/notation/relations/arroweq_3.ma".
 
 (* EQUIVALENCE FOR SUBSETS **************************************************)
 
@@ -22,7 +22,7 @@ definition subset_eq (A): relation2 (𝒫❨A❩) (𝒫❨A❩) ≝
 
 interpretation
   "equivalence (subset)"
-  'ArrowEq u1 u2 = (subset_eq ? u1 u2).
+  'ArrowEq A u1 u2 = (subset_eq A u1 u2).
 
 (* Basic destructions *******************************************************)
 

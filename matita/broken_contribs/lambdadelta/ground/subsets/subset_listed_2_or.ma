@@ -12,8 +12,20 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/subsets/subset_eq.ma".
+include "ground/subsets/subset_or.ma".
+include "ground/subsets/subset_listed_1.ma".
+include "ground/subsets/subset_listed_2.ma".
 
-notation "hvbox( a1 ⇔ break term 46 a2 )"
-  non associative with precedence 45
-  for @{ 'ArrowEq $a1 $a2 }.
+(* SUBSET WITH LISTED ELEMENTS **********************************************)
+
+(* Constructions with subset_or and subset_eq *******************************)
+
+lemma subset_pair_or (A) (a1) (a2):
+      ❴a1❵ ∪ ❴a2❵ ⇔{A} ❴a1,a2❵.
+#A #a1 #a2 @conj #x
+[ * #Hx >(subset_in_inv_single ??? Hx) -x //
+| #Hx elim (subset_in_inv_pair ???? Hx) -Hx #H0 destruct
+  /2 width=1 by subset_or_in_dx, subset_or_in_sx/
+]
+qed.
