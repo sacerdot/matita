@@ -145,7 +145,7 @@ lemma nat_ind_lt (Q:predicate …):
   [ #_ @IHQ #m #H0 elim (nlt_inv_zero_dx … H0)
   | /3 width=1 by nlt_inv_pos_bi/
   ]
-]  
+]
 qed-.
 
 (*** lt_elim *)

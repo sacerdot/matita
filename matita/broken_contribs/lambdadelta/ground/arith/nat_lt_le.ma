@@ -32,7 +32,7 @@ lemma nle_split_lt_eq (m) (n): m ≤ n → ∨∨ m < n | m = n.
 #m #n #H0 elim (ple_split_lt_eq … H0) -H0
 [ /2 width=1 by or_introl/
 | /3 width=1 by eq_inv_npsucc_bi, or_intror/
-]  
+]
 qed-.
 
 (*** lt_or_ge *)

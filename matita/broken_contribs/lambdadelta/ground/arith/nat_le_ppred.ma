@@ -29,4 +29,4 @@ qed.
 lemma nle_inv_ppred_bi (p1) (p2):
       ↓p1 ≤ ↓p2 → p1 ≤ p2.
 //
-qed-.      
+qed-.
