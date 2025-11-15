@@ -59,3 +59,14 @@ lemma term_in_comp_clear_bi_root_slice_dec (p1) (p2):
 | /4 width=1 by term_ol_clear_slice_bi, or_intror/
 ]
 qed-.
+
+(* Advanced destructions ****************************************************)
+
+lemma term_ol_clear_slice_bi_des_append_sx_dx (p1) (p) (p2):
+      (⓪(p1●p)) ϵ ⓪▵↑p2 → ⓪p1 ϵ ⓪▵↑p2.
+#p1 #p #p2 #H0
+lapply (term_ol_clear_slice_bi … H0) -H0 #H0
+elim (term_ol_clear_slice_bi_inv_gen … H0) -H0 #q1 #q2
+<path_clear_append <list_append_assoc >path_clear_append #H0
+/3 width=3 by term_ol_inv_clear_slice_bi, term_ol_clear_slice_bi_gen/
+qed-.

@@ -41,3 +41,12 @@ lemma dbfds_eq_repl (t1) (t2) (u1) (u2) (v1) (v2) (w1) (w2):
       t1 Ꟈ➡𝐝𝐛𝐟[v1,v2] t2 → u1 Ꟈ➡𝐝𝐛𝐟[w1,w2] u2.
 /3 width=5 by dbfds_eq_canc_sx, dbfds_eq_trans/
 qed-.
+
+(* Advanced constructions ***************************************************)
+
+lemma dbfds_single (t1) (t2) (r):
+      t1 ➡𝐝𝐛𝐟[r] t2 → t1 Ꟈ➡𝐝𝐛𝐟[❴r❵, Ⓕ] t2.
+#t1 #t2 #r #Ht12
+@(dbfds_mk … Ht12) -Ht12
+/2 width=1 by subset_eq_sym/
+qed.

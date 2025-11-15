@@ -22,8 +22,6 @@ include "delayed_updating/reduction/dbf_step_preterm_post.ma".
 include "delayed_updating/reduction/dbf_step_preterm_adv.ma".
 include "delayed_updating/computation/dbf_dsteps_preterm.ma".
 
-include "delayed_updating/computation/prova.ma".
-
 (* DELAYED BALANCED FOCUSED COMPUTATION IN A DEVELOPMENT ********************)
 
 (* Constructions with dbfs **************************************************)
@@ -232,21 +230,32 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
     elim (xprc_des_clear_slice … Hr01 Hp21) -Hp21
     [ #x #Hx #H0 | /2 width=5 by xprc_des_side/ | // ]
     elim (dbf_step_conf_local_le … Ht0 Ht01 Ht02 Hr01 Hr02 … Hx H0)
-    [ -Ht01 -Ht02 -Hr02 -Hx -H0 #u #t #Ht10 #Ht2u0 #Hut0 |*: /2 width=1 by/ ]
+    [ -Ht01 #u #t #Ht10 #Ht2u0 #Hut0
+      lapply (dbfs_preterm_trans … Ht0 Ht02) #Ht2
+      lapply (dbfs_des_xprc_neq … Ht0 Ht02 … Hr01) -Ht02 [ /2 width=1 by/ ] #Hr21
+      lapply (term_le_grafted_S_dx_proper … Ht0 … Hx) -Hx #Hx
+    |*: /2 width=1 by/
+    ]
     @(ex2_intro … t)
     [ @(dbfs_neq_dbfdss … Ht0 Hr01 Hnr21 Hp12 Ht10)
-    |
+    | @(dbfs_side_dbfdss … Ht2 Ht0 Hx Hr21 Hr02 Hp12 H0 Ht2u0 Hut0)
     ]
   | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr02 Hr01 Hp12) [ // ] -Hp12 #Hp12
     elim (xprc_des_clear_slice … Hr02 Hp12) -Hp12
     [ #x #Hx #H0 | /2 width=5 by xprc_des_side/ | // ]
     elim (dbf_step_conf_local_le … Ht0 Ht02 Ht01 Hr02 Hr01 … Hx H0)
-    [ -Ht01 -Ht02 -Hr01 -Hx -H0 #u #t #Ht20 #Ht1u0 #Hut0 |*: /2 width=1 by/ ]
+    [ -Ht02 #u #t #Ht20 #Ht1u0 #Hut0
+      lapply (dbfs_preterm_trans … Ht0 Ht01) #Ht1
+      lapply (dbfs_des_xprc_neq … Ht0 Ht01 … Hr02) -Ht01 [ /2 width=1 by/ ] #Hr12
+      lapply (term_le_grafted_S_dx_proper … Ht0 … Hx) -Hx #Hx
+    |*: /2 width=1 by/
+    ]
     @(ex2_intro … t)
-    [
+    [ @(dbfs_side_dbfdss … Ht1 Ht0 Hx Hr12 Hr01 Hp21 H0 Ht1u0 Hut0)
     | @(dbfs_neq_dbfdss … Ht0 Hr02 ? Hp21 Ht20) /2 width=1 by/
     ]
   | elim (dbf_step_conf_local_nol … Ht0 Ht01 Ht02 Hr01 Hr02 Hnr21 Hp21 Hp12) #t #Ht1 #Ht2
     /4 width=6 by dbfs_neq_dbfdss, xprc_des_clear, ex2_intro/
   ]
 ]
+qed-.

@@ -54,9 +54,24 @@ lemma path_dbfr_neq_eq (t) (s) (r) (p) (b) (q) (n):
 /3 width=10 by path_dbfr_neq_ge, path_dbfr_neq_le, conj/
 qed.
 
-lemma path_dbfr_side_eq (t) (x) (r) (p) (b) (q) (n):
-      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → x ϵ 𝐏 →
-      let s ≝ (⓪p)◖𝗦●(⓪x) in
+lemma path_dbfr_side (t) (x) (s) (r) (p) (b) (q) (n):
+      t ϵ 𝐓 → r ϵ 𝐑❨t,p,b,q,n❩ → x ϵ 𝐏 → s = (⓪p)◖𝗦●(⓪x) →
       ❴s,r●⓪x❵ ⇔ (s /𝐝𝐛𝐟{t} r).
 /3 width=7 by path_dbfr_side_ge, path_dbfr_side_le, conj/
+qed.
+
+lemma path_dbfr_side_sx (t1) (t2) (r1) (r2) (p1) (p2) (b1) (b2) (q1) (q2) (n2) (n1) (x):
+      t1 ϵ 𝐓 →
+      r1 ϵ 𝐑❨t1,p1,b1,q1,n1❩ → r2 ϵ 𝐑❨t2,p2,b2,q2,n2❩ →
+      r2 ⧸ϵ ⓪▵↑(p1◖𝗦) → ⓪(p2◖𝗦)●⓪x = r1 →
+      ❴r2●⓪x❵ ⇔ (r2●⓪x) /𝐝𝐛𝐟{t1} r1.
+#t1 #t2 #r1 #r2 #p1 #p2 #b1 #b2 #q1 #q2 #n1 #n2 #x #Ht #Hr1 #Hr2 #Hnr2 #H0
+@(path_dbfr_neq_eq … Hr1)
+[ //
+| <H0 <(xprc_des_r … Hr2) <path_clear_beta <path_clear_S_dx
+  /3 width=7 by path_neq_p_beta, sym_eq/
+| <(xprc_des_clear … Hr2) in ⊢ (???%); //
+| <(xprc_des_clear … Hr2) in Hnr2; >path_clear_append #Hnr2
+  /3 width=2 by term_ol_clear_slice_bi_des_append_sx_dx/
+]
 qed.

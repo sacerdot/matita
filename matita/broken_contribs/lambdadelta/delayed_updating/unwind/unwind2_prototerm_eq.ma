@@ -45,7 +45,7 @@ lemma unwind2_term_single (f) (p):
 #f #p @conj #x #H0
 [ >(subset_in_inv_single ??? H0) -x
   /2 width=1 by in_comp_unwind2_bi/
-| cases H0 -H0 #y #H0 
+| cases H0 -H0 #y #H0
   >(subset_in_inv_single ??? H0) -y
   * -x //
 ]

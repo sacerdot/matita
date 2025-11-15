@@ -32,7 +32,7 @@ theorem ibfs_lift_bi (f) (t1) (t2) (r):
 [ @and4_intro ]
 [ -Hb -Hq -Ht1 -Ht2 //
 | -Hq -Ht1 -Ht2 //
-| -Hb -Ht1 -Ht2 
+| -Hb -Ht1 -Ht2
   <(lift_path_closed_des_gen … Hq)
   <(pcc_lift_rmap_p3beta_lapp … Hq) //
 | lapply (in_comp_lift_bi f … Ht1) -Ht2 -Ht1
