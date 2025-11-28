@@ -51,3 +51,23 @@ lemma term_dbfr_nin (t) (u) (r):
 #t #u #r #Hr #s #Hs
 /4 width=3 by term_dbfr_mk, path_dbfr_neq/
 qed.
+
+(* Negated constructions with subset_le *************************************)
+
+lemma term_nle_dbfr_bi_neq (t1) (t2) (u1) (u2) (r1) (r2):
+      r2 ϵ u2 → r2 ⧸= r1 → u2 /𝐝𝐛𝐟{t2} r1 ⧸⊆ u1 /𝐝𝐛𝐟{t1} r2.
+#t1 #t2 #u1 #u2 #r1 #r2 #Hr2 #Hnr #Hu
+lapply (Hu r2 ?) -Hu
+[ /3 width=3 by term_dbfr_mk, path_dbfr_neq/
+| /2 width=4 by term_dbfr_inv_refl_dx/
+]
+qed-.
+
+(* Destructions with subset_le **********************************************)
+
+lemma term_le_des_dbfr_bi_neq (t1) (t2) (u1) (u2) (r1) (r2):
+      r2 ϵ u2 → u2 /𝐝𝐛𝐟{t2} r1 ⊆ u1 /𝐝𝐛𝐟{t1} r2 → r2 = r1.
+#t1 #t2 #u1 #u2 #r1 #r2 #Hr2 #Hu
+elim (eq_path_dec r2 r1) #Hnr destruct //
+elim (term_nle_dbfr_bi_neq … Hr2 Hnr Hu)
+qed-.

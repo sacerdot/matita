@@ -42,3 +42,12 @@ lemma term_dbfr_refl (t) (r):
 #t #r
 @(subset_eq_trans … (term_dbfr_single …)) //
 qed.
+
+(* Destructions with subset_eq **********************************************)
+
+lemma term_eq_des_dbfr_bi_neq (t1) (t2) (u1) (u2) (r1) (r2):
+      (∨∨ r1 ϵ u1 | r2 ϵ u2) →
+      u1 /𝐝𝐛𝐟{t1} r2 ⇔ u2 /𝐝𝐛𝐟{t2} r1 → r1 = r2.
+#t1 #t2 #u1 #u2 #r1 #r2 * #Hr * [ #Hu #_ | #_ #Hu @sym_eq ]
+/2 width=6 by term_le_des_dbfr_bi_neq/
+qed-.

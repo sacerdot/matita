@@ -22,13 +22,13 @@ include "delayed_updating/reduction/dbf_step_preterm_post.ma".
 include "delayed_updating/reduction/dbf_step_preterm_adv.ma".
 include "delayed_updating/computation/dbf_dsteps_preterm.ma".
 
-(* DELAYED BALANCED FOCUSED COMPUTATION IN A DEVELOPMENT ********************)
+(* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 
-(* Constructions with dbfs **************************************************)
+(* Advanced destructions ****************************************************)
 
 (* UPDATE *)
 
-lemma dbf_step_conf_local_ol (t0) (t1) (t2) (r1) (r2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
+lemma dbf_step_conf_ol (t0) (t1) (t2) (r1) (r2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
       t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
       r1 ϵ 𝐑❨t0,p1,b1,q1,n1❩ → r2 ϵ 𝐑❨t0,p2,b2,q2,n2❩ →
       r1 ϵ ⓪▵↑(p2◖𝗦) → r2 ϵ ⓪▵↑(p1◖𝗦) → ⊥.
@@ -43,7 +43,9 @@ lapply (term_ol_des_clear_slice_bi … Hp12) -Hp12 #Hp12
 lapply (term_ol_des_slice_rcons_bi … Hp12 Hp21) -p1 -p2 #H0 destruct
 qed-.
 
-lemma dbf_step_conf_local_nol (t0) (t1) (t2) (r1) (r2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
+(* Advanced constructions ***************************************************)
+
+lemma dbf_step_conf_nol (t0) (t1) (t2) (r1) (r2) (p1) (p2) (b1) (b2) (q1) (q2) (n1) (n2):
       t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
       r1 ϵ 𝐑❨t0,p1,b1,q1,n1❩ → r2 ϵ 𝐑❨t0,p2,b2,q2,n2❩ →
       (r2 = r1 → ⊥) → (r1 ϵ ⓪▵↑(p2◖𝗦) → ⊥) → (r2 ϵ ⓪▵↑(p1◖𝗦) → ⊥) →
@@ -82,7 +84,7 @@ cut (t3 ⇔ t4)
 ]
 qed-.
 
-lemma dbf_step_conf_local_le (t0) (t1) (t2) (r1) (r2) (p1) (p2) (x) (b1) (b2) (q1) (q2) (n1) (n2):
+lemma dbf_step_conf_le (t0) (t1) (t2) (r1) (r2) (p1) (p2) (x) (b1) (b2) (q1) (q2) (n1) (n2):
       t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
       r1 ϵ 𝐑❨t0,p1,b1,q1,n1❩ → r2 ϵ 𝐑❨t0,p2,b2,q2,n2❩ →
       (r2 = r1 → ⊥) → (r2 ϵ ⓪▵↑(p1◖𝗦) → ⊥) →
@@ -98,7 +100,7 @@ elim (xprc_dbfs … Hr21) #t4 #Ht24
 elim (dbfs_inv_prc_side … Ht0 Ht02 Hr02 Hx Hr01)
 * #y #H1 #H2 #Hy destruct
 elim (xprc_dbfs … Hy) #t6 #Ht26 (* -Ht24 -Ht26 *)
-elim (dbf_step_conf_local_nol … Ht2 Ht24 Ht26 Hr21 Hy)
+elim (dbf_step_conf_nol … Ht2 Ht24 Ht26 Hr21 Hy)
 [1,5: |*: #H0 ]
 [|
 | -Ht0 -Ht02 -Ht2 -Hx -Ht01 -Hnr21 -Hr01 -Hr21
@@ -214,9 +216,11 @@ lapply (dbfs_preterm_inv_sx … Ht4 Ht45 Hr45) -Ht45 -Hr45 #Hs45
 ]
 qed-.
 
-lemma dbf_step_conf_local (t0) (t1) (t2) (r1) (r2):
-      t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
-      ∃∃t. t1 Ꟈ➡*𝐝𝐛𝐟[r2 /𝐝𝐛𝐟{t0} r1, Ⓕ] t & t2 Ꟈ➡*𝐝𝐛𝐟[r1 /𝐝𝐛𝐟{t0} r2, Ⓕ] t.
+(* Main destructions with dbfdss ********************************************)
+
+theorem dbf_step_conf (t0) (t1) (t2) (r1) (r2):
+        t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r1] t1 → t0 ➡𝐝𝐛𝐟[r2] t2 →
+        ∃∃t. t1 Ꟈ➡*𝐝𝐛𝐟[r2 /𝐝𝐛𝐟{t0} r1, Ⓕ] t & t2 Ꟈ➡*𝐝𝐛𝐟[r1 /𝐝𝐛𝐟{t0} r2, Ⓕ] t.
 #t0 #t1 #t2 #r1 #r2 #Ht0 #Ht01 #Ht02
 elim (eq_path_dec r2 r1) #Hnr21 destruct
 [ lapply (dbfs_preterm_mono … Ht0 Ht01 Ht02) -Ht0 -Ht01 -Ht02 #Ht12
@@ -225,11 +229,11 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
   cases Ht02 #p2 #b2 #q2 #n2 #Hr02 #_
   elim (term_in_comp_clear_root_slice_dec_xprc … (p2◖𝗦) … Hr01) #Hp21
   elim (term_in_comp_clear_root_slice_dec_xprc … (p1◖𝗦) … Hr02) #Hp12
-  [ elim (dbf_step_conf_local_ol … Ht0 Ht01 Ht02 Hr01 Hr02 Hp21 Hp12)
+  [ elim (dbf_step_conf_ol … Ht0 Ht01 Ht02 Hr01 Hr02 Hp21 Hp12)
   | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr01 Hr02 Hp21) [ // ] -Hp21 #Hp21
     elim (xprc_des_clear_slice … Hr01 Hp21) -Hp21
     [ #x #Hx #H0 | /2 width=5 by xprc_des_side/ | // ]
-    elim (dbf_step_conf_local_le … Ht0 Ht01 Ht02 Hr01 Hr02 … Hx H0)
+    elim (dbf_step_conf_le … Ht0 Ht01 Ht02 Hr01 Hr02 … Hx H0)
     [ -Ht01 #u #t #Ht10 #Ht2u0 #Hut0
       lapply (dbfs_preterm_trans … Ht0 Ht02) #Ht2
       lapply (dbfs_des_xprc_neq … Ht0 Ht02 … Hr01) -Ht02 [ /2 width=1 by/ ] #Hr21
@@ -243,7 +247,7 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
   | lapply (term_in_comp_clear_root_slice_inv_xprc_bi … Hr02 Hr01 Hp12) [ // ] -Hp12 #Hp12
     elim (xprc_des_clear_slice … Hr02 Hp12) -Hp12
     [ #x #Hx #H0 | /2 width=5 by xprc_des_side/ | // ]
-    elim (dbf_step_conf_local_le … Ht0 Ht02 Ht01 Hr02 Hr01 … Hx H0)
+    elim (dbf_step_conf_le … Ht0 Ht02 Ht01 Hr02 Hr01 … Hx H0)
     [ -Ht02 #u #t #Ht20 #Ht1u0 #Hut0
       lapply (dbfs_preterm_trans … Ht0 Ht01) #Ht1
       lapply (dbfs_des_xprc_neq … Ht0 Ht01 … Hr02) -Ht01 [ /2 width=1 by/ ] #Hr12
@@ -254,7 +258,7 @@ elim (eq_path_dec r2 r1) #Hnr21 destruct
     [ @(dbfs_side_dbfdss … Ht1 Ht0 Hx Hr12 Hr01 Hp21 H0 Ht1u0 Hut0)
     | @(dbfs_neq_dbfdss … Ht0 Hr02 ? Hp21 Ht20) /2 width=1 by/
     ]
-  | elim (dbf_step_conf_local_nol … Ht0 Ht01 Ht02 Hr01 Hr02 Hnr21 Hp21 Hp12) #t #Ht1 #Ht2
+  | elim (dbf_step_conf_nol … Ht0 Ht01 Ht02 Hr01 Hr02 Hnr21 Hp21 Hp12) #t #Ht1 #Ht2
     /4 width=6 by dbfs_neq_dbfdss, xprc_des_clear, ex2_intro/
   ]
 ]
