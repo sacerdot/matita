@@ -38,7 +38,7 @@ definition replace_2 (A) (B): relation3 (relation A) (relation B) (relation2 A B
 definition c_reflexive (A) (B): predicate (relation3 A B B) ≝
            λR. ∀a,b. R a b b.
 
-definition Decidable: Prop → Prop ≝ λR. R ∨ (R → ⊥).
+definition Decidable: Prop → Prop ≝ λR. ∨∨ R | (negation R).
 
 definition Transitive (A) (R:relation A): Prop ≝
            ∀a1,a0. R a1 a0 → ∀a2. R a0 a2 → R a1 a2.

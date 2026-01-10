@@ -21,7 +21,7 @@ include "ground/subsets/subsets_sfinite.ma".
 (* Constructions with subset_or *********************************************)
 
 lemma subsets_sfinite_or (A) (u1) (u2):
-      u1 ϵ 𝐒𝛀 → u2 ϵ 𝐒𝛀 → u1 ∪ u2 ϵ 𝐒𝛀{A}.
+      u1 ϵ 𝐒𝛀 → u2 ϵ 𝐒𝛀 → u1 ∪ u2 ϵ 𝐒𝛀❪A❫.
 #A #u1 #u2 * #l1 #Hl1 * #l2 #Hl2
 lapply (subset_or_eq_repl … Hl1 … Hl2) -Hl1 -Hl2 #Hl12
 lapply (subset_eq_trans … Hl12 … (subset_eq_or_listed_append …)) -Hl12 #Hl12

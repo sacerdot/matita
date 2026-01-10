@@ -41,3 +41,17 @@ lemma subset_nin_inv_single (A) (a1) (b):
       b ⧸ϵ ❴a1:A❵ → b ⧸= a1.
 /2 width=1 by/
 qed-.
+
+(* Advanced constructions ***************************************************)
+
+lemma subset_in_single_dec (A:Type[0]):
+      (∀a1,a2. Decidable (a1 =❪A❫ a2)) →
+      ∀a1,a2. Decidable (a1 ϵ❪A❫ ❴a2❵).
+/2 width=1 by subset_in_listed_dec/
+qed-.
+
+lemma subset_nin_single (A) (a1) (b):
+      b ⧸= a1 → b ⧸ϵ ❴a1:A❵.
+/3 width=1 by subset_in_inv_single/
+qed-.
+

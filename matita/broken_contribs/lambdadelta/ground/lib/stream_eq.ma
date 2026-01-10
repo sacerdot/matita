@@ -27,13 +27,13 @@ interpretation
   'RingEq A t1 t2 = (stream_eq A t1 t2).
 
 definition stream_eq_repl (A) (R:relation …) ≝
-           ∀t1,t2. t1 ≗{A} t2 → R t1 t2.
+           ∀t1,t2. t1 ≗❪A❫ t2 → R t1 t2.
 
 definition stream_eq_repl_back (A) (R:predicate …) ≝
-           ∀t1. R t1 → ∀t2. t1 ≗{A} t2 → R t2.
+           ∀t1. R t1 → ∀t2. t1 ≗❪A❫ t2 → R t2.
 
 definition stream_eq_repl_fwd (A) (R:predicate …) ≝
-           ∀t1. R t1 → ∀t2. t2 ≗{A} t1 → R t2.
+           ∀t1. R t1 → ∀t2. t2 ≗❪A❫ t1 → R t2.
 
 (* Basic constructions ******************************************************)
 
@@ -57,7 +57,7 @@ lemma stream_eq_repl_sym (A) (R):
 
 (*** eq_inv_seq_aux *)
 lemma stream_eq_inv_cons_bi (A):
-      ∀t1,t2. t1 ≗{A} t2 →
+      ∀t1,t2. t1 ≗❪A❫ t2 →
       ∀u1,u2,b1,b2. b1⨮u1 = t1 → b2⨮u2 = t2 →
       ∧∧ b1 = b2 & u1 ≗ u2.
 #A #t1 #t2 * -t1 -t2

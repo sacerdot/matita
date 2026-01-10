@@ -18,6 +18,6 @@ notation < "hvbox( 𝐗❨ break term 46 l ❩ )"
   non associative with precedence 70
   for @{ 'SubsetX $S $l }.
 
-notation > "hvbox( 𝐗 opt ( { term 46 S } ) ❨ break term 46 l ❩ )"
+notation > "hvbox( 𝐗 opt ( ❪ term 46 S ❫ ) ❨ break term 46 l ❩ )"
   non associative with precedence 70
   for @{ 'SubsetX ${default @{$S}@{?}} $l }.

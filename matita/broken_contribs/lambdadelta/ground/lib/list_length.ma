@@ -30,27 +30,27 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma list_length_empty (A):
-      (𝟎) = ❘ⓔ{A}❘.
+      (𝟎) = ❘ⓔ❪A❫❘.
 // qed.
 
 lemma list_length_lcons (A) (l) (a):
-      (⁤↑❘l❘) ={ℕ} ❘a⨮{A}l❘.
+      (⁤↑❘l❘) =❪ℕ❫ ❘a⨮❪A❫l❘.
 // qed.
 
 (* Basic inversions *********************************************************)
 
 lemma list_length_inv_zero_dx (A) (l):
-      ❘l❘ = 𝟎 → ⓔ{A} = l.
+      ❘l❘ = 𝟎 → ⓔ❪A❫ = l.
 #A * // #a #l <list_length_lcons #H
 elim (eq_inv_npos_zero … H)
 qed-.
 
 lemma list_length_inv_zero_sx (A) (l):
-      (𝟎) = ❘l❘ → ⓔ{A} = l.
+      (𝟎) = ❘l❘ → ⓔ❪A❫ = l.
 /2 width=1 by list_length_inv_zero_dx/ qed-.
 
 lemma list_length_inv_succ_dx (A) (l) (x):
-      ❘l❘{A} = (⁤↑x) →
+      ❘l❘❪A❫ = (⁤↑x) →
       ∃∃tl,a. ❘tl❘ = x & a⨮tl = l.
 #A *
 [ #x <list_length_empty #H
@@ -61,6 +61,6 @@ lemma list_length_inv_succ_dx (A) (l) (x):
 qed-.
 
 lemma list_length_inv_succ_sx (A) (l) (x):
-      (⁤↑x) ={ℕ} ❘l❘{A} →
+      (⁤↑x) =❪ℕ❫ ❘l❘❪A❫ →
       ∃∃tl,a. ❘tl❘ = x & a⨮tl = l.
 /2 width=1 by list_length_inv_succ_dx/ qed-.

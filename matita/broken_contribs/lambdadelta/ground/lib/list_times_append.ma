@@ -21,7 +21,7 @@ include "ground/lib/list_times.ma".
 (* Constructions with list_append *******************************************)
 
 lemma list_times_append (A) (a) (m) (n):
-      a×(m+n) = a×n ⨁{A} a×m.
+      a×(m+n) = a×n ⨁❪A❫ a×m.
 #A #a #m #n @(nat_ind_succ … n) -n [ // | #n #IH ]
 <nplus_succ_dx <list_times_succ_lcons >IH -IH //
 qed.

@@ -27,9 +27,9 @@ cases (stream_eq_inv_cons_bi A … H) -H -a
 qed-.
 
 theorem stream_eq_canc_sx (A):
-        ∀t,t1,t2. t ≗ t1 → t ≗ t2 → t1 ≗{A} t2.
+        ∀t,t1,t2. t ≗ t1 → t ≗ t2 → t1 ≗❪A❫ t2.
 /3 width=3 by stream_eq_trans, stream_eq_sym/ qed-.
 
 theorem stream_eq_canc_dx (A):
-        ∀t,t1,t2. t1 ≗ t → t2 ≗ t → t1 ≗{A} t2.
+        ∀t,t1,t2. t1 ≗ t → t2 ≗ t → t1 ≗❪A❫ t2.
 /3 width=3 by stream_eq_trans, stream_eq_sym/ qed-.

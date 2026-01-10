@@ -25,34 +25,34 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma list_cons_comm (A):
-      ∀a. a ⨮ ⓔ = ⓔ ⨭{A} a.
+      ∀a. a ⨮ ⓔ = ⓔ ⨭❪A❫ a.
 // qed.
 
 lemma list_cons_shift (A):
-      ∀a1,l,a2. a1 ⨮{A} l ⨭ a2 = (a1 ⨮ l) ⨭ a2.
+      ∀a1,l,a2. a1 ⨮❪A❫ l ⨭ a2 = (a1 ⨮ l) ⨭ a2.
 // qed.
 
 (* Advanced constructions ***************************************************)
 
 (* Note: this is list_append_lcons_dx *)
 lemma list_append_rcons_sx (A):
-      ∀l1,l2,a. l1 ⨁ (a ⨮ l2) = (l1 ⨭ a) ⨁{A} l2.
+      ∀l1,l2,a. l1 ⨁ (a ⨮ l2) = (l1 ⨭ a) ⨁❪A❫ l2.
 // qed.
 
 lemma list_append_rcons_dx (A):
-      ∀l1,l2,a. (l1 ⨁ l2) ⨭ a = l1 ⨁{A} (l2 ⨭ a).
+      ∀l1,l2,a. (l1 ⨁ l2) ⨭ a = l1 ⨁❪A❫ (l2 ⨭ a).
 // qed.
 
 (* Basic inversions *********************************************************)
 
 lemma eq_inv_list_empty_rcons (A):
-      ∀l,a. ⓔ = l⨭{A}a → ⊥.
+      ∀l,a. ⓔ = l⨭❪A❫a → ⊥.
 #A #l #a #H0
 elim (eq_inv_list_empty_append … H0) -H0 #_ #H0 destruct
 qed-.
 
 lemma eq_inv_list_rcons_empty (A):
-      ∀l,a. l⨭{A}a = ⓔ → ⊥.
+      ∀l,a. l⨭❪A❫a = ⓔ → ⊥.
 #A #l #a #H0
 elim (eq_inv_list_append_empty … H0) -H0 #_ #H0 destruct
 qed-.
@@ -60,7 +60,7 @@ qed-.
 (* Advanced inversions ******************************************************)
 
 lemma eq_inv_list_rcons_bi (A):
-      ∀a1,a2,l1,l2. l1 ⨭{A} a1 = l2 ⨭ a2 →
+      ∀a1,a2,l1,l2. l1 ⨭❪A❫ a1 = l2 ⨭ a2 →
       ∧∧ l1 = l2 & a1 = a2.
 #A #a1 #a2 #l1 elim l1 -l1 [| #b1 #l1 #IH ] *
 [ <list_append_empty_sx <list_append_empty_sx #H destruct
@@ -78,7 +78,7 @@ qed-.
 (* Advanced eliminations ****************************************************)
 
 lemma list_ind_rcons (A) (Q:predicate …):
-      Q (ⓔ{A}) →
+      Q (ⓔ❪A❫) →
       (∀l,a. Q l -> Q (l⨭a)) →
       ∀l. Q l.
 #A #Q #IH1 #IH2 #l
@@ -90,7 +90,7 @@ qed-.
 (* Advanced inversions with list_append *************************************)
 
 lemma eq_inv_list_rcons_append (A) (l) (l1) (l2) (a):
-      l⨭a = l1 ⨁{A} l2 →
+      l⨭a = l1 ⨁❪A❫ l2 →
       ∨∨ ∧∧ l⨭a = l1 & ⓔ = l2
        | ∃∃ m. l = l1 ⨁ m & m⨭a = l2.
 #A #l #l1 #l2 #a @(list_ind_rcons … l2) -l2
@@ -103,7 +103,7 @@ lemma eq_inv_list_rcons_append (A) (l) (l1) (l2) (a):
 qed-.
 
 lemma eq_inv_list_append_dx_dx_refl (A) (l1) (l2):
-      l1 = l2⨁{A}l1 → ⓔ = l2.
+      l1 = l2⨁❪A❫l1 → ⓔ = l2.
 #A #l1 @(list_ind_rcons … l1) -l1 [ // ]
 #l1 #a1 #IH #l2 <list_append_rcons_dx #H0
 elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_
@@ -111,7 +111,7 @@ elim (eq_inv_list_rcons_bi ????? H0) -H0 #H0 #_
 qed-.
 
 lemma eq_inv_list_append_dx_bi (A) (l1) (l2) (l):
-      l1 ⨁ l = l2 ⨁{A} l → l1 = l2.
+      l1 ⨁ l = l2 ⨁❪A❫ l → l1 = l2.
 #A #l1 #l2 #l #H0
 elim (eq_inv_list_append_bi … H0) -H0 * #m #H1 #H2
 [ lapply (eq_inv_list_append_dx_dx_refl … H2) -H2

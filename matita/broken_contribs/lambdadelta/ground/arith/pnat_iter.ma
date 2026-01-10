@@ -31,22 +31,22 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
-lemma piter_unit (A) (f): f ⊜ f^{A}𝟏.
+lemma piter_unit (A) (f): f ⊜ f^❪A❫𝟏.
 // qed.
 
-lemma piter_succ (A) (f) (p): f ∘ f^p ⊜ f^{A}(↑p).
+lemma piter_succ (A) (f) (p): f ∘ f^p ⊜ f^❪A❫(↑p).
 // qed.
 
 (* Advanced constructions ***************************************************)
 
-lemma piter_appl (A) (f) (p): f ∘ f^p ⊜ f^{A}p ∘ f.
+lemma piter_appl (A) (f) (p): f ∘ f^p ⊜ f^❪A❫p ∘ f.
 #A #f #p elim p -p //
 #p #IH @exteq_repl
 /3 width=5 by compose_repl_fwd_dx, compose_repl_fwd_sx, exteq_canc_dx/
 qed.
 
 lemma piter_compose (A) (B) (f) (g) (h) (p):
-      h ∘ f ⊜ g ∘ h → h ∘ (f^{A}p) ⊜ (g^{B}p) ∘ h.
+      h ∘ f ⊜ g ∘ h → h ∘ (f^❪A❫p) ⊜ (g^❪B❫p) ∘ h.
 #A #B #f #g #h #p elim p -p
 [ #H @exteq_repl
   /2 width=5 by compose_repl_fwd_sx, compose_repl_fwd_dx/

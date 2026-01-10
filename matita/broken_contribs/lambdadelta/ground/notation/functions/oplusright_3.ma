@@ -22,6 +22,6 @@ notation > "hvbox( hd ⨮ break tl )"
   right associative with precedence 47
   for @{ 'OPlusRight ? $hd $tl }.
 
-notation > "hvbox( hd ⨮{ break term 46 S } break term 46 tl )"
+notation > "hvbox( hd ⨮❪ break term 46 S ❫ break term 46 tl )"
   non associative with precedence 47
   for @{ 'OPlusRight $S $hd $tl }.

@@ -20,7 +20,7 @@ include "ground/subsets/subset_listed_1.ma".
 (* Constructions with subset_nimp *******************************************)
 
 lemma in_nimp_single_dx_dec (A:Type[0]) (u) (b):
-      (∀a1,a2. Decidable … (a1 ={A} a2)) →
+      (∀a1,a2. Decidable … (a1 =❪A❫ a2)) →
       (∀a:A.Decidable (aϵu)) →
       ∀a:A.Decidable (aϵu⧵❴b❵).
 #A #u #b #HA #Hu

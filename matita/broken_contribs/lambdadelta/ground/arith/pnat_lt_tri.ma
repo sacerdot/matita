@@ -12,12 +12,19 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* NOTATION FOR GROUND ******************************************************)
+include "ground/arith/pnat_tri.ma".
+include "ground/arith/pnat_lt.ma".
 
-notation < "hvbox( term 66 f ^ break term 90 x )"
-  non associative with precedence 65
-  for @{ 'Exp $X $f $x }.
+(* STRICT ORDER FOR POSITIVE INTEGERS ***************************************)
 
-notation > "hvbox( f ^ opt ( ❪ break term 46 X ❫ ) break term 90 x )"
-  non associative with precedence 65
-  for @{ 'Exp ${default @{$X}@{?}} $f $x }.
+(* Properties with ptri *****************************************************)
+
+lemma ptri_lt (A) (p1) (p2) (a1) (a2) (a3):
+      p1 < p2 → a1 = ptri A p1 p2 a1 a2 a3.
+#A #p1 #p2 #a1 #a2 #a3 #Hp @(plt_ind_alt … Hp) -Hp //
+qed-.
+
+lemma ptri_gt (A) (p1) (p2) (a1) (a2) (a3):
+      p2 < p1 → a3 = ptri A p1 p2 a1 a2 a3.
+#A #p1 #p2 #a1 #a2 #a3 #Hp @(plt_ind_alt … Hp) -Hp //
+qed-.

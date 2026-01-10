@@ -29,23 +29,23 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma list_append_empty_sx (A):
-      ∀l2. l2 = ⓔ ⨁{A} l2.
+      ∀l2. l2 = ⓔ ⨁❪A❫ l2.
 // qed.
 
 lemma list_append_lcons_sx (A):
-      ∀a,l1,l2. a ⨮ l1 ⨁ l2 = (a⨮l1) ⨁{A} l2.
+      ∀a,l1,l2. a ⨮ l1 ⨁ l2 = (a⨮l1) ⨁❪A❫ l2.
 // qed.
 
 (* Helper constructions *****************************************************)
 
 lemma list_append_lcons_empty_sx (A):
-      ∀a,l. a ⨮ l = (a⨮ⓔ) ⨁{A} l.
+      ∀a,l. a ⨮ l = (a⨮ⓔ) ⨁❪A❫ l.
 // qed-.
 
 (* Advanced constructions ***************************************************)
 
 lemma list_append_empty_dx (A):
-      ∀l1. l1 = l1 ⨁{A} ⓔ.
+      ∀l1. l1 = l1 ⨁❪A❫ ⓔ.
 #A #l1 elim l1 -l1
 [ <list_append_empty_sx //
 | #hd #tl #IH <list_append_lcons_sx <IH //
@@ -66,7 +66,7 @@ qed.
 (* Basic inversions *********************************************************)
 
 lemma eq_inv_list_empty_append (A):
-      ∀l1,l2. ⓔ = l1⨁{A}l2 →
+      ∀l1,l2. ⓔ = l1⨁❪A❫l2 →
       ∧∧ ⓔ = l1 & ⓔ = l2.
 #A *
 [ #l2 /2 width=1 by conj/
@@ -75,7 +75,7 @@ lemma eq_inv_list_empty_append (A):
 qed-.
 
 lemma eq_inv_list_append_empty (A):
-      ∀l1,l2. l1⨁{A}l2 = ⓔ →
+      ∀l1,l2. l1⨁❪A❫l2 = ⓔ →
       ∧∧ l1 = ⓔ & l2 = ⓔ.
 #A *
 [ #l2 /2 width=1 by conj/
@@ -86,7 +86,7 @@ qed-.
 (* Advanced inversions ******************************************************)
 
 lemma eq_inv_list_lcons_append (A) (l2) (l1) (l) (a):
-      a⨮l = l1 ⨁{A} l2 →
+      a⨮l = l1 ⨁❪A❫ l2 →
       ∨∨ ∧∧ ⓔ = l1 & a⨮l = l2
        | ∃∃ m. a⨮m = l1 & l = m ⨁ l2.
 #A #l2 #l1 #l #a cases l1 -l1
@@ -98,7 +98,7 @@ lemma eq_inv_list_lcons_append (A) (l2) (l1) (l) (a):
 qed-.
 
 lemma eq_inv_list_append_bi (A) (l1) (l2) (n1) (n2):
-      l1 ⨁ l2 = n1 ⨁{A} n2 →
+      l1 ⨁ l2 = n1 ⨁❪A❫ n2 →
       ∨∨ ∃∃m. l1 = n1 ⨁ m & n2 = m ⨁ l2
        | ∃∃m. l2 = m ⨁ n2 & n1 = l1 ⨁ m.
 #A #l1 elim l1 -l1
@@ -114,14 +114,14 @@ lemma eq_inv_list_append_bi (A) (l1) (l2) (n1) (n2):
 qed-.
 
 lemma eq_inv_list_append_dx_sx_refl (A) (l1) (l2):
-      l1 = l1⨁{A}l2 → ⓔ = l2.
+      l1 = l1⨁❪A❫l2 → ⓔ = l2.
 #A #l1 elim l1 -l1 [ // ]
 #a1 #l1 #IH #l2 <list_append_lcons_sx #H0 destruct -H0
 /2 width=1 by/
 qed-.
 
 lemma eq_inv_list_append_sx_bi (A) (l1) (l2) (l):
-      l ⨁ l1 = l ⨁{A} l2 → l1 = l2.
+      l ⨁ l1 = l ⨁❪A❫ l2 → l1 = l2.
 #A #l1 #l2 #l #H0
 elim (eq_inv_list_append_bi … H0) -H0 * #m #H1 #H2
 [ lapply (eq_inv_list_append_dx_sx_refl … H1) -H1
@@ -133,7 +133,7 @@ qed-.
 (* Advanced eliminations ****************************************************)
 
 lemma list_ind_append_dx (A) (Q:predicate …):
-      Q (ⓔ{A}) →
+      Q (ⓔ❪A❫) →
       (∀l1,l2. Q l1 -> Q (l1⨁l2)) →
       ∀l. Q l.
 #A #Q #IH1 #IH2 * //
@@ -142,7 +142,7 @@ lemma list_ind_append_dx (A) (Q:predicate …):
 qed-.
 
 lemma list_ind_append_sx (A) (Q:predicate …):
-      Q (ⓔ{A}) →
+      Q (ⓔ❪A❫) →
       (∀l1,l2. Q l2 -> Q (l1⨁l2)) →
       ∀l. Q l.
 #A #Q #IH1 #IH2 * //

@@ -26,6 +26,6 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma subset_and_in (A) (u1) (u2) (p):
-      p ϵ u1 → p ϵ u2 → p ϵ{A} u1 ∩ u2.
+      p ϵ u1 → p ϵ u2 → p ϵ❪A❫ u1 ∩ u2.
 /2 width=1 by conj/
 qed.

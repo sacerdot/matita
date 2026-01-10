@@ -18,6 +18,6 @@ notation < "hvbox( 𝐒𝛀 )"
   non associative with precedence 70
   for @{ 'SubsetSOmega $S }.
 
-notation > "hvbox( 𝐒𝛀 opt ( { term 46 S } ) )"
+notation > "hvbox( 𝐒𝛀 opt ( ❪ term 46 S ❫ ) )"
   non associative with precedence 70
   for @{ 'SubsetSOmega ${default @{$S}@{?}} }.

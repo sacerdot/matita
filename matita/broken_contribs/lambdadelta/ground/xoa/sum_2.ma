@@ -29,9 +29,9 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma eq_sum_2_dec (A1,A2:Type[0]):
-      (∀a1,a2. Decidable (a1 ={A1} a2)) →
-      (∀a1,a2. Decidable (a1 ={A2} a2)) →
-      ∀a1,a2. Decidable (a1 ={++A1|A2} a2).
+      (∀a1,a2. Decidable (a1 =❪A1❫ a2)) →
+      (∀a1,a2. Decidable (a1 =❪A2❫ a2)) →
+      ∀a1,a2. Decidable (a1 =❪++A1|A2❫ a2).
 #A1 #A2 #HA1 #HA2 * #a1 * #a2
 [ elim (HA1 a1 a2) -HA1 -HA2 #Hna destruct
   [ /2 width=1 by or_introl/]

@@ -17,9 +17,17 @@ include "ground/notation/xoa/false_0.ma".
 include "ground/notation/xoa/true_0.ma".
 include "ground/notation/xoa/or_2.ma".
 include "ground/notation/xoa/and_2.ma".
+include "ground/notation/functions/commercialat_3.ma".
 include "ground/notation/relations/not_eq_3.ma".
 
 (* LOGIC ********************************************************************)
+
+definition apply_dx (A:Type[0]) (B:Type[0]) (f:A→B) ≝
+           f.
+
+interpretation
+  "right associative application"
+  'CommercialAt A B f a = (apply_dx A B f a).
 
 interpretation
   "false (logic)"

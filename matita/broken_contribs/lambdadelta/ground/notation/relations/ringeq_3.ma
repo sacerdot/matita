@@ -22,6 +22,6 @@ notation > "hvbox( v1 ≗ break term 46 v2 )"
   non associative with precedence 45
   for @{ 'RingEq ? $v1 $v2 }.
 
-notation > "hvbox( v1 ≗{ break term 46 M } break term 46 v2 )"
+notation > "hvbox( v1 ≗❪ break term 46 M ❫ break term 46 v2 )"
   non associative with precedence 45
   for @{ 'RingEq $M $v1 $v2 }.

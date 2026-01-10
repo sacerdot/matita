@@ -35,7 +35,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma subset_lt_mk (A) (u1) (u2):
-      u1 ⊆ u2 → u2 ⧵ u1 ϵ ⊙{A} → u1 ⊂ u2.
+      u1 ⊆ u2 → u2 ⧵ u1 ϵ ⊙❪A❫ → u1 ⊂ u2.
 /2 width=1 by conj/
 qed.
 
@@ -54,7 +54,7 @@ qed.
 (* Constructions with subset_nimply *****************************************)
 
 lemma subset_lt_nimp_sx_bi (A) (u) (v1) (v2):
-      v2 ⧵{A} v1 ⊆ u → v1 ⊂ v2 → u ⧵ v2 ⊂ u ⧵ v1.
+      v2 ⧵❪A❫ v1 ⊆ u → v1 ⊂ v2 → u ⧵ v2 ⊂ u ⧵ v1.
 #A #u #v1 #v2 #Hu * #Hv #H0
 elim (subsets_inh_inv_in … H0) -H0 #a #Ha
 /5 width=5 by subset_lt_mk, subset_le_nimp_bi, subsets_inh_in, subset_in_nimp_nimp_bi/

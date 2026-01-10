@@ -28,9 +28,9 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma list_tl_empty (A):
-      ⓔ = ⇂{A}ⓔ.
+      ⓔ = ⇂❪A❫ⓔ.
 // qed.
 
 lemma list_tl_lcons (A) (a) (t):
-      t = ⇂{A}(a⨮t).
+      t = ⇂❪A❫(a⨮t).
 // qed.

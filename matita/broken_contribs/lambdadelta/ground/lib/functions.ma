@@ -52,7 +52,7 @@ definition annulment_2 (A) (f):
 (* Constructions with compose ***********************************************)
 
 lemma compose_unfold (A) (B) (C:Type[0]) (g) (f) (a):
-      g (f a) = (g∘{A,B,C}f) a.
+      g (f a) = (g∘❪A,B,C❫f) a.
 // qed.
 
 lemma compose_injective_2_fwd (A) (B) (C) (Sa) (Sb) (Sc) (f) (g):

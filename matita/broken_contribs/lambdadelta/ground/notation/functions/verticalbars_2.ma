@@ -14,10 +14,10 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation > "hvbox( ❘ term 46 a ❘ opt ( { break term 19 A } ) )"
-  non associative with precedence 70
-  for @{ 'VerticalBars ${default @{$A}@{?}} $a }.
-
 notation < "hvbox( ❘ term 46 a ❘ )"
   non associative with precedence 70
   for @{ 'VerticalBars $A $a }.
+
+notation > "hvbox( ❘ term 46 a ❘ opt ( ❪ break term 19 A ❫ ) )"
+  non associative with precedence 70
+  for @{ 'VerticalBars ${default @{$A}@{?}} $a }.

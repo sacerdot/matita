@@ -14,10 +14,10 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation < "hvbox( term 66 f ^ break term 90 x )"
-  non associative with precedence 65
-  for @{ 'Exp $X $f $x }.
+notation < "hvbox( f @ break a )"
+  right associative with precedence 70
+  for @{ 'CommercialAt $A $B $f $a }.
 
-notation > "hvbox( f ^ opt ( ❪ break term 46 X ❫ ) break term 90 x )"
-  non associative with precedence 65
-  for @{ 'Exp ${default @{$X}@{?}} $f $x }.
+notation > "hvbox( f @ opt ( ❪ break term 46 A, break term 46 B ❫ ) break term 70 a )"
+  non associative with precedence 70
+  for @{ 'CommercialAt ${default @{$A}@{?}} ${default @{$B}@{?}} $f $a }.

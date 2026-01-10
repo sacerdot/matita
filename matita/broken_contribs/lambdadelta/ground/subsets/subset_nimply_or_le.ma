@@ -38,7 +38,7 @@ qed.
 
 lemma subset_le_or_dx_nimp_sx_refl_bi (A) (u1) (u2): (**)
       (∀a. Decidable (a ϵ u2)) →
-      u1 ⊆ (u1 ⧵{A} u2) ∪ u2.
+      u1 ⊆ (u1 ⧵❪A❫ u2) ∪ u2.
 #A #u1 #u2 #Hu2 #a #Ha
 elim (Hu2 a) -Hu2 #Hu2
 [ /2 width=1 by subset_or_in_dx/
@@ -48,7 +48,7 @@ qed.
 
 lemma subset_le_or_dx_nimp_dx_refl_bi (A) (u1) (u2): (**)
       (∀a. Decidable (a ϵ u2)) →
-      u1 ⊆ u2 ∪ (u1 ⧵{A} u2).
+      u1 ⊆ u2 ∪ (u1 ⧵❪A❫ u2).
 #A #u1 #u2 #Hu2 #a #Ha
 elim (Hu2 a) -Hu2 #Hu2
 [ /2 width=1 by subset_or_in_sx/

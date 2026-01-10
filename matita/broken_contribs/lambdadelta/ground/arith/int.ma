@@ -60,12 +60,12 @@ lemma eq_inv_zneg_bi: injective … zneg.
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_zpos_zero (p): ⁤p ={ℤ} 𝟎 → ⊥.
+lemma eq_inv_zpos_zero (p): ⁤p =❪ℤ❫ 𝟎 → ⊥.
 #p #H0 destruct
 qed-.
 
 (* Note: destruct *)
-lemma eq_inv_zzero_pos (p): 𝟎 ={ℤ} ⁤p → ⊥.
+lemma eq_inv_zzero_pos (p): 𝟎 =❪ℤ❫ ⁤p → ⊥.
 #p #H0 destruct
 qed-.
 

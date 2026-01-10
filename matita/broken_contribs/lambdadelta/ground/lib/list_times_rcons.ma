@@ -20,12 +20,12 @@ include "ground/lib/list_times_append.ma".
 (* Constructions with list_rcons ********************************************)
 
 lemma list_times_succ_rcons (A) (a) (n):
-      a×n ⨭ a = a×{A}(⁤↑n).
+      a×n ⨭ a = a×❪A❫(⁤↑n).
 #A #a #n
 >nplus_unit_sx >list_times_append //
 qed.
 
 lemma list_times_cons_shift (A) (a) (n):
-      a ⨮ a×n = a×n ⨭{A} a.
+      a ⨮ a×n = a×n ⨭❪A❫ a.
 #A #a #n //
 qed.

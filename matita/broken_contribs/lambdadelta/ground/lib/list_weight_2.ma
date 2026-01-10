@@ -18,7 +18,7 @@ include "ground/lib/list_length.ma".
 (* BINARY WEIGHT FOR LISTS **************************************************)
 
 definition list_weight_2 (A) (B) (l1) (l2): ℕ ≝
-  ❘l1❘{A}+❘l2❘{B}.
+  ❘l1❘❪A❫+❘l2❘❪B❫.
 
 (* Basic constructions ******************************************************)
 

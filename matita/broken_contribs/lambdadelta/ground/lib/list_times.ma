@@ -28,15 +28,15 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma list_times_unfold (A) (a) (n):
-      ((list_lcons ? a)^n) (ⓔ) = a×{A}n.
+      ((list_lcons ? a)^n) (ⓔ) = a×❪A❫n.
 // qed.
 
 lemma list_times_zero (A) (a):
-      ⓔ = a×{A}𝟎.
+      ⓔ = a×❪A❫𝟎.
 // qed.
 
 lemma list_times_succ_lcons (A) (a) (n):
-      a ⨮ (a×n) = a×{A}(⁤↑n).
+      a ⨮ (a×n) = a×❪A❫(⁤↑n).
 #A #a #n
 <list_times_unfold <list_times_unfold <niter_succ //
 qed.
@@ -44,7 +44,7 @@ qed.
 (* Basic inversions *********************************************************)
 
 lemma eq_inv_list_empty_times (A) (a) (n):
-      ⓔ = a×{A}n → 𝟎 = n.
+      ⓔ = a×❪A❫n → 𝟎 = n.
 #A #a #n @(nat_ind_succ … n) -n //
 #n #_ <list_times_succ_lcons #H0 destruct
 qed-.

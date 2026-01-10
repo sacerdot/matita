@@ -20,5 +20,5 @@ include "ground/lib/list_length_append.ma".
 (* Constructions with list_rcons ********************************************)
 
 lemma list_length_rcons (A) (l) (a):
-      (⁤↑❘l❘) = ❘l⨭{A}a❘.
+      (⁤↑❘l❘) = ❘l⨭❪A❫a❘.
 // qed.

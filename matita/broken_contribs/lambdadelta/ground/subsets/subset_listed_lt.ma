@@ -26,12 +26,12 @@ include "ground/subsets/subset_listed_inhabited.ma".
 (* Constructions with subset_lt *********************************************)
 
 lemma subset_lt_listed_lcons_dx (A) (l) (a):
-      a ⧸ϵ 𝐗❨l❩ → 𝐗❨l❩ ⊂ 𝐗{A}❨a⨮l❩.
+      a ⧸ϵ 𝐗❨l❩ → 𝐗❨l❩ ⊂ 𝐗❪A❫❨a⨮l❩.
 /4 width=3 by subset_listed_le_lcons_dx, subset_lt_mk, subsets_inh_in, subset_in_nimp/
 qed.
 
 lemma subset_lt_listed_lcons_bi (A) (a) (l1) (l2):
-      a ⧸ϵ{A} 𝐗❨l2❩ → 𝐗❨l1❩ ⊂ 𝐗❨l2❩ → 𝐗❨a⨮l1❩ ⊂ 𝐗❨a⨮l2❩.
+      a ⧸ϵ❪A❫ 𝐗❨l2❩ → 𝐗❨l1❩ ⊂ 𝐗❨l2❩ → 𝐗❨a⨮l1❩ ⊂ 𝐗❨a⨮l2❩.
 #A #a #l1 #l2 #Ha #Hl
 @(subset_le_lt_trans … (subset_le_listed_lcons_or …))
 @(subset_lt_le_trans … (subset_le_or_listed_lcons …))
@@ -41,7 +41,7 @@ qed.
 (* Inversions with subset_lt ************************************************)
 
 lemma subset_lt_inv_empty_dx (A) (u):
-      u ⧸⊂ Ⓕ{A}.
+      u ⧸⊂ Ⓕ❪A❫.
 #A #u * #_ #H0
 lapply (subsets_inh_le_repl_fwd … H0 ?) -H0 [ // | skip ]
 /2 width=2 by subset_nin_inv_empty_inh/
@@ -50,9 +50,9 @@ qed-.
 (* Destructions with subset_lt **********************************************)
 
 lemma subset_lt_des_listed_dx (A:Type[0]) (u) (l2):
-      (∀a1,a2. Decidable … (a1 ={A} a2)) →
-      u ⊂ 𝐗{A}❨l2❩ →
-      ∃∃l1. u ⊆ 𝐗❨l1❩ & 𝐗❨l1❩ ⊂ 𝐗{A}❨l2❩ & ❘l1❘ < ❘l2❘.
+      (∀a1,a2. Decidable … (a1 =❪A❫ a2)) →
+      u ⊂ 𝐗❪A❫❨l2❩ →
+      ∃∃l1. u ⊆ 𝐗❨l1❩ & 𝐗❨l1❩ ⊂ 𝐗❪A❫❨l2❩ & ❘l1❘ < ❘l2❘.
 #A #u #l2 #HA * #H1u #H0
 elim (subsets_inh_inv_in … H0) -H0 #b * #H1b #H2b
 generalize in match H2b; -H2b
@@ -101,9 +101,9 @@ qed-.
 (* Eliminations with subset_lt **********************************************)
 
 lemma subset_listed_ind_lt_le (A:Type[0]) (Q:predicate …): (**)
-      (∀a1,a2. Decidable … (a1 ={A} a2)) →
+      (∀a1,a2. Decidable … (a1 =❪A❫ a2)) →
       (∀l2. (∀l1. 𝐗❨l1❩ ⊂ 𝐗❨l2❩ → Q l1) → Q l2) →
-      ∀l2,l1. 𝐗{A}❨l1❩ ⊆ 𝐗❨l2❩ → Q l1.
+      ∀l2,l1. 𝐗❪A❫❨l1❩ ⊆ 𝐗❨l2❩ → Q l1.
 #A #Q #HA #IH0 #l2 @(wf1_ind_nlt … (list_length A) … l2) -l2
 #n #IH #l2 #H0 * [| #a #l1 ] #Hl12 destruct
 [ @IH0 -IH0 -IH -l2 #l1 #H0
@@ -116,8 +116,8 @@ lemma subset_listed_ind_lt_le (A:Type[0]) (Q:predicate …): (**)
 qed-.
 
 lemma subset_listed_ind_lt (A:Type[0]) (Q:predicate …): (**)
-      (∀a1,a2. Decidable … (a1 ={A} a2)) →
-      (∀l2. (∀l1. 𝐗{A}❨l1❩ ⊂ 𝐗❨l2❩ → Q l1) → Q l2) →
+      (∀a1,a2. Decidable … (a1 =❪A❫ a2)) →
+      (∀l2. (∀l1. 𝐗❪A❫❨l1❩ ⊂ 𝐗❨l2❩ → Q l1) → Q l2) →
       ∀l2. Q l2.
 #A #Q #HA #IH #l2
 @(subset_listed_ind_lt_le … HA IH l2) -Q -HA //

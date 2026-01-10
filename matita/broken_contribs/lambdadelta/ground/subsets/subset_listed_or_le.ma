@@ -20,18 +20,18 @@ include "ground/subsets/subset_listed_le_1.ma".
 (* Constructions with subset_or and subset_le *******************************)
 
 lemma subset_le_or_listed_append (A) (l1) (l2):
-      (𝐗❨l1❩) ∪ 𝐗❨l2❩ ⊆ 𝐗{A}❨l1⨁l2❩.
+      (𝐗❨l1❩) ∪ 𝐗❨l2❩ ⊆ 𝐗❪A❫❨l1⨁l2❩.
 /3 width=5 by subset_listed_le_append_sx, subset_listed_le_append_dx, subset_le_or_sx/
 qed.
 
 lemma subset_le_or_listed_lcons (A) (a1) (l2):
-      ❴a1❵ ∪ 𝐗❨l2❩ ⊆ 𝐗{A}❨a1⨮l2❩.
+      ❴a1❵ ∪ 𝐗❨l2❩ ⊆ 𝐗❪A❫❨a1⨮l2❩.
 #A #a1 #l2
 @(subset_le_or_listed_append ? (a1⨮ⓔ) l2)
 qed.
 
 lemma subset_le_listed_append_or (A) (l1) (l2):
-      (𝐗{A}❨l1⨁l2❩) ⊆ (𝐗❨l1❩) ∪ 𝐗❨l2❩.
+      (𝐗❪A❫❨l1⨁l2❩) ⊆ (𝐗❨l1❩) ∪ 𝐗❨l2❩.
 #A #l1 #l2 #a * #x1 #x2 #H0
 elim (eq_inv_list_append_bi … H0) -H0 * #m2 #H1 #H2 destruct
 [ /2 width=1 by subset_or_in_dx/
@@ -41,25 +41,25 @@ elim (eq_inv_list_append_bi … H0) -H0 * #m2 #H1 #H2 destruct
 qed.
 
 lemma subset_le_listed_lcons_or (A) (a1) (l2):
-      (𝐗{A}❨a1⨮l2❩) ⊆ ❴a1❵ ∪ 𝐗❨l2❩.
+      (𝐗❪A❫❨a1⨮l2❩) ⊆ ❴a1❵ ∪ 𝐗❨l2❩.
 #A #a1 #l2
 @(subset_le_listed_append_or ? (a1⨮ⓔ) l2)
 qed.
 
 lemma subset_le_or_sx_empty_refl (A) (u): (**)
-      (Ⓕ{A}) ∪ u ⊆ u.
+      (Ⓕ❪A❫) ∪ u ⊆ u.
 /3 width=3 by subset_le_or_sx_refl_dx, subset_empty_le_sx/
 qed.
 
 lemma subset_le_or_sx_refl_empty (A) (u): (**)
-      u ∪ Ⓕ{A} ⊆ u.
+      u ∪ Ⓕ❪A❫ ⊆ u.
 /3 width=3 by subset_le_or_sx_refl_sx, subset_empty_le_sx/
 qed.
 
 (* Advances constructions with subset_le ************************************)
 
 lemma subset_le_listed_lcons_sx (A) (a) (l):
-      a ϵ{A} 𝐗❨l❩ → 𝐗❨a⨮l❩ ⊆ 𝐗❨l❩.
+      a ϵ❪A❫ 𝐗❨l❩ → 𝐗❨a⨮l❩ ⊆ 𝐗❨l❩.
 #A #a #l #Ha
 @(subset_le_trans ??? (subset_le_listed_lcons_or …))
 /3 width=3 by subset_single_le_sx, subset_le_or_sx_refl_dx/

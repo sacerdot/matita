@@ -43,9 +43,9 @@ theorem subset_le_trans (A):
 (* Basic inversions *********************************************************)
 
 lemma subset_in_le_trans (A) (u1) (u2) (p):
-      p ϵ u1 → u1 ⊆ u2 → p ϵ{A} u2.
+      p ϵ u1 → u1 ⊆ u2 → p ϵ❪A❫ u2.
 /2 width=1 by/ qed-.
 
 lemma subset_nin_ge_trans (A) (u1) (u2) (p):
-      p ⧸ϵ u2 → u1 ⊆ u2 → p ⧸ϵ{A} u1.
+      p ⧸ϵ u2 → u1 ⊆ u2 → p ⧸ϵ❪A❫ u1.
 /3 width=1 by/ qed-.

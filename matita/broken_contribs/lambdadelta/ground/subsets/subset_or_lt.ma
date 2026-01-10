@@ -20,7 +20,7 @@ include "ground/subsets/subset_or_le.ma".
 (* Constructions with subset_lt and subset_ol *******************************)
 
 lemma subset_lt_or_bi_sx (A) (u1) (u2) (v): (**)
-      v ⧸≬{A} u2 → u1 ⊂ u2 → v ∪ u1 ⊂ v ∪ u2.
+      v ⧸≬❪A❫ u2 → u1 ⊂ u2 → v ∪ u1 ⊂ v ∪ u2.
 #A #u1 #u2 #v #Hu2 * #Hu #H0
 @subset_lt_mk
 [ /2 width=5 by subset_or_le_repl/
@@ -34,7 +34,7 @@ lemma subset_lt_or_bi_sx (A) (u1) (u2) (v): (**)
 qed.
 
 lemma subset_lt_or_bi_dx (A) (u1) (u2) (v): (**)
-      v ⧸≬{A} u2 → u1 ⊂ u2 → u1 ∪ v ⊂ u2 ∪ v.
+      v ⧸≬❪A❫ u2 → u1 ⊂ u2 → u1 ∪ v ⊂ u2 ∪ v.
 #A #u1 #u2 #v #Hu2 * #Hu #H0
 @subset_lt_mk
 [ /2 width=5 by subset_or_le_repl/

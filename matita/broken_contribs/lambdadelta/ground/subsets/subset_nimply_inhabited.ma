@@ -21,7 +21,7 @@ include "ground/subsets/subset_nimply.ma".
 (* Destructions with subset_inh *********************************************)
 
 lemma subset_in_des_nimp_inh (A) (u1) (u2):
-      u2 ⧵ u1 ϵ ⊙{A} → u2 ⧸⊆ u1.
+      u2 ⧵ u1 ϵ ⊙❪A❫ → u2 ⧸⊆ u1.
 #A #u1 #u2 #H0
 elim (subsets_inh_inv_in … H0) -H0 #a * #H1a #H2a
 /3 width=1 by/

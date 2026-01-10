@@ -22,6 +22,6 @@ notation > "hvbox( ⇂ term 70 a )"
   non associative with precedence 70
   for @{ 'DownHarpoonRight ? $a }.
 
-notation > "hvbox( ⇂{ term 46 S } break term 70 a )"
+notation > "hvbox( ⇂❪ term 46 S ❫ break term 70 a )"
   non associative with precedence 70
   for @{ 'DownHarpoonRight $S $a }.

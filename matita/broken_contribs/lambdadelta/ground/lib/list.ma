@@ -39,7 +39,7 @@ rec definition list_all A (R:predicate A) (l:list A) on l ≝ match l with
 (* Basic inversions *********************************************************)
 
 lemma eq_inv_list_lcons_bi (A) (a1) (a2) (l1) (l2):
-      a1⨮l1 = a2⨮{A}l2 →
+      a1⨮l1 = a2⨮❪A❫l2 →
       ∧∧ a1 = a2 & l1 = l2.
 #A #a1 #a2 #l1 #l2 #H0 destruct
 /2 width=1 by conj/
@@ -48,7 +48,7 @@ qed-.
 (* Advanced inversions ******************************************************)
 
 lemma eq_inv_list_lcons_refl (A) (a) (l):
-      a⨮{A}l ⧸= l.
+      a⨮❪A❫l ⧸= l.
 #A #a #l elim l -l
 [ #H0 destruct
 | #a0 #l #IH #H0
@@ -58,15 +58,15 @@ lemma eq_inv_list_lcons_refl (A) (a) (l):
 qed-.
 
 lemma eq_inv_refl_list_lcons (A) (a) (l):
-      l ⧸= a⨮{A}l.
+      l ⧸= a⨮❪A❫l.
 /2 width=4 by eq_inv_list_lcons_refl/
 qed-.
 
 (* Basic destructions *******************************************************)
 
 lemma eq_list_dec (A:Type[0]):
-      (∀a1,a2. Decidable (a1 ={A} a2)) →
-      ∀l1,l2. Decidable (l1 ={list A} l2).
+      (∀a1,a2. Decidable (a1 =❪A❫ a2)) →
+      ∀l1,l2. Decidable (l1 =❪list A❫ l2).
 #A #HA #l1 elim l1 -l1 [| #a1 #l1 #IH ]
 * [2,4: #a2 #l2 ]
 [2: elim (HA a1 a2) #Hna destruct -HA

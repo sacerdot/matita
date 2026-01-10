@@ -12,35 +12,39 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_eq.ma".
-include "ground/subsets/subset_listed.ma".
-include "ground/notation/functions/subset_somega_1.ma".
+include "ground/lib/list_rcons.ma".
 
-(* STRONGLY FINITE SUBSETS **************************************************)
+(* MAP FOR LISTS ************************************************************)
 
-definition subsets_sfinite (A): 𝒫❨𝒫❨A❩❩ ≝
-           {u | ∃l. u ⇔ 𝐗❨l❩}.
-
-interpretation
-  "strongly finite (subset of subsets)"
-  'SubsetSOmega A = (subsets_sfinite A).
+rec definition list_map A B (f:A→B) l on l ≝ match l with
+[ list_empty       ⇒ (ⓔ)
+| list_lcons hd tl ⇒ f hd ⨮ (list_map A B f tl)
+].
 
 (* Basic constructions ******************************************************)
 
-lemma subsets_sfinite_in (A) (u) (l):
-      u ⇔ 𝐗❨l❩ → u ϵ 𝐒𝛀❪A❫.
-/2 width=2 by ex_intro/
+lemma list_map_empty (A) (B) (f):
+      (ⓔ) = list_map A B f (ⓔ).
+//
 qed.
 
-(* Advanced constructions ***************************************************)
-
-lemma subsets_sfinite_listed (A) (l):
-      (𝐗❨l❩) ϵ 𝐒𝛀❪A❫.
-/2 width=2 by subsets_sfinite_in/
+lemma list_map_lcons (A) (B) (f) (hd) (tl):
+      (f hd) ⨮ list_map … tl = list_map A B f (hd ⨮ tl).
+//
 qed.
 
-lemma subsets_sfinite_eq_trans (A) (u) (v):
-      u ⇔ v → v ϵ 𝐒𝛀 → u ϵ 𝐒𝛀❪A❫.
-#A #u #v #Huv * #l #Hv
-/3 width=6 by subsets_sfinite_in, subset_eq_trans/
-qed-.
+(* Constructions with list_append *******************************************)
+
+lemma list_map_lappend (A) (B) (f) (l1) (l2):
+      list_map … f l1 ⨁ list_map … f l2 = list_map A B f (l1 ⨁ l2).
+#A #B #f #l1 elim l1 -l1 //
+#hd #tl #IH #l2
+<list_map_lcons <list_append_lcons_sx <list_map_lcons <IH //
+qed.
+
+(* Constructions with list_rcons ********************************************)
+
+lemma list_map_rcons (A) (B) (f) (hd) (tl):
+      list_map … hd ⨭ f tl = list_map A B f (hd ⨭ tl).
+//
+qed.

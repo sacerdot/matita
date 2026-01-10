@@ -21,7 +21,7 @@ include "ground/lib/list_length.ma".
 (* Constructions with list_append *******************************************)
 
 lemma list_length_append (A) (l1) (l2):
-      ❘l1❘+❘l2❘ = ❘l1⨁{A}l2❘.
+      ❘l1❘+❘l2❘ = ❘l1⨁❪A❫l2❘.
 #A #l1 elim l1 -l1 //
 #a #l1 #IH #l2
 <list_append_lcons_sx <list_length_lcons <list_length_lcons //

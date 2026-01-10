@@ -22,7 +22,7 @@ include "ground/subsets/subset_nimply.ma".
 (* Constructions with subset_and and subset_or and subset_le ****************)
 
 lemma subset_le_or_dx_and_nimp_refl_sx_bi (A) (u) (v):
-      (∀a. Decidable (a ϵ{A} v)) →
+      (∀a. Decidable (a ϵ❪A❫ v)) →
       u ⊆ (u ∩ v) ∪ (u ⧵ v).
 #A #u #v #Hu #a #Ha
 elim (Hu a) #Hna
@@ -32,7 +32,7 @@ elim (Hu a) #Hna
 qed.
 
 lemma subset_le_or_sx_and_nimp_refl_sx_bi (A) (u) (v):
-      (∀a. Decidable (a ϵ{A} v)) →
+      (∀a. Decidable (a ϵ❪A❫ v)) →
       (u ∩ v) ∪ (u ⧵ v) ⊆ u.
 #A #u #v #Hu #a * * //
 qed.

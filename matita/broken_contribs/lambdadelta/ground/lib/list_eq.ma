@@ -45,13 +45,13 @@ qed.
 (* Main constructions *******************************************************)
 
 theorem eq_list_eq (A) (l1) (l2):
-        l1 = l2 → l1 ≗{A} l2.
+        l1 = l2 → l1 ≗❪A❫ l2.
 // qed.
 
 (* Main inversions **********************************************************)
 
 theorem list_eq_inv_eq (A) (l1) (l2):
-        l1 ≗{A} l2 → l1 = l2.
+        l1 ≗❪A❫ l2 → l1 = l2.
 #A #l1 elim l1 -l1 [| #a1 #l1 #IH ] *
 [ //
 | #a2 #l2 #H elim H

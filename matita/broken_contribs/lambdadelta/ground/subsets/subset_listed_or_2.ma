@@ -22,7 +22,7 @@ include "ground/subsets/subset_listed_2.ma".
 (* Constructions with subset_or and subset_eq *******************************)
 
 lemma subset_pair_or (A) (a1) (a2):
-      ❴a1❵ ∪ ❴a2❵ ⇔{A} ❴a1,a2❵.
+      ❴a1❵ ∪ ❴a2❵ ⇔❪A❫ ❴a1,a2❵.
 #A #a1 #a2 @conj #x
 [ * #Hx >(subset_in_inv_single ??? Hx) -x //
 | #Hx elim (subset_in_inv_pair ???? Hx) -Hx #H0 destruct

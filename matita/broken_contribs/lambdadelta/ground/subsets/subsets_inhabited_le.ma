@@ -20,7 +20,7 @@ include "ground/subsets/subsets_inhabited.ma".
 (* Constructions with subset_le *********************************************)
 
 lemma subsets_inh_le_repl_fwd (A) (u1) (u2):
-      u1 ϵ ⊙→ u1 ⊆ u2 → u2 ϵ ⊙{A}.
+      u1 ϵ ⊙ → u1 ⊆ u2 → u2 ϵ ⊙❪A❫.
 #A #u1 #u2 #H0
 elim (subsets_inh_inv_in … H0) -H0 #a #Hu1 #Hu
 /3 width=2 by subsets_inh_in/

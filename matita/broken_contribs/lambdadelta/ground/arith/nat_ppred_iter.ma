@@ -20,6 +20,6 @@ include "ground/arith/nat_ppred.ma".
 (* Constructions with niter *************************************************)
 
 lemma niter_pos_ppred (A) (f) (p):
-      f∘f^(↓p) ⊜ f^{A}(⁤p).
+      f∘f^(↓p) ⊜ f^❪A❫(⁤p).
 #A #f * //
 qed.

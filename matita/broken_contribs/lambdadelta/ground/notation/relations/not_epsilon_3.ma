@@ -22,6 +22,6 @@ notation > "hvbox( a ⧸ϵ break term 46 u )"
   non associative with precedence 45
   for @{ 'NotEpsilon ? $a $u }.
 
-notation > "hvbox( a ⧸ϵ{ break term 46 S } break term 46 u )"
+notation > "hvbox( a ⧸ϵ❪ break term 46 S ❫ break term 46 u )"
   non associative with precedence 45
   for @{ 'NotEpsilon $S $a $u }.

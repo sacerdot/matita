@@ -18,7 +18,7 @@ include "ground/notation/functions/odot_1.ma".
 (* INHABITED SUBSETS ********************************************************)
 
 definition subsets_inh (A): 𝒫❨𝒫❨A❩❩ ≝
-           {u | u ≬{A} u}.
+           {u | u ≬❪A❫ u}.
 
 interpretation
   "inhabited (subset of subsets)"
@@ -27,14 +27,14 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma subsets_inh_in (A) (u) (a):
-      a ϵ{A} u → u ϵ ⊙.
+      a ϵ❪A❫ u → u ϵ ⊙.
 /2 width=3 by ex2_intro/
 qed.
 
 (* Basic inversions *********************************************************)
 
 lemma subsets_inh_inv_in (A) (u):
-      u ϵ ⊙ → ∃a. a ϵ{A} u.
+      u ϵ ⊙ → ∃a. a ϵ❪A❫ u.
 #A #u * #a #Ha #_
 /2 width=2 by ex_intro/
 qed-.

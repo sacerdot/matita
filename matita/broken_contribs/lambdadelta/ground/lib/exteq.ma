@@ -53,24 +53,24 @@ lemma exteq_canc_dx (A) (B):
 (* Constructions with compose ***********************************************)
 
 lemma compose_repl_fwd_dx (A) (B) (C) (g) (f1) (f2):
-      f1 ⊜{A,B} f2 → g ∘ f1 ⊜{A,C} g ∘ f2.
+      f1 ⊜❪A,B❫ f2 → g ∘ f1 ⊜❪A,C❫ g ∘ f2.
 #A #B #C #g #f1 #f2 #Hf12 #a
 whd in ⊢ (??%%); //
 qed.
 
 lemma compose_repl_bak_dx (A) (B) (C) (g) (f1) (f2):
-      f1 ⊜{A,B} f2 → g ∘ f2 ⊜{A,C} g ∘ f1.
+      f1 ⊜❪A,B❫ f2 → g ∘ f2 ⊜❪A,C❫ g ∘ f1.
 /3 width=1 by compose_repl_fwd_dx, exteq_sym/
 qed.
 
 lemma compose_repl_fwd_sx (A) (B) (C) (g1) (g2) (f):
-      g1 ⊜{B,C} g2 → g1 ∘ f ⊜{A,C} g2 ∘ f.
+      g1 ⊜❪B,C❫ g2 → g1 ∘ f ⊜❪A,C❫ g2 ∘ f.
 #A #B #C #g1 #g2 #f #Hg12 #a
 whd in ⊢ (??%%); //
 qed.
 
 lemma compose_repl_bak_sx (A) (B) (C) (g1) (g2) (f):
-      g1 ⊜{B,C} g2 → g2 ∘ f ⊜{A,C} g1 ∘ f.
+      g1 ⊜❪B,C❫ g2 → g2 ∘ f ⊜❪A,C❫ g1 ∘ f.
 /3 width=1 by compose_repl_fwd_sx, exteq_sym/
 qed.
 

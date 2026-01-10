@@ -22,6 +22,6 @@ notation > "hvbox( a ⧸≬ break term 46 u )"
   non associative with precedence 45
   for @{ 'NotBetween ? $a $u }.
 
-notation > "hvbox( a ⧸≬{ break term 46 S } break term 46 u )"
+notation > "hvbox( a ⧸≬❪ break term 46 S ❫ break term 46 u )"
   non associative with precedence 45
   for @{ 'NotBetween $S $a $u }.

@@ -11,10 +11,10 @@
 
 (* NOTATION FOR GROUND ******************************************************)
 
-notation > "hvbox( a ⧸= opt ( { break term 46 S } ) break b )"
-  non associative with precedence 45
-  for @{ 'NotEq ${default @{$S}@{?}} $a $b }.
-
 notation < "hvbox( term 46 a ⧸= break term 46 b )"
   non associative with precedence 45
   for @{ 'NotEq $S $a $b }.
+
+notation > "hvbox( a ⧸= opt ( ❪ break term 46 S ❫ ) break b )"
+  non associative with precedence 45
+  for @{ 'NotEq ${default @{$S}@{?}} $a $b }.

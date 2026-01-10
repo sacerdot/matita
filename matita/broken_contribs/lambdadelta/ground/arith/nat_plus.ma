@@ -43,7 +43,7 @@ qed.
 
 (*** iter_plus *)
 lemma niter_plus (A) (f) (n1) (n2):
-      f^n2 ∘ f^n1 ⊜ f^{A}(n1+n2).
+      f^n2 ∘ f^n1 ⊜ f^❪A❫(n1+n2).
 #A #f #n1 #n2 @(nat_ind_succ … n2) -n2 //
 #n2 #IH <nplus_succ_dx
 @(exteq_trans … (niter_succ …))

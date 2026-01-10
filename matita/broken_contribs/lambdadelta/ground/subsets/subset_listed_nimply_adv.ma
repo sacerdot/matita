@@ -25,8 +25,8 @@ include "ground/subsets/subset_listed_nimply_le.ma".
 (* Advanced constructions with subset_eq ************************************)
 
 lemma subset_listed_dx_le_to_eq (A:Type[0]):
-      (∀a1,a2. Decidable … (a1 ={A} a2)) →
-      ∀l2,u. (∀a. Decidable (a ϵ{A} u)) → u ⊆ 𝐗❨l2❩ →
+      (∀a1,a2. Decidable … (a1 =❪A❫ a2)) →
+      ∀l2,u. (∀a. Decidable (a ϵ❪A❫ u)) → u ⊆ 𝐗❨l2❩ →
       ∃∃l1. u ⇔ 𝐗❨l1❩ & ❘l1❘ ≤ ❘l2❘.
 #A #HA #l2 elim l2 -l2 [| #a2 #l2 #IH ] #u #Hu #Hl2
 [ @(ex2_intro … (ⓔ)) -Hu
@@ -56,17 +56,17 @@ qed-.
 (* Advanced constructions with subset_nimp and subset_eq ********************)
 
 lemma subset_nimp_listed_sx (A:Type[0]) (u) (l1):
-      (∀a1,a2. Decidable … (a1 ={A} a2)) →
+      (∀a1,a2. Decidable … (a1 =❪A❫ a2)) →
       (∀a. Decidable … (a ϵ u)) →
-      ∃∃l. 𝐗❨l1❩ ⧵ u ⇔ 𝐗{A}❨l❩ & ❘l❘ ≤ ❘l1❘.
+      ∃∃l. 𝐗❨l1❩ ⧵ u ⇔ 𝐗❪A❫❨l❩ & ❘l❘ ≤ ❘l1❘.
 #A #u #l1 #HA #Hu
 @(subset_listed_dx_le_to_eq … HA) //
 /3 width=1 by subset_in_nimp_dec, subset_in_listed_dec/
 qed-.
 
 lemma subset_nimp_listed_bi (A:Type[0]) (l1) (l2):
-      (∀a1,a2. Decidable … (a1 ={A} a2)) →
-      ∃∃l. 𝐗❨l1❩ ⧵ 𝐗❨l2❩ ⇔ 𝐗{A}❨l❩ & ❘l❘ ≤ ❘l1❘.
+      (∀a1,a2. Decidable … (a1 =❪A❫ a2)) →
+      ∃∃l. 𝐗❨l1❩ ⧵ 𝐗❨l2❩ ⇔ 𝐗❪A❫❨l❩ & ❘l❘ ≤ ❘l1❘.
 #A #l1 #l2 #HA
 /3 width=1 by subset_nimp_listed_sx, subset_in_listed_dec/
 qed-.

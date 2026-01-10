@@ -37,14 +37,14 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma stream_hd_lcons (A) (a) (t):
-      a = ⇃{A}(a⨮t).
+      a = ⇃❪A❫(a⨮t).
 // qed.
 
 lemma stream_tl_lcons (A) (a) (t):
-      t = ⇂{A}(a⨮t).
+      t = ⇂❪A❫(a⨮t).
 // qed.
 
 lemma stream_split_tl (A) (t):
-      ⇃{A}t ⨮ ⇂t = t.
+      ⇃❪A❫t ⨮ ⇂t = t.
 #A * //
 qed.

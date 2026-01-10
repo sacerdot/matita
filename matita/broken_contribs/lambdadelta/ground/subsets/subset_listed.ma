@@ -34,31 +34,31 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma subset_in_listed (A) (l1) (l2) (a):
-      a ϵ{A} 𝐗❨l1 ⨁ a ⨮ l2❩.
+      a ϵ❪A❫ 𝐗❨l1 ⨁ a ⨮ l2❩.
 /2 width=3 by ex1_2_intro/
 qed.
 
 lemma subset_in_listed_lcons_sx (A) (l) (a):
-      a ϵ{A} 𝐗❨a ⨮ l❩.
+      a ϵ❪A❫ 𝐗❨a ⨮ l❩.
 #A #l #a
 >(list_append_empty_sx … (a⨮l)) //
 qed.
 
 lemma subset_in_listed_lcons_dx (A) (l) (a) (b):
-      a ϵ 𝐗❨l❩ → a ϵ{A} 𝐗❨b⨮l❩.
+      a ϵ 𝐗❨l❩ → a ϵ❪A❫ 𝐗❨b⨮l❩.
 #A #l #a #b * #l1 #l2 #H0 destruct //
 qed.
 
 (* Basic inversions *********************************************************)
 
 lemma subset_nin_inv_empty (A) (a):
-      a ⧸ϵ{A} Ⓕ.
+      a ⧸ϵ❪A❫ Ⓕ.
 #A #a * #l1 #l2 #H0
 elim (eq_inv_list_append_empty … H0) -H0 #_ #H0 destruct
 qed-.
 
 lemma subset_in_inv_listed_lcons (A) (l) (a) (b):
-      a ϵ{A} 𝐗❨b⨮l❩ →
+      a ϵ❪A❫ 𝐗❨b⨮l❩ →
       ∨∨ a = b | a ϵ 𝐗❨l❩.
 #A #l #a #b * #l1 #l2 #H0
 elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 *
@@ -72,8 +72,8 @@ qed-.
 (* Advanced properties ******************************************************)
 
 lemma subset_in_listed_dec (A:Type[0]):
-      (∀a1,a2. Decidable … (a1 ={A} a2)) →
-      ∀a,l. Decidable … (a ϵ{A} 𝐗❨l❩).
+      (∀a1,a2. Decidable … (a1 =❪A❫ a2)) →
+      ∀a,l. Decidable … (a ϵ❪A❫ 𝐗❨l❩).
 #A #HA #a #l elim l -l
 [ @or_intror
   @subset_nin_inv_empty

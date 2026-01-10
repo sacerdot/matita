@@ -27,6 +27,6 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma subset_full_in (A) (p):
-      p ϵ{A} Ⓣ.
+      p ϵ❪A❫ Ⓣ.
 //
 qed.

@@ -18,6 +18,6 @@ notation < "hvbox( ∁ term 70 U )"
   non associative with precedence 70
   for @{ 'Complement $S $U }.
 
-notation > "hvbox( ∁ opt ( { term 46 S } ) break term 70 U )"
+notation > "hvbox( ∁ opt ( ❪ term 46 S ❫ ) break term 70 U )"
   non associative with precedence 70
   for @{ 'Complement ${default @{$S}@{?}} $U }.
