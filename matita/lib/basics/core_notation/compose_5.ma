@@ -11,7 +11,7 @@
 
 (* Core notation *******************************************************)
 
-notation > "hvbox( g break \circ opt ( { term 19 A, term 19 B, term 19 C } ) term 61 f )" 
+notation > "hvbox( g break \circ opt ( ❪ term 19 A, term 19 B, term 19 C ❫ ) term 61 f )" 
   non associative with precedence 60
 for @{ 'compose ${default @{$A}@{?}} ${default @{$B}@{?}} ${default @{$C}@{?}} $g $f }.
 

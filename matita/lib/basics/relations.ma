@@ -98,7 +98,7 @@ lemma sub_reflexive :
 qed.
 
 lemma sub_comp_l:  ∀A.∀R,R1,R2:relation A.
-  R1 ⊆ R2 → R1 ∘{A,A,A} R ⊆ R2 ∘ R.
+  R1 ⊆ R2 → R1 ∘❪A,A,A❫ R ⊆ R2 ∘ R.
 #A #R #R1 #R2 #Hsub #a #b * #c * /4/
 qed.
 

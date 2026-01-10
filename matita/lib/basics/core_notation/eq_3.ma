@@ -11,7 +11,7 @@
 
 (* Core notation *******************************************************)
 
-notation > "hvbox( a break = opt ( { term 19 S } break ) b)" 
+notation > "hvbox( a break = opt ( ❪ term 19 S ❫ break ) b)" 
   non associative with precedence 45
   for @{ 'eq ${default @{$S}@{?}} $a $b }.
 
