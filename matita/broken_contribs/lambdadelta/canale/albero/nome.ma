@@ -24,37 +24,49 @@ interpretation
   "nome generico (nome)"
   'Nome p = (Nome p).
 
-definition nome_f: nome ≝
+definition nome_f: 𝕍 ≝
 𝗑[↑↑↑↑↑𝟏].
 
 interpretation
   "nome f (nome)"
   'NomeF = (nome_f).
 
-definition nome_g: nome ≝
+definition nome_g: 𝕍 ≝
 𝗑[↑↑↑↑↑↑𝟏].
 
 interpretation
   "nome g (nome)"
   'NomeG = (nome_g).
 
-definition nome_x: nome ≝
+definition nome_x: 𝕍 ≝
 𝗑[↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑𝟏].
 
 interpretation
   "nome x (nome)"
   'NomeX = (nome_x).
 
-definition nome_y: nome ≝
+definition nome_y: 𝕍 ≝
 𝗑[↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑𝟏].
 
 interpretation
   "nome y (nome)"
   'NomeY = (nome_y).
 
-definition nome_z: nome ≝
+definition nome_z: 𝕍 ≝
 𝗑[↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑𝟏].
 
 interpretation
   "nome z (nome)"
   'NomeZ = (nome_z).
+
+(* Costruzioni **************************************************************)
+
+lemma eq_nome_dec (x1) (x2):
+      Decidable (x1 =❪𝕍❫ x2).
+* #p1 * #p2
+elim (eq_pnat_dec p1 p2) #Hp
+[ /2 width=1 by or_introl/
+| @or_intror #H0 destruct
+  /2 width=1 by/
+]
+qed-.  

@@ -9,8 +9,8 @@ include "canale/notazione/nomi_legati.ma".
 
 (* Nomi legati **************************************************************)
 
-rec definition legati (t) on t: 𝒫❨𝕍❩ ≝
-match t with
+rec definition legati (U) on U: 𝒫❨𝕍❩ ≝
+match U with
 [ NRef _   ⇒ (Ⓕ)
 | NAbs x T ⇒ ❴x❵ ∪ (legati T)
 | Appl T V ⇒ (legati T) ∪ (legati V)

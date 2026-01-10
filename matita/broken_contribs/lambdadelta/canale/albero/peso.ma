@@ -8,8 +8,8 @@ include "canale/notazione/peso.ma".
 
 (* Peso di un termine *******************************************************)
 
-rec definition peso (t) on t: ℕ⁺ ≝
-match t with
+rec definition peso (U) on U: ℕ⁺ ≝
+match U with
 [ NRef _   ⇒ (𝟏)
 | NAbs _ T ⇒ ↑(peso T)
 | Appl T V ⇒ ↑(peso T + peso V)

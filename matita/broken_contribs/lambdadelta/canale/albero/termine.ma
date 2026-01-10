@@ -29,63 +29,63 @@ interpretation
   "applicazione (termine)"
   'Applicazione T V = (Appl T V).
 
-definition termine_I: termine ≝
+definition termine_I: 𝕋 ≝
 𝛌𝗑.𝗑.
 
 interpretation
   "termine I (termine)"
   'TermineI= (termine_I).
 
-definition termine_K: termine ≝
+definition termine_K: 𝕋 ≝
 𝛌𝗑.𝛌𝗒.𝗑.
 
 interpretation
   "termine K (termine)"
   'TermineK= (termine_K).
 
-definition termine_Z: termine ≝
+definition termine_Z: 𝕋 ≝
 𝛌𝗑.𝛌𝗒.𝗒.
 
 interpretation
   "termine Z (termine)"
   'TermineZ= (termine_Z).
 
-definition termine_S: termine ≝
+definition termine_S: 𝕋 ≝
 𝛌𝗀.𝛌𝖿.𝛌𝗑. 𝗀❨𝗑❩❨𝖿❨𝗑❩❩.
 
 interpretation
   "termine S (termine)"
   'TermineS= (termine_S).
 
-definition termine_B: termine ≝
+definition termine_B: 𝕋 ≝
 𝛌𝗀.𝛌𝖿.𝛌𝗑. 𝗀❨𝖿❨𝗑❩❩.
 
 interpretation
   "termine B (termine)"
   'TermineB= (termine_B).
 
-definition termine_C: termine ≝
+definition termine_C: 𝕋 ≝
 𝛌𝗀.𝛌𝖿.𝛌𝗑. 𝗀❨𝗑❩❨𝖿❩.
 
 interpretation
   "termine C (termine)"
   'TermineC= (termine_C).
 
-definition termine_W: termine ≝
+definition termine_W: 𝕋 ≝
 𝛌𝖿.𝛌𝗑. 𝖿❨𝗑❩.
 
 interpretation
   "termine W (termine)"
   'TermineW= (termine_W).
 
-definition termine_T: termine ≝
+definition termine_T: 𝕋 ≝
 𝛌𝗑.𝛌𝖿. 𝖿❨𝗑❨𝗑❩❨𝖿❩❩.
 
 interpretation
   "termine T (termine)"
   'TermineT= (termine_T).
 
-definition termine_Theta: termine ≝
+definition termine_Theta: 𝕋 ≝
 𝗧❨𝗧❩.
 
 interpretation
