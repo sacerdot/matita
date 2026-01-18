@@ -11,9 +11,10 @@ include "canale/notazione/nomi_legati.ma".
 
 rec definition legati (U) on U: 𝒫❨𝕍❩ ≝
 match U with
-[ NRef _   ⇒ (Ⓕ)
+[ Refs _   ⇒ (Ⓕ)
 | NAbs x T ⇒ ❴x❵ ∪ (legati T)
 | Appl T V ⇒ (legati T) ∪ (legati V)
+| AAbs T   ⇒ (legati T)
 ].
 
 interpretation
@@ -22,7 +23,7 @@ interpretation
 
 (* Riscritture **************************************************************)
 
-lemma legati_nref (x:𝕍): Ⓕ = ℬx.
+lemma legati_refs (r:ℝ): Ⓕ = ℬr.
 //
 qed.
 
@@ -31,5 +32,9 @@ lemma legati_nabs (x) (T): ❴x❵ ∪ ℬT = ℬ𝛌x.T.
 qed.
 
 lemma legati_appl (T) (V): ℬT ∪ ℬV = ℬT❨V❩.
+//
+qed.
+
+lemma legati_aabs (T): ℬT = ℬ𝛌.T.
 //
 qed.

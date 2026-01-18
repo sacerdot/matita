@@ -4,7 +4,7 @@
 
 (* Notazione per l'guaglianza computazionale ********************************)
 
-notation > "hvbox( ❨ term 46 x1 ⇔ term 46 x2 ❩ term 46 Y | opt ( { term 46 X } ) term 70 Z )"
+notation > "hvbox( ❨ term 46 x1 ⇔ term 46 x2 ❩ term 46 Y | opt ( ❪ term 46 X ❫ ) term 70 Z )"
   non associative with precedence 70
   for @{ 'UguaglianzaComputazionale ${default @{$X}@{?}} $x1 $x2 $Y $Z }.
 

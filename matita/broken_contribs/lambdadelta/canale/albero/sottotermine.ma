@@ -4,7 +4,7 @@
 
 include "ground/arith/wf1_ind_plt.ma".
 include "canale/albero/peso.ma".
-include "canale/notazione/sottotermini.ma".
+include "canale/notazione/sottotermine.ma".
 
 (* Sottotermine *************************************************************)
 
@@ -16,6 +16,7 @@ with psub: predicate (𝕋) ≝
 | psub_nabs (x) (T): sub X T → psub X (𝛌x.T)
 | psub_appl (T) (V): sub X T → psub X (T❨V❩)
 | psub_side (T) (V): sub X V → psub X (T❨V❩)
+| psub_aabs (T): sub X T → psub X (𝛌.T)
 .
 
 interpretation
@@ -43,11 +44,12 @@ lemma sub_inv_gen (U) (T): U ⊆ T → ∨∨ U = T | U ⊂ T.
 ]
 qed-.
 
-lemma psub_inv_nref_dx (U) (x:𝕍): U ⧸⊂ x.
-#U #y @(insert_eq_1 … (NRef y)) #Z * -Z
+lemma psub_inv_refs_dx (U) (r:ℝ): U ⧸⊂ r.
+#U #s @(insert_eq_1 … (Refs s)) #Z * -Z
 [ #x #T #_ #H0 -U destruct
 | #T #V #_ #H0 -U destruct
 | #T #V #_ #H0 -U destruct
+| #T #_ #H0 -U destruct
 ]
 qed-.
 
@@ -56,6 +58,7 @@ lemma psub_inv_nabs_dx (U) (x) (T): U ⊂ 𝛌x.T → U ⊆ T.
 [ #x #T #HUT #H0 destruct -x //
 | #T #V #_ #H0 destruct
 | #T #V #_ #H0 destruct
+| #T #_ #H0 destruct
 ]
 qed-.
 
@@ -64,6 +67,16 @@ lemma psub_inv_appl_dx (U) (T) (V): U ⊂ T❨V❩ → ∨∨ U ⊆ T | U ⊆ V.
 [ #x #T #_ #H0 destruct
 | #T #V #HUT #H0 destruct /2 width=1 by or_introl/
 | #T #V #HWV #H0 destruct /2 width=1 by or_intror/
+| #T #_ #H0 destruct
+]
+qed-.
+
+lemma psub_inv_aabs_dx (U) (T): U ⊂ 𝛌.T → U ⊆ T.
+#U #Y @(insert_eq_1 … (𝛌.Y)) #Z * -Z
+[ #x #T #_ #H0 destruct
+| #T #V #_ #H0 destruct
+| #T #V #_ #H0 destruct
+| #T #HUT #H0 destruct //
 ]
 qed-.
 
@@ -71,9 +84,9 @@ qed-.
 
 lemma sub_peso (U) (T): U ⊆ T → ♯U ≤ ♯T.
 #U @(wf1_ind_plt … peso) #p #IH *
-[ #x #Hp #H0
+[ #r #Hp #H0
   elim (sub_inv_gen … H0) -H0 #H0 destruct //
-  elim (psub_inv_nref_dx … H0)
+  elim (psub_inv_refs_dx … H0)
 | #x #T #Hp #H0
   elim (sub_inv_gen … H0) -H0 #H0 destruct //
   lapply (psub_inv_nabs_dx … H0) -H0 #H0
@@ -81,7 +94,12 @@ lemma sub_peso (U) (T): U ⊆ T → ♯U ≤ ♯T.
 | #T #V #Hp #H0
   elim (sub_inv_gen … H0) -H0 #H0 destruct //
   elim (psub_inv_appl_dx … H0) -H0 #H0
-  /4 width=3 by ple_plt_trans, plt_des_le/
+  lapply (IH … H0) -H0 // -IH #IH
+  /3 width=3 by ple_plt_trans, plt_des_le/
+| #T #Hp #H0
+  elim (sub_inv_gen … H0) -H0 #H0 destruct //
+  lapply (psub_inv_aabs_dx … H0) -H0 #H0
+  /3 width=1 by ple_succ_dx/
 ]
 qed-.
 
@@ -108,9 +126,9 @@ qed.
 
 theorem sub_trans: Transitive … sub.
 #U #X #HX @(wf1_ind_plt … peso) #p #IH *
-[ #x #_ #H0 -p
+[ #r #_ #H0 -p
   elim (sub_inv_gen … H0) -H0 #H0 destruct // -HX
-  elim (psub_inv_nref_dx … H0)
+  elim (psub_inv_refs_dx … H0)
 | #x #T #Hp #H0
   elim (sub_inv_gen … H0) -H0 #H0 destruct //
   lapply (psub_inv_nabs_dx … H0) -H0 #H0
@@ -119,12 +137,16 @@ theorem sub_trans: Transitive … sub.
   elim (sub_inv_gen … H0) -H0 #H0 destruct //
   elim (psub_inv_appl_dx … H0) -H0 #H0
   /4 width=3 by sub_step, psub_appl, psub_side/
+| #T #Hp #H0
+  elim (sub_inv_gen … H0) -H0 #H0 destruct //
+  lapply (psub_inv_aabs_dx … H0) -H0 #H0
+  /4 width=3 by psub_aabs, sub_step/
 ]
 qed-.
 
 theorem sub_psub_trans (U) (X) (T): U ⊆ X → X ⊂ T → U ⊂ T.
 #U #X #T #UX * -T
-/3 width=3 by psub_nabs, psub_appl, psub_side, sub_trans/
+/3 width=3 by psub_nabs, psub_appl, psub_side, psub_aabs, sub_trans/
 qed-.
 
 theorem psub_trans: Transitive … psub.

@@ -16,6 +16,10 @@ notation "hvbox( T ❨ term 46 V ❩ )"
   non associative with precedence 70
   for @{ 'Applicazione $T $V }.
 
+notation "hvbox( 𝛌. term 70 T )"
+  non associative with precedence 70
+  for @{ 'Astrazione $T }.
+
 notation "hvbox( 𝗜 )"
   non associative with precedence 70
   for @{ 'TermineI }.

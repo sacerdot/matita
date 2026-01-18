@@ -2,23 +2,24 @@
    ed è distribuito ai sensi della licenza GNU GPL versione 2
 *)
 
-include "canale/albero/nome.ma".
-include "canale/notazione/termini.ma".
+include "canale/albero/riferimento.ma".
+include "canale/notazione/termine.ma".
 
 (* Categoria dei termini ****************************************************)
 
 (* Nota: un termine è una combinazione completa di costrutti elementari *)
 (* Nota: metavariabili: T, U, V, W, X, Y, Z senza grazie *)
 inductive termine: Type[0] ≝
-| NRef: (𝕍) → termine
-| NAbs: (𝕍) → termine → termine
+| Refs: (ℝ) → termine
+| NAbs: (𝕍) → termine → termine     (* vimcola i riferimenti nominali *)
 | Appl: termine → termine → termine
+| AAbs: termine → termine           (* vincola i riferimenti anonimi *)
 .
 
-coercion NRef.
+coercion Refs.
 
 interpretation
-  "termine (categoria)"
+  "termine (Categoria)"
   'CategoriaT = (termine).
 
 interpretation
@@ -28,6 +29,10 @@ interpretation
 interpretation
   "applicazione (termine)"
   'Applicazione T V = (Appl T V).
+
+interpretation
+  "astrazione anonima (termine)"
+  'Astrazione T = (AAbs T).
 
 definition termine_I: 𝕋 ≝
 𝛌𝗑.𝗑.

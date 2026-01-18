@@ -10,9 +10,10 @@ include "canale/notazione/peso.ma".
 
 rec definition peso (U) on U: ℕ⁺ ≝
 match U with
-[ NRef _   ⇒ (𝟏)
+[ Refs _   ⇒ (𝟏)
 | NAbs _ T ⇒ ↑(peso T)
 | Appl T V ⇒ ↑(peso T + peso V)
+| AAbs T   ⇒ ↑(peso T)
 ].
 
 interpretation
@@ -21,7 +22,7 @@ interpretation
 
 (* Riscritture **************************************************************)
 
-lemma peso_nref (x:𝕍): 𝟏 = ♯x.
+lemma peso_refs (r:ℝ): 𝟏 = ♯r.
 //
 qed.
 
@@ -30,6 +31,10 @@ lemma peso_nabs (x) (T): ↑♯T = ♯𝛌x.T.
 qed.
 
 lemma peso_appl (T) (V): ↑(♯T+♯V) = ♯T❨V❩.
+//
+qed.
+
+lemma peso_aabs (T): ↑♯T = ♯𝛌.T.
 //
 qed.
 
@@ -44,5 +49,9 @@ lemma peso_appl_lt (T) (V): ♯T < ♯T❨V❩.
 qed.
 
 lemma peso_side_lt (T) (V): ♯V < ♯T❨V❩.
+//
+qed.
+
+lemma peso_aabs_lt (T): ♯T < ♯𝛌.T.
 //
 qed.

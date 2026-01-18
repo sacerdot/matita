@@ -2,8 +2,8 @@
    ed è distribuito ai sensi della licenza GNU GPL versione 2
 *)
 
-(* Notazione per la sostituzione ********************************************)
+(* Notazione per le trasformazioni dei riferimenti **************************)
 
-notation "hvbox( [ term 46 V / term 46 x ] term 70 T )"
+notation "hvbox( ℝ𝕋 )"
   non associative with precedence 70
-  for @{ 'Sostituzione $x $V $T }.
+  for @{ 'CategoriaRT }.

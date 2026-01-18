@@ -11,11 +11,12 @@ include "canale/notazione/nomi_legati.ma".
 
 rec definition leganti (y) (U) on U: 𝒫❨𝕍❩ ≝
 match U with
-[ NRef _   ⇒ (Ⓕ)
+[ Refs _   ⇒ (Ⓕ)
 | NAbs x T ⇒ {z | ∨∨ ∧∧ y ϵ ℱT & z ϵ ❴x❵ ∪ (leganti y T)
                     | ∧∧ y ⧸ϵ ℱT & z ϵ (leganti y T)
               }
 | Appl T V ⇒ (leganti y T) ∪ (leganti y V)
+| AAbs T   ⇒ leganti y T
 ].
 
 interpretation
@@ -24,7 +25,7 @@ interpretation
 
 (* Riscritture **************************************************************)
 
-lemma leganti_nref (y) (x:𝕍): Ⓕ = ℬ[y]x.
+lemma leganti_refs (y) (r:ℝ): Ⓕ = ℬ[y]r.
 //
 qed.
 
@@ -36,5 +37,10 @@ lemma leganti_nabs (y) (x) (T):
 qed.
 
 lemma leganti_appl (y) (T) (V): ℬ[y]T ∪ ℬ[y]V = ℬ[y]T❨V❩.
+//
+qed.
+
+lemma leganti_aabs (y) (T):
+      ℬ[y]T = ℬ[y]𝛌.T.
 //
 qed.

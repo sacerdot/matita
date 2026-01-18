@@ -2,8 +2,9 @@
    ed è distribuito ai sensi della licenza GNU GPL versione 2
 *)
 
-(* Notazione per la sostituzione ********************************************)
+(* Notazione per le funzioni di deindicizzazione ****************************)
 
-notation "hvbox( [ term 46 V / term 46 x ] term 70 T )"
+notation "hvbox( f ˂ )"
   non associative with precedence 70
-  for @{ 'Sostituzione $x $V $T }.
+  for @{ 'SupLeftArrowhead $f }.
+

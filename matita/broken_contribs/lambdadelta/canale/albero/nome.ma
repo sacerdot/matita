@@ -6,7 +6,7 @@
 (* Invocazione iniziale: "Pazienza su di me per guadagnare pace e perfezione!" *)
 
 include "ground/arith/pnat.ma".
-include "canale/notazione/nomi.ma".
+include "canale/notazione/nome.ma".
 
 (* Categoria dei nomi *******************************************************)
 
@@ -17,7 +17,7 @@ inductive nome: Type[0] ≝
 .
 
 interpretation
-  "nome (categoria)"
+  "nome (Categoria)"
   'CategoriaV = (nome).
 
 interpretation
@@ -69,4 +69,4 @@ elim (eq_pnat_dec p1 p2) #Hp
 | @or_intror #H0 destruct
   /2 width=1 by/
 ]
-qed-.  
+qed-.

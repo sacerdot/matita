@@ -30,12 +30,12 @@ qed.
 (* Riscritture avanzate *****************************************************)
 
 lemma nuc_eq (X) (x) (Y) (Z):
-      Y = ❨x ⇔ x❩ Y |{X} Z.
+      Y = ❨x ⇔ x❩ Y |❪X❫ Z.
 #X * #p #Y #Z //
 qed.
 
 lemma nuc_neq (X) (x1) (x2) (Y) (Z):
-      x1 ⧸= x2 → Z = ❨x1 ⇔ x2❩ Y |{X} Z.
+      x1 ⧸= x2 → Z = ❨x1 ⇔ x2❩ Y |❪X❫ Z.
 #X * #p1 * #p2 #Y #Z #Hnp
 elim (pnat_split_lt_eq_gt p1 p2) #Hp
 [ /2 width=1 by ptri_lt/
