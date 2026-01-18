@@ -44,6 +44,13 @@ interpretation
   "negated leibnitz's equality (logic)"
   'NotEq S a b = (negation (eq S a b)).
 
+(* Basic constructions with apply_dx ****************************************)
+
+lemma apply_dx_unfold (A) (B:Type[0]) (f:A→B):
+      ∀a. f a = (f @ a).
+//
+qed.
+
 (* Main constructions with eq ***********************************************)
 
 theorem canc_sx_eq (A) (x) (y) (z:A):

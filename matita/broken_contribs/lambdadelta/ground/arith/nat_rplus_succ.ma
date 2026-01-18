@@ -39,6 +39,10 @@ qed.
 
 (* Advanced inversions ******************************************************)
 
+lemma eq_inv_nrplus_bi_dx (n) (p1) (p2): p1 + n = p2 + n → p1 = p2.
+#n @(nat_ind_succ … n) -n /3 width=1 by eq_inv_psucc_bi/
+qed-.
+
 lemma eq_inv_refl_nrplus_dx (n) (p): p = p + n → 𝟎 = n.
 #n #p elim p -p
 /3 width=1 by eq_inv_psucc_bi/
