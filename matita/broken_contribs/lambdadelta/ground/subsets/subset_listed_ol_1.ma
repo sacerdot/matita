@@ -17,7 +17,7 @@ include "ground/subsets/subset_listed_1.ma".
 
 (* SUBSET WITH LISTED ELEMENTS **********************************************)
 
-(* Inversions with subset_ol ************************************************)
+(* Inversions with subset_ol and subset_single ******************************)
 
 lemma subset_ol_inv_single_sx (A) (a) (u):
       ❴a❵ ≬❪A❫ u → a ϵ u.

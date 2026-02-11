@@ -25,6 +25,24 @@ lemma subset_le_nimp_or_sx (A) (u1) (u2) (v:𝒫❨A❩): (**)
 /3 width=1 by subset_in_nimp, subset_or_in_dx, subset_or_in_sx/
 qed.
 
+lemma subset_ge_nimp_or_sx (A) (u1) (u2) (v:𝒫❨A❩): (**)
+      (u1 ⧵ v) ∪ (u2 ⧵ v) ⊆ (u1 ∪ u2) ⧵ v.
+#A #u1 #u2 #v #a * * #Ha #Hna
+/3 width=1 by subset_in_nimp, subset_or_in_dx, subset_or_in_sx/
+qed.
+
+lemma subset_le_nimp_or_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
+      u ⧵ (v1 ∪ v2) ⊆ u ⧵ v1 ⧵ v2.
+#A #u #v1 #v2 #a * #Ha #H0
+/4 width=6 by subset_in_nimp, subset_nin_inv_or_dx, subset_nin_inv_or_sx/
+qed.
+
+lemma subset_ge_nimp_or_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
+      u ⧵ v1 ⧵ v2 ⊆ u ⧵ (v1 ∪ v2).
+#A #u #v1 #v2 #a * * #Ha #H1na #H2na
+/3 width=7 by subset_in_nimp, subset_nin_or/
+qed.
+
 lemma subset_le_nimp_or_sx_refl_sx (A) (u1) (u2:𝒫❨A❩): (**)
       u1 ∪ u2 ⧵ u1 ⊆ u2.
 #A #u1 #u2

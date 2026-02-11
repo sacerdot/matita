@@ -37,7 +37,7 @@ qed.
 
 (* Basic inversions *********************************************************)
 
-lemma subset_nin_inv_or (A) (a) (u1) (u2):
+lemma subset_nin_or (A) (a) (u1) (u2):
       a ⧸ϵ u1 → a ⧸ϵ u2 → a ⧸ϵ❪A❫ u1 ∪ u2.
 #A #a #u1 #u2 #Hna1 #Hna2 * #Hna
 /2 width=1 by/
@@ -52,6 +52,18 @@ lemma subset_in_or_dec (A) (a) (u1) (u2):
 #A #a #u1 #u2 * #Ha1 [ #_ | * #Ha2 ]
 [ /3 width=1 by subset_or_in_sx, or_introl/
 | /3 width=1 by subset_or_in_dx, or_introl/
-| /4 width=7 by subset_nin_inv_or, or_intror/
+| /4 width=7 by subset_nin_or, or_intror/
 ]
+qed-.
+
+lemma subset_nin_inv_or_sx (A) (a) (u1) (u2):
+      a ⧸ϵ❪A❫ u1 ∪ u2 → a ⧸ϵ u1.
+#A #a #u1 #u2 #Hna #Ha
+/3 width=1 by subset_or_in_sx/
+qed-.
+
+lemma subset_nin_inv_or_dx (A) (a) (u1) (u2):
+      a ⧸ϵ❪A❫ u1 ∪ u2 → a ⧸ϵ u2.
+#A #a #u1 #u2 #Hna #Ha
+/3 width=1 by subset_or_in_dx/
 qed-.

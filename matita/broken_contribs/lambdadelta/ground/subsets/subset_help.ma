@@ -12,28 +12,15 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_listed_le.ma".
-include "ground/subsets/subset_listed_1.ma".
+include "ground/subsets/subset_le.ma".
+include "ground/subsets/subset_or.ma".
 
-(* SUBSET WITH LISTED ELEMENTS **********************************************)
+(* SUBSETS ******************************************************************)
 
-(* Constructions with subset_le *********************************************)
+(* Help constructions *******************************************************)
 
-lemma subset_single_le_sx (A) (u) (a):
-      a ϵ u → ❴a:A❵ ⊆ u.
-#A #u #a #Ha #b #Hb
-lapply (subset_in_inv_single ??? Hb) -Hb #H0 destruct //
+lemma subset_le_help_1 (A) (u1) (u2) (v1) (v2:𝒫❨A❩): (**)
+      (u1 ∪ v1) ∪ (u2 ∪ v2) ⊆ (u1 ∪ u2) ∪ (v1 ∪ v2).
+#A #u1 #u2 #v1 #v2 #a * * #Ha
+/3 width=1 by subset_or_in_dx, subset_or_in_sx/
 qed.
-
-(* Inversions with subset_le ************************************************)
-
-lemma subset_le_inv_single_sx (A) (u) (a):
-      ❴a:A❵ ⊆ u → a ϵ u.
-#A #u #a #Ha
-elim (subset_le_inv_listed_lcons_sx ???? Ha) -Ha #Ha #_ //
-qed-.
-
-lemma subset_nle_single_empty (A) (a):
-      ❴a:A❵ ⧸⊆ Ⓕ.
-/3 width=3 by subset_le_inv_single_sx, subset_nin_inv_empty/
-qed-.

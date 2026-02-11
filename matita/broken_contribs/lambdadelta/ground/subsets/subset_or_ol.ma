@@ -53,3 +53,15 @@ lemma subset_ol_or_sx_dx (A) (u1) (u2) (u):
 #A #u1 #u2 #u * #p #H1p #H2p
 /3 width=3 by subset_or_in_dx, subset_ol_i/
 qed.
+
+(* Destructions with subset_ol **********************************************)
+
+lemma subset_nol_des_or_sx_sx (A) (u1) (u2) (u):
+      (u1 ∪ u2) ⧸≬❪A❫ u → u1 ⧸≬ u.
+/3 width=1 by subset_ol_or_sx_sx/
+qed-.
+
+lemma subset_nol_des_or_sx_dx (A) (u1) (u2) (u):
+      (u1 ∪ u2) ⧸≬❪A❫ u → u2 ⧸≬ u.
+/3 width=1 by subset_ol_or_sx_dx/
+qed-.

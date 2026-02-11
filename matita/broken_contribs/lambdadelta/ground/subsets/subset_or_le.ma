@@ -51,6 +51,12 @@ lemma subset_le_or_sx_refl_bi (A) (u:𝒫❨A❩): (**)
 /2 width=3 by subset_le_or_sx_refl_sx/
 qed.
 
+lemma subset_dx_le_or (A) (u:𝒫❨A❩) (v1) (v2): (**)
+      u ⊆ v2 → u ⊆ v1 ∪ v2.
+#U #u #v1 #v2 #H0
+@(subset_le_trans … H0) -H0 //
+qed.
+
 (* Inversions with subset_le ************************************************)
 
 lemma subset_le_or_inv_sx_sx (A) (u1) (u2) (v:𝒫❨A❩): (**)

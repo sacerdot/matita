@@ -29,3 +29,9 @@ lemma subset_le_nimp_bi (A) (u1) (u2) (v1) (v2):
 #A #u1 #u2 #v1 #v2 #H1 #H2 #a * #Hu1 #Hv2
 /4 width=1 by subset_in_nimp/
 qed.
+
+lemma subset_le_nimp_comm_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
+      u ⧵ v1 ⧵ v2 ⊆ u ⧵ v2 ⧵ v1.
+#A #u #v1 #v2 #a * * #Ha #H1na #H2na
+/3 width=1 by subset_in_nimp/
+qed.

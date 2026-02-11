@@ -28,7 +28,7 @@ lemma subset_lt_or_bi_sx (A) (u1) (u2) (v): (**)
   @(subsets_inh_in … a)
   @subset_in_nimp
   [ /2 width=1 by subset_or_in_dx/
-  | /4 width=7 by subset_nin_inv_or, subset_ol_i/
+  | /4 width=7 by subset_nin_or, subset_ol_i/
   ]
 ]
 qed.
@@ -42,7 +42,7 @@ lemma subset_lt_or_bi_dx (A) (u1) (u2) (v): (**)
   @(subsets_inh_in … a)
   @subset_in_nimp
   [ /2 width=1 by subset_or_in_sx/
-  | /4 width=7 by subset_nin_inv_or, subset_ol_i/
+  | /4 width=7 by subset_nin_or, subset_ol_i/
   ]
 ]
 qed.
