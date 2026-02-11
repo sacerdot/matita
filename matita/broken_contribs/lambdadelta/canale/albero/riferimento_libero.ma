@@ -27,3 +27,15 @@ qed.
 lemma libero_dref (i): Ⓕ = ℱ⧣i.
 //
 qed.
+
+(* Inversioni avanzate ******************************************************)
+
+lemma in_libero_inv_gen (x) (r):
+      x ϵℱr → x =❪ℝ❫ r.
+#y *
+[ #x <libero_nref #H0
+  >(subset_in_inv_single ??? H0) -y //
+| #i <libero_dref #H0
+  elim (subset_nin_inv_empty ?? H0)
+]
+qed-.

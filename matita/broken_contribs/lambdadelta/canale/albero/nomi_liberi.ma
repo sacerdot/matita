@@ -23,7 +23,12 @@ interpretation
 
 (* Riscritture **************************************************************)
 
-lemma liberi_nref (x:𝕍): ❴x❵ = liberi x.
+lemma liberi_refs (r):
+      libero r = liberi r.
+//
+qed.
+
+lemma liberi_nref (x:𝕍): ❴x❵ = ℱx.
 //
 qed.
 
@@ -60,4 +65,12 @@ lemma in_liberi_dec (T) (y):
   /2 width=1 by subset_in_or_dec/
 | #T #IH #y <liberi_aabs //
 ]
+qed-.
+
+(* Inversioni avanzate ******************************************************)
+
+lemma in_liberi_inv_refs (x) (r:ℝ):
+      x ϵℱr → x =❪𝕋❫ r.
+#y #r <liberi_refs #H0
+<(in_libero_inv_gen … H0) -r //
 qed-.

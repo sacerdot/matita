@@ -25,7 +25,7 @@ TAGS := all names xoa orig elim deps top leaf stats tbls odeps trim clean \
         home up-home \
 
 PACKAGES  := ground basic_2A static_2 basic_2 apps_2 alpha_1 \
-             explicit_updating delayed_updating
+             explicit_updating delayed_updating canale
 
 LDWS := $(shell find -name "*.ldw.xml")
 TBLS := $(shell find -name "*.tbl")

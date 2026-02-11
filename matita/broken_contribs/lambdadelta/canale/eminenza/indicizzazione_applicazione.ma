@@ -3,6 +3,7 @@
 *)
 
 include "canale/albero/termine.ma".
+include "canale/eminenza/aggiornamento_spinta.ma".
 include "canale/eminenza/indicizzazione_spinta.ma".
 
 (* Applicazione dell'indicizzazione *****************************************)
@@ -12,7 +13,7 @@ match U with
 [ Refs r   ⇒ f @ r
 | NAbs x T ⇒ (𝛌.(ixd_appl (⫯˃[x]f) T))
 | Appl T V ⇒ (ixd_appl f T)❨ixd_appl f V❩
-| AAbs T   ⇒ (𝛌.(ixd_appl f T)) (**) (* manca la spinta *)
+| AAbs T   ⇒ (𝛌.(ixd_appl (⫯f) T))
 ].
 
 interpretation
@@ -36,8 +37,7 @@ lemma ixd_appl_appl (f) (T) (V):
 //
 qed.
 
-(**) (* manca la spinta *)
 lemma ixd_appl_aabs (f) (T):
-      (𝛌.(f＠⧣˃❨T❩) = f＠⧣˃❨𝛌.T❩).
+      (𝛌.(⫯f＠⧣˃❨T❩) = f＠⧣˃❨𝛌.T❩).
 //
 qed.
