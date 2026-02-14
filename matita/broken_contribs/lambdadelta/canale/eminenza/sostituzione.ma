@@ -83,7 +83,7 @@ qed.
 
 (* Riscritture principali ***************************************************)
 
-(* Nota: primo lemma di sostituzione *)
+(* Nota: primo lemma della sostituzione sequenziale *)
 theorem sost_sost_eq (y) (V2) (V1) (T):
         [[V2 / y]V1 / y] T = [V2 / y] [V1 / y] T.
 #y #V2 #V1 #T elim T -T

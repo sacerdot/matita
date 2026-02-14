@@ -39,3 +39,8 @@ lemma u_legati_aabs (y) (T):
       ℬ﹗[y]T = ℬ﹗[y]𝛌.T.
 //
 qed.
+
+(* Costruzioni avanzate *****************************************************)
+
+axiom in_u_legati_dec (x) (y) (T):
+      Decidable (xϵℬ﹗[y]T).

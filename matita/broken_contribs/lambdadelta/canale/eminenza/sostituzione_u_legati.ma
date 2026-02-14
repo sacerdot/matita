@@ -2,43 +2,54 @@
    ed è distribuito ai sensi della licenza GNU GPL versione 2
 *)
 
+include "ground/subsets/subset_nimply_and_or_le.ma".
+include "ground/subsets/subset_rest_or_le.ma".
 include "ground/subsets/subset_help.ma".
+include "canale/albero/nomi_liberi_restrizione.ma".
 include "canale/eminenza/nomi_u_legati_le.ma".
 include "canale/eminenza/sostituzione_liberi.ma".
 
 (* Sostituzione *************************************************************)
 
 (* Costruzioni avanzate coi nomi liberi *************************************)
-
-axiom subset_le_nimp_and_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
-      u ⧵ (v1 ∩ v2) ⊆ (u ⧵ v1) ∪ (u ⧵ v2).
-(*
-#A #u #v1 #v2 #a * #Ha #H0
-*)
-
-axiom subset_ge_nimp_and_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
-      (u ⧵ v1) ∪ (u ⧵ v2) ⊆ u ⧵ (v1 ∩ v2).
-(*
-#A #u #v1 #v2 #a * * #Ha #Hna
-*)
-
-
 (*
 lemma liberi_sost_ge_sx (x) (V) (T):
-      x ϵ ℱT → ℱV ⧵ ℬ﹗[x]T ⊆ ℱ[V/x]T.
+      ❨xϵℱT❩(ℱV ⧵ ℬ﹗[x]T) ⊆ ℱ[V/x]T.
 #y #W #T elim T -T
-[ #r #H0 <(in_liberi_inv_refs … H0) -r
+[ #r
+(*
+  #H0 <(in_liberi_inv_refs … H0) -r
   <sost_refs_eq
   /2 width=2 by subset_le_nimp_sx_refl_sx/
-| #x #T #IH <liberi_nabs * #Hy #H0
-  lapply (subset_nin_inv_single ??? H0) -H0 #Hnyx
+*)
+| #x #T #IH
+  @(subset_le_trans … @ liberi_rest_nabs_le …)
+  @subset_rest_le #Hnyx
+  @subset_rest_le #Hy
+  lapply (subset_le_trans … (subset_rest_ge_refl … Hy) … IH) -IH #IH
   <(sost_nabs_neq … Hnyx) <liberi_nabs
   lapply (u_legati_nabs_libero_ge … Hy Hnyx) -Hnyx #HB1
   lapply (u_legati_nabs_ge y x T) #HB2
-  @(subset_le_trans ????? @ subset_le_nimp_bi … (IH Hy) @ subset_le_refl …) -IH -Hy
+  @(subset_le_trans ????? @ subset_le_nimp_bi … IH @ subset_le_refl …) -IH -Hy
   @(subset_le_trans ????? @ subset_le_nimp_or_dx …)
   /3 width=5 by subset_le_nimp_bi, subset_le_or_sx/
-| #T #V #IHT #IHV <liberi_appl #Hy <u_legati_appl <sost_appl <liberi_appl
+| #T #V #IHT #IHV
+  <u_legati_appl <sost_appl <liberi_appl <liberi_appl
+  @(subset_le_trans … @ subset_rest_le_repl … @ subset_le_nimp_and_dx ?????)
+  [ /2 width=1 by in_u_legati_dec, or_introl/ ]
+  @subset_rest_le #Hy
+
+
+
+
+  @(subset_le_trans … @ liberi_rest_appl_le …)
+
+  
+  
+  @(subset_le_trans … @ subset_rest_or_le …)
+   
+
+
   @(subset_le_trans … @ subset_le_nimp_and_dx …)
   
   elim Hy -Hy #Hy [ lapply (IHT ?) | lapply (IHV ?) ] // -IHT -IHV -Hy #HB

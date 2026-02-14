@@ -2,6 +2,7 @@
    ed è distribuito ai sensi della licenza GNU GPL versione 2
 *)
 
+include "ground/subsets/subset_rest.ma".
 include "canale/albero/nomi_liberi.ma".
 include "canale/notazione/nomi_legati.ma".
 
@@ -10,7 +11,7 @@ include "canale/notazione/nomi_legati.ma".
 rec definition e_legati (y) (U) on U: 𝒫❨𝕍❩ ≝
 match U with
 [ Refs _   ⇒ (Ⓕ)
-| NAbs x T ⇒ {z | ∨∨ ∧∧ y ϵ ℱT & y ⧸= x & z = x | z ϵ (e_legati y T)}
+| NAbs x T ⇒ (❨y⧸=x❩❨yϵℱT❩❴x❵) ∪ (e_legati y T)
 | Appl T V ⇒ (e_legati y T) ∪ (e_legati y V)
 | AAbs T   ⇒ e_legati y T
 ].
@@ -26,7 +27,7 @@ lemma e_legati_refs (y) (r:ℝ): Ⓕ = ℬ﹖[y]r.
 qed.
 
 lemma e_legati_nabs (y) (x) (T):
-      {z | ∨∨ ∧∧ y ϵ ℱT & y ⧸= x & z = x | z ϵ ℬ﹖[y]T} = ℬ﹖[y]𝛌x.T.
+      (❨y⧸=x❩❨yϵℱT❩❴x❵) ∪ ℬ﹖[y]T = ℬ﹖[y]𝛌x.T.
 //
 qed.
 

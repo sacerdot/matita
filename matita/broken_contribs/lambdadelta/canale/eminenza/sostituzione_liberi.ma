@@ -43,6 +43,40 @@ lemma liberi_sost_le_non_libero (x) (V) (T):
 /3 width=5 by subset_nol_inv_single_dx, subset_le_nimp_dx_refl_sx_fwd/
 qed.
 
+(* Riscritture principali coi nomi liberi ***********************************)
+
+(* Nota: secondo lemma della sostituzione sequenziale *)
+theorem sost_sost_neq_non_libero (y2) (y1) (V2) (V1) (T):
+        y2 ⧸= y1 → y1 ⧸ϵ ℱV2 → y2 ⧸ϵ ℱV1 →
+        [V1 / y1] [V2 / y2] T = [V2 / y2] [V1 / y1] T.
+#y2 #y1 #V2 #V1 #T elim T -T
+[ #r #Hny21 #Hny1 #Hny2
+  elim (eq_riferimento_dec y1 r) #Hny1r destruct
+  [ <(sost_refs_neq … @ neq_nome_riferimento … Hny21)
+    <sost_refs_eq <sost_non_libero //
+  | <(sost_refs_neq … Hny1r)
+    elim (eq_riferimento_dec y2 r) #Hny2r destruct
+    [ <sost_refs_eq <sost_non_libero //
+    | <(sost_refs_neq … Hny2r) <(sost_refs_neq … Hny1r) //
+    ]
+  ]
+| #x #T #IH #Hny21 #Hny1 #Hny2
+  elim (eq_nome_dec y1 x) #Hny1x destruct
+  [ <sost_nabs_eq <(sost_nabs_neq … Hny21) <sost_nabs_eq //
+  | <(sost_nabs_neq … Hny1x)
+    elim (eq_nome_dec y2 x) #Hny2x destruct
+    [ <sost_nabs_eq <sost_nabs_eq <(sost_nabs_neq … Hny1x) //
+    | <(sost_nabs_neq … Hny2x) <(sost_nabs_neq … Hny2x)
+      <(sost_nabs_neq … Hny1x) <IH -IH //
+    ]
+  ]
+| #T #V #IHT #IHV #Hny21 #Hny1 #Hny2
+  <sost_appl <sost_appl <IHT -IHT // <IHV -IHV //
+| #T #IH #Hny21 #Hny1 #Hny2
+  <sost_aabs <sost_aabs <IH -IH //
+]
+qed.
+
 (* Costruzioni coi nomi liberi **********************************************)
 
 lemma liberi_sost_ge_dx (x) (V) (T):
