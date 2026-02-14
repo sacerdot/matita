@@ -21,6 +21,20 @@ include "ground/subsets/subset_nimply.ma".
 
 (* Constructions with subset_and and subset_or and subset_le ****************)
 
+lemma subset_le_nimp_and_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
+      (∀a. ∨∨ Decidable (a ϵ v1) | Decidable (a ϵ v2)) →
+      u ⧵ (v1 ∩ v2) ⊆ (u ⧵ v1) ∪ (u ⧵ v2).
+#A #u #v1 #v2 #Hv #a * #Ha #H0
+elim (subset_nin_inv_and ???? (Hv a) H0) -H0 #H0a
+/4 width=1 by subset_in_nimp, subset_or_in_dx, subset_or_in_sx/
+qed.
+
+lemma subset_ge_nimp_and_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
+      (u ⧵ v1) ∪ (u ⧵ v2) ⊆ u ⧵ (v1 ∩ v2).
+#A #u #v1 #v2 #a * * #Ha #Hna
+/3 width=6 by subset_in_nimp, subset_nin_and_dx, subset_nin_and_sx/ 
+qed.
+
 lemma subset_le_or_dx_and_nimp_refl_sx_bi (A) (u) (v):
       (∀a. Decidable (a ϵ❪A❫ v)) →
       u ⊆ (u ∩ v) ∪ (u ⧵ v).
