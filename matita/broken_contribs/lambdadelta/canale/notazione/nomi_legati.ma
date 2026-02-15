@@ -8,10 +8,6 @@ notation "hvbox( ℬ term 70 T )"
   non associative with precedence 70
   for @{ 'NomiLegati $T }.
 
-notation "hvbox( ℬ﹖[ term 46 x ] term 70 T )"
+notation "hvbox( ℬ[ term 46 x ] term 70 T )"
   non associative with precedence 70
-  for @{ 'NomiLegatiE $x $T }.
-
-notation "hvbox( ℬ﹗[ term 46 x ] term 70 T )"
-  non associative with precedence 70
-  for @{ 'NomiLegatiU $x $T }.
+  for @{ 'NomiLegati $x $T }.

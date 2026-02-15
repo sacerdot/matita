@@ -12,7 +12,7 @@ definition nuc (X) (x1) (x2) (Y) (Z) ≝
 match x1 with
 [ Nome p1 ⇒
   match x2 with
-  [ Nome p2 ⇒ptri X p1 p2 Z Y Z
+  [ Nome p2 ⇒ ptri X p1 p2 Z Y Z
   ]
 ].
 
@@ -23,19 +23,19 @@ interpretation
 (* Riscritture di base ******************************************************)
 
 lemma nuc_unfold (X) (p1) (p2) (Y) (Z):
-      ptri X p1 p2 Z Y Z = ❨𝗑[p1] ⇔ 𝗑[p2]❩ Y | Z.
+      ptri X p1 p2 Z Y Z = ❨!𝗑[p1] ⇔ 𝗑[p2]❩ Y | Z.
 //
 qed.
 
 (* Riscritture avanzate *****************************************************)
 
 lemma nuc_eq (X) (x) (Y) (Z):
-      Y = ❨x ⇔ x❩ Y |❪X❫ Z.
+      Y = ❨!x ⇔ x❩ Y |❪X❫ Z.
 #X * #p #Y #Z //
 qed.
 
 lemma nuc_neq (X) (x1) (x2) (Y) (Z):
-      x1 ⧸= x2 → Z = ❨x1 ⇔ x2❩ Y |❪X❫ Z.
+      x1 ⧸= x2 → Z = ❨!x1 ⇔ x2❩ Y |❪X❫ Z.
 #X * #p1 * #p2 #Y #Z #Hnp
 elim (pnat_split_lt_eq_gt p1 p2) #Hp
 [ /2 width=1 by ptri_lt/

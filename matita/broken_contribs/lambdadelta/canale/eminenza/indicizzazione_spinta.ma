@@ -9,7 +9,7 @@ include "canale/notazione/indicizzazione.ma".
 (* Spinta dell'indicizzazione ***********************************************)
 
 definition ixd_spinta (x:𝕍) (f: ℝ𝕋): ℝ𝕋 ≝
-           λr. ❨x ⇔ r❩ (⧣𝟏) | (↑f) @ r.
+           λr. ❨!x ⇔ r❩ (⧣𝟏) | (↑f) @ r.
 
 interpretation
   "spinta (indicizzazione)"
@@ -18,7 +18,7 @@ interpretation
 (* Riscritture di base ******************************************************)
 
 lemma ixd_spinta_unfold (x:𝕍) (f) (r:ℝ):
-      ❨x ⇔ r❩ (⧣𝟏) | (↑f) @ r = (⫯˃[x]f) @ r.
+      ❨!x ⇔ r❩ (⧣𝟏) | (↑f) @ r = (⫯˃[x]f) @ r.
 //
 qed.
 

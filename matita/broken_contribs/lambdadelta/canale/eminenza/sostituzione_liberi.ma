@@ -13,7 +13,7 @@ include "canale/eminenza/sostituzione.ma".
 (* Riscritture con nomi liberi **********************************************)
 
 lemma sost_non_libero (y) (V) (T):
-      y ⧸ϵ ℱT → T = [V/y]T.
+      y ⧸ϵ ℱT → T = ⦋V/y⦌T.
 #y #V #T elim T -T
 [ #r elim (eq_riferimento_dec y r) #Hnyr destruct
   [ <liberi_nref #Hny
@@ -37,7 +37,7 @@ lemma sost_non_libero (y) (V) (T):
 qed.
 
 lemma liberi_sost_le_non_libero (x) (V) (T):
-      x ⧸ϵ ℱT → ℱ[V/x]T ⊆ ℱT ⧵ ❴x❵.
+      x ⧸ϵ ℱT → ℱ⦋V/x⦌T ⊆ ℱT ⧵ ❴x❵.
 #x #V #T #Hx
 <(sost_non_libero … Hx)
 /3 width=5 by subset_nol_inv_single_dx, subset_le_nimp_dx_refl_sx_fwd/
@@ -48,7 +48,7 @@ qed.
 (* Nota: secondo lemma della sostituzione sequenziale *)
 theorem sost_sost_neq_non_libero (y2) (y1) (V2) (V1) (T):
         y2 ⧸= y1 → y1 ⧸ϵ ℱV2 → y2 ⧸ϵ ℱV1 →
-        [V1 / y1] [V2 / y2] T = [V2 / y2] [V1 / y1] T.
+        (⦋V1 / y1⦌ ⦋V2 / y2⦌ T) = ⦋V2 / y2⦌ ⦋V1 / y1⦌ T.
 #y2 #y1 #V2 #V1 #T elim T -T
 [ #r #Hny21 #Hny1 #Hny2
   elim (eq_riferimento_dec y1 r) #Hny1r destruct
@@ -80,7 +80,7 @@ qed.
 (* Costruzioni coi nomi liberi **********************************************)
 
 lemma liberi_sost_ge_dx (x) (V) (T):
-      ℱT ⧵ ❴x❵ ⊆ ℱ[V/x]T.
+      ℱT ⧵ ❴x❵ ⊆ ℱ⦋V/x⦌T.
 #y #W #T elim T -T
 [ #r elim (eq_riferimento_dec y r) #Hnyr destruct
   [ <liberi_nref

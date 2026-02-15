@@ -10,8 +10,8 @@ include "canale/notazione/discriminatore.ma".
 
 definition rsplit (X) (Y) (Z) (r) ≝
 match r with
-[ NRef x ⇒Z @ r
-| DRef i ⇒psplit X Y (Z ∘ DRef) i
+[ NRef x ⇒ Z @ r
+| DRef i ⇒ psplit X Y (Z ∘ DRef) i
 ].
 
 interpretation

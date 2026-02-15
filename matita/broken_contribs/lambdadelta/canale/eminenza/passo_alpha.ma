@@ -4,7 +4,7 @@
 
 include "ground/xoa/ex_5_2.ma".
 include "ground/xoa/ex_3_2.ma".
-include "canale/eminenza/nomi_e_legati.ma".
+include "canale/eminenza/nomi_ap_legati.ma".
 include "canale/eminenza/sostituzione.ma".
 include "canale/notazione/conversione_alpha.ma".
 
@@ -16,8 +16,8 @@ inductive astep: relation2 (𝕋) (𝕋) ≝
 | astep_nabs (T1) (T2) (x):
   astep T1 T2 → astep (𝛌x.T1) (𝛌x.T2)
 | astep_step (T1) (T2) (x1) (x2):
-  x1 ⧸= x2 → x2 ⧸ϵ ℱT2 → x2 ⧸ϵ ℬ﹖[x1]T2 →
-  astep T1 T2 → astep (𝛌x1.T1) (𝛌x2.[x2/x1]T2)
+  x1 ⧸= x2 → x2 ⧸ϵ ℱT2 → x2 ⧸ϵ ℬ[x1]T2 →
+  astep T1 T2 → astep (𝛌x1.T1) (𝛌x2.⦋x2/x1⦌T2)
 | astep_appl (T1) (T2) (V1) (V2):
   astep T1 T2 → astep V1 V2 → astep (T1❨V1❩) (T2❨V2❩)
 | astep_aabs (T1) (T2):
@@ -45,8 +45,8 @@ qed-.
 lemma astep_inv_nabst_sx (T1) (X2) (x):
       (𝛌x.T1) ⪰α X2 →
       ∨∨ ∃∃T2. T1 ⪰α T2 & X2 = 𝛌x.T2
-       | ∃∃T2,y. x ⧸= y & y ⧸ϵ ℱ(T2:𝕋) & y ⧸ϵ ℬ﹖[x]T2 &
-                 T1 ⪰α T2 & 𝛌y.[y/x]T2 = X2
+       | ∃∃T2,y. x ⧸= y & y ⧸ϵ ℱ(T2:𝕋) & y ⧸ϵ ℬ[x]T2 &
+                 T1 ⪰α T2 & 𝛌y.⦋y/x⦌T2 = X2
 .
 #Z #X2 #z
 @(insert_eq_1 … (𝛌z.Z)) #X1 * -X1 -X2

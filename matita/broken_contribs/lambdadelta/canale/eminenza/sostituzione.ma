@@ -10,35 +10,35 @@ include "canale/notazione/sostituzione.ma".
 
 rec definition sost (y:𝕍) (W) (U) on U: 𝕋 ≝
 match U with
-[ Refs r   ⇒ ❨y ⇔ r❩ W | U
-| NAbs x T ⇒ ❨y ⇔ x❩ U | 𝛌x.(sost y W T)
+[ Refs r   ⇒ ❨!y ⇔ r❩ W | U
+| NAbs x T ⇒ ❨!y ⇔ x❩ U | 𝛌x.(sost y W T)
 | Appl T V ⇒ (sost y W T)❨sost y W V❩
 | AAbs T   ⇒ (𝛌.(sost y W T))
 ].
 
 interpretation
   "sostituzione (termine)"
-  'Sostituzione y W U = (sost y W U).
+  'Sostituzione W y U = (sost y W U).
 
 (* Riscritture di base ******************************************************)
 
 lemma sost_refs (W:𝕋) (y:𝕍) (r:ℝ):
-      ❨y ⇔ r❩ W | r = [W / y] r.
+      ❨!y ⇔ r❩ W | r = ⦋W / y⦌ r.
 //
 qed.
 
 lemma sost_nabs (W) (T) (y) (x):
-      ❨y ⇔ x❩ 𝛌x.T | 𝛌x.[W / y]T = [W / y] 𝛌x.T.
+      ❨!y ⇔ x❩ 𝛌x.T | 𝛌x.⦋W / y⦌T = ⦋W / y⦌ 𝛌x.T.
 //
 qed.
 
 lemma sost_appl (W) (T) (V) (y):
-      ([W / y]T)❨[W / y]V❩ = [W / y] T❨V❩.
+      (⦋W / y⦌T)❨⦋W / y⦌V❩ = ⦋W / y⦌ T❨V❩.
 //
 qed.
 
 lemma sost_aabs (W) (T) (y):
-      (𝛌.[W / y]T) = [W / y] 𝛌.T.
+      (𝛌.⦋W / y⦌T) = ⦋W / y⦌ 𝛌.T.
 //
 qed.
 
@@ -46,27 +46,27 @@ qed.
 (* Riscritture avanzate *****************************************************)
 
 lemma sost_refs_eq (W) (x):
-      W = [W / x] x.
+      W = ⦋W / x⦌ x.
 #W #x <sost_refs //
 qed.
 
 lemma sost_refs_neq (W) (y:𝕍) (r:ℝ):
-      y ⧸=❪ℝ❫ r → r =❪𝕋❫ [W / y] r.
+      y ⧸=❪ℝ❫ r → r =❪𝕋❫ ⦋W / y⦌ r.
 /2 width=1 by ruc_neq/
 qed.
 
 lemma sost_nabs_eq (W) (T) (x):
-      (𝛌x.T) = [W / x] 𝛌x.T.
+      (𝛌x.T) = ⦋W / x⦌ 𝛌x.T.
 //
 qed.
 
 lemma sost_nabs_neq (W) (T) (y) (x):
-      y ⧸= x → 𝛌x.[W / y]T = [W / y] 𝛌x.T.
+      y ⧸= x → 𝛌x.⦋W / y⦌T = ⦋W / y⦌ 𝛌x.T.
 /2 width=1 by nuc_neq/
 qed.
 
 lemma sost_eq (y) (T):
-      T = [y / y] T.
+      T = ⦋y / y⦌ T.
 #y #T elim T -T
 [ #r elim (eq_riferimento_dec y r) #Hnyr destruct
   [ <sost_refs_eq //
@@ -85,7 +85,7 @@ qed.
 
 (* Nota: primo lemma della sostituzione sequenziale *)
 theorem sost_sost_eq (y) (V2) (V1) (T):
-        [[V2 / y]V1 / y] T = [V2 / y] [V1 / y] T.
+        ⦋⦋V2 / y⦌V1 / y⦌ T = ⦋V2 / y⦌ ⦋V1 / y⦌ T.
 #y #V2 #V1 #T elim T -T
 [ #r elim (eq_riferimento_dec y r) #Hnyr destruct
   [ <sost_refs_eq //

@@ -4,6 +4,6 @@
 
 (* Notazione per la sostituzione ********************************************)
 
-notation "hvbox( [ term 46 V / term 46 x ] term 70 T )"
+notation "hvbox( ⦋ term 46 V / term 46 x ⦌ term 70 T )"
   non associative with precedence 70
-  for @{ 'Sostituzione $x $V $T }.
+  for @{ 'Sostituzione $V $x $T }.
