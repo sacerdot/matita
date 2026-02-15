@@ -43,6 +43,12 @@ lemma subset_le_nimp_dx_refl_empty (A) (u): (**)
 /3 width=3 by subset_in_nimp, subset_nin_inv_empty/
 qed.
 
+lemma subset_ge_nimp_refl_single (A) (u) (b): (**)
+      b ⧸ϵ u → u ⊆ u ⧵❪A❫ ❴b❵.
+#A #u #b #Hnb #a #Ha
+/4 width=5 by subset_nin_single, subset_in_nimp/
+qed.
+
 (* Inversions with subset_nimp and subset_le ********************************)
 
 lemma subset_le_inv_listed_lcons_dx (A) (u) (l) (a):
