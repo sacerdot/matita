@@ -51,7 +51,7 @@ qed.
 
 (* Nota: lemma della sostituzione sequenziale integra *)
 theorem sost_sost_neq_integra (y2) (y1) (V2) (V1) (T):
-        y2 ⧸= y1 → y1 ⧸ϵ ℱV2 → ℬ[y1]T ⧸≬ ℱV1 →
+        y2 ⧸= y1 → y1 ⧸ϵ ℱV2 → ℱV1 ⧸≬ ℬ[y1]T →
         (⦋⦋V2 / y2⦌V1 / y1⦌ ⦋V2 / y2⦌ T) = ⦋V2 / y2⦌ ⦋V1 / y1⦌ T.
 #y2 #y1 #V2 #V1 #T #Hny21 #Hny1 #HN1
 elim (in_liberi_dec V1 y2) #Hy2
