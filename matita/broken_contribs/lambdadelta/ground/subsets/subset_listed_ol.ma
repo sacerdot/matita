@@ -24,3 +24,9 @@ lemma subset_nol_empty_sx (A) (u2):
 #A #u2 * #a #Ha #_
 /2 width=3 by subset_nin_inv_empty/
 qed-.
+
+lemma subset_nol_empty_dx (A) (u1):
+      u1 ⧸≬❪A❫ Ⓕ.
+#A #u1 * #a #_ #Ha
+/2 width=3 by subset_nin_inv_empty/
+qed-.

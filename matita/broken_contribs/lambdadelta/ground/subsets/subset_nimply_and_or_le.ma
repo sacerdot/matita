@@ -50,3 +50,10 @@ lemma subset_le_or_sx_and_nimp_refl_sx_bi (A) (u) (v):
       (u ∩ v) ∪ (u ⧵ v) ⊆ u.
 #A #u #v #Hu #a * * //
 qed.
+
+lemma subset_le_nimp_or_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
+      u ⧵ (v1 ∪ v2) ⊆ (u ⧵ v1) ∩ (u ⧵ v2).
+#A #u #v1 #v2 #a * #Ha #H0
+elim (subset_nin_inv_or ???? H0) -H0 #H1a #H2a
+/4 width=3 by subset_and_in/
+qed.

@@ -24,3 +24,10 @@ lemma subset_ol_le_repl (A):
 #A #u1 #v1 * #p1 #H1 #H2 #u2 #Hu #v2 #Hv
 /3 width=3 by subset_ol_i/
 qed.
+
+(* Negated constructions with subset_le *************************************)
+
+lemma subset_nol_le_repl (A):
+      ∀u1,v1. u1 ⧸≬ v1 → ∀u2. u2 ⊆ u1 → ∀v2. v2 ⊆ v1 → u2 ⧸≬❪A❫ v2.
+/3 width=5 by subset_ol_le_repl/
+qed-.

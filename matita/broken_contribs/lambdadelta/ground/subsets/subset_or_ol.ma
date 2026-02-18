@@ -54,7 +54,7 @@ lemma subset_ol_or_sx_dx (A) (u1) (u2) (u):
 /3 width=3 by subset_or_in_dx, subset_ol_i/
 qed.
 
-(* Destructions with subset_ol **********************************************)
+(* Destructions with negated subset_ol **************************************)
 
 lemma subset_nol_des_or_sx_sx (A) (u1) (u2) (u):
       (u1 ∪ u2) ⧸≬❪A❫ u → u1 ⧸≬ u.
@@ -64,4 +64,13 @@ qed-.
 lemma subset_nol_des_or_sx_dx (A) (u1) (u2) (u):
       (u1 ∪ u2) ⧸≬❪A❫ u → u2 ⧸≬ u.
 /3 width=1 by subset_ol_or_sx_dx/
+qed-.
+
+(* Inversions with negated subset_ol ****************************************)
+
+lemma subset_nol_inv_or_dx (A) (u) (u1) (u2):
+      u ⧸≬❪A❫ (u1 ∪ u2) → ∧∧ u ⧸≬ u1 & u ⧸≬ u2.
+#A #u #u1 #u2 #H0
+@conj * #x #H1x #H2x
+/4 width=3 by subset_or_in_dx, subset_or_in_sx, subset_ol_i/
 qed-.

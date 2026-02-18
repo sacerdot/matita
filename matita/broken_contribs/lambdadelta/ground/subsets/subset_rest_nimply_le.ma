@@ -12,32 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_le.ma".
 include "ground/subsets/subset_nimply.ma".
+include "ground/subsets/subset_rest_le.ma".
 
-(* DIFFERENCE FOR SUBSETS ***************************************************)
+(* RESTRICTION FOR SUBSETS **************************************************)
 
-(* Constructions with subset_le *********************************************)
+(* Basic constructions with subset_nimply and subset_le *********************)
 
-lemma subset_le_nimp_refl_empty (A) (u) (v): (**)
-      u ⧵❪A❫ u ⊆ v.
-#A #u #v #a * #Ha #Hna
-elim Hna -Hna //
+lemma subset_rest_nimp_ge (A) (R) (u) (v): (**)
+      (❨R❩u)⧵v ⊆ ❨R❩❪A❫(u⧵v).
+#A #R #u #v #a * * #H1a #H2a #Hna
+/4 width=1 by subset_in_nimp, subset_and_in/
 qed.
 
-lemma subset_le_nimp_sx_refl_sx (A) (u1) (u2):
-      u1 ⧵❪A❫ u2 ⊆ u1.
-#A #u1 #u2 #a * #Hu1 #_ //
-qed.
-
-lemma subset_le_nimp_bi (A) (u1) (u2) (v1) (v2):
-      u1 ⊆ v1 → u2 ⊆ v2 → u1 ⧵ v2 ⊆ v1 ⧵❪A❫ u2.
-#A #u1 #u2 #v1 #v2 #H1 #H2 #a * #Hu1 #Hv2
-/4 width=1 by subset_in_nimp/
-qed.
-
-lemma subset_le_nimp_comm_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
-      u ⧵ v1 ⧵ v2 ⊆ u ⧵ v2 ⧵ v1.
-#A #u #v1 #v2 #a * * #Ha #H1na #H2na
-/3 width=1 by subset_in_nimp/
+lemma subset_rest_nimp_le (A) (R) (u) (v): (**)
+      ❨R❩❪A❫(u⧵v) ⊆ (❨R❩u)⧵v.
+#A #R #u #v #a * #H1a * #H2a #Hna
+/4 width=1 by subset_in_nimp, subset_and_in/
 qed.

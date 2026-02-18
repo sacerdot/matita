@@ -40,7 +40,7 @@ lemma subset_listed_dx_le_to_eq (A:Type[0]):
       ] #H1l1
       lapply (subset_eq_trans … H1l1 … (subset_eq_or_listed_lcons …)) -H1l1 #h1l1
       /3 width=4 by nle_succ_bi, ex2_intro/
-    | /2 width=1 by in_nimp_single_dx_dec/
+    | /2 width=1 by subset_in_nimp_single_dx_dec/
     ]
   | lapply (subset_le_trans A ?? (subset_le_nimp_dx_refl_sx_fwd …) … Hl2) -Hl2
     [ * #x2 #Hx2 #H0

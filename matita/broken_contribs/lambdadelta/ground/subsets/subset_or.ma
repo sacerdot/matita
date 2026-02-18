@@ -56,14 +56,23 @@ lemma subset_in_or_dec (A) (a) (u1) (u2):
 ]
 qed-.
 
-lemma subset_nin_inv_or_sx (A) (a) (u1) (u2):
+(* Negated destructions *****************************************************)
+
+lemma subset_nin_des_or_sx (A) (a) (u1) (u2):
       a ⧸ϵ❪A❫ u1 ∪ u2 → a ⧸ϵ u1.
 #A #a #u1 #u2 #Hna #Ha
 /3 width=1 by subset_or_in_sx/
 qed-.
 
-lemma subset_nin_inv_or_dx (A) (a) (u1) (u2):
+lemma subset_nin_des_or_dx (A) (a) (u1) (u2):
       a ⧸ϵ❪A❫ u1 ∪ u2 → a ⧸ϵ u2.
 #A #a #u1 #u2 #Hna #Ha
 /3 width=1 by subset_or_in_dx/
+qed-.
+
+(* Negated inversions *******************************************************)
+
+lemma subset_nin_inv_or (A) (a) (u1) (u2):
+      a ⧸ϵ❪A❫ u1 ∪ u2 → ∧∧ a ⧸ϵ u1 & a ⧸ϵ u2.
+/3 width=6 by conj, subset_nin_des_or_sx, subset_nin_des_or_dx/
 qed-.

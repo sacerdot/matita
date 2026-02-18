@@ -57,3 +57,17 @@ lemma subset_rest_le_gen (A) (R) (u) (v): (**)
 #A #R #u #v #Huv #a * #H1a #H2a
 /2 width=1 by/
 qed.
+
+lemma subset_rest_le_estract (A) (R) (u) (v): (**)
+      (R → ❨R❩u ⊆ v) → ❨R❩❪A❫u ⊆ v.
+#A #R #u #v #Huv #a * #H1a #H2a
+/3 width=1 by subset_and_in/
+qed.
+
+(* Advanced inversions with subset_le ***************************************)
+
+lemma subset_rest_le_inv_gen (A) (R) (u) (v): (**)
+      R → ❨R❩❪A❫u ⊆ v → u ⊆ v.
+#A #R #u #v #x #H0 #a #Ha
+/3 width=1 by subset_and_in/
+qed.
