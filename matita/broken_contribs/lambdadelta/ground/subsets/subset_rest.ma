@@ -30,3 +30,11 @@ lemma subset_rest_unfold (A) (R) (u):
       {a:A | R} ∩ u = ❨R❩u.
 //
 qed.
+
+(* Basic inversions *********************************************************)
+
+lemma subset_nin_rest (A) (R) (a) (u):
+      (R → a ⧸ϵ u) → a ⧸ϵ❪A❫ ❨R❩u.
+#A #R #a #u #H0 * #HR #Ha
+/2 width=1 by/
+qed-.
