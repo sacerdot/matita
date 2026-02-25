@@ -42,7 +42,6 @@ lemma sost_aabs (W) (T) (y):
 //
 qed.
 
-
 (* Riscritture avanzate *****************************************************)
 
 lemma sost_refs_eq (W) (x):
@@ -65,6 +64,15 @@ lemma sost_nabs_neq (W) (T) (y) (x):
 /2 width=1 by nuc_neq/
 qed.
 
+lemma sost_nabs_portata (W) (T) (y) (x):
+      (𝛌x.❨!y ⇔ x❩ T | ⦋W / y⦌T = ⦋W / y⦌ 𝛌x.T).
+#W #T #y #x
+elim (eq_nome_dec y x) #Hnyx destruct
+[ //
+| <sost_nabs_neq // <nuc_neq //
+]
+qed.
+
 lemma sost_eq (y) (T):
       T = ⦋y / y⦌ T.
 #y #T elim T -T
@@ -81,6 +89,15 @@ lemma sost_eq (y) (T):
 ]
 qed.
 
+lemma sost_nabs_spinta (W) (T) (y:𝕍) (x:𝕍):
+      (𝛌x.⦋(nuc ? y x x W) / y⦌T = ⦋W / y⦌ 𝛌x.T).
+#W #T #y #x
+elim (eq_nome_dec y x) #Hnyx destruct
+[ //
+| <sost_nabs_neq // <nuc_neq //
+]
+qed.
+
 (* Riscritture principali ***************************************************)
 
 (* Nota: primo lemma della sostituzione sequenziale *)
@@ -91,7 +108,7 @@ theorem sost_sost_eq (y) (V2) (V1) (T):
   [ <sost_refs_eq //
   | <(sost_refs_neq … Hnyr)
     <(sost_refs_neq … Hnyr) <(sost_refs_neq … Hnyr) //
-  ]  
+  ]
 | #x #T #IH elim (eq_nome_dec y x) #Hnyx //
   <(sost_nabs_neq … Hnyx)
   <(sost_nabs_neq … Hnyx) <(sost_nabs_neq … Hnyx) //

@@ -10,6 +10,7 @@ include "canale/eminenza/sostituzione_liberi.ma".
 (* Riscritture principali coi nomi legati alla portata **********************)
 
 (* Nota: terzo lemma della sostituzione sequenziale *)
+(* Nota: vale anche senza le premesse 2 e 3 nel caso V1 = y1 *)
 theorem sost_sost_neq_non_e_legato (y2) (y1) (V2) (V1) (T):
         y2 ⧸= y1 → y1 ⧸ϵ ℱV2 → y2 ⧸ϵ ℬ[y1]T →
         (⦋⦋V2 / y2⦌V1 / y1⦌ ⦋V2 / y2⦌ T) = ⦋V2 / y2⦌ ⦋V1 / y1⦌ T.
@@ -42,8 +43,8 @@ theorem sost_sost_neq_non_e_legato (y2) (y1) (V2) (V1) (T):
   ]
 | #T #V #IHT #IHV #Hny21 #Hny1 <ap_legati_appl #Hny2
   <sost_appl <sost_appl
-  <IHT -IHT /2 width=6 by subset_nin_inv_or_sx/
-  <IHV -IHV /2 width=6 by subset_nin_inv_or_dx/
+  elim (subset_nin_inv_or ???? Hny2) -Hny2 #H1ny2 #H2ny2
+  <IHT -IHT // <IHV -IHV //
 | #T #IH #Hny21 #Hny1 <ap_legati_aabs #Hny2
   <sost_aabs <sost_aabs <IH -IH //
 ]
