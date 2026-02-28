@@ -9,13 +9,13 @@ include "convergence/notation/functions/right_double_arrow_p_2.ma".
 
 (* Postulates ***************************************************************)
 
-record function_postulates (D:𝔻𝟬) (C:𝔻𝟬) (f:D→C): Prop ≝
-{ fun_in (d):
-  d ∈ D → f d ∈ C
-; fun_eq_f (d1) (d2):
-  d1 ≍ d2 → f d1 ≍ f d1
+record function_postulates (X:𝔻𝟬) (Y:𝔻𝟬) (f:X→Y): Prop ≝
+{ fun_in (x):
+  x ∈ X → f x ∈ Y
+; fun_eq_f (x1) (x2):
+  x1 ≍ x2 → f x1 ≍ f x2
 }.
 
 interpretation
   "postulates (function)"
-  'RightDoubleArrow_p D C = (function_postulates D C).
+  'RightDoubleArrow_p X Y = (function_postulates X Y).

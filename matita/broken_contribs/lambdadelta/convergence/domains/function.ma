@@ -9,13 +9,13 @@ include "convergence/notation/functions/right_double_arrow_2.ma".
 
 (* Object *******************************************************************)
 
-record function (D:𝔻𝟬) (C:𝔻𝟬): Type[0] ≝
-{ fun_S:1> D → C
-; fun_P:> fun_S 𝛆 D ⇒𝗽 C
+record function (X:𝔻𝟬) (Y:𝔻𝟬): Type[0] ≝
+{ fun_S:1> X → Y
+; fun_P: > fun_S 𝛆 X ⇒𝗽 Y
 }.
 
 interpretation
-  "function (category)"
-  'RightDoubleArrow D C = (function D C).
+  "function (domain)"
+  'RightDoubleArrow X Y = (function X Y).
 
 (* Note: notation for extesional equality: ≗ 2257 RingEqual *)
