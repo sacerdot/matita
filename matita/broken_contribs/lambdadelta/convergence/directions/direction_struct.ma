@@ -27,7 +27,7 @@ record direction_structure (S:𝔻𝟬): Type[1] ≝
 }.
 
 interpretation
-  "direction structure (category)"
+  "structure (direction)"
   'CategoryD_s S = (direction_structure S).
 
 interpretation

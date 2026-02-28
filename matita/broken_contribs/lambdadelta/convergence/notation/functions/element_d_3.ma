@@ -2,9 +2,9 @@
    and is distributed under the GNU General Public License (GPL) version 2
 *)
 
-(* NOTATION FOR LIMITS ******************************************************)
+(* NOTATION FOR CONVERGENCE *************************************************)
 
-notation < "hvbox( 𝗱[ break term 46 D ]＠❨ break term 46 i ❩ )"
+notation < "hvbox( 𝗱＠❨ break term 46 i ❩ )"
   non associative with precedence 70
   for @{ 'ElementD $X $D $i }.
 

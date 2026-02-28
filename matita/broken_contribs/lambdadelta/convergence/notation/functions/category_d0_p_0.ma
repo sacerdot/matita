@@ -2,8 +2,8 @@
    and is distributed under the GNU General Public License (GPL) version 2
 *)
 
-(* NOTATION FOR LIMITS ******************************************************)
+(* NOTATION FOR CONVERGENCE *************************************************)
 
-notation "hvbox( 𝔻𝟬𝗽❨ break term 46 D ❩ )"
+notation "hvbox( 𝔻𝟬𝗽 )"
   non associative with precedence 70
-  for @{ 'CategoryD0_p $D }.
+  for @{ 'CategoryD0_p }.

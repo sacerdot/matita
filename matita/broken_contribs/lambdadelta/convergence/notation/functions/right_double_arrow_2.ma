@@ -4,6 +4,6 @@
 
 (* NOTATION FOR CONVERGENCE *************************************************)
 
-notation > "hvbox( a ⧸∈ break term 46 b )"
-  non associative with precedence 45
-  for @{ 'NegElement $a $b }.
+notation "hvbox( D ⇒ break C )"
+  right associative with precedence 50
+  for @{ 'RightDoubleArrow $D $C }.

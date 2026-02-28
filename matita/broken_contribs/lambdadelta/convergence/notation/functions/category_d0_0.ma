@@ -2,7 +2,7 @@
    and is distributed under the GNU General Public License (GPL) version 2
 *)
 
-(* NOTATION FOR LIMITS ******************************************************)
+(* NOTATION FOR CONVERGENCE *************************************************)
 
 notation "hvbox( 𝔻𝟬 )"
   non associative with precedence 70

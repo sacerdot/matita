@@ -16,13 +16,13 @@ include "convergence/notation/relations/neg_element_2.ma".
 (* Structure ****************************************************************)
 
 record domain_structure: Type[1] ≝
-{ dom_C: Type[0]
-; dom_D: (𝒫❨dom_C❩)
-; dom_E: relation2 dom_C dom_C
+{ dom_C:> Type[0]
+; dom_D:  (𝒫❨dom_C❩)
+; dom_E:  relation2 dom_C dom_C
 }.
 
 interpretation
-  "domain structure (category)"
+  "structure (domain)"
   'CategoryD0_s = (domain_structure).
 
 interpretation
@@ -45,10 +45,8 @@ interpretation
   "negated equivalence alternative (domain structure)"
   'NegEquivalent_s D d1 d2 = (negation (dom_E D d1 d2)).
 
-coercion dom_C.
-
 definition in_dom_D (D): predicate … ≝
-           λd. d ϵ 𝗗𝗼𝗺❨D❩.
+           λd. d ϵ 𝗗𝗼𝗺 D.
 
 interpretation
   "membership (domain structure)"

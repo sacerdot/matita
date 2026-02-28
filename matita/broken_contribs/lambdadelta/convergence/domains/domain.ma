@@ -10,14 +10,10 @@ include "convergence/notation/functions/category_d0_0.ma".
 (* Object *******************************************************************)
 
 record domain: Type[1] ≝
-{ dom_S: 𝔻𝟬𝗌
-; dom_P: 𝔻𝟬𝗽❨dom_S❩
+{ dom_S:> 𝔻𝟬𝗌
+; dom_P:> dom_S 𝛆 𝔻𝟬𝗽
 }.
 
 interpretation
   "domain (category)"
   'CategoryD0 = (domain).
-
-coercion dom_S.
-
-coercion dom_P.

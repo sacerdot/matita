@@ -2,9 +2,9 @@
    and is distributed under the GNU General Public License (GPL) version 2
 *)
 
-(* NOTATION FOR LIMITS ******************************************************)
+(* NOTATION FOR CONVERGENCE *************************************************)
 
-notation < "hvbox( i1 *[ break term 46 D ] break term 61 i2 )"
+notation < "hvbox( i1 * break term 61 i2 )"
   non associative with precedence 60
   for @{ 'Asterisk $X $D $i1 $i2 }.
 

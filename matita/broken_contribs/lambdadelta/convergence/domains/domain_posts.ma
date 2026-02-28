@@ -2,8 +2,9 @@
    and is distributed under the GNU General Public License (GPL) version 2.
 *)
 
+include "convergence/domains/subset1.ma".
 include "convergence/domains/domain_struct.ma".
-include "convergence/notation/functions/category_d0_p_1.ma".
+include "convergence/notation/functions/category_d0_p_0.ma".
 
 (* ABSTRACT DOMAIN **********************************************************)
 
@@ -21,13 +22,13 @@ record domain_postulates (D:𝔻𝟬𝗌): Prop ≝
 }.
 
 interpretation
-  "domain postulates (category)"
-  'CategoryD0_p D = (domain_postulates D).
+  "postulates (domain)"
+  'CategoryD0_p = (domain_postulates).
 
 (* Corollaries **************************************************************)
 
 lemma dom_E_canc_sx (D):
-      (𝔻𝟬𝗽❨D❩) →
+      D 𝛆 𝔻𝟬𝗽 →
       ∀d0. d0 ∈ D →
       ∀d1. d1 ∈ D → d0 ≍𝘀 d1 →
       ∀d2. d2 ∈ D → d0 ≍𝘀 d2 → d1 ≍𝘀 d2.
@@ -35,7 +36,7 @@ lemma dom_E_canc_sx (D):
 qed-.
 
 lemma dom_E_canc_dx (D):
-      (𝔻𝟬𝗽❨D❩) →
+      D 𝛆 𝔻𝟬𝗽 →
       ∀d0. d0 ∈ D →
       ∀d1. d1 ∈ D → d1 ≍𝘀 d0 →
       ∀d2. d2 ∈ D → d2 ≍𝘀 d0 → d1 ≍𝘀 d2.

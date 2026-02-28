@@ -2,8 +2,8 @@
    and is distributed under the GNU General Public License (GPL) version 2
 *)
 
-(* NOTATION FOR LIMITS ******************************************************)
+(* NOTATION FOR CONVERGENCE *************************************************)
 
-notation "hvbox( 𝗖𝗮𝗿❨ break term 46 D ❩ )"
+notation "hvbox( 𝗖𝗮𝗿 break term 70 D )"
   non associative with precedence 70
   for @{ 'SetCAR $D }.
