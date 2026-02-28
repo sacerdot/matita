@@ -11,7 +11,7 @@ include "convergence/notation/functions/right_double_arrow_p_2.ma".
 
 record function_postulates (X:𝔻𝟬) (Y:𝔻𝟬) (f:X→Y): Prop ≝
 { fun_in (x):
-  x ∈ X → f x ∈ Y
+  x ϵ X → f x ϵ Y
 ; fun_eq_f (x1) (x2):
   x1 ≍ x2 → f x1 ≍ f x2
 }.

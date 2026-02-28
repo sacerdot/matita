@@ -9,7 +9,7 @@ include "convergence/notation/functions/set_ext_1.ma".
 
 record element (X:𝔻𝟬): Type[0] ≝
 { elt_S:> X
-; elt_P:> elt_S ∈ X
+; elt_P:> elt_S ϵ X
 }.
 
 interpretation

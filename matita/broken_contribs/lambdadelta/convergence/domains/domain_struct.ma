@@ -9,7 +9,6 @@ include "convergence/notation/functions/set_dom_1.ma".
 include "convergence/notation/relations/equivalent_s_3.ma".
 include "convergence/notation/relations/not_equivalent_s_3.ma".
 include "convergence/notation/relations/neg_equivalent_s_3.ma".
-include "convergence/notation/relations/neg_element_2.ma".
 
 (* ABSTRACT DOMAIN **********************************************************)
 
@@ -17,7 +16,7 @@ include "convergence/notation/relations/neg_element_2.ma".
 
 record domain_structure: Type[1] ≝
 { dom_C:> Type[0]
-; dom_D:  (𝒫❨dom_C❩)
+; dom_D:> (𝒫❨dom_C❩)
 ; dom_E:  relation2 dom_C dom_C
 }.
 
@@ -27,35 +26,20 @@ interpretation
 
 interpretation
   "carrier (domain structure)"
-  'SetCAR D = (dom_C D).
+  'SetCAR X = (dom_C X).
 
 interpretation
   "domain (domain structure)"
-  'SetDOM D = (dom_D D).
+  'SetDOM X = (dom_D X).
 
 interpretation
   "equivalence (domain structure)"
-  'Equivalent_s D d1 d2 = (dom_E D d1 d2).
+  'Equivalent_s X x1 x2 = (dom_E X x1 x2).
 
 interpretation
   "negated equivalence (domain structure)"
-  'NotEquivalent_s D d1 d2 = (negation (dom_E D d1 d2)).
+  'NotEquivalent_s X x1 x2 = (negation (dom_E X x1 x2)).
 
 interpretation
   "negated equivalence alternative (domain structure)"
-  'NegEquivalent_s D d1 d2 = (negation (dom_E D d1 d2)).
-
-definition in_dom_D (D): predicate … ≝
-           λd. d ϵ 𝗗𝗼𝗺 D.
-
-interpretation
-  "membership (domain structure)"
-  'mem d D = (in_dom_D D d).
-
-interpretation
-  "negated membership (domain structure)"
-  'notmem d D = (negation (in_dom_D D d)).
-
-interpretation
-  "negated membership alternative (domain structure)"
-  'NegElement d D = (negation (in_dom_D D d)).
+  'NegEquivalent_s X x1 x2 = (negation (dom_E X x1 x2)).

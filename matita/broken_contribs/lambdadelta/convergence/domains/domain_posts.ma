@@ -10,15 +10,15 @@ include "convergence/notation/functions/category_d0_p_0.ma".
 
 (* Postulates ***************************************************************)
 
-record domain_postulates (D:𝔻𝟬𝗌): Prop ≝
-{ dom_E_refl (d):
-  d ∈ D → d ≍𝘀 d
+record domain_postulates (X:𝔻𝟬𝗌): Prop ≝
+{ dom_E_refl (x):
+  x ϵ X → x ≍𝘀 x
 ; dom_E_sym:
-  ∀d1. d1 ∈ D → ∀d2. d2 ∈ D →
-  d1 ≍𝘀 d2 → d2 ≍𝘀 d1
-; dom_E_trans (d0):
-  d0 ∈ D → ∀d1. d1 ∈ D → d1 ≍𝘀 d0 →
-  ∀d2. d2 ∈ D → d0 ≍𝘀 d2 → d1 ≍𝘀 d2
+  ∀x1. x1 ϵ X → ∀x2. x2 ϵ X →
+  x1 ≍𝘀 x2 → x2 ≍𝘀 x1
+; dom_E_trans (x0):
+  x0 ϵ X → ∀x1. x1 ϵ X → x1 ≍𝘀 x0 →
+  ∀x2. x2 ϵ X → x0 ≍𝘀 x2 → x1 ≍𝘀 x2
 }.
 
 interpretation
@@ -27,18 +27,18 @@ interpretation
 
 (* Corollaries **************************************************************)
 
-lemma dom_E_canc_sx (D):
-      D 𝛆 𝔻𝟬𝗽 →
-      ∀d0. d0 ∈ D →
-      ∀d1. d1 ∈ D → d0 ≍𝘀 d1 →
-      ∀d2. d2 ∈ D → d0 ≍𝘀 d2 → d1 ≍𝘀 d2.
+lemma dom_E_canc_sx (X):
+      X 𝛆 𝔻𝟬𝗽 →
+      ∀x0. x0 ϵ X →
+      ∀x1. x1 ϵ X → x0 ≍𝘀 x1 →
+      ∀x2. x2 ϵ X → x0 ≍𝘀 x2 → x1 ≍𝘀 x2.
 /3 width=4 by dom_E_trans, dom_E_sym/
 qed-.
 
-lemma dom_E_canc_dx (D):
-      D 𝛆 𝔻𝟬𝗽 →
-      ∀d0. d0 ∈ D →
-      ∀d1. d1 ∈ D → d1 ≍𝘀 d0 →
-      ∀d2. d2 ∈ D → d2 ≍𝘀 d0 → d1 ≍𝘀 d2.
+lemma dom_E_canc_dx (X):
+      X 𝛆 𝔻𝟬𝗽 →
+      ∀x0. x0 ϵ X →
+      ∀x1. x1 ϵ X → x1 ≍𝘀 x0 →
+      ∀x2. x2 ϵ X → x2 ≍𝘀 x0 → x1 ≍𝘀 x2.
 /3 width=5 by dom_E_trans, dom_E_sym/
 qed-.

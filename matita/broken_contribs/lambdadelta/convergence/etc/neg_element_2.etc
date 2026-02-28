@@ -1,0 +1,24 @@
+(* This file is part of the HELM digital library (http://helm.cs.unibo.it)
+   and is distributed under the GNU General Public License (GPL) version 2
+*)
+
+(* NOTATION FOR CONVERGENCE *************************************************)
+
+notation > "hvbox( a ⧸∈ break term 46 b )"
+  non associative with precedence 45
+  for @{ 'NegElement $a $b }.
+(*
+include "convergence/notation/relations/neg_element_2.ma".
+
+interpretation
+  "membership (domain structure)"
+  'mem d D = (in_dom_D D d).
+
+interpretation
+  "negated membership (domain structure)"
+  'notmem d D = (negation (in_dom_D D d)).
+
+interpretation
+  "negated membership alternative (domain structure)"
+  'NegElement d D = (negation (in_dom_D D d)).
+*)

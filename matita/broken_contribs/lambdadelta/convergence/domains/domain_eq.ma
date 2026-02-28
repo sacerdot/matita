@@ -11,49 +11,49 @@ include "convergence/notation/relations/neg_equivalent_3.ma".
 
 (* Equivalence **************************************************************)
 
-definition dom_eq (D:𝔻𝟬): relation2 D D ≝
-           λd1,d2. ∧∧ d1 ∈ D & d2 ∈ D & d1 ≍𝘀 d2
+definition dom_eq (X:𝔻𝟬): relation2 X X ≝
+           λx1,x2. ∧∧ x1 ϵ X & x2 ϵ X & x1 ≍𝘀 x2
 .
 
 interpretation
   "equivalence (domain)"
-  'Equivalent D d1 d2 = (dom_eq D d1 d2).
+  'Equivalent X x1 x2 = (dom_eq X x1 x2).
 
 interpretation
   "negated equivalence (domain)"
-  'NotEquivalent D d1 d2 = (negation (dom_eq D d1 d2)).
+  'NotEquivalent X x1 x2 = (negation (dom_eq X x1 x2)).
 
 interpretation
   "negated equivalence alternative (domain)"
-  'NegEquivalent D d1 d2 = (negation (dom_eq D d1 d2)).
+  'NegEquivalent X x1 x2 = (negation (dom_eq X x1 x2)).
 
 (* Corollaries **************************************************************)
 
-lemma dom_eq_refl (D:𝔻𝟬) (d):
-      d ∈ D → d ≍ d.
+lemma dom_eq_refl (X:𝔻𝟬) (x):
+      x ϵ X → x ≍ x.
 /3 width=1 by dom_E_refl, and3_intro/
 qed.
 
-lemma dom_eq_sym (D) (d1) (d2):
-      d1 ≍ d2 → d2 ≍❪D❫ d1.
-#D #d1 #d2 * #Hd1 #Hd2 #Hd12
+lemma dom_eq_sym (X) (x1) (x2):
+      x1 ≍ x2 → x2 ≍❪X❫ x1.
+#X #x1 #x2 * #Hx1 #Hx2 #Hx12
 /3 width=1 by dom_E_sym, and3_intro/
 qed-.
 
-lemma dom_eq_trans (D) (d0):
-      ∀d1. d1 ≍ d0 → ∀d2. d0 ≍ d2 → d1 ≍❪D❫ d2.
-#D #d0 #d1 * #Hd1 #Hd0 #Hd10 #d2 * #_ #Hd2 #Hd02
+lemma dom_eq_trans (X) (x0):
+      ∀x1. x1 ≍ x0 → ∀x2. x0 ≍ x2 → x1 ≍❪X❫ x2.
+#X #x0 #x1 * #Hx1 #Hx0 #Hx10 #x2 * #_ #Hx2 #Hx02
 /3 width=4 by dom_E_trans, and3_intro/
 qed-.
 
-lemma dom_eq_canc_sx (D) (d0):
-      ∀d1. d0 ≍ d1 → ∀d2. d0 ≍ d2 → d1 ≍❪D❫ d2.
-#D #d0 #d1 * #Hd0 #Hd1 #Hd01 #d2 * #_ #Hd2 #Hd02
+lemma dom_eq_canc_sx (X) (x0):
+      ∀x1. x0 ≍ x1 → ∀x2. x0 ≍ x2 → x1 ≍❪X❫ x2.
+#X #x0 #x1 * #Hx0 #Hx1 #Hx01 #x2 * #_ #Hx2 #Hx02
 /3 width=4 by dom_E_canc_sx, and3_intro/
 qed-.
 
-lemma dom_eq_canc_dx (D) (d0):
-      ∀d1. d1 ≍ d0 → ∀d2. d2 ≍ d0 → d1 ≍❪D❫ d2.
-#D #d0 #d1 * #Hd1 #Hd0 #Hd10 #d2 * #Hd2 #_ #Hd20
+lemma dom_eq_canc_dx (X) (x0):
+      ∀x1. x1 ≍ x0 → ∀x2. x2 ≍ x0 → x1 ≍❪X❫ x2.
+#X #x0 #x1 * #Hx1 #Hx0 #Hx10 #x2 * #Hx2 #_ #Hx20
 /3 width=4 by dom_E_canc_dx, and3_intro/
 qed-.

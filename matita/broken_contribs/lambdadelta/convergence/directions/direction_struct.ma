@@ -18,34 +18,34 @@ include "convergence/notation/functions/asterisk_4.ma".
 
 (* Structure ****************************************************************)
 
-record direction_structure (S:𝔻𝟬): Type[1] ≝
+record direction_structure (X:𝔻𝟬): Type[1] ≝
 { dir_I: (𝔻𝟬)
-; dir_D: dir_I → 𝒫❨S❩
+; dir_D: dir_I → 𝒫❨X❩
 ; dir_i: dir_I
-; dir_d: dir_I → S
+; dir_d: dir_I → X
 ; dir_a: dir_I → dir_I → dir_I
 }.
 
 interpretation
   "structure (direction)"
-  'CategoryD_s S = (direction_structure S).
+  'CategoryD_s X = (direction_structure X).
 
 interpretation
   "index set (direction structure)"
-  'SetIDX S D = (dir_I S D).
+  'SetIDX X D = (dir_I X D).
 
 interpretation
   "superset member (direction structure)"
-  'At_s S D i = (dir_D S D i).
+  'At_s X D i = (dir_D X D i).
 
 interpretation
   "inhabitant (direction structure)"
-  'ElementI S D = (dir_i S D).
+  'ElementI X D = (dir_i X D).
 
 interpretation
   "member inhabitant (direction structure)"
-  'ElementD S D i = (dir_d S D i).
+  'ElementD X D i = (dir_d X D i).
 
 interpretation
   "intersection (direction structure)"
-  'Asterisk S D i1 i2 = (dir_a S D i1 i2).
+  'Asterisk X D i1 i2 = (dir_a X D i1 i2).

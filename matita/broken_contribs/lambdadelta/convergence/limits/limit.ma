@@ -12,10 +12,10 @@ include "convergence/notation/relations/lim_5.ma".
 
 interpretation
   "extended function of one argument (subset)"
-  'ElementExt D C f = (subset_ext_f1 D C f).
+  'ElementExt X Y f = (subset_ext_f1 X Y f).
 
 definition limit (X) (Y) (f:X⇒Y) (D:𝔻 …) (C:𝔻 …): Prop ≝
-           ∀j. j ∈ 𝗜𝗱𝘅 C → ∃∃i. i ∈ 𝗜𝗱𝘅 D & (𝗲𝘅𝘁 f) (D＠❨i❩) ⊆ C＠❨j❩.
+           ∀j. j ϵ 𝗜𝗱𝘅 C → ∃∃i. i ϵ 𝗜𝗱𝘅 D & (𝗲𝘅𝘁 f) (D＠❨i❩) ⊆ C＠❨j❩.
 
 interpretation
   "limit (limit)"
@@ -24,7 +24,7 @@ interpretation
 (* Corollarires *************************************************************)
 
 lemma mk_limit_alt (X) (Y) (f:X⇒Y) (D:𝔻 …) (C:𝔻 …):
-      ( ∀j. j ∈ 𝗜𝗱𝘅 C → ∃∃i. i ∈ 𝗜𝗱𝘅 D & ∀x. x ϵ D＠❨i❩ → f x ϵ C＠❨j❩
+      ( ∀j. j ϵ 𝗜𝗱𝘅 C → ∃∃i. i ϵ 𝗜𝗱𝘅 D & ∀x. x ϵ D＠❨i❩ → f x ϵ C＠❨j❩
       ) → 𝗹𝗶𝗺[D]f ≘ C.
 #X #Y #f #D #C #H0 #j #Hj
 elim (H0 … Hj) -H0 -Hj #i #Hi #Hf
@@ -34,7 +34,7 @@ qed.
 
 lemma limit_inv_alt (X) (Y) (f:X⇒Y) (D:𝔻 …) (C:𝔻 …):
       (𝗹𝗶𝗺[D]f ≘ C) →
-      ∀j. j ∈ 𝗜𝗱𝘅 C → ∃∃i. i ∈ 𝗜𝗱𝘅 D & ∀x. x ϵ D＠❨i❩ → f x ϵ C＠❨j❩.
+      ∀j. j ϵ 𝗜𝗱𝘅 C → ∃∃i. i ϵ 𝗜𝗱𝘅 D & ∀x. x ϵ D＠❨i❩ → f x ϵ C＠❨j❩.
 #X #Y #f #D #C #H0 #j #Hj
 elim (H0 … Hj) -H0 -Hj #i #Hi #Hf
 @(ex2_intro … Hi) -Hi #y #Hy

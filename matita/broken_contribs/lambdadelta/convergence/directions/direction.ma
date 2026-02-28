@@ -9,11 +9,11 @@ include "convergence/notation/functions/category_d_1.ma".
 
 (* Object *******************************************************************)
 
-record direction (S:𝔻𝟬): Type[1] ≝
-{ dir_S:> 𝔻𝗌 S
+record direction (X:𝔻𝟬): Type[1] ≝
+{ dir_S:> 𝔻𝗌 X
 ; dir_P:> dir_S 𝛆 𝔻𝗽
 }.
 
 interpretation
   "direction (category)"
-  'CategoryD S = (direction S).
+  'CategoryD X = (direction X).

@@ -8,7 +8,7 @@ include "convergence/notation/functions/set_ctr_2.ma".
 (* DIRECTION ****************************************************************)
 
 definition dir_ctr (X) (D:𝔻 X): 𝒫❨X❩ ≝
-           {x | ∀i. i ∈ 𝗜𝗱𝘅 D → x ϵ D＠❨i❩ }
+           {x | ∀i. i ϵ 𝗜𝗱𝘅 D → x ϵ D＠❨i❩ }
 .
 
 interpretation
@@ -17,17 +17,17 @@ interpretation
 
 (* Corollaries **************************************************************)
 
-lemma dir_ctr_in (X) (D:𝔻 X) (d):
-      (∀i. i ∈ 𝗜𝗱𝘅 D → d ϵ D＠❨i❩) → d ϵ 𝗖𝘁𝗿 D.
+lemma dir_ctr_in (X) (D:𝔻 X) (x):
+      (∀i. i ϵ 𝗜𝗱𝘅 D → x ϵ D＠❨i❩) → x ϵ 𝗖𝘁𝗿 D.
 /2 width=1 by/
 qed.
 
 lemma dir_ctr_le (X) (D:𝔻 X) (i):
-      i ∈ 𝗜𝗱𝘅 D → 𝗖𝘁𝗿 D ⊆ D＠❨i❩.
+      i ϵ 𝗜𝗱𝘅 D → 𝗖𝘁𝗿 D ⊆ D＠❨i❩.
 /2 width=1 by/
 qed.
 
 lemma dir_ctr_ge (X) (D:𝔻 X) (u):
-      (∀i. i ∈ 𝗜𝗱𝘅 D → u ⊆ D＠❨i❩) → u ⊆ 𝗖𝘁𝗿 D.
+      (∀i. i ϵ 𝗜𝗱𝘅 D → u ⊆ D＠❨i❩) → u ⊆ 𝗖𝘁𝗿 D.
 /2 width=1 by/
 qed.
