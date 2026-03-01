@@ -18,17 +18,18 @@ interpretation
 
 (* Corollaries **************************************************************)
 
-lemma dir_ctr_in (X:ℂ𝟬𝗌) (D) (x):
+lemma dir_ctr_in (X) (D:𝔻𝗌 X) (x):
       (∀i. x ϵ D＠❨i❩) → x ϵ 𝗖𝘁𝗿 D.
-/2 width=2 by/
+/2 width=1 by/
 qed.
 
-lemma dir_ctr_le (X:ℂ𝟬𝗌) (D) (i):
+lemma dir_ctr_le (X) (D:𝔻𝗌 X) (i):
       (𝗖𝘁𝗿 D) ⊆ D＠❨i❩.
-/2 width=2 by/
+/2 width=1 by/
 qed.
 
-lemma dir_ctr_ge (X:ℂ𝟬𝗌) (D) (u):
+lemma dir_ctr_ge (X) (D:𝔻𝗌 X) (u):
       (∀i. u ⊆ D＠❨i❩) → u ⊆ 𝗖𝘁𝗿 D.
-/2 width=2 by/
+#X #D #u #H0 #x #Hx #i
+@H0 // (**) (* full auto fails *)
 qed.

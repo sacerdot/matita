@@ -3,24 +3,20 @@
 *)
 
 include "ground/lib/relations.ma".
-include "convergence/notation/relations/bold_epsilon_3.ma".
-include "convergence/notation/relations/neg_bold_epsilon_3.ma".
+include "convergence/notation/relations/epsilon_sup_1_3.ma".
+include "convergence/notation/relations/neg_epsilon_sup_1_3.ma".
 
 (* BIG SUBSETS **************************************************************)
 
 definition predicate1 (A:Type[1]): Type[1] ≝ A → Prop.
-(*
-interpretation
-  "power class (big subset)"
-  'PowerClass A = (predicate A).
-*)
+
 definition subset1_in (A): predicate1 A → predicate1 A ≝
            λu.u.
 
 interpretation
   "membership (big subset)"
-  'BoldEpsilon A a u = (subset1_in A u a).
+  'EpsilonSup1 A a u = (subset1_in A u a).
 
 interpretation
   "negated membership (big subset)"
-  'NegBoldEpsilon A a u = (negation (subset1_in A u a)).
+  'NegEpsilonSup1 A a u = (negation (subset1_in A u a)).

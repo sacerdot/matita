@@ -11,7 +11,7 @@ include "convergence/notation/functions/category_c0_0.ma".
 
 record class: Type[1] ≝
 { cls_S:> ℂ𝟬𝗌
-; cls_P:> cls_S 𝛆 ℂ𝟬𝗽
+; cls_P:> cls_S ϵ¹ ℂ𝟬𝗽
 }.
 
 interpretation

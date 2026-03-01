@@ -4,10 +4,10 @@
 
 (* NOTATION FOR CONVERGENCE *************************************************)
 
-notation < "hvbox( a 𝛆 break term 46 u )"
+notation < "hvbox( a ⧸ϵ¹ break term 46 u )"
   non associative with precedence 45
-  for @{ 'BoldEpsilon $S $a $u }.
+  for @{ 'NegEpsilonSup1 $S $a $u }.
 
-notation > "hvbox( a 𝛆 opt ( ❪ break term 46 S ❫ ) break term 46 u )"
+notation > "hvbox( a ⧸ϵ¹ opt ( ❪ break term 46 S ❫ ) break term 46 u )"
   non associative with precedence 45
-  for @{ 'BoldEpsilon ${default @{$S}@{?}} $a $u }.
+  for @{ 'NegEpsilonSup1 ${default @{$S}@{?}} $a $u }.
