@@ -3,8 +3,8 @@
 *)
 
 include "convergence/classes/function_const_struct.ma".
-include "convergence/directions/direction_center.ma".
-include "convergence/limits/limit.ma".
+include "convergence/directions/direction_struct_center.ma".
+include "convergence/limits/limit_struct.ma".
 
 (* LIMIT ********************************************************************)
 

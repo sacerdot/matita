@@ -9,9 +9,9 @@ include "convergence/notation/functions/category_d_1.ma".
 
 (* Object *******************************************************************)
 
-record direction (X:𝔻𝟬): Type[1] ≝
+record direction (X): Type[1] ≝
 { dir_S:> 𝔻𝗌 X
-; dir_P:> dir_S 𝛆 𝔻𝗽
+; dir_P:> dir_S ϵ¹ 𝔻𝗽
 }.
 
 interpretation

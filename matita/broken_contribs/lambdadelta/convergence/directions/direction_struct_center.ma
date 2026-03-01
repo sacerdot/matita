@@ -6,7 +6,7 @@ include "ground/subsets/subset_le.ma".
 include "convergence/directions/direction_struct.ma".
 include "convergence/notation/functions/set_ctr_2.ma".
 
-(* DIRECTION ****************************************************************)
+(* CENTER FOR DIRECTION *****************************************************)
 
 definition dir_ctr (X:ℂ𝟬𝗌) (D): 𝒫❨X❩ ≝
            {x | ∀i. x ϵ D＠❨i❩ }
