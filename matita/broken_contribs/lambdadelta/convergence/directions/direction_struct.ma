@@ -6,10 +6,11 @@
    Initial invocation: - Patience on me to gain peace and perfection! -
 *)
 
-include "convergence/domains/domain.ma".
+include "convergence/subsets/subset_sigma.ma".
+include "convergence/classes/class.ma".
 include "convergence/notation/functions/category_d_s_1.ma".
 include "convergence/notation/functions/set_idx_2.ma".
-include "convergence/notation/functions/at_s_3.ma".
+include "convergence/notation/functions/at_3.ma".
 include "convergence/notation/functions/element_i_2.ma".
 include "convergence/notation/functions/element_d_3.ma".
 include "convergence/notation/functions/asterisk_4.ma".
@@ -18,11 +19,11 @@ include "convergence/notation/functions/asterisk_4.ma".
 
 (* Structure ****************************************************************)
 
-record direction_structure (X:𝔻𝟬): Type[1] ≝
-{ dir_I: (𝔻𝟬)
+record direction_structure (X:ℂ𝟬𝗌): Type[1] ≝
+{ dir_I: (ℂ𝟬)
 ; dir_D: dir_I → 𝒫❨X❩
 ; dir_i: dir_I
-; dir_d: dir_I → X
+; dir_d: ∀i:dir_I. 𝝨X.(dir_D i)
 ; dir_a: dir_I → dir_I → dir_I
 }.
 
@@ -36,7 +37,7 @@ interpretation
 
 interpretation
   "superset member (direction structure)"
-  'At_s X D i = (dir_D X D i).
+  'At X D i = (dir_D X D i).
 
 interpretation
   "inhabitant (direction structure)"

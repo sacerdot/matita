@@ -4,6 +4,6 @@
 
 (* NOTATION FOR CONVERGENCE *************************************************)
 
-notation "hvbox( 𝔻𝟬𝗌 )"
+notation "hvbox( ℂ𝟬𝗽 )"
   non associative with precedence 70
-  for @{ 'CategoryD0_s }.
+  for @{ 'CategoryC0_p }.

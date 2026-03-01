@@ -6,14 +6,6 @@ include "convergence/domains/element.ma".
 include "convergence/domains/function_posts.ma".
 include "convergence/notation/functions/function_k_s_3.ma".
 
-(* CONSTANT ABSTRACT FUNCTION ***********************************************)
-
-definition fun_const_s (X:𝔻𝟬) (Y) (y:𝗘𝘅𝘁 Y): X → Y ≝
-           λ_. y.
-
-interpretation
-  "structure (constant function)"
-  'FunctionK_s X Y y = (fun_const_s X Y y).
 
 (* Corollaries **************************************************************)
 

@@ -4,6 +4,6 @@
 
 (* NOTATION FOR CONVERGENCE *************************************************)
 
-notation "hvbox( 𝔻𝟬𝗽 )"
-  non associative with precedence 70
-  for @{ 'CategoryD0_p }.
+notation "hvbox ( 𝝨 term 19 X . break term 19 u )"
+  non associative with precedence 20
+  for @{ 'Sigma $X $u }.

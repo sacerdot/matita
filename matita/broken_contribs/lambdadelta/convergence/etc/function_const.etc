@@ -17,11 +17,3 @@ defined.
 interpretation
   "constant function (domain)"
   'FunctionK X Y y = (fun_const X Y y).
-
-(* Corollaries **************************************************************)
-
-(**) (* explicit coercion *) 
-lemma fun_const_appl (X:𝔻𝟬) (Y) (x:X) (y:𝗘𝘅𝘁 Y):
-      (elt_S ? y) = (𝗞 y) x.
-//
-qed.
