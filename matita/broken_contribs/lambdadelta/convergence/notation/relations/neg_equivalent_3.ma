@@ -4,6 +4,6 @@
 
 (* NOTATION FOR CONVERGENCE *************************************************)
 
-notation > "hvbox( d1 ⧸≍ opt ( ❪ break term 46 D ❫ ) break term 46 d2 )"
+notation > "hvbox( x1 ⧸≍ opt ( ❪ break term 46 X ❫ ) break term 46 x2 )"
   non associative with precedence 45
-  for @{ 'NegEquivalent ${default @{$D}@{?}} $d1 $d2 }.
+  for @{ 'NegEquivalent ${default @{$X}@{?}} $x1 $x2 }.

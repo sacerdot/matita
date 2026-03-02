@@ -9,9 +9,9 @@ include "convergence/limits/limit_struct.ma".
 
 (* Properties with overlap **************************************************)
 
-lemma limit_des_ol (X:ℂ𝟬𝗌) (Y:ℂ𝟬𝗌) (f:X→Y) (D1) (D2) (C1) (C2):
-      (𝗹𝗶𝗺[D1] f ≘ C1) → (𝗹𝗶𝗺[D2] f ≘ C2) →
-      D1 ≬ D2 → C1 ≬ C2.
+theorem limit_des_ol (X:ℂ𝟬𝗌) (Y:ℂ𝟬𝗌) (f:X→Y) (D1) (D2) (C1) (C2):
+        (𝗹𝗶𝗺[D1] f ≘ C1) → (𝗹𝗶𝗺[D2] f ≘ C2) →
+        D1 ≬ D2 → C1 ≬ C2.
 #X #Y #f #D1 #D2 #C1 #C2 #H1f #H2f #HD12 #j1 #j2
 elim (limit_inv_alt … H1f j1) -H1f #i1 #H1f
 elim (limit_inv_alt … H2f j2) -H2f #i2 #H2f
