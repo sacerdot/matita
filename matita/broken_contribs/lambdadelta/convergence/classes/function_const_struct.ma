@@ -4,6 +4,7 @@
 
 include "convergence/classes/class_struct.ma".
 include "convergence/notation/functions/function_k_s_3.ma".
+include "convergence/notation/functions/function_k_s_4.ma".
 
 (* CONSTANT ABSTRACT FUNCTION ***********************************************)
 
@@ -13,6 +14,10 @@ definition fun_const_s (X:ℂ𝟬𝗌) (Y:ℂ𝟬𝗌) (y): X → Y ≝
 interpretation
   "structure (constant function)"
   'FunctionK_s X Y y = (fun_const_s X Y y).
+
+interpretation
+  "structure (applied constant function)"
+  'FunctionK_s X Y y x = (fun_const_s X Y y x).
 
 (* Corollaries **************************************************************)
 

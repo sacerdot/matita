@@ -6,6 +6,7 @@ include "ground/subsets/subset_le.ma".
 include "ground/subsets/subset_ext.ma".
 include "convergence/directions/direction_struct.ma".
 include "convergence/notation/functions/element_ext_3.ma".
+include "convergence/notation/functions/element_ext_4.ma".
 include "convergence/notation/relations/lim_5.ma".
 
 (* LIMIT ********************************************************************)
@@ -13,6 +14,10 @@ include "convergence/notation/relations/lim_5.ma".
 interpretation
   "extended function of one argument (subset)"
   'ElementExt X Y f = (subset_ext_f1 X Y f).
+
+interpretation
+  "applied extended function of one argument (subset)"
+  'ElementExt X Y f u = (subset_ext_f1 X Y f u).
 
 definition limit (X:ℂ𝟬𝗌) (Y:ℂ𝟬𝗌) (f:X→Y) (D) (C): Prop ≝
            ∀j. ∃i. (𝗲𝘅𝘁 f) (D＠❨i❩) ⊆ C＠❨j❩.
