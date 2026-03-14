@@ -2,7 +2,9 @@
    and is distributed under the GNU General Public License (GPL) version 2.
 *)
 
+include "ground/xoa/ex_3_1.ma".
 include "ground/subsets/subset_and_le.ma".
+include "ground/subsets/subsets_inhabited.ma".
 include "convergence/directions/direction_struct.ma".
 include "convergence/notation/functions/category_d_p_1.ma".
 
@@ -11,20 +13,12 @@ include "convergence/notation/functions/category_d_p_1.ma".
 (* Postulates ***************************************************************)
 
 record direction_postulates (X) (D:𝔻𝗌 X): Prop ≝
-{
-(*
-  dir_D_le (i) (j):
-  i ≍ j → D＠❨i❩ ⊆ D＠𝘀❨j❩
-
-; dir_d_eq (i) (j):
-  i ≍❪𝗜𝗱𝘅 D❫ j → 𝗱＠❨i❩ ≍ 𝗱＠❨j❩
-*)
-  dir_a_le (i1) (i2):
-  D＠❨i1*i2❩ ⊆ D＠❨i1❩ ∩ D＠❨i2❩
-(*
-; dir_a_eq_ff:
-  ∀i1,j1. i1 ≍ j1 → ∀i2,j2. i2 ≍ j2 → i1*i2 ≍❪𝗜𝗱𝘅 D❫ j1*j2
-*)
+{ dir_i:
+  D ϵ ⊙
+; dir_d (u):
+  u ϵ D → u ϵ ⊙
+; dir_a (u1) (u2):
+  u1 ϵ D → u2 ϵ D → ∃∃u. u ϵ D & u ⊆ u1 ∩ u2
 }.
 
 interpretation
@@ -32,21 +26,12 @@ interpretation
   'CategoryD_p X = (direction_postulates X).
 
 (* Corollaries **************************************************************)
-(*
-lemma dir_M_le (X) (D:𝔻𝗌 X):
-      D 𝛆 𝔻𝗽 →
-      ∀i1,i2. i1 ≍ i2 → D＠❨i1❩ ⊆ D＠❨i2❩.
-/3 width=3 by subset_le_and_sx_refl_sx, subset_and_in, dir_D_le/
-qed.
-*)
-lemma dir_a_le_sx (X) (D:𝔻𝗌 X):
-      D ϵ¹ 𝔻𝗽 →
-      ∀i1,i2. D＠❨i1*i2❩ ⊆ D＠❨i1❩.
-/3 width=4 by dir_a_le, subset_le_and_inv_dx_sx/
-qed.
 
-lemma dir_a_le_dx (X) (D:𝔻𝗌 X):
-      D ϵ¹ 𝔻𝗽 →
-      ∀i1,i2. D＠❨i1*i2❩ ⊆ D＠❨i2❩.
-/3 width=4 by dir_a_le, subset_le_and_inv_dx_dx/
-qed.
+lemma dir_a_alt (X) (D:𝔻𝗌 X):
+      D ϵ 𝔻𝗉 →
+      ∀u1,u2. u1 ϵ D → u2 ϵ D → ∃∃u. u ϵ D & u ⊆ u1 & u ⊆ u2.
+#X #D #HD #u1 #u2 #Hu1 #Hu2
+elim (dir_a … HD … Hu1 Hu2) #u #Hu #H0
+@(ex3_intro … u)
+/2 width=4 by subset_le_and_inv_dx_sx, subset_le_and_inv_dx_dx/
+qed-. 

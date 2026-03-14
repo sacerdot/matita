@@ -9,7 +9,7 @@ include "convergence/notation/functions/set_ctr_2.ma".
 (* CENTER FOR DIRECTION *****************************************************)
 
 definition dir_ctr (X:ℂ𝟬𝗌) (D): 𝒫❨X❩ ≝
-           {x | ∀i. x ϵ D＠❨i❩ }
+           {x | ∀u. u ϵ D → x ϵ u }
 .
 
 interpretation
@@ -19,17 +19,16 @@ interpretation
 (* Corollaries **************************************************************)
 
 lemma dir_ctr_in (X) (D:𝔻𝗌 X) (x):
-      (∀i. x ϵ D＠❨i❩) → x ϵ 𝗖𝘁𝗿 D.
+      (∀u. u ϵ D → x ϵ u) → x ϵ 𝗖𝘁𝗿 D.
 /2 width=1 by/
 qed.
 
-lemma dir_ctr_le (X) (D:𝔻𝗌 X) (i):
-      (𝗖𝘁𝗿 D) ⊆ D＠❨i❩.
+lemma dir_ctr_le (X) (D:𝔻𝗌 X) (u):
+      u ϵ D → 𝗖𝘁𝗿 D ⊆ u.
 /2 width=1 by/
 qed.
 
-lemma dir_ctr_ge (X) (D:𝔻𝗌 X) (u):
-      (∀i. u ⊆ D＠❨i❩) → u ⊆ 𝗖𝘁𝗿 D.
-#X #D #u #H0 #x #Hx #i
-@H0 // (**) (* full auto fails *)
+lemma dir_ctr_ge (X) (D:𝔻𝗌 X) (v):
+      (∀u. u ϵ D → v ⊆ u) → v ⊆ 𝗖𝘁𝗿 D.
+/2 width=1 by/
 qed.

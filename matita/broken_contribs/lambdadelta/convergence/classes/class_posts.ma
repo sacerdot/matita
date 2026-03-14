@@ -26,14 +26,14 @@ interpretation
 (* Corollaries **************************************************************)
 
 lemma cls_E_canc_sx (X):
-      X ϵ¹ ℂ𝟬𝗽 →
+      X ϵ¹ ℂ𝟬𝗉 →
       ∀x0,x1. x0 ≍ x1 →
       ∀x2. x0 ≍ x2 → x1 ≍❪X❫ x2.
 /3 width=4 by cls_E_trans, cls_E_sym/
 qed-.
 
 lemma cls_E_canc_dx (X):
-      X ϵ¹ ℂ𝟬𝗽 →
+      X ϵ¹ ℂ𝟬𝗉 →
       ∀x0,x1. x1 ≍ x0 →
       ∀x2. x2 ≍ x0 → x1 ≍❪X❫ x2.
 /3 width=5 by cls_E_trans, cls_E_sym/

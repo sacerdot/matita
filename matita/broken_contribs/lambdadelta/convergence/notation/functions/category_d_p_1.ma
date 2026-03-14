@@ -4,10 +4,10 @@
 
 (* NOTATION FOR CONVERGENCE *************************************************)
 
-notation < "hvbox( 𝔻𝗽 )"
+notation < "hvbox( 𝔻𝗉 )"
   non associative with precedence 70
   for @{ 'CategoryD_p $S }.
 
-notation > "hvbox( 𝔻𝗽 opt ( ❪ break term 46 S ❫ ) )"
+notation > "hvbox( 𝔻𝗉 opt ( ❪ break term 46 S ❫ ) )"
   non associative with precedence 70
   for @{ 'CategoryD_p ${default @{$S}@{?}} }.

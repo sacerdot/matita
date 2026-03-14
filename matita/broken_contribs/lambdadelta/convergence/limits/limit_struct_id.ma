@@ -8,23 +8,23 @@ include "convergence/limits/limit_struct.ma".
 
 (* LIMIT ********************************************************************)
 
-(* Properties with the identity function ************************************)
+(* Properties with fun_id_s *************************************************)
 
 lemma limit_id (X) (D:𝔻𝗌 X) (C:𝔻𝗌 X):
       C ⊑ D → 𝗹𝗶𝗺[D] 𝗜𝗌 ≘ C.
 #X #D #C #H0
-@mk_limit_alt #j
-elim (H0 j) -H0 #i #Hij
-@(ex_intro … (i))
+@mk_limit_alt #v #Hv
+elim (H0 … Hv) -H0 #u #Hu #Huv
+@(ex2_intro … Hu)
 #x #Hx <fun_id_s_appl
-@Hij // (**) (* auto fails *)
+/2 width=1 by/
 qed.
 
 lemma limit_inv_id (X) (D:𝔻𝗌 X) (C:𝔻𝗌 X):
       (𝗹𝗶𝗺[D] 𝗜𝗌 ≘ C) → C ⊑ D.
-#X #D #C #H0 #j
-elim (limit_inv_alt … H0 j) -H0 #i #H0
-@(ex_intro … i) #x #Hx
+#X #D #C #H0 #v #Hv
+elim (limit_inv_alt … H0 … Hv) -H0 #u #Hu #H0
+@(ex2_intro … Hu) #x #Hx
 >(fun_id_s_appl … X x)
 /2 width=1 by/
 qed-.
