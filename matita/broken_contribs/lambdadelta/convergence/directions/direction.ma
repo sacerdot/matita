@@ -10,8 +10,7 @@ include "convergence/notation/functions/category_d_1.ma".
 
 (* Object *******************************************************************)
 
-(* Note: D is a direction iff D is a base for a filter  *)
-(* Note: source: Tulio Valent handouts, proposition 1.1 *)
+(* Note: a direction is a filter base *)
 definition direction (X): Type[0] ≝ 𝝨(𝔻𝗌 X).𝔻𝗉.
 
 interpretation

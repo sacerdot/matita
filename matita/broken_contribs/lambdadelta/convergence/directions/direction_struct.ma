@@ -6,7 +6,7 @@
    Initial invocation: - Patience on me to gain peace and perfection! -
 *)
 
-include "convergence/classes/class.ma".
+include "convergence/classes/class_struct.ma".
 include "convergence/notation/functions/category_d_s_1.ma".
 
 (* DIRECTION ****************************************************************)

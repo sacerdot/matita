@@ -3,18 +3,13 @@
 *)
 
 include "ground/subsets/subset_eq.ma".
-include "ground/subsets/subset_ext.ma".
+include "convergence/subsets/subset_ext.ma".
 include "convergence/directions/direction_struct.ma".
-include "convergence/notation/functions/at_4.ma".
 include "convergence/notation/functions/at_s_4.ma".
 
 (* IMAGE FOR DIRECTION ******************************************************)
 
 (* Structure ****************************************************************)
-
-interpretation
-  "applied extended function of one argument (subset)"
-  'At X Y f u = (subset_ext_f1 X Y f u).
 
 definition dir_img_s (X:ℂ𝟬𝗌) (Y:ℂ𝟬𝗌) (f:X→Y) (D:𝔻𝗌 X): 𝔻𝗌 Y ≝ ?.
 @mk_direction_structure
