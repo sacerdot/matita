@@ -1,0 +1,42 @@
+(* This file is part of the HELM digital library (http://helm.cs.unibo.it)
+   and is distributed under the GNU General Public License (GPL) version 2.
+*)
+
+include "ground/xoa/ex_3_1.ma".
+include "ground/subsets/subset_le.ma".
+include "convergence/nhoods/nhoods_struct.ma".
+include "convergence/directions/direction_struct.ma".
+include "convergence/notation/functions/function_phi_s_2.ma".
+
+(* NHOODS FOR DIRECTION *****************************************************)
+
+(* Structure ****************************************************************)
+
+definition dir_nhs_s (X) (D:𝔻𝗌 X): 𝔽𝗌 X ≝ ?.
+@mk_nhoods_structure
+#x @({v | ∧∧ x ϵ v & ∃∃u. u ϵ D & u ⊆ v})
+defined.
+
+interpretation
+  "structure (nhoods for direction)"
+  'FunctionPhi_s X D = (dir_nhs_s X D).
+
+(* Corollaries **************************************************************)
+
+lemma in_dir_nhs_s (X) (D:𝔻𝗌 X) (x:X) (u) (v):
+      x ϵ v → u ϵ D → u ⊆ v → v ϵ 𝝫𝗌[D]＠𝗌❨x❩.
+/3 width=3 by ex2_intro, conj/
+qed.
+
+lemma in_dir_nhs_s_inv (X) (D:𝔻𝗌 X) (x:X) (v):
+      v ϵ 𝝫𝗌[D]＠𝗌❨x❩ → ∃∃u. u ϵ D & u ⊆ v & x ϵ v.
+#X #D #x #v * #Hx * #u #Hu #Huv
+/2 width=4 by ex3_intro/
+qed-.
+
+lemma nhs_dir_s_open (X) (D:𝔻𝗌 X) (x:X) (v):
+      v ϵ 𝝫𝗌[D]＠𝗌❨x❩ → v ϵ 𝝫𝗌[D]＠𝗌❨v❩.
+#X #D #x #v #Hv
+elim (in_dir_nhs_s_inv … Hv) -Hv #u #Hu #Huv #Hx
+/2 width=3 by in_dir_nhs_s/
+qed.

@@ -3,7 +3,7 @@
 *)
 
 include "ground/subsets/subset_le.ma".
-include "convergence/directions/direction_struct.ma".
+include "convergence/directions/dir_s.ma".
 include "convergence/notation/relations/sqimageeq_3.ma".
 include "convergence/notation/relations/not_sqimageeq_3.ma".
 include "convergence/notation/relations/neg_sqimageeq_3.ma".
@@ -11,7 +11,6 @@ include "convergence/notation/relations/neg_sqimageeq_3.ma".
 (* ORDER FOR DIRECTION ******************************************************)
 
 (* Note: D1 is not finer than D2 *)
-(* Note: if D1 is a filter then D2 is by def a base for D1 *)
 definition dir_le (X) (D1:𝔻𝗌 X) (D2:𝔻𝗌 X): Prop ≝
            ∀u1. u1 ϵ D1 → ∃∃u2. u2 ϵ D2 & u2 ⊆ u1
 .
@@ -42,3 +41,8 @@ elim (HD10 … Hu1) -HD10 #u0 #Hu0 #Hu01
 elim (HD02 … Hu0) -HD02 #u2 #Hu2 #Hu20
 /3 width=5 by subset_le_trans, ex2_intro/
 qed-.
+
+lemma dir_le_le (X) (D1:𝔻𝗌 X) (D2:𝔻𝗌 X):
+      D1 ⊆ D2 → D1 ⊑ D2.
+/3 width=1 by dir_le_refl/
+qed.

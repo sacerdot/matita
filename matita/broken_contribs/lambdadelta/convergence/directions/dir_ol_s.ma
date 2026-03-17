@@ -3,7 +3,7 @@
 *)
 
 include "ground/subsets/subset_ol.ma".
-include "convergence/directions/direction_struct.ma".
+include "convergence/directions/dir_s.ma".
 include "convergence/notation/relations/white_heart_3.ma".
 include "convergence/notation/relations/neg_white_heart_3.ma".
 

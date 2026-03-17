@@ -3,13 +3,13 @@
 *)
 
 include "ground/subsets/subset_le.ma".
-include "convergence/directions/direction_struct.ma".
+include "convergence/directions/dir_s.ma".
 include "convergence/notation/functions/set_ctr_2.ma".
 
 (* CENTER FOR DIRECTION *****************************************************)
 
 definition dir_ctr (X:ℂ𝟬𝗌) (D): 𝒫❨X❩ ≝
-           {x | ∀u. u ϵ D → x ϵ u }
+           { x | ∀u. u ϵ D → x ϵ u }
 .
 
 interpretation

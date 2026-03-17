@@ -1,0 +1,42 @@
+(* This file is part of the HELM digital library (http://helm.cs.unibo.it)
+   and is distributed under the GNU General Public License (GPL) version 2.
+*)
+
+include "ground/subsets/subset_or_le.ma".
+include "ground/subsets/subset_listed_1.ma".
+include "convergence/nhoods/nhoods_posts.ma".
+include "convergence/directions/direction_posts.ma".
+include "convergence/directions/direction_nhs_struct.ma".
+
+(* NHOODS FOR DIRECTION *****************************************************)
+
+(* Postulates ***************************************************************)
+
+lemma dir_nhs_p (X) (D:𝔻𝗌 X):
+      D ϵ 𝔻𝗉 → 𝝫𝗌[D] ϵ 𝔽𝗉.
+#X #D #HD
+@mk_nhoods_postulates
+[ #x #u1 #u2 * #_ #Hu21 #Hu2
+  elim (in_dir_nhs_s_inv … Hu2) -Hu2 #v2 #Hv2 #Hvu2 #Hx
+  lapply (subset_le_trans … Hvu2 … Hu21) -Hvu2 #H0
+  /3 width=3 by in_dir_nhs_s/
+| #x
+  elim (subsets_inh_inv_in … @ dir_i … HD) #u #Hu
+  @(subsets_inh_in … (❴x❵∪u))
+  /3 width=3 by in_dir_nhs_s, subset_le_or_dx_refl_dx, subset_or_in_sx/
+| #x #u #Hu
+  elim (in_dir_nhs_s_inv … Hu) -Hu #v #_ #_ #Hx //
+| #x #u1 #u2 #Hu1 #Hu2
+  elim (in_dir_nhs_s_inv … Hu1) -Hu1 #v1 #Hv1 #Hvu1 #H1x
+  elim (in_dir_nhs_s_inv … Hu2) -Hu2 #v2 #Hv2 #Hvu2 #H2x
+  elim (dir_a_alt … HD … Hv1 Hv2) -Hv1 -Hv2 #v #Hv #Hv1 #Hv2
+  lapply (subset_le_trans … Hv1 … Hvu1) -v1 #Hvu1
+  lapply (subset_le_trans … Hv2 … Hvu2) -v2 #Hvu2
+  /3 width=4 by in_dir_nhs_s, subset_le_and_dx, subset_and_in/
+| /3 width=3 by nhs_dir_s_open, ex2_intro/
+| #x #u1 #u2 #Hu12 #Hu1
+  elim (in_dir_nhs_s_inv … Hu1) -Hu1 #v1 #Hv1 #Hvu1 #Hx
+  lapply (subset_le_trans … Hvu1 … Hu12) -Hvu1 #H0
+  /3 width=3 by in_dir_nhs_s/
+]
+qed-.

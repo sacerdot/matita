@@ -4,7 +4,7 @@
 
 include "ground/subsets/subset_eq.ma".
 include "convergence/subsets/subset_ext.ma".
-include "convergence/directions/direction_struct.ma".
+include "convergence/directions/dir_s.ma".
 include "convergence/notation/functions/at_s_4.ma".
 
 (* IMAGE FOR DIRECTION ******************************************************)
@@ -12,12 +12,12 @@ include "convergence/notation/functions/at_s_4.ma".
 (* Structure ****************************************************************)
 
 definition dir_img_s (X:ℂ𝟬𝗌) (Y:ℂ𝟬𝗌) (f:X→Y) (D:𝔻𝗌 X): 𝔻𝗌 Y ≝ ?.
-@mk_direction_structure
-@({v | ∃∃u. u ϵ D & v ⇔ f＠❨u❩})
+@mk_dir_S
+@({ v | ∃∃u. u ϵ D & v ⇔ f＠❨u❩ })
 defined.
 
 interpretation
-  "structure (direction image)"
+  "image structure (direction)"
   'At_s X Y f D = (dir_img_s X Y f D).
 
 (* Corollaries **************************************************************)

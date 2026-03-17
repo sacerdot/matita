@@ -3,7 +3,7 @@
 *)
 
 include "convergence/subsets/subset_sigma.ma".
-include "convergence/directions/direction_posts.ma".
+include "convergence/directions/dir_p.ma".
 include "convergence/notation/functions/category_d_1.ma".
 
 (* DIRECTION ****************************************************************)
@@ -11,18 +11,18 @@ include "convergence/notation/functions/category_d_1.ma".
 (* Object *******************************************************************)
 
 (* Note: a direction is a filter base *)
-definition direction (X): Type[0] ≝ 𝝨(𝔻𝗌 X).𝔻𝗉.
+definition dir (X): Type[0] ≝ 𝝨(𝔻𝗌 X).𝔻𝗉.
 
 interpretation
   "direction (category)"
-  'CategoryD X = (direction X).
+  'CategoryD X = (dir X).
 
-definition dir_S (X) (D: 𝔻 X): 𝔻𝗌 X ≝
-           subset_sigma_S … D.
+definition dir_s (X) (D: 𝔻 X): 𝔻𝗌 X ≝
+           subset_sigma_s … D.
 
-coercion dir_S.
+coercion dir_s.
 
-definition dir_P (X) (D: 𝔻 X): 𝔻𝗉 … D ≝
-           subset_sigma_P … D.
+definition dir_p (X) (D: 𝔻 X): 𝔻𝗉 … D ≝
+           subset_sigma_p … D.
 
-coercion dir_P.
+coercion dir_p.

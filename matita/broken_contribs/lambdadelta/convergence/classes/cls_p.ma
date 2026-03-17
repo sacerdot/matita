@@ -3,38 +3,38 @@
 *)
 
 include "convergence/subsets/subset1.ma".
-include "convergence/classes/class_struct.ma".
+include "convergence/classes/cls_s.ma".
 include "convergence/notation/functions/category_c0_p_0.ma".
 
 (* CLASS ********************************************************************)
 
 (* Postulates ***************************************************************)
 
-record class_postulates (X:ℂ𝟬𝗌): Prop ≝
-{ cls_E_refl (x):
+record cls_P (X:ℂ𝟬𝗌): Prop ≝
+{ cls_pe_refl (x):
   x ≍❪X❫ x
-; cls_E_sym:
+; cls_pe_sym:
   ∀x1,x2. x1 ≍ x2 → x2 ≍❪X❫ x1
-; cls_E_trans (x0):
+; cls_pe_trans (x0):
   ∀x1. x1 ≍ x0 → ∀x2. x0 ≍ x2 → x1 ≍❪X❫ x2
 }.
 
 interpretation
   "postulates (class)"
-  'CategoryC0_p = (class_postulates).
+  'CategoryC0_p = (cls_P).
 
 (* Corollaries **************************************************************)
 
-lemma cls_E_canc_sx (X):
+lemma cls_pe_canc_sx (X):
       X ϵ¹ ℂ𝟬𝗉 →
       ∀x0,x1. x0 ≍ x1 →
       ∀x2. x0 ≍ x2 → x1 ≍❪X❫ x2.
-/3 width=4 by cls_E_trans, cls_E_sym/
+/3 width=4 by cls_pe_trans, cls_pe_sym/
 qed-.
 
-lemma cls_E_canc_dx (X):
+lemma cls_pe_canc_dx (X):
       X ϵ¹ ℂ𝟬𝗉 →
       ∀x0,x1. x1 ≍ x0 →
       ∀x2. x2 ≍ x0 → x1 ≍❪X❫ x2.
-/3 width=5 by cls_E_trans, cls_E_sym/
+/3 width=5 by cls_pe_trans, cls_pe_sym/
 qed-.

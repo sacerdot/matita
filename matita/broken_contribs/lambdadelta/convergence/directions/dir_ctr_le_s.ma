@@ -2,14 +2,14 @@
    and is distributed under the GNU General Public License (GPL) version 2.
 *)
 
-include "convergence/directions/direction_struct_center.ma".
-include "convergence/directions/direction_struct_order.ma".
+include "convergence/directions/dir_le_s.ma".
+include "convergence/directions/dir_ctr_s.ma".
 
-(* ORDER FOR DIRECTION ******************************************************)
+(* CENTER FOR DIRECTION *****************************************************)
 
-(* Destructions with ctr ****************************************************)
+(* Destructions with dir_le *************************************************)
 
-lemma dir_le_des_ctr (X) (D1:𝔻𝗌 X) (D2:𝔻𝗌 X):
+lemma dir_le_des_ctr_bi (X) (D1:𝔻𝗌 X) (D2:𝔻𝗌 X):
       D1 ⊑ D2 → (𝗖𝘁𝗿 D2) ⊆ (𝗖𝘁𝗿 D1).
 #X #D1 #D2 #HD12
 @dir_ctr_ge #u1 #Hu1

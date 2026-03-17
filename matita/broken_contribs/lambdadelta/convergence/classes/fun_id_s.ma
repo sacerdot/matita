@@ -2,7 +2,7 @@
    and is distributed under the GNU General Public License (GPL) version 2.
 *)
 
-include "convergence/classes/class_struct.ma".
+include "convergence/classes/cls_s.ma".
 include "convergence/notation/functions/function_i_s_1.ma".
 include "convergence/notation/functions/function_i_s_2.ma".
 

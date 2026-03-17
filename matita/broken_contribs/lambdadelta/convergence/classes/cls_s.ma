@@ -13,27 +13,27 @@ include "convergence/notation/relations/neg_equivalent_3.ma".
 
 (* Structure ****************************************************************)
 
-record class_structure: Type[1] ≝
-{ cls_C:> Type[0]
-; cls_E:  relation2 cls_C cls_C
+record cls_S: Type[1] ≝
+{ cls_sc:> Type[0]
+; cls_se:  relation2 cls_sc cls_sc
 }.
 
 interpretation
   "structure (class)"
-  'CategoryC0_s = (class_structure).
+  'CategoryC0_s = (cls_S).
 
 interpretation
   "carrier (class structure)"
-  'SetCAR X = (cls_C X).
+  'SetCAR X = (cls_sc X).
 
 interpretation
   "equivalence (class structure)"
-  'Equivalent X x1 x2 = (cls_E X x1 x2).
+  'Equivalent X x1 x2 = (cls_se X x1 x2).
 
 interpretation
   "negated equivalence (class structure)"
-  'NotEquivalent X x1 x2 = (negation (cls_E X x1 x2)).
+  'NotEquivalent X x1 x2 = (negation (cls_se X x1 x2)).
 
 interpretation
   "negated equivalence alternative (class structure)"
-  'NegEquivalent X x1 x2 = (negation (cls_E X x1 x2)).
+  'NegEquivalent X x1 x2 = (negation (cls_se X x1 x2)).

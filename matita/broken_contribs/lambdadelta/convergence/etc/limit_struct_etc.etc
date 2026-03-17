@@ -1,0 +1,26 @@
+(* This file is part of the HELM digital library (http://helm.cs.unibo.it)
+   and is distributed under the GNU General Public License (GPL) version 2.
+*)
+
+include "convergence/directions/direction_struct_center.ma".
+include "convergence/directions/direction_nhs_struct.ma".
+include "convergence/nhoods/nhoods_limit_struct.ma".
+include "convergence/limits/limit_struct.ma".
+
+(* LIMIT ********************************************************************)
+
+(* Properties with nhoods ***************************************************)
+
+(* Note: main result: our convergence includes the one of general topology *)
+theorem limit_inv_nhs (X:ℂ𝟬𝗌) (Y:ℂ𝟬𝗌) (f:X→Y) (D:𝔻𝗌 X) (C:𝔻𝗌 Y) (x0:X) (y0:Y):
+        x0 ϵ 𝗖𝘁𝗿 D → y0 ϵ 𝗖𝘁𝗿 C → 𝗹𝗶𝗺[D]f ≘ C → 𝗹𝗶𝗺[x0,𝝫𝗌[D],𝝫𝗌[C]]f ≘ y0.
+#X #Y #f #D #C #x0 #y0 #Hx0 #Hy0 #HDC
+@mk_nhs_limit_alt #v2 #Hv2
+elim (in_dir_nhs_s_inv … Hv2) -Hv2 #v1 #Hv1 #Hv12 #H0y0
+elim (limit_inv_alt … HDC … Hv1) -HDC -Hv1 #u #Hu #Hf
+@(ex2_intro … u)
+[ @(in_dir_nhs_s … Hu) //
+  @Hx0 //
+| /3 width=5 by/
+]
+qed-.

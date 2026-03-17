@@ -3,8 +3,8 @@
 *)
 
 include "ground/subsets/subset_ol_le.ma". 
-include "convergence/directions/direction.ma".
-include "convergence/directions/direction_struct_overlap.ma".
+include "convergence/directions/dir.ma".
+include "convergence/directions/dir_ol_s.ma".
 
 (* OVERLAP FOR DIRECTION ****************************************************)
 
@@ -13,6 +13,6 @@ include "convergence/directions/direction_struct_overlap.ma".
 lemma dir_ol_refl (X) (D:𝔻 X):
       D ♡ D.
 #X #D #u1 #u2 #Hu1 #Hu2
-elim (dir_a_alt … Hu1 Hu2) // #u0 #Hu0 #Hu01 #Hu02
-/3 width=5 by dir_d, subset_ol_le_repl/
+elim (dir_pa_alt … Hu1 Hu2) // #u0 #Hu0 #Hu01 #Hu02
+/3 width=5 by dir_pd, subset_ol_le_repl/
 qed.
