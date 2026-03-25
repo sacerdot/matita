@@ -19,9 +19,9 @@ include "delayed_updating/computation/prototerm_originated.ma".
 
 (* Destructions with pirc and subsets_wfinite *******************************)
 
-lemma topc_des_pirc_wfinite (t):
-      t ϵ 𝐎⁺ → 𝐈❨t❩ ϵ 𝐖𝛀.
+lemma topc_des_clear_pir_wfinite (t):
+      t ϵ 𝐎⁺ → ⓪𝐈❨t❩ ϵ 𝐖𝛀.
 #t2 * #t1 #rs #Ht1 #Ht12
-@(dbfss_pirc_wfinite_sx … Ht12) -t2 -rs
-/3 width=2 by subsets_wfinite_in/
+@(dbfss_clear_pir_wfinite_sx … Ht12) -t2 -rs
+/4 width=2 by term_clear_wfinite, subsets_wfinite_in/
 qed-.

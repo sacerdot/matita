@@ -25,14 +25,16 @@ lemma tnf_A_sx (t):
       t ⊆ 𝐍 → t ϵ 𝐍𝐅 → 𝗔◗t ϵ 𝐍𝐅.
 #t #H1t #H2t #r * #p
 @(list_ind_rcons … p) -p
-[ #b #q #n * #_ #Hb #_
+[ #b #q #n #Hr
+  lapply (pcxr_des_b … Hr) #Hb
+  lapply (pcxr_des_n … Hr) -Hr
   <path_beta_unfold_dx <list_append_empty_dx #Hn (* ** UNFOLD *)
   elim (append_in_comp_inv_lcons_bi … Hn) -Hn #_ #H0
   elim (H1t … H0 …) -t //
-| #p #l0 #_ #b #q #n * #Hr #Hb #Hq
-  <path_beta_append_p #Hn
+| #p #l0 #_ #b #q #n
+  * #Hn * <path_beta_append_p #Hr #Hb #Hq destruct
   elim (append_in_comp_inv_lcons_bi … Hn) -Hn #H0 #Hn destruct
-  elim (tnf_inv_gen … (⓪𝐫❨p,b,q,⁤↑n❩) H2t) -H2t
-  /2 width=3 by prc_mk_old/
+  elim (tnf_inv_gen … (𝐫❨p,b,q,⁤↑n❩) H2t) -H2t
+  /2 width=3 by pcr_mk_old/
 ]
 qed.

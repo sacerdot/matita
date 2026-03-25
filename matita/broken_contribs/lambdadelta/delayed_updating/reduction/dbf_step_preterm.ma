@@ -13,8 +13,8 @@
 (**************************************************************************)
 
 include "delayed_updating/syntax/preterm_eq.ma".
-include "delayed_updating/reduction/preterm_reducible.ma".
-include "delayed_updating/reduction/dbf_step.ma".
+include "delayed_updating/syntax/preterm_root_eq.ma".
+include "delayed_updating/reduction/dbf_step_root_le.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 
@@ -30,39 +30,17 @@ lemma dbfs_preterm_trans (t1) (t2) (r):
 /3 width=3 by term_eq_repl_fwd, dbfs_preterm_trans_aux/
 qed.
 
-lemma dbfs_des_xprc_neq (t1) (t2) (r) (s) (p) (b) (q) (n):
+(* Note: was: dbfs_des_pcxr_neq *)
+lemma dbfs_des_in_comp_neq (t1) (t2) (r) (s):
+      t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → s ⧸= r →
+      s ϵ t1 → s ϵ t2.
+#t1 #t2 #r #s #Ht1 #Ht12 #Hnrs #Hs
+/5 width=5 by dbfs_des_in_comp_nrle, dbfs_des_r, path_rle_inv_complete/
+qed-.
+
+lemma dbfs_des_pcxr_neq (t1) (t2) (r) (s) (p) (b) (q) (n):
       t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 → s ⧸= r →
       s ϵ 𝐑❨t1,p,b,q,n❩ → s ϵ 𝐑❨t2,p,b,q,n❩.
-#t1 #t2 #r #s #p #b #q #n #Ht1 #Ht12
-#Hnsr * #Hs #Hb #Hq #Hn destruct
-@(xprc_mk … Hb Hq) -Hb -Hq
-@(dbfs_des_in_comp_neq … Ht12) // #H0
-cases Ht12 -Ht12 #p0 #b0 #q0 #n0 * #Hr #_ #_ #Hn0 #Ht12 destruct
-lapply (term_slice_des_clear_bi … (𝐞) … Ht1 … H0) -H0
-[1,2: /2 width=1 by term_in_comp_root/ ]
-* #s #_ #Hs >Hs in Hn; #Hn
-lapply (term_complete_append … Ht1 Hn0 Hn) -t1 #H0 destruct
-/2 width=1 by/
-qed-.
-
-(* Inversions with preterm **************************************************)
-
-lemma dbfs_preterm_inv_sx (t1) (t2) (r) (p) (b) (q) (n):
-      t1 ϵ 𝐓 → t1 ➡𝐝𝐛𝐟[r] t2 →
-      r ϵ 𝐑❨t1,p,b,q,n❩ →
-      ⬕[𝐅❨p,b,q,n❩←𝐃❨t1,p,b,q,n❩]t1 ⇔ t2.
-#t1 #t2 #r #p1 #b1 #q1 #n1 #Ht1
-* #p2 #b2 #q2 #n2 #H2r #Ht12 #H1r
-lapply (subset_ol_i ???? H1r H2r) -H1r -H2r #H0
-elim (ol_des_xprc_bi … Ht1 H0) -H0 #H1 #H2 #H3 #H4 destruct //
-qed-.
-
-(* Main inversions with preterm *********************************************)
-
-theorem dbfs_preterm_mono (t0) (t1) (t2) (r):
-        t0 ϵ 𝐓 → t0 ➡𝐝𝐛𝐟[r] t1 → t0 ➡𝐝𝐛𝐟[r] t2 → t1 ⇔ t2.
-#t0 #t1 #t2 #r #Ht0 #Ht01
-* #p #b #q #n #Hr #Ht02
-lapply (dbfs_preterm_inv_sx … Ht0 Ht01 Hr) -Ht0 -Ht01 -Hr #Ht01
-@(subset_eq_canc_sx … Ht01 … Ht02)
+#t1 #t2 #r #s #p #b #q #n #Ht1 #Ht12 #Hnrs * #H1s #H2s
+/3 width=6 by dbfs_des_in_comp_neq, subset_and_in/
 qed-.

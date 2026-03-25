@@ -125,6 +125,11 @@ lemma path_p3beta_append_q (p) (b) (q1) (q2):
 //
 qed.
 
+lemma path_p2beta_append_q (p) (b) (q):
+      (𝐫❨p,b,q❩) = 𝐫❨p,b❩●q.
+//
+qed.
+
 lemma path_qbeta_append (q1) (q2) (n):
       q1●𝐫❨q2,n❩ = 𝐫❨q1●q2,n❩.
 //
@@ -145,7 +150,18 @@ lemma path_p3beta_rcons_d (p) (b) (q) (n):
 //
 qed.
 
+lemma path_p2beta_qbeta (p) (b) (q) (n):
+      (𝐫❨p,b,q,n❩) = 𝐫❨p,b❩●𝐫❨q,n❩.
+//
+qed.
+
 (* Basic inversions *********************************************************)
+
+lemma path_neq_beta_rcons_S (x) (p) (b) (q) (n):
+      (𝐫❨p,b,q,n❩ ⧸= x◖𝗦).
+#x #p #b #q #n
+<path_beta_unfold_sx #H0 destruct
+qed-.
 
 lemma path_eq_inv_beta_append_dx_bi_q (x1) (x2) (p) (b) (q1) (q2) (n1) (n2):
       (𝐫❨p,b,q1,n1❩)●x1 = 𝐫❨p,b,q2,n2❩●x2 →

@@ -14,10 +14,9 @@
 
 include "ground/xoa/ex_2_4.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
-include "delayed_updating/syntax/prototerm_clear.ma".
 include "delayed_updating/substitution/fsubst.ma".
-include "delayed_updating/reduction/prototerm_reducible.ma".
-include "delayed_updating/reduction/prototerm_xfocus.ma".
+include "delayed_updating/reduction/prototerm_cx_redex.ma".
+include "delayed_updating/reduction/prototerm_x_focus.ma".
 include "delayed_updating/reduction/prototerm_delayed.ma".
 include "delayed_updating/notation/relations/black_rightarrow_dbf_3.ma".
 
@@ -43,11 +42,11 @@ lemma dbfs_mk (t1) (t2) (r) (p) (b) (q) (n):
 @(ex2_4_intro … Hr Ht12)
 qed.
 
-lemma xprc_dbfs (t1) (r) (p) (b) (q) (n):
+lemma pcxr_dbfs (t1) (r) (p) (b) (q) (n):
       r ϵ 𝐑❨t1,p,b,q,n❩ →
       ∃t2. t1 ➡𝐝𝐛𝐟[r] t2.
 #t1 #r #p #b #q #n #Hr
-lapply (xprc_des_n … Hr) #Hn
+lapply (pcxr_des_n … Hr) #Hn
 @ex_intro [| @(dbfs_mk … Hr) @subset_eq_refl ]
 qed-.
 
@@ -66,20 +65,11 @@ lemma dbfs_eq_canc_dx (t) (t1) (t2) (r):
 /3 width=3 by dbfs_eq_trans, subset_eq_sym/
 qed-.
 
-(* Basic destructions *******************************************************)
+(* Advanced destructions ****************************************************)
 
-lemma dbfs_des_clear_r (t1) (t2) (r):
-      t1 ➡𝐝𝐛𝐟[r] t2 → ⓪r = r.
+lemma dbfs_des_r (t1) (t2) (r):
+      t1 ➡𝐝𝐛𝐟[r] t2 → r ϵ t1.
 #t1 #t2 #r * #p #b #q #n #Hr #_
-/2 width=6 by xprc_des_clear/
-qed-.
-
-lemma dbfs_des_in_comp_neq (t1) (t2) (r) (s):
-      t1 ➡𝐝𝐛𝐟[r] t2 → ⓪s ⧸ϵ ↑r →
-      s ϵ t1 → s ϵ t2.
-#t1 #t2 #r #s *
-#p #b #q #n #Hr #Ht12 #Hns #Hs
-lapply (xprc_des_r … Hr) -Hr #H0 destruct
-@(subset_in_eq_repl_fwd ????? Ht12) -t2
-/4 width=1 by fsubst_in_comp_false, term_slice_clear/
+lapply (pcxr_des_r … Hr) #H0 destruct
+/2 width=2 by pcxr_des_n/
 qed-.

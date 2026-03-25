@@ -14,7 +14,7 @@
 
 include "delayed_updating/reduction/dbf_step.ma".
 include "delayed_updating/reduction/prototerm_delayed_eq.ma".
-include "delayed_updating/reduction/prototerm_reducible_eq.ma".
+include "delayed_updating/reduction/prototerm_cx_redex_eq.ma".
 
 (* DELAYED BALANCED FOCUSED REDUCTION ***************************************)
 
@@ -25,7 +25,7 @@ lemma dbfs_eq_canc_sx (t) (t1) (t2) (r):
 #t #t1 #t2 #r #Ht1
 * #p #b #q #n #Hr #Ht2
 @(dbfs_mk … p b q n)
-[ /3 width=3 by xprc_eq_repl, subset_in_eq_repl_fwd/
+[ /3 width=3 by pcxr_eq_repl, subset_in_eq_repl_fwd/
 | /4 width=3 by subset_eq_canc_sx, fsubst_eq_repl, brd_eq_repl_fwd/
 ]
 qed-.

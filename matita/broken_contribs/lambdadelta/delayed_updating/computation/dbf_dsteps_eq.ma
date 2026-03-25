@@ -45,14 +45,29 @@ qed-.
 
 (* Advanced constructions ***************************************************)
 
-lemma dbfdss_empty (t1) (t2) (t) (r):
-      t1 ⇔ t2 → t1 Ꟈ➡*𝐝𝐛𝐟[Ⓕ /𝐝𝐛𝐟{t} r, Ⓕ] t2.
+lemma dbfdss_empty (t1) (t2) (r):
+      t1 ⇔ t2 → t1 Ꟈ➡*𝐝𝐛𝐟[Ⓕ /𝐝𝐛𝐟 r, Ⓕ] t2.
 /3 width=1 by dbfdss_refl, subset_eq_sym/
 qed.
 
-lemma dbfdss_self (t1) (t2) (t) (r):
-      t1 ⇔ t2 → t1 Ꟈ➡*𝐝𝐛𝐟[r /𝐝𝐛𝐟{t} r, Ⓕ] t2.
+lemma dbfdss_self (t1) (t2) (r):
+      t1 ⇔ t2 → t1 Ꟈ➡*𝐝𝐛𝐟[r /𝐝𝐛𝐟 r, Ⓕ] t2.
 /3 width=1 by dbfdss_refl, subset_eq_sym/
+qed.
+
+lemma dbfs_neq_dbfdss (t1) (t2) (s) (r) (p) (b) (q) (n):
+      r ϵ 𝐑❨p,b,q,n❩ → s ⧸= r → p◖𝗦 ⧸≚ s →
+      t1 ➡𝐝𝐛𝐟[s] t2 → t1 Ꟈ➡*𝐝𝐛𝐟[s /𝐝𝐛𝐟 r, Ⓕ] t2.
+#t1 #t2 #s #r #p #b #q #n #Hr #Hnsr #Hns #Ht12
+@(dbfdss_eq_canc_sx t1)
+[3: // |4: @(path_dbfr_neq_eq … Hr) // | skip ]
+/3 width=1 by dbfdss_step, dbfds_single/
+qed.
+
+lemma dbfs_neq_dbfdss_cx (t0) (t1) (t2) (s) (r) (p) (b) (q) (n):
+      r ϵ 𝐑❨t0,p,b,q,n❩ → s ⧸= r → p◖𝗦 ⧸≚ s →
+      t1 ➡𝐝𝐛𝐟[s] t2 → t1 Ꟈ➡*𝐝𝐛𝐟[s /𝐝𝐛𝐟 r, Ⓕ] t2.
+/3 width=6 by pcxr_des_x, dbfs_neq_dbfdss/
 qed.
 
 (* Advanved inversions ******************************************************)

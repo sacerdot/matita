@@ -13,8 +13,6 @@
 (**************************************************************************)
 
 include "ground/lib/functions.ma".
-include "ground/subsets/subset_and.ma".
-include "ground/subsets/subset_listed_1.ma".
 include "delayed_updating/syntax/prototerm_eq.ma".
 include "delayed_updating/syntax/prototerm_clear.ma".
 
@@ -26,13 +24,6 @@ lemma clear_le_repl:
       compatible_2_fwd … (subset_le …) (subset_le …) (term_clear).
 #t1 #t2 #Ht12 #zp * #p #Hp #H0 destruct
 /3 width=1 by in_comp_term_clear/
-qed.
-
-(* Note: the other inclusion does not hold as is *)
-lemma clear_and_dx (t1) (t2):
-      ⓪(t1 ∩ t2) ⊆ (⓪t1) ∩ (⓪t2).
-#t1 #t2 #pz * #p * #H1p #H2p #H0 destruct
-/3 width=1 by in_comp_term_clear, subset_and_in/
 qed.
 
 lemma term_clear_root_le_refl (t):
@@ -74,6 +65,25 @@ lemma term_le_slice_clear (p):
 <path_clear_append //
 qed.
 
+lemma clear_pt_append_ge (p) (t):
+      (⓪p)●(⓪t) ⊆ ⓪(p●t).
+#p #t #r * #s0 * #s #Hs #H1 #H2 destruct
+/3 width=1 by pt_append_in, in_comp_term_clear/
+qed.
+
+lemma clear_pt_append_le (p) (t):
+      (⓪(p●t)) ⊆ (⓪p)●(⓪t).
+#p #t #r0 * #r * #q #Hq #H1 #H2 destruct
+/3 width=1 by pt_append_in, in_comp_term_clear/
+qed.
+
+lemma term_clear_grafted_le (t) (p):
+      (⓪⋔[p]t) ⊆ ⋔[⓪p]⓪t.
+#t #p #q0 * #q #Hq #H0 destruct
+lapply (term_grafted_inv_gen … Hq) -Hq #H0
+lapply (in_comp_term_clear … H0) -H0 <path_clear_append #H0 //
+qed.
+
 (* Constructions with subset_eq *********************************************)
 
 lemma clear_eq_repl:
@@ -84,30 +94,11 @@ qed.
 
 lemma clear_pt_append (p) (t):
       (⓪p)●(⓪t) ⇔ ⓪(p●t).
-#p #t @conj #r * #s * #q #Hq #H1 #H2 destruct
-/3 width=1 by pt_append_in, in_comp_term_clear/
+/3 width=1 by conj, clear_pt_append_ge, clear_pt_append_le/
 qed.
 
 lemma term_eq_clear_slice_clear (p):
       (⓪↑p) ⇔ ⓪↑⓪p.
 #p @conj
 /2 width=1 by term_le_clear_slice_clear, term_le_clear_slice/
-qed.
-
-lemma clear_single (p):
-      ❴⓪p❵ ⇔ ⓪❴p❵.
-#p @conj #r *
-[ #q1 #q2 #H0
-  elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 *
-  [ #_ #H0 destruct -q1 /2 width=1 by in_comp_term_clear/
-  | #q #_ #H0 -q1
-    elim (eq_inv_list_empty_append … H0) #_ #H0 -q destruct
-  ]
-| #s * #q1 #q2 #H0 #H1 destruct
-  elim (eq_inv_list_lcons_append ????? (sym_eq … H0)) -H0 *
-  [ #_ #H0 destruct -q1 //
-  | #q #_ #H0 -q1
-    elim (eq_inv_list_empty_append … H0) #_ #H0 -q destruct
-  ]
-]
 qed.

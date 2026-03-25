@@ -17,15 +17,15 @@ include "delayed_updating/computation/dbf_steps.ma".
 
 (* DELAYED BALANCED FOCUSED COMPUTATION *************************************)
 
-(* Inversions with pirc and subsets_wfinite *********************************)
+(* Inversions with pir and subsets_wfinite **********************************)
 
-lemma dbfss_pirc_wfinite_sx (t1) (t2) (rs):
-      (𝐈❨t1❩) ϵ 𝐖𝛀 → t1 ➡*𝐝𝐛𝐟[rs] t2 →  𝐈❨t2❩ ϵ 𝐖𝛀.
+lemma dbfss_clear_pir_wfinite_sx (t1) (t2) (rs):
+      (⓪𝐈❨t1❩) ϵ 𝐖𝛀 → t1 ➡*𝐝𝐛𝐟[rs] t2 →  ⓪𝐈❨t2❩ ϵ 𝐖𝛀.
 #t1 #t2 #rs #Ht1 #H0
 @(dbfss_ind_dx … H0) -t2 -rs //
 [ #t0 #t2 #_ * #Ht02 #_ #Ht2 -t1
-  /3 width=3 by subset_le_pirc_bi, subsets_wfinite_le_trans/
+  /4 width=3 by subset_le_pir_bi, clear_le_repl, subsets_wfinite_le_trans/
 | #t0 #t2 #rs #r #_ #Ht02 #Ht0 -t1 -rs
-  /2 width=4 by dbfs_pirc_wfinite_sx/
+  /2 width=4 by dbfs_clear_pir_wfinite_sx/
 ]
 qed-.

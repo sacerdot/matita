@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/lib/list_times_rcons.ma".
-include "delayed_updating/syntax/path.ma".
+include "delayed_updating/syntax/label.ma".
 
 (* PRODUCT FOR LABELS *******************************************************)
 

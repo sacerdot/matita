@@ -13,22 +13,15 @@
 (**************************************************************************)
 
 include "ground/xoa/ex_3_2.ma".
+include "ground/lib/list_map.ma".
+include "delayed_updating/syntax/label_clear.ma".
 include "delayed_updating/syntax/path.ma".
-include "delayed_updating/notation/functions/circled_zero_1.ma".
 
 (* CLEAR FOR PATH ***********************************************************)
 
-rec definition path_clear (p) on p ≝
-match p with
-[ list_empty     ⇒ p
-| list_lcons l q ⇒
-   match l with
-   [ label_d k ⇒ (path_clear q)◖𝗱(𝟎)
-   | label_L   ⇒ (path_clear q)◖𝗟
-   | label_A   ⇒ (path_clear q)◖𝗔
-   | label_S   ⇒ (path_clear q)◖𝗦
-   ]
-].
+definition path_clear (p) ≝
+           list_map … label_clear p
+.
 
 interpretation
   "clear (path)"
@@ -36,8 +29,17 @@ interpretation
 
 (* Basic constructions ******************************************************)
 
+lemma path_clear_unfold (p):
+      list_map … label_clear p = ⓪p.
+//
+qed.
+
 lemma path_clear_empty:
-      𝐞 = ⓪𝐞.
+      (𝐞) = ⓪𝐞.
+// qed.
+
+lemma path_clear_rcons (p) (l):
+      (⓪p)◖⓪l = ⓪(p◖l).
 // qed.
 
 lemma path_clear_d_dx (p) (k):
@@ -67,12 +69,15 @@ qed.
 
 theorem path_clear_append (p) (q):
         ⓪p●⓪q = ⓪(p●q).
-#p #q elim q -q //
-* [ #k ] #q #IH
-<list_append_lcons_sx //
+//
 qed.
 
 (* Constructions with path_lcons ********************************************)
+
+lemma path_clear_lcons (p) (l):
+      (⓪l)◗⓪p = ⓪(l◗p).
+//
+qed.
 
 lemma path_clear_d_sx (p) (k):
       (𝗱(𝟎)◗⓪p) = ⓪(𝗱k◗p).

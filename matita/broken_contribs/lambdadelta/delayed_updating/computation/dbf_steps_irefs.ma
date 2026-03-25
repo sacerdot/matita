@@ -19,14 +19,15 @@ include "delayed_updating/computation/dbf_steps_preterm.ma".
 
 (* Destructions with pirc ***************************************************)
 
-lemma dbfss_des_le_pirc_bi (t1) (t2) (rs):
-      t1 ϵ 𝐓 → t1 ➡*𝐝𝐛𝐟[rs] t2 → 𝐈❨t1❩ ⊆ 𝐈❨t2❩.
+lemma dbfss_des_le_clear_pir_bi (t1) (t2) (rs):
+      t1 ϵ 𝐓 → t1 ➡*𝐝𝐛𝐟[rs] t2 → ⓪𝐈❨t1❩ ⊆ ⓪𝐈❨t2❩.
 #t1 #t2 #r #Ht1 #H0
 @(dbfss_ind_dx … H0) -t2 -r //
 [ #u1 #u2 #_ * #_ #Hu #Hu2
-  /3 width=3 by subset_le_pirc_bi, subset_le_trans/
+  @(subset_le_trans … Hu2) -t1
+  /3 width=3 by subset_le_pir_bi, clear_le_repl/
 | #t #t2 #rs #r #Ht1 #Ht2 #IH
   @(subset_le_trans … IH) -IH
-  /3 width=5 by dbfss_preterm_trans, dbfs_des_le_pirc_bi/
+  /3 width=5 by dbfss_preterm_trans, dbfs_des_le_clear_pir_bi/
 ]
 qed-.

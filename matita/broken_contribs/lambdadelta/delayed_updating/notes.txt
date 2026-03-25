@@ -66,20 +66,26 @@ In t6.
 Hy  : 𝐑❨t2,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩ to t2
       (I) 𝐃❨t2,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱…◗x,n1❩ p1 A ⓪b1 L y A ⓪b2 L
 Hr65: 𝐑❨t6,p1,b1,y●𝗦◗x,n1❩ to t5
-      (O) 𝐅❨p1,b1,y●𝗦◗x❩                    p1 A   b1 L y S     
-    : (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩        p1 A   b1 L y A ⓪b2 L
+      (O) 𝐅❨p1,b1,y●𝗦◗x❩                   p1 A  b1 L y S     
+    : (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩       p1 A  b1 L y A ⓪b2 L
 ⓪ on b1
 
 In t5.
 Hr45: 𝐑❨t4,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱⁤↑(♭b2+n2)◗x,n1❩ from t4
 * v3  (I) 𝐃❨t4,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱…◗x,n1❩ p1 A ⓪b1 L y A ⓪b2 L
 Hr65: 𝐑❨t6,p1,b1,y●𝗦◗x,n1❩ from t6
-      (I) 𝐃❨t6,p1,b1,y●𝗦◗x,n1❩              p1 A ⓪b1 L y S
+      (I) 𝐃❨t6,p1,b1,y●𝗦◗x,n1❩             p1 A ⓪b1 L y S
 from t4:
-    : (I) 𝐃❨t2,p1,b1,y●𝗦◗x,n1❩              p1 A ⓪b1 L y S
-    : (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩        p1 A   b1 L y A ⓪b2 L
+    : (I) 𝐃❨t2,p1,b1,y●𝗦◗x,n1❩             p1 A ⓪b1 L y S
+    : (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩       p1 A  b1 L y A ⓪b2 L
 from t6:
     : (I) 𝐃❨t2,p1,b1,y●𝗔◗⓪b2●𝗟◗q2●𝗱…◗x,n1❩ p1 A ⓪b1 L y A ⓪b2 L
-    : (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩        p1 A   b1 L y A ⓪b2 L
+    : (I) 𝐃❨t0,p1●𝗔◗b1●𝗟◗y,b2,q2,n2❩       p1 A  b1 L y A ⓪b2 L
 ⓪ on b1
 *)
+
+ x-redex pxr  R(p,b,q,n)
+cx-redex pcxr R(t,p,b,q,n)
+ c-redex pcr  R(t)
+ x-focus brxf F(p,b,q,n)
+   focus brf  F(t,p,b,q,n)

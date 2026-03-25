@@ -60,6 +60,12 @@ lemma term_grafted_inv_gen (t) (p) (q):
       q ϵ ⋔[p]t → p●q ϵ t.
 // qed-.
 
+lemma term_in_root_inv_gen (t) (p):
+      p ϵ ▵t → ∃q. p●q ϵ t.
+#t #p * #q #H0
+/2 width=2 by ex_intro/
+qed-.
+
 lemma term_in_append_inv_gen (t) (p) (x):
       x ϵ p●t → ∃∃q. qϵt & p●q = x.
 #t #p #x * #q #Hq #H0 destruct

@@ -46,16 +46,3 @@ elim (term_in_root_brd_inv_gen … H0) -H0 #x #y
 <path_beta_swap_pq #H0 #_
 @(path_neq_p_beta … H0)
 qed-.
-
-(* Constructions with subset_ol *********************************************)
-
-lemma grafted_brd_nol (t) (p1) (p2) (b) (q) (n):
-      ↑(p1◖𝗔) ⧸≬ ↑p2 →
-      (Ⓕ) ⇔ ⋔[p2]𝐃❨t,p1,b,q,n❩.
-#t #p1 #p2 #b #q #n #Hp12
-@conj [ /2 width=1 by subset_empty_le_sx/ ] #x #Hx
-elim (term_in_append_inv_gen … Hx) -Hx #y #_ #H0
-elim Hp12 -Hp12
-@(term_ol_slice_bi … (trans_eq … H0)) -H0
-[| <path_beta_unfold_b <list_append_assoc // ] (* ** UNFOLD *)
-qed.

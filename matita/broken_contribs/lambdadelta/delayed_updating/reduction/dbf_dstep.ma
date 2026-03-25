@@ -21,7 +21,7 @@ include "delayed_updating/notation/relations/d_stroke_black_rightarrow_dbf_4.ma"
 
 definition dbfds: relation4 (𝕋) (𝒫❨ℙ❩) (𝕋) (𝒫❨ℙ❩) ≝
            λt1,u1,t2,u2.
-           ∃∃r. r ϵ u1 & t1 ➡𝐝𝐛𝐟[r] t2 & u1 /𝐝𝐛𝐟{t1} r ⇔ u2
+           ∃∃r. r ϵ u1 & t1 ➡𝐝𝐛𝐟[r] t2 & u1 /𝐝𝐛𝐟 r ⇔ u2
 .
 
 interpretation
@@ -31,7 +31,7 @@ interpretation
 (* Basic constructions ******************************************************)
 
 lemma dbfds_mk (t1) (t2) (u1) (u2) (r):
-      r ϵ u1 → t1 ➡𝐝𝐛𝐟[r] t2 → u1 /𝐝𝐛𝐟{t1} r ⇔ u2 →
+      r ϵ u1 → t1 ➡𝐝𝐛𝐟[r] t2 → u1 /𝐝𝐛𝐟 r ⇔ u2 →
       t1 Ꟈ➡𝐝𝐛𝐟[u1,u2] t2.
 /2 width=4 by ex3_intro/
 qed.

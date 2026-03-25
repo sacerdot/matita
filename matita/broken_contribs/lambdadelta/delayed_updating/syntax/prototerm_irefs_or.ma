@@ -19,15 +19,22 @@ include "delayed_updating/syntax/prototerm_irefs_eq.ma".
 
 (* Constructions with subset_or and subset_le *******************************)
 
-lemma subset_le_or_pirc (t1) (t2):
+lemma pir_or_ge (t1) (t2):
       (𝐈❨t1❩) ∪ 𝐈❨t2❩ ⊆ 𝐈❨t1 ∪ t2❩.
 #t1 #t2
 @subset_le_or_sx
-@subset_le_pirc_bi // (**) (* auto fails *)
+@subset_le_pir_bi // (**) (* auto fails *)
 qed.
 
-lemma subset_le_pirc_or (t1) (t2):
+lemma pir_or_le (t1) (t2):
       (𝐈❨t1 ∪ t2❩) ⊆ 𝐈❨t1❩ ∪ 𝐈❨t2❩.
 #t1 #t2 #r * #p #q #n #Hr #Hp * #Ht destruct
-/3 width=4 by path_in_pirc, subset_or_in_sx, subset_or_in_dx/
+/3 width=4 by pir_mk, subset_or_in_sx, subset_or_in_dx/
+qed.
+
+(* Constructions with subset_or and subset_le *******************************)
+
+lemma pir_or (t1) (t2):
+      (𝐈❨t1❩) ∪ 𝐈❨t2❩ ⇔ 𝐈❨t1 ∪ t2❩.
+/3 width=1 by conj, pir_or_ge, pir_or_le/
 qed.

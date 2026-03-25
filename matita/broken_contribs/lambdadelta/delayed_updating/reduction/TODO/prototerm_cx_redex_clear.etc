@@ -1,0 +1,86 @@
+(**************************************************************************)
+(*       ___                                                              *)
+(*      ||M||                                                             *)
+(*      ||A||       A project by Andrea Asperti                           *)
+(*      ||T||                                                             *)
+(*      ||I||       Developers:                                           *)
+(*      ||T||         The HELM team.                                      *)
+(*      ||A||         http://helm.cs.unibo.it                             *)
+(*      \   /                                                             *)
+(*       \ /        This file is distributed under the terms of the       *)
+(*        v         GNU General Public License Version 2                  *)
+(*                                                                        *)
+(**************************************************************************)
+
+include "delayed_updating/syntax/prototerm_clear_ol_eq.ma".
+include "delayed_updating/syntax/prototerm_beta.ma".
+include "delayed_updating/reduction/prototerm_reducible.ma".
+
+(* COMPLETE EXPLICIT β-REDEX POINTER ****************************************)
+
+(* Constructions with term_clear ********************************************)
+
+lemma term_in_comp_clear_root_slice_dec_pcxr (t) (r) (p1) (p2) (b) (q) (n):
+      r ϵ 𝐑❨t,p1,b,q,n❩ →
+      Decidable (r ϵ ⓪▵↑p2).
+#t #r #p1 #p2 #b #q #n #Hr
+<(pcxr_des_clear … Hr) -Hr
+@term_in_comp_clear_bi_root_slice_dec
+qed-.
+
+lemma term_in_comp_clear_root_slice_pcxr_gen (t) (r1) (p1) (p2) (x1:ℙ) (x2:ℙ) (b1) (q1) (n1):
+      r1 ϵ 𝐑❨t,p1,b1,q1,n1❩ →
+      r1●⓪x1 = ⓪p2●⓪x2 → r1 ϵ ⓪▵↑p2.
+#t #r1 #p1 #p2 #x1 #x2 #b1 #q1 #n1 #Hr1
+<(pcxr_des_clear … Hr1) -Hr1 #H0
+/3 width=3 by term_ol_inv_clear_slice_bi, term_ol_clear_slice_bi_gen/
+qed.
+
+lemma term_in_comp_clear_root_slice_pcxr_sx (t) (r1) (p1) (p2) (x1:ℙ) (x2:ℙ) (b1) (q1) (n1):
+      r1 ϵ 𝐑❨t,p1,b1,q1,n1❩ →
+      r1●⓪x1 = ⓪p2●x2 → r1 ϵ ⓪▵↑p2.
+#t #r1 #p1 #p2 #x1 #x2 #b1 #q1 #n1 #Hr1
+<(pcxr_des_clear … Hr1) in ⊢ (%→?); >path_clear_append #H0
+elim (eq_inv_path_append_clear … (sym_eq … H0)) #y1 #y2 #_ #Hy2 #_ destruct
+<path_clear_append in H0; >(pcxr_des_clear … Hr1) in ⊢ (%→?); #H0
+/2 width=6 by term_in_comp_clear_root_slice_pcxr_gen/
+qed.
+
+lemma term_in_comp_clear_root_slice_pcxr_dx (t) (r1) (p1) (p2) (x1:ℙ) (x2:ℙ) (b1) (q1) (n1):
+      r1 ϵ 𝐑❨t,p1,b1,q1,n1❩ →
+      r1●x1 = ⓪p2●⓪x2 → r1 ϵ ⓪▵↑p2.
+#t #r1 #p1 #p2 #x1 #x2 #b1 #q1 #n1 #Hr1
+>path_clear_append #H0
+elim (eq_inv_path_append_clear … H0) #y1 #y2 #_ #Hy2 #_ destruct
+<path_clear_append in H0; #H0
+/2 width=6 by term_in_comp_clear_root_slice_pcxr_gen/
+qed.
+
+(* Inversions with term_clear ***********************************************)
+
+lemma term_in_comp_clear_root_slice_inv_pcxr_gen (t) (r1) (p1) (p2) (b1) (q1) (n1):
+      r1 ϵ 𝐑❨t,p1,b1,q1,n1❩ →
+      r1 ϵ ⓪▵↑p2 →
+      ∃∃x1:ℙ,x2:ℙ. r1●⓪x1 = ⓪p2●⓪x2.
+#t #r1 #p1 #p2 #b1 #q1 #n1 #Hr1
+<(pcxr_des_clear … Hr1) -Hr1 #H0
+/3 width=1 by term_ol_clear_slice_bi, term_ol_clear_slice_bi_inv_gen/
+qed-.
+
+(* Destructions with term_clear *********************************************)
+
+lemma pcxr_des_r_clear (t) (r) (p) (b) (q) (n):
+      r ϵ 𝐑❨t,p,b,q,n❩ → r ϵ ⓪t.
+#t #r #p #b #q #n #Hr
+lapply (pcxr_des_n … Hr) #Hn
+lapply (pcxr_des_r … Hr) -Hr #H0 destruct
+/2 width=1 by in_comp_term_clear/
+qed-.
+
+lemma pcxr_des_ol_pA_sx (t1) (t2) (r) (p) (b) (q) (n):
+      r ϵ 𝐑❨t1,p,b,q,n❩ → r ϵ t2 →
+      (⓪↑(p◖𝗔)) ≬ t2.
+#t1 #t2 #r #p #b #q #n #H1r #H2r
+lapply (pcxr_des_r … H1r) -H1r #H1r destruct
+/3 width=3 by in_comp_term_clear, subset_ol_i/
+qed-.

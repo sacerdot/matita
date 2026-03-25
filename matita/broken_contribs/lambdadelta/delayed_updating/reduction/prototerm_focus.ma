@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "ground/subsets/subset_and.ma".
-include "delayed_updating/reduction/prototerm_xfocus.ma".
+include "delayed_updating/reduction/prototerm_x_focus.ma".
 include "delayed_updating/notation/functions/subset_f_5.ma".
 
 (* BALANCED REDUCTION FOCUS *************************************************)

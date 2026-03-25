@@ -15,7 +15,7 @@
 include "ground/subsets/subset_le.ma".
 include "ground/subsets/subset_listed_1.ma".
 include "delayed_updating/syntax/prototerm.ma".
-include "delayed_updating/reduction/prototerm_reducibles.ma".
+include "delayed_updating/reduction/prototerm_c_redex.ma".
 include "delayed_updating/notation/functions/subset_nf_0.ma".
 
 (* NORMAL FORM FOR PROTOTERM ************************************************)
@@ -39,13 +39,13 @@ qed-.
 
 lemma tnf_empty: Ⓕ ϵ 𝐍𝐅.
 #r * #p #b #q #n #Hr
-lapply (xprc_des_n … Hr) -Hr #Hn
+lapply (pcxr_des_n … Hr) -Hr #Hn
 elim (subset_nin_inv_empty ?? Hn)
 qed.
 
 lemma tnf_null: ❴𝐞❵ ϵ 𝐍𝐅.
 #r * #p #b #q #n #Hr
-lapply (xprc_des_n … Hr) -Hr #Hn
+lapply (pcxr_des_n … Hr) -Hr #Hn
 lapply (subset_in_inv_single ??? Hn) -Hn
 >path_p3beta_rcons_d #Hn destruct
 qed.
@@ -56,14 +56,14 @@ lemma tnf_lcons (t) (l):
 #t #l #Hl #Ht #r * #p
 @(list_ind_rcons … p) -p
 [ #b #q #n #Hr
-  lapply (xprc_des_n … Hr) -Hr
+  lapply (pcxr_des_n … Hr) -Hr
   <path_beta_unfold_dx <list_append_empty_dx #Hn (* ** UNFOLD *)
   elim (append_in_comp_inv_lcons_bi … Hn) -Hn #H0 #_
   elim Hl -Hl //
-| #p #l0 #_ #b #q #n * #Hr #Hb #Hq
-  <path_beta_append_p #Hn
+| #p #l0 #_ #b #q #n
+  * #Hn * <path_beta_append_p #Hr #Hb #Hq destruct
   elim (append_in_comp_inv_lcons_bi … Hn) -Hn #H0 #Hn destruct
-  elim (tnf_inv_gen … (⓪𝐫❨p,b,q,⁤↑n❩) Ht) -Ht -l
-  /2 width=3 by prc_mk_old/
+  elim (tnf_inv_gen … (𝐫❨p,b,q,⁤↑n❩) Ht) -Ht -l
+  /2 width=3 by pcr_mk_old/
 ]
 qed.

@@ -47,7 +47,7 @@ interpretation
 (* Basic destructions *******************************************************)
 
 lemma eq_path_dec (p1) (p2):
-      Decidable (p1 ={ℙ} p2).
+      Decidable (p1 =❪ℙ❫ p2).
 /3 width=1 by eq_label_dec, eq_list_dec/
 qed-.
 

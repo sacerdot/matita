@@ -12,8 +12,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/syntax/preterm.ma".
 include "ground/arith/nat_succ_iter.ma".
+include "delayed_updating/syntax/preterm.ma".
 
 (* PRETERM ******************************************************************)
 
