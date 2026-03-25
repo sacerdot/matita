@@ -18,6 +18,10 @@ notation < "hvbox( f @ break a )"
   right associative with precedence 70
   for @{ 'CommercialAt $A $B $f $a }.
 
-notation > "hvbox( f @ opt ( ❪ break term 46 A, break term 46 B ❫ ) break term 70 a )"
+notation > "hvbox( f @❪ break term 46 A, break term 46 B ❫ break term 70 a )"
   non associative with precedence 70
-  for @{ 'CommercialAt ${default @{$A}@{?}} ${default @{$B}@{?}} $f $a }.
+  for @{ 'CommercialAt $A $B $f $a }.
+
+notation > "hvbox( f @ break a )"
+  right associative with precedence 70
+  for @{ 'CommercialAt ? ? $f $a }.
