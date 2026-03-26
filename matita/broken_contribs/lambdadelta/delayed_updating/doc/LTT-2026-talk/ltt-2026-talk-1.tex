@@ -1,0 +1,51 @@
+\begin{slide}
+\begin{center}\Title{Overview}\end{center}
+
+\begin{itemize}
+
+\IncPart{1}{\item[]
+A function call in untyped $\lambda$-calculus corresponds to
+a $\beta$-reduction step, whose most common form is: 
+$\Comp{\Abst{x}T}\Appl{V} \BStep T\Subs{V}{x}$.
+}
+
+\IncPart{1}{\item[]
+The substitution $T\Subs{V}{x}$
+replaces with $V$ \stress{all} free instances of $x$ in $T$,
+while avoiding captures through $\alpha$-conversion,
+\ie, renaming.
+}
+
+\IncPart{2}{\item[]
+From the computational standpoint,
+avoiding captures is a time consuming operation
+that reduction machines strive to avert.
+}
+
+\IncPart{3}{\item[]
+Replacing named variable instances with de Bruijn's depth indexes
+(\stress{nameless} binding)
+speeds up this operation without nullifying it.
+}
+
+\IncPart{4}{\item[]
+The depth index of a variable instance $x$ bound in $T$
+is the number of $\lambda$'s of $T$ in whose scope $x$ occurs free.
+Thus, it's a positive integer.
+}
+
+\IncPart{5}{\item[]
+The nameless substitution $T\Subs{V}{1}$
+may update the depth indexes of the free variables
+in the copies of $V$ that it inserts in $T$.
+}
+
+\IncPart{6}{\item[]
+This operation, known as lifting,
+amounts to applying an \stress{update function} $\Uniform{h}$ (where $h \ge 0$)
+to the depth indexes occurring in $V$.
+}
+
+\end{itemize}
+
+\end{slide}

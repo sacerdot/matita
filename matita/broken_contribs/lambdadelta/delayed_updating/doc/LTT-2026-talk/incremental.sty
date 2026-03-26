@@ -1,0 +1,15 @@
+\newif\ifIncremental\Incrementaltrue
+\newcount\IncStep\IncStep=0%
+\newcommand*\IncColor[1]{#1}%
+\newcommand*\IncInput[2]{{%
+  \ifIncremental
+     \loop\ifnum\IncStep<#1\advance\IncStep1\input{#2}\repeat
+  \else
+     \IncStep=#1\input{#2}%
+  \fi
+}}%
+\newcommand\IncPart[2]{%
+   \ifnum#1>\IncStep\color{white}{\renewcommand*\IncColor[1]{white}#2}%
+   \else{#2}\fi
+}%
+\newcommand*\NoIncremental{\Incrementalfalse}%

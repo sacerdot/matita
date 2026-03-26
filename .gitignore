@@ -1,5 +1,16 @@
+.latexmkrc
+*.aux
+*.log
+*.blg
+*.fls
+*.fdb_latexmk
+*.out
+*.pag
 *.exe
+*.zip
 _build
+matita/broken_contribs/lambdadelta/delayed_updating/doc/LTT-2026-paper/*.pdf
+matita/broken_contribs/lambdadelta/delayed_updating/doc/LTT-2026-talk/*.pdf
 matita/broken_contribs/lambdadelta/bin/*/_build
 matita/broken_contribs/lambdadelta/.depend
 matita/broken_contribs/lambdadelta/bin/recomm/srcs

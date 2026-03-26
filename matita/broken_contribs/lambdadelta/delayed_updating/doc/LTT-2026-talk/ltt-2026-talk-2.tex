@@ -1,0 +1,55 @@
+\begin{slide}
+\begin{center}\Title{Our proposal}\end{center}
+
+\begin{itemize}
+
+\IncPart{1}{\item[]
+We recall that $\Uniform{h}\Appl{n} \bydef n + h$
+appears first in early de Bruijn's works,
+where the theory of update functions finds its foundation.
+}
+
+\IncPart{2}{\item[]
+A class of systems originating from these works and from $\LS$
+\stress{delay} the application of update functions
+by storing them in their syntax.
+}
+
+\IncPart{3}{\item[]
+The main reason for so doing is allowing
+a computation either to delay updates at will or to apply them whenever is the case.
+}
+
+\IncPart{4}{\item[]
+The system we are presenting here today belongs to this class.
+}
+
+\IncPart{5}{\item[]
+We wish to introduce a $\beta$-reduction step $\EFStep{}$
+that is \stress{focused} and \stress{expanding},
+We explain these terms by means of an example.
+}
+
+\IncPart{5}{\item[]
+\begin{center}
+$\Comp{\Abst{x}x\Appl{x}}\Appl{V} =
+ \Comp{\Abst{}1\Appl{\mstress{1}}}\Appl{V} \EFStep{}
+ \Comp{\Abst{}1\Appl{\mstress{\IRef{1}V}}}\Appl{V}$
+\end{center}
+}
+
+\IncPart{5}{\item[]
+The step attaches a copy of $V$ after the leaf $\mstress{1}$,
+which becomes an inner node
+and records that we still need to update $V$ with
+$\Uniform{\mstress{\scriptstyle 1}}$.
+}
+
+\IncPart{6}{\item[]
+\stress{Focused} means we replace exactly one instance of $x$.\\
+\stress{Expanding} means the redex is a subtree of the reduct.
+}
+
+\end{itemize}
+
+\end{slide}

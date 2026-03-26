@@ -1,0 +1,22 @@
+\newcommand\BColorSet{1}
+
+\usepackage[includefoot,screen,centering,hmargin=3em,vmargin={8ex,2ex}]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\headheight}{3ex}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\authorrunning: \emph{\titlerunning}}
+\fancyfoot[R]{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0ex}
+\renewcommand{\footrulewidth}{0ex}
+
+\newenvironment{slide}{\huge}{\newpage}
+\newcommand*\slidelabel[1]{\label{slide:#1}}
+\newcommand*\slideref[1]{\pageref{slide:#1}}
+\newcommand*\slidetitle[1]{%
+  \begin{center}\textbf{#1}\end{center}%
+}

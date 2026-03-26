@@ -1,0 +1,63 @@
+\begin{slide}
+\begin{center}\Title{Our main definitions}\end{center}
+
+\begin{itemize}
+
+\IncPart{1}{\item[]
+In this setting $T\Subs{W}{V}$ replaces the set of paths $V$ with $W$ in $T$
+and $\IS\LabP{p}\LabP{T} \bydef \ExpSubset{\IS\LabP{p}\LabP{q}}{q \in T}$
+for $p$ and $q$ arbitrary segments of paths.
+}
+
+\IncPart{1}{\item[]
+\stress{Definition (subtree).}
+Let $\IS\Subtree{T}(p) \bydef \ExpSubset{q}{\IS\LabP{p}\LabP{q} \in T}$. 
+}
+
+\IncPart{2}{\item[]
+\stress{Balanced segments}
+are a key notion in reduction at a distance.
+}
+
+\IncPart{2}{\item[]
+\stress{Definition (balanced segment).}
+$\Empty$ (the empty path segment) is balanced,
+if $b$ and $c$ are balanced so are:
+$\IS\LabA\LabP{b}\LabL$,
+$\IS\LabD{h}\LabP{b}$,
+$\IS\LabP{b}\LabD{h}$,
+$\IS\LabP{b}\LabP{c}$.
+}
+
+\IncPart{3}{\item[]
+When $\IS\LabP{p}\LabL\LabP{q}\LabP{(n+1)} \in T$ and $n \in \N$
+the occurrence $n+1$ \stress{refers to the displayed} $\IS\LabL$
+when $\Depth{q} = n$, with $\Depth{q}$ aware of delayed lifts.
+}
+
+\IncPart{4}{\item[]
+\stress{Definition (depth).}
+$\Depth{p} \in \N$ is given by:
+$\Depth{\Empty} \bydef 0$,
+$\Depth{\IS\LabP{p}\LabA} \bydef \Depth{\IS\LabP{p}\LabS} \bydef \Depth{p}$,
+$\Depth{\IS\LabP{p}\LabL} \bydef \Depth{p}+1$,
+if $\Depth{p} \ge h$ then $\Depth{\IS\LabP{p}\LabD{h}} \bydef \Depth{p}-h$.
+}
+
+\IncPart{5}{\item[]
+\stress{Definition (ef-reduction).}
+If $r = \IS\LabP{p}\LabA\LabP{b}\LabL\LabP{q}\LabP{(n+1)} \in T$,
+$b$ is balanced and $\Depth{q} = n \in \N$ then
+$T \EFStep{r} T\Subs{\IS\LabP{r}\Subtree{T}(\IS\LabP{p}\LabS)}{r}$.
+}
+
+\IncPart{6}{\item[]
+\stress{Key observation.}
+The delayed lifts in the segment $b$
+are never applied to any variable occurrence
+and thus we can rule them out.
+}
+
+\end{itemize}
+
+\end{slide}

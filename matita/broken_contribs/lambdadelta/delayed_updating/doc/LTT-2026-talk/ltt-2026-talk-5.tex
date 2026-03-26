@@ -1,0 +1,50 @@
+\begin{slide}
+\begin{center}\Title{Concluding remarks}\end{center}
+
+\begin{itemize}
+
+\IncPart{1}{\item[]
+An \stress{algorithm} exists to check if a path $r \in T$ has the form
+$\IS\LabP{p}\LabA\LabP{b}\LabL\LabP{q}\\\LabP{(n+1)}$
+in which $b$ and $q$ meet the requirements for ef-reduction.
+}
+
+\IncPart{2}{\item[]
+To \stress{apply} the delayed lifts in a path $\IS\LabP{p}\LabD{n} \in T$
+we remove them from $p$ and we apply to $n$ a suitable update function depending on $p$.
+}
+
+\IncPart{3}{\item[]
+The inductive definition of this update function $\UnfoldF{p}{f}$ (unfold)
+requires a parameter $f$ whose initial value is the \stress{identity function}.
+}
+
+\IncPart{4}{\item[]
+\stress{Definition (push).}
+The push $\Push f$ of a function $f$ is a well-known function given by:
+$(\Push f)\Appl{1} \bydef 1, (\Push f)\Appl{n+1} \bydef (\Push f)\Appl{n}+1$.
+}
+
+\IncPart{4}{\item[]
+\stress{Definition (unfold).}
+The function $\UnfoldF{p}{f}$ is given by:
+$\UnfoldF{\Empty}{f} \bydef f$,\\
+$\UnfoldF{\IS\LabP{p}\LabA}{f} \bydef \UnfoldF{\IS\LabP{p}\LabS}{f} \bydef \UnfoldF{p}{f}$,
+$\UnfoldF{\IS\LabP{p}\LabL}{f} \bydef \UnfoldF{p}{(\Push f)}$,
+$\UnfoldF{\IS\LabP{p}\LabD{h}}{f} \bydef (\UnfoldF{\IS\LabP{p}}{f})\After\Uniform{h}$.
+}
+
+\IncPart{5}{\item[]
+We can express other reductions in this system as well.
+For instance variants of non-expanding focused $\beta$-reduction and $\zeta$-reduction.
+}
+
+\IncPart{6}{\item[]
+We are verifying that all these reductions have desired properties,
+e.g., \stress{confluence}.
+Such results will appear in a forthcoming article.
+}
+
+\end{itemize}
+
+\end{slide}

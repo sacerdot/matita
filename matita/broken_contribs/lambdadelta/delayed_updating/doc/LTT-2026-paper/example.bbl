@@ -1,0 +1,273 @@
+\begin{thebibliography}{10}
+\providecommand{\bibitemdeclare}[2]{}
+\providecommand{\surnamestart}{}
+\providecommand{\surnameend}{}
+\providecommand{\urlprefix}{Available at }
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\href}[2]{\texttt{#2}}
+\providecommand{\urlalt}[2]{\href{#1}{#2}}
+\providecommand{\doi}[1]{doi:\urlalt{https://doi.org/#1}{#1}}
+\providecommand{\eprint}[1]{arXiv:\urlalt{https://arxiv.org/abs/#1}{#1}}
+\providecommand{\bibinfo}[2]{#2}
+
+\bibitemdeclare{article}{Aba91}
+\bibitem{Aba91}
+\bibinfo{author}{M.~\surnamestart {Abadi}\surnameend},
+  \bibinfo{author}{L.~\surnamestart {Cardelli}\surnameend},
+  \bibinfo{author}{P.-L. \surnamestart {Curien}\surnameend} \&
+  \bibinfo{author}{J.-J. \surnamestart {L\'evy}\surnameend}
+  (\bibinfo{year}{1991}): \emph{\bibinfo{title}{{Explicit Substitutions}}}.
+\newblock {\slshape \bibinfo{journal}{J. of Functional Programming}}
+  \bibinfo{volume}{1}(\bibinfo{number}{4}), pp. \bibinfo{pages}{375--416},
+  \doi{10.1017/S0956796800000186}.
+
+\bibitemdeclare{inproceedings}{AccKes}
+\bibitem{AccKes}
+\bibinfo{author}{B.~\surnamestart {Accattoli}\surnameend} \&
+  \bibinfo{author}{D.~\surnamestart {Kesner}\surnameend}
+  (\bibinfo{year}{2010}): \emph{\bibinfo{title}{{The structural
+  lambda-calculus}}}.
+\newblock In \bibinfo{editor}{A.~\surnamestart {Dawar}\surnameend} \&
+  \bibinfo{editor}{H.~\surnamestart {Veith}\surnameend}, editors: {\slshape
+  \bibinfo{booktitle}{{Computer Science Logic}}}, {\slshape
+  \bibinfo{series}{LNCS}} \bibinfo{volume}{6247}, \bibinfo{publisher}{Springer
+  Berlin, Heidelberg}, pp. \bibinfo{pages}{381--395},
+  \doi{10.1007/978-3-642-15205-4\_30}.
+\newblock \bibinfo{note}{24th International Workshop, CSL 2010, 19th Annual
+  Conference of the EACSL, Brno, Czech Republic, August 23-27, 2010,
+  Proceedings}.
+
+\bibitemdeclare{inproceedings}{AccKes12}
+\bibitem{AccKes12}
+\bibinfo{author}{B.~\surnamestart {Accattoli}\surnameend} \&
+  \bibinfo{author}{D.~\surnamestart Kesner\surnameend} (\bibinfo{year}{2012}):
+  \emph{\bibinfo{title}{{The Permutative $\lambda$-Calculus}}}.
+\newblock In \bibinfo{editor}{N.~\surnamestart Bj{\o}rner\surnameend} \&
+  \bibinfo{editor}{A.~\surnamestart Voronkov\surnameend}, editors: {\slshape
+  \bibinfo{booktitle}{{Logic for Programming, Artificial Intelligence, and
+  Reasoning}}}, {\slshape \bibinfo{series}{LNCS}} \bibinfo{volume}{7180},
+  \bibinfo{publisher}{Springer Berlin Heidelberg}, pp. \bibinfo{pages}{23--36},
+  \doi{10.1007/978-3-642-28717-6\_5}.
+\newblock \bibinfo{note}{18th International Conference, LPAR-18, Merida,
+  Venezuela, March 11-15, 2012, Proceedings}.
+
+\bibitemdeclare{inproceedings}{Asp}
+\bibitem{Asp}
+\bibinfo{author}{A.~\surnamestart {Asperti}\surnameend},
+  \bibinfo{author}{W.~\surnamestart {Ricciotti}\surnameend},
+  \bibinfo{author}{C.~\surnamestart {Sacerdoti Coen}\surnameend} \&
+  \bibinfo{author}{E.~\surnamestart Enrico~{Tassi}\surnameend}
+  (\bibinfo{year}{2011}): \emph{\bibinfo{title}{{The Matita Interactive Theorem
+  Prover}}}.
+\newblock In \bibinfo{editor}{N.~\surnamestart {Bj{\o}rner}\surnameend} \&
+  \bibinfo{editor}{V.~\surnamestart {Sofronie-Stokkermans}\surnameend},
+  editors: {\slshape \bibinfo{booktitle}{{Automated Deduction -- CADE-23}}},
+  {\slshape \bibinfo{series}{LNCS}} \bibinfo{volume}{6803},
+  \bibinfo{publisher}{Springer Berlin, Heidelberg}, pp.
+  \bibinfo{pages}{64--69}, \doi{10.1007/978-3-642-22438-6\_7}.
+\newblock \bibinfo{note}{23rd International Conference on Automated Deduction,
+  Wrocław, Poland, July 31 -- August 5, 2011, Proceedings}.
+
+\bibitemdeclare{inproceedings}{BarBon}
+\bibitem{BarBon}
+\bibinfo{author}{P.~\surnamestart {Barenbaum}\surnameend} \&
+  \bibinfo{author}{E.~\surnamestart {Bonelli}\surnameend}
+  (\bibinfo{year}{2017}): \emph{\bibinfo{title}{{Optimality and the Linear
+  Substitution Calculus}}}.
+\newblock In \bibinfo{editor}{D.~\surnamestart {Miller}\surnameend}, editor:
+  {\slshape \bibinfo{booktitle}{{2nd International Conference on Formal
+  Structures for Computation and Deduction (FSCD 2017)}}}, {\slshape
+  \bibinfo{series}{Leibniz International Proceedings in Informatics
+  (LIPIcs)}}~\bibinfo{volume}{84}, \bibinfo{publisher}{Schloss Dagstuhl --
+  Leibniz-Zentrum f{\"u}r Informatik}, pp. \bibinfo{pages}{9:1--9:16},
+  \doi{10.4230/LIPIcs.FSCD.2017.9}.
+
+\bibitemdeclare{incollection}{Bar92}
+\bibitem{Bar92}
+\bibinfo{author}{H.P. \surnamestart {Barendregt}\surnameend}
+  (\bibinfo{year}{1992}): \emph{\bibinfo{title}{{Lambda Calculi with Types}}}.
+\newblock In \bibinfo{editor}{S.~\surnamestart {Abramsky}\surnameend},
+  \bibinfo{editor}{D.M. \surnamestart {Gabbay}\surnameend} \&
+  \bibinfo{editor}{T.~\surnamestart {Maibaum}\surnameend}, editors: {\slshape
+  \bibinfo{booktitle}{{Background: Computational Structures}}}, {\slshape
+  \bibinfo{series}{Handbook of Logic in Computer Science}}~\bibinfo{volume}{2},
+  \bibinfo{publisher}{Clarendon Press}, pp. \bibinfo{pages}{117--309},
+  \doi{10.1093/oso/9780198537618.003.0002}.
+
+\bibitemdeclare{article}{CHL96}
+\bibitem{CHL96}
+\bibinfo{author}{P.-L. \surnamestart {Curien}\surnameend}, \bibinfo{author}{Th.
+  \surnamestart {Hardin}\surnameend} \& \bibinfo{author}{J.-J. \surnamestart
+  {L\'evy}\surnameend} (\bibinfo{year}{1996}):
+  \emph{\bibinfo{title}{{Confluence Properties of Weak and Strong Calculi of
+  Explicit Substitutions}}}.
+\newblock {\slshape \bibinfo{journal}{Journal of the ACM}}
+  \bibinfo{volume}{43}(\bibinfo{number}{2}), pp. \bibinfo{pages}{362--397},
+  \doi{10.1145/226643.226675}.
+
+\bibitemdeclare{article}{deB72}
+\bibitem{deB72}
+\bibinfo{author}{N.G. \surnamestart {de Bruijn}\surnameend}
+  (\bibinfo{year}{1972}): \emph{\bibinfo{title}{{Lambda calculus notation with
+  nameless dummies, a tool for automatic formula manipulation, with application
+  to the Church-Rosser theorem}}}.
+\newblock {\slshape \bibinfo{journal}{Indagationes Math.}}
+  \bibinfo{volume}{75}(\bibinfo{number}{5}), pp. \bibinfo{pages}{381--392},
+  \doi{10.1016/1385-7258(72)90034-0}.
+\newblock \bibinfo{note}{Also in \cite{NedGeuDeV}}.
+
+\bibitemdeclare{techreport}{deB77}
+\bibitem{deB77}
+\bibinfo{author}{N.G. \surnamestart {de Bruijn}\surnameend}
+  (\bibinfo{year}{1977}): \emph{\bibinfo{title}{{A namefree lambda calculus
+  with formulas involving symbols that represent reference transforming
+  mappings}}}.
+\newblock \bibinfo{type}{Memorandum} \bibinfo{number}{1977-10},
+  \bibinfo{institution}{Eindhoven University of Technology, Dept. of Math.}
+\newblock \bibinfo{note}{See also The Automath Archive AUT 050,
+  www.win.tue.nl$>$Automath}.
+
+\bibitemdeclare{techreport}{deB78a}
+\bibitem{deB78a}
+\bibinfo{author}{N.G. \surnamestart {de Bruijn}\surnameend}
+  (\bibinfo{year}{1978}): \emph{\bibinfo{title}{{A namefree lambda calculus
+  with facilities for internal definitions of expressions and segments}}}.
+\newblock \bibinfo{type}{EUT-report} \bibinfo{number}{78-WSK-03},
+  \bibinfo{institution}{Eindhoven University of Technology}.
+\newblock \bibinfo{note}{See also The Automath Archive AUT 059,
+  www.win.tue.nl$>$Automath}.
+
+\bibitemdeclare{article}{deB78b}
+\bibitem{deB78b}
+\bibinfo{author}{N.G. \surnamestart {de Bruijn}\surnameend}
+  (\bibinfo{year}{1978}): \emph{\bibinfo{title}{{Lambda calculus notation with
+  namefree formulas involving symbols that represent reference transforming
+  mappings}}}.
+\newblock {\slshape \bibinfo{journal}{Indagationes Math.}}
+  \bibinfo{volume}{81}(\bibinfo{number}{1}), pp. \bibinfo{pages}{348--356},
+  \doi{10.1016/1385-7258(78)90052-5}.
+\newblock \bibinfo{note}{See also The Automath Archive AUT 055,
+  www.win.tue.nl$>$Automath}.
+
+\bibitemdeclare{incollection}{deB87}
+\bibitem{deB87}
+\bibinfo{author}{N.G. \surnamestart {de Bruijn}\surnameend}
+  (\bibinfo{year}{1987}): \emph{\bibinfo{title}{{Generalizing Automath by means
+  of a lambda-typed lambda calculus}}}.
+\newblock In \bibinfo{editor}{D.W. \surnamestart {Kueker}\surnameend},
+  \bibinfo{editor}{E.G.K. \surnamestart {Lopez-Escobar}\surnameend} \&
+  \bibinfo{editor}{C.H. \surnamestart {Smith}\surnameend}, editors: {\slshape
+  \bibinfo{booktitle}{{Mathematical logic and theoretical computer science}}},
+  {\slshape \bibinfo{series}{Lecture notes in pure and applied mathematics}}
+  \bibinfo{volume}{106}, \bibinfo{publisher}{Marcel Dekker Inc.}, pp.
+  \bibinfo{pages}{71--92}.
+\newblock \bibinfo{note}{Also in \cite{NedGeuDeV}}.
+
+\bibitemdeclare{techreport}{Gui09}
+\bibitem{Gui09}
+\bibinfo{author}{F.~\surnamestart {Guidi}\surnameend} (\bibinfo{year}{2009}):
+  \emph{\bibinfo{title}{{Landau's ``Grundlagen der Analysis'' from Automath to
+  lambda-delta}}}.
+\newblock \bibinfo{type}{Technical Report} \bibinfo{number}{UBLCS 2009-16},
+  \bibinfo{institution}{University of Bologna}.
+
+\bibitemdeclare{article}{KB05}
+\bibitem{KB05}
+\bibinfo{author}{F.~\surnamestart {Kamareddine}\surnameend} \&
+  \bibinfo{author}{R.~\surnamestart {Bloo}\surnameend} (\bibinfo{year}{2005}):
+  \emph{\bibinfo{title}{{De Bruijn's syntax and reductional behaviour of
+  lambda-terms: the untyped case}}}.
+\newblock {\slshape \bibinfo{journal}{Journal of Logic and Algebraic
+  Programming}} \bibinfo{volume}{62}(\bibinfo{number}{1}), pp.
+  \bibinfo{pages}{109--131}, \doi{10.1016/j.jlap.2004.01.001}.
+
+\bibitemdeclare{article}{KN93}
+\bibitem{KN93}
+\bibinfo{author}{F.D. \surnamestart {Kamareddine}\surnameend} \&
+  \bibinfo{author}{R.P. \surnamestart {Nederpelt}\surnameend}
+  (\bibinfo{year}{1993}): \emph{\bibinfo{title}{{On stepwise explicit
+  substitution}}}.
+\newblock {\slshape \bibinfo{journal}{Int. Journal of Foundations of Computer
+  Science}} \bibinfo{volume}{4}(\bibinfo{number}{3}), pp.
+  \bibinfo{pages}{197--240}, \doi{10.1142/S0129054193000146}.
+
+\bibitemdeclare{book}{Klu05}
+\bibitem{Klu05}
+\bibinfo{author}{W.~\surnamestart {Kluge}\surnameend} (\bibinfo{year}{2005}):
+  \emph{\bibinfo{title}{{Abstract Computing Machines --- A Lambda Calculus
+  Perspective}}}.
+\newblock \bibinfo{series}{Texts in Theoretical Computer Science. An EATCS
+  Series}, \bibinfo{publisher}{Springer Berlin, Heidelberg},
+  \doi{10.1007/b138965}.
+
+\bibitemdeclare{phdthesis}{Ned73}
+\bibitem{Ned73}
+\bibinfo{author}{R.P. \surnamestart {Nederpelt}\surnameend}
+  (\bibinfo{year}{1973}): \emph{\bibinfo{title}{{Strong normalisation in a
+  typed lambda-calculus with lambda-structured types}}}.
+\newblock Ph.D. thesis, \bibinfo{school}{Eindhoven University of Technology}.
+\newblock \bibinfo{note}{Also in \cite{NedGeuDeV}}.
+
+\bibitemdeclare{techreport}{Ned79}
+\bibitem{Ned79}
+\bibinfo{author}{R.P. \surnamestart {Nederpelt}\surnameend}
+  (\bibinfo{year}{1979}): \emph{\bibinfo{title}{{A system of lambda-calculus
+  possessing facilities for typing and abbreviating, Part I: Informal
+  introduction}}}.
+\newblock \bibinfo{type}{Memorandum} \bibinfo{number}{1979-02},
+  \bibinfo{institution}{Department of Mathematics, Eindhoven University of
+  Technology}.
+\newblock \bibinfo{note}{The Automath Archive AUT 068,
+  www.win.tue.nl$>$Automath}.
+
+\bibitemdeclare{techreport}{Ned80}
+\bibitem{Ned80}
+\bibinfo{author}{R.P. \surnamestart {Nederpelt}\surnameend}
+  (\bibinfo{year}{1980}): \emph{\bibinfo{title}{{A system of lambda-calculus
+  possessing facilities for typing and abbreviating, Part II: Formal
+  description}}}.
+\newblock \bibinfo{type}{Memorandum} \bibinfo{number}{1980-11},
+  \bibinfo{institution}{Department of Mathematics, Eindhoven University of
+  Technology}.
+\newblock \bibinfo{note}{The Automath Archive AUT 075,
+  www.win.tue.nl$>$Automath}.
+
+\bibitemdeclare{proceedings}{NedGeuDeV}
+\bibitem{NedGeuDeV}
+\bibinfo{editor}{R.P. \surnamestart {Nederpelt}\surnameend},
+  \bibinfo{editor}{J.H. \surnamestart {Geuvers}\surnameend} \&
+  \bibinfo{editor}{R.C. \surnamestart {de Vrijer}\surnameend}, editors
+  (\bibinfo{year}{1994}): \emph{\bibinfo{title}{{Selected Papers on
+  Automath}}}. {\slshape \bibinfo{series}{Studies in Logic and the Foundations
+  of Mathematics}} \bibinfo{volume}{133}, \bibinfo{publisher}{North-Holland
+  Pub. Co.}
+
+\bibitemdeclare{techreport}{Reg92}
+\bibitem{Reg92}
+\bibinfo{author}{L.~\surnamestart {Regnier}\surnameend} (\bibinfo{year}{1992}):
+  \emph{\bibinfo{title}{{Lambda-calcul et reseaux}}}.
+\newblock \bibinfo{type}{These de doctorat}, \bibinfo{institution}{Universite
+  Paris 7}.
+
+\bibitemdeclare{article}{Reg94}
+\bibitem{Reg94}
+\bibinfo{author}{L.~\surnamestart {Regnier}\surnameend} (\bibinfo{year}{1994}):
+  \emph{\bibinfo{title}{{Une \'{e}quivalence sur les lambda-termes}}}.
+\newblock {\slshape \bibinfo{journal}{Theoretical Computer Science}}
+  \bibinfo{volume}{126}(\bibinfo{number}{2}), pp. \bibinfo{pages}{281--292},
+  \doi{10.1016/0304-3975(94)90012-4}.
+
+\bibitemdeclare{inproceedings}{Ros93}
+\bibitem{Ros93}
+\bibinfo{author}{K.H. \surnamestart {Rose}\surnameend} (\bibinfo{year}{1993}):
+  \emph{\bibinfo{title}{{Explicit cyclic substitution}}}.
+\newblock In \bibinfo{editor}{M.~\surnamestart {Rusinowitch}\surnameend} \&
+  \bibinfo{editor}{J.-L. \surnamestart {R\'emy}\surnameend}, editors: {\slshape
+  \bibinfo{booktitle}{{Conditional Term Rewriting Systems}}}, {\slshape
+  \bibinfo{series}{LNCS}} \bibinfo{volume}{656}, \bibinfo{publisher}{Springer
+  Berlin, Heidelberg}, pp. \bibinfo{pages}{36--50},
+  \doi{10.1007/3-540-56393-8\_3}.
+\newblock \bibinfo{note}{Third International Workshop, CTRS-92, Pont-a-Mousson,
+  France, July 8-10, 1992. Proceedings}.
+
+\end{thebibliography}
