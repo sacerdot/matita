@@ -3,7 +3,6 @@
 *)
 
 include "convergence/classes/fun_id_s.ma".
-include "convergence/directions/dir_le_s.ma".
 include "convergence/limits/dir_limit_s.ma".
 
 (* LIMIT FOR DIRECTION ******************************************************)
