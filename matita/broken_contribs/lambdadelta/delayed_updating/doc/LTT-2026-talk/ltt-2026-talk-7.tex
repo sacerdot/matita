@@ -1,0 +1,60 @@
+\begin{slide}
+\begin{center}\Title{Appendix}\end{center}
+
+\begin{itemize}
+
+\IncPart{1}{\item[]
+When $\IRef{h}T$ denotes the delayed application of $\Uniform{h}$ to $T$
+(\ie, this construct has a context-free semantics),
+we can set the next definitions.
+}
+
+\IncPart{2}{\item[]
+\stress{Definition (depth).}
+$\Depth{p} \in \N$ is given by:
+$\Depth{\Empty} \bydef 0$,
+$\Depth{\IS\LabP{p}\LabA} \bydef \Depth{\IS\LabP{p}\LabS} \bydef \Depth{p}$,
+$\Depth{\IS\LabP{p}\LabL} \bydef \Depth{p}+1$,
+if $\mstress{\Depth{p} \ge h}$
+then $\mstress{\Depth{\IS\LabP{p}\LabD{h}} \bydef \Depth{p}-h}$.
+}
+
+\IncPart{3}{\item[]
+The inductive definition of the unfold update function $\UnfoldF{p}{f}$
+requires a parameter $f$ whose initial value is the \stress{identity function}.
+}
+
+\IncPart{3}{\item[]
+\stress{Definition (push).}
+The push $\Push f$ of a function $f$ is a well-known function we define by:
+$(\Push f)\Appl{1} \bydef 1, (\Push f)\Appl{n+1} \bydef (\Push f)\Appl{n}+1$.
+}
+
+\IncPart{3}{\item[]
+\stress{Definition (unfold).}
+The function $\UnfoldF{p}{f}$ is given by:
+$\UnfoldF{\Empty}{f} \bydef f$,\\
+$\UnfoldF{\IS\LabP{p}\LabA}{f} \bydef \UnfoldF{\IS\LabP{p}\LabS}{f} \bydef \UnfoldF{p}{f}$,
+$\UnfoldF{\IS\LabP{p}\LabL}{f} \bydef \UnfoldF{p}{(\Push f)}$,
+$\mstress{\UnfoldF{\IS\LabP{p}\LabD{h}}{f} \bydef (\UnfoldF{\IS\LabP{p}}{f})\After\Uniform{h}}$.
+}
+
+\IncPart{4}{\item[]
+Applying an update function $f$ to a path (lifting) requires
+the  well-known function that we define by:
+$(\Tail{f}{h})\Appl{n} \bydef f\Appl{h+n}-f\Appl{h}$.
+}
+
+\IncPart{4}{\item[]
+\stress{Definition (lift).}
+The lift $\Lift{f}{p}$ is defined by:
+$\Lift{f}{\Empty} \bydef \Empty$,
+$\Lift{f}{\IS\LabA\LabP{p}} \bydef \IS\LabA\Lift{f}{p}$,
+$\Lift{f}{\IS\LabS\LabP{p}} \bydef \IS\LabS\Lift{f}{p}$,
+$\Lift{f}{\IS\LabL\LabP{p}} \bydef \IS\LabL\Lift{\Push f}{p}$,
+$\mstress{\Lift{f}{\IS\LabD{h}\LabP{p}} \bydef \IS\LabD{f\Appl{h}}\Lift{\Tail{f}{h}}{p}}$.
+}
+
+\end{itemize}
+
+\end{slide}

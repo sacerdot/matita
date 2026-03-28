@@ -36,26 +36,23 @@ when $\Depth{q} = n$, with $\Depth{q}$ aware of delayed lifts.
 }
 
 \IncPart{4}{\item[]
-\stress{Definition (depth).}
-$\Depth{p} \in \N$ is given by:
-$\Depth{\Empty} \bydef 0$,
-$\Depth{\IS\LabP{p}\LabA} \bydef \Depth{\IS\LabP{p}\LabS} \bydef \Depth{p}$,
-$\Depth{\IS\LabP{p}\LabL} \bydef \Depth{p}+1$,
-if $\Depth{p} \ge h$ then $\Depth{\IS\LabP{p}\LabD{h}} \bydef \Depth{p}-h$.
-}
-
-\IncPart{5}{\item[]
 \stress{Definition (ef-reduction).}
 If $r = \IS\LabP{p}\LabA\LabP{b}\LabL\LabP{q}\LabP{(n+1)} \in T$,
 $b$ is balanced and $\Depth{q} = n \in \N$ then
 $T \EFStep{r} T\Subs{\IS\LabP{r}\Subtree{T}(\IS\LabP{p}\LabS)}{r}$.
 }
 
+\IncPart{5}{\item[]
+\stress{Key observation 1.}
+The introduced delayed lift $n+1$ does not denote $\Uniform{n+1}$
+but $\Uniform{\Length{b}+n+1}$},
+where $\Length{b}$ counts the labels $\LabL$ in $b$.
+
 \IncPart{6}{\item[]
-\stress{Key observation.}
+\stress{Key observation 2.}
 The delayed lifts in the segment $b$
 are never applied to any variable occurrence
-and thus we can rule them out.
+and thus we must rule them out.
 }
 
 \end{itemize}

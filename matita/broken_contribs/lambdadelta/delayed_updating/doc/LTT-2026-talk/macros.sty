@@ -1,32 +1,15 @@
-%\usepackage{enumitem}
-%\usepackage{wasysym}
-%\usepackage{titling}
-%\usepackage{graphbox}
-%\usepackage{tikz}
 \usepackage{amssymb}
 \usepackage{MnSymbol}
 \usepackage{tikz-qtree}
-
-%\setlist{align=left}
-
-%\newcommand*\slidepicture[1]{%
-%  \includegraphics[align=c,width=8em,height=6em]{jpg/#1.jpg}%
-%}
-
-% 45:5 
-%\definecolor{FFiveI}{HTML}{FFC000}
-%\definecolor{FFiveII}{HTML}{0DFF00}
-%\definecolor{FFiveIII}{HTML}{00D9FF}
-%\definecolor{FFiveIV}{HTML}{5A00FF}
-%\definecolor{FFiveV}{HTML}{FF0073}
 
 \newcommand*\Title[1]{\textbf{\color{blue}{#1}}}
 \newcommand*\SlideTitle[1]{\slidetitle{\color{blue}{#1}}}
 
 \newcommand*\stress[1]{\textbf{#1}}
-\newcommand*\mstress[1]{\colorbox{\IncColor{Lavender}}{$#1$}}
+\newcommand*\mstress[1]{\colorbox{\IncColor{Lavender!50}}{$#1$}}
 \newcommand*\bydef{\stackrel{\mathrm{def}}{=}}
 \newcommand*\ie{i.e.}
+\newcommand*\p{^{\prime}}
 
 \newcommand*\ExpSubset[2]{\{#1 \mathrel\vert #2\}}
 \newcommand*\Abst[1]{\lambda #1.}
@@ -38,11 +21,14 @@
 \newcommand*\N{\mathbb{N}}
 \newcommand*\Uniform[1]{\tau_{#1}}
 \newcommand*\After{\mathbin\circ}
+\newcommand*\Length[1]{\vert #1 \vert}
 \newcommand*\Depth[1]{\Vert #1 \Vert}
+\newcommand*\Clear[1]{\underline{#1}}
 \newcommand*\LS{\lambda\sigma}
 \newcommand*\BStep{\Step{\beta}{}}
 \newcommand*\BDStep{\Step{\beta\mathrm{d}}{}}
 \newcommand*\EFStep[1]{\Step{\mathrm{ef}}{#1}}
+\newcommand*\EFpStep[1]{\Step{\mathrm{ef}\p}{#1}}
 \newcommand*\IS{\!}
 \newcommand*\LabL{\,\mathsf{L}}
 \newcommand*\LabA{\,\mathsf{A}}
@@ -53,14 +39,5 @@
 \newcommand*\Subtree[1]{\,\mathop{\mathrm{tree}}_{\,#1}}
 \newcommand*\UnfoldF[2]{ #2\After #1}
 \newcommand*\Push{\mathop\upspoon}
-
-% \newcommand*\Item{\item[\color{FFiveIV}{$\RHD$}]}
-
-% \newcommand*\Set[2]{\def\TMP{#2}\{#1\ifx\TMP\empty\else\mathrel\vert #2\fi\}}
-% \newcommand*\Pair[2]{(#1,#2)}
-% \newcommand*\Fun[2]{#1\mapsto #2}
-% \newcommand*\Tuple[3]{{#1}_{#2} \ldots {#1}_{#3}}
-
-% \newcommand*\LI{\lambda\mathrm{I}}
-% \newcommand*\LK{\lambda\mathrm{K}}
-% \newcommand*\AUTQE{\mathrm{AUT-QE}}
+\newcommand*\Tail[2]{#1\mathbin\downspoon #2}
+\newcommand*\Lift[2]{\mathop\uparrow^{#1}#2}
