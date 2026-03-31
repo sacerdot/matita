@@ -20,7 +20,6 @@ include "delayed_updating/reduction/prototerm_x_redex_root_eq.ma".
 include "delayed_updating/reduction/prototerm_x_focus_ol.ma".
 include "delayed_updating/reduction/prototerm_delayed_ol.ma".
 include "delayed_updating/reduction/prototerm_delayed_cx_redex.ma".
-include "delayed_updating/reduction/preterm_cx_redex_clear.ma".
 include "delayed_updating/reduction/preterm_delayed_x_focus_cx_redex.ma".
 include "delayed_updating/reduction/dbf_step_inv.ma".
 include "delayed_updating/reduction/dbf_step_adv.ma".

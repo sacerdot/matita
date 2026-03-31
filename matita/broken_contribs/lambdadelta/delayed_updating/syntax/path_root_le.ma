@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 include "delayed_updating/notation/relations/sqsubseteq_2.ma".
-include "delayed_updating/notation/relations/not_sqsubseteq_2.ma".
+include "delayed_updating/notation/relations/neg_sqsubseteq_2.ma".
 include "delayed_updating/syntax/prototerm.ma".
 
 (* ROOT ORDER FOR PATH ******************************************************)
@@ -28,7 +28,7 @@ interpretation
 
 interpretation
   "negated root order (path)"
-  'NotSqSubsetEq p1 p2 = (negation (path_rle p1 p2)).
+  'NegSqSubsetEq p1 p2 = (negation (path_rle p1 p2)).
 
 (* Basic constructions ******************************************************)
 

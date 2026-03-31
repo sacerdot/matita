@@ -12,16 +12,34 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/reduction/prototerm_dbf_residuals_eq.ma".
-include "delayed_updating/computation/prototerm_dbf_c_residuals.ma".
+include "delayed_updating/reduction/prototerm_dbf_residuals.ma".
+include "delayed_updating/notation/relations/epsilon_star_2.ma".
+include "delayed_updating/notation/relations/neg_epsilon_star_2.ma".
 
-(* CUMULATED RESIDUALS OF A SUBSET OF DBF-REDEX POINTERS ********************)
+(* MEMBERSHIP OF A TRACE TO A SUBSET OF DBF-REDEX POINTERS ******************)
 
-(* Constructions with term_eq ***********************************************)
+rec definition term_ins_dbfr (rs) (u) on rs: Prop ≝
+match rs with
+[ list_empty      ⇒ ⊤
+| list_lcons r rs ⇒ ∧∧ r ϵ u & term_ins_dbfr rs (u /𝐝𝐛𝐟 r)   
+].
 
-lemma term_dbfrs_eq_repl_fwd (rs) (u1) (u2):
-      u1 ⇔ u2 → (u1 /𝐝𝐛𝐟 rs) ⇔ (u2 /𝐝𝐛𝐟 rs).
-#rs elim rs -rs [ // ]
-#r #rs #IH #u1 #u2 #Hu12
-/3 width=1 by term_dbfr_eq_repl_fwd/
-qed-.
+interpretation
+  "trace membership (subset of dbf-redex pointers)"
+  'EpsilonStar rs u = (term_ins_dbfr rs u).
+
+interpretation
+  "negated trace membership (subset of dbf-redex pointers)"
+  'NegEpsilonStar rs u = (negation (term_ins_dbfr rs u)).
+
+(* Basic constructions ******************************************************)
+
+lemma term_ins_dbfr_empty (u):
+      (ⓔ) ϵ* u.
+//
+qed.
+
+lemma term_ins_dbfr_lcons (r) (rs) (u):
+      r ϵ u → rs ϵ* u /𝐝𝐛𝐟 r → r⨮rs ϵ* u.
+/2 width=1 by conj/
+qed.

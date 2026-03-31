@@ -40,7 +40,7 @@ lemma term_dbfr_side_sx (r1) (p1) (p2) (b1) (b2) (q1) (q2) (n2) (n1) (x1) (x2):
       p1◖𝗦 ⧸≚ 𝐫❨p2,b2,q2,n2❩ → p2◖𝗦●x1 = r1 →
       ❴𝐫❨p2,b2,q2,n2❩●x2❵ ⇔ ❴r1,𝐫❨p2,b2,q2,n2❩●x2❵ /𝐝𝐛𝐟 r1.
 #r1 #p1 #p2 #b1 #b2 #q1 #q2 #n1 #n2 #x1 #x2 #Hr1 #Hnr2 #H0
-@(subset_eq_trans … (term_dbfr_eq_repl … @ subset_pair_or …))
+@(subset_eq_trans … (term_dbfr_eq_repl_fwd … @ subset_pair_or …))
 @(subset_eq_trans … (term_dbfr_sor …))
 @(subset_eq_trans … (subset_or_eq_repl …))
 [2: @subset_eq_refl |4: // |3,5: skip ]

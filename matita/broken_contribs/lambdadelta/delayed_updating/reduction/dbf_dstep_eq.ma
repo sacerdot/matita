@@ -27,7 +27,7 @@ lemma dbfds_eq_canc_sx (t) (t1) (t2) (u) (u1) (u2):
 @(dbfds_mk … r)
 [ /2 width=3 by subset_in_eq_repl_fwd/
 | /2 width=3 by dbfs_eq_canc_sx/
-| /3 width=3 by subset_eq_canc_sx, term_dbfr_eq_repl/
+| /3 width=3 by subset_eq_canc_sx, term_dbfr_eq_repl_fwd/
 ]
 qed-.
 

@@ -16,7 +16,7 @@ include "ground/xoa/ex_1_2.ma".
 include "delayed_updating/syntax/path_help.ma".
 include "delayed_updating/syntax/path_root_le.ma".
 include "delayed_updating/notation/relations/equiangular_2.ma".
-include "delayed_updating/notation/relations/not_equiangular_2.ma".
+include "delayed_updating/notation/relations/neg_equiangular_2.ma".
 
 (* ROOT EQUIVALENCE FOR PATH ************************************************)
 
@@ -30,7 +30,7 @@ interpretation
 
 interpretation
   "negated root equivalence (path)"
-  'NotEquiangular p1 p2 = (negation (path_req p1 p2)).
+  'NegEquiangular p1 p2 = (negation (path_req p1 p2)).
 
 (* Basic constructions ******************************************************)
 

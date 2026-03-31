@@ -13,4 +13,4 @@
 
 notation "hvbox( x1 ⧸⊑ break term 46 x2 )"
   non associative with precedence 45
-  for @{ 'NotSqSubsetEq $x1 $x2 }.
+  for @{ 'NegSqSubsetEq $x1 $x2 }.

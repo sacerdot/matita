@@ -19,11 +19,11 @@ include "delayed_updating/reduction/prototerm_dbf_residuals_le.ma".
 
 (* Constructions with subset_eq *********************************************)
 
-lemma term_dbfr_eq_repl (u1) (u2) (r):
+lemma term_dbfr_eq_repl_fwd (u1) (u2) (r):
       u1 ⇔ u2 → (u1 /𝐝𝐛𝐟 r) ⇔ (u2 /𝐝𝐛𝐟 r).
 #u1 #u2 #r * #Hu12 #Hu21
 /3 width=3 by term_dbfr_le_repl, conj/
-qed.
+qed-.
 
 lemma term_dbfr_empty (r):
       Ⓕ ⇔ Ⓕ /𝐝𝐛𝐟 r.

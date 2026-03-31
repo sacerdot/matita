@@ -11,6 +11,6 @@
 
 (* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation "hvbox( x1 ⧸≚ break term 46 x2 )"
+notation "hvbox( x1 ϵ* break term 46 x2 )"
   non associative with precedence 45
-  for @{ 'NotEquiangular $x1 $x2 }.
+  for @{ 'EpsilonStar $x1 $x2 }.
