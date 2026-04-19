@@ -24,7 +24,7 @@ lemma path_clear_ppc (p):
 #p #Hp #H0
 lapply (eq_inv_path_empty_clear … H0) -H0 #H0 destruct
 /2 width=1 by ppc_inv_empty/
-qed-.
+qed.
 
 (* Inversions with ppc ******************************************************)
 

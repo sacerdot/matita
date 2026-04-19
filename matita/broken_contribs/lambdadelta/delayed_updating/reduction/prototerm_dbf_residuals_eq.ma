@@ -45,9 +45,9 @@ qed.
 
 (* Destructions with subset_eq **********************************************)
 
-lemma term_eq_des_dbfr_bi_neq (u1) (u2) (r1) (r2):
+lemma term_eq_des_dbfr_bi (u1) (u2) (r1) (r2):
       (∨∨ r1 ϵ u1 | r2 ϵ u2) →
       u1 /𝐝𝐛𝐟 r2 ⇔ u2 /𝐝𝐛𝐟 r1 → r1 = r2.
 #u1 #u2 #r1 #r2 * #Hr * [ #Hu #_ | #_ #Hu @sym_eq ]
-/2 width=4 by term_le_des_dbfr_bi_neq/
+/2 width=4 by term_le_des_dbfr_bi/
 qed-.

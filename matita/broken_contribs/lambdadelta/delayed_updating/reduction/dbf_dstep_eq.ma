@@ -57,6 +57,6 @@ lemma dbfds_inv_dbfr_dx (t1) (t2) (u) (r):
       t1 Ꟈ➡𝐝𝐛𝐟[u, u /𝐝𝐛𝐟 r] t2 →
       ∧∧ r ϵ u & t1 ➡𝐝𝐛𝐟[r] t2.
 #t1 #t2 #u #r * #r0 #Hr0 #Ht12 #Hu
->(term_eq_des_dbfr_bi_neq … Hu) -Hu
+>(term_eq_des_dbfr_bi … Hu) -Hu
 /2 width=1 by or_intror, conj/
 qed-.

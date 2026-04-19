@@ -52,6 +52,11 @@ qed.
 
 (* Negated constructions with subset_le *************************************)
 
+lemma term_nle_dbfr_dx_refl (u) (r):
+      r ϵ u → u ⧸⊆ u /𝐝𝐛𝐟 r.
+/3 width=3 by term_dbfr_inv_refl_dx/
+qed-.
+
 lemma term_nle_dbfr_bi_neq (u1) (u2) (r1) (r2):
       r2 ϵ u2 → r2 ⧸= r1 → u2 /𝐝𝐛𝐟 r1 ⧸⊆ u1 /𝐝𝐛𝐟 r2.
 #u1 #u2 #r1 #r2 #Hr2 #Hnr #Hu
@@ -63,7 +68,7 @@ qed-.
 
 (* Destructions with subset_le **********************************************)
 
-lemma term_le_des_dbfr_bi_neq (u1) (u2) (r1) (r2):
+lemma term_le_des_dbfr_bi (u1) (u2) (r1) (r2):
       r2 ϵ u2 → u2 /𝐝𝐛𝐟 r1 ⊆ u1 /𝐝𝐛𝐟 r2 → r2 = r1.
 #u1 #u2 #r1 #r2 #Hr2 #Hu
 elim (eq_path_dec r2 r1) #Hnr destruct //

@@ -35,7 +35,7 @@ lemma term_dbfrs_empty (u):
 //
 qed.
 
-lemma term_dbfrs_lcons (u) (rs) (r):
+lemma term_dbfrs_cons_sx (u) (rs) (r):
       (u /𝐝𝐛𝐟 r) /𝐝𝐛𝐟 rs = u /𝐝𝐛𝐟 (r⨮rs).
 //
 qed.
@@ -45,7 +45,7 @@ lemma term_dbfrs_append (ss) (rs) (u):
 #ss #rs elim rs -rs //
 qed.
 
-lemma term_dbfrs_rcons (u) (rs) (s):
+lemma term_dbfrs_cons_dx (u) (rs) (s):
       (u /𝐝𝐛𝐟 rs) /𝐝𝐛𝐟 s = u /𝐝𝐛𝐟 (rs⨭s).
 //
 qed.

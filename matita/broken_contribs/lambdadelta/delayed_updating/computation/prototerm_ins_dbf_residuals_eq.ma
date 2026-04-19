@@ -23,5 +23,5 @@ lemma term_ins_dbfr_eq_repl_fwd (rs) (u1) (u2):
       rs ϵ* u1 → u1 ⇔ u2 → rs ϵ* u2.
 #rs elim rs -rs [ // ]
 #r #rs #IH #u1 #u2 * #Hr #Hrs #Hu12
-/4 width=3 by term_ins_dbfr_lcons, term_dbfr_eq_repl_fwd, subset_in_eq_repl_fwd/
+/4 width=3 by term_ins_dbfr_cons_sx, term_dbfr_eq_repl_fwd, subset_in_eq_repl_fwd/
 qed-.

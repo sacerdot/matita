@@ -22,7 +22,7 @@ include "delayed_updating/notation/functions/uptriangle_1.ma".
 
 (* Note: a prototerm is a subset of complete paths *)
 interpretation
-  "prototerm ()"
+  "prototerm (category)"
   'CategoryT = (predicate (list label)).
 
 definition term_grafted (p) (t): 𝕋 ≝

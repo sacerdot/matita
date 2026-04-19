@@ -30,7 +30,7 @@ lemma dbfss_dbfdss (t1) (t2) (rs):
   @(eq_dbfdss_trans … (IH …)) //
 | /2 width=1 by dbfdss_refl/
 | #t1 #t0 #rs #r #Ht10 #_ #IH #u * #Hr #Hrs
-  <term_dbfrs_lcons
+  <term_dbfrs_cons_sx
   /3 width=4 by dbfdss_step_sx, dbfds_mk/
 ]
 qed.
@@ -44,7 +44,7 @@ lemma dbfdss_inv_dbfss (t1) (t2) (u1) (u2):
 [ #t1 #t2 #u1 #u2 #Ht12 #Hu12
   /3 width=4 by frs_refl, ex3_intro/
 | #t1 #t2 #u1 #u2 * #r #Hr #Ht12 #Hu12
-  /3 width=4 by frs_step, term_ins_dbfr_lcons, ex3_intro/
+  /3 width=4 by frs_step, term_ins_dbfr_cons_sx, ex3_intro/
 | #t #t1 #t2 #u #u1 #u2 #_ #_ * #rs1 #Ht1 #Hrs1 #Hu1 * #rs2 #Ht2 #Hrs2 #Hu2
   @(ex3_intro … (rs1⨁rs2))
   [ /2 width=3 by frs_trans/

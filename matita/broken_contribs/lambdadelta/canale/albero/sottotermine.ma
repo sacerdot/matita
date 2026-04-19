@@ -37,7 +37,7 @@ interpretation
 
 (* Eliminazioni di base *****************************************************)
 
-lemma sub_inv_gen (U) (T): U ⊆ T → ∨∨ U = T | U ⊂ T. 
+lemma sub_inv_gen (U) (T): U ⊆ T → ∨∨ U = T | U ⊂ T.
 #U #T * -T
 [ /2 width=1 by or_introl/
 | #T #H0 /2 width=1 by or_intror/

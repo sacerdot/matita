@@ -17,7 +17,7 @@ match r1 with
 | DRef i1 ⇒
   match r2 with
   [ NRef x2 ⇒ Z
-  | DRef i2 ⇒ ptri X i1 i2 Z Y Z 
+  | DRef i2 ⇒ ptri X i1 i2 Z Y Z
   ]
 ].
 

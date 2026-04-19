@@ -17,7 +17,7 @@ include "delayed_updating/notation/functions/circled_zero_1.ma".
 
 (* CLEAR FOR LABELS *********************************************************)
 
-definition label_clear (l) ≝ 
+definition label_clear (l) ≝
 match l with
 [ label_d k ⇒ 𝗱(𝟎)
 | label_L   ⇒ 𝗟

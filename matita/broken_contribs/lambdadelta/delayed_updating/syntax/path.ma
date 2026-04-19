@@ -25,7 +25,7 @@ include "delayed_updating/notation/functions/category_p_0.ma".
 (* Note: a path is a list of labels *)
 (* Note: constructed from the leaf (right end) to the root (left end) *)
 interpretation
-  "path ()"
+  "path (category)"
   'CategoryP = (list label).
 
 interpretation

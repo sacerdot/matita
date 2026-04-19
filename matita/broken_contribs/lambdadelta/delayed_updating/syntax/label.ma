@@ -34,7 +34,7 @@ inductive label: Type[0] ≝
 .
 
 interpretation
-  "label ()"
+  "label (category)"
   'CategoryL = (label).
 
 interpretation

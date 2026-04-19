@@ -21,7 +21,7 @@ include "delayed_updating/notation/relations/neg_epsilon_star_2.ma".
 rec definition term_ins_dbfr (rs) (u) on rs: Prop ≝
 match rs with
 [ list_empty      ⇒ ⊤
-| list_lcons r rs ⇒ ∧∧ r ϵ u & term_ins_dbfr rs (u /𝐝𝐛𝐟 r)   
+| list_lcons r rs ⇒ ∧∧ r ϵ u & term_ins_dbfr rs (u /𝐝𝐛𝐟 r)
 ].
 
 interpretation
@@ -39,7 +39,7 @@ lemma term_ins_dbfr_empty (u):
 //
 qed.
 
-lemma term_ins_dbfr_lcons (r) (rs) (u):
+lemma term_ins_dbfr_cons_sx (r) (rs) (u):
       r ϵ u → rs ϵ* u /𝐝𝐛𝐟 r → r⨮rs ϵ* u.
 /2 width=1 by conj/
 qed.

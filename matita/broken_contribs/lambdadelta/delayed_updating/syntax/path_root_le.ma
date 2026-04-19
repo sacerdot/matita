@@ -12,9 +12,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
+include "delayed_updating/syntax/prototerm.ma".
 include "delayed_updating/notation/relations/sqsubseteq_2.ma".
 include "delayed_updating/notation/relations/neg_sqsubseteq_2.ma".
-include "delayed_updating/syntax/prototerm.ma".
 
 (* ROOT ORDER FOR PATH ******************************************************)
 

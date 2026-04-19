@@ -12,29 +12,21 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "delayed_updating/notation/functions/category_pstar_0.ma".
-include "delayed_updating/syntax/path.ma".
+include "delayed_updating/syntax/path_root_lt.ma".
+include "delayed_updating/reduction/prototerm_dbf_residuals.ma".
 
-(* TRACE ********************************************************************)
+(* RESIDUALS OF A SUBSET OF DBF-REDEX POINTERS ******************************)
 
-(* Note: a trace is a list of redexes fired in a computation *)
-(* Note: constructed from the first (left end) to the last (right end) *)
-interpretation
-  "trace (category)"
-  'CategoryPStar = (list (list label)).
+(* Destructions with rlt ****************************************************)
 
-interpretation
-  "empty (trace)"
-  'ElementE = (list_empty (list label)).
-
-interpretation
-  "left cons (trace)"
-  'BlackHalfCircleRight r ss = (list_lcons (list label) r ss).
-
-interpretation
-  "append (trace)"
-  'BlackCircle rs ss = (list_append (list label) rs ss).
-
-interpretation
-  "right cons (trace)"
-  'BlackHalfCircleLeft rs s = (list_append (list label) rs (list_lcons (list label) s (list_empty (list label)))).
+lemma term_in_dbfr_des_rlt (u) (r) (x):
+      x ϵ u /𝐝𝐛𝐟 r → ∨∨ x ϵ u | ⓪r ⊏ ⓪x.
+#x #u #r * #s #Hs * *
+[ #_ #H0 destruct
+  /2 width=1 by or_introl/
+| #p #b #q1 #q2 #n #Hr #Hq2 #H1 #H2 destruct
+  <path_clear_append <(path_clear_beta_b … (⁤↑n))
+  lapply (pxr_des_eq … Hr) -Hr #H0 destruct
+  /4 width=3 by path_clear_ppc, path_rlt_mk, or_intror/
+]
+qed-.

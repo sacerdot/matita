@@ -43,4 +43,4 @@ lemma dir_pa_alt (X) (D:𝔻𝗌 X):
 elim (dir_pa … HD … Hu1 Hu2) #u #Hu #H0
 @(ex3_intro … u)
 /2 width=4 by subset_le_and_inv_dx_sx, subset_le_and_inv_dx_dx/
-qed-. 
+qed-.

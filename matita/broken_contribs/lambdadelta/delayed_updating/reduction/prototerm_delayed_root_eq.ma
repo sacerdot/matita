@@ -21,7 +21,7 @@ include "delayed_updating/reduction/prototerm_delayed.ma".
 
 (* Constructions with path_root_neq *****************************************)
 
-(* Was: grafted_brd_nol *) 
+(* Was: grafted_brd_nol *)
 lemma grafted_brd_nreq (t) (p1) (p2) (b) (q) (n):
       p1◖𝗔 ⧸≚  p2 → Ⓕ ⇔ ⋔[p2]𝐃❨t,p1,b,q,n❩.
 #t #p1 #p2 #b #q #n #Hnp12

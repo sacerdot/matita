@@ -47,7 +47,7 @@ qed.
 lemma subset_rest_le_repl (A) (R):
       compatible_2_fwd … (subset_le …) (subset_le …) (subset_rest A R).
 #A #R #u1 #u2 #Hu12 #a * #H1a #H2a
-/3 width=1 by subset_and_in/ 
+/3 width=1 by subset_and_in/
 qed.
 
 (* Advanced constructions with subset_le ************************************)

@@ -32,7 +32,7 @@ qed.
 lemma subset_ge_nimp_and_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
       (u ⧵ v1) ∪ (u ⧵ v2) ⊆ u ⧵ (v1 ∩ v2).
 #A #u #v1 #v2 #a * * #Ha #Hna
-/3 width=6 by subset_in_nimp, subset_nin_and_dx, subset_nin_and_sx/ 
+/3 width=6 by subset_in_nimp, subset_nin_and_dx, subset_nin_and_sx/
 qed.
 
 lemma subset_le_or_dx_and_nimp_refl_sx_bi (A) (u) (v):

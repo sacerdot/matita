@@ -26,15 +26,15 @@ qed.
 
 lemma upd_spinta_nref (f) (x:𝕍):
       (↑f) @ x =❪ℝ❫ (⫯f) @ x.
-// 
+//
 qed.
 
 lemma upd_spinta_unit (f):
       (⧣𝟏) = (⫯f) @ ⧣𝟏.
-// 
+//
 qed.
 
 lemma upd_spinta_succ (f) (i):
       (↑f) @ (⧣i) = (⫯f) @ ⧣↑i.
-// 
+//
 qed.

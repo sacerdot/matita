@@ -9,8 +9,8 @@
      \ /
       V_______________________________________________________________ *)
 
-(* Core notation *******************************************************)
+(* NOTATION FOR DELAYED UPDATING ********************************************)
 
-notation < "hvbox( g break \circ term 61 f break ␣ term 71 x )"
-  non associative with precedence 70
-  for @{ 'compose $A $B $C $g $f $x }.
+notation "hvbox( x1 ⧸⊏ break term 46 x2 )"
+  non associative with precedence 45
+  for @{ 'NegSqSubset $x1 $x2 }.

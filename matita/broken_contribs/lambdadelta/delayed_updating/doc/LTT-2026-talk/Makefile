@@ -1,6 +1,6 @@
 H = @
 
-MAINS = ltt-2026-talk-i ltt-2026-talk
+MAINS = ltt-2026-presentation ltt-2026-slides
 
 all: $(MAINS:%=%.pdf)
 

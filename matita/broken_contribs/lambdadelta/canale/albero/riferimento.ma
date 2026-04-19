@@ -9,7 +9,7 @@ include "canale/notazione/riferimento.ma".
 
 (* Nota: un riferimento può essere per nome o per profondità *)
 (* Nota: metavariabili riferimento: r, s *)
-(* Nota: metavariabili profondità: i, j *) 
+(* Nota: metavariabili profondità: i, j *)
 inductive riferimento: Type[0] ≝
 | NRef: (𝕍) → riferimento
 | DRef: (ℕ⁺) → riferimento

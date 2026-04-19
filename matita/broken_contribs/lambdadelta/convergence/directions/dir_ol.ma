@@ -2,7 +2,7 @@
    and is distributed under the GNU General Public License (GPL) version 2.
 *)
 
-include "ground/subsets/subset_ol_le.ma". 
+include "ground/subsets/subset_ol_le.ma".
 include "convergence/directions/dir.ma".
 include "convergence/directions/dir_ol_s.ma".
 

@@ -41,7 +41,7 @@ qed.
 
 theorem rt_uni_iniettiva (n):
         rt_iniettiva @  𝐮❨n❩.
-#n * [ #x1 <rt_uni_nref | #i1 <rt_uni_dref ] 
+#n * [ #x1 <rt_uni_nref | #i1 <rt_uni_dref ]
 * [1,3: #x2 <rt_uni_nref |*: #i2 <rt_uni_dref ]
 #H0 destruct // -e0 (**) (* destruct fallisce *)
 lapply (eq_inv_dref_bi … H0) -H0 #H0
