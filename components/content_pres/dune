@@ -1,6 +1,6 @@
 (library
  (name helm_content_pres)
- (libraries sedlex uuseg.string helm_content helm_syntax_extensions camlp5.gramlib helm_grafite)
+ (libraries sedlex uuseg.string helm_content helm_syntax_extensions compiler-libs.common camlp5.gramlib helm_grafite)
  (preprocessor_deps ../syntax_extensions/pa_unicode_macro.cma ../syntax_extensions/helm_syntax_extensions.cma)
  (preprocess (per_module
    ((pps sedlex.ppx) cicNotationLexer)
