@@ -11,28 +11,13 @@ include "canale/eminenza/sostituzione_ap_liberi.ma".
 
 (* Costruzioni coi nomi legati alla portata ristretta e l'inclusione ********)
 
-(*
-
-include "ground/subsets/subset_rest_or_le.ma".
-include "canale/eminenza/nomi_ap_legati_1_le.ma".
-include "canale/eminenza/sostituzione_liberi.ma".
-
-lemma in_inv_ap_liberi_nabs (V) (T) (y1) (y2) (x):
-      y1 ϵ ℱ[V/y2] 𝛌x.T →
-      ∧∧ y2 ⧸= x & y1 ϵ ℱ[V/y2]T & y1 ⧸= x.
-#V #T #y1 #y2 #x <ap_liberi_nabs #Hy1
-elim (subset_rest_inv_gen ???? Hy1) -Hy1 #Hny2x * #Hy1 #Hny1
-lapply (subset_nin_inv_single ??? Hny1) -Hny1 #Hny1x
-/2 width=1 by and3_intro/
-qed-.
-*)
 lemma ap_legati_sost_ge_rc (y1) (y2) (W) (T):
       ℬ[y1,y2,ℱW]T ⊆ ℬ[y1]⦋W/y2⦌T.
 #y1 #y2 #W #T elim T -T
 [ #r <ap_legati_refs //
 | #x #T #IH
   @ap_legati_3_nabs_inv_le
-  [ #Hy1 #Hny1x #Hny2x #_ -IH
+  [ #Hy1 #Hny1x #Hny2x -IH
     <(sost_nabs_neq … Hny2x) -Hny2x
     @ap_legati_1_nabs_ge_sx [ // ] -Hny1x
     @liberi_sost_ge_sx //
@@ -45,6 +30,14 @@ lemma ap_legati_sost_ge_rc (y1) (y2) (W) (T):
 | #T #IH
   <sost_aabs <ap_legati_aabs <ap_legati_aabs //
 ]
+qed.
+
+lemma ap_legati_sost_ge (y1) (y2) (W) (T):
+      y1 ⧸= y2 →
+      ∪∪ ❨y2ϵℱT❩ℬ[y1]W | ℬ[y1,y2,ℱW]T | ℬ[y1]T ⊆ ℬ[y1]⦋W/y2⦌T.
+#y1 #Hy2 #W #T #Hny12
+@subset_le_or_3_sx
+/2 width=1 by ap_legati_sost_ge_rc, ap_legati_sost_ge_dx, ap_legati_sost_ge_sx/
 qed.
 
 lemma ap_legati_sost_le (y1) (y2) (W) (T):
@@ -64,7 +57,7 @@ lemma ap_legati_sost_le (y1) (y2) (W) (T):
     [ #Hny1x #Hny1 -IH
       elim (liberi_sost_le … Hny1) -Hny1 #Hy1
       [ @subset_le_or_3_dx_rc
-        @ap_legati_3_nabs_ge_sx //
+        /2 width=1 by ap_legati_3_nabs_ge_sx/
       | @subset_le_or_3_dx_dx
         /3 width=2 by ap_legati_1_nabs_ge_sx, subset_le_nimp_sx_refl_sx/
       ]
@@ -85,7 +78,3 @@ lemma ap_legati_sost_le (y1) (y2) (W) (T):
   @subset_or_3_le_repl //
 ]
 qed.
-(*
-      elim (subset_rest_inv_gen … @ ap_liberi_le … Hy1) -Hy1 #Hy2 #Hy1
-      /3 width=3 by ap_legati_1_nabs_ge_sx, subset_rest_ge/
-*)

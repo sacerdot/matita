@@ -10,9 +10,9 @@ include "canale/eminenza/nomi_ap_legati_3.ma".
 (* Costruzioni con l'inclusione *********************************************)
 
 lemma ap_legati_3_nabs_ge_sx (y1) (y2) (W) (x) (T):
-      y1 ϵ ℱ[W/y2]T → y1 ⧸=x → y2 ⧸= x → y2 ϵ ℱT → ❴x❵ ⊆ ℬ[y1,y2,W]𝛌x.T.
-#y1 #y2 #W #x #T #Hy1 #Hny1x #Hny2x #Hy2
-/3 width=1 by ap_legati_nabs_ge_sx, and4_intro/
+      y1 ϵ ℱ[W/y2]T → y1 ⧸=x → y2 ⧸= x → ❴x❵ ⊆ ℬ[y1,y2,W]𝛌x.T.
+#y1 #y2 #W #x #T #Hy1 #Hny1x #Hny2x
+/3 width=1 by ap_legati_nabs_ge_sx, and3_intro/
 qed.
 
 lemma ap_legati_3_nabs_ge_dx (y1) (y2) (W) (x) (T):
@@ -22,7 +22,7 @@ lemma ap_legati_3_nabs_ge_dx (y1) (y2) (W) (x) (T):
 qed.
 
 lemma ap_legati_3_nabs_inv_le (y1) (y2) (W) (x) (T) (U):
-      (y1 ϵ ℱ[W/y2]T → y1 ⧸=x → y2 ⧸= x → y2 ϵ ℱT → ❴x❵ ⊆ U) →
+      (y1 ϵ ℱ[W/y2]T → y1 ⧸=x → y2 ⧸= x → ❴x❵ ⊆ U) →
       (y2 ⧸= x → ℬ[y1,y2,W]T ⊆ U) →
       ℬ[y1,y2,W]𝛌x.T ⊆ U.
 #y1 #y2 #W #x #T #U #H1 #H2
