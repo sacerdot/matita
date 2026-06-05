@@ -9,6 +9,7 @@ include "canale/notazione/condizione_b.ma".
 
 (* Nomi legati alla portata ristretta ***************************************)
 
+(* Nota: y1 ϵ ℱ[W/y2]T comporta y2 ϵ ℱT per ap_liberi_le *)
 definition condizione_b3_sx: 𝕍 → 𝕍 → 𝒫❨𝕍❩ → relation2 (𝕍) (𝕋) ≝
            λy1,y2,W,x,T. ∧∧ y1 ϵ ℱ[W/y2]T & y1 ⧸=x & y2 ⧸=x.
 

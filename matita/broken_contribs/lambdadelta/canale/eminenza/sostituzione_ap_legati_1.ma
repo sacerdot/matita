@@ -10,7 +10,7 @@ include "canale/eminenza/sostituzione_liberi.ma".
 
 (* Costruzioni coi nomi legati alla portata e l'inclusione ******************)
 
-lemma ap_legati_sost_ge_sx (y1) (y2) (W) (T):
+lemma ap_legati_1_sost_ge_sx (y1) (y2) (W) (T):
       ❨y2ϵℱT❩ℬ[y1]W ⊆ ℬ[y1]⦋W/y2⦌T.
 #y1 #y2 #W #T elim T -T
 [ #r
@@ -31,7 +31,7 @@ lemma ap_legati_sost_ge_sx (y1) (y2) (W) (T):
 ]
 qed.
 
-lemma ap_legati_sost_ge_dx (y1) (y2) (W) (T):
+lemma ap_legati_1_sost_ge_dx (y1) (y2) (W) (T):
       y1 ⧸= y2 → ℬ[y1]T ⊆ ℬ[y1]⦋W/y2⦌T.
 #y1 #y2 #W #T #Hny12 elim T -T
 [ #r <ap_legati_refs //
@@ -64,7 +64,7 @@ qed.
 
 (* Nota: terzo lemma della sostituzione sequenziale *)
 (* Nota: vale anche senza le premesse 2 e 3 nel caso V1 = y1 *)
-theorem sost_sost_neq_non_ap_legato (y2) (y1) (V2) (V1) (T):
+theorem sost_sost_neq_non_ap_legato_1 (y2) (y1) (V2) (V1) (T):
         y2 ⧸= y1 → y1 ⧸ϵ ℱV2 → y2 ⧸ϵ ℬ[y1]T →
         (⦋⦋V2 / y2⦌V1 / y1⦌ ⦋V2 / y2⦌ T) = ⦋V2 / y2⦌ ⦋V1 / y1⦌ T.
 #y2 #y1 #V2 #V1 #T elim T -T
@@ -109,7 +109,7 @@ theorem sost_sost_neq_integra (y2) (y1) (V2) (V1) (T):
         (⦋⦋V2 / y2⦌V1 / y1⦌ ⦋V2 / y2⦌ T) = ⦋V2 / y2⦌ ⦋V1 / y1⦌ T.
 #y2 #y1 #V2 #V1 #T #Hny21 #Hny1 #HN1
 elim (in_liberi_dec V1 y2) #Hy2
-[ @(sost_sost_neq_non_ap_legato … Hny21 Hny1)
+[ @(sost_sost_neq_non_ap_legato_1 … Hny21 Hny1)
   /3 width=3 by subset_ol_i/
 | <(sost_non_libero … Hy2)
   @(sost_sost_neq_non_libero … Hny21 Hny1) //
