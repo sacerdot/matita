@@ -12,35 +12,12 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_and.ma".
-include "ground/notation/functions/parenthesis_3.ma".
+(* NOTATION FOR GROUND ******************************************************)
 
-(* RESTRICTION FOR SUBSETS **************************************************)
+notation < "hvbox(∪∪ term 46 U1 break | term 46 U2 break | term 69 U3)"
+  non associative with precedence 70
+  for  @{ 'Union $S $U1 $U2 $U3 }.
 
-definition subset_rest (A) (R) (u): 𝒫❨A❩ ≝
-           {a | R} ∩ u.
-
-interpretation
-  "restriction (subset)"
-  'Parenthesis A R u = (subset_rest A R u).
-
-(* Basic constructions ******************************************************)
-
-lemma subset_rest_unfold (A) (R) (u):
-      {a:A | R} ∩ u = ❨R❩u.
-//
-qed.
-
-(* Basic inversions *********************************************************)
-
-lemma subset_rest_inv_gen (A) (R) (u) (a): (**)
-      a ϵ ❨R❩❪A❫u → ∧∧ R & a ϵ u.
-#A #R #u #a * #H1a #H2a
-/2 width=1 by conj/
-qed-.
-
-lemma subset_nin_rest (A) (R) (a) (u):
-      (R → a ⧸ϵ u) → a ⧸ϵ❪A❫ ❨R❩u.
-#A #R #a #u #H0 * #HR #Ha
-/2 width=1 by/
-qed-.
+notation > "hvbox(∪∪ opt( ❪ term 46 S ❫ ) term 46 U1 break | term 46 U2 break | term 69 U3)"
+  non associative with precedence 70
+  for  @{ 'Union ${default @{$S}@{?}} $U1 $U2 $U3 }.

@@ -64,6 +64,13 @@ lemma subset_rest_le_estract (A) (R) (u) (v): (**)
 /3 width=1 by subset_and_in/
 qed.
 
+lemma subset_rest_ge (A) (R) (v) (u): (**)
+      R → v ⊆ u → v ⊆ ❨R❩❪A❫u.
+#A #R #v #u #HR #Hv
+@(subset_le_trans … Hv) -Hv
+/2 width=1 by subset_rest_ge_refl/
+qed.
+
 (* Advanced inversions with subset_le ***************************************)
 
 lemma subset_rest_le_inv_gen (A) (R) (u) (v): (**)

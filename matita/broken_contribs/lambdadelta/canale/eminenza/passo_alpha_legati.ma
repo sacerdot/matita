@@ -4,7 +4,7 @@
 
 include "ground/subsets/subset_or_le.ma".
 include "ground/subsets/subset_listed_le_1.ma".
-include "canale/albero/nomi_legati.ma".
+include "canale/albero/nomi_legati_le.ma".
 include "canale/eminenza/passo_alpha.ma".
 
 (* Passo alpha **************************************************************)
@@ -15,18 +15,20 @@ lemma astep_inv_applicativo_sx (T1) (T2):
       T1 ⪰α T2 → ℬT1 ⊆ Ⓕ → T1 = T2.
 #T1 #T2 #HT12 elim HT12 -T1 -T2
 [ //
-| #T1 #T2 #x #_ #_ <legati_nabs #H0
+| #T1 #T2 #x #_ #_ #H0
+  lapply (subset_le_trans … (legati_nabs_ge …) … H0) -H0 #H0
   lapply (subset_le_or_inv_sx_sx … H0) -H0 #H0
   elim (subset_nle_single_empty ?? H0)
-| #T1 #T2 #x1 #x2 #_ #_ #_ #_ #_ <legati_nabs #H0
+| #T1 #T2 #x1 #x2 #_ #_ #_ #_ #_ #H0
+  lapply (subset_le_trans … (legati_nabs_ge …) … H0) -H0 #H0
   lapply (subset_le_or_inv_sx_sx … H0) -H0 #H0
   elim (subset_nle_single_empty ?? H0)
-| #T1 #T2 #V1 #V2 #_ #_ #IHT #IHV <legati_appl #H0
+| #T1 #T2 #V1 #V2 #_ #_ #IHT #IHV <ap_legati_appl #H0
   <IHT -IHT
   [ <IHV -IHV /2 width=4 by subset_le_or_inv_sx_dx/
   | -IHV /2 width=4 by subset_le_or_inv_sx_sx/
   ]
-| #T1 #T2 #_ #IH <legati_aabs #H0
+| #T1 #T2 #_ #IH <ap_legati_aabs #H0
   <IH -IH //
 ]
 qed-.

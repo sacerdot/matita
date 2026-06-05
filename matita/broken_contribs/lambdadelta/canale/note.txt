@@ -1,0 +1,16 @@
+LEMMI DI SOSTITUZIONE
+
+1) La seconda sostituzione è sovrapposta (e quindi è interna) alla prima:
+   ⦋⦋V2 / y⦌V1 / y⦌ T = ⦋V2 / y⦌ ⦋V1 / y⦌ T.
+
+2) Le due sostituzioni sono esterne fra loro:
+   y2 ⧸= y1 → y1 ⧸ϵ ℱV2 → y2 ⧸ϵ ℱV1 →
+   ⦋V1 / y1⦌ ⦋V2 / y2⦌ T = ⦋V2 / y2⦌ ⦋V1 / y1⦌ T.
+
+3) La prima sostituzione è esterna alla seconda:
+   y2 ⧸= y1 → y1 ⧸ϵ ℱV2 → y2 ⧸ϵ ℬ[y1]T →
+   ⦋⦋V2 / y2⦌V1 / y1⦌ ⦋V2 / y2⦌ T = ⦋V2 / y2⦌ ⦋V1 / y1⦌ T.
+
+4) La seconda sostituzione è interna alla prima:
+   y2 ⧸ϵ ℱT → y2 ⧸ϵ ℬ[y1]T →
+   ⦋⦋V2 / y2⦌ V1 / y1⦌ T = ⦋V2 / y2⦌ ⦋V1 / y1⦌ T.

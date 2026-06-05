@@ -4,10 +4,8 @@
 
 include "ground/subsets/subset_nimply_or_le.ma".
 include "ground/subsets/subset_listed_nimply.ma".
-include "ground/subsets/subset_rest_le.ma".
 include "ground/subsets/subset_help.ma".
-include "canale/albero/nomi_liberi.ma".
-include "canale/eminenza/nomi_ap_liberi.ma".
+include "canale/eminenza/nomi_ap_liberi_le.ma".
 include "canale/eminenza/sostituzione.ma".
 
 (* Sostituzione *************************************************************)
@@ -37,12 +35,12 @@ lemma liberi_sost_le (x) (V) (T):
   [ @(subset_le_trans ????? @ subset_le_or_dx_refl_sx …)
     /2 width=1 by subset_rest_ge_refl/
   | <sost_refs_neq //
-    /5 width=3 by in_libero_inv_gen, subset_ge_nimp_refl_single, subset_dx_le_or/
+    /5 width=3 by in_libero_inv_gen, subset_ge_nimp_refl_single, subset_le_or_dx_dx/
   ]
 | #x #T #IH <ap_liberi_nabs <liberi_nabs
   elim (eq_nome_dec y x) #Hnyx destruct
   [ <sost_nabs_eq <liberi_nabs -IH
-    /4 width=4 by subset_ge_nimp_refl_single, subset_nin_nimp_single_dx_refl, subset_dx_le_or/
+    /4 width=4 by subset_ge_nimp_refl_single, subset_nin_nimp_single_dx_refl, subset_le_or_dx_dx/
   | <sost_nabs_neq // <liberi_nabs
     @(subset_le_trans … @ subset_le_nimp_bi … IH @ subset_le_refl …) -IH
     @(subset_le_trans … @ subset_le_nimp_or_sx …)
@@ -56,3 +54,17 @@ lemma liberi_sost_le (x) (V) (T):
 | #T #IHT <ap_liberi_aabs <sost_aabs <liberi_aabs <liberi_aabs //
 ]
 qed.
+
+(* Distruzioni avanzate coi nomi liberi *************************************)
+
+lemma in_liberi_sost_des_refs_refl (x1) (x2:𝕍) (T):
+      x1 ϵ ℱ⦋x2/x1⦌T → x1 = x2.
+#x1 #x2 #T #Hx1
+lapply (liberi_sost_le … Hx1) -Hx1 * #H0
+[ lapply (ap_liberi_le … H0) -H0 #H0
+  lapply (subset_rest_le_refl ???? H0) -H0 #H0
+  lapply (in_libero_inv_gen … H0) -H0 #H0 destruct //
+| elim H0 -H0 #_ #H0
+  elim H0 -H0 //
+]
+qed-.

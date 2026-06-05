@@ -4,7 +4,7 @@
 
 include "ground/xoa/ex_5_2.ma".
 include "ground/xoa/ex_3_2.ma".
-include "canale/eminenza/nomi_ap_legati.ma".
+include "canale/eminenza/nomi_ap_legati_1.ma".
 include "canale/eminenza/sostituzione.ma".
 include "canale/notazione/conversione_alpha.ma".
 

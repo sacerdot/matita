@@ -2,7 +2,6 @@
    ed è distribuito ai sensi della licenza GNU GPL versione 2
 *)
 
-include "canale/eminenza/nomi_ap_liberi_le.ma".
 include "canale/eminenza/sostituzione_liberi.ma".
 include "canale/eminenza/sostituzione_ap_liberi.ma".
 

@@ -12,35 +12,23 @@
 (*                                                                        *)
 (**************************************************************************)
 
-include "ground/subsets/subset_and.ma".
-include "ground/notation/functions/parenthesis_3.ma".
+include "ground/subsets/subset_or_le.ma".
+include "ground/subsets/subset_or_3_le.ma".
 
-(* RESTRICTION FOR SUBSETS **************************************************)
+(* TERNARY UNION FOR SUBSETS ************************************************)
 
-definition subset_rest (A) (R) (u): 𝒫❨A❩ ≝
-           {a | R} ∩ u.
+(* Constructions with subset_or and subset_le *******************************)
 
-interpretation
-  "restriction (subset)"
-  'Parenthesis A R u = (subset_rest A R u).
-
-(* Basic constructions ******************************************************)
-
-lemma subset_rest_unfold (A) (R) (u):
-      {a:A | R} ∩ u = ❨R❩u.
-//
+lemma subset_le_or_or_3_bi (A) (u1) (u2) (u3) (v1) (v2) (v3):
+      (∪∪ u1 | u2 | u3) ∪ (∪∪ v1 | v2 | v3) ⊆ ∪∪❪A❫ u1 ∪ v1 | u2 ∪ v2 | (u3 ∪ v3).
+#A #u1 #u2 #u3 #v1 #v2 #v3
+@subset_le_or_sx @subset_le_or_3_sx
+/3 width=3 by subset_le_or_3_dx_rc, subset_le_or_3_dx_sx, subset_or_3_in_dx, subset_le_or_dx_refl_dx, subset_le_or_dx_refl_sx/
 qed.
 
-(* Basic inversions *********************************************************)
-
-lemma subset_rest_inv_gen (A) (R) (u) (a): (**)
-      a ϵ ❨R❩❪A❫u → ∧∧ R & a ϵ u.
-#A #R #u #a * #H1a #H2a
-/2 width=1 by conj/
-qed-.
-
-lemma subset_nin_rest (A) (R) (a) (u):
-      (R → a ⧸ϵ u) → a ⧸ϵ❪A❫ ❨R❩u.
-#A #R #a #u #H0 * #HR #Ha
-/2 width=1 by/
-qed-.
+lemma subset_ge_or_or_3_bi (A) (u1) (u2) (u3) (v1) (v2) (v3):
+      ∪∪❪A❫ u1 ∪ v1 | u2 ∪ v2 | (u3 ∪ v3) ⊆ (∪∪ u1 | u2 | u3) ∪ (∪∪ v1 | v2 | v3).
+#A #u1 #u2 #u3 #v1 #v2 #v3
+@subset_le_or_3_sx @subset_le_or_sx
+/3 width=3 by subset_le_or_3_dx_refl_dx, subset_le_or_3_dx_refl_rc, subset_le_or_3_dx_refl_sx, subset_le_or_dx_sx, subset_le_or_dx_dx/
+qed.

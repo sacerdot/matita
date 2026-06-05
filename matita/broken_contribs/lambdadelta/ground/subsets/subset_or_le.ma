@@ -18,13 +18,7 @@ include "ground/subsets/subset_or.ma".
 
 (* UNION FOR SUBSETS ********************************************************)
 
-(* Constructions with subset_le *********************************************)
-
-lemma subset_le_or_sx (A) (u1) (u2) (v:𝒫❨A❩): (**)
-      u1 ⊆ v → u2 ⊆ v → u1 ∪ u2 ⊆ v.
-#A #u1 #u2 #v #Hu1 #Hu2 #p * #Hp
-/3 width=1 by/
-qed.
+(* Base constructions with subset_le ****************************************)
 
 lemma subset_le_or_dx_refl_sx (A) (u1) (u2:𝒫❨A❩): (**)
       u1 ⊆ u1 ∪ u2.
@@ -34,6 +28,26 @@ qed.
 lemma subset_le_or_dx_refl_dx (A) (u1:𝒫❨A❩) (u2): (**)
       u2 ⊆ u1 ∪ u2.
 /2 width=1 by subset_or_in_dx/
+qed.
+
+lemma subset_le_or_sx (A) (u1) (u2) (v:𝒫❨A❩): (**)
+      u1 ⊆ v → u2 ⊆ v → u1 ∪ u2 ⊆ v.
+#A #u1 #u2 #v #Hu1 #Hu2 #p * #Hp
+/3 width=1 by/
+qed.
+
+(* Advanced constructions with subset_le ************************************)
+
+lemma subset_le_or_dx_sx (A) (u:𝒫❨A❩) (v1) (v2): (**)
+      u ⊆ v1 → u ⊆ v1 ∪ v2.
+#U #u #v1 #v2 #H0
+@(subset_le_trans … H0) -H0 //
+qed.
+
+lemma subset_le_or_dx_dx (A) (u:𝒫❨A❩) (v1) (v2): (**)
+      u ⊆ v2 → u ⊆ v1 ∪ v2.
+#U #u #v1 #v2 #H0
+@(subset_le_trans … H0) -H0 //
 qed.
 
 lemma subset_le_or_sx_refl_sx (A) (u1) (u2:𝒫❨A❩): (**)
@@ -49,12 +63,6 @@ qed.
 lemma subset_le_or_sx_refl_bi (A) (u:𝒫❨A❩): (**)
       u ∪ u ⊆ u.
 /2 width=3 by subset_le_or_sx_refl_sx/
-qed.
-
-lemma subset_dx_le_or (A) (u:𝒫❨A❩) (v1) (v2): (**)
-      u ⊆ v2 → u ⊆ v1 ∪ v2.
-#U #u #v1 #v2 #H0
-@(subset_le_trans … H0) -H0 //
 qed.
 
 (* Inversions with subset_le ************************************************)

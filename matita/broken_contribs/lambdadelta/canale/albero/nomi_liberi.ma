@@ -50,6 +50,12 @@ qed.
 
 (* Costruzioni avanzate *****************************************************)
 
+lemma in_liberi_nabs (y) (x) (T):
+      y ⧸= x → y ϵ ℱT → y ϵ ℱ𝛌x.T.
+#y #x #T #H0 #Hy
+/4 width=1 by subset_in_inv_single, subset_in_nimp/
+qed.
+
 lemma in_liberi_dec (T) (y):
       Decidable (y ϵ ℱT).
 #T elim T -T
@@ -73,4 +79,10 @@ lemma in_liberi_inv_refs (x) (r:ℝ):
       x ϵℱr → x =❪𝕋❫ r.
 #y #r <liberi_refs #H0
 <(in_libero_inv_gen … H0) -r //
+qed-.
+
+lemma in_liberi_inv_nabs (y) (x) (T):
+      y ϵ ℱ𝛌x.T → ∧∧ y ϵ ℱT & y ⧸= x.
+#y #x #T * #Hy #H0
+/3 width=1 by conj/
 qed-.

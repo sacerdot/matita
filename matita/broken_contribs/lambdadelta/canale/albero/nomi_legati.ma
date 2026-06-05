@@ -2,39 +2,22 @@
    ed è distribuito ai sensi della licenza GNU GPL versione 2
 *)
 
-include "ground/subsets/subset_or.ma".
-include "ground/subsets/subset_listed_1.ma".
-include "canale/albero/termine.ma".
-include "canale/notazione/nomi_legati.ma".
+include "canale/albero/nomi_ap_legati.ma".
+include "canale/notazione/condizione_b.ma".
 
 (* Nomi legati **************************************************************)
 
-rec definition legati (U) on U: 𝒫❨𝕍❩ ≝
-match U with
-[ Refs _   ⇒ (Ⓕ)
-| NAbs x T ⇒ ❴x❵ ∪ (legati T)
-| Appl T V ⇒ (legati T) ∪ (legati V)
-| AAbs T   ⇒ (legati T)
-].
+definition condizione_b0: relation2 (𝕍) (𝕋) ≝
+           λ_,_. ⊤.
+
+interpretation
+  "nomi legati (condizione)"
+  'CondizioneB = (condizione_b0).
+
+interpretation
+  "nomi legati (condizione applicata)"
+  'CondizioneBAppl x T= (condizione_b0 x T).
 
 interpretation
   "nomi legati (sottoinsieme di nomi)"
-  'NomiLegati T = (legati T).
-
-(* Riscritture **************************************************************)
-
-lemma legati_refs (r:ℝ): Ⓕ = ℬr.
-//
-qed.
-
-lemma legati_nabs (x) (T): ❴x❵ ∪ ℬT = ℬ𝛌x.T.
-//
-qed.
-
-lemma legati_appl (T) (V): ℬT ∪ ℬV = ℬT❨V❩.
-//
-qed.
-
-lemma legati_aabs (T): ℬT = ℬ𝛌.T.
-//
-qed.
+  'NomiLegati U = (ap_legati condizione_b0 condizione_b0 U).

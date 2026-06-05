@@ -9,7 +9,7 @@ include "ground/subsets/subset_nimply_ol_le.ma".
 include "ground/subsets/subset_nimply_and_le.ma".
 include "ground/subsets/subset_nimply_and_or_le.ma".
 include "canale/albero/nomi_liberi_restrizione.ma".
-include "canale/eminenza/nomi_ap_legati.ma".
+include "canale/eminenza/nomi_ap_legati_1_le.ma".
 include "canale/eminenza/nomi_ap_liberi.ma".
 
 (* Nomi liberi alla portata *************************************************)
@@ -38,20 +38,19 @@ lemma ap_liberi_ge (y) (w) (T):
 [ #r <ap_legati_refs <ap_liberi_refs
   @(subset_le_trans … @ liberi_rest_refs_le …)
   @subset_rest_le_repl //
-| #x #T #IH <ap_legati_nabs <ap_liberi_nabs
+| #x #T #IH <ap_liberi_nabs
   @(subset_le_trans … @ liberi_rest_nabs_le …)
   @subset_rest_le_gen #Hnyx
   @subset_rest_le_gen #Hy
-  @(subset_le_trans … @ subset_le_nimp_or_dx …)
   @(subset_rest_le_inv_gen … Hnyx)
   @subset_rest_le_repl
+  @(subset_le_trans ??? @ subset_le_nimp_bi ???????)
+  [ @ap_legati_1_nabs_ge // | @subset_le_refl | skip | skip ]
+  @(subset_le_trans … @ subset_le_nimp_or_dx …)
   @(subset_le_trans … @ subset_ge_nimp_and_sx_assoc_sx …)
-  @subset_le_nimp_bi
-  [ @(subset_le_trans … @ subset_le_and_sx_refl_dx …)
-    @(subset_rest_le_inv_gen … Hy) //
-  | @(subset_rest_le_inv_gen … Hy)
-    @(subset_rest_le_inv_gen … Hnyx) //
-  ]
+  @subset_le_nimp_bi [| // ]
+  @(subset_le_trans ????? @ subset_rest_le_inv_gen … Hy IH) -IH
+  @subset_le_and_sx_refl_dx
 | #T #V #IHT #IHV <ap_legati_appl <ap_liberi_appl
   @(subset_le_trans … @ liberi_rest_appl_le …)
   @subset_or_le_repl
