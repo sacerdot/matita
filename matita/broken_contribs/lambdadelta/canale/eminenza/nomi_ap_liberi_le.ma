@@ -3,7 +3,6 @@
 *)
 
 include "ground/subsets/subset_and_le.ma".
-include "ground/subsets/subset_or_le.ma".
 include "ground/subsets/subset_nimply_le.ma".
 include "ground/subsets/subset_nimply_ol_le.ma".
 include "ground/subsets/subset_nimply_and_le.ma".

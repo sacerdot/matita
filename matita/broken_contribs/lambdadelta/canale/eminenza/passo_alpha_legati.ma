@@ -2,7 +2,6 @@
    ed è distribuito ai sensi della licenza GNU GPL versione 2
 *)
 
-include "ground/subsets/subset_or_le.ma".
 include "ground/subsets/subset_listed_le_1.ma".
 include "canale/albero/nomi_legati_le.ma".
 include "canale/eminenza/passo_alpha.ma".

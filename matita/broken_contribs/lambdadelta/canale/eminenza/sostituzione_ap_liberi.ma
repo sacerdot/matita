@@ -55,6 +55,27 @@ lemma liberi_sost_le (x) (V) (T):
 ]
 qed.
 
+(* Costruzioni avanzate coi nomi liberi *************************************)
+
+lemma in_liberi_sost_refl (x2) (x1) (T):
+      x2 ⧸ϵ ℬ[x1]T → x1 ϵ ℱT → x2 ϵ ℱ⦋x2/x1⦌T.
+#x2 #x1 #T #Hnx2 #Hx1
+/5 width=1 by liberi_sost_ge_sx, ap_liberi_ge, subset_rest_ge_refl, subset_in_nimp/
+qed.
+
+
+(* Inversioni avanzate coi nomi liberi **************************************)
+
+lemma in_inv_liberi_sost_nref_neq (x) (x1:𝕍) (x2) (T:𝕋):
+      x ⧸= x1 → x ϵ ℱ⦋x1/x2⦌T → x ϵ ℱT.
+#x #x1 #x2 #T #Hnx1 #Hx
+elim (liberi_sost_le … Hx) -Hx [| * // ] #Hx
+lapply (ap_liberi_le … Hx) -Hx #Hx
+lapply (subset_rest_le_refl ???? Hx) -Hx #Hx
+elim Hnx1 -Hnx1
+<(subset_in_inv_single ??? Hx) -x1 //
+qed-.
+
 (* Distruzioni avanzate coi nomi liberi *************************************)
 
 lemma in_liberi_sost_des_refs_refl (x1) (x2:𝕍) (T):
